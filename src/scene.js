@@ -551,6 +551,7 @@ export class AnatomyScene {
     for (const entry of Object.values(this.entries)) entry.group.visible = entry.id === id;
     for (const ov of this.overlays) ov.visible = ov.userData.entryId === id;
     this.anatomy.skinGroup.visible = false;
+    this._updateEmphasis();
     this._updateLabelVisibility();
   }
 
@@ -1290,7 +1291,7 @@ export class AnatomyScene {
       let dim = false;
       if (this.systemFilter !== "all" && entry.system !== this.systemFilter) dim = true;
       if (diseaseActive && !affected.has(entry.id)) dim = true;
-      if (entry.id === this.selectedId) dim = false;
+      if (entry.id === this.selectedId || entry.id === this.isolatedId) dim = false;
       this._dimEntry(entry, dim);
       if (entry.labelEl) entry.labelEl.classList.toggle("dim", dim);
     }
