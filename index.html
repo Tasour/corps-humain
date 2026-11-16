@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050a12" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>CORPS — Atlas vivant du corps humain</title>
+    <meta name="description" content="Explorez le corps humain en 3D, découvrez les organes, les os, les muscles et visualisez l'effet des maladies. Apprenez en jouant." />
+    <meta property="og:title" content="CORPS — Atlas vivant du corps humain" />
+    <meta property="og:description" content="Atlas 3D interactif : organes, squelette, muscles et pathologies simulées. Jeux pédagogiques inclus." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./favicon.svg" />
+  </head>
+  <body>
+    <div id="app">
+      <header id="topbar">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.1" opacity=".45"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1>CORPS</h1>
+            <span>Atlas vivant · anatomie &amp; pathologies</span>
+          </div>
+        </div>
+
+        <nav class="layers" id="layers" aria-label="Couches anatomiques">
+          <button class="layer-pill" data-layer="skin" style="--c:#67e8f9">
+            <span class="swatch"></span>Peau
+          </button>
+          <button class="layer-pill" data-layer="muscles" style="--c:#ef4444">
+            <span class="swatch"></span>Muscles
+          </button>
+          <button class="layer-pill" data-layer="bones" style="--c:#e5ddc8">
+            <span class="swatch"></span>Squelette
+          </button>
+          <button class="layer-pill" data-layer="organs" style="--c:#2dd4bf">
+            <span class="swatch"></span>Organes
+          </button>
+          <span class="layers-sep"></span>
+          <button class="layer-pill" data-layer="labels" style="--c:#94a3b8">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Étiquettes
+          </button>
+          <button class="layer-pill icon-only" id="btn-rotate" title="Rotation automatique" aria-label="Rotation automatique">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="layer-pill icon-only" id="btn-explode" title="Vue éclatée" aria-label="Vue éclatée" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><path d="M12 2.8 21 7.4v9.2L12 21.2 3 16.6V7.4L12 2.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12 21 7.4M12 12 3 7.4M12 12v9.2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </button>
+        </nav>
+
+        <div class="top-actions">
+          <button class="btn btn-ghost" id="btn-hunt">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Chasse aux organes
+          </button>
+          <button class="btn btn-primary" id="btn-quiz">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><path d="M4 13h3l2-6 3.5 12L15 10l2 3h3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Mode diagnostic
+          </button>
+        </div>
+      </header>
+
+      <aside id="left-panel" class="panel">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.4" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="search" type="search" placeholder="Organe, os, muscle, maladie…" autocomplete="off" spellcheck="false" />
+          <kbd>/</kbd>
+        </div>
+        <div class="filter-title"><span>Systèmes</span></div>
+        <div id="system-filter" class="system-filter"></div>
+        <div class="filter-title">
+          <span>Explorer</span>
+          <span id="list-count" class="count"></span>
+        </div>
+        <div class="segmented" id="kind-filter">
+          <button class="seg active" data-kind="organ">Organes</button>
+          <button class="seg" data-kind="bone">Os</button>
+          <button class="seg" data-kind="muscle">Muscles</button>
+          <button class="seg" data-kind="all">Tout</button>
+        </div>
+        <div id="organ-list" class="organ-list"></div>
+        <div class="panel-foot">
+          <span class="foot-dot"></span>
+          Astuce : cliquez directement sur la silhouette 3D.
+        </div>
+      </aside>
+
+      <main id="viewport">
+        <div id="stage"></div>
+        <div id="labels" aria-hidden="true"></div>
+
+        <div id="active-path" class="active-path" hidden>
+          <span class="pulse-dot"></span>
+          <span class="ap-label">Pathologie active</span>
+          <strong id="ap-name">—</strong>
+          <button id="ap-clear" title="Retirer la pathologie" aria-label="Retirer la pathologie">✕</button>
+        </div>
+
+        <div id="monitor" class="monitor">
+          <div class="monitor-head">
+            <span class="mono-label">MONITEUR</span>
+            <span class="live"><i></i>LIVE</span>
+          </div>
+          <canvas id="ecg" width="536" height="150"></canvas>
+          <div class="vitals-grid">
+            <div class="vital"><b id="v-hr">72</b><span>FC <em>bpm</em></span></div>
+            <div class="vital"><b id="v-spo2">98</b><span>SpO₂ <em>%</em></span></div>
+            <div class="vital"><b id="v-rr">14</b><span>FR <em>/min</em></span></div>
+            <div class="vital"><b id="v-bp">120/80</b><span>TA <em>mmHg</em></span></div>
+            <div class="vital"><b id="v-temp">36.8</b><span>T° <em>°C</em></span></div>
+          </div>
+          <div class="monitor-note" id="monitor-note">Sujet sain · valeurs de repos</div>
+        </div>
+
+        <div id="view-presets" class="view-presets">
+          <button data-view="full">Corps</button>
+          <button data-view="thorax">Thorax</button>
+          <button data-view="abdomen">Abdomen</button>
+          <button data-view="head">Tête</button>
+          <button data-view="profile">Profil</button>
+          <button data-view="back">Dos</button>
+        </div>
+
+        <div id="hint" class="hint">
+          <span class="mouse">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="5" stroke="currentColor" stroke-width="1.6"/><path d="M12 6v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          Glissez pour tourner · molette pour zoomer · cliquez sur un organe
+        </div>
+
+        <div id="hunt-hud" class="hunt-hud" hidden>
+          <div class="hunt-top">
+            <span class="hunt-mode">CHASSE AUX ORGANES</span>
+            <span class="hunt-time" id="hunt-time">90s</span>
+            <span class="hunt-score" id="hunt-score">0 pt</span>
+            <button id="hunt-quit" class="hunt-quit" aria-label="Quitter">✕</button>
+          </div>
+          <div class="hunt-target">Trouvez <strong id="hunt-name">le foie</strong></div>
+          <div class="hunt-sub" id="hunt-sub">Cliquez sur l'organe dans le corps 3D</div>
+          <div class="hunt-bar"><i id="hunt-bar"></i></div>
+        </div>
+
+        <div id="toast" class="toast"></div>
+        <div id="tooltip" class="tooltip" hidden></div>
+      </main>
+
+      <aside id="right-panel" class="panel">
+        <div id="right-content"></div>
+      </aside>
+    </div>
+    <div id="grain" aria-hidden="true"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
