@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#050a12" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CORPS" />
     <title>CORPS — Atlas vivant du corps humain</title>
     <meta name="description" content="Explorez le corps humain en 3D, découvrez les organes, les os, les muscles et visualisez l'effet des maladies. Apprenez en jouant." />
     <meta property="og:title" content="CORPS — Atlas vivant du corps humain" />
@@ -55,6 +61,10 @@
         </nav>
 
         <div class="top-actions">
+          <button class="btn btn-ghost" id="btn-install" data-install data-install-top hidden title="Installer CORPS sur cet appareil" aria-label="Installer l'application">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17v2.5h14V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>Installer</span>
+          </button>
           <button class="btn btn-ghost" id="btn-hunt">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             Chasse aux organes
@@ -149,6 +159,22 @@
         <div id="toast" class="toast"></div>
         <div id="tooltip" class="tooltip" hidden></div>
       </main>
+
+      <dialog id="install-help" class="install-help" aria-labelledby="install-help-title">
+        <div class="install-help-card">
+          <button class="install-help-close" data-install-close aria-label="Fermer">✕</button>
+          <div class="eyebrow"><span class="eyebrow-line"></span>APPLICATION</div>
+          <h3 id="install-help-title">Installer CORPS</h3>
+          <p id="install-help-lead" class="muted small">
+            Ajoutez l'atlas à votre écran d'accueil pour l'ouvrir en plein écran.
+          </p>
+          <ol id="install-help-steps" class="install-help-steps"></ol>
+          <p class="muted small">
+            Une fois installée, l'application s'ouvre comme une app native et reste
+            disponible hors ligne après la première visite.
+          </p>
+        </div>
+      </dialog>
 
       <aside id="right-panel" class="panel">
         <div id="right-content"></div>

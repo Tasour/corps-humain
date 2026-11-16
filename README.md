@@ -21,6 +21,7 @@ les os et les muscles sont générés procéduralement.
   (FC, SpO₂, FR, TA, température) et ECG.
 - Recherche, filtres par système, fiches détaillées (fonction, causes, symptômes, prévention).
 - Deux jeux pédagogiques : **mode diagnostic** et **chasse aux organes**.
+- **Installable sur mobile (PWA)** : icône dédiée, plein écran et accès hors ligne.
 - Interface responsive desktop / mobile, sans dépendance à un backend.
 
 ## Lancer le projet
@@ -34,6 +35,26 @@ npm run preview  # prévisualise le build
 
 Le build utilise `base: "./"`, il fonctionne donc à la racine comme dans un sous-dossier
 (GitHub Pages, serveur statique, etc.).
+
+## Installer sur téléphone (PWA)
+
+L'application est une **Progressive Web App** : elle peut être installée depuis le navigateur,
+sans passer par l'App Store ni le Play Store.
+
+### Android / Chrome
+
+1. Ouvrir https://tasour.github.io/corps-humain/
+2. Appuyer sur le bouton **Installer** ou sur le menu **⋮** de Chrome.
+3. Choisir **Installer l'application** (ou **Ajouter à l'écran d'accueil**).
+
+### iOS / Safari
+
+1. Ouvrir https://tasour.github.io/corps-humain/ dans **Safari**.
+2. Appuyer sur le bouton **Partager**.
+3. Choisir **Sur l'écran d'accueil**, puis **Ajouter**.
+
+L'application s'ouvre ensuite en plein écran, avec son icône, et reste disponible
+hors ligne après la première visite.
 
 ## Raccourci Omarchy
 

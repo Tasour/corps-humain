@@ -234,6 +234,18 @@ export function renderHome({ stats, featured, bestDiag, bestHunt }) {
       </div>
     </section>
 
+    <section class="panel-block install-block" data-install-block>
+      <div class="block-head"><h3>Sur votre téléphone</h3><span class="muted">PWA</span></div>
+      <p class="muted small">
+        Installez CORPS sur l'écran d'accueil : ouverture plein écran, icône dédiée
+        et accès hors ligne après la première visite.
+      </p>
+      <button class="btn btn-ghost small" data-install>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17v2.5h14V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Installer l'application
+      </button>
+    </section>
+
     <section class="panel-block credits-block">
       <div class="block-head"><h3>Sources &amp; crédits</h3></div>
       <p class="muted small">

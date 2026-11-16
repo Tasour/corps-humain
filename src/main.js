@@ -4,6 +4,7 @@ import { VitalsMonitor } from "./monitor.js";
 import { DISEASES, DISEASE_MAP, NORMAL_VITALS } from "./data/diseases.js";
 import { SYSTEMS } from "./data/systems.js";
 import { DiagnosticGame, OrganHunt } from "./games.js";
+import { setupPWA } from "./pwa.js";
 import {
   renderSystemChips,
   renderEntityList,
@@ -742,6 +743,7 @@ syncSceneLayers();
 renderLeft();
 renderRight();
 updateActivePath();
+setupPWA({ toast });
 
 window.__app = { scene, state, quiz, hunt, monitor };
 
