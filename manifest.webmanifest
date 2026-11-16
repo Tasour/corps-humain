@@ -1,0 +1,52 @@
+{
+  "id": "./",
+  "name": "CORPS — Atlas vivant du corps humain",
+  "short_name": "CORPS",
+  "description": "Atlas 3D interactif du corps humain : organes, squelette, muscles, pathologies simulées et jeux pédagogiques.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#04080f",
+  "theme_color": "#050a12",
+  "categories": ["education", "medical", "health"],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./screenshots/desktop.jpg",
+      "sizes": "1280x760",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Vue éclatée du corps humain en 3D"
+    },
+    {
+      "src": "./screenshots/mobile.jpg",
+      "sizes": "720x1558",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Atlas CORPS sur mobile"
+    }
+  ]
+}
