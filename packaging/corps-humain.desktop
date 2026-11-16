@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=CORPS — Atlas du corps humain
+GenericName=Atlas d'anatomie 3D
+Comment=Explorez le corps humain en 3D, les organes, les os, les muscles et les pathologies
+Exec=/usr/share/omarchy/bin/omarchy-launch-webapp https://tasour.github.io/corps-humain/
+Icon=corps-humain
+Terminal=false
+Categories=Education;
+Keywords=anatomie;corps;humain;médecine;organes;biologie;3D;
+StartupNotify=true
+StartupWMClass=brave-tasour.github.io__corps-humain_-Default

@@ -35,6 +35,16 @@ npm run preview  # prévisualise le build
 Le build utilise `base: "./"`, il fonctionne donc à la racine comme dans un sous-dossier
 (GitHub Pages, serveur statique, etc.).
 
+## Raccourci Omarchy
+
+Pour ajouter l'application au lanceur Omarchy (Hyprland) :
+
+```bash
+bash packaging/install-launcher.sh
+```
+
+Le raccourci ouvre l'application hébergée en mode web-app, avec son icône et son nom dédiés.
+
 ## Structure
 
 ```
