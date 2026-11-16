@@ -52,6 +52,8 @@ const state = {
   labels: !window.matchMedia("(max-width: 920px)").matches,
   autoRotate: false,
   explode: false,
+  explodeAmount: 0,
+  crossSection: false,
   isolatedId: null,
   compareOn: false,
   severityBefore: 0.65,
@@ -188,6 +190,15 @@ function syncLayerUI() {
     explodeBtn.classList.toggle("active", state.explode);
     explodeBtn.setAttribute("aria-pressed", state.explode ? "true" : "false");
   }
+  const range = $("#explode-range");
+  if (range) range.value = String(Math.round(state.explodeAmount * 100));
+  const value = $("#explode-value");
+  if (value) value.textContent = `${Math.round(state.explodeAmount * 100)} %`;
+  const sectionBtn = $("#btn-section");
+  if (sectionBtn) {
+    sectionBtn.classList.toggle("active", state.crossSection);
+    sectionBtn.setAttribute("aria-pressed", state.crossSection ? "true" : "false");
+  }
 }
 
 function updateActivePath() {
@@ -293,30 +304,113 @@ function readBest(key) {
 /* ───────────────────────────── scene tools ───────────────────────────── */
 
 function setExplode(on, { announce = true } = {}) {
-  state.explode = on;
-  if (on) {
-    state.isolatedId = null;
-    scene.isolateEntry(null);
-  }
-  scene.setExplode(on);
-  syncLayerUI();
-  if (state.view !== "home") renderRight();
-  if (on) {
-    requestAnimationFrame(() => scene.frameAll(1.42));
-  } else {
-    scene.setView("full");
-  }
+  setExplodeAmount(on ? 1 : 0, { announce: false });
   if (announce) {
     toast(on ? "Vue éclatée : chaque organe se détache" : "Vue anatomique restaurée", "info");
   }
 }
 
+function setExplodeAmount(value, { announce = false } = {}) {
+  const amount = Math.max(0, Math.min(1, value));
+  const wasExploded = state.explodeAmount > 0.02;
+  const hadIsolate = !!state.isolatedId;
+  if (amount > 0.001 && state.crossSection) {
+    state.crossSection = false;
+    scene.setCrossSection(false);
+  }
+  state.explodeAmount = amount;
+  state.explode = amount > 0.02;
+  if (amount > 0) {
+    state.isolatedId = null;
+    scene.isolateEntry(null);
+  }
+  scene.setExplodeAmount(amount);
+  syncLayerUI();
+  if (hadIsolate) renderRight();
+  if (amount <= 0.001) {
+    scene.setView("full");
+  } else if (!wasExploded) {
+    requestAnimationFrame(() => scene.frameAll(1.32 + amount * 0.3));
+  }
+  if (announce) {
+    toast(`Vue éclatée : ${Math.round(amount * 100)} %`, "info");
+  }
+}
+
+function setCrossSection(on, { announce = true } = {}) {
+  state.crossSection = on;
+  if (on) {
+    if (state.explodeAmount > 0) setExplodeAmount(0, { announce: false });
+    clearIsolate();
+    state.layers.organs = true;
+    state.layers.bones = true;
+    syncSceneLayers();
+    syncLayerUI();
+    scene.setCrossSection(true);
+    scene.setView("full");
+  } else {
+    scene.setCrossSection(false);
+    syncLayerUI();
+  }
+  if (state.view !== "home") renderRight();
+  if (announce) {
+    toast(
+      on ? "Coupe anatomique : la partie avant est retirée" : "Coupe anatomique désactivée",
+      "info",
+    );
+  }
+}
+
+function resetScene() {
+  state.mode = "explore";
+  state.view = "home";
+  state.selectedId = null;
+  state.activeDisease = null;
+  state.severity = 0.65;
+  state.compareOn = false;
+  state.system = "all";
+  state.kind = "organ";
+  state.query = "";
+  state.layers = { skin: true, muscles: false, bones: false, organs: true };
+  state.labels = !window.matchMedia("(max-width: 920px)").matches;
+  state.autoRotate = false;
+  state.explode = false;
+  state.explodeAmount = 0;
+  state.crossSection = false;
+  state.isolatedId = null;
+  search.value = "";
+  quiz.active = false;
+  hunt.active = false;
+  huntHud.hidden = true;
+  appEl.classList.remove("playing");
+  monitorEl.hidden = false;
+  scene.clearDisease();
+  scene.isolateEntry(null);
+  scene.setExplodeAmount(0);
+  scene.setCrossSection(false);
+  scene.setSystemFilter("all");
+  scene.setSelected(null);
+  scene.setAutoRotate(false);
+  syncSceneLayers();
+  syncLayerUI();
+  renderLeft();
+  renderRight();
+  updateActivePath();
+  scene.setView("full");
+  toast("Scène réinitialisée", "info");
+}
+
 function resetTools() {
-  if (state.explode) setExplode(false, { announce: false });
+  if (state.explodeAmount > 0) setExplodeAmount(0, { announce: false });
+  if (state.crossSection) {
+    state.crossSection = false;
+    scene.setCrossSection(false);
+  }
   if (state.isolatedId) {
     state.isolatedId = null;
     scene.isolateEntry(null);
   }
+  syncLayerUI();
 }
 
 function clearIsolate() {
@@ -694,6 +788,22 @@ rightContent.addEventListener("change", (e) => {
 $("#btn-quiz").addEventListener("click", startQuiz);
 $("#btn-hunt").addEventListener("click", startHunt);
 $("#btn-explode").addEventListener("click", () => setExplode(!state.explode));
+
+const explodeRange = $("#explode-range");
+if (explodeRange) {
+  explodeRange.addEventListener("input", () => {
+    setExplodeAmount(Number(explodeRange.value) / 100);
+  });
+  explodeRange.addEventListener("change", () => {
+    const amount = Number(explodeRange.value) / 100;
+    if (amount > 0.001) {
+      requestAnimationFrame(() => scene.frameAll(1.32 + amount * 0.3));
+    }
+  });
+}
+
+$("#btn-section")?.addEventListener("click", () => setCrossSection(!state.crossSection));
+$("#btn-reset-scene")?.addEventListener("click", resetScene);
 $("#hunt-quit").addEventListener("click", () => exitHunt(true));
 $("#ap-clear").addEventListener("click", () => {
   clearActiveDisease();

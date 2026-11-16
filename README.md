@@ -14,7 +14,9 @@ les os et les muscles sont générés procéduralement.
 
 - **22 organes**, **13 os**, **11 muscles** et **30 pathologies** répartis en 9 systèmes.
 - Couches anatomiques : peau, muscles, squelette, organes, étiquettes.
-- **Vue éclatée** : chaque organe se détache pour être observé séparément.
+- **Vue éclatée** : chaque organe se détache pour être observé séparément (slider %).
+- **Coupe anatomique** : retire la partie avant du corps pour visualiser l'intérieur (squelette, organes).
+- **Réinitialisation de la scène** : retour complet à l'anatomie, aux couches et à l'état.
 - **Isolement** : un seul organe à l'écran, avec cadrage automatique.
 - **Comparaison sain / malade** : bascule instantanée entre l'état physiologique et la pathologie.
 - Simulation de gravité en temps réel : morphologie, couleurs, halos, secousses, monitorage
@@ -85,8 +87,8 @@ src/
 L'anatomie et les contenus sont originaux et générés pour ce projet. Les idées de
 visualisation s'inspirent de projets libres :
 
-- [ashemag/human-atlas](https://github.com/ashemag/human-atlas) — vue éclatée, isolement,
-  comparaison sain / malade.
+- [ashemag/human-atlas](https://github.com/ashemag/human-atlas) — vue éclatée (slider),
+  isolement, comparaison sain / malade.
 - [BodyParts3D · Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy) — référence
   de modélisation anatomique libre.
 - [anatomyatelier.org](https://anatomyatelier.org/) — inspiration pédagogique.

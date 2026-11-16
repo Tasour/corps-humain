@@ -128,6 +128,24 @@
           <div class="monitor-note" id="monitor-note">Sujet sain · valeurs de repos</div>
         </div>
 
+        <div id="scene-dock" class="scene-dock">
+          <div class="dock-head">
+            <span>Vue éclatée</span>
+            <output id="explode-value">0 %</output>
+          </div>
+          <input id="explode-range" class="dock-range" type="range" min="0" max="100" step="1" value="0" aria-label="Vue éclatée" />
+          <div class="dock-actions">
+            <button id="btn-section" class="dock-toggle" aria-pressed="false" title="Coupe anatomique">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".35"/><path d="M20 5a9 9 0 0 0-13 0l6.5 6.5L20 5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span>Coupe</span>
+            </button>
+            <button id="btn-reset-scene" class="dock-toggle" title="Réinitialiser la scène">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.34-5.66M4 4v5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Réinitialiser</span>
+            </button>
+          </div>
+        </div>
+
         <div id="view-presets" class="view-presets">
           <button data-view="full">Corps</button>
           <button data-view="thorax">Thorax</button>

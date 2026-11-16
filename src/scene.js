@@ -112,6 +112,8 @@ export class AnatomyScene {
     this.explodeTarget = 0;
     this.explodeData = [];
     this.isolatedId = null;
+    this.crossSection = false;
+    this.clipPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0.12);
     this.tremor = 0;
     this.tremorPhase = 0;
     this.clock = new THREE.Clock();
@@ -141,6 +143,7 @@ export class AnatomyScene {
       powerPreference: "high-performance",
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.localClippingEnabled = true;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.02;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -416,7 +419,7 @@ export class AnatomyScene {
   }
 
   _applyLayers() {
-    this.anatomy.skinGroup.visible = this.layers.skin && !this.isolatedId;
+    this.anatomy.skinGroup.visible = this.layers.skin && !this.isolatedId && !this.crossSection;
     this.anatomy.musclesGroup.visible = this.layers.muscles;
     this.anatomy.skeletonGroup.visible = this.layers.bones;
     this.anatomy.organsGroup.visible = this.layers.organs;
@@ -535,8 +538,54 @@ export class AnatomyScene {
   }
 
   setExplode(on) {
-    this.explodeTarget = on ? 1 : 0;
-    if (on) this.isolateEntry(null);
+    this.setExplodeAmount(on ? 1 : 0);
+  }
+
+  setExplodeAmount(value) {
+    const amount = clamp(value, 0, 1);
+    this.explodeTarget = amount;
+    if (amount > 0.001) this.isolateEntry(null);
+  }
+
+  setCrossSection(on) {
+    this.crossSection = !!on;
+    this._applyClipping(this.crossSection);
+    this._applyLayers();
+  }
+
+  _applyClipping(on) {
+    const materials = new Set();
+    const collect = (root) => {
+      root.traverse((object) => {
+        if (!object.isMesh || !object.material) return;
+        const list = Array.isArray(object.material) ? object.material : [object.material];
+        for (const material of list) {
+          if (!material || material.isShaderMaterial) continue;
+          materials.add(material);
+        }
+      });
+    };
+    for (const entry of Object.values(this.entries)) collect(entry.group);
+    for (const overlay of this.overlays) collect(overlay);
+
+    for (const material of materials) {
+      if (on) {
+        if (material.userData._clipSide === undefined) {
+          material.userData._clipSide = material.side;
+        }
+        material.clippingPlanes = [this.clipPlane];
+        material.clipShadows = true;
+        material.side = THREE.DoubleSide;
+      } else {
+        material.clippingPlanes = null;
+        material.clipShadows = false;
+        if (material.userData._clipSide !== undefined) {
+          material.side = material.userData._clipSide;
+          delete material.userData._clipSide;
+        }
+      }
+      material.needsUpdate = true;
+    }
   }
 
   isolateEntry(id) {
@@ -759,6 +808,7 @@ export class AnatomyScene {
     this._applyLayers();
     this._updateEmphasis();
     this._positionHalo();
+    if (this.crossSection) this._applyClipping(true);
   }
 
   _applyEffect(entry, effect, amount) {
