@@ -157,8 +157,16 @@ des deux interfaces et la qualité adaptative sont les étapes P2/P3.
   (1 500 triangles) ; sur desktop, `high` (12 000 triangles).
 - Un gouverneur ajuste le `devicePixelRatio` (1 à 1,5) et le biais LOD du
   culling selon le coût CPU moyen de `renderer.render()`.
-- Les textures KTX2 ne sont pas encore nécessaires : les sources libres
-  utilisées fournissent des géométries et des matériaux, pas de PBR textures.
+- Textures PBR : les sources libres ne fournissent pas d'albedo. Des albedos
+  tissu-spécifiques (os, muscle, viscère) sont générés procéduralement dans le
+  navigateur, puis les cartes normal et roughness sont dérivées par filtre de
+  Sobel. Aucun fichier externe, compatible hors ligne. La génération d'images IA
+  ayant échoué (crédit insuffisant), cette voie reste ouverte si des textures
+  CC ou générées deviennent disponibles.
+- LOD global automatique : après stabilisation, le moteur passe toutes les
+  structures en `medium` sur desktop rapide (CPU < 6 ms) et reste en `low` sur
+  mobile. À l'isolement, la structure (ou chaque membre du groupe) passe en
+  `high`, et la peau est masquée.
 
 ## Phases de migration
 

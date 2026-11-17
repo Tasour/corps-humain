@@ -172,6 +172,13 @@
       }
       selected = structure;
       detailStructure = null;
+      activeGroup = null;
+      groupAnim = null;
+      document.getElementById('group-actions').style.display = 'none';
+      engine.setSkinVisible(false);
+      const skinButton = document.querySelector('[data-cat="skin"]');
+      if (skinButton) skinButton.classList.remove('active');
+      engine.isolate(structure);
       engine.highlight(structure, '#7ef9ff');
       const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
       document.getElementById('sel-name').textContent = structure.fr || structure.en;
@@ -219,10 +226,12 @@
     for (const group of GROUPS) {
       const button = document.createElement('button');
       button.textContent = group.label;
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
         activeGroup = group;
         engine.resetGroupTransforms();
         const count = engine.showGroup(group);
+        const level = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
+        await engine.setGroupLod(group, level);
         document.getElementById('sel-name').textContent = group.label;
         document.getElementById('sel-meta').textContent = `${count} structures · ${group.movement || 'vue de groupe'}`;
         document.getElementById('group-actions').style.display = 'flex';
@@ -257,6 +266,9 @@
       groupAnim = null;
       engine.resetGroupTransforms();
       if (activeGroup) engine.showGroup(activeGroup);
+      engine.setSkinVisible(true);
+      const skinButton = document.querySelector('[data-cat="skin"]');
+      if (skinButton) skinButton.classList.add('active');
       forceCulling = true;
     });
 
@@ -275,7 +287,8 @@
     document.querySelectorAll('[data-cat]').forEach((button) => {
       button.addEventListener('click', () => {
         button.classList.toggle('active');
-        engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
+        if (button.dataset.cat === 'skin') engine.setSkinVisible(button.classList.contains('active'));
+        else engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
       });
     });
     document.getElementById('focus').addEventListener('click', () => {
@@ -300,6 +313,9 @@
     });
     document.getElementById('clear-iso').addEventListener('click', () => {
       engine.isolate(null);
+      engine.setSkinVisible(true);
+      const skinButton = document.querySelector('[data-cat="skin"]');
+      if (skinButton) skinButton.classList.add('active');
       engine.highlight(selected, '#7ef9ff');
       forceCulling = true;
     });
@@ -321,12 +337,14 @@
     let visibleCount = engine.updateVisibility(camera);
     let lastCamera = camera.position.clone();
     let frames = 0, last = performance.now(), frameSum = 0, frameCount = 0;
+    let autoLodDone = false;
+    const startedAt = performance.now();
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
     const labelEl = document.getElementById('label');
     const qualityEl = document.getElementById('quality');
     const maxRatio = Math.min(devicePixelRatio, 1.5);
-    function loop() {
+    async function loop() {
       requestAnimationFrame(loop);
       if (cameraTween) {
         cameraTween.t = Math.min(1, cameraTween.t + 0.045);
@@ -383,7 +401,13 @@
         }
         fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
         drawEl.textContent = `${renderer.info.render.calls} appels · ${Math.round(renderer.info.render.triangles / 1000)}k tris · ${visibleCount} visibles · ${avg.toFixed(1)} ms CPU`;
-        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)}`;
+        if (!autoLodDone && now - startedAt > 4000) {
+          autoLodDone = true;
+          const mobile = innerWidth < 700;
+          const target = !mobile && avg < 6 ? 'medium' : 'low';
+          if (target !== engine.globalLod) await engine.setGlobalLod(target);
+        }
+        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)} · global ${engine.globalLod}`;
         frames = 0; frameSum = 0; frameCount = 0; last = now;
       }
     }

@@ -28,29 +28,134 @@ function colorFor(structure) {
   return CATEGORY_COLORS.organ;
 }
 
-/* Micro-texture procedurale : donne un relief organique léger sans fichier
- * externe (les sources libres ne fournissent pas de textures PBR). */
-let tissueTexture = null;
-function getTissueTexture() {
-  if (tissueTexture) return tissueTexture;
+/* Textures PBR : albedos générés, puis cartes normal/roughness dérivées
+ * localement (aucun téléchargement supplémentaire, compatible hors ligne). */
+function derivePbrMaps(image) {
   const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = 64;
-  const ctx = canvas.getContext("2d");
-  const image = ctx.createImageData(64, 64);
-  let seed = 7;
-  for (let i = 0; i < 64 * 64; i++) {
-    seed = (seed * 1664525 + 1013904223) >>> 0;
-    const n = 110 + ((seed >>> 24) % 45);
-    image.data[i * 4] = n;
-    image.data[i * 4 + 1] = n;
-    image.data[i * 4 + 2] = n;
-    image.data[i * 4 + 3] = 255;
+  canvas.width = image.width;
+  canvas.height = image.height;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  ctx.drawImage(image, 0, 0);
+  const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const w = canvas.width, h = canvas.height;
+  const height = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) {
+    height[i] = (data[i * 4] * 0.299 + data[i * 4 + 1] * 0.587 + data[i * 4 + 2] * 0.114) / 255;
   }
-  ctx.putImageData(image, 0, 0);
-  tissueTexture = new THREE.CanvasTexture(canvas);
-  tissueTexture.wrapS = tissueTexture.wrapT = THREE.RepeatWrapping;
-  tissueTexture.repeat.set(6, 6);
-  return tissueTexture;
+  const normalCanvas = document.createElement("canvas");
+  normalCanvas.width = w; normalCanvas.height = h;
+  const nctx = normalCanvas.getContext("2d");
+  const normalData = nctx.createImageData(w, h);
+  const roughCanvas = document.createElement("canvas");
+  roughCanvas.width = w; roughCanvas.height = h;
+  const rctx = roughCanvas.getContext("2d");
+  const roughData = rctx.createImageData(w, h);
+  const at = (x, y) => height[((y + h) % h) * w + ((x + w) % w)];
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const dx = at(x + 1, y) - at(x - 1, y);
+      const dy = at(x, y + 1) - at(x, y - 1);
+      const nx = -dx * 3, ny = -dy * 3, nz = 1;
+      const len = Math.hypot(nx, ny, nz);
+      const i = (y * w + x) * 4;
+      normalData.data[i] = ((nx / len) * 0.5 + 0.5) * 255;
+      normalData.data[i + 1] = ((ny / len) * 0.5 + 0.5) * 255;
+      normalData.data[i + 2] = ((nz / len) * 0.5 + 0.5) * 255;
+      normalData.data[i + 3] = 255;
+      const rough = Math.round(255 - Math.min(1, Math.abs(dx) + Math.abs(dy) + 0.25) * 255);
+      roughData.data[i] = roughData.data[i + 1] = roughData.data[i + 2] = rough;
+      roughData.data[i + 3] = 255;
+    }
+  }
+  nctx.putImageData(normalData, 0, 0);
+  rctx.putImageData(roughData, 0, 0);
+  const make = (canvas) => {
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(6, 6);
+    return tex;
+  };
+  return { normal: make(normalCanvas), roughness: make(roughCanvas) };
+}
+
+/* Albedos procéduraux tissu-spécifiques (aucun fichier externe). */
+function generateAlbedo(kind) {
+  const size = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  let seed = kind.length * 7919;
+  const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+
+  if (kind === "bone") {
+    ctx.fillStyle = "#e6dccb";
+    ctx.fillRect(0, 0, size, size);
+    for (let i = 0; i < 900; i++) {
+      const x = rnd() * size, y = rnd() * size, r = 0.4 + rnd() * 1.6;
+      ctx.fillStyle = `rgba(120,105,85,${0.08 + rnd() * 0.18})`;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.strokeStyle = "rgba(255,250,240,.18)";
+    ctx.lineWidth = 1;
+    for (let y = 0; y < size; y += 9) {
+      ctx.beginPath();
+      for (let x = 0; x <= size; x += 8) {
+        const yy = y + Math.sin(x * 0.06 + y) * 1.5;
+        x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+      }
+      ctx.stroke();
+    }
+  } else if (kind === "muscle") {
+    ctx.fillStyle = "#9d3540";
+    ctx.fillRect(0, 0, size, size);
+    for (let i = 0; i < 240; i++) {
+      const x = rnd() * size;
+      const w = 1 + rnd() * 4;
+      const shade = 120 + Math.floor(rnd() * 90);
+      ctx.strokeStyle = `rgba(${shade + 40},${Math.floor(shade * 0.45)},${Math.floor(shade * 0.5)},.45)`;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.bezierCurveTo(x + (rnd() - 0.5) * 14, size * 0.33, x + (rnd() - 0.5) * 14, size * 0.66, x + (rnd() - 0.5) * 8, size);
+      ctx.stroke();
+    }
+  } else {
+    ctx.fillStyle = "#c07a70";
+    ctx.fillRect(0, 0, size, size);
+    for (let i = 0; i < 90; i++) {
+      const x = rnd() * size, y = rnd() * size, r = 6 + rnd() * 20;
+      const grad = ctx.createRadialGradient(x, y, 1, x, y, r);
+      grad.addColorStop(0, `rgba(220,150,135,${0.1 + rnd() * 0.18})`);
+      grad.addColorStop(1, "rgba(150,80,75,0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.strokeStyle = "rgba(110,45,55,.35)";
+    for (let i = 0; i < 45; i++) {
+      ctx.lineWidth = 0.4 + rnd();
+      ctx.beginPath();
+      let x = rnd() * size, y = rnd() * size;
+      ctx.moveTo(x, y);
+      for (let k = 0; k < 6; k++) {
+        x += (rnd() - 0.5) * 26; y += (rnd() - 0.5) * 26;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+  }
+  return canvas;
+}
+
+async function loadTissueTextures() {
+  const out = {};
+  for (const key of ["bone", "muscle", "organ"]) {
+    const canvas = generateAlbedo(key);
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(5, 5);
+    out[key] = { map: tex, ...derivePbrMaps(canvas) };
+  }
+  return out;
 }
 
 async function loadBinary(url) {
@@ -98,8 +203,11 @@ export class AnatomyV2Engine {
     this.visibleBuffer = null;
     this.lodBuffers = new Map();
     this.geometryIds = new Map();
+    this.sourceGeometries = new Map();
+    this.globalLod = "low";
     this.currentVisible = new Set();
     this.isolated = null;
+    this.skinDesired = true;
     this.frustum = new THREE.Frustum();
     this.projScreen = new THREE.Matrix4();
     this.ready = false;
@@ -108,6 +216,7 @@ export class AnatomyV2Engine {
 
   async load(onProgress = () => {}) {
     await initWasm();
+    this.textures = await loadTissueTextures();
     const response = await fetch(`${this.base}manifest.json`);
     if (!response.ok) throw new Error(`manifest -> ${response.status}`);
     this.manifest = await response.json();
@@ -180,14 +289,17 @@ export class AnatomyV2Engine {
         vertexCount += Math.max(...levels.map((r) => r.vertexCount || 0));
         indexCount += Math.max(...levels.map((r) => r.indexCount || 0));
       }
+      const maps = this.textures[category] || this.textures.organ;
       const material = new THREE.MeshPhysicalMaterial({
-        color: CATEGORY_COLORS[category] || "#ffffff",
-        roughness: category === "bone" ? 0.82 : 0.55,
+        color: 0xffffff,
+        map: maps?.map || null,
+        normalMap: maps?.normal || null,
+        normalScale: new THREE.Vector2(0.5, 0.5),
+        roughnessMap: maps?.roughness || null,
+        roughness: category === "bone" ? 0.9 : 0.7,
         metalness: 0,
         clearcoat: category === "organ" ? 0.35 : 0.12,
         clearcoatRoughness: 0.45,
-        bumpMap: getTissueTexture(),
-        bumpScale: category === "bone" ? 0.0015 : 0.003,
         side: THREE.DoubleSide,
       });
       const batch = new THREE.BatchedMesh(list.length, vertexCount, indexCount, material);
@@ -203,6 +315,7 @@ export class AnatomyV2Engine {
         batch.setMatrixAt(instanceId, matrix);
         batch.setColorAt(instanceId, new THREE.Color(colorFor(structure)));
         this.geometryIds.set(structure.id, { category, geometryId });
+        this.sourceGeometries.set(structure.id, structure._geometry);
         structure._geometryId = geometryId;
         structure._activeLod = this.lod;
         this.instanceToStructure.set(`${category}:${instanceId}`, structure);
@@ -216,8 +329,12 @@ export class AnatomyV2Engine {
     if (this.manifest.skin?.lod?.high) {
       const skinRecord = this.manifest.skin.lod.high;
       const skinGeometry = geometryFromRecord(buffers.skin, skinRecord);
-      const material = new THREE.MeshStandardMaterial({
+      const skinMaps = this.textures.organ;
+      const material = new THREE.MeshPhysicalMaterial({
         color: CATEGORY_COLORS.skin,
+        map: skinMaps?.map || null,
+        normalMap: skinMaps?.normal || null,
+        roughnessMap: skinMaps?.roughness || null,
         transparent: true,
         opacity: 0.22,
         depthWrite: false,
@@ -322,8 +439,11 @@ export class AnatomyV2Engine {
     this.isolated = structure || null;
     if (!structure) {
       this.currentVisible = new Set();
+      if (this.skinBatch) this.skinBatch.visible = this.skinDesired;
       return 0;
     }
+    /* Un item isolé ne doit pas rester derrière l'enveloppe de peau. */
+    if (this.skinBatch) this.skinBatch.visible = false;
     for (const [structureIndex, ref] of this.structureToInstance) {
       const batch = this.batches.get(ref.category);
       if (batch) batch.setVisibleAt(ref.instanceId, structureIndex === structure._index);
@@ -346,6 +466,7 @@ export class AnatomyV2Engine {
     }
     this.isolated = group;
     this.currentVisible = memberIndices;
+    if (this.skinBatch) this.skinBatch.visible = false;
     return members.length;
   }
 
@@ -416,6 +537,47 @@ export class AnatomyV2Engine {
         0.02,
       ),
     };
+  }
+
+  /* Passe TOUTES les structures à un niveau de détail (vue globale). */
+  async setGlobalLod(lod) {
+    if (!["low", "medium", "high"].includes(lod) || this.globalLod === lod) return false;
+    for (const category of this.batches.keys()) {
+      if (lod !== "low") await this.ensureLod(category, lod);
+      const batch = this.batches.get(category);
+      for (const structure of this.structures) {
+        if (structure.category !== category || !structure._geometryId) continue;
+        const geometry = lod === "low"
+          ? this.sourceGeometries.get(structure.id)
+          : geometryFromRecord(this.lodBuffers.get(`${category}:${lod}`), structure.lod[lod]);
+        if (geometry) {
+          batch.setGeometryAt(structure._geometryId, geometry);
+          structure._activeLod = lod;
+        }
+      }
+    }
+    this.globalLod = lod;
+    for (const batch of this.batches.values()) {
+      batch.computeBoundingBox();
+      batch.computeBoundingSphere();
+    }
+    return true;
+  }
+
+  /* Détail maximal pour un groupe entier (à l'isolement). */
+  async setGroupLod(group, lod) {
+    if (!group) return 0;
+    let count = 0;
+    for (const id of group.members) {
+      const structure = this.byId.get(id);
+      if (structure && await this.setStructureLod(structure, lod)) count++;
+    }
+    return count;
+  }
+
+  setSkinVisible(visible) {
+    this.skinDesired = !!visible;
+    if (this.skinBatch) this.skinBatch.visible = this.skinDesired && !this.isolated;
   }
 
   setCategoryVisible(category, visible) {
