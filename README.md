@@ -5,6 +5,9 @@ Construit avec **Three.js** et **Vite**, il s'appuie sur les maillages libres **
 et **Z-Anatomy** pour la peau, les organes, les os et les muscles, avec une anatomie procédurale
 de secours.
 
+La feuille de route des **10 chantiers prioritaires** est dans
+[`docs/chantiers-prioritaires.md`](docs/chantiers-prioritaires.md).
+
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
 ![Aperçu de l'atlas 3D](docs/apercu.jpg)

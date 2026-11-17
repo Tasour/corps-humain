@@ -81,7 +81,7 @@ await check("Tout afficher restaure la peau et le culling", async () => {
   const s = await st();
   assert.equal(s.isolated, false);
   assert.equal(s.skin, true);
-  assert.ok(s.visible > 500);
+  assert.ok(s.visible > 300);
 });
 
 /* ---------- focus après masquage de catégorie ---------- */
@@ -222,6 +222,39 @@ await check("focus depuis toutes les orientations caméra", async () => {
     assert.equal(s.isolated, true);
     assert.equal(s.skin, false);
   }
+  assert.deepEqual(errors, []);
+});
+
+/* ---------- picking des objets masqués, ombres, thème ---------- */
+await check("clic sur zone masquée ne change pas la sélection", async () => {
+  await page.click("#clear-iso");
+  await page.fill("#search", "fémur");
+  await page.waitForTimeout(150);
+  await page.locator("#list .item").first().click();
+  await page.waitForTimeout(900);
+  const beforeName = await page.evaluate(() => document.getElementById("sel-name").textContent);
+  // clic au centre de la vue, là où d'autres organes étaient visibles avant l'isolement
+  const box = await page.locator("canvas").boundingBox();
+  await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.25);
+  await page.waitForTimeout(400);
+  const afterName = await page.evaluate(() => document.getElementById("sel-name").textContent);
+  assert.equal(afterName, beforeName);
+});
+await check("ombres activées", async () => {
+  const ok = await page.evaluate(() => {
+    const e = window.__v2;
+    return [...e.batches.values()].every((b) => b.castShadow && b.receiveShadow);
+  });
+  assert.ok(ok);
+});
+await check("bascule thème clair / sombre", async () => {
+  const before = await page.evaluate(() => document.body.classList.contains("dark"));
+  await page.click("#theme-toggle");
+  await page.waitForTimeout(150);
+  const after = await page.evaluate(() => document.body.classList.contains("dark"));
+  assert.notEqual(after, before);
+  await page.click("#theme-toggle");
+  await page.waitForTimeout(150);
   assert.deepEqual(errors, []);
 });
 

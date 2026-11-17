@@ -319,6 +319,8 @@ export class AnatomyV2Engine {
       const batch = new THREE.BatchedMesh(list.length, vertexCount, indexCount, material);
       batch.name = `v2-${category}`;
       batch.perObjectFrustumCulled = true;
+      batch.castShadow = true;
+      batch.receiveShadow = true;
       const matrix = new THREE.Matrix4();
       for (const structure of list) {
         const levels = Object.values(structure.lod || {});
@@ -425,6 +427,7 @@ export class AnatomyV2Engine {
     if (hit < 0) return null;
     const structure = this.structures[hit] || null;
     if (!structure) return null;
+    if (this.isolated && !this.currentVisible.has(structure._index)) return null;
     const batch = this.batches.get(structure.category);
     if (batch && !batch.visible) return null;
     return structure;
@@ -441,7 +444,11 @@ export class AnatomyV2Engine {
       const category = [...this.batches.entries()].find(([, b]) => b === batch)?.[0];
       if (!category) continue;
       const structure = this.instanceToStructure.get(`${category}:${hit.instanceId}`);
-      if (structure) return structure;
+      if (!structure) continue;
+      /* BatchedMesh masque les instances via une texture : le raycast les
+       * traverse quand même. On filtre donc avec notre propre état de visibilité. */
+      if (this.isolated && !this.currentVisible.has(structure._index)) continue;
+      return structure;
     }
     return null;
   }
