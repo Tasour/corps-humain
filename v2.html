@@ -33,6 +33,9 @@
     #perf b { color: #7ee7c7; font-size: 18px; }
     #label { position: fixed; z-index: 7; pointer-events: none; display: none; transform: translate(-50%, -150%); background: rgba(8,20,32,.9); border: 1px solid #4fd1e0; border-radius: 6px; padding: 3px 8px; font-size: 12px; color: #eafcff; white-space: nowrap; }
     #info .chips { margin-top: 8px; }
+    #animations { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px; }
+    #animations button { font-size: 11px; padding: 4px 8px; }
+    #waypoint-info { position: fixed; z-index: 7; left: 50%; bottom: 18px; transform: translateX(-50%); max-width: 520px; display: none; }
     #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
     #loading.hidden { opacity: 0; pointer-events: none; }
     #mobile-toggle { display: none; }
@@ -67,9 +70,14 @@
     <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
     <div class="panel" id="shortcuts"></div>
     <div class="panel" id="groups"></div>
+    <div class="panel" id="animations"></div>
     <div class="panel" id="list"></div>
   </div>
   <div id="label"></div>
+  <div class="panel" id="waypoint-info">
+    <div class="title" id="wp-title">—</div>
+    <div class="sub" id="wp-text">—</div>
+  </div>
   <div class="panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
     <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
@@ -82,6 +90,7 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
+    import { getWaypoints } from './src/data/waypoints.js';
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -108,6 +117,7 @@
       document.getElementById('load-text').textContent = `${label} — ${Math.round(p * 100)} %`;
     });
     engine.addTo(scene);
+    engine.camera = camera;
     for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, cat === 'organ');
     engine.setCategoryVisible('skin', true);
     document.getElementById('count').textContent =
@@ -180,6 +190,9 @@
       if (skinButton) skinButton.classList.remove('active');
       engine.isolate(structure);
       engine.highlight(structure, '#7ef9ff');
+      engine.showWaypoints(getWaypoints(structure));
+      document.getElementById('waypoint-info').style.display = 'none';
+      waypointTour = null;
       const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
       document.getElementById('sel-name').textContent = structure.fr || structure.en;
       const sideLabel = structure.side === 'left' ? ' · G' : structure.side === 'right' ? ' · D' : '';
@@ -223,6 +236,9 @@
     const groupsEl = document.getElementById('groups');
     let activeGroup = null;
     let groupAnim = null;
+    let waypointTour = null;
+    let tourActive = false;
+    let tourAngle = 0;
     for (const group of GROUPS) {
       const button = document.createElement('button');
       button.textContent = group.label;
@@ -256,10 +272,43 @@
       });
       groupsEl.appendChild(button);
     }
+    const animationsEl = document.getElementById('animations');
+    const animationDefs = [
+      { label: "Tour du monde", action: () => {
+        tourActive = !tourActive;
+        if (tourActive) {
+          cameraTween = null;
+          tourAngle = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
+        }
+      } },
+      { label: "Waypoints", action: () => {
+        if (!selected) return;
+        const wps = getWaypoints(selected);
+        waypointTour = { waypoints: wps, index: 0, timer: 0 };
+      } },
+      { label: "Battement cardiaque", action: () => startSceneAnim('heartbeat', QUICK_ACCESS[4].ids) },
+      { label: "Respiration", action: () => startSceneAnim('breathing', QUICK_ACCESS[2].ids) },
+      { label: "Clignement", action: () => startSceneAnim('blink', ["organ:bp-fibrous-layer-of-eyeball-l", "organ:bp-fibrous-layer-of-eyeball-r"]) },
+      { label: "Flux sanguin", action: () => startSceneAnim('bloodflow', engine.structures.filter((s) => /arter|vein|vascul|artère|veine/i.test(s.en || "")).slice(0, 160).map((s) => s.id)) },
+    ];
+    function startSceneAnim(type, ids) {
+      groupAnim = null;
+      engine.resetGroupTransforms();
+      engine.setSceneAnimation(type, ids);
+    }
+    for (const def of animationDefs) {
+      const button = document.createElement('button');
+      button.textContent = def.label;
+      button.addEventListener('click', def.action);
+      animationsEl.appendChild(button);
+    }
+
     document.getElementById('explode').addEventListener('click', () => {
+      engine.clearAnimation();
       if (activeGroup) groupAnim = { group: activeGroup, mode: 'explode', t: 0, dir: 1 };
     });
     document.getElementById('move').addEventListener('click', () => {
+      engine.clearAnimation();
       if (activeGroup) groupAnim = { group: activeGroup, mode: 'movement', t: 0, dir: 1 };
     });
     document.getElementById('group-reset').addEventListener('click', () => {
@@ -281,6 +330,22 @@
       pointer.x = (event.clientX / innerWidth) * 2 - 1;
       pointer.y = -(event.clientY / innerHeight) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
+      const wp = engine.pickWaypoint(raycaster);
+      if (wp) {
+        document.getElementById('wp-title').textContent = wp.title;
+        document.getElementById('wp-text').textContent = wp.text;
+        document.getElementById('waypoint-info').style.display = 'block';
+        const target = new THREE.Vector3(...wp.position);
+        const dir = camera.position.clone().sub(controls.target).normalize();
+        cameraTween = {
+          fromPos: camera.position.clone(),
+          toPos: target.clone().addScaledVector(dir, 0.42),
+          fromTarget: controls.target.clone(),
+          toTarget: target,
+          t: 0,
+        };
+        return;
+      }
       await selectStructure(engine.pick(raycaster), false);
     });
 
@@ -339,6 +404,7 @@
     let frames = 0, last = performance.now(), frameSum = 0, frameCount = 0;
     let autoLodDone = false;
     const startedAt = performance.now();
+    let previousTime = performance.now();
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
     const labelEl = document.getElementById('label');
@@ -346,6 +412,39 @@
     const maxRatio = Math.min(devicePixelRatio, 1.5);
     async function loop() {
       requestAnimationFrame(loop);
+      const nowFrame = performance.now();
+      const dt = Math.min(0.05, (nowFrame - previousTime) / 1000);
+      previousTime = nowFrame;
+      if (tourActive) {
+        cameraTween = null;
+        tourAngle += dt * 0.28;
+        const radius = Math.hypot(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
+        camera.position.x = controls.target.x + Math.sin(tourAngle) * radius;
+        camera.position.z = controls.target.z + Math.cos(tourAngle) * radius;
+        camera.position.y = controls.target.y + 0.15 + Math.sin(tourAngle * 2) * 0.08;
+        camera.lookAt(controls.target);
+      }
+      if (waypointTour) {
+        waypointTour.timer += dt;
+        if (waypointTour.timer > 2.2) {
+          waypointTour.timer = 0;
+          waypointTour.index = (waypointTour.index + 1) % waypointTour.waypoints.length;
+          const wp = waypointTour.waypoints[waypointTour.index];
+          document.getElementById('wp-title').textContent = wp.title;
+          document.getElementById('wp-text').textContent = wp.text;
+          document.getElementById('waypoint-info').style.display = 'block';
+          const target = new THREE.Vector3(...wp.position);
+          const dir = camera.position.clone().sub(controls.target).normalize();
+          cameraTween = {
+            fromPos: camera.position.clone(),
+            toPos: target.clone().addScaledVector(dir, 0.45),
+            fromTarget: controls.target.clone(),
+            toTarget: target,
+            t: 0,
+          };
+        }
+      }
+      engine.updateAnimation(dt, nowFrame / 1000);
       if (cameraTween) {
         cameraTween.t = Math.min(1, cameraTween.t + 0.045);
         const e = 1 - Math.pow(1 - cameraTween.t, 3);

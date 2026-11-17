@@ -1,0 +1,250 @@
+import assert from "node:assert/strict";
+import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+
+const BASE = process.env.TEST_BASE || "http://localhost:5199";
+const results = [];
+const errors = [];
+
+function check(name, fn) {
+  return Promise.resolve()
+    .then(fn)
+    .then(() => results.push({ name, ok: true }))
+    .catch((e) => {
+      results.push({ name, ok: false, error: e.message });
+    });
+}
+
+const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const context = await browser.newContext({ viewport: { width: 1360, height: 880 } });
+const page = await context.newPage();
+page.on("pageerror", (e) => errors.push(String(e)));
+page.on("console", (m) => {
+  if (m.type() !== "error") return;
+  if (m.text().includes("Failed to load resource")) return; // favicon
+  errors.push(m.text());
+});
+
+await page.goto(`${BASE}/v2.html`);
+await page.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 120000 });
+await page.waitForTimeout(1000);
+
+const st = () => page.evaluate(() => {
+  const e = window.__v2;
+  return {
+    global: e.globalLod,
+    isolated: !!e.isolated,
+    visible: e.currentVisible.size,
+    skin: e.skinBatch?.visible,
+    skinDesired: e.skinDesired,
+    bones: e.batches.get("bone")?.visible,
+    muscles: e.batches.get("muscle")?.visible,
+    organs: e.batches.get("organ")?.visible,
+    camera: [e.camera?.position?.x, e.camera?.position?.y, e.camera?.position?.z],
+    selected: document.getElementById("sel-name").textContent,
+    meta: document.getElementById("sel-meta").textContent,
+    count: e.structures.length,
+    drawCalls: e.stats.drawCalls,
+  };
+});
+
+/* ---------- chargement ---------- */
+await check("chargement : 2107 structures et 3 lots", async () => {
+  const s = await st();
+  assert.equal(s.count, 2107);
+  assert.equal(s.drawCalls, 3);
+});
+await check("aucune erreur console au chargement", () => assert.deepEqual(errors, []));
+
+/* ---------- recherche et sélection ---------- */
+await check("recherche fémur renvoie 2结果", async () => {
+  await page.fill("#search", "fémur");
+  await page.waitForTimeout(200);
+  const n = await page.locator("#list .item").count();
+  assert.equal(n, 2);
+});
+await check("sélection depuis la liste isole et masque la peau", async () => {
+  await page.locator("#list .item").first().click();
+  await page.waitForTimeout(800);
+  const s = await st();
+  assert.equal(s.isolated, true);
+  assert.equal(s.skin, false);
+  assert.equal(s.visible, 1);
+});
+await check("le détail high se charge à l'isolement", async () => {
+  await page.waitForTimeout(4000);
+  const high = await page.evaluate(() => window.__v2.structures.filter((s) => s._activeLod === "high").length);
+  assert.ok(high >= 1, `high=${high}`);
+});
+await check("Tout afficher restaure la peau et le culling", async () => {
+  await page.click("#clear-iso");
+  await page.waitForTimeout(500);
+  const s = await st();
+  assert.equal(s.isolated, false);
+  assert.equal(s.skin, true);
+  assert.ok(s.visible > 500);
+});
+
+/* ---------- focus après masquage de catégorie ---------- */
+await check("focus réactive la catégorie masquée", async () => {
+  await page.evaluate(() => window.__v2.setCategoryVisible("bone", false));
+  await page.fill("#search", "fémur");
+  await page.waitForTimeout(200);
+  await page.locator("#list .item").first().click();
+  await page.waitForTimeout(300);
+  await page.evaluate(() => window.__v2.setCategoryVisible("bone", false));
+  await page.click("#focus");
+  await page.waitForTimeout(400);
+  const s = await st();
+  assert.equal(s.bones, true);
+  assert.equal(s.isolated, true);
+  assert.equal(s.visible, 1);
+});
+await check("focus peau reste masquée", async () => {
+  const s = await st();
+  assert.equal(s.skin, false);
+});
+
+/* ---------- groupes ---------- */
+await check("groupe bras gauche : 7 membres, catégories réactivées", async () => {
+  await page.locator("#groups button", { hasText: "Membre supérieur gauche" }).click();
+  await page.waitForTimeout(600);
+  const s = await st();
+  assert.equal(s.visible, 7);
+  assert.equal(s.bones, true);
+  assert.equal(s.muscles, true);
+  assert.equal(s.skin, false);
+});
+await check("animation éclat modifie les matrices", async () => {
+  await page.click("#explode");
+  await page.waitForTimeout(900);
+  const moved = await page.evaluate(() => {
+    const e = window.__v2;
+    const s = e.byId.get("bone:humerus-l");
+    const ref = e.structureToInstance.get(s._index);
+    const m = new Float32Array(16);
+    e.batches.get(ref.category).getMatrixAt(ref.instanceId, { fromArray: (arr, off) => { for (let i = 0; i < 16; i++) m[i] = arr[off + i]; } });
+    return Math.abs(m[12]) + Math.abs(m[13]) + Math.abs(m[14]);
+  });
+  assert.ok(moved > 0.001, `déplacement=${moved}`);
+});
+await check("reset groupe restaure les matrices", async () => {
+  await page.click("#group-reset");
+  await page.waitForTimeout(300);
+  const s = await st();
+  assert.equal(s.visible, 7);
+});
+await check("mouvement articulaire fonctionne", async () => {
+  await page.locator("#groups button", { hasText: "Avant-bras gauche" }).click();
+  await page.waitForTimeout(400);
+  await page.click("#move");
+  await page.waitForTimeout(700);
+  assert.deepEqual(errors, []);
+});
+await check("changement rapide de groupes ne casse pas l'état", async () => {
+  for (const label of ["Cœur et cavités", "Poumons et lobes", "Œil droit et muscles", "Membre inférieur gauche"]) {
+    await page.locator("#groups button", { hasText: label }).click();
+    await page.waitForTimeout(120);
+  }
+  await page.waitForTimeout(600);
+  assert.deepEqual(errors, []);
+});
+
+/* ---------- LOD ---------- */
+await check("LOD global medium sur desktop rapide", async () => {
+  await page.waitForTimeout(3000);
+  const s = await st();
+  assert.ok(["low", "medium"].includes(s.global));
+});
+await check("sélection multiple consécutive reste stable", async () => {
+  await page.click("#clear-iso");
+  for (const q of ["radius", "triceps", "foie", "œil", "cerveau"]) {
+    await page.fill("#search", q);
+    await page.waitForTimeout(120);
+    const item = page.locator("#list .item").first();
+    if (await item.count()) await item.click();
+    await page.waitForTimeout(150);
+  }
+  assert.deepEqual(errors, []);
+});
+
+/* ---------- waypoints et animations ---------- */
+await check("waypoints créés à la sélection", async () => {
+  await page.click("#clear-iso");
+  await page.fill("#search", "coeur");
+  await page.waitForTimeout(200);
+  await page.locator("#list .item").first().click();
+  await page.waitForTimeout(500);
+  const n = await page.evaluate(() => window.__v2.waypointGroup.children.length);
+  assert.ok(n >= 3, `waypoints=${n}`);
+});
+await check("visite guidée des waypoints affiche une anecdote", async () => {
+  await page.locator("#animations button", { hasText: "Waypoints" }).click();
+  await page.waitForTimeout(2600);
+  const info = await page.evaluate(() => ({
+    display: document.getElementById("waypoint-info").style.display,
+    title: document.getElementById("wp-title").textContent,
+    text: document.getElementById("wp-text").textContent,
+  }));
+  assert.equal(info.display, "block");
+  assert.ok(info.title.length > 2);
+  assert.ok(info.text.length > 20);
+});
+await check("tour du monde fait orbitner la caméra", async () => {
+  const before = await page.evaluate(() => window.__v2.camera.position.x);
+  await page.locator("#animations button", { hasText: "Tour du monde" }).click();
+  await page.waitForTimeout(1400);
+  const after = await page.evaluate(() => window.__v2.camera.position.x);
+  await page.locator("#animations button", { hasText: "Tour du monde" }).click();
+  assert.ok(Math.abs(after - before) > 0.02, `avant=${before} après=${after}`);
+});
+await check("battement cardiaque modifie les matrices", async () => {
+  await page.locator("#animations button", { hasText: "Battement cardiaque" }).click();
+  await page.waitForTimeout(600);
+  const active = await page.evaluate(() => window.__v2.animation?.type);
+  assert.equal(active, "heartbeat");
+});
+await check("respiration / clignement / flux sanguin sans erreur", async () => {
+  for (const label of ["Respiration", "Clignement", "Flux sanguin"]) {
+    await page.locator("#animations button", { hasText: label }).click();
+    await page.waitForTimeout(400);
+  }
+  assert.deepEqual(errors, []);
+});
+await check("focus depuis toutes les orientations caméra", async () => {
+  await page.click("#clear-iso");
+  await page.fill("#search", "fémur");
+  await page.waitForTimeout(150);
+  for (const pos of [[2.5, 1.3, 0], [-2.5, 1.3, 0], [0, 1.3, 2.5], [0, 1.3, -2.5]]) {
+    await page.evaluate((p) => window.__v2.camera.position.set(...p), pos);
+    await page.locator("#list .item").first().click();
+    await page.waitForTimeout(250);
+    const s = await st();
+    assert.equal(s.isolated, true);
+    assert.equal(s.skin, false);
+  }
+  assert.deepEqual(errors, []);
+});
+
+/* ---------- mobile ---------- */
+await check("mobile : sidebar repliable et focus", async () => {
+  const m = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const mp = await m.newPage();
+  mp.on("pageerror", (e) => errors.push("mobile: " + e.message));
+  await mp.goto(`${BASE}/v2.html`);
+  await mp.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 120000 });
+  const hidden = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
+  assert.equal(hidden, "none");
+  await mp.click("#mobile-toggle");
+  await mp.waitForTimeout(150);
+  const open = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
+  assert.equal(open, "flex");
+  await m.close();
+});
+
+await browser.close();
+
+const failed = results.filter((r) => !r.ok);
+console.log(`\n${results.length - failed.length}/${results.length} tests réussis`);
+for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.name}${r.error ? " — " + r.error : ""}`);
+if (errors.length) console.log("ERREURS", errors);
+process.exit(failed.length ? 1 : 0);

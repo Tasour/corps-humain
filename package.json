@@ -10,6 +10,7 @@
     "models": "node scripts/build-anatomy-models.mjs",
     "models:v2": "node scripts/build-anatomy-v2.mjs",
     "analyze:v2": "node scripts/analyze-v2.mjs",
+    "test:v2": "node tests/v2-tests.mjs",
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core"
   },
   "dependencies": {

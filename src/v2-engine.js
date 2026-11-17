@@ -208,6 +208,10 @@ export class AnatomyV2Engine {
     this.currentVisible = new Set();
     this.isolated = null;
     this.skinDesired = true;
+    this.camera = null;
+    this.waypointGroup = new THREE.Group();
+    this.waypoints = [];
+    this.animation = null;
     this.frustum = new THREE.Frustum();
     this.projScreen = new THREE.Matrix4();
     this.ready = false;
@@ -358,6 +362,43 @@ export class AnatomyV2Engine {
   addTo(scene) {
     for (const batch of this.batches.values()) scene.add(batch);
     if (this.skinBatch) scene.add(this.skinBatch);
+    scene.add(this.waypointGroup);
+  }
+
+  /* Marqueurs de waypoints d'une structure. */
+  showWaypoints(waypoints) {
+    this.clearWaypoints();
+    this.waypoints = waypoints || [];
+    let spread = 0;
+    for (let i = 0; i < this.waypoints.length; i++) {
+      for (let j = i + 1; j < this.waypoints.length; j++) {
+        const a = this.waypoints[i].position, b = this.waypoints[j].position;
+        spread = Math.max(spread, Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2]));
+      }
+    }
+    const radius = Math.min(0.006, Math.max(0.001, spread * 0.035));
+    const geometry = new THREE.SphereGeometry(radius, 10, 8);
+    for (const wp of this.waypoints) {
+      const material = new THREE.MeshBasicMaterial({ color: 0x7ef9ff, depthTest: false, transparent: true, opacity: 0.95 });
+      const marker = new THREE.Mesh(geometry, material);
+      marker.position.set(...wp.position);
+      marker.renderOrder = 20;
+      marker.userData.waypoint = wp;
+      this.waypointGroup.add(marker);
+    }
+  }
+
+  clearWaypoints() {
+    for (const child of [...this.waypointGroup.children]) {
+      this.waypointGroup.remove(child);
+      child.material?.dispose();
+    }
+    this.waypoints = [];
+  }
+
+  pickWaypoint(raycaster) {
+    const hits = raycaster.intersectObjects(this.waypointGroup.children, false);
+    return hits.length ? hits[0].object.userData.waypoint : null;
   }
 
   /* Renvoie la structure la plus proche sous le rayon, ou null. */
@@ -573,6 +614,60 @@ export class AnatomyV2Engine {
       if (structure && await this.setStructureLod(structure, lod)) count++;
     }
     return count;
+  }
+
+  /* Animations de scène appliquées aux instances d'un lot. */
+  setSceneAnimation(type, ids = []) {
+    this.clearAnimation();
+    if (!type) return;
+    this.animation = { type, ids: [...ids], t: 0 };
+  }
+
+  clearAnimation() {
+    if (!this.animation) return;
+    const identity = new THREE.Matrix4();
+    for (const id of this.animation.ids) {
+      const structure = this.byId.get(id);
+      const ref = structure && this.structureToInstance.get(structure._index);
+      const batch = ref && this.batches.get(ref.category);
+      if (!batch) continue;
+      batch.setMatrixAt(ref.instanceId, identity);
+      batch.setColorAt(ref.instanceId, new THREE.Color(colorFor(structure)));
+    }
+    this.animation = null;
+  }
+
+  updateAnimation(dt, time) {
+    if (!this.animation) return;
+    const { type, ids } = this.animation;
+    this.animation.t += dt;
+    for (const id of ids) {
+      const structure = this.byId.get(id);
+      const ref = structure && this.structureToInstance.get(structure._index);
+      const batch = ref && this.batches.get(ref.category);
+      if (!batch) continue;
+      const b = structure.bounds;
+      const center = new THREE.Vector3((b.min[0]+b.max[0])/2, (b.min[1]+b.max[1])/2, (b.min[2]+b.max[2])/2);
+      if (type === "bloodflow") {
+        const pulse = 0.55 + 0.75 * (0.5 + 0.5 * Math.sin(time * 4 - center.y * 18));
+        batch.setColorAt(ref.instanceId, new THREE.Color(colorFor(structure)).multiplyScalar(pulse));
+        continue;
+      }
+      let sx = 1, sy = 1, sz = 1;
+      if (type === "heartbeat") {
+        const s = 1 + 0.06 * Math.sin(time * Math.PI * 2 * 1.2);
+        sx = sy = sz = s;
+      } else if (type === "breathing") {
+        const s = 1 + 0.05 * Math.sin(time * Math.PI * 2 * 0.25);
+        sx = sz = s; sy = 1 + 0.02 * Math.sin(time * Math.PI * 2 * 0.25);
+      } else if (type === "blink") {
+        sy = 1 - 0.92 * Math.pow(Math.max(0, Math.sin(time * Math.PI * 2 * 0.3)), 18);
+      }
+      const to = new THREE.Matrix4().makeTranslation(center.x, center.y, center.z);
+      const scale = new THREE.Matrix4().makeScale(sx, sy, sz);
+      const back = new THREE.Matrix4().makeTranslation(-center.x, -center.y, -center.z);
+      batch.setMatrixAt(ref.instanceId, to.multiply(scale).multiply(back));
+    }
   }
 
   setSkinVisible(visible) {

@@ -114,7 +114,13 @@ un item, et d'animer les groupes (éclaté, mouvements articulaires). Un accès 
 
 Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
 vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
-AABB) et produit `docs/analyses/rapport-v2.md`.
+AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 22 tests 3D**
+(`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
+peau, les groupes, les animations, les waypoints, le tour du monde, le LOD et le mobile.
+
+Chaque structure possède des **waypoints** (3 par défaut, anecdotes et explications
+pour les structures majeures), une visite guidée, et plusieurs animations de scène :
+tour du monde, battement cardiaque, respiration, clignement et flux sanguin.
 
 ## Installer sur téléphone (PWA)
 
