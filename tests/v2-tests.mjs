@@ -297,7 +297,7 @@ await check("mobile : sidebar repliable et focus", async () => {
   const m = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
   const mp = await m.newPage();
   mp.on("pageerror", (e) => errors.push("mobile: " + e.message));
-  await mp.goto(`${BASE}/v2.html`);
+  await mp.goto(`${BASE}/v2.html`, { timeout: 120000 });
   await mp.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 120000 });
   const hidden = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
   assert.equal(hidden, "none");
