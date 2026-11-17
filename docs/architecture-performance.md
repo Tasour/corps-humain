@@ -119,13 +119,42 @@ GPU.
 - Aucun post-traitement coûteux sur le chemin par défaut (le scan skin reste un
   uniform simple).
 
+## Implémentation P1 (prototype fonctionnel)
+
+Le moteur `src/v2-engine.js` consomme le jeu de données v2 et expose :
+
+- `load()` — chargement du manifeste, des chunks `low`, construction des géométries
+  et de l'index BVH WASM ;
+- `addTo(scene)` — ajout de **3 lots `BatchedMesh`** (os, muscles, organes) plus
+  un lot peau optionnel ;
+- `pick(raycaster)` — picking via le BVH Rust (~24× plus rapide qu'un balayage) ;
+- `updateVisibility(camera, lodBias)` — culling frustum + LOD via
+  `AnatomyIndex.visible_into`, avec bascule incrémentale de la visibilité des
+  instances (seules les différences sont écrites).
+
+La page `/v2.html` (accessible aussi en production) démontre l'atlas complet
+avec contrôles OrbitControls, filtres par catégorie, sélection d'une structure
+et compteur de performance.
+
+**Mesures sur le jeu de données réel** (2 131 structures, niveau `low`,
+Chrome headless, 1 228 k triangles affichés) :
+
+- **3 draw calls** (au lieu de 2 131) ;
+- **~1,2 ms de CPU par `renderer.render()`** ;
+- **1 223 structures visibles** après culling ;
+- picking et culling négligeables dans le budget frame.
+
+Le chemin reste expérimental : l'application principale (`index.html`) utilise
+encore le modèle v1 (47 structures) et toutes ses fonctionnalités. La fusion
+des deux interfaces et la qualité adaptative sont les étapes P2/P3.
+
 ## Phases de migration
 
 | Priorité | Contenu | État |
 |---|---|---|
 | **P0.1** | Inventaire complet des 2 202 structures + prototype Rust/WASM + benchmarks | ✅ fait |
 | **P0.2** | **Jeu de données 3D** : 2 131 structures individuelles en 3 LOD (300 / 1,5 k / 12 k), simplification meshopt, manifest, chunks par catégorie | ✅ fait — voir `docs/jeu-de-donnees-v2.md` |
-| P1 | Refonte du rendu : `BatchedMesh` + index WASM pour picking/culling | à faire |
+| P1 | Moteur `BatchedMesh` + index WASM : 3 lots, picking BVH, culling frustum/LOD, page `/v2.html` | ✅ fait — 3 appels, 1,2 M tris, ~1,2 ms CPU/frame |
 | P2 | Qualité adaptative (governor DPR/LOD), textures KTX2 à la demande | à faire |
 | P3 | Explorateur hiérarchique (système → organe → structure) dans l'UI | à faire |
 
