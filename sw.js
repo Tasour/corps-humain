@@ -2,13 +2,14 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v16";
+const CACHE_VERSION = "corps-v17";
 const SHELL = [
   "./",
   "./index.html",
   "./v2.html",
   "./manifest.webmanifest",
   "./favicon.svg",
+  "./logo.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
