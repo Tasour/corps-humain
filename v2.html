@@ -29,6 +29,8 @@
     #info { position: fixed; z-index: 6; right: 14px; bottom: 14px; width: min(330px, calc(100vw - 28px)); }
     #perf { min-width: 240px; }
     #perf b { color: #7ee7c7; font-size: 18px; }
+    #label { position: fixed; z-index: 7; pointer-events: none; display: none; transform: translate(-50%, -150%); background: rgba(8,20,32,.9); border: 1px solid #4fd1e0; border-radius: 6px; padding: 3px 8px; font-size: 12px; color: #eafcff; white-space: nowrap; }
+    #info .chips { margin-top: 8px; }
     #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
     #loading.hidden { opacity: 0; pointer-events: none; }
     #mobile-toggle { display: none; }
@@ -40,7 +42,7 @@
       .top { left: 8px; right: 8px; top: 8px; }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-CjbWn0QN.js"></script>
+  <script type="module" crossorigin src="./assets/v2-CIwez7KQ.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-DP8_PodO.js">
 </head>
 <body>
@@ -65,10 +67,12 @@
     <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
     <div class="panel" id="list"></div>
   </div>
+  <div id="label"></div>
   <div class="panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
     <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
     <div class="sub" id="sel-meta"></div>
+    <div class="chips"><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
   </div>
 </body>
 </html>
