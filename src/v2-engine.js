@@ -20,19 +20,19 @@ function colorFor(structure) {
   if (/cartilage/.test(mats)) return "#c9d6d0";
   if (/bone/.test(mats) || structure.category === "bone") return "#e6dcc9";
   if (/tendon|fascia|ligament|bursa|sheath/.test(mats + " " + name)) return "#d8c9a8";
-  if (/nerve|nerv|gyrus|sulcus|brain|encephal|spinal|dura|meninx|plexus|tract|nucleus/.test(name + " " + sub)) return "#e0cfa4";
+  if (/nerve|nerv|gyrus|sulcus|brain|encephal|spinal|dura|meninx|plexus|tract|nucleus/.test(name + " " + sub)) return "#cbb06a";
   if (/artery|arteria|artere|arter/.test(name + " " + sub)) return "#b63a40";
   if (/vein|vena|veine|venous|sinus/.test(name + " " + sub)) return "#4a6ea8";
   if (/lymph/.test(name + " " + sub)) return "#7fbfa8";
   if (/heart|cardia|ventricl|atrium|myocard/.test(name)) return "#8e2f3a";
-  if (/lung|pulmon|bronch|alveol/.test(name)) return "#d99a92";
+  if (/lung|pulmon|bronch|alveol/.test(name)) return "#c47b78";
   if (/liver|hepat/.test(name)) return "#83423a";
   if (/kidney|renal|nephron/.test(name)) return "#9c4b44";
   if (/stomach|gastr|intestin|colon|digest/.test(name)) return "#c98d7e";
-  if (/pancrea|spleen|thyroid|gland|adrenal/.test(name)) return "#c98a55";
-  if (/skin|epiderm/.test(name)) return "#a8c4c2";
+  if (/pancrea|spleen|thyroid|gland|adrenal/.test(name)) return "#b4743e";
+  if (/skin|epiderm/.test(name)) return "#7fa8a6";
   if (structure.category === "muscle") return "#a83b44";
-  if (structure.category === "organ") return "#c98273";
+  if (structure.category === "organ") return "#a85f55";
   return CATEGORY_COLORS[structure.category] || "#ffffff";
 }
 
@@ -215,7 +215,8 @@ export class AnatomyV2Engine {
     this.globalLod = "low";
     this.currentVisible = new Set();
     this.isolated = null;
-    this.skinDesired = true;
+    /* La peau est masquée par défaut pour laisser les organes lisibles. */
+    this.skinDesired = false;
     this.camera = null;
     this.waypointGroup = new THREE.Group();
     this.waypointGroup.visible = false;

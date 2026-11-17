@@ -70,7 +70,7 @@
     .group { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #9aa7ad; padding: 10px 8px 5px; }
     /* ---------- vue 3D ---------- */
     .viewport { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fdfbf7 0%, #efe9df 72%, #e5ddd1 100%); }
-    .viewport canvas { display: block; width: 100%; height: 100%; }
+    .viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
     .view-toolbar {
       position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 6px; padding: 7px; background: rgba(255,253,249,.92);
@@ -181,7 +181,7 @@
         <button id="isolate">Isoler</button>
         <button id="clear-iso">Tout afficher</button>
         <button id="pivot">Pivot : item</button>
-        <button data-cat="skin" class="active">Peau</button>
+        <button data-cat="skin">Peau</button>
         <button data-cat="bone">Os</button>
         <button data-cat="muscle">Muscles</button>
         <button data-cat="organ" class="active">Organes</button>
@@ -270,7 +270,7 @@
     });
     engine.addTo(scene);
     for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, cat === 'organ');
-    engine.setSkinVisible(true);
+    engine.setSkinVisible(false);
     document.getElementById('count').textContent = `${engine.stats.structures} structures`;
     document.getElementById('list-total').textContent = `${engine.structures.length}`;
     document.getElementById('loading').style.display = 'none';
@@ -502,9 +502,9 @@
     });
     document.getElementById('clear-iso').addEventListener('click', () => {
       engine.isolate(null);
-      engine.setSkinVisible(true);
+      engine.setSkinVisible(false);
       const skinBtn = document.querySelector('[data-cat="skin"]');
-      if (skinBtn) skinBtn.classList.add('active');
+      if (skinBtn) skinBtn.classList.remove("active");
       engine.setWaypointsVisible(false);
       waypointTour = null;
       wpInfo.style.display = 'none';
@@ -559,7 +559,7 @@
       groupAnim = null;
       engine.resetGroupTransforms();
       if (activeGroup) engine.showGroup(activeGroup);
-      engine.setSkinVisible(true);
+      engine.setSkinVisible(false);
       forceCulling = true;
     });
 
@@ -567,6 +567,13 @@
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     let downX = 0, downY = 0;
+    renderer.domElement.addEventListener('dblclick', () => {
+      camera.position.set(0.72, 1.28, 2.55);
+      controls.target.set(0, 1, 0);
+      cameraTween = null;
+      tourActive = false;
+      controls.update();
+    });
     renderer.domElement.addEventListener('pointerdown', (e) => { downX = e.clientX; downY = e.clientY; });
     renderer.domElement.addEventListener('pointerup', async (e) => {
       if (Math.hypot(e.clientX - downX, e.clientY - downY) > 5) return;
@@ -682,7 +689,8 @@
         if (avg > 8 && pixelRatio > 1) {
           pixelRatio = Math.max(1, pixelRatio - 0.25);
           renderer.setPixelRatio(pixelRatio);
-          lodBias = Math.max(0.6, lodBias - 0.1);
+          /* Le biais LOD reste à 1 : le seuil WASM garantit déjà que toutes
+           * les structures restent visibles en vue corps entier. */
           forceCulling = true;
         }
         if (!autoLodDone && now - startedAt > 4000) {

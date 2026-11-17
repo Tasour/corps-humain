@@ -80,7 +80,7 @@ await check("Tout afficher restaure la peau et le culling", async () => {
   await page.waitForTimeout(500);
   const s = await st();
   assert.equal(s.isolated, false);
-  assert.equal(s.skin, true);
+  assert.equal(s.skin, false);
   assert.ok(s.visible > 300);
 });
 
@@ -240,6 +240,30 @@ await check("clic sur zone masquée ne change pas la sélection", async () => {
   const afterName = await page.evaluate(() => document.getElementById("sel-name").textContent);
   assert.equal(afterName, beforeName);
 });
+await check("glisser la scène ne change pas la sélection", async () => {
+  const name = await page.evaluate(() => document.getElementById("sel-name").textContent);
+  const box = await page.locator("canvas").boundingBox();
+  await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width * 0.62, box.y + box.height * 0.55, { steps: 10 });
+  await page.mouse.up();
+  await page.waitForTimeout(300);
+  assert.equal(await page.evaluate(() => document.getElementById("sel-name").textContent), name);
+});
+await check("double-clic recadre la vue", async () => {
+  await page.locator("canvas").dblclick({ position: { x: 300, y: 300 } });
+  await page.waitForTimeout(900);
+  const pos = await page.evaluate(() => window.__v2.camera.position.toArray());
+  assert.ok(Math.hypot(pos[0] - 0.72, pos[2] - 2.55) < 0.35, `pos=${pos}`);
+});
+await check("toutes les structures restent visibles en rotation", async () => {
+  await page.click("#clear-iso");
+  await page.waitForTimeout(300);
+  await page.evaluate(() => { const c = window.__v2.camera; c.position.set(2.5, 1.3, 0); c.lookAt(0, 1, 0); });
+  await page.waitForTimeout(400);
+  const visible = await page.evaluate(() => window.__v2.currentVisible.size);
+  assert.ok(visible > 2000, `visibles=${visible}`);
+});
 await check("ombres activées", async () => {
   const ok = await page.evaluate(() => {
     const e = window.__v2;
@@ -260,17 +284,21 @@ await check("bascule thème clair / sombre", async () => {
 
 /* ---------- mobile ---------- */
 await check("mobile : sidebar repliable et focus", async () => {
-  const m = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const m = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
   const mp = await m.newPage();
   mp.on("pageerror", (e) => errors.push("mobile: " + e.message));
   await mp.goto(`${BASE}/v2.html`);
   await mp.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 120000 });
   const hidden = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
   assert.equal(hidden, "none");
-  await mp.click("#mobile-toggle");
+  await mp.click("#mobile-toggle", { force: true });
   await mp.waitForTimeout(150);
   const open = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
   assert.equal(open, "flex");
+  await mp.click("#mobile-toggle");
+  await mp.touchscreen.tap(195, 420);
+  await mp.waitForTimeout(300);
+  assert.deepEqual(errors.filter((e) => e.startsWith("mobile:")), []);
   await m.close();
 });
 

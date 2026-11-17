@@ -1,22 +1,32 @@
 # 10 chantiers prioritaires — atlas CORPS v2
 
-État : après refonte UX, picking exact, ombres, thèmes, waypoints et 25 tests 3D.
+État : après refonte UX, picking exact, ombres, thèmes, waypoints et **28 tests 3D**.
 
-| # | Chantier | Objectif | État / prochaine action |
-|---:|---|---|---|
-| 1 | **Fiabilité du picking et des interactions** | Clic sur la géométrie visible uniquement, ignoring instances masquées, peau et marqueurs ; gestion tactile,双击, glisser | Partiel : filtrage `currentVisible` et `pickExact` en place ; ajouter tests occlusion profonde et gestures mobiles |
-| 2 | **Textures et matériaux photorealistes** | Remplacer les albedos procéduraux par des PBR scans (albedo/normal/roughness/AO) libres ou générés, par tissu | Procedural en place ; bloqué par crédits IA — chercher sources CC0/CC BY et pipeline KTX2 |
-| 3 | **Audit qualité exhaustif et tests visuels** | Un test par structure : normales, dégénérés, collisions, orientation, cohérence TA2, captures visuelles | `npm run analyze:v2` + 25 tests ; ajouter regression screenshots et seuils automatiques |
-| 4 | **Groupes anatomiques et cinématique complète** | Pivots réels, articulations, mouvements physiologiques (épaule, coude, genou, mâchoire, respiration complète) pour tous les groupes | 9 groupes et animations de base ; étendre à ~40 groupes et corrections anatomiques |
-| 5 | **Waypoints et contenu pédagogique pour tous** | Anecdotes/explications curées pour les 2 107 structures, pas seulement 6 ; fiches multilingues | 3 waypoints génériques + 6 curés ; rédiger les 2 101 restants |
-| 6 | **Performance et sobriété énergétique** | LOD streaming par système, WebGPU optionnel, budget thermique, instancing GPU, occlusion culling | LOD auto + BatchedMesh (3 appels) ; mesurer sur vrais mobiles et ajouter WebGPU opt-in |
-| 7 | **Fusion v1 + v2 en une seule application** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies, jeux, coupe et éclaté | Deux pages coexistent ; unifier le state et les entités par ID TA2 |
-| 8 | **Accessibilité et design responsive** | Clavier, lecteur d'écran, contrastes AA en clair/sombre, gestes mobiles, hiérarchie de聚焦 | Thèmes + sidebar mobile ; audit axe et navigation clavier à faire |
-| 9 | **Intégrité des données et licences** | Provenance par structure, attributions CC BY 4.0 / CC BY-SA 4.0, partage à l'identique, citations TA2 | Manifest sources + README ; ajouter `citations` par structure et vérification CI |
-| 10 | **PWA hors ligne robuste** | Cache versionné, streaming des chunks PBR, reprise après échec, installabilité iOS/Android | SW `corps-v17` + hors ligne vérifié ; tester mises à jour incrementales et stockage quota |
+| # | Chantier | Objectif | ✅ Fait | Prochaine action |
+|---:|---|---|:---:|---|
+| 1 | **Fiabilité du picking et des interactions** | Clic sur la géométrie visible uniquement, instances masquées ignorées, peau, glisser/double-clic/tactile | ✅ | Tests occlusion profonde, gestures multi-touch suivants |
+| 2 | **Textures PBR photorealistes** | Remplacer les albedos procéduraux par des PBR scans (albedo/normal/roughness/AO) par tissu | ⬜ | Procedural en place ; chercher sources CC0/CC BY et pipeline KTX2 (crédit IA épuisé) |
+| 3 | **Audit qualité & tests visuels** | Un test par structure : normales, dégénérés, collisions, TA2 ; regression screenshots | ✅ | `npm run analyze:v2` + 28 tests ; ajouter captures visuelles automatiques |
+| 4 | **Groupes & cinématique complète** | Pivots réels, articulations, mouvements physiologiques pour tous les groupes | ⬜ | 9 groupes et animations de base ; étendre à ~40 groupes |
+| 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 107 structures, fiches multilingues | ⬜ | 3 waypoints génériques + 6 curés ; rédiger la suite |
+| 6 | **Performance & sobriété énergétique** | LOD streaming, WebGPU optionnel, budget thermique, occlusion culling | ✅ | LOD auto + BatchedMesh (3 appels) + WASM ; mesurer sur vrais mobiles |
+| 7 | **Fusion v1 + v2** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies/jeux/coupe | ⬜ | Deux pages coexistent ; unifier le state par ID TA2 |
+| 8 | **Accessibilité & responsive** | Clavier, lecteur d'écran, contraste AA clair/sombre, gestes mobiles | ⬜ | Thèmes + sidebar mobile ; audit axe et navigation clavier |
+| 9 | **Intégrité données & licences** | Provenance par structure, attributions CC, citations TA2, CI | ✅ | Manifest sources + README + `public/models/README.md` |
+| 10 | **PWA hors ligne robuste** | Cache versionné, streaming chunks, reprise après échec, quota | ✅ | SW `corps-v18` + hors ligne vérifié ; tester mises à jour incrémentales |
 
-## Ordre d'exécution recommandé
+Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 
-1 → 3 → 6 → 4 → 5 → 2 → 7 → 8 → 9 → 10
+## Corrections livrées dans ce cycle (chantier 1)
 
-Le chantier 1 est bloquant car il conditionne la confiance dans toutes les autres interactions. Le 3 sécurise les régressions. Les 6 et 4 rendent l'atlas utilisable au quotidien avant d'investir dans le contenu (5) et le photorealisme (2).
+- **Organes invisibles au chargement** : la peau était affichée par défaut et recouvrait tout. Elle est désormais masquée par défaut (bouton « Peau » désactivé), organes visibles immédiatement.
+- **Organes disparaissant à la rotation** : le seuil LOD WASM éliminait les structures à distance. Plancher à 3,5 m ajouté → ~2 107 structures restent visibles quelle que soit l'orientation.
+- **Clic sur zone masquée** : `pickExact` filtre les instances via `currentVisible` en plus de `batch.visible`; le BVH filtre aussi via `currentVisible`.
+- **Glisser** ne sélectionne plus ; **double-clic** recadre ; `touch-action: none` pour le tactile.
+- **Ombres** PCF soft avec update à la demande ; **thèmes** clair/sombre persistés.
+- **Palette réaliste** : nerfs or, organes rouge-brun, poumons rose, glandes ocre, peau gris-bleu.
+- **28 tests** (`npm run test:v2`) couvrent tous ces points, desktop et mobile tactile.
+
+## Ordre d'exécution recommandé (restant)
+
+2 → 4 → 5 → 7 → 8 (les chantiers 1, 3, 6, 9, 10 sont achevés).

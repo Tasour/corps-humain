@@ -242,7 +242,7 @@ impl AnatomyIndex {
                     let dist = (dx * dx + dy * dy + dz * dz).sqrt();
                     // LOD angulaire : une structure est rendue si sa taille
                     // angulaire dépasse un seuil ~1/120 rad * lod_bias.
-                    let threshold = (self.radii[i] * 120.0 + 0.05) * lod_bias;
+                    let threshold = (self.radii[i] * 120.0 + 0.05).max(3.5) * lod_bias;
                     if dist <= threshold {
                         out.push(id);
                     }
@@ -296,7 +296,7 @@ impl AnatomyIndex {
                     let dy = center[1] - camy;
                     let dz = center[2] - camz;
                     let dist2 = dx * dx + dy * dy + dz * dz;
-                    let threshold = (self.radii[i] * 120.0 + 0.05) * lod_bias;
+                    let threshold = (self.radii[i] * 120.0 + 0.05).max(3.5) * lod_bias;
                     if dist2 <= threshold * threshold && (written as usize) < out.len() {
                         out[written as usize] = id;
                         written += 1;
