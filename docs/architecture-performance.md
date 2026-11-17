@@ -121,17 +121,19 @@ GPU.
 
 ## Phases de migration
 
-| Phase | Contenu | État |
+| Priorité | Contenu | État |
 |---|---|---|
-| P0 | Inventaire complet + prototype Rust/WASM + benchmarks | ✅ fait |
-| P1 | Export des 2 202 structures en 3 LOD, meshopt, manifest par système | à faire |
-| P2 | Refonte du rendu : `BatchedMesh` + index WASM pour picking/culling | à faire |
-| P3 | Qualité adaptative (governor DPR/LOD), textures KTX2 à la demande | à faire |
-| P4 | Explorateur hiérarchique (système → organe → structure) dans l'UI | à faire |
+| **P0.1** | Inventaire complet des 2 202 structures + prototype Rust/WASM + benchmarks | ✅ fait |
+| **P0.2** | **Jeu de données 3D** : export des 2 202 structures en 3 LOD (300 / 1,5 k / original), compression meshopt, manifest par système, chunks chargeables à la demande | 🔲 **à faire — prochaine étape** |
+| P1 | Refonte du rendu : `BatchedMesh` + index WASM pour picking/culling | à faire |
+| P2 | Qualité adaptative (governor DPR/LOD), textures KTX2 à la demande | à faire |
+| P3 | Explorateur hiérarchique (système → organe → structure) dans l'UI | à faire |
 
-Le code actuel continue de fonctionner : le moteur WASM et le benchmark sont
-des modules autonomes, non branchés sur l'application. L'intégration se fera
-sans casser le repli procédural ni le mode hors ligne.
+Le **jeu de données** fait donc partie des fondations (P0), au même titre que
+l'inventaire et le moteur WASM : sans lui, les couches de rendu et de culling
+n'ont rien à afficher. Le code actuel continue de fonctionner : le moteur WASM
+et le benchmark sont des modules autonomes, non branchés sur l'application.
+L'intégration se fera sans casser le repli procédural ni le mode hors ligne.
 
 ## Commandes
 
