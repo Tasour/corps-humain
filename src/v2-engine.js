@@ -319,7 +319,16 @@ export class AnatomyV2Engine {
       });
       const batch = new THREE.BatchedMesh(list.length, vertexCount, indexCount, material);
       batch.name = `v2-${category}`;
+      /* Cette option force BatchedMesh à recalculer ses paramètres de dessin
+       * dans onBeforeRender avec la caméra principale. Sans elle, le passage
+       * d'ombre (onBeforeShadow) écrase l'indirect buffer et le rendu principal
+       * ne dessine plus rien dès que la caméra bouge. */
       batch.perObjectFrustumCulled = true;
+      /* Le culling au niveau du lot (hérité de Mesh) utilise la boundingSphere
+       * du géométrie fusionnée, qui devient erronée quand on remplace les
+       * géométries (setGeometryAt). On le désactive : le culling fin est déjà
+       * fait par le BVH WASM et par BatchedMesh par instance. */
+      batch.frustumCulled = false;
       batch.castShadow = true;
       batch.receiveShadow = true;
       const matrix = new THREE.Matrix4();
@@ -508,6 +517,8 @@ export class AnatomyV2Engine {
     const batch = this.batches.get(ref.category);
     if (!batch) return false;
     batch.setGeometryAt(structure._geometryId, geometry);
+    batch.computeBoundingBox();
+    batch.computeBoundingSphere();
     structure._activeLod = lod;
     return true;
   }

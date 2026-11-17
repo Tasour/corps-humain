@@ -275,6 +275,22 @@ await check("toutes les structures restent visibles en rotation", async () => {
   const visible = await page.evaluate(() => window.__v2.currentVisible.size);
   assert.ok(visible > 2000, `visibles=${visible}`);
 });
+await check("rotation : le modèle reste visible (pas d'erreur GL)", async () => {
+  await page.click("#clear-iso");
+  await page.waitForTimeout(300);
+  const glErrors = [];
+  const listener = (m) => { if (m.text().includes("GL_INVALID") || m.text().includes("Mismatch")) glErrors.push(m.text()); };
+  page.on("console", listener);
+  await page.mouse.move(640, 430);
+  await page.mouse.down();
+  await page.mouse.move(780, 470, { steps: 10 });
+  await page.mouse.up();
+  await page.waitForTimeout(700);
+  page.off("console", listener);
+  assert.deepEqual(glErrors, []);
+  const info = await page.evaluate(() => ({ ...window.__renderer.info.render }));
+  assert.ok(info.triangles > 100000, `triangles=${info.triangles}`);
+});
 await check("ombres activées", async () => {
   const ok = await page.evaluate(() => {
     const e = window.__v2;

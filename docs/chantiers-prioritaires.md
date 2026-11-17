@@ -28,7 +28,11 @@ Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 - **Lot désactivé à la sélection** : cliquer un os ou un muscle alors que sa catégorie était
   masquée par défaut laissait un écran vide. `selectStructure()` réactive désormais la
   catégorie de l'item (et son bouton), comme le fait déjà le bouton Focus.
-- **29 tests** (`npm run test:v2`) couvrent tous ces points, desktop et mobile tactile.
+- **Disparition des organes à la rotation** : `PCFSoftShadowMap`, supprimé en three r187,
+  provoquait `GL_INVALID_OPERATION: Mismatch between texture format and sampler type
+  (shadow)` après le premier passage d'ombre. Remplacé par `BasicShadowMap` ; le modèle
+  reste visible à la rotation.
+- **30 tests** (`npm run test:v2`) couvrent tous ces points, desktop et mobile tactile.
 
 ## Ordre d'exécution recommandé (restant)
 
