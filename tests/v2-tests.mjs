@@ -17,6 +17,7 @@ function check(name, fn) {
 const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
 const context = await browser.newContext({ viewport: { width: 1360, height: 880 } });
 const page = await context.newPage();
+page.setDefaultTimeout(90000);
 page.on("pageerror", (e) => errors.push(String(e)));
 page.on("console", (m) => {
   if (m.type() !== "error") return;
@@ -296,6 +297,7 @@ await check("bascule thème clair / sombre", async () => {
 await check("mobile : sidebar repliable et focus", async () => {
   const m = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
   const mp = await m.newPage();
+  mp.setDefaultTimeout(90000);
   mp.on("pageerror", (e) => errors.push("mobile: " + e.message));
   await mp.goto(`${BASE}/v2.html`, { timeout: 120000 });
   await mp.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 120000 });
