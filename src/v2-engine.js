@@ -14,6 +14,11 @@ const CATEGORY_COLORS = {
 const CATEGORY_ORDER = ["bone", "muscle", "organ", "skin"];
 
 function colorFor(structure) {
+  const mats = (structure.materials || []).join(" ").toLowerCase();
+  if (/cartilage/.test(mats)) return "#cbd8d4";
+  if (/bone/.test(mats)) return "#ded5c3";
+  if (/tendon|fascia|ligament/.test(mats)) return "#d8cbb0";
+  if (/gland/.test(mats)) return "#d98f4a";
   if (structure.category !== "organ") return CATEGORY_COLORS[structure.category];
   const sub = (structure.subsystem || "").toLowerCase();
   const name = (structure.en || "").toLowerCase();
@@ -21,6 +26,31 @@ function colorFor(structure) {
   if (/cardiac|arter|vein|venous|lymph/.test(sub + " " + name)) return "#d45a63";
   if (/respirat|digest|urinary|reproduct|endocrine|visceral/.test(sub)) return "#d98f4a";
   return CATEGORY_COLORS.organ;
+}
+
+/* Micro-texture procedurale : donne un relief organique léger sans fichier
+ * externe (les sources libres ne fournissent pas de textures PBR). */
+let tissueTexture = null;
+function getTissueTexture() {
+  if (tissueTexture) return tissueTexture;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = 64;
+  const ctx = canvas.getContext("2d");
+  const image = ctx.createImageData(64, 64);
+  let seed = 7;
+  for (let i = 0; i < 64 * 64; i++) {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const n = 110 + ((seed >>> 24) % 45);
+    image.data[i * 4] = n;
+    image.data[i * 4 + 1] = n;
+    image.data[i * 4 + 2] = n;
+    image.data[i * 4 + 3] = 255;
+  }
+  ctx.putImageData(image, 0, 0);
+  tissueTexture = new THREE.CanvasTexture(canvas);
+  tissueTexture.wrapS = tissueTexture.wrapT = THREE.RepeatWrapping;
+  tissueTexture.repeat.set(6, 6);
+  return tissueTexture;
 }
 
 async function loadBinary(url) {
@@ -44,6 +74,12 @@ function geometryFromRecord(buffer, record) {
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3, true));
   geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+  const uvs = new Float32Array(record.vertexCount * 2);
+  for (let i = 0; i < record.vertexCount; i++) {
+    uvs[i * 2] = positions[i * 3] * 2 + 0.5;
+    uvs[i * 2 + 1] = positions[i * 3 + 1] * 0.6;
+  }
+  geometry.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
   geometry.computeBoundingSphere();
   return geometry;
 }
@@ -144,10 +180,14 @@ export class AnatomyV2Engine {
         vertexCount += Math.max(...levels.map((r) => r.vertexCount || 0));
         indexCount += Math.max(...levels.map((r) => r.indexCount || 0));
       }
-      const material = new THREE.MeshStandardMaterial({
+      const material = new THREE.MeshPhysicalMaterial({
         color: CATEGORY_COLORS[category] || "#ffffff",
-        roughness: 0.68,
-        metalness: 0.02,
+        roughness: category === "bone" ? 0.82 : 0.55,
+        metalness: 0,
+        clearcoat: category === "organ" ? 0.35 : 0.12,
+        clearcoatRoughness: 0.45,
+        bumpMap: getTissueTexture(),
+        bumpScale: category === "bone" ? 0.0015 : 0.003,
         side: THREE.DoubleSide,
       });
       const batch = new THREE.BatchedMesh(list.length, vertexCount, indexCount, material);
@@ -290,6 +330,65 @@ export class AnatomyV2Engine {
     }
     this.currentVisible = new Set([structure._index]);
     return 1;
+  }
+
+  /* Affiche uniquement les membres d'un groupe, en réactivant leurs catégories. */
+  showGroup(group) {
+    if (!group) return 0;
+    const members = group.members.map((id) => this.byId.get(id)).filter(Boolean);
+    const ids = new Set(members.map((s) => s.id));
+    const categories = new Set(members.map((s) => s.category));
+    for (const category of categories) this.setCategoryVisible(category, true);
+    const memberIndices = new Set(members.map((s) => s._index));
+    for (const [structureIndex, ref] of this.structureToInstance) {
+      const batch = this.batches.get(ref.category);
+      if (batch) batch.setVisibleAt(ref.instanceId, memberIndices.has(structureIndex));
+    }
+    this.isolated = group;
+    this.currentVisible = memberIndices;
+    return members.length;
+  }
+
+  /* Anime un groupe : éclaté (t : 0→1) ou mouvement articulaire. */
+  animateGroup(group, t, mode = "explode") {
+    if (!group) return;
+    const members = group.members.map((id) => this.byId.get(id)).filter(Boolean);
+    const centers = members.map((s) => {
+      const b = s.bounds;
+      return new THREE.Vector3((b.min[0]+b.max[0])/2, (b.min[1]+b.max[1])/2, (b.min[2]+b.max[2])/2);
+    });
+    const center = centers.reduce((a, c) => a.add(c), new THREE.Vector3()).multiplyScalar(1 / Math.max(1, centers.length));
+    const axis = new THREE.Vector3(...(group.axis || [0, 1, 0])).normalize();
+    const pivot = new THREE.Vector3(...(group.pivot || center.toArray()));
+    const identity = new THREE.Matrix4();
+    const rotate = new THREE.Matrix4().makeRotationAxis(axis, (group.angle || 0.5) * Math.sin(t * Math.PI));
+    const toPivot = new THREE.Matrix4().makeTranslation(pivot.x, pivot.y, pivot.z);
+    const fromPivot = new THREE.Matrix4().makeTranslation(-pivot.x, -pivot.y, -pivot.z);
+    const movement = new THREE.Matrix4().multiplyMatrices(toPivot, rotate).multiply(fromPivot);
+
+    members.forEach((structure, i) => {
+      const ref = this.structureToInstance.get(structure._index);
+      const batch = ref && this.batches.get(ref.category);
+      if (!batch) return;
+      let matrix = identity;
+      if (mode === "explode") {
+        const dir = centers[i].clone().sub(center).normalize().multiplyScalar(0.18 * t);
+        matrix = new THREE.Matrix4().makeTranslation(dir.x, dir.y, dir.z);
+      } else if (mode === "movement") {
+        matrix = movement;
+      }
+      batch.setMatrixAt(ref.instanceId, matrix);
+    });
+    /* setMatrixAt marque déjà la texture de matrices comme à mettre à jour. */
+  }
+
+  resetGroupTransforms() {
+    const identity = new THREE.Matrix4();
+    for (const [structureIndex, ref] of this.structureToInstance) {
+      const batch = this.batches.get(ref.category);
+      if (batch) batch.setMatrixAt(ref.instanceId, identity);
+    }
+    /* setMatrixAt marque déjà la texture de matrices comme à mettre à jour. */
   }
 
   /* Colorie une instance (sélection). La couleur par défaut est blanche. */

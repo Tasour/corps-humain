@@ -1,0 +1,241 @@
+{
+  "generated": "2026-11-17T04:48:44.709Z",
+  "summary": {
+    "structures": 2107,
+    "triangles": 1123549,
+    "degenerateTriangles": 300,
+    "nanVertices": 0,
+    "badNormals": 0,
+    "badIndices": 0,
+    "structuresWithIssues": 1,
+    "collisions": 25
+  },
+  "issues": [
+    {
+      "id": "organ:zonular-fibres-l",
+      "fr": "Fibres zonulaires",
+      "category": "organ",
+      "subsystem": "Nerveux et sens",
+      "side": "left",
+      "vertices": 152,
+      "triangles": 300,
+      "bounds": {
+        "min": [
+          0.031040886417031288,
+          1.5910234451293945,
+          0.07213643938302994
+        ],
+        "max": [
+          0.031240886077284813,
+          1.5912851095199585,
+          0.07235267758369446
+        ]
+      },
+      "issues": [
+        "300 triangles dégénérés"
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "a": "bone:bp-nose",
+      "b": "organ:bp-nasal-septum",
+      "frA": "Nez",
+      "frB": "Septum nasal",
+      "ratio": 1,
+      "centerDist": 0
+    },
+    {
+      "a": "organ:bp-hepatic-portal-vein-l",
+      "b": "organ:bp-left-lobe-of-liver-l",
+      "frA": "Veine porte du foie",
+      "frB": "Lobe hépatique gauche",
+      "ratio": 1,
+      "centerDist": 0.0003
+    },
+    {
+      "a": "bone:second-rib-l",
+      "b": "organ:bp-posterior-intercostal-artery-l",
+      "frA": "Deuxième côte",
+      "frB": "Artère intercostale postérieure",
+      "ratio": 0.98,
+      "centerDist": 0.0051
+    },
+    {
+      "a": "bone:second-rib-l",
+      "b": "organ:bp-second-posterior-intercostal-artery-l",
+      "frA": "Deuxième côte",
+      "frB": "Deuxième artère intercostale postérieure",
+      "ratio": 0.98,
+      "centerDist": 0.0052
+    },
+    {
+      "a": "bone:second-rib-r",
+      "b": "organ:bp-posterior-intercostal-artery-r",
+      "frA": "Deuxième côte",
+      "frB": "Artère intercostale postérieure",
+      "ratio": 0.98,
+      "centerDist": 0.0051
+    },
+    {
+      "a": "bone:second-rib-r",
+      "b": "organ:bp-second-posterior-intercostal-artery-r",
+      "frA": "Deuxième côte",
+      "frB": "Deuxième artère intercostale postérieure",
+      "ratio": 0.98,
+      "centerDist": 0.0052
+    },
+    {
+      "a": "organ:bp-lumbar-artery",
+      "b": "organ:bp-lumbar-vein",
+      "frA": "(Côte lombaire)",
+      "frB": "(Côte lombaire)",
+      "ratio": 0.98,
+      "centerDist": 0.01
+    },
+    {
+      "a": "organ:bp-anterior-circumflex-humeral-artery-l",
+      "b": "organ:bp-anterior-circumflex-humeral-vein-l",
+      "frA": "Artère circonflexe antérieure de l'humérus",
+      "frB": "Veine circonflexe humérale antérieure",
+      "ratio": 0.96,
+      "centerDist": 0.0028
+    },
+    {
+      "a": "organ:bp-anterior-circumflex-humeral-artery-r",
+      "b": "organ:bp-anterior-circumflex-humeral-vein-r",
+      "frA": "Artère circonflexe antérieure de l'humérus",
+      "frB": "Veine circonflexe humérale antérieure",
+      "ratio": 0.96,
+      "centerDist": 0.0029
+    },
+    {
+      "a": "organ:bp-heart",
+      "b": "organ:left-atrium",
+      "frA": "Coeur",
+      "frB": "Atrium gauche",
+      "ratio": 0.96,
+      "centerDist": 0.0072
+    },
+    {
+      "a": "organ:mesocolic-taenia",
+      "b": "organ:bp-peritoneum",
+      "frA": "Ténia mésocolique",
+      "frB": "Péritoine",
+      "ratio": 0.96,
+      "centerDist": 0.0137
+    },
+    {
+      "a": "organ:mesocolic-taenia",
+      "b": "organ:bp-visceral-peritoneum",
+      "frA": "Ténia mésocolique",
+      "frB": "Péritoine viscéral",
+      "ratio": 0.96,
+      "centerDist": 0.0137
+    },
+    {
+      "a": "organ:bp-right-subcostal-vein-r",
+      "b": "organ:bp-subcostal-artery-r",
+      "frA": "Veine subcostale droite",
+      "frB": "Artère subcostale",
+      "ratio": 0.96,
+      "centerDist": 0.0086
+    },
+    {
+      "a": "organ:bp-right-testicular-artery-r",
+      "b": "organ:bp-right-testicular-vein-r",
+      "frA": "Artère testiculaire droite",
+      "frB": "Veine testiculaire droite",
+      "ratio": 0.95,
+      "centerDist": 0.01
+    },
+    {
+      "a": "organ:bp-right-testicular-vein-r",
+      "b": "organ:bp-testicular-artery-r",
+      "frA": "Veine testiculaire droite",
+      "frB": "Artère testiculaire",
+      "ratio": 0.95,
+      "centerDist": 0.01
+    },
+    {
+      "a": "bone:mandible",
+      "b": "muscle:bp-mouth",
+      "frA": "Mandibule",
+      "frB": "Bouche",
+      "ratio": 0.94,
+      "centerDist": 0.0084
+    },
+    {
+      "a": "organ:bp-middle-colic-artery",
+      "b": "organ:bp-middle-colic-vein",
+      "frA": "Artère colique moyenne",
+      "frB": "Veine colique moyenne",
+      "ratio": 0.94,
+      "centerDist": 0.0033
+    },
+    {
+      "a": "organ:renal-pelvis-r",
+      "b": "organ:bp-right-renal-vein-r",
+      "frA": "Bassinet/ pelvis rénal",
+      "frB": "Veine rénale droite",
+      "ratio": 0.93,
+      "centerDist": 0.0044
+    },
+    {
+      "a": "organ:bp-left-testicular-artery-l",
+      "b": "organ:bp-left-testicular-vein-l",
+      "frA": "Artère testiculaire gauche",
+      "frB": "Veine testiculaire gauche",
+      "ratio": 0.92,
+      "centerDist": 0.007
+    },
+    {
+      "a": "organ:bp-left-testicular-vein-l",
+      "b": "organ:bp-testicular-artery-l",
+      "frA": "Veine testiculaire gauche",
+      "frB": "Artère testiculaire",
+      "ratio": 0.92,
+      "centerDist": 0.007
+    },
+    {
+      "a": "organ:bp-telencephalon-l",
+      "b": "organ:white-matter-of-telencephalon-l",
+      "frA": "Télencéphale",
+      "frB": "Substance blanche du télencéphale",
+      "ratio": 0.92,
+      "centerDist": 0.0129
+    },
+    {
+      "a": "organ:bp-telencephalon-r",
+      "b": "organ:white-matter-of-telencephalon-r",
+      "frA": "Télencéphale",
+      "frB": "Substance blanche du télencéphale",
+      "ratio": 0.92,
+      "centerDist": 0.0132
+    },
+    {
+      "a": "muscle:epicranial-aponeurosis-l",
+      "b": "organ:bp-telencephalon-l",
+      "frA": "Aponévrose épicrânienne",
+      "frB": "Télencéphale",
+      "ratio": 0.91,
+      "centerDist": 0.0096
+    },
+    {
+      "a": "muscle:epicranial-aponeurosis-l",
+      "b": "organ:white-matter-of-telencephalon-l",
+      "frA": "Aponévrose épicrânienne",
+      "frB": "Substance blanche du télencéphale",
+      "ratio": 0.91,
+      "centerDist": 0.011
+    },
+    {
+      "a": "muscle:epicranial-aponeurosis-r",
+      "b": "organ:bp-telencephalon-r",
+      "frA": "Aponévrose épicrânienne",
+      "frB": "Télencéphale",
+      "ratio": 0.91,
+      "centerDist": 0.0091
+    }
+  ]
+}

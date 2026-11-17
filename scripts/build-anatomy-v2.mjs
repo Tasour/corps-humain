@@ -154,6 +154,21 @@ function compact(indices, positions, normals) {
   return { positions: p, normals: no, indices: idx, vertexCount: n, indexCount: idx.length };
 }
 
+function removeDegenerate(geometry) {
+  const kept = [];
+  const { positions, indices } = geometry;
+  for (let i = 0; i < indices.length; i += 3) {
+    const a = indices[i] * 3, b = indices[i + 1] * 3, c = indices[i + 2] * 3;
+    const ux = positions[b] - positions[a], uy = positions[b + 1] - positions[a + 1], uz = positions[b + 2] - positions[a + 2];
+    const vx = positions[c] - positions[a], vy = positions[c + 1] - positions[a + 1], vz = positions[c + 2] - positions[a + 2];
+    const cx = uy * vz - uz * vy, cy = uz * vx - ux * vz, cz = ux * vy - uy * vx;
+    if (cx * cx + cy * cy + cz * cz >= 1e-16) kept.push(indices[i], indices[i + 1], indices[i + 2]);
+  }
+  if (kept.length === indices.length) return geometry;
+  if (kept.length < 3) return geometry;
+  return compact(Uint32Array.from(kept), geometry.positions, geometry.normals);
+}
+
 function makeLod(geometry, targetTriangles) {
   const triangles = geometry.indexCount / 3;
   if (triangles <= targetTriangles) return geometry;
@@ -181,7 +196,8 @@ function pad4(acc) {
 }
 function push(acc, buffer) { acc.parts.push(buffer); acc.length += buffer.length; }
 
-function writeGeometry(acc, geometry) {
+function writeGeometry(acc, input) {
+  const geometry = removeDegenerate(input);
   pad4(acc);
   const positions = acc.length;
   push(acc, Buffer.from(geometry.positions.buffer, geometry.positions.byteOffset, geometry.positions.byteLength));
@@ -232,6 +248,7 @@ for (const s of structures) {
     subsystem: s.subsystem || "",
     side: s.side || null,
     source: s.best.source,
+    materials: s.materials || [],
     bounds: geometry.bounds,
     lod: {},
   };

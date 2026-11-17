@@ -104,7 +104,13 @@ Une démonstration de l'atlas complet avec rendu groupé et picking WASM est dis
 sur `/v2.html` (3 appels de rendu, ~1,2 ms CPU/frame pour 1,2 M triangles). Le détail
 d'une structure se charge à la demande (medium sur mobile, high sur desktop) et un
 gouverneur ajuste résolution et LOD selon le coût de rendu. Son explorateur latéral
-permet de rechercher et de cadrer chacune des 2 107 structures.
+permet de rechercher et de cadrer chacune des 2 107 structures, d'isoler/focaliser
+un item, et d'animer les groupes (éclaté, mouvements articulaires). Un accès rapide
+« bras gauche », « poumons », « œil droit » etc. est disponible.
+
+Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
+vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
+AABB) et produit `docs/analyses/rapport-v2.md`.
 
 ## Installer sur téléphone (PWA)
 

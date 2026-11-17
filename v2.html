@@ -20,6 +20,8 @@
     button.active { background: #1d5d76; border-color: #4fd1e0; color: #eafcff; }
     #sidebar { position: fixed; z-index: 6; left: 14px; top: 132px; bottom: 14px; width: 310px; display: flex; flex-direction: column; gap: 8px; }
     #search { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #29435c; background: #0d1b2b; color: #dce7f2; font: inherit; font-size: 13px; }
+    #shortcuts, #groups { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px; }
+    #shortcuts button, #groups button { font-size: 11px; padding: 4px 8px; }
     #list { flex: 1; overflow: auto; padding: 6px; }
     .group { font-size: 10px; letter-spacing: .1em; color: #5f7f99; text-transform: uppercase; padding: 9px 8px 4px; }
     .item { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #c8d8e6; border-radius: 7px; padding: 6px 8px; font-size: 12px; }
@@ -63,6 +65,8 @@
   </div>
   <div id="sidebar">
     <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
+    <div class="panel" id="shortcuts"></div>
+    <div class="panel" id="groups"></div>
     <div class="panel" id="list"></div>
   </div>
   <div id="label"></div>
@@ -70,12 +74,14 @@
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
     <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
     <div class="sub" id="sel-meta"></div>
-    <div class="chips"><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
+    <div class="chips"><button id="focus">Focus</button><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
+    <div class="chips" id="group-actions" style="display:none"><button id="explode">Éclater</button><button id="move">Mouvement</button><button id="group-reset">Réinitialiser</button></div>
   </div>
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { AnatomyV2Engine } from './src/v2-engine.js';
+    import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -197,6 +203,63 @@
     document.getElementById('search').addEventListener('input', renderList);
     renderList();
 
+    const shortcutsEl = document.getElementById('shortcuts');
+    for (const item of QUICK_ACCESS) {
+      const button = document.createElement('button');
+      button.textContent = item.label;
+      button.addEventListener('click', () => {
+        const first = engine.byId.get(item.ids[0]);
+        if (first) selectStructure(first, true);
+      });
+      shortcutsEl.appendChild(button);
+    }
+    const groupsEl = document.getElementById('groups');
+    let activeGroup = null;
+    let groupAnim = null;
+    for (const group of GROUPS) {
+      const button = document.createElement('button');
+      button.textContent = group.label;
+      button.addEventListener('click', () => {
+        activeGroup = group;
+        engine.resetGroupTransforms();
+        const count = engine.showGroup(group);
+        document.getElementById('sel-name').textContent = group.label;
+        document.getElementById('sel-meta').textContent = `${count} structures · ${group.movement || 'vue de groupe'}`;
+        document.getElementById('group-actions').style.display = 'flex';
+        const members = group.members.map((id) => engine.byId.get(id)).filter(Boolean);
+        const c = members.reduce((acc, s) => {
+          const b = s.bounds;
+          acc.x += (b.min[0] + b.max[0]) / 2;
+          acc.y += (b.min[1] + b.max[1]) / 2;
+          acc.z += (b.min[2] + b.max[2]) / 2;
+          return acc;
+        }, { x: 0, y: 0, z: 0 });
+        const n = Math.max(1, members.length);
+        c.x /= n; c.y /= n; c.z /= n;
+        const dir = camera.position.clone().sub(controls.target).normalize();
+        cameraTween = {
+          fromPos: camera.position.clone(),
+          toPos: new THREE.Vector3(c.x, c.y, c.z).addScaledVector(dir, 1.1),
+          fromTarget: controls.target.clone(),
+          toTarget: new THREE.Vector3(c.x, c.y, c.z),
+          t: 0,
+        };
+      });
+      groupsEl.appendChild(button);
+    }
+    document.getElementById('explode').addEventListener('click', () => {
+      if (activeGroup) groupAnim = { group: activeGroup, mode: 'explode', t: 0, dir: 1 };
+    });
+    document.getElementById('move').addEventListener('click', () => {
+      if (activeGroup) groupAnim = { group: activeGroup, mode: 'movement', t: 0, dir: 1 };
+    });
+    document.getElementById('group-reset').addEventListener('click', () => {
+      groupAnim = null;
+      engine.resetGroupTransforms();
+      if (activeGroup) engine.showGroup(activeGroup);
+      forceCulling = true;
+    });
+
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     let downX = 0, downY = 0;
@@ -214,6 +277,23 @@
         button.classList.toggle('active');
         engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
       });
+    });
+    document.getElementById('focus').addEventListener('click', () => {
+      if (!selected) return;
+      engine.setCategoryVisible(selected.category, true);
+      const dir = camera.position.clone().sub(controls.target).normalize();
+      engine.isolate(selected);
+      const target = engine.focusTarget(selected);
+      if (target) {
+        cameraTween = {
+          fromPos: camera.position.clone(),
+          toPos: target.center.clone().addScaledVector(dir, Math.max(0.25, target.radius * 4)),
+          fromTarget: controls.target.clone(),
+          toTarget: target.center,
+          t: 0,
+        };
+      }
+      forceCulling = true;
     });
     document.getElementById('isolate').addEventListener('click', () => {
       if (selected) { engine.isolate(selected); forceCulling = true; }
@@ -254,6 +334,12 @@
         camera.position.lerpVectors(cameraTween.fromPos, cameraTween.toPos, e);
         controls.target.lerpVectors(cameraTween.fromTarget, cameraTween.toTarget, e);
         if (cameraTween.t >= 1) cameraTween = null;
+      }
+      if (groupAnim) {
+        groupAnim.t += 0.012 * groupAnim.dir;
+        if (groupAnim.t >= 1) { groupAnim.t = 1; groupAnim.dir = -1; }
+        if (groupAnim.t <= 0) { groupAnim.t = 0; groupAnim.dir = 1; }
+        engine.animateGroup(groupAnim.group, groupAnim.t, groupAnim.mode);
       }
       controls.update();
       if (selected) {
