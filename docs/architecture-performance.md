@@ -148,6 +148,18 @@ Le chemin reste expérimental : l'application principale (`index.html`) utilise
 encore le modèle v1 (47 structures) et toutes ses fonctionnalités. La fusion
 des deux interfaces et la qualité adaptative sont les étapes P2/P3.
 
+## Implémentation P2 (qualité adaptative)
+
+- Les lots sont créés avec une réservation égale au plus gros LOD de chaque
+  structure. Au clic, `setStructureLod()` charge le chunk medium ou high et
+  remplace la géométrie de l'instance ; les autres restent en low.
+- Sur mobile (écran < 700 px ou peu de mémoire), le détail chargé est `medium`
+  (1 500 triangles) ; sur desktop, `high` (12 000 triangles).
+- Un gouverneur ajuste le `devicePixelRatio` (1 à 1,5) et le biais LOD du
+  culling selon le coût CPU moyen de `renderer.render()`.
+- Les textures KTX2 ne sont pas encore nécessaires : les sources libres
+  utilisées fournissent des géométries et des matériaux, pas de PBR textures.
+
 ## Phases de migration
 
 | Priorité | Contenu | État |
@@ -155,7 +167,7 @@ des deux interfaces et la qualité adaptative sont les étapes P2/P3.
 | **P0.1** | Inventaire complet des 2 202 structures + prototype Rust/WASM + benchmarks | ✅ fait |
 | **P0.2** | **Jeu de données 3D** : 2 131 structures individuelles en 3 LOD (300 / 1,5 k / 12 k), simplification meshopt, manifest, chunks par catégorie | ✅ fait — voir `docs/jeu-de-donnees-v2.md` |
 | P1 | Moteur `BatchedMesh` + index WASM : 3 lots, picking BVH, culling frustum/LOD, page `/v2.html` | ✅ fait — 3 appels, 1,2 M tris, ~1,2 ms CPU/frame |
-| P2 | Qualité adaptative (governor DPR/LOD), textures KTX2 à la demande | à faire |
+| P2 | Qualité adaptative (gouverneur DPR/LOD, détail à la demande) | ✅ fait — medium sur mobile, high sur desktop |
 | P3 | Explorateur hiérarchique (système → organe → structure) dans l'UI | à faire |
 
 Le **jeu de données** fait donc partie des fondations (P0), au même titre que

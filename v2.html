@@ -40,7 +40,7 @@
         <button id="reset">Recadrer</button>
       </div>
     </div>
-    <div class="panel" id="perf"><div class="title">PERFORMANCE</div><b id="fps">—</b><div class="sub" id="draw">—</div></div>
+    <div class="panel" id="perf"><div class="title">PERFORMANCE</div><b id="fps">—</b><div class="sub" id="draw">—</div><div class="sub" id="quality">qualité —</div></div>
   </div>
   <div class="overlay panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
@@ -84,23 +84,40 @@
 
     let visibleCount = engine.updateVisibility(camera);
     let lastCamera = camera.position.clone();
+    let detailStructure = null;
+    let forceCulling = false;
+    let lodBias = 1;
+    let pixelRatio = Math.min(devicePixelRatio, 1.5);
+    renderer.setPixelRatio(pixelRatio);
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     let selected = null;
 
-    renderer.domElement.addEventListener('pointerdown', (event) => {
+    renderer.domElement.addEventListener('pointerdown', async (event) => {
       pointer.x = (event.clientX / innerWidth) * 2 - 1;
       pointer.y = -(event.clientY / innerHeight) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
       selected = engine.pick(raycaster);
+      if (detailStructure && detailStructure !== selected) {
+        await engine.setStructureLod(detailStructure, 'low');
+      }
       if (!selected) {
+        detailStructure = null;
         document.getElementById('sel-name').textContent = 'Aucune structure sous le curseur.';
         document.getElementById('sel-meta').textContent = '';
         return;
       }
       document.getElementById('sel-name').textContent = selected.fr || selected.en;
-      document.getElementById('sel-meta').textContent =
-        `${selected.category} · TA2 ${selected.ta2 || '—'} · ${selected.lod.low.indexCount / 3} triangles`;
+      document.getElementById('sel-meta').textContent = `${selected.category} · TA2 ${selected.ta2 || '—'}`;
+      const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
+      if (selected.lod?.[detailLevel]) {
+        document.getElementById('sel-meta').textContent += ' · chargement du détail…';
+        const ok = await engine.setStructureLod(selected, detailLevel);
+        detailStructure = selected;
+        document.getElementById('sel-meta').textContent =
+          `${selected.category} · TA2 ${selected.ta2 || '—'} · ${ok ? selected.lod[detailLevel].indexCount / 3 : selected.lod.low.indexCount / 3} triangles (${detailLevel})`;
+        forceCulling = true; // refresh du culling après le changement de géométrie
+      }
     });
 
     document.querySelectorAll('[data-cat]').forEach((button) => {
@@ -122,24 +139,45 @@
     });
 
     let frames = 0, last = performance.now();
+    let frameSum = 0, frameCount = 0;
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
+    const qualityEl = document.getElementById('quality');
+    const maxRatio = Math.min(devicePixelRatio, 1.5);
     function loop() {
       requestAnimationFrame(loop);
       controls.update();
-      if (camera.position.distanceToSquared(lastCamera) > 1e-6) {
+      if (camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) {
         lastCamera.copy(camera.position);
-        visibleCount = engine.updateVisibility(camera);
+        forceCulling = false;
+        visibleCount = engine.updateVisibility(camera, lodBias);
       }
       const t0 = performance.now();
       renderer.render(scene, camera);
       const renderMs = performance.now() - t0;
       frames++;
+      frameSum += renderMs;
+      frameCount++;
       const now = performance.now();
       if (now - last >= 500) {
+        const avg = frameSum / Math.max(1, frameCount);
+        /* Gouverneur thermique : on réduit la résolution et le nombre de
+         * structures détaillées si le coût de rendu dépasse le budget. */
+        if (avg > 8 && pixelRatio > 1) {
+          pixelRatio = Math.max(1, pixelRatio - 0.25);
+          renderer.setPixelRatio(pixelRatio);
+          lodBias = Math.max(0.6, lodBias - 0.1);
+          forceCulling = true;
+        } else if (avg < 3.5 && pixelRatio < maxRatio) {
+          pixelRatio = Math.min(maxRatio, pixelRatio + 0.25);
+          renderer.setPixelRatio(pixelRatio);
+          lodBias = Math.min(1, lodBias + 0.1);
+          forceCulling = true;
+        }
         fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
-        drawEl.textContent = `${renderer.info.render.calls} appels · ${Math.round(renderer.info.render.triangles / 1000)}k tris · ${visibleCount} visibles · ${renderMs.toFixed(1)} ms CPU`;
-        frames = 0; last = now;
+        drawEl.textContent = `${renderer.info.render.calls} appels · ${Math.round(renderer.info.render.triangles / 1000)}k tris · ${visibleCount} visibles · ${avg.toFixed(1)} ms CPU`;
+        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)}`;
+        frames = 0; frameSum = 0; frameCount = 0; last = now;
       }
     }
     loop();

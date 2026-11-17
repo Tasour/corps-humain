@@ -50,6 +50,8 @@ export class AnatomyV2Engine {
     this.instanceToStructure = new Map();
     this.structureToInstance = new Map();
     this.visibleBuffer = null;
+    this.lodBuffers = new Map();
+    this.geometryIds = new Map();
     this.currentVisible = new Set();
     this.frustum = new THREE.Frustum();
     this.projScreen = new THREE.Matrix4();
@@ -122,8 +124,11 @@ export class AnatomyV2Engine {
       if (!list.length) continue;
       let vertexCount = 0, indexCount = 0;
       for (const s of list) {
-        vertexCount += s._geometry.attributes.position.count;
-        indexCount += s._geometry.index.count;
+        /* On réserve la place du plus gros LOD pour pouvoir remplacer la
+         * géométrie d'une instance sans reconstruire le lot. */
+        const levels = Object.values(s.lod || {});
+        vertexCount += Math.max(...levels.map((r) => r.vertexCount || 0));
+        indexCount += Math.max(...levels.map((r) => r.indexCount || 0));
       }
       const material = new THREE.MeshStandardMaterial({
         color: CATEGORY_COLORS[category] || "#ffffff",
@@ -136,9 +141,15 @@ export class AnatomyV2Engine {
       batch.perObjectFrustumCulled = true;
       const matrix = new THREE.Matrix4();
       for (const structure of list) {
-        const geometryId = batch.addGeometry(structure._geometry);
+        const levels = Object.values(structure.lod || {});
+        const maxVertices = Math.max(...levels.map((r) => r.vertexCount || 0));
+        const maxIndices = Math.max(...levels.map((r) => r.indexCount || 0));
+        const geometryId = batch.addGeometry(structure._geometry, maxVertices, maxIndices);
         const instanceId = batch.addInstance(geometryId);
         batch.setMatrixAt(instanceId, matrix);
+        this.geometryIds.set(structure.id, { category, geometryId });
+        structure._geometryId = geometryId;
+        structure._activeLod = this.lod;
         this.instanceToStructure.set(`${category}:${instanceId}`, structure);
         this.structureToInstance.set(structure._index, { category, instanceId });
       }
@@ -217,6 +228,33 @@ export class AnatomyV2Engine {
     }
     this.currentVisible = next;
     return count;
+  }
+
+  /* Charge (une seule fois) le chunk d'un niveau de détail pour une catégorie. */
+  async ensureLod(category, lod) {
+    const key = `${category}:${lod}`;
+    if (this.lodBuffers.has(key)) return this.lodBuffers.get(key);
+    const buffer = await loadBinary(`${this.base}${category}.${lod}.bin.gz`);
+    this.lodBuffers.set(key, buffer);
+    return buffer;
+  }
+
+  /* Remplace la géométrie d'une structure par un niveau plus fin. */
+  async setStructureLod(structure, lod) {
+    if (!structure?._geometryId || structure._activeLod === lod) return false;
+    const record = structure.lod?.[lod];
+    if (!record) return false;
+    const ref = this.geometryIds.get(structure.id);
+    if (!ref) return false;
+    const buffer = await this.ensureLod(ref.category, lod);
+    const geometry = geometryFromRecord(buffer, record);
+    const batch = this.batches.get(ref.category);
+    if (!batch) return false;
+    batch.setGeometryAt(structure._geometryId, geometry);
+    batch.computeBoundingBox();
+    batch.computeBoundingSphere();
+    structure._activeLod = lod;
+    return true;
   }
 
   setCategoryVisible(category, visible) {

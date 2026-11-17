@@ -101,7 +101,9 @@ batching (`bench/batching.html`) l'accompagnent.
 Le **jeu de données v2** (2 131 structures × 3 niveaux de détail) est décrit dans
 [`docs/jeu-de-donnees-v2.md`](docs/jeu-de-donnees-v2.md) et généré via `npm run models:v2`.
 Une démonstration de l'atlas complet avec rendu groupé et picking WASM est disponible
-sur `/v2.html` (3 appels de rendu, ~1,2 ms CPU/frame pour 1,2 M triangles).
+sur `/v2.html` (3 appels de rendu, ~1,2 ms CPU/frame pour 1,2 M triangles). Le détail
+d'une structure se charge à la demande (medium sur mobile, high sur desktop) et un
+gouverneur ajuste résolution et LOD selon le coût de rendu.
 
 ## Installer sur téléphone (PWA)
 
