@@ -70,7 +70,7 @@
     .group { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #9aa7ad; padding: 10px 8px 5px; }
     /* ---------- vue 3D ---------- */
     .viewport { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fdfbf7 0%, #efe9df 72%, #e5ddd1 100%); }
-    .viewport canvas { display: block; width: 100%; height: 100%; }
+    .viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
     .view-toolbar {
       position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 6px; padding: 7px; background: rgba(255,253,249,.92);
@@ -149,7 +149,7 @@
       .anim-bar { bottom: 12px; }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-BTFg2KaG.js"></script>
+  <script type="module" crossorigin src="./assets/v2-DDVxA46E.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-gz_bSIhd.js">
 </head>
 <body>
@@ -183,7 +183,7 @@
         <button id="isolate">Isoler</button>
         <button id="clear-iso">Tout afficher</button>
         <button id="pivot">Pivot : item</button>
-        <button data-cat="skin" class="active">Peau</button>
+        <button data-cat="skin">Peau</button>
         <button data-cat="bone">Os</button>
         <button data-cat="muscle">Muscles</button>
         <button data-cat="organ" class="active">Organes</button>
