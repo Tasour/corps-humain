@@ -2,10 +2,11 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v4";
+const CACHE_VERSION = "corps-v7";
 const SHELL = [
   "./",
   "./index.html",
+  "./v2.html",
   "./manifest.webmanifest",
   "./favicon.svg",
   "./icons/icon-192.png",
@@ -16,7 +17,15 @@ const SHELL = [
 
 /* Modèles anatomiques BodyParts3D + Z-Anatomy : volumineux, mis en cache
  * séparément pour qu'un échec ne bloque pas l'installation du shell. */
-const MODELS = ["./models/anatomy.json", "./models/anatomy.bin.gz"];
+const MODELS = [
+  "./models/anatomy.json",
+  "./models/anatomy.bin.gz",
+  "./models/v2/manifest.json",
+  "./models/v2/bone.low.bin.gz",
+  "./models/v2/muscle.low.bin.gz",
+  "./models/v2/organ.low.bin.gz",
+  "./models/v2/skin.low.bin.gz",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -25,10 +34,26 @@ self.addEventListener("install", (event) => {
       await cache.addAll(SHELL);
       /* Pré-cache les assets hachés référencés par index.html. */
       try {
-        const response = await fetch("./index.html", { cache: "reload" });
-        const html = await response.text();
-        const assets = [...html.matchAll(/(?:src|href)="(\.\/assets\/[^"]+)"/g)].map((match) => match[1]);
-        await Promise.all([...new Set(assets)].map((asset) => cache.add(asset).catch(() => {})));
+        const assets = new Set();
+        for (const page of ["./index.html", "./v2.html"]) {
+          const response = await fetch(page, { cache: "reload" });
+          const html = await response.text();
+          for (const match of html.matchAll(/(?:src|href)="(\.\/assets\/[^"]+)"/g)) {
+            assets.add(match[1]);
+          }
+        }
+        /* Le module WASM est référencé depuis le JS, pas depuis le HTML :
+           on le découvre en scannant les scripts precachés. */
+        for (const asset of [...assets]) {
+          if (!asset.endsWith(".js")) continue;
+          try {
+            const source = await (await fetch(asset)).text();
+            for (const match of source.matchAll(/(corps_core_bg-[^"']+\.wasm)/g)) {
+              assets.add(`./assets/${match[1]}`);
+            }
+          } catch { /* le fichier sera mis en cache à la volée */ }
+        }
+        await Promise.all([...assets].map((asset) => cache.add(asset).catch(() => {})));
       } catch {
         /* le shell reste utilisable, les assets seront mis en cache à la volée */
       }

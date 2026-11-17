@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>CORPS — Atlas complet v2</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #070d16; color: #dce7f2; font: 14px/1.45 system-ui, sans-serif; overflow: hidden; }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+    .overlay { position: fixed; z-index: 5; pointer-events: none; }
+    .top { top: 14px; left: 14px; right: 14px; display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
+    .panel { pointer-events: auto; background: rgba(9,18,30,.82); border: 1px solid #21384f; border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(6px); }
+    .title { font-weight: 700; letter-spacing: .12em; font-size: 12px; color: #67e8f9; }
+    .sub { color: #8297ad; font-size: 12px; margin-top: 2px; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    button { pointer-events: auto; cursor: pointer; border: 1px solid #29435c; background: #102033; color: #cfe0ee; border-radius: 999px; padding: 5px 11px; font: inherit; font-size: 12px; }
+    button.active { background: #1d5d76; border-color: #4fd1e0; color: #eafcff; }
+    #info { bottom: 14px; left: 14px; width: min(340px, calc(100vw - 28px)); }
+    #perf { top: 14px; right: 14px; text-align: right; font-variant-numeric: tabular-nums; }
+    #perf b { color: #7ee7c7; font-size: 18px; }
+    #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 10; transition: opacity .4s; }
+    #loading.hidden { opacity: 0; pointer-events: none; }
+  </style>
+  <script type="module" crossorigin src="./assets/v2-qRm4U1La.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/OrbitControls-DP8_PodO.js">
+</head>
+<body>
+  <div id="app"></div>
+  <div id="loading"><div class="panel"><div class="title">CORPS · ATLAS COMPLET V2</div><div class="sub" id="load-text">Chargement…</div></div></div>
+  <div class="overlay top">
+    <div class="panel">
+      <div class="title">CORPS — ATLAS COMPLET</div>
+      <div class="sub" id="count">— structures</div>
+      <div class="chips">
+        <button data-cat="bone" class="active">Os</button>
+        <button data-cat="muscle" class="active">Muscles</button>
+        <button data-cat="organ" class="active">Organes</button>
+        <button data-cat="skin">Peau</button>
+        <button id="reset">Recadrer</button>
+      </div>
+    </div>
+    <div class="panel" id="perf"><div class="title">PERFORMANCE</div><b id="fps">—</b><div class="sub" id="draw">—</div></div>
+  </div>
+  <div class="overlay panel" id="info">
+    <div class="title">STRUCTURE SÉLECTIONNÉE</div>
+    <div class="sub" id="sel-name">Cliquez sur une structure.</div>
+    <div class="sub" id="sel-meta"></div>
+  </div>
+</body>
+</html>
