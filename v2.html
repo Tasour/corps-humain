@@ -375,11 +375,19 @@
          * synchrone et ne bloque pas l'action suivante. */
         setTimeout(async () => {
           if (generation !== selectGeneration) return;
-          const ok = await engine.setStructureLod(structure, level);
-          if (generation !== selectGeneration) return;
-          detailStructure = structure;
-          document.getElementById('sel-meta').textContent =
-            `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[level].indexCount / 3 : structure.lod.low.indexCount / 3} tris`;
+          try {
+            const ok = await engine.setStructureLod(structure, level);
+            if (generation !== selectGeneration) return;
+            detailStructure = structure;
+            document.getElementById('sel-meta').textContent =
+              `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[level].indexCount / 3 : structure.lod.low.indexCount / 3} tris`;
+          } catch {
+            /* Détail indisponible (réseau lent/503) : on garde le LOD courant. */
+            if (generation === selectGeneration) {
+              document.getElementById('sel-meta').textContent =
+                `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'} · ${structure.lod.low.indexCount / 3} tris (détail indisponible)`;
+            }
+          }
         }, 60);
       }
       forceCulling = true;
@@ -429,7 +437,7 @@
         engine.resetGroupTransforms();
         const count = engine.showGroup(group);
         const level = innerWidth < 820 ? 'medium' : 'high';
-        await engine.setGroupLod(group, level);
+        try { await engine.setGroupLod(group, level); } catch { /* garde le LOD courant */ }
         document.getElementById('sel-name').textContent = group.label;
         document.getElementById('sel-meta').textContent = `${count} structures · ${group.movement || 'vue de groupe'}`;
         document.getElementById('group-actions').style.display = 'flex';
