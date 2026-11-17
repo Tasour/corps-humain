@@ -10,43 +10,64 @@
     body { margin: 0; background: #070d16; color: #dce7f2; font: 14px/1.45 system-ui, sans-serif; overflow: hidden; }
     #app { position: fixed; inset: 0; }
     canvas { display: block; }
-    .overlay { position: fixed; z-index: 5; pointer-events: none; }
-    .top { top: 14px; left: 14px; right: 14px; display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
-    .panel { pointer-events: auto; background: rgba(9,18,30,.82); border: 1px solid #21384f; border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(6px); }
-    .title { font-weight: 700; letter-spacing: .12em; font-size: 12px; color: #67e8f9; }
+    .panel { background: rgba(9,18,30,.86); border: 1px solid #21384f; border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(6px); }
+    .title { font-weight: 700; letter-spacing: .12em; font-size: 11px; color: #67e8f9; }
     .sub { color: #8297ad; font-size: 12px; margin-top: 2px; }
+    .top { position: fixed; z-index: 6; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; gap: 10px; pointer-events: none; }
+    .top > * { pointer-events: auto; }
     .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    button { pointer-events: auto; cursor: pointer; border: 1px solid #29435c; background: #102033; color: #cfe0ee; border-radius: 999px; padding: 5px 11px; font: inherit; font-size: 12px; }
+    button { cursor: pointer; border: 1px solid #29435c; background: #102033; color: #cfe0ee; border-radius: 999px; padding: 5px 11px; font: inherit; font-size: 12px; }
     button.active { background: #1d5d76; border-color: #4fd1e0; color: #eafcff; }
-    #info { bottom: 14px; left: 14px; width: min(340px, calc(100vw - 28px)); }
-    #perf { top: 14px; right: 14px; text-align: right; font-variant-numeric: tabular-nums; }
+    #sidebar { position: fixed; z-index: 6; left: 14px; top: 132px; bottom: 14px; width: 310px; display: flex; flex-direction: column; gap: 8px; }
+    #search { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #29435c; background: #0d1b2b; color: #dce7f2; font: inherit; font-size: 13px; }
+    #list { flex: 1; overflow: auto; padding: 6px; }
+    .group { font-size: 10px; letter-spacing: .1em; color: #5f7f99; text-transform: uppercase; padding: 9px 8px 4px; }
+    .item { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #c8d8e6; border-radius: 7px; padding: 6px 8px; font-size: 12px; }
+    .item:hover { background: #16293d; }
+    .item.active { background: #1c5369; color: #eafcff; }
+    .item small { color: #6e8aa4; margin-left: 6px; }
+    #info { position: fixed; z-index: 6; right: 14px; bottom: 14px; width: min(330px, calc(100vw - 28px)); }
+    #perf { min-width: 240px; }
     #perf b { color: #7ee7c7; font-size: 18px; }
-    #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 10; transition: opacity .4s; }
+    #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
     #loading.hidden { opacity: 0; pointer-events: none; }
+    #mobile-toggle { display: none; }
+    @media (max-width: 700px) {
+      #sidebar { left: 8px; right: 8px; top: 130px; bottom: 120px; width: auto; display: none; }
+      #sidebar.open { display: flex; }
+      #mobile-toggle { display: inline-block; }
+      #info { right: 8px; bottom: 8px; }
+      .top { left: 8px; right: 8px; top: 8px; }
+    }
   </style>
-  <script type="module" crossorigin src="./assets/v2-EHMvx_C-.js"></script>
+  <script type="module" crossorigin src="./assets/v2-CjbWn0QN.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-DP8_PodO.js">
 </head>
 <body>
   <div id="app"></div>
   <div id="loading"><div class="panel"><div class="title">CORPS · ATLAS COMPLET V2</div><div class="sub" id="load-text">Chargement…</div></div></div>
-  <div class="overlay top">
+  <div class="top">
     <div class="panel">
       <div class="title">CORPS — ATLAS COMPLET</div>
       <div class="sub" id="count">— structures</div>
       <div class="chips">
-        <button data-cat="bone" class="active">Os</button>
-        <button data-cat="muscle" class="active">Muscles</button>
+        <button data-cat="bone">Os</button>
+        <button data-cat="muscle">Muscles</button>
         <button data-cat="organ" class="active">Organes</button>
-        <button data-cat="skin">Peau</button>
+        <button data-cat="skin" class="active">Peau</button>
+        <button id="mobile-toggle">Explorer</button>
         <button id="reset">Recadrer</button>
       </div>
     </div>
     <div class="panel" id="perf"><div class="title">PERFORMANCE</div><b id="fps">—</b><div class="sub" id="draw">—</div><div class="sub" id="quality">qualité —</div></div>
   </div>
-  <div class="overlay panel" id="info">
+  <div id="sidebar">
+    <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
+    <div class="panel" id="list"></div>
+  </div>
+  <div class="panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
-    <div class="sub" id="sel-name">Cliquez sur une structure.</div>
+    <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
     <div class="sub" id="sel-meta"></div>
   </div>
 </body>
