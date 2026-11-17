@@ -20,6 +20,8 @@
     button.active { background: #1d5d76; border-color: #4fd1e0; color: #eafcff; }
     #sidebar { position: fixed; z-index: 6; left: 14px; top: 132px; bottom: 14px; width: 310px; display: flex; flex-direction: column; gap: 8px; }
     #search { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #29435c; background: #0d1b2b; color: #dce7f2; font: inherit; font-size: 13px; }
+    #shortcuts, #groups { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px; }
+    #shortcuts button, #groups button { font-size: 11px; padding: 4px 8px; }
     #list { flex: 1; overflow: auto; padding: 6px; }
     .group { font-size: 10px; letter-spacing: .1em; color: #5f7f99; text-transform: uppercase; padding: 9px 8px 4px; }
     .item { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #c8d8e6; border-radius: 7px; padding: 6px 8px; font-size: 12px; }
@@ -42,8 +44,8 @@
       .top { left: 8px; right: 8px; top: 8px; }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-CocqETys.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/OrbitControls-DP8_PodO.js">
+  <script type="module" crossorigin src="./assets/v2-BuTlgHV7.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/OrbitControls-BkaG9KvR.js">
 </head>
 <body>
   <div id="app"></div>
@@ -65,6 +67,8 @@
   </div>
   <div id="sidebar">
     <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
+    <div class="panel" id="shortcuts"></div>
+    <div class="panel" id="groups"></div>
     <div class="panel" id="list"></div>
   </div>
   <div id="label"></div>
@@ -72,7 +76,8 @@
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
     <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
     <div class="sub" id="sel-meta"></div>
-    <div class="chips"><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
+    <div class="chips"><button id="focus">Focus</button><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
+    <div class="chips" id="group-actions" style="display:none"><button id="explode">Éclater</button><button id="move">Mouvement</button><button id="group-reset">Réinitialiser</button></div>
   </div>
 </body>
 </html>
