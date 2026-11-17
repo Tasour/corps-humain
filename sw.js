@@ -2,7 +2,7 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v21";
+const CACHE_VERSION = "corps-v22";
 const SHELL = [
   "./",
   "./index.html",
