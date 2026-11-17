@@ -90,6 +90,14 @@ chaque structure le meilleur modèle 3D (Z-Anatomy ou BodyParts3D), est fourni d
   (1 251 structures canoniques), noms TA2 français/latin, triangles, meilleur modèle
   et alternatives.
 
+### Performance et passage à l'échelle
+
+L'architecture pour afficher l'intégralité des structures sans surchauffe est décrite dans
+[`docs/architecture-performance.md`](docs/architecture-performance.md) : rendu groupé
+`BatchedMesh`, moteur Rust→WASM pour le picking et le culling, niveaux de détail et
+budget thermique. Un prototype WASM (`wasm/corps-core`, 37 Ko) et un benchmark de
+batching (`bench/batching.html`) l'accompagnent.
+
 ## Installer sur téléphone (PWA)
 
 L'application est une **Progressive Web App** : elle peut être installée depuis le navigateur,

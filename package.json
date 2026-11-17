@@ -7,7 +7,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "models": "node scripts/build-anatomy-models.mjs"
+    "models": "node scripts/build-anatomy-models.mjs",
+    "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core"
   },
   "dependencies": {
     "three": "^0.187.0"

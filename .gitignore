@@ -2,5 +2,6 @@ node_modules/
 dist/
 zanatomy-export/
 zanatomy-objects.json
+wasm/*/target/
 .DS_Store
 *.log

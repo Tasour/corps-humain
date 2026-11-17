@@ -1,0 +1,54 @@
+<!doctype html><meta charset="utf-8"><title>bench batching</title>
+<script type="module">
+import * as THREE from 'three';
+const N = 2200, GROUPS = 12;
+const renderer = new THREE.WebGLRenderer({ antialias: false });
+renderer.setSize(900, 700); document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x101820);
+const camera = new THREE.PerspectiveCamera(40, 900/700, 0.05, 20);
+camera.position.set(0, 1, 2.6); camera.lookAt(0,1,0);
+scene.add(new THREE.HemisphereLight(0xffffff,0x223344,2));
+const geos = [], colors = [];
+let seed=42; const rnd=()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);
+for (let i=0;i<N;i++){
+  const g = new THREE.SphereGeometry(0.012 + rnd()*0.02, 8, 6);
+  geos.push(g); colors.push(i%GROUPS);
+}
+const mats = Array.from({length:GROUPS},(_,i)=>new THREE.MeshStandardMaterial({color:new THREE.Color().setHSL(i/GROUPS,0.5,0.5)}));
+let mode='individual';
+let roots=[];
+function build(mode){
+  scene.remove(...roots); roots=[];
+  if(mode==='individual'){
+    for(let i=0;i<N;i++){
+      const m=new THREE.Mesh(geos[i],mats[colors[i]]);
+      m.position.set((rnd()-.5)*.6, rnd()*1.8, (rnd()-.5)*.3);
+      roots.push(m); scene.add(m);
+    }
+  } else {
+    const per=Math.ceil(N/GROUPS);
+    for(let g=0;g<GROUPS;g++){
+      const ids=[]; for(let i=0;i<N;i++) if(colors[i]===g) ids.push(i);
+      const g0=geos[ids[0]];const batch=new THREE.BatchedMesh(ids.length, ids.length*g0.attributes.position.count, ids.length*g0.index.count, mats[g]);
+      for(let k=0;k<ids.length;k++){const gid=batch.addGeometry(geos[ids[k]]);const inst=batch.addInstance(gid);batch.setMatrixAt(inst,new THREE.Matrix4().makeTranslation((rnd()-.5)*.6,rnd()*1.8,(rnd()-.5)*.3));}
+      batch.perObjectFrustumCulled=true;
+      roots.push(batch); scene.add(batch);
+    }
+  }
+}
+function measure(mode){
+  build(mode);
+  const times=[];
+  for(let f=0;f<90;f++){
+    camera.position.x = Math.sin(f*0.02)*0.15;
+    camera.lookAt(0,1,0);
+    const t=performance.now(); renderer.render(scene,camera); times.push(performance.now()-t);
+  }
+  times.sort((a,b)=>a-b);
+  return {mode, median:+times[45].toFixed(2), p90:+times[81].toFixed(2), calls:renderer.info.render.calls, tris:renderer.info.render.triangles};
+}
+const res=[measure('individual'), measure('batched')];
+window.__bench = res;
+document.title = 'done';
+console.log(JSON.stringify(res));
+</script>

@@ -1,0 +1,16 @@
+{
+  "name": "corps-core",
+  "type": "module",
+  "description": "Index spatial et culling WASM pour l'atlas CORPS",
+  "version": "0.1.0",
+  "files": [
+    "corps_core_bg.wasm",
+    "corps_core.js",
+    "corps_core.d.ts"
+  ],
+  "main": "corps_core.js",
+  "types": "corps_core.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
