@@ -1,4 +1,5 @@
 node_modules/
 dist/
+zanatomy-export/
 .DS_Store
 *.log

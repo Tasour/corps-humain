@@ -2,7 +2,7 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v3";
+const CACHE_VERSION = "corps-v4";
 const SHELL = [
   "./",
   "./index.html",
@@ -14,8 +14,8 @@ const SHELL = [
   "./icons/apple-touch-icon.png",
 ];
 
-/* Modèles anatomiques BodyParts3D : volumineux, mis en cache séparément
- * pour qu'un échec ne bloque pas l'installation du shell. */
+/* Modèles anatomiques BodyParts3D + Z-Anatomy : volumineux, mis en cache
+ * séparément pour qu'un échec ne bloque pas l'installation du shell. */
 const MODELS = ["./models/anatomy.json", "./models/anatomy.bin.gz"];
 
 self.addEventListener("install", (event) => {

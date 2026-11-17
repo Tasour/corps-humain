@@ -4,16 +4,35 @@ import zlib from "node:zlib";
 import { MeshoptSimplifier } from "meshoptimizer";
 
 /* Génère public/models/anatomy.json + anatomy.bin (.gz) à partir des maillages
- * BodyParts3D 4.0 déjà convertis (mètres / Y-up) du dépôt human-atlas.
+ * BodyParts3D 4.0 déjà convertis (mètres / Y-up) du dépôt human-atlas, complétés
+ * par les maillages Z-Anatomy pour les structures absentes de BodyParts3D
+ * (thyroïde, grand dorsal, abdominaux, obliques).
  *
- * Source : https://github.com/ashemag/human-atlas (public/models)
- * Licence : BodyParts3D, © The Database Center for Life Science, CC BY 4.0
+ * Sources :
+ *   https://github.com/ashemag/human-atlas (public/models) — BodyParts3D
+ *   https://github.com/Z-Anatomy/Models-of-human-anatomy — Z-Anatomy
+ * Licences :
+ *   BodyParts3D, © The Database Center for Life Science, CC BY 4.0
+ *   Z-Anatomy, CC BY-SA 4.0
  *
  * Usage :
- *   ANATOMY_SOURCE=/chemin/vers/human-atlas/public/models npm run models
+ *   ANATOMY_SOURCE=/chemin/vers/human-atlas/public/models \
+ *   ZANATOMY_SOURCE=/chemin/vers/zanatomy-export npm run models
  */
 const SRC = process.env.ANATOMY_SOURCE || "/tmp/opencode/human-atlas/public/models";
+const ZANATOMY_SRC = process.env.ZANATOMY_SOURCE || path.resolve(import.meta.dirname, "../zanatomy-export");
 const OUT = process.env.ANATOMY_OUT || path.resolve(import.meta.dirname, "../public/models");
+
+/* Export Blender de Z-Anatomy : positions/normales Float32, indices Uint32,
+ * déjà convertis en mètres / Y-up (x, z, -y). */
+let zanatomy = null;
+try {
+  const manifest = JSON.parse(fs.readFileSync(path.join(ZANATOMY_SRC, "zanatomy.json"), "utf8"));
+  const buffer = fs.readFileSync(path.join(ZANATOMY_SRC, manifest.bin));
+  zanatomy = { manifest, buffer };
+} catch (error) {
+  console.warn(`Export Z-Anatomy introuvable (${ZANATOMY_SRC}) : ${error.message}`);
+}
 
 const atlas = JSON.parse(fs.readFileSync(path.join(SRC, "atlas.json"), "utf8"));
 const chunkBuffers = atlas.chunks.map((c) =>
@@ -48,6 +67,7 @@ const ENTITIES = {
   vessie: { concepts: ["urinary bladder"], target: 1200 },
   rate: { concepts: ["spleen"], target: 1500 },
   surrenales: { concepts: ["adrenal gland"], target: 2500 },
+  thyroide: { zanatomy: "thyroide", target: 1600 },
 
   crane: { concepts: ["skull"], systems: ["skeletal"], target: 24000 },
   colonne: { concepts: ["vertebral column"], target: 22000 },
@@ -91,6 +111,9 @@ const ENTITIES = {
   quadriceps: { concepts: ["zone of quadriceps femoris"], target: 6000 },
   ischio_jambiers: { patterns: [/semitendinosus|semimembranosus|biceps femoris/i], target: 3500 },
   mollets: { concepts: ["soleus"], patterns: [/gastrocnemius/i], target: 4000 },
+  dorsaux: { zanatomy: "dorsaux", target: 8000 },
+  abdominaux: { zanatomy: "abdominaux", target: 14000 },
+  obliques: { zanatomy: "obliques", target: 9000 },
 };
 
 const SKIN = { concepts: ["skin"], target: 22000 };
@@ -128,6 +151,22 @@ function readPart(part) {
     normals: new Int16Array(buffer.buffer, buffer.byteOffset + part.normals, part.vertexCount * 3),
     indices: new Uint32Array(buffer.buffer, buffer.byteOffset + part.indices, part.indexCount),
   };
+}
+
+function readZanatomy(id) {
+  const record = zanatomy.manifest.entities[id];
+  if (!record) throw new Error(`entité Z-Anatomy absente : ${id}`);
+  const arrayBuffer = zanatomy.buffer.buffer;
+  const base = zanatomy.buffer.byteOffset;
+  const positions = new Float32Array(arrayBuffer, base + record.positions, record.vertexCount * 3);
+  const sourceNormals = new Float32Array(arrayBuffer, base + record.normals, record.vertexCount * 3);
+  const normals = new Int16Array(sourceNormals.length);
+  for (let i = 0; i < sourceNormals.length; i++) {
+    const value = Math.round(sourceNormals[i] * 32767);
+    normals[i] = Math.max(-32767, Math.min(32767, value));
+  }
+  const indices = new Uint32Array(arrayBuffer, base + record.indices, record.indexCount);
+  return { positions, normals, indices, vertexCount: record.vertexCount, indexCount: record.indexCount };
 }
 
 function mergeParts(parts) {
@@ -246,28 +285,54 @@ await MeshoptSimplifier.ready;
 const binary = [];
 let binaryLength = 0;
 const manifest = {
-  version: "BodyParts3D 4.0",
+  version: "BodyParts3D 4.0 + Z-Anatomy",
+  sources: [
+    {
+      name: "BodyParts3D 4.0",
+      url: "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html",
+      license: "CC BY 4.0",
+    },
+    {
+      name: "Z-Anatomy",
+      url: "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+      license: "CC BY-SA 4.0",
+    },
+  ],
   source: "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html",
-  license: "BodyParts3D, © The Database Center for Life Science, CC BY 4.0",
+  license:
+    "BodyParts3D, © The Database Center for Life Science, CC BY 4.0 ; Z-Anatomy, CC BY-SA 4.0",
   bin: "anatomy.bin",
   entities: {},
 };
 let totalTriangles = 0;
 
 for (const [id, spec] of Object.entries(ENTITIES)) {
-  const parts = collectParts(spec);
-  if (!parts.length) {
-    console.warn(`Aucune géométrie pour ${id}`);
-    continue;
+  let geometry;
+  let partCount;
+  if (spec.zanatomy) {
+    if (!zanatomy) {
+      console.warn(`Z-Anatomy indisponible pour ${id}`);
+      continue;
+    }
+    geometry = readZanatomy(spec.zanatomy);
+    partCount = 1;
+  } else {
+    const parts = collectParts(spec);
+    if (!parts.length) {
+      console.warn(`Aucune géométrie pour ${id}`);
+      continue;
+    }
+    geometry = mergeParts(parts);
+    partCount = parts.length;
   }
-  const merged = mergeParts(parts);
-  const simplified = simplifyGeometry(merged, spec.target);
+  const simplified = simplifyGeometry(geometry, spec.target);
   const record = writeEntity(simplified);
-  record.parts = parts.length;
+  record.parts = partCount;
+  if (spec.zanatomy) record.source = "Z-Anatomy";
   manifest.entities[id] = record;
   totalTriangles += record.indexCount / 3;
   console.log(
-    `${id.padEnd(18)} ${String(parts.length).padStart(3)} pièces  ${String(record.indexCount / 3).padStart(6)} tris  ${(record.vertexCount / 1000).toFixed(1)}k verts`,
+    `${id.padEnd(18)} ${String(partCount).padStart(3)} pièces  ${String(record.indexCount / 3).padStart(6)} tris  ${(record.vertexCount / 1000).toFixed(1)}k verts${spec.zanatomy ? "  [Z-Anatomy]" : ""}`,
   );
 }
 

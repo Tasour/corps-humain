@@ -75,6 +75,21 @@ export const MUSCLES = [
       "Les « abdos » ne se dessinent pas en faisant des séries interminables : la visibilité dépend surtout du taux de masse grasse.",
   },
   {
+    id: "obliques",
+    kind: "muscle",
+    name: "Obliques",
+    latin: "Musculus obliquus externus abdominis",
+    system: "musculaire",
+    color: "#b84452",
+    region: "Côtés de l'abdomen",
+    description:
+      "Le grand oblique est une large nappe musculaire qui recouvre les côtés de l'abdomen, des côtes basses au bassin.",
+    role:
+      "Fait tourner et incliner le tronc, comprime les viscères et participe à l'expiration forcée ; il stabilise la colonne avec les autres abdominaux.",
+    funFact:
+      "Ses fibres descendent en diagonale, comme les mains dans les poches : c'est le muscle qui travaille quand on tourne le buste.",
+  },
+  {
     id: "biceps",
     kind: "muscle",
     name: "Biceps brachial",

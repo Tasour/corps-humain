@@ -2,7 +2,8 @@
 
 Atlas 3D interactif en français pour explorer l'anatomie et visualiser l'effet des pathologies.
 Construit avec **Three.js** et **Vite**, il s'appuie sur les maillages libres **BodyParts3D 4.0**
-pour la peau, les organes, les os et les muscles, avec une anatomie procédurale de secours.
+et **Z-Anatomy** pour la peau, les organes, les os et les muscles, avec une anatomie procédurale
+de secours.
 
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
@@ -12,9 +13,9 @@ pour la peau, les organes, les os et les muscles, avec une anatomie procédurale
 
 ## Fonctionnalités
 
-- **Maillages anatomiques réels BodyParts3D** pour 43 structures (organes, os, muscles, peau),
-  chargés progressivement avec repli procédural automatique.
-- **22 organes**, **13 os**, **11 muscles** et **30 pathologies** répartis en 9 systèmes.
+- **Maillages anatomiques réels BodyParts3D + Z-Anatomy** pour 47 structures (organes, os,
+  muscles) et la peau, chargés progressivement avec repli procédural automatique.
+- **22 organes**, **13 os**, **12 muscles** et **30 pathologies** répartis en 9 systèmes.
 - Couches anatomiques : peau, muscles, squelette, organes, étiquettes.
 - **Vue éclatée** : chaque organe se détache pour être observé séparément (slider %).
 - **Coupe anatomique** : retire la partie avant du corps pour visualiser l'intérieur (squelette, organes).
@@ -46,20 +47,37 @@ Les maillages sont pré-générés dans `public/models/` :
 
 - `anatomy.json` — manifeste (entités, offsets, bornes, nombre de triangles) ;
 - `anatomy.bin` — positions Float32, normales Int16 normalisées, indices Uint16/Uint32 ;
-- `anatomy.bin.gz` — même binaire compressé, servi en priorité (~4,9 Mo).
+- `anatomy.bin.gz` — même binaire compressé, servi en priorité (~5,3 Mo).
 
 L'application affiche d'abord l'anatomie procédurale, puis remplace progressivement les
 maillages dès que le binaire est disponible. En cas d'échec, le rendu procédural reste actif.
 
-Pour régénérer les modèles à partir des données BodyParts3D déjà converties
-(dépôt [human-atlas](https://github.com/ashemag/human-atlas)) :
+Le jeu de données combine deux sources :
+
+1. **BodyParts3D 4.0**, via les maillages déjà convertis du dépôt
+   [human-atlas](https://github.com/ashemag/human-atlas), pour la peau, les organes, les os
+   et la majorité des muscles ;
+2. **Z-Anatomy**, pour la thyroïde, le grand dorsal, les abdominaux et les obliques, absents
+   de l'extraction BodyParts3D utilisée.
+
+Pour régénérer les modèles, exporter d'abord les structures Z-Anatomy depuis le fichier
+Blender officiel (`Z-Anatomy/Startup.blend`) :
+
+```bash
+blender -b /chemin/vers/Z-Anatomy/Startup.blend --python scripts/export-zanatomy.py
+```
+
+Puis fusionner les deux sources. L'export Z-Anatomy est lu par défaut dans
+`zanatomy-export/` (variable `ZANATOMY_SOURCE` pour changer ce dossier) :
 
 ```bash
 ANATOMY_SOURCE=/chemin/vers/human-atlas/public/models npm run models
 ```
 
 Le script `scripts/build-anatomy-models.mjs` fusionne les pièces, simplifie avec
-`meshoptimizer`, recentre les géométries et produit le binaire compressé.
+`meshoptimizer`, recentre les géométries et produit le binaire compressé. L'export Z-Anatomy
+convertit les coordonnées Blender (Z-up) vers le repère de l'application (mètres, Y-up) et
+calcule des normales lissées.
 
 ## Installer sur téléphone (PWA)
 
@@ -104,27 +122,39 @@ src/
   data/             pathologies et systèmes
   style.css         interface
 public/
-  models/           maillages BodyParts3D (manifeste + binaire + .gz)
+  models/           maillages BodyParts3D + Z-Anatomy (manifeste + binaire + .gz)
   sw.js             service worker (app shell + modèles hors ligne)
 scripts/
   build-anatomy-models.mjs   extraction, simplification et packaging des modèles
+  export-zanatomy.py         export Blender des structures Z-Anatomy
 ```
 
 ## Sources & crédits
 
-Les maillages 3D proviennent de **[BodyParts3D 4.0](https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html)**,
-© The Database Center for Life Science, diffusés sous licence
-[CC Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
-Ils ont été extraits, fusionnés, simplifiés et convertis en mètres / Y-up pour le web
-(voir `public/models/anatomy.json`). Les structures non disponibles dans BodyParts3D
-(thyroïde, dorsaux, abdominaux) restent générées procéduralement.
+Les maillages 3D proviennent de deux sources libres :
+
+- **[BodyParts3D 4.0](https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html)**,
+  © The Database Center for Life Science, diffusé sous licence
+  [CC Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
+  Les maillages ont été extraits, fusionnés, simplifiés et convertis en mètres / Y-up
+  pour le web (voir `public/models/anatomy.json`).
+- **[Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy)**,
+  « Z-Anatomy — The libre 3D atlas of anatomy », diffusé sous licence
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+  Les maillages Z-Anatomy (thyroïde, grand dorsal, abdominaux, obliques) sont dérivés
+  de BodyParts3D et ont été exportés depuis le fichier Blender officiel, puis simplifiés
+  et convertis dans le même repère.
+
+Le jeu de données combiné `public/models/anatomy.bin` est donc distribué sous
+**CC BY-SA 4.0**, avec attribution de BodyParts3D et de Z-Anatomy. Toute redistribution
+d'un modèle dérivé doit conserver ces attributions et la même licence de partage.
 
 Les contenus pédagogiques sont originaux. Les idées de visualisation s'inspirent de projets libres :
 
 - [ashemag/human-atlas](https://github.com/ashemag/human-atlas) — vue éclatée (slider),
   isolement, comparaison sain / malade, pipeline de conversion des maillages.
-- [Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy) — référence
-  de modélisation anatomique libre.
+- [Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy) — maillages Z-Anatomy
+  et référence de modélisation anatomique libre.
 - [anatomyatelier.org](https://anatomyatelier.org/) — inspiration pédagogique.
 
 ## Avertissement
@@ -134,4 +164,8 @@ En cas de symptômes réels, consultez un professionnel de santé.
 
 ## Licence
 
-Code sous licence MIT — voir [LICENSE](LICENSE).
+Le **code** est sous licence MIT — voir [LICENSE](LICENSE).
+
+Les **maillages anatomiques** de `public/models/` sont sous licence **CC BY-SA 4.0** :
+BodyParts3D 4.0 (© The Database Center for Life Science, CC BY 4.0) et Z-Anatomy
+(CC BY-SA 4.0). Voir `public/models/README.md` pour le détail des attributions.

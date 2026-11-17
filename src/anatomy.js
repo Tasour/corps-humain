@@ -801,6 +801,11 @@ export function buildMuscles() {
         group.add(abs);
       }
     }
+  }
+
+  /* obliques */
+  {
+    const { group, material } = makeGroup("obliques");
     for (const s of [-1, 1]) {
       const oblique = ellipsoid(0.024, 0.085, 0.014, material, 18);
       oblique.position.set(s * 0.095, 1.09, 0.085);

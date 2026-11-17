@@ -42,6 +42,7 @@ export const ARTICLE = {
   pectoraux: "les",
   dorsaux: "les",
   abdominaux: "les",
+  obliques: "les",
   biceps: "le",
   triceps: "le",
   fessiers: "les",
@@ -250,8 +251,11 @@ export function renderHome({ stats, featured, bestDiag, bestHunt }) {
       <div class="block-head"><h3>Sources &amp; crédits</h3></div>
       <p class="muted small">
         Anatomie 3D dérivée de <strong>BodyParts3D 4.0</strong> (Database Center for Life Science,
-        licence CC BY 4.0), complétée par une anatomie procédurale de secours. Contenus
-        pédagogiques originaux. Inspiré par des projets libres d'anatomie 3D&nbsp;:
+        licence CC BY 4.0), complétée pour la thyroïde, le grand dorsal, les abdominaux et les
+        obliques par des maillages <strong>Z-Anatomy</strong> (licence CC BY-SA 4.0), avec une
+        anatomie procédurale de secours. Les maillages combinés sont distribués sous CC BY-SA 4.0&nbsp;;
+        le code reste sous MIT. Contenus pédagogiques originaux. Inspiré par des projets libres
+        d'anatomie 3D&nbsp;:
       </p>
       <ul class="credit-list">
         <li>
@@ -264,7 +268,7 @@ export function renderHome({ stats, featured, bestDiag, bestHunt }) {
         </li>
         <li>
           <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener noreferrer">Z-Anatomy</a>
-          <span>référence de modélisation anatomique libre</span>
+          <span>thyroïde, grand dorsal, abdominaux, obliques — CC BY-SA 4.0</span>
         </li>
         <li>
           <a href="https://anatomyatelier.org/" target="_blank" rel="noopener noreferrer">anatomyatelier.org</a>
