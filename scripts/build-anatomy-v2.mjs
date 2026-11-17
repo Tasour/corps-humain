@@ -24,10 +24,45 @@ const currentBuffer = fs.readFileSync(path.join(CURRENT_MODELS, "anatomy.bin"));
 
 const partByName = new Map(atlas.parts.map((p) => [p.name, p]));
 const allStructures = Object.values(inventory.categories).flat();
-/* Les concepts « région / système » de BodyParts3D (tronc, corps humain,
- * système squelettique…) sont des agrégats de dizaines de structures déjà
- * présentes individuellement : on les exclut du jeu de données de rendu. */
-const structures = allStructures.filter((s) => !(s.bodyParts3D?.parts > 20));
+/* Concepts à exclure du rendu :
+ *  - agrégats « région / système » (> 20 pièces) déjà couverts individuellement ;
+ *  - catégories morphologiques génériques (« os plat », « os court »…) qui ne
+ *    sont pas une structure anatomique unique ;
+ *  - la peau de BodyParts3D, qui est une enveloppe corporelle complète et
+ *    doublerait notre lot `skin` dédié. */
+const EXCLUDED_CONCEPTS = new Set([
+  "organ:bp-skin",
+  "organ:bp-skin-appendage",
+  "bone:bp-investing-fascia-l",
+  "bone:bp-investing-fascia-r",
+  "bone:bp-flat-bone",
+  "bone:bp-flat-bone-l",
+  "bone:bp-flat-bone-r",
+  "bone:bp-short-bone-l",
+  "bone:bp-short-bone-r",
+  "bone:bp-irregular-bone",
+  "bone:bp-irregular-bone-l",
+  "bone:bp-irregular-bone-r",
+  "bone:bp-long-bone-l",
+  "bone:bp-long-bone-r",
+  "bone:bp-sesamoid-bone-l",
+  "bone:bp-sesamoid-bone-r",
+  /* Régions anatomiques génériques, pas des structures individuelles. */
+  "bone:bp-abdomen",
+  "bone:bp-abdomen-l",
+  "bone:bp-abdomen-r",
+  "bone:bp-back-of-abdomen",
+  "bone:bp-neck",
+  "muscle:bp-pelvis",
+  "muscle:bp-pelvis-l",
+  "muscle:bp-pelvis-r",
+  "organ:bp-nerve-trunk",
+  "organ:bp-nerve-trunk-l",
+  "organ:bp-nerve-trunk-r",
+]);
+const structures = allStructures.filter(
+  (s) => !(s.bodyParts3D?.parts > 20) && !EXCLUDED_CONCEPTS.has(s.id),
+);
 const excludedAggregates = allStructures.length - structures.length;
 
 const LOD = {

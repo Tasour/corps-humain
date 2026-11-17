@@ -1,7 +1,7 @@
 # Jeu de données v2 — atlas 3D complet
 
 Le jeu de données v2 est la matière première de la nouvelle architecture
-(voir `docs/architecture-performance.md`). Il contient **2 131 structures
+(voir `docs/architecture-performance.md`). Il contient **2 107 structures
 anatomiques individuelles**, chacune en **3 niveaux de détail**, contre 47
 structures / 1 niveau dans la version actuelle.
 
@@ -56,24 +56,33 @@ sont pas simplifiées.
 
 | Catégorie | low gz | medium gz | high gz |
 |---|---:|---:|---:|
-| Os | 2,7 Mo | 5,2 Mo | 12,4 Mo |
+| Os | 2,3 Mo | 4,8 Mo | 11,3 Mo |
 | Muscles | 2,8 Mo | 8,9 Mo | 22,6 Mo |
-| Organes | 9,9 Mo | 16,1 Mo | 28,5 Mo |
+| Organes | 9,8 Mo | 15,9 Mo | 28,2 Mo |
 | Peau | < 0,1 Mo | < 0,1 Mo | 0,2 Mo |
-| **Total** | **15,4 Mo** | **30,2 Mo** | **63,7 Mo** |
+| **Total** | **14,9 Mo** | **29,6 Mo** | **62,3 Mo** |
 
 Seul le niveau `low` est nécessaire au démarrage. Les niveaux supérieurs sont
 chargés à la demande, par catégorie.
 
 ## Structures exclues
 
-71 concepts « région / système » de BodyParts3D (`Corps humain`, `Tronc`,
-`Système squelettique`, `Membre supérieur gauche`…) sont des **agrégats** de
-plus de 20 structures déjà présentes individuellement. Ils sont conservés dans
-l'inventaire (`docs/inventaire-anatomique/`) mais **exclus du jeu de données de
-rendu** pour éviter des géométries composites de 50 000 à 180 000 triangles
-qui duplicated leurs propres composants. Le manifeste porte
-`excludedAggregates: 71`.
+95 concepts sont conservés dans l'inventaire mais **exclus du jeu de données de
+rendu** (`excludedAggregates: 95`) :
+
+- les **agrégats « région / système »** de plus de 20 pièces (`Corps humain`,
+  `Tronc`, `Système squelettique`, `Membre supérieur gauche`…) ;
+- les **catégories morphologiques génériques** (`os plat`, `os court`,
+  `os long`, `os irrégulier`, `os sésamoïde`, `fascia engainant`) qui ne
+  désignent pas une structure unique ;
+- les **régions génériques** (`abdomen`, `dos de l'abdomen`, `cou`, `bassin`,
+  `tronc`) qui apparaissaient en double dans la liste sans être des structures ;
+- la **peau de BodyParts3D** (`skin`, `skin appendages`) : c'est une enveloppe
+  corporelle complète qui recouvrait tout le modèle en orange et doublait le
+  lot `skin` dédié.
+
+Sans ces exclusions, le rendu affichait une enveloppe orangée sur tout le corps
+et des doublons de structures déjà présentes individuellement.
 
 ## Régénération
 

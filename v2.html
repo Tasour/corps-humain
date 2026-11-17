@@ -143,8 +143,9 @@
         const sub = key.includes(':') ? subsystemLabels[key.split(':')[1]] || key.split(':')[1] : '';
         html += `<div class="group">${labels[cat] || cat}${sub ? ' · ' + sub : ''} (${items.length})</div>`;
         for (const s of items) {
+          const side = s.side === 'left' ? ' · G' : s.side === 'right' ? ' · D' : '';
           html += `<button class="item${selected === s ? ' active' : ''}" data-id="${s.id}">` +
-            `${s.fr || s.en}<small>${s.ta2 || ''}</small></button>`;
+            `${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
         }
       }
       if (!matches.length) html = '<div class="group">Aucun résultat</div>';
@@ -168,12 +169,13 @@
       engine.highlight(structure, '#7ef9ff');
       const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
       document.getElementById('sel-name').textContent = structure.fr || structure.en;
-      document.getElementById('sel-meta').textContent = `${labels[structure.category] || ''} · TA2 ${structure.ta2 || '—'} · chargement…`;
+      const sideLabel = structure.side === 'left' ? ' · G' : structure.side === 'right' ? ' · D' : '';
+      document.getElementById('sel-meta').textContent = `${labels[structure.category] || ''}${sideLabel} · TA2 ${structure.ta2 || '—'} · chargement…`;
       if (structure.lod?.[detailLevel]) {
         const ok = await engine.setStructureLod(structure, detailLevel);
         detailStructure = structure;
         document.getElementById('sel-meta').textContent =
-          `${labels[structure.category] || ''} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[detailLevel].indexCount / 3 : structure.lod.low.indexCount / 3} tris (${detailLevel})`;
+          `${labels[structure.category] || ''}${sideLabel} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[detailLevel].indexCount / 3 : structure.lod.low.indexCount / 3} tris (${detailLevel})`;
       }
       forceCulling = true;
       if (focus) {

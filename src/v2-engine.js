@@ -2,7 +2,7 @@ import * as THREE from "three";
 import initWasm, { AnatomyIndex } from "./wasm/corps-core/corps_core.js";
 
 /* Moteur de rendu v2 :lots BatchedMesh + index spatial WASM.
- * Charge le jeu de données 2 131 structures, construit un lot par catégorie,
+ * Charge le jeu de données 2 107 structures, construit un lot par catégorie,
  * et fournit picking (BVH) et culling/LOD (frustum) pour la boucle de rendu.
  */
 const CATEGORY_COLORS = {
@@ -12,6 +12,16 @@ const CATEGORY_COLORS = {
   skin: "#67e8f9",
 };
 const CATEGORY_ORDER = ["bone", "muscle", "organ", "skin"];
+
+function colorFor(structure) {
+  if (structure.category !== "organ") return CATEGORY_COLORS[structure.category];
+  const sub = (structure.subsystem || "").toLowerCase();
+  const name = (structure.en || "").toLowerCase();
+  if (/nerv|sens|gyrus|sulcus|brain|nerve|spinal|dura|meninx|plexus/.test(sub + " " + name)) return "#7a76a8";
+  if (/cardiac|arter|vein|venous|lymph/.test(sub + " " + name)) return "#d45a63";
+  if (/respirat|digest|urinary|reproduct|endocrine|visceral/.test(sub)) return "#d98f4a";
+  return CATEGORY_COLORS.organ;
+}
 
 async function loadBinary(url) {
   const response = await fetch(url);
@@ -76,7 +86,8 @@ export class AnatomyV2Engine {
     const buffers = {};
     for (const category of categories) {
       /* La peau reste lisse même en vue d'ensemble : on prend son niveau medium. */
-      const lodName = category === "skin" ? "medium" : this.lod;
+      /* La peau garde son plus haut LOD : les doigts se déforment dès 1,5 k tris. */
+      const lodName = category === "skin" ? "high" : this.lod;
       const buffer = await loadBinary(`${this.base}${category}.${lodName}.bin.gz`);
       buffers[category] = buffer;
       done++;
@@ -150,6 +161,7 @@ export class AnatomyV2Engine {
         const geometryId = batch.addGeometry(structure._geometry, maxVertices, maxIndices);
         const instanceId = batch.addInstance(geometryId);
         batch.setMatrixAt(instanceId, matrix);
+        batch.setColorAt(instanceId, new THREE.Color(colorFor(structure)));
         this.geometryIds.set(structure.id, { category, geometryId });
         structure._geometryId = geometryId;
         structure._activeLod = this.lod;
@@ -161,8 +173,8 @@ export class AnatomyV2Engine {
     }
 
     /* Peau : un lot séparé, translucide. */
-    if (this.manifest.skin?.lod?.medium) {
-      const skinRecord = this.manifest.skin.lod.medium;
+    if (this.manifest.skin?.lod?.high) {
+      const skinRecord = this.manifest.skin.lod.high;
       const skinGeometry = geometryFromRecord(buffers.skin, skinRecord);
       const material = new THREE.MeshStandardMaterial({
         color: CATEGORY_COLORS.skin,

@@ -136,10 +136,10 @@ La page `/v2.html` (accessible aussi en production) démontre l'atlas complet
 avec contrôles OrbitControls, filtres par catégorie, sélection d'une structure
 et compteur de performance.
 
-**Mesures sur le jeu de données réel** (2 131 structures, niveau `low`,
+**Mesures sur le jeu de données réel** (2 107 structures, niveau `low`,
 Chrome headless, 1 228 k triangles affichés) :
 
-- **3 draw calls** (au lieu de 2 131) ;
+- **3 draw calls** (au lieu de 2 107) ;
 - **~1,2 ms de CPU par `renderer.render()`** ;
 - **1 223 structures visibles** après culling ;
 - picking et culling négligeables dans le budget frame.
@@ -165,7 +165,7 @@ des deux interfaces et la qualité adaptative sont les étapes P2/P3.
 | Priorité | Contenu | État |
 |---|---|---|
 | **P0.1** | Inventaire complet des 2 202 structures + prototype Rust/WASM + benchmarks | ✅ fait |
-| **P0.2** | **Jeu de données 3D** : 2 131 structures individuelles en 3 LOD (300 / 1,5 k / 12 k), simplification meshopt, manifest, chunks par catégorie | ✅ fait — voir `docs/jeu-de-donnees-v2.md` |
+| **P0.2** | **Jeu de données 3D** : 2 107 structures individuelles en 3 LOD (300 / 1,5 k / 12 k), simplification meshopt, manifest, chunks par catégorie | ✅ fait — voir `docs/jeu-de-donnees-v2.md` |
 | P1 | Moteur `BatchedMesh` + index WASM : 3 lots, picking BVH, culling frustum/LOD, page `/v2.html` | ✅ fait — 3 appels, 1,2 M tris, ~1,2 ms CPU/frame |
 | P2 | Qualité adaptative (gouverneur DPR/LOD, détail à la demande) | ✅ fait — medium sur mobile, high sur desktop |
 | P3 | Explorateur hiérarchique (catégorie → sous-système → structure), recherche, cadrage | ✅ fait — voir `/v2.html` |
