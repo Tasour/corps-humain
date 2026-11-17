@@ -231,6 +231,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 7px;
+  text-decoration: none;
   padding: 9px 14px;
   border-radius: 9px;
   border: 1px solid transparent;
