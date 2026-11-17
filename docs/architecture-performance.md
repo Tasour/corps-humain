@@ -168,7 +168,7 @@ des deux interfaces et la qualité adaptative sont les étapes P2/P3.
 | **P0.2** | **Jeu de données 3D** : 2 131 structures individuelles en 3 LOD (300 / 1,5 k / 12 k), simplification meshopt, manifest, chunks par catégorie | ✅ fait — voir `docs/jeu-de-donnees-v2.md` |
 | P1 | Moteur `BatchedMesh` + index WASM : 3 lots, picking BVH, culling frustum/LOD, page `/v2.html` | ✅ fait — 3 appels, 1,2 M tris, ~1,2 ms CPU/frame |
 | P2 | Qualité adaptative (gouverneur DPR/LOD, détail à la demande) | ✅ fait — medium sur mobile, high sur desktop |
-| P3 | Explorateur hiérarchique (système → organe → structure) dans l'UI | à faire |
+| P3 | Explorateur hiérarchique (catégorie → sous-système → structure), recherche, cadrage | ✅ fait — voir `/v2.html` |
 
 Le **jeu de données** fait donc partie des fondations (P0), au même titre que
 l'inventaire et le moteur WASM : sans lui, les couches de rendu et de culling

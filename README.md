@@ -103,7 +103,8 @@ Le **jeu de données v2** (2 131 structures × 3 niveaux de détail) est décrit
 Une démonstration de l'atlas complet avec rendu groupé et picking WASM est disponible
 sur `/v2.html` (3 appels de rendu, ~1,2 ms CPU/frame pour 1,2 M triangles). Le détail
 d'une structure se charge à la demande (medium sur mobile, high sur desktop) et un
-gouverneur ajuste résolution et LOD selon le coût de rendu.
+gouverneur ajuste résolution et LOD selon le coût de rendu. Son explorateur latéral
+permet de rechercher et de cadrer chacune des 2 131 structures.
 
 ## Installer sur téléphone (PWA)
 

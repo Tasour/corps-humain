@@ -10,41 +10,62 @@
     body { margin: 0; background: #070d16; color: #dce7f2; font: 14px/1.45 system-ui, sans-serif; overflow: hidden; }
     #app { position: fixed; inset: 0; }
     canvas { display: block; }
-    .overlay { position: fixed; z-index: 5; pointer-events: none; }
-    .top { top: 14px; left: 14px; right: 14px; display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
-    .panel { pointer-events: auto; background: rgba(9,18,30,.82); border: 1px solid #21384f; border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(6px); }
-    .title { font-weight: 700; letter-spacing: .12em; font-size: 12px; color: #67e8f9; }
+    .panel { background: rgba(9,18,30,.86); border: 1px solid #21384f; border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(6px); }
+    .title { font-weight: 700; letter-spacing: .12em; font-size: 11px; color: #67e8f9; }
     .sub { color: #8297ad; font-size: 12px; margin-top: 2px; }
+    .top { position: fixed; z-index: 6; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; gap: 10px; pointer-events: none; }
+    .top > * { pointer-events: auto; }
     .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    button { pointer-events: auto; cursor: pointer; border: 1px solid #29435c; background: #102033; color: #cfe0ee; border-radius: 999px; padding: 5px 11px; font: inherit; font-size: 12px; }
+    button { cursor: pointer; border: 1px solid #29435c; background: #102033; color: #cfe0ee; border-radius: 999px; padding: 5px 11px; font: inherit; font-size: 12px; }
     button.active { background: #1d5d76; border-color: #4fd1e0; color: #eafcff; }
-    #info { bottom: 14px; left: 14px; width: min(340px, calc(100vw - 28px)); }
-    #perf { top: 14px; right: 14px; text-align: right; font-variant-numeric: tabular-nums; }
+    #sidebar { position: fixed; z-index: 6; left: 14px; top: 132px; bottom: 14px; width: 310px; display: flex; flex-direction: column; gap: 8px; }
+    #search { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #29435c; background: #0d1b2b; color: #dce7f2; font: inherit; font-size: 13px; }
+    #list { flex: 1; overflow: auto; padding: 6px; }
+    .group { font-size: 10px; letter-spacing: .1em; color: #5f7f99; text-transform: uppercase; padding: 9px 8px 4px; }
+    .item { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #c8d8e6; border-radius: 7px; padding: 6px 8px; font-size: 12px; }
+    .item:hover { background: #16293d; }
+    .item.active { background: #1c5369; color: #eafcff; }
+    .item small { color: #6e8aa4; margin-left: 6px; }
+    #info { position: fixed; z-index: 6; right: 14px; bottom: 14px; width: min(330px, calc(100vw - 28px)); }
+    #perf { min-width: 240px; }
     #perf b { color: #7ee7c7; font-size: 18px; }
-    #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 10; transition: opacity .4s; }
+    #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
     #loading.hidden { opacity: 0; pointer-events: none; }
+    #mobile-toggle { display: none; }
+    @media (max-width: 700px) {
+      #sidebar { left: 8px; right: 8px; top: 130px; bottom: 120px; width: auto; display: none; }
+      #sidebar.open { display: flex; }
+      #mobile-toggle { display: inline-block; }
+      #info { right: 8px; bottom: 8px; }
+      .top { left: 8px; right: 8px; top: 8px; }
+    }
   </style>
 </head>
 <body>
   <div id="app"></div>
   <div id="loading"><div class="panel"><div class="title">CORPS · ATLAS COMPLET V2</div><div class="sub" id="load-text">Chargement…</div></div></div>
-  <div class="overlay top">
+  <div class="top">
     <div class="panel">
       <div class="title">CORPS — ATLAS COMPLET</div>
       <div class="sub" id="count">— structures</div>
       <div class="chips">
-        <button data-cat="bone" class="active">Os</button>
-        <button data-cat="muscle" class="active">Muscles</button>
+        <button data-cat="bone">Os</button>
+        <button data-cat="muscle">Muscles</button>
         <button data-cat="organ" class="active">Organes</button>
-        <button data-cat="skin">Peau</button>
+        <button data-cat="skin" class="active">Peau</button>
+        <button id="mobile-toggle">Explorer</button>
         <button id="reset">Recadrer</button>
       </div>
     </div>
     <div class="panel" id="perf"><div class="title">PERFORMANCE</div><b id="fps">—</b><div class="sub" id="draw">—</div><div class="sub" id="quality">qualité —</div></div>
   </div>
-  <div class="overlay panel" id="info">
+  <div id="sidebar">
+    <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
+    <div class="panel" id="list"></div>
+  </div>
+  <div class="panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
-    <div class="sub" id="sel-name">Cliquez sur une structure.</div>
+    <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
     <div class="sub" id="sel-meta"></div>
   </div>
   <script type="module">
@@ -52,11 +73,10 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { AnatomyV2Engine } from './src/v2-engine.js';
 
-    const app = document.getElementById('app');
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     renderer.setSize(innerWidth, innerHeight);
-    app.appendChild(renderer.domElement);
+    document.getElementById('app').appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x080f1b);
@@ -65,7 +85,7 @@
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0, 1.0, 0);
     controls.enableDamping = true;
-    controls.minDistance = 0.3;
+    controls.minDistance = 0.12;
     controls.maxDistance = 6;
     controls.update();
     scene.add(new THREE.HemisphereLight(0xeaf6ff, 0x1c2b3b, 2.1));
@@ -73,51 +93,114 @@
     key.position.set(1, 2, 2);
     scene.add(key);
 
-    const loadText = document.getElementById('load-text');
     const engine = new AnatomyV2Engine({ lod: 'low' });
-    await engine.load((p, label) => { loadText.textContent = `${label} — ${Math.round(p * 100)} %`; });
+    await engine.load((p, label) => {
+      document.getElementById('load-text').textContent = `${label} — ${Math.round(p * 100)} %`;
+    });
     engine.addTo(scene);
-    for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, true);
-    engine.setCategoryVisible('skin', false);
-    document.getElementById('count').textContent = `${engine.stats.structures} structures · ${Math.round(engine.stats.triangles / 1000)}k triangles`;
+    for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, cat === 'organ');
+    engine.setCategoryVisible('skin', true);
+    document.getElementById('count').textContent =
+      `${engine.stats.structures} structures · ${Math.round(engine.stats.triangles / 1000)}k triangles`;
     document.getElementById('loading').classList.add('hidden');
 
-    let visibleCount = engine.updateVisibility(camera);
-    let lastCamera = camera.position.clone();
+    const labels = { bone: 'Os', muscle: 'Muscles', organ: 'Organes', skin: 'Peau' };
+    const subsystemLabels = {
+      arterial: 'Artères', venous: 'Veines', cardiac: 'Cœur',
+      nervous: 'Nerfs', sensory: 'Sens', lymphatic: 'Lymphatique',
+      digestive: 'Digestion', respiratory: 'Respiration', urinary: 'Urinaire',
+      reproductive: 'Reproduction', endocrine: 'Endocrine',
+      integumentary: 'Téguments', 'Nerveux et sens': 'Nerveux et sens',
+      Viscéral: 'Viscéral', Lymphoïde: 'Lymphoïde', Cardiovasculaire: 'Cardiovasculaire',
+    };
+    let selected = null;
     let detailStructure = null;
+    let cameraTween = null;
     let forceCulling = false;
     let lodBias = 1;
     let pixelRatio = Math.min(devicePixelRatio, 1.5);
-    renderer.setPixelRatio(pixelRatio);
+
+    function renderList() {
+      const query = document.getElementById('search').value.trim().toLowerCase();
+      const list = document.getElementById('list');
+      const matches = engine.structures.filter((s) =>
+        !query || `${s.fr} ${s.en} ${s.la} ${s.ta2}`.toLowerCase().includes(query),
+      ).slice(0, 400);
+      const groups = new Map();
+      for (const s of matches) {
+        const key = s.category === 'organ' && s.subsystem
+          ? `organ:${s.subsystem}` : s.category;
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(s);
+      }
+      let html = '';
+      for (const [key, items] of groups) {
+        const cat = key.split(':')[0];
+        const sub = key.includes(':') ? subsystemLabels[key.split(':')[1]] || key.split(':')[1] : '';
+        html += `<div class="group">${labels[cat] || cat}${sub ? ' · ' + sub : ''} (${items.length})</div>`;
+        for (const s of items) {
+          html += `<button class="item${selected === s ? ' active' : ''}" data-id="${s.id}">` +
+            `${s.fr || s.en}<small>${s.ta2 || ''}</small></button>`;
+        }
+      }
+      if (!matches.length) html = '<div class="group">Aucun résultat</div>';
+      list.innerHTML = html;
+      list.querySelectorAll('.item').forEach((button) => {
+        button.addEventListener('click', () => {
+          const structure = engine.byId.get(button.dataset.id);
+          if (structure) selectStructure(structure, true);
+        });
+      });
+    }
+
+    async function selectStructure(structure, focus) {
+      if (!structure) return;
+      if (selected) engine.highlight(selected, '#ffffff');
+      if (detailStructure && detailStructure !== structure) {
+        await engine.setStructureLod(detailStructure, 'low');
+      }
+      selected = structure;
+      detailStructure = null;
+      engine.highlight(structure, '#7ef9ff');
+      const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
+      document.getElementById('sel-name').textContent = structure.fr || structure.en;
+      document.getElementById('sel-meta').textContent = `${labels[structure.category] || ''} · TA2 ${structure.ta2 || '—'} · chargement…`;
+      if (structure.lod?.[detailLevel]) {
+        const ok = await engine.setStructureLod(structure, detailLevel);
+        detailStructure = structure;
+        document.getElementById('sel-meta').textContent =
+          `${labels[structure.category] || ''} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[detailLevel].indexCount / 3 : structure.lod.low.indexCount / 3} tris (${detailLevel})`;
+      }
+      forceCulling = true;
+      if (focus) {
+        const target = engine.focusTarget(structure);
+        if (target) {
+          const dir = camera.position.clone().sub(controls.target).normalize();
+          cameraTween = {
+            fromPos: camera.position.clone(),
+            toPos: target.center.clone().addScaledVector(dir, Math.max(0.35, target.radius * 5)),
+            fromTarget: controls.target.clone(),
+            toTarget: target.center,
+            t: 0,
+          };
+        }
+      }
+      renderList();
+    }
+
+    document.getElementById('search').addEventListener('input', renderList);
+    renderList();
+
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
-    let selected = null;
-
-    renderer.domElement.addEventListener('pointerdown', async (event) => {
+    let downX = 0, downY = 0;
+    renderer.domElement.addEventListener('pointerdown', (event) => { downX = event.clientX; downY = event.clientY; });
+    renderer.domElement.addEventListener('pointerup', async (event) => {
+      if (Math.hypot(event.clientX - downX, event.clientY - downY) > 5) return;
       pointer.x = (event.clientX / innerWidth) * 2 - 1;
       pointer.y = -(event.clientY / innerHeight) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      selected = engine.pick(raycaster);
-      if (detailStructure && detailStructure !== selected) {
-        await engine.setStructureLod(detailStructure, 'low');
-      }
-      if (!selected) {
-        detailStructure = null;
-        document.getElementById('sel-name').textContent = 'Aucune structure sous le curseur.';
-        document.getElementById('sel-meta').textContent = '';
-        return;
-      }
-      document.getElementById('sel-name').textContent = selected.fr || selected.en;
-      document.getElementById('sel-meta').textContent = `${selected.category} · TA2 ${selected.ta2 || '—'}`;
-      const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
-      if (selected.lod?.[detailLevel]) {
-        document.getElementById('sel-meta').textContent += ' · chargement du détail…';
-        const ok = await engine.setStructureLod(selected, detailLevel);
-        detailStructure = selected;
-        document.getElementById('sel-meta').textContent =
-          `${selected.category} · TA2 ${selected.ta2 || '—'} · ${ok ? selected.lod[detailLevel].indexCount / 3 : selected.lod.low.indexCount / 3} triangles (${detailLevel})`;
-        forceCulling = true; // refresh du culling après le changement de géométrie
-      }
+      await selectStructure(engine.pick(raycaster), false);
     });
 
     document.querySelectorAll('[data-cat]').forEach((button) => {
@@ -126,26 +209,37 @@
         engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
       });
     });
+    document.getElementById('mobile-toggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
     document.getElementById('reset').addEventListener('click', () => {
       camera.position.set(0.72, 1.28, 2.55);
       controls.target.set(0, 1.0, 0);
+      cameraTween = null;
       controls.update();
     });
-
     addEventListener('resize', () => {
       camera.aspect = innerWidth / innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(innerWidth, innerHeight);
     });
 
-    let frames = 0, last = performance.now();
-    let frameSum = 0, frameCount = 0;
+    let visibleCount = engine.updateVisibility(camera);
+    let lastCamera = camera.position.clone();
+    let frames = 0, last = performance.now(), frameSum = 0, frameCount = 0;
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
     const qualityEl = document.getElementById('quality');
     const maxRatio = Math.min(devicePixelRatio, 1.5);
     function loop() {
       requestAnimationFrame(loop);
+      if (cameraTween) {
+        cameraTween.t = Math.min(1, cameraTween.t + 0.045);
+        const e = 1 - Math.pow(1 - cameraTween.t, 3);
+        camera.position.lerpVectors(cameraTween.fromPos, cameraTween.toPos, e);
+        controls.target.lerpVectors(cameraTween.fromTarget, cameraTween.toTarget, e);
+        if (cameraTween.t >= 1) cameraTween = null;
+      }
       controls.update();
       if (camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) {
         lastCamera.copy(camera.position);
@@ -155,14 +249,10 @@
       const t0 = performance.now();
       renderer.render(scene, camera);
       const renderMs = performance.now() - t0;
-      frames++;
-      frameSum += renderMs;
-      frameCount++;
+      frames++; frameSum += renderMs; frameCount++;
       const now = performance.now();
       if (now - last >= 500) {
         const avg = frameSum / Math.max(1, frameCount);
-        /* Gouverneur thermique : on réduit la résolution et le nombre de
-         * structures détaillées si le coût de rendu dépasse le budget. */
         if (avg > 8 && pixelRatio > 1) {
           pixelRatio = Math.max(1, pixelRatio - 0.25);
           renderer.setPixelRatio(pixelRatio);

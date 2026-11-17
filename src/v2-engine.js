@@ -74,7 +74,9 @@ export class AnatomyV2Engine {
     const total = categories.length + 1;
     const buffers = {};
     for (const category of categories) {
-      const buffer = await loadBinary(`${this.base}${category}.${this.lod}.bin.gz`);
+      /* La peau reste lisse même en vue d'ensemble : on prend son niveau medium. */
+      const lodName = category === "skin" ? "medium" : this.lod;
+      const buffer = await loadBinary(`${this.base}${category}.${lodName}.bin.gz`);
       buffers[category] = buffer;
       done++;
       onProgress(done / total, `géométrie ${category}`);
@@ -158,8 +160,8 @@ export class AnatomyV2Engine {
     }
 
     /* Peau : un lot séparé, translucide. */
-    if (this.manifest.skin?.lod?.[this.lod]) {
-      const skinRecord = this.manifest.skin.lod[this.lod];
+    if (this.manifest.skin?.lod?.medium) {
+      const skinRecord = this.manifest.skin.lod.medium;
       const skinGeometry = geometryFromRecord(buffers.skin, skinRecord);
       const material = new THREE.MeshStandardMaterial({
         color: CATEGORY_COLORS.skin,
@@ -195,7 +197,11 @@ export class AnatomyV2Engine {
     const dir = raycaster.ray.direction;
     const hit = this.index.raycast(origin.x, origin.y, origin.z, dir.x, dir.y, dir.z, 8);
     if (hit < 0) return null;
-    return this.structures[hit] || null;
+    const structure = this.structures[hit] || null;
+    if (!structure) return null;
+    const batch = this.batches.get(structure.category);
+    if (batch && !batch.visible) return null;
+    return structure;
   }
 
   /* Culling frustum + LOD. Appelé quand la caméra bouge. */
@@ -255,6 +261,33 @@ export class AnatomyV2Engine {
     batch.computeBoundingSphere();
     structure._activeLod = lod;
     return true;
+  }
+
+  /* Colorie une instance (sélection). La couleur par défaut est blanche. */
+  highlight(structure, color = "#ffffff") {
+    if (!structure) return;
+    const ref = this.structureToInstance.get(structure._index);
+    const batch = ref && this.batches.get(ref.category);
+    if (batch) batch.setColorAt(ref.instanceId, new THREE.Color(color));
+  }
+
+  /* Centre et rayon d'une structure, pour le cadrage. */
+  focusTarget(structure) {
+    const b = structure?.bounds;
+    if (!b) return null;
+    return {
+      center: new THREE.Vector3(
+        (b.min[0] + b.max[0]) / 2,
+        (b.min[1] + b.max[1]) / 2,
+        (b.min[2] + b.max[2]) / 2,
+      ),
+      radius: Math.max(
+        (b.max[0] - b.min[0]) / 2,
+        (b.max[1] - b.min[1]) / 2,
+        (b.max[2] - b.min[2]) / 2,
+        0.02,
+      ),
+    };
   }
 
   setCategoryVisible(category, visible) {

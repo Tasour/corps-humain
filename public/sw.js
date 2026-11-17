@@ -2,7 +2,7 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v8";
+const CACHE_VERSION = "corps-v9";
 const SHELL = [
   "./",
   "./index.html",
@@ -25,6 +25,7 @@ const MODELS = [
   "./models/v2/muscle.low.bin.gz",
   "./models/v2/organ.low.bin.gz",
   "./models/v2/skin.low.bin.gz",
+  "./models/v2/skin.medium.bin.gz",
 ];
 
 self.addEventListener("install", (event) => {
