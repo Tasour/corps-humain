@@ -329,11 +329,16 @@
       const level = innerWidth < 820 ? 'medium' : 'high';
       if (structure.lod?.[level]) {
         document.getElementById('sel-meta').textContent += ' · chargement du détail…';
-        const ok = await engine.setStructureLod(structure, level);
-        if (generation !== selectGeneration) return;
-        detailStructure = structure;
-        document.getElementById('sel-meta').textContent =
-          `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[level].indexCount / 3 : structure.lod.low.indexCount / 3} tris`;
+        /* Le chargement du détail est différé : le gestionnaire de clic reste
+         * synchrone et ne bloque pas l'action suivante. */
+        setTimeout(async () => {
+          if (generation !== selectGeneration) return;
+          const ok = await engine.setStructureLod(structure, level);
+          if (generation !== selectGeneration) return;
+          detailStructure = structure;
+          document.getElementById('sel-meta').textContent =
+            `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[level].indexCount / 3 : structure.lod.low.indexCount / 3} tris`;
+        }, 60);
       }
       forceCulling = true;
       if (focus) {
