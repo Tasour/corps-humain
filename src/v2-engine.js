@@ -53,6 +53,7 @@ export class AnatomyV2Engine {
     this.lodBuffers = new Map();
     this.geometryIds = new Map();
     this.currentVisible = new Set();
+    this.isolated = null;
     this.frustum = new THREE.Frustum();
     this.projScreen = new THREE.Matrix4();
     this.ready = false;
@@ -207,6 +208,7 @@ export class AnatomyV2Engine {
   /* Culling frustum + LOD. Appelé quand la caméra bouge. */
   updateVisibility(camera, lodBias = 1) {
     if (!this.index) return 0;
+    if (this.isolated) return this.currentVisible.size;
     camera.updateMatrixWorld();
     const planes = [];
     this.projScreen.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
@@ -261,6 +263,21 @@ export class AnatomyV2Engine {
     batch.computeBoundingSphere();
     structure._activeLod = lod;
     return true;
+  }
+
+  /* Isole une structure : toutes les autres instances sont masquées. */
+  isolate(structure) {
+    this.isolated = structure || null;
+    if (!structure) {
+      this.currentVisible = new Set();
+      return 0;
+    }
+    for (const [structureIndex, ref] of this.structureToInstance) {
+      const batch = this.batches.get(ref.category);
+      if (batch) batch.setVisibleAt(ref.instanceId, structureIndex === structure._index);
+    }
+    this.currentVisible = new Set([structure._index]);
+    return 1;
   }
 
   /* Colorie une instance (sélection). La couleur par défaut est blanche. */

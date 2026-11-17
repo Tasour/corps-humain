@@ -29,6 +29,8 @@
     #info { position: fixed; z-index: 6; right: 14px; bottom: 14px; width: min(330px, calc(100vw - 28px)); }
     #perf { min-width: 240px; }
     #perf b { color: #7ee7c7; font-size: 18px; }
+    #label { position: fixed; z-index: 7; pointer-events: none; display: none; transform: translate(-50%, -150%); background: rgba(8,20,32,.9); border: 1px solid #4fd1e0; border-radius: 6px; padding: 3px 8px; font-size: 12px; color: #eafcff; white-space: nowrap; }
+    #info .chips { margin-top: 8px; }
     #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
     #loading.hidden { opacity: 0; pointer-events: none; }
     #mobile-toggle { display: none; }
@@ -63,10 +65,12 @@
     <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
     <div class="panel" id="list"></div>
   </div>
+  <div id="label"></div>
   <div class="panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
     <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
     <div class="sub" id="sel-meta"></div>
+    <div class="chips"><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
   </div>
   <script type="module">
     import * as THREE from 'three';
@@ -209,6 +213,14 @@
         engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
       });
     });
+    document.getElementById('isolate').addEventListener('click', () => {
+      if (selected) { engine.isolate(selected); forceCulling = true; }
+    });
+    document.getElementById('clear-iso').addEventListener('click', () => {
+      engine.isolate(null);
+      engine.highlight(selected, '#7ef9ff');
+      forceCulling = true;
+    });
     document.getElementById('mobile-toggle').addEventListener('click', () => {
       document.getElementById('sidebar').classList.toggle('open');
     });
@@ -229,6 +241,7 @@
     let frames = 0, last = performance.now(), frameSum = 0, frameCount = 0;
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
+    const labelEl = document.getElementById('label');
     const qualityEl = document.getElementById('quality');
     const maxRatio = Math.min(devicePixelRatio, 1.5);
     function loop() {
@@ -241,6 +254,22 @@
         if (cameraTween.t >= 1) cameraTween = null;
       }
       controls.update();
+      if (selected) {
+        const target = engine.focusTarget(selected);
+        if (target) {
+          const p = target.center.clone().project(camera);
+          if (p.z < 1 && Math.abs(p.x) < 1.2 && Math.abs(p.y) < 1.2) {
+            labelEl.style.display = 'block';
+            labelEl.style.left = `${(p.x * 0.5 + 0.5) * innerWidth}px`;
+            labelEl.style.top = `${(-p.y * 0.5 + 0.5) * innerHeight}px`;
+            labelEl.textContent = selected.fr || selected.en;
+          } else {
+            labelEl.style.display = 'none';
+          }
+        }
+      } else {
+        labelEl.style.display = 'none';
+      }
       if (camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) {
         lastCamera.copy(camera.position);
         forceCulling = false;
