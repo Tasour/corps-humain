@@ -13,32 +13,41 @@
 - Seuls les objets MESH réels sont retenus (tris > 0, >= 8 sommets) ; les marqueurs .j/.i/.g et les points d'insertion/origine (.ol/.or/.el/.er) sont exclus.
 - Les collections 'Bonus collection' sont prises en compte pour les os lorsqu'elles portent le seul maillage d'une structure (ex. os du carpe) ; elles n'apportent aucun muscle ni organe supplémentaire.
 - Chaque objet est classé en os, muscle ou organe selon sa collection principale dans Z-Anatomy.
+- Les concepts BodyParts3D non représentés dans Z-Anatomy sont ajoutés à l'inventaire lorsqu'ils correspondent à un nom TA2 canonique (union des deux sources).
 - Les noms TA2 sont appariés au nom Z-Anatomy (anglais puis latin, avec variantes sans 'muscle'/'bone'/'gland').
 - Les concepts BodyParts3D sont appariés par nom normalisé ; le meilleur modèle est celui qui offre le plus de triangles (Z-Anatomy en cas d'égalité).
 
 ## Résultats
 
-| Catégorie | Objets maillés | Structures canoniques | Triangles Z-Anatomy | Noms TA2 | Avec BodyParts3D | Meilleur Z-Anatomy | Meilleur BodyParts3D |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Os | 277 | 159 | 702 015 | 277 | 124 | 259 | 18 |
-| Muscles | 683 | 344 | 2 323 599 | 671 | 309 | 632 | 51 |
-| Organes | 595 | 386 | 2 068 831 | 547 | 122 | 554 | 41 |
+| Catégorie | Objets maillés | Structures canoniques | Triangles du meilleur modèle | Noms TA2 | Avec BodyParts3D | Uniquement BodyParts3D | Meilleur Z-Anatomy | Meilleur BodyParts3D |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Os | 359 | 203 | 2 340 767 | 359 | 206 | 82 | 259 | 100 |
+| Muscles | 702 | 353 | 2 450 595 | 690 | 328 | 19 | 632 | 70 |
+| Organes | 1141 | 695 | 6 862 764 | 1093 | 668 | 546 | 554 | 587 |
 
-**Total : 1555 maillages individuels** (889 structures canoniques). 1495 noms normalisés TA2 appariés, 555 concepts BodyParts3D appariés.
+**Total : 2202 maillages individuels** (1251 structures canoniques). 1495 noms normalisés TA2 appariés, 555 concepts BodyParts3D appariés.
 
 Le fichier `structures.json` contient l'intégralité des entrées, avec pour chacune : le nom français (TA2), le nom latin, l'identifiant TA2, les collections d'origine, le maillage Z-Anatomy, l'éventuel concept BodyParts3D, le **meilleur modèle** (source, objet, triangles, licence) et les alternatives.
 
-## Os (277 maillages)
+## Os (359 maillages)
 
 | Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
 |---|---|:--:|---|---|---:|---|
+| Abdomen | Abdomen / Abdomen | G + D | abdomen | BodyParts3D 4.0 | 49 134 | — |
 | Cellules osseuses ethmoïdales antérieures | Cellulae anteriores ossis ethmoidei | G + D | Anterior cells of ethmoid bone.l | Z-Anatomy | 736 | — |
 | Cartilage aryténoïde | Cartilago arytenoidea | G + D | Arytenoid cartilage.l | Z-Anatomy | 3 780 | BodyParts3D 4.0 (arytenoid cartilage) |
 | Atlas (C1) | Atlas (C1) | — | Atlas (C1) | Z-Anatomy | 2 194 | — |
+| Squelette axial | Axial skeleton / Skeleton axiale | — | axial skeleton | BodyParts3D 4.0 | 95 804 | — |
 | Axis (C2) | Axis (C2) | — | Axis (C2) | Z-Anatomy | 2 334 | — |
+| Arrière de l'abdomen | Back of abdomen / Dorsum abdominis | — | back of abdomen | BodyParts3D 4.0 | 25 786 | — |
+| Arrière du thorax | Back of thorax / Dorsum thoracis | — | back of thorax | BodyParts3D 4.0 | 43 262 | — |
 | Corps du sternum | Corpus sterni | — | Body of sternum | Z-Anatomy | 4 466 | BodyParts3D 4.0 (body of sternum) |
+| Partie osseuse du septum nasal | Bony part of nasal septum / Pars ossea septi nasi | — | bony part of nasal septum | BodyParts3D 4.0 | 1 586 | — |
+| Pelvis osseux | Bony pelvis / Pelvis ossea | G + D | bony pelvis | BodyParts3D 4.0 | 5 058 | — |
 | Calcaneus | Calcaneus | G + D | Calcaneus.l | Z-Anatomy | 1 448 | BodyParts3D 4.0 (calcaneus) |
+| Dent canine | Canine tooth / Dens caninus | G + D | canine tooth | BodyParts3D 4.0 | 1 490 | — |
 | Grand os | Os capitatum | G + D | Capitate bone.l | Z-Anatomy | 472 | BodyParts3D 4.0 (capitate) |
+| Vertèbre cervicale | Cervical vertebra / Vertebra cervicalis | — | cervical vertebra | BodyParts3D 4.0 | 12 752 | — |
 | Clavicule | Clavicula | G + D | Clavicle.l | Z-Anatomy | 1 550 | BodyParts3D 4.0 (clavicle) |
 | Coccyx | Os coccygis | — | Coccyx | Z-Anatomy | 1 166 | — |
 | Cartilages corniculés | Cartilago corniculata | G + D | Corniculate cartilage.l | Z-Anatomy | 136 | BodyParts3D 4.0 (corniculate cartilage) |
@@ -54,6 +63,7 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Cartilage costal de la troisième côte | Cartilago costae tertiae costae | G + D | Costal cartilage of third rib.l | Z-Anatomy | 3 600 | — |
 | Cartilage cricoïde | Cartilago cricoidea | — | cricoid cartilage | BodyParts3D 4.0 | 3 028 | Z-Anatomy (Cricoid cartilage) |
 | Os cuboïde | Os cuboideum | G + D | Cuboid bone.l | Z-Anatomy | 998 | BodyParts3D 4.0 (cuboid bone) |
+| Cartilage cunéïforme | Cuneiform cartilage / Cartilago cuneiformis | G + D | cuneiform cartilage | BodyParts3D 4.0 | 174 | — |
 | Phalange distale du cinquième doigt de pied | Phalanx distalis quintum digitorum pedis | G + D | Distal phalanx of fifth finger of foot.l | Z-Anatomy | 236 | — |
 | Phalange distale du cinquième doigt de la main | Phalanx distalis quintum digitorum manus | G + D | Distal phalanx of fifth finger of hand.l | Z-Anatomy | 192 | — |
 | Phalange distale du premier doigt de pied | Phalanx distalis primum digitorum pedis | G + D | Distal phalanx of first finger of foot.l | Z-Anatomy | 466 | — |
@@ -67,6 +77,8 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Huitième côte | Octava costa | G + D | Eighth rib.l | Z-Anatomy | 8 270 | BodyParts3D 4.0 (eighth rib) |
 | Onzième côte | Undecima costa | G + D | Eleventh rib.l | Z-Anatomy | 5 034 | BodyParts3D 4.0 (eleventh rib) |
 | Os ethmoïde | Os ethmoideum | — | Ethmoid bone | Z-Anatomy | 10 130 | BodyParts3D 4.0 (ethmoid) |
+| Nez externe | External nose / Nasus externus | G + D | external nose | BodyParts3D 4.0 | 1 156 | — |
+| Fausses côtes | False ribs / Costae spuriae | G + D | false rib | BodyParts3D 4.0 | 6 798 | — |
 | Fémur | Os femoris | G + D | Femur.l | Z-Anatomy | 3 794 | BodyParts3D 4.0 (femur) |
 | Fibula | Fibula | G + D | Fibula.l | Z-Anatomy | 1 264 | BodyParts3D 4.0 (fibula) |
 | Cinquième métacarpien | Os quintum metacarpi | G + D | Fifth metacarpal bone.l | Z-Anatomy | 512 | BodyParts3D 4.0 (fifth metacarpal bone) |
@@ -75,6 +87,9 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Premier métacrapien | Os primum metarcapi | G + D | First metacarpal bone.l | Z-Anatomy | 682 | BodyParts3D 4.0 (first metacarpal bone) |
 | Premier métatarsien | Os primum metatarsi | G + D | First metatarsal bone.l | Z-Anatomy | 1 088 | BodyParts3D 4.0 (first metatarsal bone) |
 | Première côte | Costa prima | G + D | First rib.l | Z-Anatomy | 3 210 | BodyParts3D 4.0 (first rib) |
+| Première vertèbre thoracique | First thoracic vertebra / Vertebra thoracica prima | — | first thoracic vertebra | BodyParts3D 4.0 | 1 398 | — |
+| Os plat | Flat bone / Os planum | G + D | flat bone | BodyParts3D 4.0 | 10 024 | — |
+| Côtes flottantes | Floating ribs / Costae fluctuantes | G + D | floating rib | BodyParts3D 4.0 | 1 800 | — |
 | Quatrième métacrapien | Os quartum metacarpi | G + D | Fourth metacarpal bone.l | Z-Anatomy | 642 | BodyParts3D 4.0 (fourth metacarpal bone) |
 | Quatrième métatarsien | Os quatum metatarsi | G + D | Fourth metatarsal bone.l | Z-Anatomy | 834 | BodyParts3D 4.0 (fourth metatarsal bone) |
 | Quatrième côte | Quarta costa | G + D | Fourth rib.l | Z-Anatomy | 8 646 | BodyParts3D 4.0 (fourth rib) |
@@ -83,19 +98,28 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Os coxal | Os coxae | G + D | Hip bone.l | Z-Anatomy | 3 788 | BodyParts3D 4.0 (hip bone) |
 | Humérus | Humerus | G + D | Humerus.l | Z-Anatomy | 4 280 | BodyParts3D 4.0 (humerus) |
 | Os hyoïde | Os hyoideum | — | hyoid bone | BodyParts3D 4.0 | 2 072 | Z-Anatomy (Hyoid bone) |
+| Dent incisive | Incisor tooth / Dens incisivus | G + D | incisor tooth | BodyParts3D 4.0 | 2 802 | — |
 | Enclume | Incus | G + D | Incus.l | Z-Anatomy | 2 532 | — |
 | Os cornet nasal inférieur | Concha nasalis inferior | G + D | inferior nasal concha | BodyParts3D 4.0 | 662 | Z-Anatomy (Inferior nasal concha bone.l) |
 | Os cunéïforme intermédiaire | Os cuneiforme intermedium | G + D | Intermediate cuneiform bone.l | Z-Anatomy | 444 | BodyParts3D 4.0 (intermediate cuneiform bone) |
+| Symphyse intervertébrale | Intervertebral symphysis / Symphysis intervertebralis | — | intervertebral symphysis | BodyParts3D 4.0 | 2 852 | — |
+| Fascia engainant | Investing fascia / Fascia investiens | G + D | zone of investing fascia | BodyParts3D 4.0 | 3 776 | — |
+| Os irrégulier | Irregular bone / Os irregulare | G + D | irregular bone | BodyParts3D 4.0 | 71 712 | — |
 | Os lacrymal | Os lacrimale | G + D | lacrimal bone | BodyParts3D 4.0 | 604 | Z-Anatomy (Lacrimal bone.l) |
 | Os cunéïforme latéral | Os cuneiforme laterale | G + D | lateral cuneiform bone | BodyParts3D 4.0 | 648 | Z-Anatomy (Lateral cuneiform bone.l) |
 | Processus latéral du cartilage septal | Processus lateralis cartilaginis septi nasi | G + D | Lateral process of nasal septal cartilage.l | Z-Anatomy | 347 | — |
+| Membre inférieur gauche | Left lower limb / Membrum inferior sinistrus | G | left lower limb | BodyParts3D 4.0 | 21 396 | — |
+| Membre supérieur gauche | Left upper limb / Membrum superior sinistrus | G | left upper limb | BodyParts3D 4.0 | 54 170 | — |
+| Os long | Long bone / Os longum | G + D | long bone | BodyParts3D 4.0 | 38 562 | — |
 | Dent canine inférieure | Dens caninus inferioris | G + D | Lower canine.l | Z-Anatomy | 1 276 | — |
 | Première molaire inférieure | Dens molaris primus inferioris | G + D | Lower first molar tooth.l | Z-Anatomy | 4 508 | — |
 | Première prémolaire inférieure | Dens premolaris primus inferioris | G + D | Lower first premolar.l | Z-Anatomy | 1 222 | — |
 | Dent incisive inférolatérale | Dens incisivus lateralis inferioris | G + D | Lower lateral incisor.l | Z-Anatomy | 1 040 | — |
+| Membre inférieur | Lower limb / Membrum inferius | G + D | lower limb | BodyParts3D 4.0 | 5 058 | — |
 | Dent incisive inféromédiale | Dens incisivus medialis inferioris | G + D | Lower medial incisor.l | Z-Anatomy | 984 | — |
 | Deuxième molaire inférieure | Dens molaris secundus inferioris | G + D | Lower second molar tooth.l | Z-Anatomy | 1 676 | — |
 | Deuxième prémolaire inférieure | Dens premolaris secundus inferioris | G + D | Lower second premolar.l | Z-Anatomy | 1 180 | — |
+| Vertèbre lombaire | Lumbar vertebra / Vertebra lumbalis | — | lumbar vertebra | BodyParts3D 4.0 | 12 620 | — |
 | Os semilunaire | Os lunatum | G + D | Lunate bone.l | Z-Anatomy | 2 088 | BodyParts3D 4.0 (lunate) |
 | Grand cartilage alaire | Cartilago alaris major | G + D | major alar cartilage | BodyParts3D 4.0 | 388 | Z-Anatomy (Major alar cartilage.l) |
 | Marteau | Malleus | G + D | Malleus.l | Z-Anatomy | 3 982 | — |
@@ -103,6 +127,8 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Manubrium sternal | Manubrium sterni | — | Manubrium of sternum | Z-Anatomy | 2 662 | — |
 | Os maxillaire | Maxilla | G + D | Maxilla.l | Z-Anatomy | 4 798 | BodyParts3D 4.0 (maxilla) |
 | Os cunéïforme médial | Os cuneiforme mediale | G + D | Medial cuneiform bone.l | Z-Anatomy | 992 | BodyParts3D 4.0 (medial cuneiform bone) |
+| Os métacarpien | Metacarpal bone / Os metacarpi | G + D | metacarpal bone | BodyParts3D 4.0 | 2 634 | — |
+| Os métatarsien | Metatarsal bone / Os metatarsi | G + D | metatarsal bone | BodyParts3D 4.0 | 3 502 | — |
 | Cellules osseuses ethmoïdales moyennes | Cellulae mediae ossis ethmoidei | G + D | Middle cells of ethmoid bone.l | Z-Anatomy | 960 | — |
 | Phalange moyenne du cinquème doigt de pied | Phalanx media quintum digitorum pedis | G + D | Middle phalanx of fifth finger of foot.l | Z-Anatomy | 216 | — |
 | Phalange moyenne du cinquième doigt de la main | Phalanx media quintum digitorum manus | G + D | Middle phalanx of fifth finger of hand.l | Z-Anatomy | 292 | — |
@@ -112,16 +138,23 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Phalange moyenne du deuxième doigt de la main | Phalanx media scundum digitorum manus | G + D | Middle phalanx of second finger of hand.l | Z-Anatomy | 314 | — |
 | Phalange moyenne du troisème doigt de pied | Phalanx media tertium digitorum pedis | G + D | Middle phalanx of third finger of foot.l | Z-Anatomy | 400 | — |
 | Phalange moyenne du troisième doigt de la main | Phalanx media tertium digitorum manus | G + D | Middle phalanx of third finger of hand.l | Z-Anatomy | 360 | — |
+| Dent molaire | Molar tooth / Dens molaris | G + D | molar tooth | BodyParts3D 4.0 | 6 508 | — |
+| Systèmes musculosquelettiques | Musculoskeletal systems / Systemata musculoskeletalia | G + D | musculoskeletal system | BodyParts3D 4.0 | 130 256 | — |
 | Os nasal | Os nasale | G + D | nasal bone | BodyParts3D 4.0 | 388 | Z-Anatomy (Nasal bone.l) |
 | Cartilage septal nasal | Cartilago septi nasi | — | Nasal septal cartilage | Z-Anatomy | 360 | — |
 | Os naviculaire | Os naviculare | G + D | Navicular bone.l | Z-Anatomy | 732 | — |
+| Cou | Neck / Collum | — | neck | BodyParts3D 4.0 | 18 846 | — |
+| Neurocrâne | Neurocranium / Neurocranium | G + D | neurocranium | BodyParts3D 4.0 | 18 642 | — |
 | Neuvième côte | Nona costa | G + D | Ninth rib.l | Z-Anatomy | 7 778 | BodyParts3D 4.0 (ninth rib) |
+| Nez | Nose / Nasus | G + D | nose | BodyParts3D 4.0 | 1 928 | — |
 | Os occipital | Os occipitale | — | Occipital bone | Z-Anatomy | 7 531 | BodyParts3D 4.0 (occipital bone) |
 | Os palatin | Os palatinum | G + D | palatine bone | BodyParts3D 4.0 | 1 606 | Z-Anatomy (Palatine bone.l) |
 | Os pariétal | Os parietale | G + D | Parietal bone.l | Z-Anatomy | 6 886 | BodyParts3D 4.0 (parietal bone) |
 | Patella | Patella | G + D | patella | BodyParts3D 4.0 | 304 | Z-Anatomy (Patella.l) |
+| Ceinture pelvienne | Pelvic girdle / Cingulum pelvicum | G + D | pelvic girdle | BodyParts3D 4.0 | 5 058 | — |
 | Os pisiforme | Os pisiforme | G + D | Pisiform bone.l | Z-Anatomy | 1 668 | BodyParts3D 4.0 (pisiform) |
 | Cellules osseuses ethmoïdales postérieures | Cellulae posteriores ossis ethmoidei | G + D | Posterior cells of ethmoid bone.l | Z-Anatomy | 1 216 | — |
+| Dent prémolaire | Premolar tooth / Dens premolaris | G + D | premolar tooth | BodyParts3D 4.0 | 4 002 | — |
 | Phalange proximale du cinquième doigt de pied | Phalanx proximalis quintum digitorum pedis | G + D | Proximal phalanx of fifth finger of foot.l | Z-Anatomy | 516 | — |
 | Phalange proximale du cinquième doigt de la main | Phalanx proximalis quintum digitorum manus | G + D | Proximal phalanx of fifth finger of hand.l | Z-Anatomy | 560 | — |
 | Phalange proximale du premier doigt de pied | Phalanx proximalis primum digitorum pedis | G + D | Proximal phalanx of first finger of foot.l | Z-Anatomy | 532 | — |
@@ -133,27 +166,37 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Phalange proximale du troisième doigt de pied | Phalanx proximalis tertium digitorum pedis | G + D | Proximal phalanx of third finger of foot.l | Z-Anatomy | 460 | — |
 | Phalange proximale du troisième doigt de la main | Phalanx proximalis tertium digitorum manus | G + D | Proximal phalanx of third finger of hand.l | Z-Anatomy | 440 | — |
 | Radius | Radius | G + D | Radius.l | Z-Anatomy | 784 | BodyParts3D 4.0 (radius) |
+| Côte | Rib / Costa | G + D | rib | BodyParts3D 4.0 | 19 178 | — |
+| Membre inférieur droit | Right lower limb / Membrum inferior dextrus | D | right lower limb | BodyParts3D 4.0 | 21 170 | — |
+| Membre supérieur droit | Right upper limb / Membrum superior dextrus | D | right upper limb | BodyParts3D 4.0 | 53 344 | — |
+| Racine du nez | Root of nose / Radix nasi | G + D | root of nose | BodyParts3D 4.0 | 388 | — |
 | Sacrum | Os sacrum | — | Sacrum | Z-Anatomy | 11 676 | BodyParts3D 4.0 (sacrum) |
 | Os scaphoîde | Os scaphoideum | G + D | Scaphoid bone.l | Z-Anatomy | 390 | BodyParts3D 4.0 (scaphoid) |
 | Scapula | Scapula | G + D | Scapula.l | Z-Anatomy | 25 326 | BodyParts3D 4.0 (scapula) |
 | Deuxième métacarpien | Os secundum metacarpi | G + D | Second metacarpal bone.l | Z-Anatomy | 764 | BodyParts3D 4.0 (second metacarpal bone) |
 | Deuxième os métatarsien | Os secundum metatarsi | G + D | Second metatarsal bone.l | Z-Anatomy | 690 | BodyParts3D 4.0 (second metatarsal bone) |
 | Deuxième côte | Costa secunda | G + D | Second rib.l | Z-Anatomy | 5 364 | BodyParts3D 4.0 (second rib) |
+| Os sésamoïde | Sesamoid bone / Os sesamoideum | G + D | sesamoid bone | BodyParts3D 4.0 | 546 | — |
 | Os sésamoïdes du pied | Ossa sesamoidea pedis | G + D | Sesamoid bones of foot.l | Z-Anatomy | 290 | — |
 | Septième côte | Septima costa | G + D | Seventh rib.l | Z-Anatomy | 9 776 | BodyParts3D 4.0 (seventh rib) |
+| Os court | Short bone / Os breve | G + D | short bone | BodyParts3D 4.0 | 8 896 | — |
 | Sinus de l'os frontal | Sinus ossis frontalis | — | Sinus of frontal bone | Z-Anatomy | 1 504 | — |
 | Sinus de l'os sphénoïdal | Sinus ossis sphenoidei | — | Sinus of sphenoid bone | Z-Anatomy | 384 | — |
 | Sixième côte | Sexta costa | G + D | Sixth rib.l | Z-Anatomy | 10 132 | BodyParts3D 4.0 (sixth rib) |
+| Système squelettique | Skeletal system / Systema skeletale | G + D | skeletal system | BodyParts3D 4.0 | 130 256 | — |
 | Os sphénoïde | Os sphenoideum | — | Sphenoid bone | Z-Anatomy | 7 308 | BodyParts3D 4.0 (sphenoid bone) |
 | Etrier | Stapes | G + D | Stapes.l | Z-Anatomy | 4 342 | — |
+| Sternum | Sternum / Sternum | — | zone of sternum | BodyParts3D 4.0 | 1 892 | — |
 | Talus | Os tali | G + D | Talus.l | Z-Anatomy | 1 350 | BodyParts3D 4.0 (talus) |
 | Os temporal | Os temporale | G + D | Temporal bone.l | Z-Anatomy | 14 094 | BodyParts3D 4.0 (temporal bone) |
 | Dixième côte | Decima costa | G + D | Tenth rib.l | Z-Anatomy | 7 026 | BodyParts3D 4.0 (tenth rib) |
 | Troisième métacarpien | Os tertium metacarpi | G + D | Third metacarpal bone.l | Z-Anatomy | 708 | BodyParts3D 4.0 (third metacarpal bone) |
 | Troisième métatarsien | Os tertium metatarsi | G + D | Third metatarsal bone.l | Z-Anatomy | 814 | BodyParts3D 4.0 (third metatarsal bone) |
 | Troisème côte | Tertia costa | G + D | Third rib.l | Z-Anatomy | 6 980 | BodyParts3D 4.0 (third rib) |
+| Vertèbre thoracique | Thoracic vertebra / Vertebra thoracica | — | thoracic vertebra | BodyParts3D 4.0 | 22 420 | — |
 | Cartilage thyroïde | Cartilago thyreoidea | — | Thyroid cartilage | Z-Anatomy | 4 488 | BodyParts3D 4.0 (thyroid cartilage) |
 | Tibia | Tibia | G + D | Tibia.l | Z-Anatomy | 1 670 | BodyParts3D 4.0 (tibia) |
+| Dent | Tooth / Dens | G + D | tooth | BodyParts3D 4.0 | 14 802 | — |
 | Os trapèze | Os trapezium | G + D | Trapezium bone.l | Z-Anatomy | 500 | BodyParts3D 4.0 (trapezium) |
 | Os trapèzoïde | Os trapezoideum | G + D | trapezoid | BodyParts3D 4.0 | 396 | Z-Anatomy (Trapezoid bone.l) |
 | Os pyramidal | Os triquetrum | G + D | Triquetrum bone.l | Z-Anatomy | 176 | — |
@@ -166,6 +209,7 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Dent incisive supéromédiale | Dens incisivus medialis superioris | G + D | Upper medial incisor.l | Z-Anatomy | 1 368 | — |
 | Deuxième molaire supérieure | Dens molaris secundus superioris | G + D | Upper second molar tooth.l | Z-Anatomy | 1 844 | — |
 | Deuxième prémolaire supérieure | Dens premolaris secundus superioris | G + D | Upper second premolar.l | Z-Anatomy | 1 554 | — |
+| Vertèbre | Vertebra / Vertebra | — | vertebra | BodyParts3D 4.0 | 47 792 | — |
 | Vertèbre C3 | Vertebra cervicalis III | — | Vertebra C3 | Z-Anatomy | 2 440 | — |
 | Vertèbre C4 | Vertebra cervicalis IV | — | Vertebra C4 | Z-Anatomy | 1 940 | — |
 | Vertèbre C5 | Vertebra cervicalis V | — | Vertebra C5 | Z-Anatomy | 2 336 | — |
@@ -188,11 +232,12 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Vertèbre T7 | Vertebra thoracis VII | — | Vertebra T7 | Z-Anatomy | 2 794 | — |
 | Vertèbre T8 | Vertebra thoracis VIII | — | Vertebra T8 | Z-Anatomy | 1 733 | — |
 | Vertèbre T9 | Vertebra thoracis IX | — | Vertebra T9 | Z-Anatomy | 2 978 | — |
+| Colonne vertébrale | Vertebral column / Columna vertebralis | — | vertebral column | BodyParts3D 4.0 | 95 804 | — |
 | Vomer | Vomer | — | vomer | BodyParts3D 4.0 | 1 586 | Z-Anatomy (Vomer) |
 | Processus xiphoïde | Processus xiphoideus | — | Xiphoid process | Z-Anatomy | 913 | BodyParts3D 4.0 (xiphoid process) |
 | Os zygomatique | Os zygomaticum | G + D | Zygomatic bone.l | Z-Anatomy | 1 328 | BodyParts3D 4.0 (zygomatic bone) |
 
-## Muscles (683 maillages)
+## Muscles (702 maillages)
 
 | Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
 |---|---|:--:|---|---|---:|---|
@@ -252,6 +297,7 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Aponévrose épicrânienne | Galea aponeurotica | G + D | Epicranial aponeurosis.l | Z-Anatomy | 20 118 | — |
 | Court extenseur radial du carpe | Extensor radialis brevis carpi | G + D | Extensor carpi radialis brevis.l | Z-Anatomy | 3 142 | BodyParts3D 4.0 (extensor carpi radialis brevis) |
 | Long extenseur radial du carpe | Extensor radialis longus carpi | G + D | Extensor carpi radialis longus.l | Z-Anatomy | 3 706 | BodyParts3D 4.0 (extensor carpi radialis longus) |
+| Extenseur ulnaire du carpe | Extensor carpi ulnaris / Extensor ulnaris carpi | G + D | extensor carpi ulnaris | BodyParts3D 4.0 | 1 660 | — |
 | Extenseur du petit doigt | Extensor digiti minimi | G + D | Extensor digiti minimi.l | Z-Anatomy | 2 152 | BodyParts3D 4.0 (extensor digiti minimi) |
 | Extenseur des doigts | Extensor digitorum | G + D | Extensor digitorum.l | Z-Anatomy | 6 410 | BodyParts3D 4.0 (extensor digitorum) |
 | Court extenseur des orteils | Extensor brevis digitorum | G + D | Extensor digitorum brevis.l | Z-Anatomy | 3 184 | — |
@@ -276,7 +322,9 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Court fléchisseur des orteils | Flexor brevis digitorum | G + D | Flexor digitorum brevis.l | Z-Anatomy | 3 224 | BodyParts3D 4.0 (flexor digitorum brevis) |
 | Long fléchisseur des orteils | Musculus flexor digitorum longus | G + D | Flexor digitorum longus.l | Z-Anatomy | 6 836 | BodyParts3D 4.0 (flexor digitorum longus) |
 | Fléchisseur profond des doigts | Flexor profundus digitorum | G + D | Flexor digitorum profundus.l | Z-Anatomy | 7 110 | BodyParts3D 4.0 (flexor digitorum profundus) |
+| Fléchisseur superficiel des doigts | Flexor digitorum superficialis / Flexor superficialis digitorum superficialis | G + D | flexor digitorum superficialis | BodyParts3D 4.0 | 2 278 | — |
 | Long fléchisseur de l'hallux | Flexor longus hallucis | G + D | Flexor hallucis longus.l | Z-Anatomy | 5 878 | BodyParts3D 4.0 (flexor hallucis longus) |
+| Court fléchisseur du pouce | Flexor pollicis brevis / Flexor brevis pollicis | G + D | flexor pollicis brevis | BodyParts3D 4.0 | 490 | — |
 | Long fléchisseur du pouce | Flexor longus pollicis | G + D | Flexor pollicis longus.l | Z-Anatomy | 1 666 | BodyParts3D 4.0 (flexor pollicis longus) |
 | Rétinaculum des fléchisseurs | Retinaculum flexorium tali | G + D | Flexor retinaculum of ankle.l | Z-Anatomy | 696 | — |
 | Rétinaculum des fléchisseurs du poignet | Retinaculum flexorium carpi | G + D | flexor retinaculum of wrist | BodyParts3D 4.0 | 1 412 | Z-Anatomy (Flexor retinaculum of wrist.l) |
@@ -332,10 +380,12 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Bourse subtendineuse latérale des muscles gastrocnémiens | Bursa subtendinea lateralis musculi gastrocnemii | G + D | Lateral subtendinous bursa of gastrocnemius muscle.l | Z-Anatomy | 992 | — |
 | Muscle grand dorsal | Musculus latissimus dorsi | G + D | Latissimus dorsi muscle.l | Z-Anatomy | 21 580 | — |
 | Muscle élévateur de l'angle de la bouche | Levator anguli oris | G + D | Levator anguli oris.l | Z-Anatomy | 330 | — |
+| Muscle élévateur de l'anus | Levator ani / Musculus levator ani | G + D | zone of levator ani | BodyParts3D 4.0 | 11 410 | — |
 | Muscle élévateur de la lèvre supérieure | Levator labii superioris | G + D | Levator labii superioris.l | Z-Anatomy | 540 | — |
 | Musclé élévateur nasolabial | Levator nasolabialis | G + D | Levator nasolabialis.l | Z-Anatomy | 172 | — |
 | Muscle élévateur de la paupière supérieure | Levator palpebrae superioris | G + D | Levator palpebrae superioris.l | Z-Anatomy | 2 152 | BodyParts3D 4.0 (levator palpebrae superioris) |
 | Muscle élévateur de la scapula | Levator scapulae | G + D | Levator scapulae.l | Z-Anatomy | 3 082 | BodyParts3D 4.0 (levator scapulae) |
+| Élévateur du voile du palais | Levator veli palatini / Levator veli palatini | G + D | levator veli palatini | BodyParts3D 4.0 | 2 708 | — |
 | Courts élévateurs des côtes | Levatores breves costarum | G + D | Levatores breves costarum.l | Z-Anatomy | 2 690 | — |
 | Longs élévateurs des côtes | Levatores longi costarum | G + D | Levatores longi costarum.l | Z-Anatomy | 5 930 | — |
 | Ligne blanche | Linea alba | — | linea alba | BodyParts3D 4.0 | 436 | Z-Anatomy (Linea alba) |
@@ -362,6 +412,7 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Muscle mentonnier | Musculus mentalis | G + D | Mentalis muscle.l | Z-Anatomy | 166 | — |
 | Lame moyenne du fascia thoracolombaire | Lamina media fasciae thoracolumbaris | G + D | Middle layer of thoracolumbar fascia.l | Z-Anatomy | 160 | — |
 | Constricteur moyen du pharynx | Constrictor medius pharyngis | G + D | Middle pharyngeal constrictor.l | Z-Anatomy | 2 948 | BodyParts3D 4.0 (middle pharyngeal constrictor) |
+| Bouche | Mouth / Stoma | G + D | mouth | BodyParts3D 4.0 | 6 856 | — |
 | Muscles multifides du cou | Musculus multifidus colli | G + D | Multifidus colli muscle.l | Z-Anatomy | 1 390 | — |
 | Muscles multifides lombaire | Musculus multifidus lumborum | G + D | Multifidus lumborum muscle.l | Z-Anatomy | 2 820 | — |
 | Muscles multifides du thorax | Musculus multifidus thoracis | G + D | Multifidus thoracis muscle.l | Z-Anatomy | 3 902 | — |
@@ -389,6 +440,8 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Muscle pectiné | Musculus pectineus | G + D | Pectineus muscle.l | Z-Anatomy | 1 952 | BodyParts3D 4.0 (pectineus) |
 | Fascia pectoral | Fascia pectoralis | G + D | Pectoral fascia.l | Z-Anatomy | 2 709 | — |
 | Muscle petit pectoral | Musculus pectoralis minor | G + D | Pectoralis minor muscle.l | Z-Anatomy | 4 142 | BodyParts3D 4.0 (pectoralis minor) |
+| Pelvis | Pelvis / Pelvis | G + D | pelvis | BodyParts3D 4.0 | 7 776 | — |
+| Périnée | Perineum / Perineum | — | perineum | BodyParts3D 4.0 | 1 394 | — |
 | Fascia du muscle piriforme | Fascia musculi piriformis | G + D | Piriformis fascia.l | Z-Anatomy | 926 | — |
 | Muscle piriforme | Musculus piriformis | G + D | Piriformis muscle.l | Z-Anatomy | 1 500 | BodyParts3D 4.0 (piriformis) |
 | Aponévrose plantaire | Aponeurosis plantaris | G + D | Plantar aponeurosis.l | Z-Anatomy | 406 | — |
@@ -514,6 +567,7 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Tendon sheath of tibialis anterior | Tendon sheath of tibialis anterior | G + D | Tendon sheath of tibialis anterior.l | Z-Anatomy | 240 | — |
 | Gaine tendineuse du muscle tibial postérieur | Vagina tendinis musculi tibialis posterioris | G + D | Tendon sheath of tibialis posterior muscle.l | Z-Anatomy | 286 | — |
 | Muscle tenseur du fascia lata | Tensor fasciae latae | G + D | Tensor fasciae latae.l | Z-Anatomy | 1 862 | BodyParts3D 4.0 (tensor fasciae latae) |
+| Tenseur du voile du palais | Tensor veli palatini / Tensor veli palatini | G + D | tensor veli palatini | BodyParts3D 4.0 | 3 050 | — |
 | Muscle grand rond | Musculus teres major | G + D | Teres major muscle.l | Z-Anatomy | 1 154 | BodyParts3D 4.0 (teres major) |
 | Muscle petit rond | Musculus teres minor | G + D | Teres minor muscle.l | Z-Anatomy | 1 522 | BodyParts3D 4.0 (teres minor) |
 | Partie thyro-épiglottique du muscle thyro-aryténoïdien | Pars thyreoepiglottica musculi thyreoarytenoidei | G + D | Thyro-epiglottic part of thyro-arytenoid muscle.l | Z-Anatomy | 3 110 | — |
@@ -541,7 +595,156 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Muscle grand zygomatique | Musculus zygomaticus major | G + D | Zygomaticus major muscle.l | Z-Anatomy | 798 | — |
 | Muscle petit zygomatique | Musculus zygomaticus minor | G + D | Zygomaticus minor muscle.l | Z-Anatomy | 432 | — |
 
-## Organes (595 maillages)
+## Organes (1141 maillages)
+
+### arterial
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Aorte abdominale | Abdominal aorta / Aorta abdominalis | — | abdominal aorta | BodyParts3D 4.0 | 498 | — |
+| Branche acromiale de l'artère thoraco-acromiale | Acromial branch of thoraco-acromial artery / Ramus acromialis arteriae thoracoacromialis | G + D | acromial branch of thoraco-acromial artery | BodyParts3D 4.0 | 412 | — |
+| Artère cérébrale antérieure | Anterior cerebral artery / Arteria cerebri anterior | G + D | anterior cerebral artery | BodyParts3D 4.0 | 400 | — |
+| Artère choroïdienne antérieure | Anterior choroidal artery / Arteria chorioidea anterior arteria choroidea anterior | G + D | anterior choroidal artery | BodyParts3D 4.0 | 296 | — |
+| Artère circonflexe antérieure de l'humérus | Anterior circumflex humeral artery / Arteria circumflexa anterior humeri | G + D | anterior circumflex humeral artery | BodyParts3D 4.0 | 718 | — |
+| Artère cérébelleuse inféro-antérieure | Anterior inferior cerebellar artery / Arteria cerebelli inferior anterior | — | anterior inferior cerebellar artery | BodyParts3D 4.0 | 1 214 | — |
+| Artère pancréaticoduodénale inféro-antérieure | Anterior inferior pancreaticoduodenal artery / Arteria pancreaticoduodenalis inferior anterior | — | anterior inferior pancreaticoduodenal artery | BodyParts3D 4.0 | 342 | — |
+| Artère interosseuse antérieure | Anterior interosseous artery / Arteria interossea anterior | G + D | anterior interosseous artery | BodyParts3D 4.0 | 432 | — |
+| Artère spinale antérieure | Anterior spinal artery / Arteria spinalis anterior | G + D | anterior spinal artery | BodyParts3D 4.0 | 294 | — |
+| Artère tibiale antérieure | Anterior tibial artery / Arteria tibialis anterior | G + D | anterior tibial artery | BodyParts3D 4.0 | 3 830 | — |
+| Artère récurrente tibiale antérieure | Anterior tibial recurrent artery / Arteria recurrens tibialis anterior | G + D | anterior tibial recurrent artery | BodyParts3D 4.0 | 1 328 | — |
+| Artère récurrente ulnaire antérieure | Anterior ulnar recurrent artery / Arteria recurrens ulnaris anterior | G + D | anterior ulnar recurrent artery | BodyParts3D 4.0 | 180 | — |
+| Aorte | Aorta / Aorta | — | aorta | BodyParts3D 4.0 | 2 986 | — |
+| Artère appendiculaire | Appendicular artery / Arteria appendicularis | — | appendicular artery | BodyParts3D 4.0 | 622 | — |
+| Artère arquée | Arcuate artery / Arteria arcuata | G + D | arcuate artery | BodyParts3D 4.0 | 494 | — |
+| Artère principale du pouce | Princeps pollicis artery / Arteria princeps pollicis | G + D | arteria princeps pollicis | BodyParts3D 4.0 | 422 | — |
+| Artère radiale de l'index | Radialis indicis artery / Arteria radialis indicis | G + D | arteria radialis indicis | BodyParts3D 4.0 | 452 | — |
+| Aorte ascendante | Ascending aorta / Aorta ascendens | — | ascending aorta | BodyParts3D 4.0 | 388 | — |
+| Branche ascendante de l'artère colique gauche | Ascending branch of left colic artery / Ramus ascendens arteriae | G | ascending branch of left colic artery | BodyParts3D 4.0 | 320 | — |
+| Artère axillaire | Axillary artery / Arteria axillaris | G + D | axillary artery | BodyParts3D 4.0 | 614 | — |
+| Artère basilaire | Basilar artery / Arteria basilaris | G + D | basilar artery | BodyParts3D 4.0 | 1 712 | — |
+| Artère brachiale | Brachial artery / Arteria brachialis | G + D | brachial artery | BodyParts3D 4.0 | 762 | — |
+| Artère callosomarginale | Callosomarginal artery / Arteria callosomarginalis | G + D | callosomarginal artery | BodyParts3D 4.0 | 520 | — |
+| Système cardiovasculaire | Cardiovascular system / Systema cardiovasculare | G + D | cardiovascular system | BodyParts3D 4.0 | 86 698 | — |
+| Cercle artériel du cerveau | Cerebral arterial circle / Circulus arteriosus cerebri | G + D | cerebral arterial circle | BodyParts3D 4.0 | 486 | — |
+| Artère circonflexe de la scapula | Circumflex scapular artery / Arteria circumflexa scapulae | G + D | circumflex scapular artery | BodyParts3D 4.0 | 428 | — |
+| Artère carotide commune | Common carotid artery / Carotis communis | G + D | common carotid artery | BodyParts3D 4.0 | 164 | — |
+| Artère hépatique commune | Common hepatic artery / Arteria hepatica communis | G + D | common hepatic artery | BodyParts3D 4.0 | 6 002 | — |
+| Artère iliaque commune | Common iliac artery / Arteria iliaca communis | G + D | common iliac artery | BodyParts3D 4.0 | 2 012 | — |
+| Artère interosseuse commune | Common interosseous artery / Arteria interossea communis | G + D | common interosseous artery | BodyParts3D 4.0 | 436 | — |
+| Tronc costocervical | Costocervical trunk / Truncus costocervicalis | G + D | costocervical trunk | BodyParts3D 4.0 | 232 | — |
+| Artère brachiale profonde | Deep brachial artery / Arteria profunda brachii | G + D | deep brachial artery | BodyParts3D 4.0 | 550 | — |
+| Artère cervicale profonde | Deep cervical artery / Arteria cervicalis profunda | G + D | deep cervical artery | BodyParts3D 4.0 | 330 | — |
+| Artère plantaire profonde | Deep plantar artery / Arteria plantaris profunda | G + D | deep plantar artery | BodyParts3D 4.0 | 442 | — |
+| Branche deltoïdienne de l'artère thoraco-acromiale | Deltoid branch of thoraco-acromial artery / Ramus deltoideus arteriae thoracoacromialis | G + D | deltoid branch of thoraco-acromial artery | BodyParts3D 4.0 | 294 | — |
+| Aorte descendante | Descending aorta / Aorta descendens | — | descending aorta | BodyParts3D 4.0 | 2 002 | — |
+| Branche descendante de l'artère circonflexe lat. de la cuisse | Descending branch of lateral circumflex femoral artery / Ramus descendens arteriae circumflexae lateralis femoris | G + D | descending branch of lateral circumflex femoral artery | BodyParts3D 4.0 | 1 150 | — |
+| Branche descendante de l'artère colique gauche | Descending branch of left colic artery / Ramus descendens arteriae colicae sinistrae | G | descending branch of left colic artery | BodyParts3D 4.0 | 464 | — |
+| Artère descendante du genou | Descending genicular artery / Arteria descendens genus | G + D | descending genicular artery | BodyParts3D 4.0 | 1 436 | — |
+| Artère dorsale du pénis | Dorsal artery of penis / Arteria dorsalis penis | G + D | dorsal artery of penis | BodyParts3D 4.0 | 1 436 | — |
+| Branche carpienne dorsale de l'artère radiale | Dorsal carpal branch of radial artery / Ramus carpeus dorsalis arteriae | G + D | dorsal carpal branch of radial artery | BodyParts3D 4.0 | 298 | — |
+| Branche carpienne dorsale de l'artère ulnaire | Dorsal carpal branch of ulnar artery / Ramus carpeus dorsalis arteriae ulnaris | G + D | dorsal carpal branch of ulnar artery | BodyParts3D 4.0 | 542 | — |
+| Artère pancréatique dorsale | Dorsal pancreatic artery / Arteria pancreatica dorsalis | — | dorsal pancreatic artery | BodyParts3D 4.0 | 456 | — |
+| Artère dorsale de la scapula | Dorsal scapular artery / Arteria dorsalis scapulae | G + D | dorsal scapular artery | BodyParts3D 4.0 | 996 | — |
+| Artère dorsale du pied | Dorsalis pedis artery / Arteria dorsalis pedis | G + D | dorsalis pedis artery | BodyParts3D 4.0 | 374 | — |
+| Artère iliaque externe | External iliac artery / Arteria iliaca externa | G + D | external iliac artery | BodyParts3D 4.0 | 2 012 | — |
+| Artère fémorale | Femoral artery / Arteria femoralis | G + D | femoral artery | BodyParts3D 4.0 | 208 | — |
+| Première artère intercostale postérieure | First posterior intercostal artery / Arteria intercostalis posterior prima | G + D | first posterior intercostal artery | BodyParts3D 4.0 | 502 | — |
+| Artère gastroduodénale | Gastroduodenal artery / Arteria gastroduodenalis | — | gastroduodenal artery | BodyParts3D 4.0 | 200 | — |
+| Grande artère pancréatique | Great pancreatic artery / Arteria pancreatica maqna | — | great pancreatic artery | BodyParts3D 4.0 | 264 | — |
+| Coeur | Heart / Cor | G + D | heart | BodyParts3D 4.0 | 15 716 | — |
+| Corps humain | Human body / Corpus humanum | G + D | human body | BodyParts3D 4.0 | 410 514 | — |
+| Artère iléocolique | Ileocolic artery / Arteria ileocolica | — | ileocolic artery | BodyParts3D 4.0 | 2 284 | — |
+| Artère épigastrique inférieure | Inferior epigastric artery / Arteria epigastrica inferior | G + D | inferior epigastric artery | BodyParts3D 4.0 | 1 500 | — |
+| Artère inférolatérale du genou | Inferior lateral genicular artery / Arteria inferior lateralis genus | G + D | inferior lateral genicular artery | BodyParts3D 4.0 | 770 | — |
+| Artère inféromédiale du genou | Inferior medial genicular artery / Arteria inferior medialis genus | G + D | inferior medial genicular artery | BodyParts3D 4.0 | 810 | — |
+| Médiastin inférieur | Inferior mediastinum / Mediastinum inferius | G + D | inferior mediastinum | BodyParts3D 4.0 | 21 628 | — |
+| Artère mésentérique inférieure | Inferior mesenteric artery / Arteria mesenterica inferior | G | inferior mesenteric artery | BodyParts3D 4.0 | 2 464 | — |
+| Artère pancréatique inférieure | Inferior pancreatic artery / Arteria pancreatica inferior | — | inferior pancreatic artery | BodyParts3D 4.0 | 400 | — |
+| Artère pancréaticoduodénale inférieure | Inferior pancreaticoduodenal artery / Arteria pancreaticoduodenalis | — | inferior pancreaticoduodenal artery | BodyParts3D 4.0 | 260 | — |
+| Artère phrénique inférieure | Inferior phrenic artery / Arteria phrenica inferior | G + D | inferior phrenic artery | BodyParts3D 4.0 | 2 412 | — |
+| Artère surrénale inférieure | Inferior suprarenal artery / Arteria suprarenalis inferior | G + D | inferior suprarenal artery | BodyParts3D 4.0 | 742 | — |
+| Artère thyroïdienne inférieure | Inferior thyroid artery / Arteria thyreoidea inferior arteria thyroidea inferior | G + D | inferior thyroid artery | BodyParts3D 4.0 | 286 | — |
+| Artère collatérale ulnaire inférieure | Inferior ulnar collateral artery / Arteria collateralis ulnaris inferior | G + D | inferior ulnar collateral artery | BodyParts3D 4.0 | 260 | — |
+| Artère carotide interne | Internal carotid artery / Carotis interna | G + D | internal carotid artery | BodyParts3D 4.0 | 422 | — |
+| Artère iliaque interne | Internal iliac artery / Arteria iliaca interna | G + D | internal iliac artery | BodyParts3D 4.0 | 262 | — |
+| Artère thoracique interne | Internal thoracic artery / Arteria thoracica interna | G + D | internal thoracic artery | BodyParts3D 4.0 | 800 | — |
+| Artère circonflexe fémorale latérale | Lateral circumflex femoral artery / Arteria circumflexa lateralis femoris | G + D | lateral circumflex femoral artery | BodyParts3D 4.0 | 284 | — |
+| Artère occipitale latérale | Lateral occipital artery / Arteria occipitalis lateralis | G + D | lateral occipital artery | BodyParts3D 4.0 | 484 | — |
+| Artère plantaire latérale | Lateral plantar artery / Arteria plantaris lateralis | G + D | lateral plantar artery | BodyParts3D 4.0 | 278 | — |
+| Artère tarsienne latérale | Lateral tarsal artery / Arteria tarsea lateralis | G + D | lateral tarsal artery | BodyParts3D 4.0 | 428 | — |
+| Artère thoracique latérale | Lateral thoracic artery / Arteria thoracica lateralis | G + D | lateral thoracic artery | BodyParts3D 4.0 | 516 | — |
+| Artère colique gauche | Left colic artery / Arteria colica sinistra | G | left colic artery | BodyParts3D 4.0 | 180 | — |
+| Artère carotide commune gauche | Left common carotid artery / Carotis communis sinistra | G + D | left common carotid artery | BodyParts3D 4.0 | 2 298 | — |
+| Artère coronaire gauche | Left coronary artery / Arteria coronaria sinistra | G | left coronary artery | BodyParts3D 4.0 | 8 608 | — |
+| Artère gastrique gauche | Left gastric artery / Arteria gastrica sinistra | G | left gastric artery | BodyParts3D 4.0 | 904 | — |
+| Artère hépatique gauche | Left hepatic artery / Arteria hepatica sinistra | G | left hepatic artery | BodyParts3D 4.0 | 2 332 | — |
+| Artère pulmonaire gauche | Left pulmonary artery / Arteria pulmonalis sinistra | G | left pulmonary artery | BodyParts3D 4.0 | 10 738 | — |
+| Artère rénale gauche | Left renal artery / Arteria renum sinistra | G | left renal artery | BodyParts3D 4.0 | 1 800 | — |
+| Artère subclavière gauche | Left subclavian artery / Arteria subclavia sinistra | G + D | left subclavian artery | BodyParts3D 4.0 | 1 712 | — |
+| Artère testiculaire gauche | Left testicular artery / Arteria testicularis sinistra | G | left testicular artery | BodyParts3D 4.0 | 2 732 | — |
+| (Côte lombaire) | (Lumbar rib) / (Costa lumbalis) | — | lumbar artery | BodyParts3D 4.0 | 5 400 | — |
+| Artère occipitale médiale | Medial occipital artery / Arteria occipitalis medialis | G + D | medial occipital artery | BodyParts3D 4.0 | 660 | — |
+| Artère plantaire médiale | Medial plantar artery / Arteria plantaris medialis | G + D | medial plantar artery | BodyParts3D 4.0 | 376 | — |
+| Médiastin | Mediastinum / Mediastinum | G + D | mediastinum | BodyParts3D 4.0 | 23 678 | — |
+| Artère colique moyenne | Middle colic artery / Arteria colica media | — | middle colic artery | BodyParts3D 4.0 | 702 | — |
+| Médiastin moyen | Middle mediastinum / Mediastinum medium | G + D | middle mediastinum | BodyParts3D 4.0 | 20 690 | — |
+| Artère surrénale moyenne | Middle suprarenal artery / Arteria suprarenalis media | G + D | middle suprarenal artery | BodyParts3D 4.0 | 490 | — |
+| Artère musculophrénique | Musculophrenic artery / Arteria musculoohrenica | G + D | musculophrenic artery | BodyParts3D 4.0 | 564 | — |
+| Artère ophtalmique | Ophthalmic artery / Arteria ophthalmica | G + D | ophthalmic artery | BodyParts3D 4.0 | 530 | — |
+| Artère péricalleuse | Pericallosal artery / Arteria pericallosa | G + D | pericallosal artery | BodyParts3D 4.0 | 578 | — |
+| Arcade plantaire | Plantar arch / Arcus plantaris | G + D | plantar arch | BodyParts3D 4.0 | 850 | — |
+| Artère poplitée | Popliteal artery / Arteria poplitea | G + D | popliteal artery | BodyParts3D 4.0 | 3 680 | — |
+| Artère cérébrale postérieure | Posterior cerebral artery / Arteria cerebri posterior | G + D | zone of posterior cerebral artery | BodyParts3D 4.0 | 728 | — |
+| Artère circonflexe postérieure de l'humérus | Posterior circumflex humeral artery / Arteria circumflexa posterior humeri | G + D | posterior circumflex humeral artery | BodyParts3D 4.0 | 678 | — |
+| Artère communiquante postérieure | Posterior communicating artery / Arteria communicans posterior | G + D | posterior communicating artery | BodyParts3D 4.0 | 204 | — |
+| Artère cérébelleuse inféropostérieure | Posterior inferior cerebellar artery / Arteria cerebelli inferior posterior | G + D | posterior inferior cerebellar artery | BodyParts3D 4.0 | 3 696 | — |
+| Artère pancréaticoduodénale inféro-postérieure | Posterior inferior pancreaticoduodenal artery / Arteria pancreaticoduodenalis inferior posterior | — | posterior inferior pancreaticoduodenal artery | BodyParts3D 4.0 | 372 | — |
+| Artères intercostales postérieures | Posterior intercostal arteries / Arteriae intercostales posteriores | — | posterior intercostal arteries | BodyParts3D 4.0 | 16 062 | — |
+| Artère intercostale postérieure | Posterior intercostal artery / Arteria intercostalis posterior | G + D | posterior intercostal artery | BodyParts3D 4.0 | 1 100 | — |
+| Artère pancréaticoduodénale postérosupérieure | Posterior superior pancreaticoduodenal artery / Arteria pancreaticoduodenalis superior posterior | — | posterior superior pancreaticoduodenal artery | BodyParts3D 4.0 | 380 | — |
+| Artère tibiale postérieure | Posterior tibial artery / Arteria tibialis posterior | G + D | posterior tibial artery | BodyParts3D 4.0 | 2 012 | — |
+| Artère récurrente ulnaire postérieure | Posterior ulnar recurrent artery / Arteria recurrens ulnaris posterior | G + D | posterior ulnar recurrent artery | BodyParts3D 4.0 | 328 | — |
+| Partie précommunicante de l'artère cérébrale postérieure | Precommunicating part of posterior cerebral artery / Pars precommunicans arteriae posterioris cerebri | G + D | precommunicating part of posterior cerebral artery | BodyParts3D 4.0 | 282 | — |
+| Artère radiale | Radial artery / Arteria radialis | G + D | radial artery | BodyParts3D 4.0 | 1 708 | — |
+| Artère collatérale radiale | Radial collateral artery / Arteria collateralis radialis | G + D | radial collateral artery | BodyParts3D 4.0 | 318 | — |
+| Artère récurrente radiale | Radial recurrent artery / Arteria recurrens radialis | G + D | radial recurrent artery | BodyParts3D 4.0 | 572 | — |
+| Artère interosseuse récurrente | Recurrent interosseous artery / Arteria interossea recurrens | G + D | recurrent interosseous artery | BodyParts3D 4.0 | 286 | — |
+| Artère rénale | Renal artery / Arteria renalis | G + D | renal artery | BodyParts3D 4.0 | 286 | — |
+| Artère colique droite | Right colic artery / Arteria colica dextra | D | right colic artery | BodyParts3D 4.0 | 854 | — |
+| Artère carotide commune droite | Right common carotid artery / Carotis communis dextra | G + D | right common carotid artery | BodyParts3D 4.0 | 486 | — |
+| Artère coronaire droite | Right coronary artery / Arteria coronaria dextra | D | right coronary artery | BodyParts3D 4.0 | 9 648 | — |
+| Artère gastrique droite | Right gastric artery / Arteria gastrica dextra | D | right gastric artery | BodyParts3D 4.0 | 448 | — |
+| Artère hépatique droite | Right hepatic artery / Arteria hepatica dextra | D | right hepatic artery | BodyParts3D 4.0 | 2 774 | — |
+| Lobe hépatique droit | Right lobe of liver / Lobus dexter hepatis | D | right lobe of liver | BodyParts3D 4.0 | 3 678 | — |
+| Poumon droit | Right lung / Pulmo dexter | D | right lung | BodyParts3D 4.0 | 7 352 | — |
+| Artère pulmonaire droite | Right pulmonary artery / Arteria pulmonalis dextra | D | right pulmonary artery | BodyParts3D 4.0 | 1 412 | — |
+| Artère rénale droite | Right renal artery / Arteria renum dextra | D | right renal artery | BodyParts3D 4.0 | 1 694 | — |
+| Artère subclavière droite | Right subclavian artery / Arteria subclavia dextra | G + D | right subclavian artery | BodyParts3D 4.0 | 1 712 | — |
+| Artère testiculaire droite | Right testicular artery / Arteria testicularis dextra | D | right testicular artery | BodyParts3D 4.0 | 2 846 | — |
+| Deuxième artère intercostale postérieure | Second posterior intercostal artery / Arteria intercostalis posterior secunda | G + D | second posterior intercostal artery | BodyParts3D 4.0 | 598 | — |
+| Artère splénique | Splenic artery / Arteria splenica | — | splenic artery | BodyParts3D 4.0 | 3 356 | — |
+| Artère subclavière | Subclavian artery / Arteria subclavia | G + D | subclavian artery | BodyParts3D 4.0 | 558 | — |
+| Artère subcostale | Subcostal artery / Arteria subcostalis | G + D | subcostal artery | BodyParts3D 4.0 | 416 | — |
+| Artère subscapulaire | Subscapular artery / Arteria subscapularis | G + D | subscapular artery | BodyParts3D 4.0 | 772 | — |
+| Artère épigastrique superficielle | Superficial epigastric artery / Arteria epigastrica superficialis | G + D | superficial epigastric artery | BodyParts3D 4.0 | 576 | — |
+| Artère cérébelleuse supérieure | Superior cerebellar artery / Arteria cerebelli superior | G + D | superior cerebellar artery | BodyParts3D 4.0 | 398 | — |
+| Artère épigastrique supérieure | Superior epigastric artery / Arteria epigastrica superior | G + D | superior epigastric artery | BodyParts3D 4.0 | 498 | — |
+| Artère supérieure latérale du genou | Superior lateral genicular artery / Arteria superior lateralis genus | G + D | superior lateral genicular artery | BodyParts3D 4.0 | 566 | — |
+| Artère supérieure médiale du genou | Superior medial genicular artery / Arteria superior medialis genus | G + D | superior medial genicular artery | BodyParts3D 4.0 | 504 | — |
+| Médiastin supérieur | Superior mediastinum / Medisatinum superius | G + D | superior mediastinum | BodyParts3D 4.0 | 2 050 | — |
+| Artère mésentérique supérieure | Superior mesenteric artery / Arteria mesenteries superior | D | superior mesenteric artery | BodyParts3D 4.0 | 5 074 | — |
+| Artère collatérale ulnaire | Superior ulnar collateral artery / Arteria collateralis ulnaris superior | G + D | superior ulnar collateral artery | BodyParts3D 4.0 | 324 | — |
+| Artère suprascapulaire | Suprascapular artery / Arteria suprascapularis | G + D | suprascapular artery | BodyParts3D 4.0 | 424 | — |
+| Artère intercostale suprême | Supreme intercostal artery / Arteria intercostalis suprema | G + D | supreme intercostal artery | BodyParts3D 4.0 | 206 | — |
+| Artère testiculaire | Testicular artery / Arteria testicularis | G + D | testicular artery | BodyParts3D 4.0 | 2 732 | — |
+| Artère thoracodorsale | Thoracodorsal artery / Arteria thoracodorsalis | G + D | thoracodorsal artery | BodyParts3D 4.0 | 462 | — |
+| Thorax | Thorax / Thorax | G + D | thorax | BodyParts3D 4.0 | 78 000 | — |
+| Tronc thyrocervical | Thyrocervical trunk / Truncus thyreocervicalis | G + D | thyrocervical trunk | BodyParts3D 4.0 | 122 | — |
+| Artère transverse du cou | Transverse cervical artery / Arteria transversa colli arteria transversa cervicis | G + D | transverse cervical artery | BodyParts3D 4.0 | 348 | — |
+| Tronc | Trunk / Truncus | G + D | trunk | BodyParts3D 4.0 | 134 296 | — |
+| Artère ulnaire | Ulnar artery / Arteria ulnaris | G + D | ulnar artery | BodyParts3D 4.0 | 1 564 | — |
+| (Artère récurrente ulnaire) | (Ulnar recurrent artery) / (Arteria recurrens ulnaris) | G + D | ulnar recurrent artery | BodyParts3D 4.0 | 508 | — |
+| Artère vertébrale | Vertebral artery / Arteria vertebralis | G + D | vertebral artery | BodyParts3D 4.0 | 494 | — |
 
 ### Nerveux et sens
 
@@ -923,6 +1126,85 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Lymphonoeuds supratrochléaires | Nodi supratrochleares | G + D | Supratrochlear nodes.l | Z-Anatomy | 840 | — |
 | Lymphonoeuds thyroïdiens | Nodi thyreoidei | G + D | Thyroid nodes.l | Z-Anatomy | 336 | — |
 
+### venous
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Veine circonflexe humérale antérieure | Anterior circumflex humeral vein / Vena circumflexa anterior humeri | G + D | anterior circumflex humeral vein | BodyParts3D 4.0 | 722 | — |
+| Veine interventriculaire antérieure | Anterior interventricular vein / Vena interventricularis anterior | — | anterior interventricular vein | BodyParts3D 4.0 | 2 918 | — |
+| Veine axillaire | Axillary vein / Vena axillaris | G + D | axillary vein | BodyParts3D 4.0 | 464 | — |
+| Veine azygos | Azygos vein / Vena azyga | — | azygos vein | BodyParts3D 4.0 | 4 016 | — |
+| Veine basilique | Basilic vein / Vena basilica | G + D | basilic vein | BodyParts3D 4.0 | 4 034 | — |
+| Veine brachiocéphalique | Brachiocephalic vein / Vena brachiocephalica | G + D | brachiocephalic vein | BodyParts3D 4.0 | 744 | — |
+| Veine céphalique | Cephalic vein / Vena cephalica | G + D | cephalic vein | BodyParts3D 4.0 | 5 032 | — |
+| Veine circonflexe de la scapula | Circumflex scapular vein / Vena circumflexa scapulae | G + D | circumflex scapular vein | BodyParts3D 4.0 | 330 | — |
+| Veine iliaque commune | Common iliac vein / Vena iliaca communis | G + D | common iliac vein | BodyParts3D 4.0 | 398 | — |
+| Sinus coronaire | Coronary sinus / Sinus coronarius | — | coronary sinus | BodyParts3D 4.0 | 602 | — |
+| Veine dorsale profonde du pénis | Deep dorsal vein of penis / Vena dorsalis profunda penis | — | deep dorsal vein of penis | BodyParts3D 4.0 | 518 | — |
+| Veine fémorale profonde | Deep femoral vein / Vena profunda femoris | G + D | deep femoral vein | BodyParts3D 4.0 | 1 394 | — |
+| Arcade veineuse dorsale du pied | Dorsal venous arch of foot / Arcus venosus dorsalis pedis | G + D | dorsal venous arch of foot | BodyParts3D 4.0 | 962 | — |
+| Réseau veineux dorsal de la main | Dorsal venous network of hand / Rete venosum dorsale manus | G + D | dorsal venous network of hand | BodyParts3D 4.0 | 946 | — |
+| Veine iliaque externe | External iliac vein / Vena iliaca externa | G + D | external iliac vein | BodyParts3D 4.0 | 1 044 | — |
+| Veine fémorale | Femoral vein / Vena femoralis | G + D | femoral vein | BodyParts3D 4.0 | 228 | — |
+| Fibulaire | Fibular / Fibularis | G + D | fibular vein | BodyParts3D 4.0 | 2 648 | — |
+| Grande veine cardiaque | Great cardiac vein / Vena magna cordis | — | great cardiac vein | BodyParts3D 4.0 | 608 | — |
+| Veine grande saphène | Great saphenous vein / Vena saphena magna | G + D | great saphenous vein | BodyParts3D 4.0 | 6 608 | — |
+| Veine porte du foie | Hepatic portal vein / Vena portae hepatis | G + D | hepatic portal vein | BodyParts3D 4.0 | 788 | — |
+| Lèvre iléocolique | Ileocolic lip / Labrum ileocolicum | — | ileocolic vein | BodyParts3D 4.0 | 650 | — |
+| Veine iliolombale | Iliolumbar vein / Vena iliolumbalis | G + D | iliolumbar vein | BodyParts3D 4.0 | 2 352 | — |
+| Veine épigastrique inférieure | Inferior epigastric vein / Vena epigastrica inferior | G + D | inferior epigastric vein | BodyParts3D 4.0 | 1 642 | — |
+| Veine mésentérique inférieure | Inferior mesenteric vein / Vena mesenterica inferior | — | inferior mesenteric vein | BodyParts3D 4.0 | 242 | — |
+| Veine cave inférieure | Inferior vena cava / Vena cava inferior | — | inferior vena cava | BodyParts3D 4.0 | 746 | — |
+| Veine iliaque interne | Internal iliac vein / Vena iliaca interna | G + D | internal iliac vein | BodyParts3D 4.0 | 546 | — |
+| Veine jugulaire interne | Internal jugular vein / Vena jugularis interna | G + D | internal jugular vein | BodyParts3D 4.0 | 272 | — |
+| Veine pudendale interne | Internal pudendal vein / Vena pudendalis interna | G + D | internal pudendal vein | BodyParts3D 4.0 | 1 638 | — |
+| Veine thoracique latérale | Lateral thoracic vein / Vena thoracica lateralis | G + D | lateral thoracic vein | BodyParts3D 4.0 | 800 | — |
+| Veine lombaire ascendante gauche | Left ascending lumbar vein / Vena lumbalis ascendens sinistra | G | left ascending lumbar vein | BodyParts3D 4.0 | 388 | — |
+| Veine brachiocéphalique gauche | Left brachiocephalic vein / Vena brachiocephalica sinistra | G | left brachiocephalic vein | BodyParts3D 4.0 | 744 | — |
+| Veine colique gauche | Left colic vein / Vena colica sinistra | G | left colic vein | BodyParts3D 4.0 | 844 | — |
+| Veine gastrique gauche | Left gastric vein / Vena gastrica sinistra | G | left gastric vein | BodyParts3D 4.0 | 986 | — |
+| Veine hépatique gauche | Left hepatic vein / Vena hepatica sinistra | G | left hepatic vein | BodyParts3D 4.0 | 884 | — |
+| Veine pulmonaire inférieure gauche | Left inferior pulmonary vein / Vena pulmonalis sinistra inferior | G | left inferior pulmonary vein | BodyParts3D 4.0 | 3 486 | — |
+| Veine rénale gauche | Left renal vein / Vena renalis sinistra | G | left renal vein | BodyParts3D 4.0 | 2 918 | — |
+| Veine sous-clavière gauche | Left subclavian vein / Vena subclavia sinistra | G | left subclavian vein | BodyParts3D 4.0 | 402 | — |
+| Veine subcostale gauche | Left subcostal vein / Vena subcostalis sinistra | G | left subcostal vein | BodyParts3D 4.0 | 322 | — |
+| Veine intercostale supérieure gauche | Left superior intercostal vein / Vena intercostalis superior sinistra | G | left superior intercostal vein | BodyParts3D 4.0 | 292 | — |
+| Veine pulmonaire supérieure gauche | Left superior pulmonary vein / Vena pulmonalis sinistra superior | G | left superior pulmonary vein | BodyParts3D 4.0 | 872 | — |
+| Veine surrénale gauche | Left suprarenal vein / Vena suprarenalis sinistra | G | left suprarenal vein | BodyParts3D 4.0 | 374 | — |
+| Veine testiculaire gauche | Left testicular vein / Vena testicularis sinistra | G | left testicular vein | BodyParts3D 4.0 | 3 186 | — |
+| (Côte lombaire) | (Lumbar rib) / (Costa lumbalis) | — | lumbar vein | BodyParts3D 4.0 | 3 904 | — |
+| Veine antébrachiale médiane | Median antebrachial vein / Vena mediana antebrachii | G + D | median antebrachial vein | BodyParts3D 4.0 | 1 168 | — |
+| Veine médiane du coude | Median cubital vein / Vena mediana cubiti | G + D | median cubital vein | BodyParts3D 4.0 | 550 | — |
+| Veine sacrée médiane | Median sacral vein / Vena sacralis mediana | — | median sacral vein | BodyParts3D 4.0 | 1 026 | — |
+| Veine cardiaque moyenne | Middle cardiac vein / Vena media cordis interventricularis inferior | — | middle cardiac vein | BodyParts3D 4.0 | 4 188 | — |
+| Veine colique moyenne | Middle colic vein / Vena colica media | — | middle colic vein | BodyParts3D 4.0 | 716 | — |
+| Veine poplitée | Popliteal vein / Vena poplitea | G + D | popliteal vein | BodyParts3D 4.0 | 3 650 | — |
+| Radial | Radial / Radialis | G + D | radial vein | BodyParts3D 4.0 | 1 084 | — |
+| Veine lombaire ascendante droite | Right ascending lumbar vein / Vena lumbalis ascendens dextra | D | right ascending lumbar vein | BodyParts3D 4.0 | 1 734 | — |
+| Veine brachiocéphalique droite | Right brachiocephalic vein / Vena brachiocephalica dextra | D | right brachiocephalic vein | BodyParts3D 4.0 | 1 788 | — |
+| Veine colique droite | Right colic vein / Vena colica dextra | D | right colic vein | BodyParts3D 4.0 | 992 | — |
+| Veine gastrique droite | Right gastric vein / Vena gastrica dextra | D | right gastric vein | BodyParts3D 4.0 | 456 | — |
+| Veine hépatique droite | Right hepatic vein / Vena hepatica dextra | D | right hepatic vein | BodyParts3D 4.0 | 1 936 | — |
+| Veine pulmonaire inférieure droite | Right inferior pulmonary vein / Vena pulmonalis dextra inferior | D | right inferior pulmonary vein | BodyParts3D 4.0 | 4 662 | — |
+| Veine rénale droite | Right renal vein / Vena renalis dextra | D | right renal vein | BodyParts3D 4.0 | 2 714 | — |
+| Veine sous-clavière droite | Right subclavian vein / Vena subclavia dextra | D | right subclavian vein | BodyParts3D 4.0 | 350 | — |
+| Veine subcostale droite | Right subcostal vein / Vena subcostalis dextra | D | right subcostal vein | BodyParts3D 4.0 | 366 | — |
+| Veine intercostale supérieure droite | Right superior intercostal vein / Vena intercostalis superior dextra | D | right superior intercostal vein | BodyParts3D 4.0 | 274 | — |
+| Veine pulmonaire supérieure droite | Right superior pulmonary vein / Vena pulmonalis dextra superior | D | right superior pulmonary vein | BodyParts3D 4.0 | 2 628 | — |
+| Veine surrénale droite | Right suprarenal vein / Vena suprarenalis dextra | D | right suprarenal vein | BodyParts3D 4.0 | 452 | — |
+| Veine testiculaire droite | Right testicular vein / Vena testicularis dextra | D | right testicular vein | BodyParts3D 4.0 | 3 000 | — |
+| Petite veine cardiaque | Small cardiac vein / Vena parva cordis | — | small cardiac vein | BodyParts3D 4.0 | 1 152 | — |
+| Veine petite saphène | Small saphenous vein / Vena saphena parva | G + D | small saphenous vein | BodyParts3D 4.0 | 3 592 | — |
+| Veine splénique | Splenic vein / Vena splenica | — | splenic vein | BodyParts3D 4.0 | 724 | — |
+| Veine sous-clavière | Subclavian vein / Vena subclavia | G + D | subclavian vein | BodyParts3D 4.0 | 402 | — |
+| Veine subscapulaire | Subscapular vein / Vena subscapularis | G + D | subscapular vein | BodyParts3D 4.0 | 436 | — |
+| Veine épigastrique superficielle | Superficial epigastric vein / Vena epigastrica superficialis | G + D | superficial epigastric vein | BodyParts3D 4.0 | 466 | — |
+| Veine mésentérique supérieure | Superior mesenteric vein / Vena mesenterica superior | — | superior mesenteric vein | BodyParts3D 4.0 | 478 | — |
+| Veine cave supérieure | Superior vena cava / Vena cava superior | — | superior vena cava | BodyParts3D 4.0 | 554 | — |
+| Veine suprascapulaire | Suprascapular vein / Vena suprascapularis | G + D | suprascapular vein | BodyParts3D 4.0 | 434 | — |
+| Veine thoracodorsale | Thoracodorsal vein / Vena thoracodorsalis | G + D | thoracodorsal vein | BodyParts3D 4.0 | 370 | — |
+| Ulnaire | Ulnar / Ulnaris | G + D | ulnar vein | BodyParts3D 4.0 | 1 300 | — |
+
 ### Cardiovasculaire
 
 | Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
@@ -948,3 +1230,145 @@ Le fichier `structures.json` contient l'intégralité des entrées, avec pour ch
 | Ventricule droit | Ventriculus dexter | — | Right ventricle | Z-Anatomy | 22 322 | BodyParts3D 4.0 (right ventricle) |
 | Cuspide septale de la valve atrioventriculaire droite | Cuspis septalis valvae atrioventricularis dextrae | — | Septal leaflet of right atrioventricular valve | Z-Anatomy | 9 040 | — |
 | Muscle papillaire septal du ventricule droit | Musculus papillaris septalis ventriculi dextri | — | Septal papillary muscle of right ventricle | Z-Anatomy | 844 | BodyParts3D 4.0 (septal papillary muscle of right ventricle) |
+
+### nervous
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Nerf ethmoïdal antérieur | Anterior ethmoidal nerve / Nervus ethmoideus anterior | G + D | anterior ethmoidal nerve | BodyParts3D 4.0 | 286 | — |
+| Bras du colliculus inférieur | Brachium of inferior colliculus / Brachium colliculi inferioris | G + D | brachium of inferior colliculus | BodyParts3D 4.0 | 308 | — |
+| Bras du colliculus supérieur | Brachium of superior colliculus / Brachium colliculi superioris | G + D | brachium of superior colliculus | BodyParts3D 4.0 | 280 | — |
+| Encéphale | Brain / Encephalon | G + D | brain | BodyParts3D 4.0 | 30 370 | — |
+| Tronc cérébral | Brainstem / Trucus encephali | G + D | brainstem | BodyParts3D 4.0 | 11 886 | — |
+| Cervelet | Cerebellum / Cerebellum | — | cerebellum | BodyParts3D 4.0 | 10 492 | — |
+| Ganglion ciliaire | Ciliary ganglion / Ganglion ciliare | G + D | ciliary ganglion | BodyParts3D 4.0 | 180 | — |
+| Gyrus du cingulum | Cingulate gyrus / Gyrus cinguli | G + D | cingulate gyrus | BodyParts3D 4.0 | 1 480 | — |
+| Nerf crânien | Cranial nerve / Nervus cranialis | G + D | cranial nerve | BodyParts3D 4.0 | 598 | — |
+| Diencéphale | Diencephalon / Diencephalon | — | zone of diencephalon | BodyParts3D 4.0 | 1 556 | — |
+| Epithalamus | Epithalamus / Epithalamus | — | epithalamus | BodyParts3D 4.0 | 964 | — |
+| Nerf frontal | Frontal nerve / Nervus frontalis | G + D | frontal nerve | BodyParts3D 4.0 | 316 | — |
+| Tête | Head / Caput | G + D | head | BodyParts3D 4.0 | 64 106 | — |
+| Branche inférieure du nerf oculomoteur | Inferior branch of oculomotor nerve / Ramus inferior nervi oculomotorii | G + D | inferior branch of oculomotor nerve | BodyParts3D 4.0 | 932 | — |
+| Gyrus frontal inférieur | Inferior frontal gyrus / Gyrus frontalis inferior | G + D | inferior frontal gyrus | BodyParts3D 4.0 | 2 702 | — |
+| Nerf infratrochléaire | Infratrochlear nerve / Nervus infratrochlearis | G + D | infratrochlear nerve | BodyParts3D 4.0 | 248 | — |
+| Cortex insulaire | Insula / Insula | G + D | insula | BodyParts3D 4.0 | 1 962 | — |
+| Capsule interne | Internal capsule / Capsula interna | G + D | internal capsule | BodyParts3D 4.0 | 2 362 | — |
+| Nerf lacrymal | Lacrimal nerve / Nervus lacrimalis | G + D | lacrimal nerve | BodyParts3D 4.0 | 464 | — |
+| Lame terminale | Lamina terminalis / Lamina terminalis | — | lamina terminalis | BodyParts3D 4.0 | 458 | — |
+| Nerf nasociliaire | Nasociliary nerve / Nervus nasociliaris | G + D | nasociliary nerve | BodyParts3D 4.0 | 236 | — |
+| Nerf | Nerve / Nervus | G + D | nerve | BodyParts3D 4.0 | 5 454 | — |
+| Tronc | Trunk / Truncus | G + D | nerve trunk | BodyParts3D 4.0 | 1 712 | — |
+| Système nerveux | Nervous system / Systema nervosum | G + D | nervous system | BodyParts3D 4.0 | 30 530 | — |
+| Lobe occipital | Occipital lobe / Lobus occipitalis | G + D | occipital lobe | BodyParts3D 4.0 | 3 484 | — |
+| Nerf ophtalmique | Ophthalmic nerve / Nervus ophthalmicus | G + D | ophthalmic nerve | BodyParts3D 4.0 | 390 | — |
+| Gyrus parahippocampique | Parahippocampal gyrus / Gyrus parahippocampalis | G + D | parahippocampal gyrus | BodyParts3D 4.0 | 652 | — |
+| Ganglion parasympathique | Parasympathetic ganglion / Ganglion parasympathicum | G + D | parasympathetic ganglion | BodyParts3D 4.0 | 180 | — |
+| Nerf ethmoïdal postérieur | Posterior ethmoidal nerve / Nervus ethmoideus posterior | G + D | posterior ethmoidal nerve | BodyParts3D 4.0 | 212 | — |
+| Moëlle épinière | Spinal cord / Medulla spinalis | — | spinal cord | BodyParts3D 4.0 | 160 | — |
+| Branche supérieure du nerf oculomoteur | Superior branch of oculomotor nerve / Ramus superior nervi oculomotorii | G + D | superior branch of oculomotor nerve | BodyParts3D 4.0 | 550 | — |
+| Nerf supra-orbitaire | Supra-orbital nerve / Nervus supraorbitalis | G + D | supra-orbital nerve | BodyParts3D 4.0 | 646 | — |
+| Nerf supratrochléaire | Supratrochlear nerve / Nervus supratrochlearis | G + D | supratrochlear nerve | BodyParts3D 4.0 | 698 | — |
+| Télencéphale | Telencephalon / Telencephalon | G + D | telencephalon | BodyParts3D 4.0 | 54 920 | — |
+| Tuber cinereum | Tuber cinereum / Tuber cinereum | — | tuber cinereum | BodyParts3D 4.0 | 1 172 | — |
+
+### lymphatic
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Médiastin antérieur | Anterior mediastinum / Mediastinum anterius | G + D | anterior mediastinum | BodyParts3D 4.0 | 824 | — |
+| Lobe du thymus | Lobe of thymus / Lobus thymi | G + D | lobe of thymus | BodyParts3D 4.0 | 824 | — |
+| Thymus | Thymus / Thymus | G + D | thymus | BodyParts3D 4.0 | 824 | — |
+
+### cardiac
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Valve aortique | Aortic valve / Valva aortae | G + D | aortic valve | BodyParts3D 4.0 | 912 | — |
+| Squelette fibreux du coeur | Fibrous skeleton of heart / Skeleton flbrosum cordis | G + D | fibrous skeleton of heart | BodyParts3D 4.0 | 2 322 | — |
+| Foramen interventriculaire | Interventricular foramen / Foramen interventriculare | — | interventricular foramen | BodyParts3D 4.0 | 1 016 | — |
+| Valve pulmonaire | Pulmonary valve / Valva trunci pulmonalis | G + D | pulmonary valve | BodyParts3D 4.0 | 992 | — |
+
+### digestive
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Canal biliaire | Bile duct / Ductus biliaris | G + D | bile duct | BodyParts3D 4.0 | 902 | — |
+| Conduit hépatique commun | Common hepatic duct / Ductus hepaticus communis | — | common hepatic duct | BodyParts3D 4.0 | 626 | — |
+| Conduit cystique | Cystic duct / Ductus cysticus | — | cystic duct | BodyParts3D 4.0 | 276 | — |
+| Conduits biliaires extrahépatiques | Extrahepatic bile ducts / Ductus biliares extrahepatici | G + D | extrahepatic bile duct | BodyParts3D 4.0 | 902 | — |
+| Iléon | Ileum / Ileum | — | zone of ileum | BodyParts3D 4.0 | 7 854 | — |
+| Jéjunum | Jejunum / Jejunum | — | zone of jejunum | BodyParts3D 4.0 | 5 974 | — |
+| Gros intestin | Large intestine / Intestinum crassum | — | large intestine | BodyParts3D 4.0 | 22 932 | — |
+| Conduit hépatique gauche | Left hepatic duct / Ductus hepaticus sinister | G | left hepatic duct | BodyParts3D 4.0 | 736 | — |
+| Lobe hépatique gauche | Left lobe of liver / Lobus sinister hepatis | G | left lobe of liver | BodyParts3D 4.0 | 3 508 | — |
+| Méso-appendice | Meso-appendix / Mesoappendix | — | mesoappendix | BodyParts3D 4.0 | 814 | — |
+| Canal pancréatique | Pancreatic duct / Ductus pancreaticus | — | pancreatic duct | BodyParts3D 4.0 | 1 816 | — |
+| Péritoine | Peritoneum / Peritoneum | — | peritoneum | BodyParts3D 4.0 | 26 858 | — |
+| Rectum | Rectum / Rectum | — | rectum | BodyParts3D 4.0 | 1 538 | — |
+| Conduit hépatique droit | Right hepatic duct / Ductus hepaticus dexter | D | right hepatic duct | BodyParts3D 4.0 | 226 | — |
+| Intestin grêle | Small intestine / Intestinum tenue | — | zone of small intestine | BodyParts3D 4.0 | 13 828 | — |
+| Ténia libre | Free taenia / Taenia libera | — | taenia libera | BodyParts3D 4.0 | 4 974 | — |
+| Ténia mésocolique | Mesocolic taenia / Taenia mesocolica | — | taenia mesocolica | BodyParts3D 4.0 | 5 260 | — |
+| Ténia omental | Omental taenia / Taenia omentalis | — | taenia omentalis | BodyParts3D 4.0 | 3 502 | — |
+| Mésocôlon transverse | Transverse mesocolon / Mesocolon transversum | — | transverse mesocolon | BodyParts3D 4.0 | 872 | — |
+| Péritoine viscéral | Visceral peritoneum / Peritoneum viscerale | — | visceral peritoneum | BodyParts3D 4.0 | 26 858 | — |
+
+### respiratory
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Bronche | Bronchus / Bronchus | G + D | bronchus | BodyParts3D 4.0 | 2 594 | — |
+| Partie cartilagineuse du septum nasal | Cartilaginous part of nasal septum / Pars cartilaginea septi nasi | — | cartilaginous part of nasal septum | BodyParts3D 4.0 | 342 | — |
+| Dos du nez | Dorsum of nose / Dorsum nasi | G + D | dorsum of nose | BodyParts3D 4.0 | 380 | — |
+| Poumon gauche | Left lung / Pulmo sinister | G | left lung | BodyParts3D 4.0 | 3 910 | — |
+| Bronche principale gauche | Left main bronchus / Bronchus principalis sinister | G | left main bronchus | BodyParts3D 4.0 | 2 594 | — |
+| Bronche principale | Main bronchus / Bronchus principalis | G | main bronchus | BodyParts3D 4.0 | 2 594 | — |
+| Septum nasal | Nasal septum / Septum nasi | — | nasal septum | BodyParts3D 4.0 | 1 928 | — |
+| Médiastin postérieur | Posterior mediastinum / Mediastinum posterius | G + D | posterior mediastinum | BodyParts3D 4.0 | 4 954 | — |
+| Système respiratoire | Respiratory system / Systema respiratorium | G + D | respiratory system | BodyParts3D 4.0 | 28 532 | — |
+| Bronche principale droite | Right main bronchus / Bronchus principalis dexter | D | right main bronchus | BodyParts3D 4.0 | 2 346 | — |
+| Arbre bronchique | Tracheobronchial tree / Arbor tracheobronchialis | G + D | tracheobronchial tree | BodyParts3D 4.0 | 6 782 | — |
+
+### sensory
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Choroïde | Choroid / Chorioidea | G + D | choroid | BodyParts3D 4.0 | 8 604 | — |
+| Couronne ciliaire | Corona ciliaris / Corona ciliaris | G + D | corona ciliaris | BodyParts3D 4.0 | 10 150 | — |
+| Oreille externe | External ear / Auris externa | — | external ear | BodyParts3D 4.0 | 1 350 | — |
+| Face | Face / Facies | G + D | face | BodyParts3D 4.0 | 23 712 | — |
+| Tunique fibreuse du globe oculaire | Fibrous layer of eyeball / Tunica fibrosa bulbi oculi | G + D | fibrous layer of eyeball | BodyParts3D 4.0 | 10 266 | — |
+| Partie optique de la rétine | Optic part of retina / Pars optica retinae | G + D | optic part of retina | BodyParts3D 4.0 | 5 150 | — |
+| Rétinaculum | Retinaculum / Retinaculum tendinis | G + D | retinaculum | BodyParts3D 4.0 | 1 412 | — |
+| Viscérocrâne | Viscerocranium / Viscerocranium | G + D | viscerocranium | BodyParts3D 4.0 | 18 862 | — |
+
+### reproductive
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Corps spongieux du pénis | Corpus spongiosum of penis / Corpus spongiosum penis | — | zone of corpus spongiosum of penis | BodyParts3D 4.0 | 1 328 | — |
+| Système génital | Genital systems / Systemata genitalia | — | genital system | BodyParts3D 4.0 | 442 | — |
+
+### integumentary
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Sourcil | Eyebrow / Supercilium | — | eyebrow | BodyParts3D 4.0 | 6 174 | — |
+| Mont du pubis | Mons pubis / Mons pubis | — | mons pubis | BodyParts3D 4.0 | 2 718 | — |
+| Poils pubiens | Pubic hairs / Pubes | — | pubic hair | BodyParts3D 4.0 | 2 718 | — |
+| Peau | Skin / Cutis | — | skin | BodyParts3D 4.0 | 44 744 | — |
+| Appendices de la peau | Skin appendages / Adnexa cutis | — | skin appendage | BodyParts3D 4.0 | 8 310 | — |
+
+### endocrine
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Glande pituitaire | Pituitary gland / Glandula pituitana | — | pituitary gland | BodyParts3D 4.0 | 1 134 | — |
+
+### urinary
+
+| Structure (français) | Nom TA2 / latin | Côté | Meilleur modèle | Source | Triangles | Alternative |
+|---|---|:--:|---|---|---:|---|
+| Uretère | Ureter / Ureter | G + D | ureter | BodyParts3D 4.0 | 760 | — |
+| Urètre | Urethra / Urethra | — | urethra | BodyParts3D 4.0 | 306 | — |
+| Système urinaire | Urinary system / Systema urinarium | G + D | urinary system | BodyParts3D 4.0 | 530 | — |

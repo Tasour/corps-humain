@@ -86,8 +86,9 @@ chaque structure le meilleur modèle 3D (Z-Anatomy ou BodyParts3D), est fourni d
 [`docs/inventaire-anatomique/`](docs/inventaire-anatomique/) :
 
 - [`rapport.md`](docs/inventaire-anatomique/rapport.md) — tableau lisible par catégorie ;
-- [`structures.json`](docs/inventaire-anatomique/structures.json) — 1 555 maillages individuels,
-  noms TA2 français/latin, triangles, meilleur modèle et alternatives.
+- [`structures.json`](docs/inventaire-anatomique/structures.json) — 2 202 maillages individuels
+  (1 251 structures canoniques), noms TA2 français/latin, triangles, meilleur modèle
+  et alternatives.
 
 ## Installer sur téléphone (PWA)
 

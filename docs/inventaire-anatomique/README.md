@@ -4,9 +4,11 @@ Ce dossier contient l'inventaire exhaustif des organes, os et muscles de Z-Anato
 avec pour chaque structure le meilleur modèle 3D disponible.
 
 - `rapport.md` — rapport lisible : méthode, statistiques et tableaux par catégorie.
-- `structures.json` — données complètes (1 555 maillages individuels) : noms TA2
-  anglais/latin/français, collections d'origine, maillage Z-Anatomy, concept
-  BodyParts3D éventuel, meilleur modèle et alternatives.
+- `structures.json` — données complètes (2 202 maillages individuels, 1 251
+  structures canoniques) : noms TA2 anglais/latin/français, collections d'origine,
+  maillage Z-Anatomy, concept BodyParts3D éventuel, meilleur modèle et alternatives.
+  L'inventaire est l'**union** de Z-Anatomy et de BodyParts3D ; les structures
+  propres à BodyParts3D sont signalées par `onlyInBodyParts3D: true`.
 
 ## Régénération
 

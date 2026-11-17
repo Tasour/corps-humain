@@ -25,12 +25,12 @@ for (const m of doc.meta.methodology) lines.push(`- ${m}`);
 lines.push("");
 lines.push("## Résultats");
 lines.push("");
-lines.push("| Catégorie | Objets maillés | Structures canoniques | Triangles Z-Anatomy | Noms TA2 | Avec BodyParts3D | Meilleur Z-Anatomy | Meilleur BodyParts3D |");
-lines.push("|---|---:|---:|---:|---:|---:|---:|---:|");
+lines.push("| Catégorie | Objets maillés | Structures canoniques | Triangles du meilleur modèle | Noms TA2 | Avec BodyParts3D | Uniquement BodyParts3D | Meilleur Z-Anatomy | Meilleur BodyParts3D |");
+lines.push("|---|---:|---:|---:|---:|---:|---:|---:|---:|");
 const labels = { bone: "Os", muscle: "Muscles", organ: "Organes" };
 for (const [k, c] of Object.entries(doc.meta.counts)) {
   lines.push(
-    `| ${labels[k]} | ${c.objects} | ${c.canonicalStructures} | ${c.totalTriangles.toLocaleString("fr-FR")} | ${c.withTA2} | ${c.withBodyParts3D} | ${c.bestFromZAnatomy} | ${c.bestFromBodyParts3D} |`,
+    `| ${labels[k]} | ${c.objects} | ${c.canonicalStructures} | ${c.bestModelTriangles.toLocaleString("fr-FR")} | ${c.withTA2} | ${c.withBodyParts3D} | ${c.onlyInBodyParts3D} | ${c.bestFromZAnatomy} | ${c.bestFromBodyParts3D} |`,
   );
 }
 lines.push("");

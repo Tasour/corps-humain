@@ -221,6 +221,94 @@ for (const o of objects) {
   });
 }
 
+/* ---------- structures présentes uniquement dans BodyParts3D ---------- */
+const usedConcepts = new Set();
+for (const list of Object.values(categories)) {
+  for (const entry of list) if (entry.bodyParts3D?.conceptId) usedConcepts.add(entry.bodyParts3D.conceptId);
+}
+const conceptSystemCategory = {
+  skeletal: "bone",
+  muscular: "muscle",
+  cardiac: "organ",
+  endocrine: "organ",
+  digestive: "organ",
+  respiratory: "organ",
+  urinary: "organ",
+  reproductive: "organ",
+  lymphatic: "organ",
+  nervous: "organ",
+  sensory: "organ",
+  arterial: "organ",
+  venous: "organ",
+  integumentary: "organ",
+};
+const genericConcept = /^(vascular tree|segment of|variant|anastomosis|vascular anastomosis|zone of)$/i;
+
+for (const concept of atlas.concepts) {
+  if (usedConcepts.has(concept.id)) continue;
+  if (genericConcept.test(concept.name)) continue;
+  const parts = concept.elements.map((id) => partById.get(id)).filter(Boolean);
+  if (!parts.length) continue;
+  const countsBySystem = {};
+  for (const part of parts) countsBySystem[part.system] = (countsBySystem[part.system] || 0) + 1;
+  const system = Object.entries(countsBySystem).sort((a, b) => b[1] - a[1])[0][0];
+  const category = conceptSystemCategory[system];
+  if (!category) continue;
+
+  const bySide = { none: [], left: [], right: [] };
+  for (const part of parts) {
+    if (/\bleft\b/i.test(part.name)) bySide.left.push(part);
+    else if (/\bright\b/i.test(part.name)) bySide.right.push(part);
+    else bySide.none.push(part);
+  }
+  for (const [sideKey, sideParts] of Object.entries(bySide)) {
+    if (!sideParts.length) continue;
+    const tris = Math.round(sideParts.reduce((sum, part) => sum + part.indexCount / 3, 0));
+    if (tris < 100) continue;
+    const side = sideKey === "none" ? null : sideKey;
+    const canonical = concept.name.replace(/^zone of /, "").trim();
+    const ta = matchTa2(canonical);
+    /* On n'ajoute que les concepts canoniques identifiés dans TA2 : les termes
+       génériques de BodyParts3D (« abdomen proper », « segment of… ») ne sont
+       pas des structures anatomiques au sens de l'inventaire. */
+    if (!ta) continue;
+    categories[category].push({
+      id: `${category}:bp-${norm(canonical).replace(/ /g, "-")}${side ? "-" + side[0] : ""}`,
+      category,
+      canonical,
+      subsystem: category === "organ" ? system : "",
+      object: "",
+      side,
+      english: ta?.en || canonical,
+      latin: ta?.la || "",
+      french: ta?.fr || canonical,
+      ta2Id: ta?.id || "",
+      collections: [`BodyParts3D:${system}`],
+      dimensions: null,
+      materials: [],
+      zAnatomy: null,
+      bodyParts3D: {
+        concept: concept.name,
+        conceptId: concept.id,
+        parts: sideParts.length,
+        triangles: tris,
+        partNames: sideParts.map((part) => part.name),
+      },
+      best: {
+        source: "BodyParts3D 4.0",
+        model: concept.name,
+        modelId: concept.id,
+        triangles: tris,
+        parts: sideParts.length,
+        license: "CC BY 4.0",
+        url: "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html",
+      },
+      alternatives: [],
+      onlyInBodyParts3D: true,
+    });
+  }
+}
+
 /* ---------- tri de chaque catégorie ---------- */
 for (const list of Object.values(categories)) {
   list.sort((a, b) => a.canonical.localeCompare(b.canonical) || (a.side || "").localeCompare(b.side || ""));
@@ -232,9 +320,10 @@ for (const [k, list] of Object.entries(categories)) {
   counts[k] = {
     objects: list.length,
     canonicalStructures: canonical.size,
-    totalTriangles: list.reduce((a, e) => a + e.zAnatomy.triangles, 0),
+    bestModelTriangles: list.reduce((a, e) => a + e.best.triangles, 0),
     withTA2: list.filter((e) => e.ta2Id).length,
     withBodyParts3D: list.filter((e) => e.bodyParts3D).length,
+    onlyInBodyParts3D: list.filter((e) => e.onlyInBodyParts3D).length,
     bestFromZAnatomy: list.filter((e) => e.best.source === "Z-Anatomy").length,
     bestFromBodyParts3D: list.filter((e) => e.best.source === "BodyParts3D 4.0").length,
   };
@@ -268,6 +357,7 @@ const doc = {
       "Seuls les objets MESH réels sont retenus (tris > 0, >= 8 sommets) ; les marqueurs .j/.i/.g et les points d'insertion/origine (.ol/.or/.el/.er) sont exclus.",
       "Les collections 'Bonus collection' sont prises en compte pour les os lorsqu'elles portent le seul maillage d'une structure (ex. os du carpe) ; elles n'apportent aucun muscle ni organe supplémentaire.",
       "Chaque objet est classé en os, muscle ou organe selon sa collection principale dans Z-Anatomy.",
+      "Les concepts BodyParts3D non représentés dans Z-Anatomy sont ajoutés à l'inventaire lorsqu'ils correspondent à un nom TA2 canonique (union des deux sources).",
       "Les noms TA2 sont appariés au nom Z-Anatomy (anglais puis latin, avec variantes sans 'muscle'/'bone'/'gland').",
       "Les concepts BodyParts3D sont appariés par nom normalisé ; le meilleur modèle est celui qui offre le plus de triangles (Z-Anatomy en cas d'égalité).",
     ],
