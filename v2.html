@@ -33,6 +33,9 @@
     #perf b { color: #7ee7c7; font-size: 18px; }
     #label { position: fixed; z-index: 7; pointer-events: none; display: none; transform: translate(-50%, -150%); background: rgba(8,20,32,.9); border: 1px solid #4fd1e0; border-radius: 6px; padding: 3px 8px; font-size: 12px; color: #eafcff; white-space: nowrap; }
     #info .chips { margin-top: 8px; }
+    #animations { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px; }
+    #animations button { font-size: 11px; padding: 4px 8px; }
+    #waypoint-info { position: fixed; z-index: 7; left: 50%; bottom: 18px; transform: translateX(-50%); max-width: 520px; display: none; }
     #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
     #loading.hidden { opacity: 0; pointer-events: none; }
     #mobile-toggle { display: none; }
@@ -44,7 +47,7 @@
       .top { left: 8px; right: 8px; top: 8px; }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-DkgScaO9.js"></script>
+  <script type="module" crossorigin src="./assets/v2-BNJXui3n.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-BkaG9KvR.js">
 </head>
 <body>
@@ -69,9 +72,14 @@
     <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
     <div class="panel" id="shortcuts"></div>
     <div class="panel" id="groups"></div>
+    <div class="panel" id="animations"></div>
     <div class="panel" id="list"></div>
   </div>
   <div id="label"></div>
+  <div class="panel" id="waypoint-info">
+    <div class="title" id="wp-title">—</div>
+    <div class="sub" id="wp-text">—</div>
+  </div>
   <div class="panel" id="info">
     <div class="title">STRUCTURE SÉLECTIONNÉE</div>
     <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
