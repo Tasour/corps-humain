@@ -15,17 +15,25 @@ const CATEGORY_ORDER = ["bone", "muscle", "organ", "skin"];
 
 function colorFor(structure) {
   const mats = (structure.materials || []).join(" ").toLowerCase();
-  if (/cartilage/.test(mats)) return "#cbd8d4";
-  if (/bone/.test(mats)) return "#ded5c3";
-  if (/tendon|fascia|ligament/.test(mats)) return "#d8cbb0";
-  if (/gland/.test(mats)) return "#d98f4a";
-  if (structure.category !== "organ") return CATEGORY_COLORS[structure.category];
+  const name = `${structure.en || ""} ${structure.fr || ""}`.toLowerCase();
   const sub = (structure.subsystem || "").toLowerCase();
-  const name = (structure.en || "").toLowerCase();
-  if (/nerv|sens|gyrus|sulcus|brain|nerve|spinal|dura|meninx|plexus/.test(sub + " " + name)) return "#7a76a8";
-  if (/cardiac|arter|vein|venous|lymph/.test(sub + " " + name)) return "#d45a63";
-  if (/respirat|digest|urinary|reproduct|endocrine|visceral/.test(sub)) return "#d98f4a";
-  return CATEGORY_COLORS.organ;
+  if (/cartilage/.test(mats)) return "#c9d6d0";
+  if (/bone/.test(mats) || structure.category === "bone") return "#e6dcc9";
+  if (/tendon|fascia|ligament|bursa|sheath/.test(mats + " " + name)) return "#d8c9a8";
+  if (/nerve|nerv|gyrus|sulcus|brain|encephal|spinal|dura|meninx|plexus|tract|nucleus/.test(name + " " + sub)) return "#e0cfa4";
+  if (/artery|arteria|artere|arter/.test(name + " " + sub)) return "#b63a40";
+  if (/vein|vena|veine|venous|sinus/.test(name + " " + sub)) return "#4a6ea8";
+  if (/lymph/.test(name + " " + sub)) return "#7fbfa8";
+  if (/heart|cardia|ventricl|atrium|myocard/.test(name)) return "#8e2f3a";
+  if (/lung|pulmon|bronch|alveol/.test(name)) return "#d99a92";
+  if (/liver|hepat/.test(name)) return "#83423a";
+  if (/kidney|renal|nephron/.test(name)) return "#9c4b44";
+  if (/stomach|gastr|intestin|colon|digest/.test(name)) return "#c98d7e";
+  if (/pancrea|spleen|thyroid|gland|adrenal/.test(name)) return "#c98a55";
+  if (/skin|epiderm/.test(name)) return "#a8c4c2";
+  if (structure.category === "muscle") return "#a83b44";
+  if (structure.category === "organ") return "#c98273";
+  return CATEGORY_COLORS[structure.category] || "#ffffff";
 }
 
 /* Textures PBR : albedos générés, puis cartes normal/roughness dérivées
@@ -210,6 +218,8 @@ export class AnatomyV2Engine {
     this.skinDesired = true;
     this.camera = null;
     this.waypointGroup = new THREE.Group();
+    this.waypointGroup.visible = false;
+    this.waypointsVisible = false;
     this.waypoints = [];
     this.animation = null;
     this.frustum = new THREE.Frustum();
@@ -366,6 +376,11 @@ export class AnatomyV2Engine {
   }
 
   /* Marqueurs de waypoints d'une structure. */
+  setWaypointsVisible(visible) {
+    this.waypointsVisible = !!visible;
+    this.waypointGroup.visible = this.waypointsVisible;
+  }
+
   showWaypoints(waypoints) {
     this.clearWaypoints();
     this.waypoints = waypoints || [];
@@ -376,7 +391,7 @@ export class AnatomyV2Engine {
         spread = Math.max(spread, Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2]));
       }
     }
-    const radius = Math.min(0.006, Math.max(0.001, spread * 0.035));
+    const radius = Math.min(0.004, Math.max(0.0006, spread * 0.018));
     const geometry = new THREE.SphereGeometry(radius, 10, 8);
     for (const wp of this.waypoints) {
       const material = new THREE.MeshBasicMaterial({ color: 0x7ef9ff, depthTest: false, transparent: true, opacity: 0.95 });
@@ -413,6 +428,22 @@ export class AnatomyV2Engine {
     const batch = this.batches.get(structure.category);
     if (batch && !batch.visible) return null;
     return structure;
+  }
+
+  /* Picking exact sur les triangles des lots visibles (plus fiable que l'AABB
+   * du BVH pour les structures imbriquées). */
+  pickExact(raycaster) {
+    const targets = [...this.batches.values()].filter((b) => b.visible);
+    if (!targets.length) return null;
+    const hits = raycaster.intersectObjects(targets, false);
+    for (const hit of hits) {
+      const batch = hit.object;
+      const category = [...this.batches.entries()].find(([, b]) => b === batch)?.[0];
+      if (!category) continue;
+      const structure = this.instanceToStructure.get(`${category}:${hit.instanceId}`);
+      if (structure) return structure;
+    }
+    return null;
   }
 
   /* Culling frustum + LOD. Appelé quand la caméra bouge. */
@@ -469,8 +500,6 @@ export class AnatomyV2Engine {
     const batch = this.batches.get(ref.category);
     if (!batch) return false;
     batch.setGeometryAt(structure._geometryId, geometry);
-    batch.computeBoundingBox();
-    batch.computeBoundingSphere();
     structure._activeLod = lod;
     return true;
   }

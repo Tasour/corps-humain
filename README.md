@@ -119,8 +119,15 @@ AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 22 tests 3D**
 peau, les groupes, les animations, les waypoints, le tour du monde, le LOD et le mobile.
 
 Chaque structure possède des **waypoints** (3 par défaut, anecdotes et explications
-pour les structures majeures), une visite guidée, et plusieurs animations de scène :
-tour du monde, battement cardiaque, respiration, clignement et flux sanguin.
+pour les structures majeures),masqués tant que le bouton « Waypoints » n'est pas
+activé, plus une visite guidée et plusieurs animations de scène : tour du monde,
+battement cardiaque, respiration, clignement et flux sanguin.
+
+L'interface v2 a été entièrement repensée : thème clair inspiré des atlas
+médicaux, mise en page trois colonnes (explorateur / vue 3D / fiche), logo
+inspiré de l'homme vitruvien de Léonard de Vinci, éclairage PBR avec
+environnement, picking exact sur triangles, pivot de rotation commutable
+(item / corps) et étiquettes placées sans chevaucher les waypoints.
 
 ## Installer sur téléphone (PWA)
 

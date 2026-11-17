@@ -3,103 +3,217 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>CORPS — Atlas complet v2</title>
+  <title>CORPS — Atlas anatomique complet</title>
+  <link rel="icon" href="./logo.svg" type="image/svg+xml" />
   <style>
-    :root { color-scheme: dark; }
+    :root {
+      --paper: #f7f3ec;
+      --paper-2: #fffdf9;
+      --ink: #22313a;
+      --muted: #6f7f88;
+      --line: #ded5c8;
+      --teal: #1e7f8c;
+      --teal-soft: #e2f1f0;
+      --accent: #b4553f;
+      --shadow: 0 12px 40px -22px rgba(26, 46, 55, .45);
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; background: #070d16; color: #dce7f2; font: 14px/1.45 system-ui, sans-serif; overflow: hidden; }
-    #app { position: fixed; inset: 0; }
-    canvas { display: block; }
-    .panel { background: rgba(9,18,30,.86); border: 1px solid #21384f; border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(6px); }
-    .title { font-weight: 700; letter-spacing: .12em; font-size: 11px; color: #67e8f9; }
-    .sub { color: #8297ad; font-size: 12px; margin-top: 2px; }
-    .top { position: fixed; z-index: 6; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; gap: 10px; pointer-events: none; }
-    .top > * { pointer-events: auto; }
-    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    button { cursor: pointer; border: 1px solid #29435c; background: #102033; color: #cfe0ee; border-radius: 999px; padding: 5px 11px; font: inherit; font-size: 12px; }
-    button.active { background: #1d5d76; border-color: #4fd1e0; color: #eafcff; }
-    #sidebar { position: fixed; z-index: 6; left: 14px; top: 132px; bottom: 14px; width: 310px; display: flex; flex-direction: column; gap: 8px; }
-    #search { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #29435c; background: #0d1b2b; color: #dce7f2; font: inherit; font-size: 13px; }
-    #shortcuts, #groups { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px; }
-    #shortcuts button, #groups button { font-size: 11px; padding: 4px 8px; }
-    #list { flex: 1; overflow: auto; padding: 6px; }
-    .group { font-size: 10px; letter-spacing: .1em; color: #5f7f99; text-transform: uppercase; padding: 9px 8px 4px; }
-    .item { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #c8d8e6; border-radius: 7px; padding: 6px 8px; font-size: 12px; }
-    .item:hover { background: #16293d; }
-    .item.active { background: #1c5369; color: #eafcff; }
-    .item small { color: #6e8aa4; margin-left: 6px; }
-    #info { position: fixed; z-index: 6; right: 14px; bottom: 14px; width: min(330px, calc(100vw - 28px)); }
-    #perf { min-width: 240px; }
-    #perf b { color: #7ee7c7; font-size: 18px; }
-    #label { position: fixed; z-index: 7; pointer-events: none; display: none; transform: translate(-50%, -150%); background: rgba(8,20,32,.9); border: 1px solid #4fd1e0; border-radius: 6px; padding: 3px 8px; font-size: 12px; color: #eafcff; white-space: nowrap; }
-    #info .chips { margin-top: 8px; }
-    #animations { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px; }
-    #animations button { font-size: 11px; padding: 4px 8px; }
-    #waypoint-info { position: fixed; z-index: 7; left: 50%; bottom: 18px; transform: translateX(-50%); max-width: 520px; display: none; }
-    #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #070d16; z-index: 20; transition: opacity .4s; }
-    #loading.hidden { opacity: 0; pointer-events: none; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font: 14px/1.5 "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      overflow: hidden;
+    }
+    /* ---------- en-tête ---------- */
+    header {
+      height: 74px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 26px; border-bottom: 1px solid var(--line); background: var(--paper-2);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 42px; height: 42px; }
+    .brand h1 { margin: 0; font: 600 22px/1 Georgia, serif; letter-spacing: .22em; }
+    .brand small { display: block; margin-top: 3px; color: var(--muted); font-size: 10.5px; letter-spacing: .08em; }
+    .top-meta { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 11px; }
+    .badge { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: #fff; }
+    .top-actions { display: flex; gap: 8px; }
+    /* ---------- mise en page 3 colonnes ---------- */
+    .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr) 330px; height: calc(100vh - 74px); }
+    .sidebar, .details { background: var(--paper-2); overflow: auto; }
+    .sidebar { border-right: 1px solid var(--line); padding: 18px 16px; }
+    .details { border-left: 1px solid var(--line); padding: 26px 24px; }
+    .section { margin-bottom: 20px; }
+    .section-title {
+      font: 600 10px/1.3 "Segoe UI", sans-serif; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--muted); margin: 0 0 9px; display: flex; justify-content: space-between;
+    }
+    #search {
+      width: 100%; padding: 10px 12px 10px 34px; border: 1px solid var(--line); border-radius: 9px;
+      background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%236f7f88' stroke-width='2'><circle cx='6' cy='6' r='4'/><path d='m9 9 4 4'/></svg>") no-repeat 11px center;
+      color: var(--ink); font: inherit; font-size: 12.5px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    button {
+      cursor: pointer; font: inherit; font-size: 11.5px; color: var(--ink);
+      border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 6px 10px;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    button:hover { background: var(--teal-soft); border-color: #9cc9c8; }
+    button.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    #list .item {
+      display: block; width: 100%; text-align: left; border: 0; border-radius: 7px;
+      background: transparent; padding: 7px 9px; font-size: 12.5px; color: var(--ink);
+    }
+    #list .item:hover { background: #eef4f2; }
+    #list .item.active { background: var(--teal-soft); color: #105b66; }
+    #list .item small { float: right; color: #9aa7ad; font-size: 10px; }
+    .group { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #9aa7ad; padding: 10px 8px 5px; }
+    /* ---------- vue 3D ---------- */
+    .viewport { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fdfbf7 0%, #efe9df 72%, #e5ddd1 100%); }
+    .viewport canvas { display: block; width: 100%; height: 100%; }
+    .view-toolbar {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; padding: 7px; background: rgba(255,253,249,.92);
+      border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); backdrop-filter: blur(8px);
+    }
+    .anim-bar {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 92%;
+      padding: 8px; background: rgba(255,253,249,.92); border: 1px solid var(--line);
+      border-radius: 12px; box-shadow: var(--shadow);
+    }
+    .group-actions {
+      position: absolute; top: 72px; left: 50%; transform: translateX(-50%);
+      display: none; gap: 6px; padding: 6px; background: rgba(255,253,249,.92);
+      border: 1px solid var(--line); border-radius: 10px;
+    }
+    #label {
+      position: absolute; z-index: 4; pointer-events: none; display: none;
+      transform: translate(-50%, -170%); padding: 4px 9px 4px 13px;
+      background: rgba(34,49,58,.92); color: #fff; border-radius: 5px; font-size: 11px; white-space: nowrap;
+    }
+    #label::before {
+      content: ""; position: absolute; left: 5px; top: 50%; width: 4px; height: 4px;
+      border-radius: 50%; background: #7ee7c7; transform: translateY(-50%);
+    }
+    #waypoint-info {
+      position: absolute; z-index: 5; left: 50%; bottom: 80px; transform: translateX(-50%);
+      display: none; max-width: 480px; padding: 14px 18px; text-align: center; pointer-events: none;
+      background: rgba(255,253,249,.96); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+    }
+    #wp-title { font: 600 15px Georgia, serif; color: var(--accent); }
+    #wp-text { margin-top: 6px; font-size: 12.5px; color: #4d5d66; }
+    .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: #8b979e; text-align: right; }
+    .perf b { color: var(--teal); font-size: 15px; }
+    /* ---------- panneau détails ---------- */
+    .details h2 { margin: 0; font: 600 30px/1.1 Georgia, serif; }
+    .details .latin { color: var(--accent); font: italic 13px Georgia, serif; margin-top: 6px; }
+    .details .meta { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 16px; color: #4d5d66; font-size: 12.5px; }
+    .details .meta div { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted var(--line); }
+    .details .meta span:last-child { color: var(--ink); font-weight: 600; }
+    .fact { margin-top: 18px; padding: 14px; background: #fbf3e8; border-left: 3px solid var(--accent); border-radius: 6px; font-size: 12.5px; color: #5a4a3c; }
+    #sel-name { font: 600 30px/1.1 Georgia, serif; }
+    #sel-meta { color: var(--muted); font-size: 12px; }
+    /* ---------- chargement ---------- */
+    #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--paper); }
+    #loading .card { text-align: center; }
+    #loading img { width: 72px; }
+    #loading h2 { margin: 14px 0 4px; font: 600 24px Georgia, serif; letter-spacing: .12em; }
+    #loading p { color: var(--muted); font-size: 12px; }
     #mobile-toggle { display: none; }
-    @media (max-width: 700px) {
-      #sidebar { left: 8px; right: 8px; top: 130px; bottom: 120px; width: auto; display: none; }
-      #sidebar.open { display: flex; }
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 250px minmax(0, 1fr) 270px; }
+      .details { padding: 20px 16px; }
+    }
+    @media (max-width: 820px) {
+      header { padding: 0 14px; height: 64px; }
+      .layout { grid-template-columns: 1fr; height: calc(100vh - 64px); }
+      .sidebar { position: fixed; z-index: 12; top: 64px; bottom: 0; left: 0; width: 290px; display: none; box-shadow: var(--shadow); }
+      .sidebar.open { display: flex; flex-direction: column; }
+      .details { display: none; }
       #mobile-toggle { display: inline-block; }
-      #info { right: 8px; bottom: 8px; }
-      .top { left: 8px; right: 8px; top: 8px; }
+      .view-toolbar { top: 12px; flex-wrap: wrap; max-width: 94%; justify-content: center; }
+      .anim-bar { bottom: 12px; }
     }
   </style>
 </head>
 <body>
-  <div id="app"></div>
-  <div id="loading"><div class="panel"><div class="title">CORPS · ATLAS COMPLET V2</div><div class="sub" id="load-text">Chargement…</div></div></div>
-  <div class="top">
-    <div class="panel">
-      <div class="title">CORPS — ATLAS COMPLET</div>
-      <div class="sub" id="count">— structures</div>
-      <div class="chips">
-        <button data-cat="bone">Os</button>
-        <button data-cat="muscle">Muscles</button>
-        <button data-cat="organ" class="active">Organes</button>
-        <button data-cat="skin" class="active">Peau</button>
+  <header>
+    <div class="brand">
+      <img src="./logo.svg" alt="Logo CORPS" />
+      <div><h1>CORPS</h1><small>Atlas vivant · anatomie &amp; pathologies</small></div>
+    </div>
+    <div class="top-meta">
+      <span class="badge" id="count">— structures</span>
+      <span class="badge">Version 2.0</span>
+      <div class="top-actions">
         <button id="mobile-toggle">Explorer</button>
         <button id="reset">Recadrer</button>
       </div>
     </div>
-    <div class="panel" id="perf"><div class="title">PERFORMANCE</div><b id="fps">—</b><div class="sub" id="draw">—</div><div class="sub" id="quality">qualité —</div></div>
+  </header>
+
+  <div class="layout">
+    <aside id="sidebar" class="sidebar">
+      <div class="section"><input id="search" type="search" placeholder="Organe, os, muscle, TA2…" autocomplete="off" /></div>
+      <div class="section"><div class="section-title">Accès rapide</div><div class="chips" id="shortcuts"></div></div>
+      <div class="section"><div class="section-title">Groupes anatomiques</div><div class="chips" id="groups"></div></div>
+      <div class="section"><div class="section-title">Explorer <span id="list-total"></span></div><div id="list"></div></div>
+    </aside>
+
+    <main class="viewport" id="viewport">
+      <div class="view-toolbar">
+        <button id="focus">Focus</button>
+        <button id="isolate">Isoler</button>
+        <button id="clear-iso">Tout afficher</button>
+        <button id="pivot">Pivot : item</button>
+        <button data-cat="skin" class="active">Peau</button>
+        <button data-cat="bone">Os</button>
+        <button data-cat="muscle">Muscles</button>
+        <button data-cat="organ" class="active">Organes</button>
+      </div>
+      <div class="group-actions" id="group-actions">
+        <button id="explode">Éclater</button>
+        <button id="move">Mouvement</button>
+        <button id="group-reset">Réinitialiser</button>
+      </div>
+      <div class="perf"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
+      <div id="label"></div>
+      <div id="waypoint-info"><div id="wp-title">—</div><div id="wp-text">—</div></div>
+      <div class="anim-bar" id="animations"></div>
+    </main>
+
+    <aside class="details" id="info">
+      <div class="section-title">Structure sélectionnée</div>
+      <div id="sel-name">Cliquez sur une structure</div>
+      <div id="sel-meta">ou choisissez-la dans la liste</div>
+      <div class="meta" id="detail-meta"></div>
+      <div class="fact" id="detail-fact">Explorez les 2 107 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+    </aside>
   </div>
-  <div id="sidebar">
-    <input id="search" type="search" placeholder="Rechercher un organe, un os, un muscle, un code TA2…" autocomplete="off" />
-    <div class="panel" id="shortcuts"></div>
-    <div class="panel" id="groups"></div>
-    <div class="panel" id="animations"></div>
-    <div class="panel" id="list"></div>
-  </div>
-  <div id="label"></div>
-  <div class="panel" id="waypoint-info">
-    <div class="title" id="wp-title">—</div>
-    <div class="sub" id="wp-text">—</div>
-  </div>
-  <div class="panel" id="info">
-    <div class="title">STRUCTURE SÉLECTIONNÉE</div>
-    <div class="sub" id="sel-name">Cliquez sur une structure ou dans la liste.</div>
-    <div class="sub" id="sel-meta"></div>
-    <div class="chips"><button id="focus">Focus</button><button id="isolate">Isoler</button><button id="clear-iso">Tout afficher</button></div>
-    <div class="chips" id="group-actions" style="display:none"><button id="explode">Éclater</button><button id="move">Mouvement</button><button id="group-reset">Réinitialiser</button></div>
-  </div>
+
+  <div id="loading"><div class="card"><img src="./logo.svg" alt="" /><h2>CORPS</h2><p id="load-text">Chargement de l'atlas…</p></div></div>
+
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
     import { getWaypoints } from './src/data/waypoints.js';
 
+    const viewport = document.getElementById('viewport');
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-    renderer.setSize(innerWidth, innerHeight);
-    document.getElementById('app').appendChild(renderer.domElement);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    viewport.insertBefore(renderer.domElement, viewport.firstChild);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x080f1b);
-    const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.05, 30);
+    scene.background = new THREE.Color('#f2ece2');
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 30);
     camera.position.set(0.72, 1.28, 2.55);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0, 1.0, 0);
@@ -107,101 +221,119 @@
     controls.minDistance = 0.12;
     controls.maxDistance = 6;
     controls.update();
-    scene.add(new THREE.HemisphereLight(0xeaf6ff, 0x1c2b3b, 2.1));
-    const key = new THREE.DirectionalLight(0xffffff, 1.2);
-    key.position.set(1, 2, 2);
+    const key = new THREE.DirectionalLight(0xffffff, 1.6);
+    key.position.set(1.4, 2.4, 2.2);
     scene.add(key);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xcbb9a3, 1.6));
 
     const engine = new AnatomyV2Engine({ lod: 'low' });
+    engine.camera = camera;
     await engine.load((p, label) => {
       document.getElementById('load-text').textContent = `${label} — ${Math.round(p * 100)} %`;
     });
     engine.addTo(scene);
-    engine.camera = camera;
     for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, cat === 'organ');
-    engine.setCategoryVisible('skin', true);
-    document.getElementById('count').textContent =
-      `${engine.stats.structures} structures · ${Math.round(engine.stats.triangles / 1000)}k triangles`;
-    document.getElementById('loading').classList.add('hidden');
+    engine.setSkinVisible(true);
+    document.getElementById('count').textContent = `${engine.stats.structures} structures`;
+    document.getElementById('list-total').textContent = `${engine.structures.length}`;
+    document.getElementById('loading').style.display = 'none';
 
-    const labels = { bone: 'Os', muscle: 'Muscles', organ: 'Organes', skin: 'Peau' };
-    const subsystemLabels = {
-      arterial: 'Artères', venous: 'Veines', cardiac: 'Cœur',
-      nervous: 'Nerfs', sensory: 'Sens', lymphatic: 'Lymphatique',
-      digestive: 'Digestion', respiratory: 'Respiration', urinary: 'Urinaire',
-      reproductive: 'Reproduction', endocrine: 'Endocrine',
-      integumentary: 'Téguments', 'Nerveux et sens': 'Nerveux et sens',
-      Viscéral: 'Viscéral', Lymphoïde: 'Lymphoïde', Cardiovasculaire: 'Cardiovasculaire',
-    };
-    let selected = null;
-    let detailStructure = null;
-    let cameraTween = null;
-    let forceCulling = false;
-    let lodBias = 1;
-    let pixelRatio = Math.min(devicePixelRatio, 1.5);
+    function resize() {
+      const w = viewport.clientWidth, h = viewport.clientHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / Math.max(1, h);
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    new ResizeObserver(resize).observe(viewport);
+
+    const labels = { bone: 'Os', muscle: 'Muscle', organ: 'Organe', skin: 'Peau' };
+    let selected = null, detailStructure = null, activeGroup = null;
+    let groupAnim = null, waypointTour = null, tourActive = false, tourAngle = 0;
+    let cameraTween = null, forceCulling = false, pivotMode = 'item';
+    let lodBias = 1, pixelRatio = Math.min(devicePixelRatio, 1.5);
+    let lastClick = 0;
+    let selectGeneration = 0;
+
+    const detailMeta = document.getElementById('detail-meta');
+    const detailFact = document.getElementById('detail-fact');
+    const labelEl = document.getElementById('label');
+    const wpInfo = document.getElementById('waypoint-info');
 
     function renderList() {
       const query = document.getElementById('search').value.trim().toLowerCase();
-      const list = document.getElementById('list');
       const matches = engine.structures.filter((s) =>
         !query || `${s.fr} ${s.en} ${s.la} ${s.ta2}`.toLowerCase().includes(query),
       ).slice(0, 400);
       const groups = new Map();
       for (const s of matches) {
-        const key = s.category === 'organ' && s.subsystem
-          ? `organ:${s.subsystem}` : s.category;
+        const key = s.category;
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(s);
       }
       let html = '';
-      for (const [key, items] of groups) {
-        const cat = key.split(':')[0];
-        const sub = key.includes(':') ? subsystemLabels[key.split(':')[1]] || key.split(':')[1] : '';
-        html += `<div class="group">${labels[cat] || cat}${sub ? ' · ' + sub : ''} (${items.length})</div>`;
+      for (const [cat, items] of groups) {
+        html += `<div class="group">${labels[cat] || cat} (${items.length})</div>`;
         for (const s of items) {
           const side = s.side === 'left' ? ' · G' : s.side === 'right' ? ' · D' : '';
-          html += `<button class="item${selected === s ? ' active' : ''}" data-id="${s.id}">` +
-            `${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
+          html += `<button class="item${selected === s ? ' active' : ''}" data-id="${s.id}">${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
         }
       }
       if (!matches.length) html = '<div class="group">Aucun résultat</div>';
+      const list = document.getElementById('list');
       list.innerHTML = html;
-      list.querySelectorAll('.item').forEach((button) => {
-        button.addEventListener('click', () => {
-          const structure = engine.byId.get(button.dataset.id);
-          if (structure) selectStructure(structure, true);
-        });
-      });
+      list.querySelectorAll('.item').forEach((b) => b.addEventListener('click', () => {
+        const s = engine.byId.get(b.dataset.id);
+        if (s) selectStructure(s, true);
+      }));
+    }
+
+    function showWaypoint(wp) {
+      document.getElementById('wp-title').textContent = wp.title;
+      document.getElementById('wp-text').textContent = wp.text;
+      wpInfo.style.display = 'block';
+      detailFact.textContent = wp.text;
     }
 
     async function selectStructure(structure, focus) {
       if (!structure) return;
+      const generation = ++selectGeneration;
       if (selected) engine.highlight(selected, '#ffffff');
-      if (detailStructure && detailStructure !== structure) {
-        await engine.setStructureLod(detailStructure, 'low');
-      }
+      if (detailStructure && detailStructure !== structure) await engine.setStructureLod(detailStructure, 'low');
       selected = structure;
       detailStructure = null;
       activeGroup = null;
       groupAnim = null;
+      engine.clearAnimation();
       document.getElementById('group-actions').style.display = 'none';
       engine.setSkinVisible(false);
-      const skinButton = document.querySelector('[data-cat="skin"]');
-      if (skinButton) skinButton.classList.remove('active');
+      const skinBtn = document.querySelector('[data-cat="skin"]');
+      if (skinBtn) skinBtn.classList.remove('active');
       engine.isolate(structure);
-      engine.highlight(structure, '#7ef9ff');
+      engine.highlight(structure, '#ffffff');
       engine.showWaypoints(getWaypoints(structure));
-      document.getElementById('waypoint-info').style.display = 'none';
+      engine.setWaypointsVisible(false);
       waypointTour = null;
-      const detailLevel = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
+      wpInfo.style.display = 'none';
+
+      const side = structure.side === 'left' ? ' · G' : structure.side === 'right' ? ' · D' : '';
       document.getElementById('sel-name').textContent = structure.fr || structure.en;
-      const sideLabel = structure.side === 'left' ? ' · G' : structure.side === 'right' ? ' · D' : '';
-      document.getElementById('sel-meta').textContent = `${labels[structure.category] || ''}${sideLabel} · TA2 ${structure.ta2 || '—'} · chargement…`;
-      if (structure.lod?.[detailLevel]) {
-        const ok = await engine.setStructureLod(structure, detailLevel);
+      document.getElementById('sel-meta').textContent = `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'}`;
+      detailMeta.innerHTML =
+        `<div><span>Nom latin</span><span>${structure.la || '—'}</span></div>` +
+        `<div><span>Système</span><span>${labels[structure.category] || structure.category}</span></div>` +
+        `<div><span>Code TA2</span><span>${structure.ta2 || '—'}</span></div>` +
+        `<div><span>Source</span><span>${structure.source || '—'}</span></div>`;
+      detailFact.textContent = `Cette structure fait partie du système ${structure.category}. Activez les points d'intérêt pour découvrir ses parties et leurs anecdotes.`;
+
+      const level = innerWidth < 820 ? 'medium' : 'high';
+      if (structure.lod?.[level]) {
+        document.getElementById('sel-meta').textContent += ' · chargement du détail…';
+        const ok = await engine.setStructureLod(structure, level);
+        if (generation !== selectGeneration) return;
         detailStructure = structure;
         document.getElementById('sel-meta').textContent =
-          `${labels[structure.category] || ''}${sideLabel} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[detailLevel].indexCount / 3 : structure.lod.low.indexCount / 3} tris (${detailLevel})`;
+          `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'} · ${ok ? structure.lod[level].indexCount / 3 : structure.lod.low.indexCount / 3} tris`;
       }
       forceCulling = true;
       if (focus) {
@@ -210,43 +342,46 @@
           const dir = camera.position.clone().sub(controls.target).normalize();
           cameraTween = {
             fromPos: camera.position.clone(),
-            toPos: target.center.clone().addScaledVector(dir, Math.max(0.35, target.radius * 5)),
+            toPos: target.center.clone().addScaledVector(dir, Math.max(0.3, target.radius * 5)),
             fromTarget: controls.target.clone(),
             toTarget: target.center,
             t: 0,
           };
+          if (pivotMode === 'item') controls.target.copy(target.center);
         }
       }
-      renderList();
+      /* On ne reconstruit pas la liste ici : cela détacherait les boutons
+       * pendant un clic Playwright/utilisateur et rendrait le clic instable. */
+      document.querySelectorAll('#list .item').forEach((el) => {
+        el.classList.toggle('active', el.dataset.id === structure.id);
+      });
     }
 
     document.getElementById('search').addEventListener('input', renderList);
     renderList();
 
+    /* Raccourcis et groupes. */
     const shortcutsEl = document.getElementById('shortcuts');
     for (const item of QUICK_ACCESS) {
-      const button = document.createElement('button');
-      button.textContent = item.label;
-      button.addEventListener('click', () => {
-        const first = engine.byId.get(item.ids[0]);
-        if (first) selectStructure(first, true);
+      const b = document.createElement('button');
+      b.textContent = item.label;
+      b.addEventListener('click', () => {
+        const s = engine.byId.get(item.ids[0]);
+        if (s) selectStructure(s, true);
       });
-      shortcutsEl.appendChild(button);
+      shortcutsEl.appendChild(b);
     }
     const groupsEl = document.getElementById('groups');
-    let activeGroup = null;
-    let groupAnim = null;
-    let waypointTour = null;
-    let tourActive = false;
-    let tourAngle = 0;
     for (const group of GROUPS) {
-      const button = document.createElement('button');
-      button.textContent = group.label;
-      button.addEventListener('click', async () => {
+      const b = document.createElement('button');
+      b.textContent = group.label;
+      b.addEventListener('click', async () => {
         activeGroup = group;
+        groupAnim = null;
+        engine.clearAnimation();
         engine.resetGroupTransforms();
         const count = engine.showGroup(group);
-        const level = (innerWidth < 700 || (navigator.deviceMemory || 4) <= 4) ? 'medium' : 'high';
+        const level = innerWidth < 820 ? 'medium' : 'high';
         await engine.setGroupLod(group, level);
         document.getElementById('sel-name').textContent = group.label;
         document.getElementById('sel-meta').textContent = `${count} structures · ${group.movement || 'vue de groupe'}`;
@@ -254,9 +389,7 @@
         const members = group.members.map((id) => engine.byId.get(id)).filter(Boolean);
         const c = members.reduce((acc, s) => {
           const b = s.bounds;
-          acc.x += (b.min[0] + b.max[0]) / 2;
-          acc.y += (b.min[1] + b.max[1]) / 2;
-          acc.z += (b.min[2] + b.max[2]) / 2;
+          acc.x += (b.min[0] + b.max[0]) / 2; acc.y += (b.min[1] + b.max[1]) / 2; acc.z += (b.min[2] + b.max[2]) / 2;
           return acc;
         }, { x: 0, y: 0, z: 0 });
         const n = Math.max(1, members.length);
@@ -264,45 +397,104 @@
         const dir = camera.position.clone().sub(controls.target).normalize();
         cameraTween = {
           fromPos: camera.position.clone(),
-          toPos: new THREE.Vector3(c.x, c.y, c.z).addScaledVector(dir, 1.1),
+          toPos: new THREE.Vector3(c.x, c.y, c.z).addScaledVector(dir, 1.15),
           fromTarget: controls.target.clone(),
           toTarget: new THREE.Vector3(c.x, c.y, c.z),
           t: 0,
         };
+        if (pivotMode === 'item') controls.target.set(c.x, c.y, c.z);
       });
-      groupsEl.appendChild(button);
+      groupsEl.appendChild(b);
     }
+
+    /* Animations. */
     const animationsEl = document.getElementById('animations');
-    const animationDefs = [
-      { label: "Tour du monde", action: () => {
-        tourActive = !tourActive;
-        if (tourActive) {
-          cameraTween = null;
-          tourAngle = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
-        }
-      } },
-      { label: "Waypoints", action: () => {
-        if (!selected) return;
-        const wps = getWaypoints(selected);
-        waypointTour = { waypoints: wps, index: 0, timer: 0 };
-      } },
-      { label: "Battement cardiaque", action: () => startSceneAnim('heartbeat', QUICK_ACCESS[4].ids) },
-      { label: "Respiration", action: () => startSceneAnim('breathing', QUICK_ACCESS[2].ids) },
-      { label: "Clignement", action: () => startSceneAnim('blink', ["organ:bp-fibrous-layer-of-eyeball-l", "organ:bp-fibrous-layer-of-eyeball-r"]) },
-      { label: "Flux sanguin", action: () => startSceneAnim('bloodflow', engine.structures.filter((s) => /arter|vein|vascul|artère|veine/i.test(s.en || "")).slice(0, 160).map((s) => s.id)) },
-    ];
     function startSceneAnim(type, ids) {
       groupAnim = null;
       engine.resetGroupTransforms();
       engine.setSceneAnimation(type, ids);
     }
-    for (const def of animationDefs) {
-      const button = document.createElement('button');
-      button.textContent = def.label;
-      button.addEventListener('click', def.action);
-      animationsEl.appendChild(button);
+    const defs = [
+      { label: 'Tour du monde', action: () => {
+        tourActive = !tourActive;
+        if (tourActive) { cameraTween = null; tourAngle = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z); }
+      } },
+      { label: 'Waypoints', action: () => {
+        if (!selected) return;
+        engine.setWaypointsVisible(true);
+        waypointTour = { waypoints: getWaypoints(selected), index: 0, timer: 2.1 };
+      } },
+      { label: 'Battement cardiaque', action: () => startSceneAnim('heartbeat', QUICK_ACCESS[4].ids) },
+      { label: 'Respiration', action: () => startSceneAnim('breathing', QUICK_ACCESS[2].ids) },
+      { label: 'Clignement', action: () => startSceneAnim('blink', ['organ:bp-fibrous-layer-of-eyeball-l', 'organ:bp-fibrous-layer-of-eyeball-r']) },
+      { label: 'Flux sanguin', action: () => startSceneAnim('bloodflow', engine.structures.filter((s) => /arter|vein|artère|veine|vascul/i.test(s.en || '')).slice(0, 160).map((s) => s.id)) },
+    ];
+    for (const def of defs) {
+      const b = document.createElement('button');
+      b.textContent = def.label;
+      b.addEventListener('click', def.action);
+      animationsEl.appendChild(b);
     }
 
+    /* Commandes de vue. */
+    document.getElementById('focus').addEventListener('click', () => {
+      if (!selected) return;
+      engine.setCategoryVisible(selected.category, true);
+      engine.isolate(selected);
+      const target = engine.focusTarget(selected);
+      if (target) {
+        const dir = camera.position.clone().sub(controls.target).normalize();
+        cameraTween = {
+          fromPos: camera.position.clone(),
+          toPos: target.center.clone().addScaledVector(dir, Math.max(0.25, target.radius * 4)),
+          fromTarget: controls.target.clone(),
+          toTarget: target.center,
+          t: 0,
+        };
+        if (pivotMode === 'item') controls.target.copy(target.center);
+      }
+      forceCulling = true;
+    });
+    document.getElementById('isolate').addEventListener('click', () => {
+      if (selected) { engine.isolate(selected); engine.setSkinVisible(false); forceCulling = true; }
+    });
+    document.getElementById('clear-iso').addEventListener('click', () => {
+      engine.isolate(null);
+      engine.setSkinVisible(true);
+      const skinBtn = document.querySelector('[data-cat="skin"]');
+      if (skinBtn) skinBtn.classList.add('active');
+      engine.setWaypointsVisible(false);
+      waypointTour = null;
+      wpInfo.style.display = 'none';
+      forceCulling = true;
+    });
+    document.getElementById('pivot').addEventListener('click', (e) => {
+      pivotMode = pivotMode === 'item' ? 'corps' : 'item';
+      e.currentTarget.textContent = `Pivot : ${pivotMode}`;
+      if (pivotMode === 'corps') controls.target.set(0, 1, 0);
+      else if (selected) {
+        const t = engine.focusTarget(selected);
+        if (t) controls.target.copy(t.center);
+      }
+    });
+    document.querySelectorAll('[data-cat]').forEach((button) => {
+      button.addEventListener('click', () => {
+        button.classList.toggle('active');
+        if (button.dataset.cat === 'skin') engine.setSkinVisible(button.classList.contains('active'));
+        else engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
+        forceCulling = true;
+      });
+    });
+    document.getElementById('reset').addEventListener('click', () => {
+      camera.position.set(0.72, 1.28, 2.55);
+      controls.target.set(0, 1, 0);
+      cameraTween = null;
+      tourActive = false;
+      controls.update();
+    });
+    document.getElementById('mobile-toggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
     document.getElementById('explode').addEventListener('click', () => {
       engine.clearAnimation();
       if (activeGroup) groupAnim = { group: activeGroup, mode: 'explode', t: 0, dir: 1 };
@@ -316,89 +508,43 @@
       engine.resetGroupTransforms();
       if (activeGroup) engine.showGroup(activeGroup);
       engine.setSkinVisible(true);
-      const skinButton = document.querySelector('[data-cat="skin"]');
-      if (skinButton) skinButton.classList.add('active');
       forceCulling = true;
     });
 
+    /* Picking : d'abord les waypoints visibles, puis un raycast exact. */
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     let downX = 0, downY = 0;
-    renderer.domElement.addEventListener('pointerdown', (event) => { downX = event.clientX; downY = event.clientY; });
-    renderer.domElement.addEventListener('pointerup', async (event) => {
-      if (Math.hypot(event.clientX - downX, event.clientY - downY) > 5) return;
-      pointer.x = (event.clientX / innerWidth) * 2 - 1;
-      pointer.y = -(event.clientY / innerHeight) * 2 + 1;
+    renderer.domElement.addEventListener('pointerdown', (e) => { downX = e.clientX; downY = e.clientY; });
+    renderer.domElement.addEventListener('pointerup', async (e) => {
+      if (Math.hypot(e.clientX - downX, e.clientY - downY) > 5) return;
+      const now = performance.now();
+      if (now - lastClick < 220) return;
+      lastClick = now;
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      const wp = engine.pickWaypoint(raycaster);
-      if (wp) {
-        document.getElementById('wp-title').textContent = wp.title;
-        document.getElementById('wp-text').textContent = wp.text;
-        document.getElementById('waypoint-info').style.display = 'block';
-        const target = new THREE.Vector3(...wp.position);
-        const dir = camera.position.clone().sub(controls.target).normalize();
-        cameraTween = {
-          fromPos: camera.position.clone(),
-          toPos: target.clone().addScaledVector(dir, 0.42),
-          fromTarget: controls.target.clone(),
-          toTarget: target,
-          t: 0,
-        };
-        return;
+      if (engine.waypointsVisible) {
+        const wp = engine.pickWaypoint(raycaster);
+        if (wp) {
+          showWaypoint(wp);
+          const target = new THREE.Vector3(...wp.position);
+          const dir = camera.position.clone().sub(controls.target).normalize();
+          cameraTween = {
+            fromPos: camera.position.clone(),
+            toPos: target.clone().addScaledVector(dir, 0.9),
+            fromTarget: controls.target.clone(),
+            toTarget: target,
+            t: 0,
+          };
+          return;
+        }
       }
-      await selectStructure(engine.pick(raycaster), false);
+      await selectStructure(engine.pickExact(raycaster) || engine.pick(raycaster), false);
     });
 
-    document.querySelectorAll('[data-cat]').forEach((button) => {
-      button.addEventListener('click', () => {
-        button.classList.toggle('active');
-        if (button.dataset.cat === 'skin') engine.setSkinVisible(button.classList.contains('active'));
-        else engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
-      });
-    });
-    document.getElementById('focus').addEventListener('click', () => {
-      if (!selected) return;
-      engine.setCategoryVisible(selected.category, true);
-      const dir = camera.position.clone().sub(controls.target).normalize();
-      engine.isolate(selected);
-      const target = engine.focusTarget(selected);
-      if (target) {
-        cameraTween = {
-          fromPos: camera.position.clone(),
-          toPos: target.center.clone().addScaledVector(dir, Math.max(0.25, target.radius * 4)),
-          fromTarget: controls.target.clone(),
-          toTarget: target.center,
-          t: 0,
-        };
-      }
-      forceCulling = true;
-    });
-    document.getElementById('isolate').addEventListener('click', () => {
-      if (selected) { engine.isolate(selected); forceCulling = true; }
-    });
-    document.getElementById('clear-iso').addEventListener('click', () => {
-      engine.isolate(null);
-      engine.setSkinVisible(true);
-      const skinButton = document.querySelector('[data-cat="skin"]');
-      if (skinButton) skinButton.classList.add('active');
-      engine.highlight(selected, '#7ef9ff');
-      forceCulling = true;
-    });
-    document.getElementById('mobile-toggle').addEventListener('click', () => {
-      document.getElementById('sidebar').classList.toggle('open');
-    });
-    document.getElementById('reset').addEventListener('click', () => {
-      camera.position.set(0.72, 1.28, 2.55);
-      controls.target.set(0, 1.0, 0);
-      cameraTween = null;
-      controls.update();
-    });
-    addEventListener('resize', () => {
-      camera.aspect = innerWidth / innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(innerWidth, innerHeight);
-    });
-
+    /* Boucle de rendu. */
     let visibleCount = engine.updateVisibility(camera);
     let lastCamera = camera.position.clone();
     let frames = 0, last = performance.now(), frameSum = 0, frameCount = 0;
@@ -407,9 +553,8 @@
     let previousTime = performance.now();
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
-    const labelEl = document.getElementById('label');
     const qualityEl = document.getElementById('quality');
-    const maxRatio = Math.min(devicePixelRatio, 1.5);
+
     async function loop() {
       requestAnimationFrame(loop);
       const nowFrame = performance.now();
@@ -417,11 +562,11 @@
       previousTime = nowFrame;
       if (tourActive) {
         cameraTween = null;
-        tourAngle += dt * 0.28;
+        tourAngle += dt * 0.3;
         const radius = Math.hypot(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
         camera.position.x = controls.target.x + Math.sin(tourAngle) * radius;
         camera.position.z = controls.target.z + Math.cos(tourAngle) * radius;
-        camera.position.y = controls.target.y + 0.15 + Math.sin(tourAngle * 2) * 0.08;
+        camera.position.y = controls.target.y + 0.12 + Math.sin(tourAngle * 2) * 0.06;
         camera.lookAt(controls.target);
       }
       if (waypointTour) {
@@ -429,15 +574,12 @@
         if (waypointTour.timer > 2.2) {
           waypointTour.timer = 0;
           waypointTour.index = (waypointTour.index + 1) % waypointTour.waypoints.length;
-          const wp = waypointTour.waypoints[waypointTour.index];
-          document.getElementById('wp-title').textContent = wp.title;
-          document.getElementById('wp-text').textContent = wp.text;
-          document.getElementById('waypoint-info').style.display = 'block';
-          const target = new THREE.Vector3(...wp.position);
+          showWaypoint(waypointTour.waypoints[waypointTour.index]);
+          const target = new THREE.Vector3(...waypointTour.waypoints[waypointTour.index].position);
           const dir = camera.position.clone().sub(controls.target).normalize();
           cameraTween = {
             fromPos: camera.position.clone(),
-            toPos: target.clone().addScaledVector(dir, 0.45),
+            toPos: target.clone().addScaledVector(dir, 0.9),
             fromTarget: controls.target.clone(),
             toTarget: target,
             t: 0,
@@ -459,22 +601,18 @@
         engine.animateGroup(groupAnim.group, groupAnim.t, groupAnim.mode);
       }
       controls.update();
-      if (selected) {
+      if (selected && !engine.waypointsVisible) {
         const target = engine.focusTarget(selected);
         if (target) {
           const p = target.center.clone().project(camera);
-          if (p.z < 1 && Math.abs(p.x) < 1.2 && Math.abs(p.y) < 1.2) {
+          if (p.z < 1 && Math.abs(p.x) < 1.1 && Math.abs(p.y) < 1.1) {
             labelEl.style.display = 'block';
-            labelEl.style.left = `${(p.x * 0.5 + 0.5) * innerWidth}px`;
-            labelEl.style.top = `${(-p.y * 0.5 + 0.5) * innerHeight}px`;
+            labelEl.style.left = `${(p.x * 0.5 + 0.5) * viewport.clientWidth}px`;
+            labelEl.style.top = `${(-p.y * 0.5 + 0.5) * viewport.clientHeight}px`;
             labelEl.textContent = selected.fr || selected.en;
-          } else {
-            labelEl.style.display = 'none';
-          }
+          } else labelEl.style.display = 'none';
         }
-      } else {
-        labelEl.style.display = 'none';
-      }
+      } else labelEl.style.display = 'none';
       if (camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) {
         lastCamera.copy(camera.position);
         forceCulling = false;
@@ -492,21 +630,15 @@
           renderer.setPixelRatio(pixelRatio);
           lodBias = Math.max(0.6, lodBias - 0.1);
           forceCulling = true;
-        } else if (avg < 3.5 && pixelRatio < maxRatio) {
-          pixelRatio = Math.min(maxRatio, pixelRatio + 0.25);
-          renderer.setPixelRatio(pixelRatio);
-          lodBias = Math.min(1, lodBias + 0.1);
-          forceCulling = true;
         }
-        fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
-        drawEl.textContent = `${renderer.info.render.calls} appels · ${Math.round(renderer.info.render.triangles / 1000)}k tris · ${visibleCount} visibles · ${avg.toFixed(1)} ms CPU`;
         if (!autoLodDone && now - startedAt > 4000) {
           autoLodDone = true;
-          const mobile = innerWidth < 700;
-          const target = !mobile && avg < 6 ? 'medium' : 'low';
+          const target = innerWidth > 820 && avg < 6 ? 'medium' : 'low';
           if (target !== engine.globalLod) await engine.setGlobalLod(target);
         }
-        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)} · global ${engine.globalLod}`;
+        fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
+        drawEl.textContent = `${renderer.info.render.calls} appels · ${Math.round(renderer.info.render.triangles / 1000)}k tris · ${visibleCount} visibles`;
+        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)} · ${engine.globalLod}`;
         frames = 0; frameSum = 0; frameCount = 0; last = now;
       }
     }
