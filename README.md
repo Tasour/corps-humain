@@ -1,17 +1,19 @@
 # CORPS — Atlas vivant du corps humain
 
 Atlas 3D interactif en français pour explorer l'anatomie et visualiser l'effet des pathologies.
-Construit avec **Three.js** et **Vite**, sans modèle anatomique externe : la silhouette, les organes,
-les os et les muscles sont générés procéduralement.
+Construit avec **Three.js** et **Vite**, il s'appuie sur les maillages libres **BodyParts3D 4.0**
+pour la peau, les organes, les os et les muscles, avec une anatomie procédurale de secours.
 
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
-![Aperçu de la vue éclatée](docs/apercu.jpg)
+![Aperçu de l'atlas 3D](docs/apercu.jpg)
 
 ![Simulation d'une pathologie](docs/pathologie.jpg)
 
 ## Fonctionnalités
 
+- **Maillages anatomiques réels BodyParts3D** pour 43 structures (organes, os, muscles, peau),
+  chargés progressivement avec repli procédural automatique.
 - **22 organes**, **13 os**, **11 muscles** et **30 pathologies** répartis en 9 systèmes.
 - Couches anatomiques : peau, muscles, squelette, organes, étiquettes.
 - **Vue éclatée** : chaque organe se détache pour être observé séparément (slider %).
@@ -37,6 +39,27 @@ npm run preview  # prévisualise le build
 
 Le build utilise `base: "./"`, il fonctionne donc à la racine comme dans un sous-dossier
 (GitHub Pages, serveur statique, etc.).
+
+## Modèles 3D
+
+Les maillages sont pré-générés dans `public/models/` :
+
+- `anatomy.json` — manifeste (entités, offsets, bornes, nombre de triangles) ;
+- `anatomy.bin` — positions Float32, normales Int16 normalisées, indices Uint16/Uint32 ;
+- `anatomy.bin.gz` — même binaire compressé, servi en priorité (~4,9 Mo).
+
+L'application affiche d'abord l'anatomie procédurale, puis remplace progressivement les
+maillages dès que le binaire est disponible. En cas d'échec, le rendu procédural reste actif.
+
+Pour régénérer les modèles à partir des données BodyParts3D déjà converties
+(dépôt [human-atlas](https://github.com/ashemag/human-atlas)) :
+
+```bash
+ANATOMY_SOURCE=/chemin/vers/human-atlas/public/models npm run models
+```
+
+Le script `scripts/build-anatomy-models.mjs` fusionne les pièces, simplifie avec
+`meshoptimizer`, recentre les géométries et produit le binaire compressé.
 
 ## Installer sur téléphone (PWA)
 
@@ -72,24 +95,35 @@ Le raccourci ouvre l'application hébergée en mode web-app, avec son icône et 
 
 ```
 src/
-  anatomy.js        géométrie procédurale (peau, organes, os, muscles)
-  scene.js          moteur Three.js, couches, pathologies, vue éclatée, isolement
+  anatomy.js        anatomie procédurale de secours + matériau de peau
+  scene.js          moteur Three.js, chargement des modèles, couches, pathologies
   main.js           état de l'application et interactions
   ui.js             rendu des panneaux et fiches
   games.js          mode diagnostic et chasse aux organes
   monitor.js        ECG et constantes vitales
   data/             pathologies et systèmes
   style.css         interface
+public/
+  models/           maillages BodyParts3D (manifeste + binaire + .gz)
+  sw.js             service worker (app shell + modèles hors ligne)
+scripts/
+  build-anatomy-models.mjs   extraction, simplification et packaging des modèles
 ```
 
 ## Sources & crédits
 
-L'anatomie et les contenus sont originaux et générés pour ce projet. Les idées de
-visualisation s'inspirent de projets libres :
+Les maillages 3D proviennent de **[BodyParts3D 4.0](https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html)**,
+© The Database Center for Life Science, diffusés sous licence
+[CC Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
+Ils ont été extraits, fusionnés, simplifiés et convertis en mètres / Y-up pour le web
+(voir `public/models/anatomy.json`). Les structures non disponibles dans BodyParts3D
+(thyroïde, dorsaux, abdominaux) restent générées procéduralement.
+
+Les contenus pédagogiques sont originaux. Les idées de visualisation s'inspirent de projets libres :
 
 - [ashemag/human-atlas](https://github.com/ashemag/human-atlas) — vue éclatée (slider),
-  isolement, comparaison sain / malade.
-- [BodyParts3D · Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy) — référence
+  isolement, comparaison sain / malade, pipeline de conversion des maillages.
+- [Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy) — référence
   de modélisation anatomique libre.
 - [anatomyatelier.org](https://anatomyatelier.org/) — inspiration pédagogique.
 

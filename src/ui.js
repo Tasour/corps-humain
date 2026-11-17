@@ -249,16 +249,21 @@ export function renderHome({ stats, featured, bestDiag, bestHunt }) {
     <section class="panel-block credits-block">
       <div class="block-head"><h3>Sources &amp; crédits</h3></div>
       <p class="muted small">
-        Anatomie procédurale et contenus pédagogiques originaux. Inspiré par des projets libres
-        d'anatomie 3D&nbsp;:
+        Anatomie 3D dérivée de <strong>BodyParts3D 4.0</strong> (Database Center for Life Science,
+        licence CC BY 4.0), complétée par une anatomie procédurale de secours. Contenus
+        pédagogiques originaux. Inspiré par des projets libres d'anatomie 3D&nbsp;:
       </p>
       <ul class="credit-list">
+        <li>
+          <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html" target="_blank" rel="noopener noreferrer">BodyParts3D 4.0</a>
+          <span>maillages anatomiques — © The Database Center for Life Science, CC BY 4.0</span>
+        </li>
         <li>
           <a href="https://github.com/ashemag/human-atlas" target="_blank" rel="noopener noreferrer">ashemag/human-atlas</a>
           <span>vue éclatée, isolement, comparaison sain / malade</span>
         </li>
         <li>
-          <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener noreferrer">BodyParts3D · Z-Anatomy</a>
+          <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener noreferrer">Z-Anatomy</a>
           <span>référence de modélisation anatomique libre</span>
         </li>
         <li>

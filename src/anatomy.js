@@ -170,6 +170,7 @@ function makeSkinMaterial() {
       uOpacity: { value: 1 },
       uTime: { value: 0 },
       uTint: { value: new THREE.Color("#67e8f9") },
+      uScan: { value: 1 },
     },
     vertexShader: /* glsl */ `
       varying vec3 vN;
@@ -189,14 +190,15 @@ function makeSkinMaterial() {
       uniform vec3 uTint;
       uniform float uOpacity;
       uniform float uTime;
+      uniform float uScan;
       varying vec3 vN;
       varying vec3 vV;
       varying vec3 vW;
       void main() {
         float fres = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.1);
-        float scan = smoothstep(0.86, 1.0, sin(vW.y * 26.0 - uTime * 1.1) * 0.5 + 0.5);
-        vec3 col = mix(uBase, uRim, fres * 0.95) + uTint * scan * 0.25;
-        float alpha = (0.028 + fres * 0.52 + scan * 0.05) * uOpacity;
+        float scan = smoothstep(0.86, 1.0, sin(vW.y * 22.0 - uTime * 1.1) * 0.5 + 0.5) * uScan;
+        vec3 col = mix(uBase, uRim, fres * 0.95) + uTint * scan * 0.12;
+        float alpha = (0.028 + fres * 0.52 + scan * 0.025) * uOpacity;
         gl_FragColor = vec4(col, alpha);
       }
     `,

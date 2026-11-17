@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "models": "node scripts/build-anatomy-models.mjs"
   },
   "dependencies": {
     "three": "^0.187.0"
   },
   "devDependencies": {
+    "meshoptimizer": "^0.20.0",
     "vite": "^7.0.0"
   }
 }

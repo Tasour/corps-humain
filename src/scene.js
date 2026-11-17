@@ -121,6 +121,7 @@ export class AnatomyScene {
     this.hoverRaf = null;
     this.lastPointer = { x: 0, y: 0 };
     this.tint = new THREE.Color("#67e8f9");
+    this.modelsLoaded = false;
 
     this._initRenderer(labels);
     this._initScene();
@@ -298,19 +299,135 @@ export class AnatomyScene {
     this.skinMaterial = this.anatomy.skinMaterial;
 
     this._applyLayers();
+    this._loadAnatomyModels();
+  }
+
+  async _loadAnatomyModels() {
+    try {
+      const response = await fetch("./models/anatomy.json");
+      if (!response.ok) throw new Error(`manifest ${response.status}`);
+      const manifest = await response.json();
+      const binary = await this._fetchGeometry(manifest.bin);
+      this._applyAnatomyModels(manifest, binary);
+    } catch (error) {
+      console.warn("Modèles anatomiques 3D non chargés, anatomie procédurale conservée :", error);
+    }
+  }
+
+  /* Récupère le binaire anatomique, en gzip si disponible (environ 30 % plus léger). */
+  async _fetchGeometry(file) {
+    const load = async (url) => {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`geometry ${response.status}`);
+      const payload = await response.arrayBuffer();
+      const signature = new Uint8Array(payload, 0, Math.min(2, payload.byteLength));
+      const gzip = signature[0] === 0x1f && signature[1] === 0x8b;
+      if (!gzip) return payload;
+      if (typeof DecompressionStream !== "function") {
+        throw new Error("gzip non pris en charge par ce navigateur");
+      }
+      return new Response(new Blob([payload]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+    };
+    try {
+      return await load(`./models/${file}.gz`);
+    } catch {
+      return load(`./models/${file}`);
+    }
+  }
+
+  _geometryFromRecord(buffer, record) {
+    const positions = new Float32Array(buffer, record.positions, record.vertexCount * 3);
+    const normals = new Int16Array(buffer, record.normals, record.vertexCount * 3);
+    const indices =
+      record.indexType === "u16"
+        ? new Uint16Array(buffer, record.indices, record.indexCount)
+        : new Uint32Array(buffer, record.indices, record.indexCount);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3, true));
+    geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
+    return geometry;
+  }
+
+  _applyAnatomyModels(manifest, buffer) {
+    if (this.modelsLoaded) return;
+    this.modelsLoaded = true;
+
+    for (const [id, record] of Object.entries(manifest.entities || {})) {
+      const entry = this.entries[id];
+      if (!entry || !record) continue;
+      const geometry = this._geometryFromRecord(buffer, record);
+      const offset = entry.group.position;
+      if (offset.lengthSq() > 0) geometry.translate(-offset.x, -offset.y, -offset.z);
+
+      /* Recentre la géométrie sur son propre centre : les échelles (morphologie,
+         halo, aura) restent alors ancrées sur la structure au lieu de l'origine du corps. */
+      geometry.computeBoundingBox();
+      const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+      geometry.translate(-center.x, -center.y, -center.z);
+      geometry.computeBoundingBox();
+      geometry.computeBoundingSphere();
+
+      const mesh = new THREE.Mesh(geometry, entry.materials[0]);
+      mesh.name = `${id}-model`;
+      mesh.position.copy(center);
+      mesh.userData.pickId = id;
+      entry.group.add(mesh);
+
+      /* La colonne est un maillage unique : on garde les positions d'origine
+         pour pouvoir simuler une scoliose par déformation. */
+      if (id === "colonne") {
+        entry.spineBend = {
+          mesh,
+          original: geometry.attributes.position.array.slice(),
+          minY: geometry.boundingBox.min.y,
+          maxY: geometry.boundingBox.max.y,
+        };
+      }
+
+      for (const old of entry.meshes) {
+        if (old === mesh) continue;
+        old.parent?.remove(old);
+      }
+      entry.meshes = [mesh];
+      entry.meshBase = new Map([
+        [mesh, { scale: mesh.scale.clone(), position: mesh.position.clone(), rotation: mesh.rotation.clone() }],
+      ]);
+      entry.vertebrae = null;
+    }
+
+    if (manifest.skin) {
+      const geometry = this._geometryFromRecord(buffer, manifest.skin);
+      for (const child of [...this.anatomy.skinGroup.children]) {
+        this.anatomy.skinGroup.remove(child);
+      }
+      const skin = new THREE.Mesh(geometry, this.skinMaterial);
+      skin.name = "skin-model";
+      this.anatomy.skinGroup.add(skin);
+      /* Le maillage réel est assez détaillé : on coupe le balayage pour éviter les bandes. */
+      this.skinMaterial.uniforms.uScan.value = 0;
+    }
+
+    this._applyLayers();
+    this._applyClipping(this.crossSection);
+    this._updateEmphasis();
+    this._positionHalo();
+    this.stage.dispatchEvent(new CustomEvent("models-loaded"));
   }
 
   _labelOffset(id) {
     const map = {
       cerveau: [0.0, 0.14, 0.0],
-      cervelet: [-0.085, 0.06, -0.01],
+      cervelet: [-0.085, 0.0, -0.01],
       tronc_cerebral: [-0.06, 0.0, 0.02],
       moelle_epiniere: [0.075, 0.15, 0.0],
       coeur: [0.105, 0.06, 0.02],
       coronaires: [-0.095, 0.0, 0.045],
       aorte: [-0.1, 0.17, -0.02],
       poumons: [-0.175, 0.1, 0.0],
-      bronches: [0.1, 0.19, 0.0],
+      bronches: [0.13, 0.02, 0.0],
       oesophage: [-0.02, 0.21, 0.0],
       estomac: [0.1, 0.03, 0.01],
       foie: [-0.13, 0.04, 0.0],
@@ -322,7 +439,7 @@ export class AnatomyScene {
       ureteres: [-0.1, -0.03, 0.02],
       vessie: [0.0, -0.055, 0.05],
       rate: [0.12, 0.03, -0.02],
-      thyroide: [0.065, 0.03, 0.02],
+      thyroide: [0.065, 0.0, 0.02],
       surrenales: [-0.14, 0.015, -0.01],
     };
     return new THREE.Vector3(...(map[id] || [0, 0.03, 0]));
@@ -749,6 +866,11 @@ export class AnatomyScene {
       if (m.roughness !== undefined) m.roughness = o.roughness;
       m.needsUpdate = true;
     }
+    if (entry.spineBend) {
+      const position = entry.spineBend.mesh.geometry.attributes.position;
+      position.array.set(entry.spineBend.original);
+      position.needsUpdate = true;
+    }
     if (entry.vertebrae) {
       for (const v of entry.vertebrae) {
         v.mesh.position.copy(v.base);
@@ -845,7 +967,7 @@ export class AnatomyScene {
     const mat = new THREE.MeshBasicMaterial({
       color: new THREE.Color(color),
       transparent: true,
-      opacity: 0.18 + amount * 0.16,
+      opacity: 0.06 + amount * 0.07,
       blending: THREE.AdditiveBlending,
       side: THREE.BackSide,
       depthWrite: false,
@@ -856,7 +978,7 @@ export class AnatomyScene {
       if (!mesh.geometry || seen.has(mesh)) continue;
       seen.add(mesh);
       const shell = new THREE.Mesh(mesh.geometry, mat);
-      shell.scale.setScalar(1.1);
+      shell.scale.setScalar(1.06);
       shell.renderOrder = 8;
       shell.frustumCulled = false;
       mesh.add(shell);
@@ -906,6 +1028,19 @@ export class AnatomyScene {
   }
 
   _bendSpine(entry, amount) {
+    if (entry.spineBend) {
+      const { mesh, original, minY, maxY } = entry.spineBend;
+      const position = mesh.geometry.attributes.position;
+      const array = position.array;
+      const height = Math.max(0.0001, maxY - minY);
+      for (let i = 0; i < array.length; i += 3) {
+        const t = (original[i + 1] - minY) / height;
+        array[i] = original[i] + Math.sin(t * Math.PI) * 0.045 * amount;
+      }
+      position.needsUpdate = true;
+      mesh.geometry.computeBoundingSphere();
+      return;
+    }
     if (!entry.vertebrae) return;
     for (const v of entry.vertebrae) {
       const offset = Math.sin(v.t * Math.PI) * 0.075 * amount;
@@ -924,9 +1059,11 @@ export class AnatomyScene {
     const maxDim = Math.max(size.x, size.y, size.z, 0.02);
     const rng = seeded(seed);
     const group = new THREE.Group();
-    group.position.copy(center);
     group.userData.entryId = entry.id;
-    this.overlayRoot.add(group);
+    /* L'overlay suit la structure : vue éclatée, morphologie et isolement restent alignés. */
+    entry.group.updateWorldMatrix(true, false);
+    entry.group.add(group);
+    group.position.copy(entry.group.worldToLocal(center.clone()));
     this.overlays.push(group);
 
     const addMesh = (geo, material, pos) => {
@@ -1038,12 +1175,12 @@ export class AnatomyScene {
         const mat = new THREE.MeshBasicMaterial({
           color: 0xff3b30,
           transparent: true,
-          opacity: 0.08 + amount * 0.14,
+          opacity: 0.05 + amount * 0.09,
           blending: THREE.AdditiveBlending,
           depthWrite: false,
         });
-        for (let i = 0; i < 7; i++) {
-          const r = Math.min(maxDim * (0.16 + rng() * 0.18) * (0.75 + amount * 0.5), 0.085);
+        for (let i = 0; i < 6; i++) {
+          const r = Math.min(maxDim * (0.14 + rng() * 0.14) * (0.75 + amount * 0.5), 0.055);
           const blob = new THREE.Mesh(new THREE.SphereGeometry(r, 12, 9), mat);
           blob.position.set(
             (rng() - 0.5) * size.x * 0.55,
