@@ -98,6 +98,9 @@ L'architecture pour afficher l'intégralité des structures sans surchauffe est 
 budget thermique. Un prototype WASM (`wasm/corps-core`, 37 Ko) et un benchmark de
 batching (`bench/batching.html`) l'accompagnent.
 
+Le **jeu de données v2** (2 131 structures × 3 niveaux de détail) est décrit dans
+[`docs/jeu-de-donnees-v2.md`](docs/jeu-de-donnees-v2.md) et généré via `npm run models:v2`.
+
 ## Installer sur téléphone (PWA)
 
 L'application est une **Progressive Web App** : elle peut être installée depuis le navigateur,

@@ -124,7 +124,7 @@ GPU.
 | Priorité | Contenu | État |
 |---|---|---|
 | **P0.1** | Inventaire complet des 2 202 structures + prototype Rust/WASM + benchmarks | ✅ fait |
-| **P0.2** | **Jeu de données 3D** : export des 2 202 structures en 3 LOD (300 / 1,5 k / original), compression meshopt, manifest par système, chunks chargeables à la demande | 🔲 **à faire — prochaine étape** |
+| **P0.2** | **Jeu de données 3D** : 2 131 structures individuelles en 3 LOD (300 / 1,5 k / 12 k), simplification meshopt, manifest, chunks par catégorie | ✅ fait — voir `docs/jeu-de-donnees-v2.md` |
 | P1 | Refonte du rendu : `BatchedMesh` + index WASM pour picking/culling | à faire |
 | P2 | Qualité adaptative (governor DPR/LOD), textures KTX2 à la demande | à faire |
 | P3 | Explorateur hiérarchique (système → organe → structure) dans l'UI | à faire |
