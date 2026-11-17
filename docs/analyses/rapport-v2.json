@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-17T04:48:44.709Z",
+  "generated": "2026-11-17T04:54:32.405Z",
   "summary": {
     "structures": 2107,
     "triangles": 1123549,
@@ -236,6 +236,125 @@
       "frB": "Télencéphale",
       "ratio": 0.91,
       "centerDist": 0.0091
+    }
+  ],
+  "groups": [
+    {
+      "id": "arm-l",
+      "label": "Membre supérieur gauche",
+      "members": 7,
+      "missing": 0,
+      "triangles": 2100,
+      "box": [
+        0.277,
+        0.57,
+        0.163
+      ],
+      "movement": "Abduction de l'épaule"
+    },
+    {
+      "id": "arm-r",
+      "label": "Membre supérieur droit",
+      "members": 7,
+      "missing": 0,
+      "triangles": 2098,
+      "box": [
+        0.277,
+        0.57,
+        0.163
+      ],
+      "movement": "Abduction de l'épaule"
+    },
+    {
+      "id": "forearm-l",
+      "label": "Avant-bras gauche",
+      "members": 2,
+      "missing": 0,
+      "triangles": 600,
+      "box": [
+        0.085,
+        0.255,
+        0.087
+      ],
+      "movement": "Pronation / supination"
+    },
+    {
+      "id": "forearm-r",
+      "label": "Avant-bras droit",
+      "members": 2,
+      "missing": 0,
+      "triangles": 600,
+      "box": [
+        0.085,
+        0.255,
+        0.087
+      ],
+      "movement": "Pronation / supination"
+    },
+    {
+      "id": "leg-l",
+      "label": "Membre inférieur gauche",
+      "members": 5,
+      "missing": 0,
+      "triangles": 1476,
+      "box": [
+        0.146,
+        0.957,
+        0.143
+      ],
+      "movement": "Flexion de la hanche"
+    },
+    {
+      "id": "leg-r",
+      "label": "Membre inférieur droit",
+      "members": 5,
+      "missing": 0,
+      "triangles": 1476,
+      "box": [
+        0.146,
+        0.957,
+        0.143
+      ],
+      "movement": "Flexion de la hanche"
+    },
+    {
+      "id": "lungs",
+      "label": "Poumons et lobes",
+      "members": 6,
+      "missing": 0,
+      "triangles": 5351,
+      "box": [
+        0.261,
+        0.264,
+        0.186
+      ],
+      "movement": "Inspiration (expansion)"
+    },
+    {
+      "id": "eye-r",
+      "label": "Œil droit et muscles",
+      "members": 5,
+      "missing": 0,
+      "triangles": 2214,
+      "box": [
+        0.075,
+        0.031,
+        0.044
+      ],
+      "movement": "Rotation latérale du globe oculaire"
+    },
+    {
+      "id": "heart",
+      "label": "Cœur et cavités",
+      "members": 5,
+      "missing": 0,
+      "triangles": 6798,
+      "box": [
+        0.119,
+        0.108,
+        0.113
+      ],
+      "movement": "Torsion cardiaque"
     }
   ]
 }

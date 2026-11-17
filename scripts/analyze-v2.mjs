@@ -103,6 +103,33 @@ for (let i = 0; i < boxes.length; i++) {
 }
 collisions.sort((x, y) => y.ratio - x.ratio);
 
+/* Analyse par groupe : présence des membres, volume, triangles et collisions internes. */
+const { GROUPS } = await import(path.resolve(import.meta.dirname, "../src/data/groups.js"));
+const byId = new Map(manifest.structures.map((s) => [s.id, s]));
+const groupStats = GROUPS.map((group) => {
+  const members = group.members.map((id) => byId.get(id)).filter(Boolean);
+  const missing = group.members.length - members.length;
+  const tris = members.reduce((a, s) => a + s.lod.low.indexCount / 3, 0);
+  const b = members.reduce((acc, s) => {
+    const r = s.bounds;
+    acc.min = acc.min.map((v, i) => Math.min(v, r.min[i]));
+    acc.max = acc.max.map((v, i) => Math.max(v, r.max[i]));
+    return acc;
+  }, { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] });
+  const box = members.length
+    ? b.max.map((v, i) => +(v - b.min[i]).toFixed(3))
+    : [0, 0, 0];
+  return {
+    id: group.id,
+    label: group.label,
+    members: members.length,
+    missing,
+    triangles: tris,
+    box,
+    movement: group.movement || "",
+  };
+});
+
 const report = {
   generated: new Date().toISOString(),
   summary: {
@@ -117,6 +144,7 @@ const report = {
   },
   issues,
   collisions: collisions.slice(0, 300),
+  groups: groupStats,
 };
 fs.mkdirSync(OUT, { recursive: true });
 fs.writeFileSync(path.join(OUT, "rapport-v2.json"), JSON.stringify(report, null, 2));
@@ -146,5 +174,9 @@ for (const e of issues.slice(0, 120)) lines.push(`- **${e.fr || e.id}** (${e.id}
 if (!issues.length) lines.push("- Aucune.");
 lines.push("", "## Collisions AABB les plus fortes", "");
 for (const c of collisions.slice(0, 80)) lines.push(`- ${c.frA} ↔ ${c.frB} : ${Math.round(c.ratio * 100)} %`);
+lines.push("", "## Analyse par groupe", "", "| Groupe | Membres | Manquants | Triangles | Boîte (m) | Mouvement |", "|---|---:|---:|---:|---|---|");
+for (const g of groupStats) {
+  lines.push(`| ${g.label} | ${g.members} | ${g.missing} | ${g.triangles.toLocaleString("fr-FR")} | ${g.box.join(" × ")} | ${g.movement} |`);
+}
 fs.writeFileSync(path.join(OUT, "rapport-v2.md"), lines.join("\n"));
 console.log(JSON.stringify(report.summary, null, 2));

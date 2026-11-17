@@ -46,3 +46,17 @@ Généré le 2026-11-17.
 - Aponévrose épicrânienne ↔ Télencéphale : 91 %
 - Aponévrose épicrânienne ↔ Substance blanche du télencéphale : 91 %
 - Aponévrose épicrânienne ↔ Télencéphale : 91 %
+
+## Analyse par groupe
+
+| Groupe | Membres | Manquants | Triangles | Boîte (m) | Mouvement |
+|---|---:|---:|---:|---|---|
+| Membre supérieur gauche | 7 | 0 | 2 100 | 0.277 × 0.57 × 0.163 | Abduction de l'épaule |
+| Membre supérieur droit | 7 | 0 | 2 098 | 0.277 × 0.57 × 0.163 | Abduction de l'épaule |
+| Avant-bras gauche | 2 | 0 | 600 | 0.085 × 0.255 × 0.087 | Pronation / supination |
+| Avant-bras droit | 2 | 0 | 600 | 0.085 × 0.255 × 0.087 | Pronation / supination |
+| Membre inférieur gauche | 5 | 0 | 1 476 | 0.146 × 0.957 × 0.143 | Flexion de la hanche |
+| Membre inférieur droit | 5 | 0 | 1 476 | 0.146 × 0.957 × 0.143 | Flexion de la hanche |
+| Poumons et lobes | 6 | 0 | 5 351 | 0.261 × 0.264 × 0.186 | Inspiration (expansion) |
+| Œil droit et muscles | 5 | 0 | 2 214 | 0.075 × 0.031 × 0.044 | Rotation latérale du globe oculaire |
+| Cœur et cavités | 5 | 0 | 6 798 | 0.119 × 0.108 × 0.113 | Torsion cardiaque |
