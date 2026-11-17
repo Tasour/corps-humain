@@ -346,6 +346,11 @@
       engine.setSkinVisible(false);
       const skinBtn = document.querySelector('[data-cat="skin"]');
       if (skinBtn) skinBtn.classList.remove('active');
+      /* Réactive TOUJOURS la catégorie de l'item choisi : sinon le lot reste
+       * masqué (os/muscles le sont par défaut) et la vue devient vide. */
+      engine.setCategoryVisible(structure.category, true);
+      const catBtn = document.querySelector(`[data-cat="${structure.category}"]`);
+      if (catBtn) catBtn.classList.add('active');
       engine.isolate(structure);
       engine.highlight(structure, '#ffffff');
       engine.showWaypoints(getWaypoints(structure));

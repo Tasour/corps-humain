@@ -25,7 +25,10 @@ Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 - **Glisser** ne sélectionne plus ; **double-clic** recadre ; `touch-action: none` pour le tactile.
 - **Ombres** PCF soft avec update à la demande ; **thèmes** clair/sombre persistés.
 - **Palette réaliste** : nerfs or, organes rouge-brun, poumons rose, glandes ocre, peau gris-bleu.
-- **28 tests** (`npm run test:v2`) couvrent tous ces points, desktop et mobile tactile.
+- **Lot désactivé à la sélection** : cliquer un os ou un muscle alors que sa catégorie était
+  masquée par défaut laissait un écran vide. `selectStructure()` réactive désormais la
+  catégorie de l'item (et son bouton), comme le fait déjà le bouton Focus.
+- **29 tests** (`npm run test:v2`) couvrent tous ces points, desktop et mobile tactile.
 
 ## Ordre d'exécution recommandé (restant)
 

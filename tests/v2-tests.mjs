@@ -70,6 +70,16 @@ await check("sélection depuis la liste isole et masque la peau", async () => {
   assert.equal(s.skin, false);
   assert.equal(s.visible, 1);
 });
+await check("sélection d'un os réactive son lot (vue non vide)", async () => {
+  const s = await st();
+  assert.equal(s.bones, true);
+  const tris = await page.evaluate(() => {
+    const e = window.__v2;
+    const batch = e.batches.get("bone");
+    return [...Array(batch.instanceCount)].filter((_, i) => batch.getVisibleAt(i)).length;
+  });
+  assert.ok(tris >= 1);
+});
 await check("le détail high se charge à l'isolement", async () => {
   await page.waitForTimeout(4000);
   const high = await page.evaluate(() => window.__v2.structures.filter((s) => s._activeLod === "high").length);
