@@ -704,7 +704,9 @@
           if (target !== engine.globalLod) await engine.setGlobalLod(target);
         }
         fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
-        drawEl.textContent = `${renderer.info.render.calls} appels · ${Math.round(renderer.info.render.triangles / 1000)}k tris · ${visibleCount} visibles`;
+        const triCount = renderer.info.render.triangles;
+        const triText = triCount < 1000 ? `${triCount} tris` : `${Math.round(triCount / 1000)}k tris`;
+        drawEl.textContent = `${renderer.info.render.calls} appels · ${triText} · ${visibleCount} visibles`;
         qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)} · ${engine.globalLod}`;
         frames = 0; frameSum = 0; frameCount = 0; last = now;
       }
