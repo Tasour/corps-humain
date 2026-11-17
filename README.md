@@ -79,6 +79,16 @@ Le script `scripts/build-anatomy-models.mjs` fusionne les pièces, simplifie ave
 convertit les coordonnées Blender (Z-up) vers le repère de l'application (mètres, Y-up) et
 calcule des normales lissées.
 
+### Inventaire anatomique complet
+
+Un inventaire exhaustif des **organes, os et muscles** disponibles dans Z-Anatomy, avec pour
+chaque structure le meilleur modèle 3D (Z-Anatomy ou BodyParts3D), est fourni dans
+[`docs/inventaire-anatomique/`](docs/inventaire-anatomique/) :
+
+- [`rapport.md`](docs/inventaire-anatomique/rapport.md) — tableau lisible par catégorie ;
+- [`structures.json`](docs/inventaire-anatomique/structures.json) — 1 555 maillages individuels,
+  noms TA2 français/latin, triangles, meilleur modèle et alternatives.
+
 ## Installer sur téléphone (PWA)
 
 L'application est une **Progressive Web App** : elle peut être installée depuis le navigateur,
