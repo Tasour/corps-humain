@@ -8,7 +8,7 @@ export const QUICK_ACCESS = [
   { label: "Bras droit", ids: ["bone:clavicle-r", "bone:scapula-r", "bone:humerus-r", "bone:radius-r", "bone:ulna-r", "muscle:long-head-of-biceps-brachii-r", "muscle:short-head-of-biceps-brachii-r"] },
   { label: "Poumons", ids: ["organ:bp-left-lung", "organ:superior-lobe-of-left-lung", "organ:inferior-lobe-of-left-lung", "organ:superior-lobe-of-right-lung", "organ:middle-lobe-of-right-lung", "organ:inferior-lobe-of-right-lung"] },
   { label: "Œil droit", ids: ["organ:bp-fibrous-layer-of-eyeball-r", "organ:anterior-segment-of-eyeball-r", "organ:posterior-segment-of-eyeball-r", "muscle:lateral-rectus-muscle-r", "muscle:medial-rectus-muscle-r"] },
-  { label: "Cœur", ids: ["organ:bp-heart", "organ:left-atrium", "organ:right-atrium", "organ:left-ventricle", "organ:right-ventricle"] },
+  { label: "Cœur", ids: ["organ:bp-heart"], select: "organ:bp-heart" },
   { label: "Jambe gauche", ids: ["bone:hip-bone-l", "bone:femur-l", "bone:patella-l", "bone:tibia-l", "bone:fibula-l"] },
   { label: "Reins", ids: ["organ:kidney-l", "organ:kidney-r"] },
   { label: "Encéphale", ids: ["organ:bp-brain", "organ:bp-brainstem", "organ:cerebellum-l", "organ:cerebellum-r"] },
@@ -65,7 +65,7 @@ export const GROUPS = [
   },
   {
     id: "heart", label: "Cœur et cavités",
-    members: QUICK_ACCESS[4].ids,
+    members: ["organ:bp-heart", "organ:left-atrium", "organ:right-atrium", "organ:left-ventricle", "organ:right-ventricle"],
     pivot: [0.02, 1.30, 0.03], axis: [0, 0, 1], angle: 0.35,
     movement: "Torsion cardiaque",
   },

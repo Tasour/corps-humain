@@ -49,9 +49,9 @@ const st = () => page.evaluate(() => {
 });
 
 /* ---------- chargement ---------- */
-await check("chargement : 2107 structures et 3 lots", async () => {
+await check("chargement : 2104 structures et 3 lots", async () => {
   const s = await st();
-  assert.equal(s.count, 2107);
+  assert.equal(s.count, 2104);
   assert.equal(s.drawCalls, 3);
 });
 await check("aucune erreur console au chargement", () => assert.deepEqual(errors, []));

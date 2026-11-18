@@ -1,0 +1,1391 @@
+{
+  "generated": "2026-11-18T00:10:56.519Z",
+  "structures": 2104,
+  "count": 173,
+  "findings": [
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-bony-pelvis",
+      "b": "bone:bp-lower-limb",
+      "fr": "Pelvis osseux ↔ Membre inférieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-bony-pelvis",
+      "b": "bone:bp-pelvic-girdle",
+      "fr": "Pelvis osseux ↔ Ceinture pelvienne",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-bony-pelvis-l",
+      "b": "bone:bp-lower-limb-l",
+      "fr": "Pelvis osseux ↔ Membre inférieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-bony-pelvis-l",
+      "b": "bone:bp-pelvic-girdle-l",
+      "fr": "Pelvis osseux ↔ Ceinture pelvienne",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-bony-pelvis-r",
+      "b": "bone:bp-lower-limb-r",
+      "fr": "Pelvis osseux ↔ Membre inférieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-bony-pelvis-r",
+      "b": "bone:bp-pelvic-girdle-r",
+      "fr": "Pelvis osseux ↔ Ceinture pelvienne",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-lower-limb",
+      "b": "bone:bp-pelvic-girdle",
+      "fr": "Membre inférieur ↔ Ceinture pelvienne",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-lower-limb-l",
+      "b": "bone:bp-pelvic-girdle-l",
+      "fr": "Membre inférieur ↔ Ceinture pelvienne",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "bone:bp-lower-limb-r",
+      "b": "bone:bp-pelvic-girdle-r",
+      "fr": "Membre inférieur ↔ Ceinture pelvienne",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "muscle:piriformis-fascia-l",
+      "b": "muscle:piriformis-muscle-l",
+      "fr": "Fascia du muscle piriforme ↔ Muscle piriforme",
+      "detail": "centres à 0.0001 m, ratio de volume 1.03 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "muscle:piriformis-fascia-r",
+      "b": "muscle:piriformis-muscle-r",
+      "fr": "Fascia du muscle piriforme ↔ Muscle piriforme",
+      "detail": "centres à 0.0001 m, ratio de volume 1.03 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "muscle:subfacial-prepatellar-bursa-l",
+      "b": "muscle:subtendinous-prepatellar-bursa-l",
+      "fr": "Subfacial prepatellar bursa ↔ Bourse subtendineuse prépatellaire",
+      "detail": "centres à 0.0008 m, ratio de volume 0.62 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "muscle:subfacial-prepatellar-bursa-r",
+      "b": "muscle:subtendinous-prepatellar-bursa-r",
+      "fr": "Subfacial prepatellar bursa ↔ Bourse subtendineuse prépatellaire",
+      "detail": "centres à 0.0008 m, ratio de volume 0.62 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:accessory-nucleus-of-oculomotor-nerve-l",
+      "b": "organ:accessory-nucleus-of-oculomotor-nerve-r",
+      "fr": "Noyau accessoire du nerf oculomoteur ↔ Noyau accessoire du nerf oculomoteur",
+      "detail": "centres à 0.0016 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-chamber-of-eyeball-l",
+      "b": "organ:cornea-l",
+      "fr": "Chambre antérieure du globe oculaire ↔ Cornée",
+      "detail": "centres à 0.0004 m, ratio de volume 0.61 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-chamber-of-eyeball-l",
+      "b": "organ:iris-l",
+      "fr": "Chambre antérieure du globe oculaire ↔ Iris",
+      "detail": "centres à 0.0020 m, ratio de volume 1.15 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-chamber-of-eyeball-r",
+      "b": "organ:cornea-r",
+      "fr": "Chambre antérieure du globe oculaire ↔ Cornée",
+      "detail": "centres à 0.0004 m, ratio de volume 0.61 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-chamber-of-eyeball-r",
+      "b": "organ:iris-r",
+      "fr": "Chambre antérieure du globe oculaire ↔ Iris",
+      "detail": "centres à 0.0020 m, ratio de volume 1.15 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-corticospinal-tract",
+      "b": "organ:tectospinal-tract",
+      "fr": "Tractus corticospinal antérieur ↔ Tractus tectospinal",
+      "detail": "centres à 0.0018 m, ratio de volume 0.86 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:anterior-horn-of-spinal-cord",
+      "fr": "Faisceau antérieur propre ↔ Corne antérieure de la moëlle épinière",
+      "detail": "centres à 0.0001 m, ratio de volume 0.83 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:intermediolateral-nucleus",
+      "fr": "Faisceau antérieur propre ↔ Noyau intermédiolatéral",
+      "detail": "centres à 0.0015 m, ratio de volume 0.81 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:lateral-fasciculus-proprius",
+      "fr": "Faisceau antérieur propre ↔ Faisceau latéral propre",
+      "detail": "centres à 0.0019 m, ratio de volume 0.71 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:lateral-intermediate-substance",
+      "fr": "Faisceau antérieur propre ↔ Substance intermédiaire latérale",
+      "detail": "centres à 0.0012 m, ratio de volume 0.79 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:lateral-reticulospinal-tract",
+      "fr": "Faisceau antérieur propre ↔ Tractus réticulospinal latéral",
+      "detail": "centres à 0.0009 m, ratio de volume 0.87 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:lateral-vestibulospinal-tract",
+      "fr": "Faisceau antérieur propre ↔ Tractus vestibulospinal latéral",
+      "detail": "centres à 0.0018 m, ratio de volume 1.04 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-fasciculus-proprius",
+      "b": "organ:spinotectal-tract",
+      "fr": "Faisceau antérieur propre ↔ Tractus spinotectal",
+      "detail": "centres à 0.0016 m, ratio de volume 0.89 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:intermediolateral-nucleus",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Noyau intermédiolatéral",
+      "detail": "centres à 0.0014 m, ratio de volume 0.97 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:lateral-fasciculus-proprius",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Faisceau latéral propre",
+      "detail": "centres à 0.0017 m, ratio de volume 0.85 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:lateral-intermediate-substance",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Substance intermédiaire latérale",
+      "detail": "centres à 0.0011 m, ratio de volume 0.94 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:lateral-reticulospinal-tract",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Tractus réticulospinal latéral",
+      "detail": "centres à 0.0011 m, ratio de volume 1.04 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:lateral-spinothalamic-tract",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Tractus spinothalamique latéral",
+      "detail": "centres à 0.0007 m, ratio de volume 0.67 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:lateral-vestibulospinal-tract",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Tractus vestibulospinal latéral",
+      "detail": "centres à 0.0020 m, ratio de volume 1.24 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0010 m, ratio de volume 0.64 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-horn-of-spinal-cord",
+      "b": "organ:spinotectal-tract",
+      "fr": "Corne antérieure de la moëlle épinière ↔ Tractus spinotectal",
+      "detail": "centres à 0.0017 m, ratio de volume 1.06 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-anterior-mediastinum-l",
+      "b": "organ:bp-lobe-of-thymus-l",
+      "fr": "Médiastin antérieur ↔ Lobe du thymus",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-anterior-mediastinum-l",
+      "b": "organ:bp-thymus-l",
+      "fr": "Médiastin antérieur ↔ Thymus",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-anterior-mediastinum-r",
+      "b": "organ:bp-lobe-of-thymus-r",
+      "fr": "Médiastin antérieur ↔ Lobe du thymus",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-anterior-mediastinum-r",
+      "b": "organ:bp-thymus-r",
+      "fr": "Médiastin antérieur ↔ Thymus",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinocerebellar-tract",
+      "b": "organ:lateral-fasciculus-proprius",
+      "fr": "Tractus spinocérébelleux antérieur ↔ Faisceau latéral propre",
+      "detail": "centres à 0.0020 m, ratio de volume 1.56 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinocerebellar-tract",
+      "b": "organ:lateral-spinothalamic-tract",
+      "fr": "Tractus spinocérébelleux antérieur ↔ Tractus spinothalamique latéral",
+      "detail": "centres à 0.0004 m, ratio de volume 1.25 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinocerebellar-tract",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Tractus spinocérébelleux antérieur ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0012 m, ratio de volume 1.19 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinocerebellar-tract",
+      "b": "organ:white-matter-of-spinal-cord",
+      "fr": "Tractus spinocérébelleux antérieur ↔ Substance blanche de la moëlle épinière",
+      "detail": "centres à 0.0016 m, ratio de volume 0.90 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinothalamic-tract",
+      "b": "organ:lateral-reticulospinal-tract",
+      "fr": "Tractus spinothalamique antérieur ↔ Tractus réticulospinal latéral",
+      "detail": "centres à 0.0018 m, ratio de volume 0.92 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinothalamic-tract",
+      "b": "organ:lateral-vestibulospinal-tract",
+      "fr": "Tractus spinothalamique antérieur ↔ Tractus vestibulospinal latéral",
+      "detail": "centres à 0.0009 m, ratio de volume 1.11 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinothalamic-tract",
+      "b": "organ:medial-reticulospinal-tract",
+      "fr": "Tractus spinothalamique antérieur ↔ Tractus réticulospinal médial",
+      "detail": "centres à 0.0005 m, ratio de volume 1.05 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:anterior-spinothalamic-tract",
+      "b": "organ:spinotectal-tract",
+      "fr": "Tractus spinothalamique antérieur ↔ Tractus spinotectal",
+      "detail": "centres à 0.0011 m, ratio de volume 0.94 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-aortic-valve-l",
+      "b": "organ:bp-fibrous-skeleton-of-heart-l",
+      "fr": "Valve aortique ↔ Squelette fibreux du coeur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-aortic-valve-r",
+      "b": "organ:bp-fibrous-skeleton-of-heart-r",
+      "fr": "Valve aortique ↔ Squelette fibreux du coeur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-basilar-artery",
+      "b": "organ:bp-left-subclavian-artery",
+      "fr": "Artère basilaire ↔ Artère subclavière gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-basilar-artery",
+      "b": "organ:bp-right-subclavian-artery",
+      "fr": "Artère basilaire ↔ Artère subclavière droite",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-basilar-artery-l",
+      "b": "organ:bp-right-subclavian-artery-l",
+      "fr": "Artère basilaire ↔ Artère subclavière droite",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bile-duct",
+      "b": "organ:bp-common-hepatic-duct",
+      "fr": "Canal biliaire ↔ Conduit hépatique commun",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bile-duct",
+      "b": "organ:bp-extrahepatic-bile-duct",
+      "fr": "Canal biliaire ↔ Conduits biliaires extrahépatiques",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bile-duct-l",
+      "b": "organ:bp-extrahepatic-bile-duct-l",
+      "fr": "Canal biliaire ↔ Conduits biliaires extrahépatiques",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bile-duct-l",
+      "b": "organ:bp-left-hepatic-duct-l",
+      "fr": "Canal biliaire ↔ Conduit hépatique gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bile-duct-r",
+      "b": "organ:bp-extrahepatic-bile-duct-r",
+      "fr": "Canal biliaire ↔ Conduits biliaires extrahépatiques",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bile-duct-r",
+      "b": "organ:bp-right-hepatic-duct-r",
+      "fr": "Canal biliaire ↔ Conduit hépatique droit",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-brachiocephalic-vein-l",
+      "b": "organ:bp-left-brachiocephalic-vein-l",
+      "fr": "Veine brachiocéphalique ↔ Veine brachiocéphalique gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bronchus-l",
+      "b": "organ:bp-left-main-bronchus-l",
+      "fr": "Bronche ↔ Bronche principale gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bronchus-l",
+      "b": "organ:bp-main-bronchus-l",
+      "fr": "Bronche ↔ Bronche principale",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bronchus-l",
+      "b": "organ:bp-posterior-mediastinum-l",
+      "fr": "Bronche ↔ Médiastin postérieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bronchus-r",
+      "b": "organ:bp-posterior-mediastinum-r",
+      "fr": "Bronche ↔ Médiastin postérieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-bronchus-r",
+      "b": "organ:bp-right-main-bronchus-r",
+      "fr": "Bronche ↔ Bronche principale droite",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-cerebral-arterial-circle-l",
+      "b": "organ:bp-right-common-carotid-artery-l",
+      "fr": "Cercle artériel du cerveau ↔ Artère carotide commune droite",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-cerebral-arterial-circle-r",
+      "b": "organ:bp-left-common-carotid-artery-r",
+      "fr": "Cercle artériel du cerveau ↔ Artère carotide commune gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-ciliary-ganglion-l",
+      "b": "organ:bp-parasympathetic-ganglion-l",
+      "fr": "Ganglion ciliaire ↔ Ganglion parasympathique",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-ciliary-ganglion-r",
+      "b": "organ:bp-parasympathetic-ganglion-r",
+      "fr": "Ganglion ciliaire ↔ Ganglion parasympathique",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-common-hepatic-artery-l",
+      "b": "organ:bp-left-hepatic-artery-l",
+      "fr": "Artère hépatique commune ↔ Artère hépatique gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-common-hepatic-duct",
+      "b": "organ:bp-extrahepatic-bile-duct",
+      "fr": "Conduit hépatique commun ↔ Conduits biliaires extrahépatiques",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-common-iliac-artery",
+      "b": "organ:bp-external-iliac-artery",
+      "fr": "Artère iliaque commune ↔ Artère iliaque externe",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-common-iliac-artery",
+      "b": "organ:bp-posterior-tibial-artery",
+      "fr": "Artère iliaque commune ↔ Artère tibiale postérieure",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-external-iliac-artery",
+      "b": "organ:bp-posterior-tibial-artery",
+      "fr": "Artère iliaque externe ↔ Artère tibiale postérieure",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-extrahepatic-bile-duct-l",
+      "b": "organ:bp-left-hepatic-duct-l",
+      "fr": "Conduits biliaires extrahépatiques ↔ Conduit hépatique gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-extrahepatic-bile-duct-r",
+      "b": "organ:bp-right-hepatic-duct-r",
+      "fr": "Conduits biliaires extrahépatiques ↔ Conduit hépatique droit",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:gracile-fasciculus",
+      "b": "organ:nucleus-proprius",
+      "fr": "Faisceau gracile ↔ Noyau propre",
+      "detail": "centres à 0.0008 m, ratio de volume 0.63 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-hepatic-portal-vein-l",
+      "b": "organ:bp-left-lobe-of-liver-l",
+      "fr": "Veine porte du foie ↔ Lobe hépatique gauche",
+      "detail": "centres à 0.0005 m, ratio de volume 0.99 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-inferior-mesenteric-artery-l",
+      "b": "organ:bp-left-colic-artery-l",
+      "fr": "Artère mésentérique inférieure ↔ Artère colique gauche",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:inferior-salivatory-nucleus-l",
+      "b": "organ:superior-salivatory-nucleus-l",
+      "fr": "Noyau salivaire inférieur ↔ Noyau salivaire supérieur",
+      "detail": "centres à 0.0018 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:inferior-salivatory-nucleus-r",
+      "b": "organ:superior-salivatory-nucleus-r",
+      "fr": "Noyau salivaire inférieur ↔ Noyau salivaire supérieur",
+      "detail": "centres à 0.0018 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:lateral-corticospinal-tract",
+      "fr": "Noyau intermédiolatéral ↔ Faisceau corticospinal latéral",
+      "detail": "centres à 0.0015 m, ratio de volume 0.67 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:lateral-fasciculus-proprius",
+      "fr": "Noyau intermédiolatéral ↔ Faisceau latéral propre",
+      "detail": "centres à 0.0004 m, ratio de volume 0.87 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:lateral-intermediate-substance",
+      "fr": "Noyau intermédiolatéral ↔ Substance intermédiaire latérale",
+      "detail": "centres à 0.0003 m, ratio de volume 0.97 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:nucleus-proprius",
+      "fr": "Noyau intermédiolatéral ↔ Noyau propre",
+      "detail": "centres à 0.0017 m, ratio de volume 1.16 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:posterior-fasciculus-proprius",
+      "fr": "Noyau intermédiolatéral ↔ Faisceau postérieur propre",
+      "detail": "centres à 0.0016 m, ratio de volume 1.07 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:posterior-horn-of-spinal-cord",
+      "fr": "Noyau intermédiolatéral ↔ Corne postérieure de la moëlle épinière",
+      "detail": "centres à 0.0017 m, ratio de volume 1.01 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Noyau intermédiolatéral ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0004 m, ratio de volume 0.66 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:intermediolateral-nucleus",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Noyau intermédiolatéral ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0008 m, ratio de volume 0.92 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:iris-l",
+      "b": "organ:lens-l",
+      "fr": "Iris ↔ Cristalin",
+      "detail": "centres à 0.0020 m, ratio de volume 1.03 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:iris-r",
+      "b": "organ:lens-r",
+      "fr": "Iris ↔ Cristalin",
+      "detail": "centres à 0.0020 m, ratio de volume 1.03 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:iris-r",
+      "b": "organ:zonular-fibres-r",
+      "fr": "Iris ↔ Fibres zonulaires",
+      "detail": "centres à 0.0005 m, ratio de volume 0.92 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:lateral-fasciculus-proprius",
+      "fr": "Faisceau corticospinal latéral ↔ Faisceau latéral propre",
+      "detail": "centres à 0.0012 m, ratio de volume 1.29 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:lateral-intermediate-substance",
+      "fr": "Faisceau corticospinal latéral ↔ Substance intermédiaire latérale",
+      "detail": "centres à 0.0018 m, ratio de volume 1.45 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:posterior-fasciculus-proprius",
+      "fr": "Faisceau corticospinal latéral ↔ Faisceau postérieur propre",
+      "detail": "centres à 0.0001 m, ratio de volume 1.59 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:posterior-horn-of-spinal-cord",
+      "fr": "Faisceau corticospinal latéral ↔ Corne postérieure de la moëlle épinière",
+      "detail": "centres à 0.0002 m, ratio de volume 1.50 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:posterior-spinocerebellar-tract",
+      "fr": "Faisceau corticospinal latéral ↔ Tractus spinocérébelleux postérieur",
+      "detail": "centres à 0.0003 m, ratio de volume 0.84 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:posterolateral-tract",
+      "fr": "Faisceau corticospinal latéral ↔ Tractus postérolatéral",
+      "detail": "centres à 0.0015 m, ratio de volume 1.27 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Faisceau corticospinal latéral ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0019 m, ratio de volume 0.99 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Faisceau corticospinal latéral ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0007 m, ratio de volume 1.36 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-corticospinal-tract",
+      "b": "organ:white-matter-of-spinal-cord",
+      "fr": "Faisceau corticospinal latéral ↔ Substance blanche de la moëlle épinière",
+      "detail": "centres à 0.0016 m, ratio de volume 0.74 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:lateral-intermediate-substance",
+      "fr": "Faisceau latéral propre ↔ Substance intermédiaire latérale",
+      "detail": "centres à 0.0007 m, ratio de volume 1.12 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:nucleus-proprius",
+      "fr": "Faisceau latéral propre ↔ Noyau propre",
+      "detail": "centres à 0.0014 m, ratio de volume 1.34 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:posterior-fasciculus-proprius",
+      "fr": "Faisceau latéral propre ↔ Faisceau postérieur propre",
+      "detail": "centres à 0.0013 m, ratio de volume 1.23 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:posterior-horn-of-spinal-cord",
+      "fr": "Faisceau latéral propre ↔ Corne postérieure de la moëlle épinière",
+      "detail": "centres à 0.0013 m, ratio de volume 1.16 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:posterior-spinocerebellar-tract",
+      "fr": "Faisceau latéral propre ↔ Tractus spinocérébelleux postérieur",
+      "detail": "centres à 0.0014 m, ratio de volume 0.65 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Faisceau latéral propre ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0008 m, ratio de volume 0.76 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-fasciculus-proprius",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Faisceau latéral propre ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0005 m, ratio de volume 1.05 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-intermediate-substance",
+      "b": "organ:lateral-spinothalamic-tract",
+      "fr": "Substance intermédiaire latérale ↔ Tractus spinothalamique latéral",
+      "detail": "centres à 0.0018 m, ratio de volume 0.71 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-intermediate-substance",
+      "b": "organ:nucleus-proprius",
+      "fr": "Substance intermédiaire latérale ↔ Noyau propre",
+      "detail": "centres à 0.0020 m, ratio de volume 1.19 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-intermediate-substance",
+      "b": "organ:posterior-fasciculus-proprius",
+      "fr": "Substance intermédiaire latérale ↔ Faisceau postérieur propre",
+      "detail": "centres à 0.0019 m, ratio de volume 1.10 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-intermediate-substance",
+      "b": "organ:posterior-horn-of-spinal-cord",
+      "fr": "Substance intermédiaire latérale ↔ Corne postérieure de la moëlle épinière",
+      "detail": "centres à 0.0019 m, ratio de volume 1.04 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-intermediate-substance",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Substance intermédiaire latérale ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0001 m, ratio de volume 0.68 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-intermediate-substance",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Substance intermédiaire latérale ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0011 m, ratio de volume 0.94 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-reticulospinal-tract",
+      "b": "organ:lateral-spinothalamic-tract",
+      "fr": "Tractus réticulospinal latéral ↔ Tractus spinothalamique latéral",
+      "detail": "centres à 0.0004 m, ratio de volume 0.65 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-reticulospinal-tract",
+      "b": "organ:lateral-vestibulospinal-tract",
+      "fr": "Tractus réticulospinal latéral ↔ Tractus vestibulospinal latéral",
+      "detail": "centres à 0.0009 m, ratio de volume 1.20 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-reticulospinal-tract",
+      "b": "organ:medial-reticulospinal-tract",
+      "fr": "Tractus réticulospinal latéral ↔ Tractus réticulospinal médial",
+      "detail": "centres à 0.0013 m, ratio de volume 1.13 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-reticulospinal-tract",
+      "b": "organ:spinotectal-tract",
+      "fr": "Tractus réticulospinal latéral ↔ Tractus spinotectal",
+      "detail": "centres à 0.0006 m, ratio de volume 1.02 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-spinothalamic-tract",
+      "b": "organ:rubrospinal-tract",
+      "fr": "Tractus spinothalamique latéral ↔ Faisceau rubrospinal",
+      "detail": "centres à 0.0017 m, ratio de volume 0.96 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-spinothalamic-tract",
+      "b": "organ:spinotectal-tract",
+      "fr": "Tractus spinothalamique latéral ↔ Tractus spinotectal",
+      "detail": "centres à 0.0010 m, ratio de volume 1.58 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-vestibulospinal-tract",
+      "b": "organ:medial-reticulospinal-tract",
+      "fr": "Tractus vestibulospinal latéral ↔ Tractus réticulospinal médial",
+      "detail": "centres à 0.0004 m, ratio de volume 0.95 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lateral-vestibulospinal-tract",
+      "b": "organ:spinotectal-tract",
+      "fr": "Tractus vestibulospinal latéral ↔ Tractus spinotectal",
+      "detail": "centres à 0.0003 m, ratio de volume 0.85 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-left-main-bronchus-l",
+      "b": "organ:bp-main-bronchus-l",
+      "fr": "Bronche principale gauche ↔ Bronche principale",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-left-main-bronchus-l",
+      "b": "organ:bp-posterior-mediastinum-l",
+      "fr": "Bronche principale gauche ↔ Médiastin postérieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-left-subclavian-artery",
+      "b": "organ:bp-right-subclavian-artery",
+      "fr": "Artère subclavière gauche ↔ Artère subclavière droite",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-left-subclavian-vein-l",
+      "b": "organ:bp-subclavian-vein-l",
+      "fr": "Veine sous-clavière gauche ↔ Veine sous-clavière",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-left-testicular-artery-l",
+      "b": "organ:bp-testicular-artery-l",
+      "fr": "Artère testiculaire gauche ↔ Artère testiculaire",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:lens-r",
+      "b": "organ:zonular-fibres-r",
+      "fr": "Cristalin ↔ Fibres zonulaires",
+      "detail": "centres à 0.0015 m, ratio de volume 0.89 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-lobe-of-thymus-l",
+      "b": "organ:bp-thymus-l",
+      "fr": "Lobe du thymus ↔ Thymus",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-lobe-of-thymus-r",
+      "b": "organ:bp-thymus-r",
+      "fr": "Lobe du thymus ↔ Thymus",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-main-bronchus-l",
+      "b": "organ:bp-posterior-mediastinum-l",
+      "fr": "Bronche principale ↔ Médiastin postérieur",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:medial-reticulospinal-tract",
+      "b": "organ:spinotectal-tract",
+      "fr": "Tractus réticulospinal médial ↔ Tractus spinotectal",
+      "detail": "centres à 0.0007 m, ratio de volume 0.90 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:medial-vestibulospinal-tract",
+      "b": "organ:tectospinal-tract",
+      "fr": "Tractus vestibulospinal médial ↔ Tractus tectospinal",
+      "detail": "centres à 0.0005 m, ratio de volume 1.29 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-mons-pubis",
+      "b": "organ:bp-pubic-hair",
+      "fr": "Mont du pubis ↔ Poils pubiens",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:mucosa-of-stomach",
+      "b": "organ:stomach",
+      "fr": "Muqueuse de l'estomac ↔ Estomac",
+      "detail": "centres à 0.0005 m, ratio de volume 0.96 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-of-hypoglossal-nerve-l",
+      "b": "organ:nucleus-of-hypoglossal-nerve-r",
+      "fr": "Noyau du nerf hypoglosse ↔ Noyau du nerf hypoglosse",
+      "detail": "centres à 0.0015 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-of-hypoglossal-nerve-l",
+      "b": "organ:posterior-nucleus-of-vagus-nerve-l",
+      "fr": "Noyau du nerf hypoglosse ↔ Noyau postérieur du nerf vague",
+      "detail": "centres à 0.0015 m, ratio de volume 1.18 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-of-hypoglossal-nerve-r",
+      "b": "organ:posterior-nucleus-of-vagus-nerve-r",
+      "fr": "Noyau du nerf hypoglosse ↔ Noyau postérieur du nerf vague",
+      "detail": "centres à 0.0015 m, ratio de volume 1.18 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-proprius",
+      "b": "organ:posterior-fasciculus-proprius",
+      "fr": "Noyau propre ↔ Faisceau postérieur propre",
+      "detail": "centres à 0.0002 m, ratio de volume 0.92 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-proprius",
+      "b": "organ:posterior-horn-of-spinal-cord",
+      "fr": "Noyau propre ↔ Corne postérieure de la moëlle épinière",
+      "detail": "centres à 0.0001 m, ratio de volume 0.87 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-proprius",
+      "b": "organ:posterolateral-tract",
+      "fr": "Noyau propre ↔ Tractus postérolatéral",
+      "detail": "centres à 0.0013 m, ratio de volume 0.74 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:nucleus-proprius",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Noyau propre ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0009 m, ratio de volume 0.79 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-peritoneum",
+      "b": "organ:bp-visceral-peritoneum",
+      "fr": "Péritoine ↔ Péritoine viscéral",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-fasciculus-proprius",
+      "b": "organ:posterior-horn-of-spinal-cord",
+      "fr": "Faisceau postérieur propre ↔ Corne postérieure de la moëlle épinière",
+      "detail": "centres à 0.0001 m, ratio de volume 0.94 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-fasciculus-proprius",
+      "b": "organ:posterolateral-tract",
+      "fr": "Faisceau postérieur propre ↔ Tractus postérolatéral",
+      "detail": "centres à 0.0013 m, ratio de volume 0.80 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-fasciculus-proprius",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Faisceau postérieur propre ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0008 m, ratio de volume 0.86 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-horn-of-spinal-cord",
+      "b": "organ:posterolateral-tract",
+      "fr": "Corne postérieure de la moëlle épinière ↔ Tractus postérolatéral",
+      "detail": "centres à 0.0013 m, ratio de volume 0.85 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-horn-of-spinal-cord",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Corne postérieure de la moëlle épinière ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0009 m, ratio de volume 0.91 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-posterior-intercostal-artery-l",
+      "b": "organ:bp-second-posterior-intercostal-artery-l",
+      "fr": "Artère intercostale postérieure ↔ Deuxième artère intercostale postérieure",
+      "detail": "centres à 0.0002 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-posterior-intercostal-artery-r",
+      "b": "organ:bp-second-posterior-intercostal-artery-r",
+      "fr": "Artère intercostale postérieure ↔ Deuxième artère intercostale postérieure",
+      "detail": "centres à 0.0001 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-posterior-mediastinum-r",
+      "b": "organ:bp-right-main-bronchus-r",
+      "fr": "Médiastin postérieur ↔ Bronche principale droite",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-l",
+      "b": "organ:retina-l",
+      "fr": "Segment postérieur du globe oculaire ↔ Rétine",
+      "detail": "centres à 0.0000 m, ratio de volume 1.35 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-l",
+      "b": "organ:sclera-l",
+      "fr": "Segment postérieur du globe oculaire ↔ Sclère",
+      "detail": "centres à 0.0016 m, ratio de volume 0.64 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-l",
+      "b": "organ:suspensory-ligament-of-eyeball-l",
+      "fr": "Segment postérieur du globe oculaire ↔ Ligament suspenseur du bulbe",
+      "detail": "centres à 0.0019 m, ratio de volume 1.34 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-l",
+      "b": "organ:vitreous-body-l",
+      "fr": "Segment postérieur du globe oculaire ↔ Corps vitré",
+      "detail": "centres à 0.0010 m, ratio de volume 1.51 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-r",
+      "b": "organ:retina-r",
+      "fr": "Segment postérieur du globe oculaire ↔ Rétine",
+      "detail": "centres à 0.0002 m, ratio de volume 1.02 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-r",
+      "b": "organ:sclera-r",
+      "fr": "Segment postérieur du globe oculaire ↔ Sclère",
+      "detail": "centres à 0.0016 m, ratio de volume 0.64 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-r",
+      "b": "organ:suspensory-ligament-of-eyeball-r",
+      "fr": "Segment postérieur du globe oculaire ↔ Ligament suspenseur du bulbe",
+      "detail": "centres à 0.0019 m, ratio de volume 1.34 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-segment-of-eyeball-r",
+      "b": "organ:vitreous-body-r",
+      "fr": "Segment postérieur du globe oculaire ↔ Corps vitré",
+      "detail": "centres à 0.0010 m, ratio de volume 1.51 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-spinocerebellar-tract",
+      "b": "organ:posterolateral-tract",
+      "fr": "Tractus spinocérébelleux postérieur ↔ Tractus postérolatéral",
+      "detail": "centres à 0.0012 m, ratio de volume 1.52 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:posterior-spinocerebellar-tract",
+      "b": "organ:white-matter-of-spinal-cord",
+      "fr": "Tractus spinocérébelleux postérieur ↔ Substance blanche de la moëlle épinière",
+      "detail": "centres à 0.0019 m, ratio de volume 0.89 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:retina-l",
+      "b": "organ:suspensory-ligament-of-eyeball-l",
+      "fr": "Rétine ↔ Ligament suspenseur du bulbe",
+      "detail": "centres à 0.0019 m, ratio de volume 0.99 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:retina-l",
+      "b": "organ:vitreous-body-l",
+      "fr": "Rétine ↔ Corps vitré",
+      "detail": "centres à 0.0010 m, ratio de volume 1.11 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:retina-r",
+      "b": "organ:sclera-r",
+      "fr": "Rétine ↔ Sclère",
+      "detail": "centres à 0.0017 m, ratio de volume 0.63 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:retina-r",
+      "b": "organ:suspensory-ligament-of-eyeball-r",
+      "fr": "Rétine ↔ Ligament suspenseur du bulbe",
+      "detail": "centres à 0.0020 m, ratio de volume 1.32 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:retina-r",
+      "b": "organ:vitreous-body-r",
+      "fr": "Rétine ↔ Corps vitré",
+      "detail": "centres à 0.0012 m, ratio de volume 1.48 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-right-colic-artery-r",
+      "b": "organ:bp-superior-mesenteric-artery-r",
+      "fr": "Artère colique droite ↔ Artère mésentérique supérieure",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-right-hepatic-artery",
+      "b": "organ:bp-right-lobe-of-liver",
+      "fr": "Artère hépatique droite ↔ Lobe hépatique droit",
+      "detail": "centres à 0.0016 m, ratio de volume 0.97 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-right-subclavian-vein-r",
+      "b": "organ:bp-subclavian-vein-r",
+      "fr": "Veine sous-clavière droite ↔ Veine sous-clavière",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:bp-right-testicular-artery-r",
+      "b": "organ:bp-testicular-artery-r",
+      "fr": "Artère testiculaire droite ↔ Artère testiculaire",
+      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:rubrospinal-tract",
+      "b": "organ:spinal-reticular-process",
+      "fr": "Faisceau rubrospinal ↔ Processus réticulaire spinal",
+      "detail": "centres à 0.0012 m, ratio de volume 1.38 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:rubrospinal-tract",
+      "b": "organ:white-matter-of-spinal-cord",
+      "fr": "Faisceau rubrospinal ↔ Substance blanche de la moëlle épinière",
+      "detail": "centres à 0.0005 m, ratio de volume 0.75 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:stria-terminalis-l",
+      "b": "organ:stria-terminalis-r",
+      "fr": "Strie terminale ↔ Strie terminale",
+      "detail": "centres à 0.0013 m, ratio de volume 1.00 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:suspensory-ligament-of-eyeball-l",
+      "b": "organ:vitreous-body-l",
+      "fr": "Ligament suspenseur du bulbe ↔ Corps vitré",
+      "detail": "centres à 0.0015 m, ratio de volume 1.13 (imbrication anatomique probable)"
+    },
+    {
+      "type": "doublon-aabb",
+      "severity": "warning",
+      "a": "organ:suspensory-ligament-of-eyeball-r",
+      "b": "organ:vitreous-body-r",
+      "fr": "Ligament suspenseur du bulbe ↔ Corps vitré",
+      "detail": "centres à 0.0015 m, ratio de volume 1.13 (imbrication anatomique probable)"
+    }
+  ]
+}

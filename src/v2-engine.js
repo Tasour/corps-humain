@@ -2,7 +2,7 @@ import * as THREE from "three";
 import initWasm, { AnatomyIndex } from "./wasm/corps-core/corps_core.js";
 
 /* Moteur de rendu v2 :lots BatchedMesh + index spatial WASM.
- * Charge le jeu de données 2 107 structures, construit un lot par catégorie,
+ * Charge le jeu de données 2 104 structures, construit un lot par catégorie,
  * et fournit picking (BVH) et culling/LOD (frustum) pour la boucle de rendu.
  */
 const CATEGORY_COLORS = {

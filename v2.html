@@ -73,9 +73,13 @@
     .viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
     .view-toolbar {
       position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 6px; padding: 7px; background: rgba(255,253,249,.92);
-      border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); backdrop-filter: blur(8px);
+      display: flex; gap: 4px; padding: 5px; background: rgba(255,253,249,.92);
+      border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); backdrop-filter: blur(8px);
     }
+    .view-toolbar button { padding: 7px 9px; min-width: 34px; font-size: 11px; }
+    .layers-list { display: flex; flex-direction: column; gap: 4px; }
+    .layers-list button { width: 100%; text-align: left; display: flex; align-items: center; gap: 8px; }
+    .layers-list .swatch { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
     .anim-bar {
       position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 92%;
@@ -170,6 +174,15 @@
   <div class="layout">
     <aside id="sidebar" class="sidebar">
       <div class="section"><input id="search" type="search" placeholder="Organe, os, muscle, TA2…" autocomplete="off" /></div>
+      <div class="section">
+        <div class="section-title">Couches</div>
+        <div class="layers-list">
+          <button data-cat="skin"><span class="swatch" style="--c:#7fa8a6"></span>Peau</button>
+          <button data-cat="bone"><span class="swatch" style="--c:#e6dcc9"></span>Os</button>
+          <button data-cat="muscle"><span class="swatch" style="--c:#a83b44"></span>Muscles</button>
+          <button data-cat="organ" class="active"><span class="swatch" style="--c:#a85f55"></span>Organes</button>
+        </div>
+      </div>
       <div class="section"><div class="section-title">Accès rapide</div><div class="chips" id="shortcuts"></div></div>
       <div class="section"><div class="section-title">Groupes anatomiques</div><div class="chips" id="groups"></div></div>
       <div class="section"><div class="section-title">Explorer <span id="list-total"></span></div><div id="list"></div></div>
@@ -177,14 +190,10 @@
 
     <main class="viewport" id="viewport">
       <div class="view-toolbar">
-        <button id="focus">Focus</button>
-        <button id="isolate">Isoler</button>
-        <button id="clear-iso">Tout afficher</button>
-        <button id="pivot">Pivot : item</button>
-        <button data-cat="skin">Peau</button>
-        <button data-cat="bone">Os</button>
-        <button data-cat="muscle">Muscles</button>
-        <button data-cat="organ" class="active">Organes</button>
+        <button id="focus" title="Cadrer la structure">◎ Focus</button>
+        <button id="isolate" title="Isoler">◉ Isoler</button>
+        <button id="clear-iso" title="Tout afficher">◌ Tout</button>
+        <button id="pivot" title="Pivot de rotation">⟲ Item</button>
       </div>
       <div class="group-actions" id="group-actions">
         <button id="explode">Éclater</button>
@@ -202,7 +211,7 @@
       <div id="sel-name">Cliquez sur une structure</div>
       <div id="sel-meta">ou choisissez-la dans la liste</div>
       <div class="meta" id="detail-meta"></div>
-      <div class="fact" id="detail-fact">Explorez les 2 107 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+      <div class="fact" id="detail-fact">Explorez les 2 104 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
     </aside>
   </div>
 
@@ -421,7 +430,7 @@
       const b = document.createElement('button');
       b.textContent = item.label;
       b.addEventListener('click', () => {
-        const s = engine.byId.get(item.ids[0]);
+        const s = engine.byId.get(item.select || item.ids[0]);
         if (s) selectStructure(s, true);
       });
       shortcutsEl.appendChild(b);
@@ -527,7 +536,7 @@
     });
     document.getElementById('pivot').addEventListener('click', (e) => {
       pivotMode = pivotMode === 'item' ? 'corps' : 'item';
-      e.currentTarget.textContent = `Pivot : ${pivotMode}`;
+      e.currentTarget.textContent = pivotMode === 'item' ? '⟲ Item' : '⟲ Corps';
       if (pivotMode === 'corps') controls.target.set(0, 1, 0);
       else if (selected) {
         const t = engine.focusTarget(selected);

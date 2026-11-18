@@ -59,6 +59,10 @@ const EXCLUDED_CONCEPTS = new Set([
   "organ:bp-nerve-trunk",
   "organ:bp-nerve-trunk-l",
   "organ:bp-nerve-trunk-r",
+  /* Structures hors enveloppe cutanée (détectées par check-collisions.mjs). */
+  "bone:distal-phalanx-of-first-finger-of-hand-l",
+  "muscle:dorsal-fascia-of-hand-l",
+  "muscle:palmar-aponeurosis-l",
 ]);
 const structures = allStructures.filter(
   (s) => !(s.bodyParts3D?.parts > 20) && !EXCLUDED_CONCEPTS.has(s.id),

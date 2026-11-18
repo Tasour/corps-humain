@@ -5,8 +5,10 @@ Construit avec **Three.js** et **Vite**, il s'appuie sur les maillages libres **
 et **Z-Anatomy** pour la peau, les organes, les os et les muscles, avec une anatomie procédurale
 de secours.
 
-La feuille de route des **10 chantiers prioritaires** est dans
+La feuille de route des **15 chantiers prioritaires** est dans
 [`docs/chantiers-prioritaires.md`](docs/chantiers-prioritaires.md).
+Le contrôle des collisions est assuré par `npm run check:collisions` et
+`npm run test:collisions` (rapport `docs/analyses/collisions.md`).
 
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
@@ -101,7 +103,7 @@ L'architecture pour afficher l'intégralité des structures sans surchauffe est 
 budget thermique. Un prototype WASM (`wasm/corps-core`, 37 Ko) et un benchmark de
 batching (`bench/batching.html`) l'accompagnent.
 
-Le **jeu de données v2** (2 107 structures × 3 niveaux de détail) est décrit dans
+Le **jeu de données v2** (2 104 structures × 3 niveaux de détail) est décrit dans
 [`docs/jeu-de-donnees-v2.md`](docs/jeu-de-donnees-v2.md) et généré via `npm run models:v2`.
 Une démonstration de l'atlas complet avec rendu groupé et picking WASM est disponible
 sur `/v2.html` (3 appels de rendu, ~1,2 ms CPU/frame pour 1,2 M triangles). Le détail
@@ -111,7 +113,7 @@ low sur mobile) selon le coût de rendu. Isoler un item ou un groupe charge son
 détail maximal (high) et masque la peau. Les matériaux utilisent des **textures PBR
 procédurales** (albedo tissu-spécifique, normal et roughness dérivées localement).
 Son explorateur latéral
-permet de rechercher et de cadrer chacune des 2 107 structures, d'isoler/focaliser
+permet de rechercher et de cadrer chacune des 2 104 structures, d'isoler/focaliser
 un item, et d'animer les groupes (éclaté, mouvements articulaires). Un accès rapide
 « bras gauche », « poumons », « œil droit » etc. est disponible.
 
