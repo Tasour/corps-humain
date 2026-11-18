@@ -1,0 +1,21 @@
+.tree { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow: auto; }
+#list { max-height: 340px; overflow: auto; }
+.tree-node { border: 0; background: transparent; width: 100%; text-align: left; }
+.tree-node:hover { background: #eef4f2; }
+body.dark .tree-node:hover { background: #1a2c3a; }
+.tree-node.active { background: var(--teal-soft); color: #105b66; }
+.tree-indent { display: inline-block; width: 10px; }
+.tree-caret { display: inline-block; width: 14px; color: var(--muted); }
+.tree-count { float: right; color: #9aa7ad; font-size: 10px; }
+.tree-back { margin-bottom: 8px; padding: 4px 10px; font-size: 11px; min-height: 28px; }
+.tree-back:disabled { opacity: .45; cursor: default; }
+.breadcrumb { font-size: 11px; color: var(--muted); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.breadcrumb button { padding: 2px 6px; font-size: 10.5px; }
+.breadcrumb .sep { color: #b9c4cc; }
+#hover-label {
+  position: fixed; z-index: 8; pointer-events: none; display: none;
+  padding: 4px 9px; border-radius: 5px; font-size: 11px; font-weight: 600;
+  background: rgba(16, 91, 102, .92); color: #fff; white-space: nowrap;
+  transform: translate(14px, 14px);
+  box-shadow: 0 4px 14px -6px rgba(0,0,0,.5);
+}

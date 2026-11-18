@@ -12,6 +12,9 @@ const CATEGORY_COLORS = {
   skin: "#67e8f9",
 };
 const CATEGORY_ORDER = ["bone", "muscle", "organ", "skin"];
+/* Nombre maximal de géométries de contour conservées au survol. Au-delà,
+ * les plus anciennes sont libérées pour éviter une croissance sans borne. */
+const HOVER_CACHE_LIMIT = 20;
 
 function colorFor(structure) {
   const mats = (structure.materials || []).join(" ").toLowerCase();
@@ -218,6 +221,9 @@ export class AnatomyV2Engine {
     /* La peau est masquée par défaut pour laisser les organes lisibles. */
     this.skinDesired = false;
     this.camera = null;
+    this.hoverScene = new THREE.Scene();
+    this.hoverMesh = null;
+    this.hoverGeometryCache = new Map();
     this.waypointGroup = new THREE.Group();
     this.waypointGroup.visible = false;
     this.waypointsVisible = false;
@@ -443,21 +449,95 @@ export class AnatomyV2Engine {
     return structure;
   }
 
+  /* Met en évidence un ensemble de structures (un bloc de l'arborescence). */
+  showCollection(ids) {
+    const set = new Set(ids);
+    const members = ids.map((id) => this.byId.get(id)).filter(Boolean);
+    for (const category of new Set(members.map((s) => s.category))) {
+      this.setCategoryVisible(category, true);
+    }
+    for (const [index, ref] of this.structureToInstance) {
+      const batch = this.batches.get(ref.category);
+      if (batch) batch.setVisibleAt(ref.instanceId, set.has(this.structures[index].id));
+    }
+    this.isolated = { ids };
+    this.currentVisible = new Set(members.map((s) => s._index));
+    if (this.skinBatch) this.skinBatch.visible = false;
+    return members.length;
+  }
+
+  /* Contour d'une structure au survol : une copie légèrement agrandie,
+   * rendue en BackSide pour dessiner une silhouette autour du maillage. */
+  setHover(structure, activeGeometry = null) {
+    this.clearHover();
+    if (!structure) return;
+    const source = activeGeometry || this.sourceGeometries.get(structure.id);
+    if (!source) return;
+    const b = structure.bounds;
+    const center = new THREE.Vector3((b.min[0]+b.max[0])/2, (b.min[1]+b.max[1])/2, (b.min[2]+b.max[2])/2);
+    let geometry = this.hoverGeometryCache.get(structure.id);
+    if (!geometry) {
+      geometry = source.clone();
+      geometry.translate(-center.x, -center.y, -center.z);
+      this.hoverGeometryCache.set(structure.id, geometry);
+      /* Map conserve l'ordre d'insertion : on évince les plus anciennes. */
+      while (this.hoverGeometryCache.size > HOVER_CACHE_LIMIT) {
+        const oldest = this.hoverGeometryCache.keys().next().value;
+        this.hoverGeometryCache.get(oldest)?.dispose();
+        this.hoverGeometryCache.delete(oldest);
+      }
+    }
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x35d6d6,
+      side: THREE.BackSide,
+      transparent: true,
+      opacity: 0.85,
+      depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.copy(center);
+    mesh.scale.setScalar(1.035);
+    mesh.renderOrder = 10;
+    this.hoverMesh = mesh;
+    (this.hoverScene || (this.hoverScene = new THREE.Scene())).add(mesh);
+  }
+
+  clearHover() {
+    if (!this.hoverMesh) return;
+    this.hoverScene?.remove(this.hoverMesh);
+    this.hoverMesh.material.dispose();
+    this.hoverMesh = null;
+  }
+
   /* Picking exact sur les triangles des lots visibles (plus fiable que l'AABB
    * du BVH pour les structures imbriquées). */
   pickExact(raycaster) {
-    const targets = [...this.batches.values()].filter((b) => b.visible);
+    if (!this.batches.size) return null;
+    /* On ne teste que les catégories actuellement affichées. */
+    const targets = [];
+    const byBatch = new Map();
+    for (const [category, batch] of this.batches) {
+      if (batch?.visible) {
+        targets.push(batch);
+        byBatch.set(batch, category);
+      }
+    }
     if (!targets.length) return null;
     const hits = raycaster.intersectObjects(targets, false);
     for (const hit of hits) {
-      const batch = hit.object;
-      const category = [...this.batches.entries()].find(([, b]) => b === batch)?.[0];
+      const category = byBatch.get(hit.object);
       if (!category) continue;
-      const structure = this.instanceToStructure.get(`${category}:${hit.instanceId}`);
+      /* Three.js r187 renseigne `batchId` (index d'instance) sur les hits
+       * BatchedMesh ; `instanceId` n'est posé que par les Mesh classiques.
+       * On accepte les deux pour rester compatible avec les versions voisines. */
+      const instanceId = hit.batchId ?? hit.instanceId;
+      if (instanceId === undefined || instanceId === null) continue;
+      const structure = this.instanceToStructure.get(`${category}:${instanceId}`);
       if (!structure) continue;
-      /* BatchedMesh masque les instances via une texture : le raycast les
-       * traverse quand même. On filtre donc avec notre propre état de visibilité. */
-      if (this.isolated && !this.currentVisible.has(structure._index)) continue;
+      /* Même pour un BatchedMesh, on recoupe avec notre propre état de
+       * visibilité (AABB/BVH + isolation) : une instance cullée ou masquée ne
+       * doit jamais produire de survol ni de contour. */
+      if (!this.currentVisible.has(structure._index)) continue;
       return structure;
     }
     return null;
@@ -527,9 +607,18 @@ export class AnatomyV2Engine {
   isolate(structure) {
     this.isolated = structure || null;
     if (!structure) {
-      this.currentVisible = new Set();
+      /* Rétablit TOUTES les instances (y compris celles laissées visibles par
+       * un isolement, un groupe ou une collection) puis réapplique le culling
+       * frustum comme lors d'un mouvement de caméra. currentVisible reflète
+       * ainsi l'état réel affiché au lieu de rester vide. */
+      for (const [, ref] of this.structureToInstance) {
+        const batch = this.batches.get(ref.category);
+        if (batch) batch.setVisibleAt(ref.instanceId, true);
+      }
+      this.currentVisible = new Set(this.structureToInstance.keys());
       if (this.skinBatch) this.skinBatch.visible = this.skinDesired;
-      return 0;
+      if (this.camera) this.updateVisibility(this.camera, 1);
+      return this.currentVisible.size;
     }
     /* Un item isolé ne doit pas rester derrière l'enveloppe de peau. */
     if (this.skinBatch) this.skinBatch.visible = false;

@@ -71,12 +71,7 @@
     /* ---------- vue 3D ---------- */
     .viewport { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fdfbf7 0%, #efe9df 72%, #e5ddd1 100%); }
     .viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
-    .view-toolbar {
-      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 4px; padding: 5px; background: rgba(255,253,249,.92);
-      border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); backdrop-filter: blur(8px);
-    }
-    .view-toolbar button { padding: 7px 9px; min-width: 34px; font-size: 11px; }
+
     .layers-list { display: flex; flex-direction: column; gap: 4px; }
     .layers-list button { width: 100%; text-align: left; display: flex; align-items: center; gap: 8px; }
     .layers-list .swatch { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
@@ -149,7 +144,6 @@
       .sidebar.open { display: flex; flex-direction: column; }
       .details { display: none; }
       #mobile-toggle { display: inline-block; }
-      .view-toolbar { top: 12px; flex-wrap: wrap; max-width: 94%; justify-content: center; }
       .anim-bar { bottom: 12px; }
     }
   </style>
@@ -183,18 +177,19 @@
           <button data-cat="organ" class="active"><span class="swatch" style="--c:#a85f55"></span>Organes</button>
         </div>
       </div>
+      <div class="section">
+        <div class="section-title">Exploration hiérarchique</div>
+        <button id="tree-back" class="tree-back" type="button" disabled>← Retour</button>
+        <div class="breadcrumb" id="breadcrumb"></div>
+        <div class="tree" id="tree"></div>
+      </div>
       <div class="section"><div class="section-title">Accès rapide</div><div class="chips" id="shortcuts"></div></div>
       <div class="section"><div class="section-title">Groupes anatomiques</div><div class="chips" id="groups"></div></div>
       <div class="section"><div class="section-title">Explorer <span id="list-total"></span></div><div id="list"></div></div>
     </aside>
 
     <main class="viewport" id="viewport">
-      <div class="view-toolbar">
-        <button id="focus" title="Cadrer la structure">◎ Focus</button>
-        <button id="isolate" title="Isoler">◉ Isoler</button>
-        <button id="clear-iso" title="Tout afficher">◌ Tout</button>
-        <button id="pivot" title="Pivot de rotation">⟲ Item</button>
-      </div>
+      <div id="hover-label"></div>
       <div class="group-actions" id="group-actions">
         <button id="explode">Éclater</button>
         <button id="move">Mouvement</button>
@@ -224,6 +219,8 @@
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
     import { getWaypoints } from './src/data/waypoints.js';
+    import { AnatomyTree } from './src/data/hierarchy.js';
+    import './src/data/hierarchy.css';
 
     const viewport = document.getElementById('viewport');
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
@@ -278,6 +275,7 @@
       document.getElementById('load-text').textContent = `${label} — ${Math.round(p * 100)} %`;
     });
     engine.addTo(scene);
+    scene.add(engine.hoverScene);
     for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, cat === 'organ');
     engine.setSkinVisible(false);
     document.getElementById('count').textContent = `${engine.stats.structures} structures`;
@@ -296,10 +294,11 @@
     const labels = { bone: 'Os', muscle: 'Muscle', organ: 'Organe', skin: 'Peau' };
     let selected = null, detailStructure = null, activeGroup = null;
     let groupAnim = null, waypointTour = null, tourActive = false, tourAngle = 0;
-    let cameraTween = null, forceCulling = false, pivotMode = 'item';
+    let cameraTween = null, forceCulling = false;
     let lodBias = 1, pixelRatio = Math.min(devicePixelRatio, 1.5);
     let lastClick = 0;
     let selectGeneration = 0;
+    let detailTimer = null;
 
     const detailMeta = document.getElementById('detail-meta');
     const detailFact = document.getElementById('detail-fact');
@@ -334,6 +333,141 @@
       }));
     }
 
+    /* ---------- exploration hiérarchique ---------- */
+    const tree = new AnatomyTree(engine.structures);
+    let currentNode = tree.root;
+    const treeEl = document.getElementById('tree');
+    const crumbEl = document.getElementById('breadcrumb');
+    const backBtn = document.getElementById('tree-back');
+
+    function renderBreadcrumb() {
+      /* On part des nœuds eux-mêmes : les ancêtres restent cliquables et
+       * reconstruisent correctement le niveau, même après traduction. */
+      const chain = tree.breadcrumbNodes(currentNode);
+      crumbEl.innerHTML = chain.map((node, i) => i < chain.length - 1
+        ? `<button data-crumb="${node.id}">${node.label}</button><span class="sep">›</span>`
+        : `<span>${node.label}</span>`).join('');
+      crumbEl.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+        const node = tree.get(b.dataset.crumb) || tree.root;
+        focusNode(node);
+      }));
+      backBtn.disabled = currentNode === tree.root;
+      backBtn.title = currentNode === tree.root
+        ? 'Vous êtes à la racine'
+        : `Revenir à ${currentNode.parent?.label || 'Corps humain'}`;
+    }
+
+    function renderTree() {
+      const nodes = currentNode.children;
+      if (!nodes.length) {
+        treeEl.innerHTML = '<div class="group">Feuille : utilisez la liste ci-dessous.</div>';
+        return;
+      }
+      treeEl.innerHTML = nodes.map((n) =>
+        `<button class="tree-node" data-node="${n.id}">` +
+        `<span class="tree-indent"></span><span class="tree-caret">${n.children.length ? '▸' : '·'}</span>` +
+        `${n.label}<span class="tree-count">${n.count}</span></button>`,
+      ).join('');
+      treeEl.querySelectorAll('.tree-node').forEach((b) => b.addEventListener('click', () => {
+        const node = tree.get(b.dataset.node);
+        if (node) focusNode(node);
+      }));
+    }
+
+    function focusNode(node) {
+      if (!node) return;
+      currentNode = node;
+      engine.clearHover();
+      selected = null;
+      document.getElementById('hover-label').style.display = 'none';
+      let count;
+      if (node === tree.root) {
+        /* Retour à la racine : on lève l'isolement et on laisse le culling
+         * réafficher toutes les structures visibles du corps entier. */
+        engine.isolate(null);
+        count = tree.root.ids.length;
+      } else {
+        count = engine.showCollection(node.ids);
+      }
+      const b = tree.bounds(node, engine.byId);
+      if (b) {
+        const dir = camera.position.clone().sub(controls.target).normalize();
+        const dist = Math.max(0.25, b.radius * 3.2);
+        cameraTween = {
+          fromPos: camera.position.clone(),
+          toPos: new THREE.Vector3(...b.center).addScaledVector(dir, dist),
+          fromTarget: controls.target.clone(),
+          toTarget: new THREE.Vector3(...b.center),
+          t: 0,
+        };
+        controls.target.set(...b.center);
+      }
+      document.getElementById('sel-name').textContent = node.label;
+      document.getElementById('sel-meta').textContent = `${count} structures · niveau ${node.depth}`;
+      detailFact.textContent = `Bloc ${node.depth} : ${count} structures. Cliquez sur un sous-bloc ci-dessus pour descendre d'un niveau, ou sur une structure de la liste pour l'isoler.`;
+      engine.clearWaypoints();
+      engine.setWaypointsVisible(false);
+      waypointTour = null;
+      wpInfo.style.display = 'none';
+      renderBreadcrumb();
+      renderTree();
+      forceCulling = true;
+      /* Le détail du bloc se charge en arrière-plan, sans bloquer l'UI.
+       * À la racine, on évite de promouvoir des structures au hasard : le
+       * corps entier reste à son LOD d'ensemble. */
+      if (node !== tree.root) {
+        const level = innerWidth < 820 ? 'medium' : 'high';
+        node.ids.slice(0, 20).forEach((id) => {
+          const s = engine.byId.get(id);
+          if (s) engine.setStructureLod(s, level).catch(() => {});
+        });
+      }
+    }
+    backBtn.addEventListener('click', () => {
+      focusNode(currentNode.parent || tree.root);
+    });
+    renderBreadcrumb();
+    renderTree();
+
+    /* ---------- survol : contour + étiquette ---------- */
+    const hoverLabel = document.getElementById('hover-label');
+    const hoverRaycaster = new THREE.Raycaster();
+    let hovered = null;
+    let lastHover = 0;
+    renderer.domElement.addEventListener('pointermove', (e) => {
+      const now = performance.now();
+      /* Raycast de triangles sur ~2 000 instances : on borne à ~70 ms pour
+       * garder une interaction fluide sans sacrifier la précision du survol. */
+      if (now - lastHover < 70) return;
+      lastHover = now;
+      const rect = renderer.domElement.getBoundingClientRect();
+      hoverRaycaster.setFromCamera({
+        x: ((e.clientX - rect.left) / rect.width) * 2 - 1,
+        y: -((e.clientY - rect.top) / rect.height) * 2 + 1,
+      }, camera);
+      const structure = engine.pickExact(hoverRaycaster);
+      if (structure !== hovered) {
+        hovered = structure;
+        if (structure) engine.setHover(structure);
+        else engine.clearHover();
+      }
+      if (structure) {
+        hoverLabel.textContent = structure.fr || structure.en;
+        hoverLabel.style.left = `${e.clientX}px`;
+        hoverLabel.style.top = `${e.clientY}px`;
+        hoverLabel.style.display = 'block';
+        renderer.domElement.style.cursor = 'pointer';
+      } else {
+        hoverLabel.style.display = 'none';
+        renderer.domElement.style.cursor = 'grab';
+      }
+    });
+    renderer.domElement.addEventListener('pointerleave', () => {
+      hovered = null;
+      engine.clearHover();
+      hoverLabel.style.display = 'none';
+    });
+
     function showWaypoint(wp) {
       document.getElementById('wp-title').textContent = wp.title;
       document.getElementById('wp-text').textContent = wp.text;
@@ -345,7 +479,12 @@
       if (!structure) return;
       const generation = ++selectGeneration;
       if (selected) engine.highlight(selected, '#ffffff');
-      if (detailStructure && detailStructure !== structure) await engine.setStructureLod(detailStructure, 'low');
+      /* Le retour au LOD bas de l'ancienne structure se fait en arrière-plan :
+       * l'isolement de la nouvelle reste synchrone, même si le chunk low n'est
+       * pas encore en cache (un clic doit toujours sélectionner immédiatement). */
+      if (detailStructure && detailStructure !== structure) {
+        engine.setStructureLod(detailStructure, 'low').catch(() => {});
+      }
       selected = structure;
       detailStructure = null;
       activeGroup = null;
@@ -382,7 +521,8 @@
         document.getElementById('sel-meta').textContent += ' · chargement du détail…';
         /* Le chargement du détail est différé : le gestionnaire de clic reste
          * synchrone et ne bloque pas l'action suivante. */
-        setTimeout(async () => {
+        detailTimer = setTimeout(async () => {
+          detailTimer = null;
           if (generation !== selectGeneration) return;
           try {
             const ok = await engine.setStructureLod(structure, level);
@@ -411,7 +551,7 @@
             toTarget: target.center,
             t: 0,
           };
-          if (pivotMode === 'item') controls.target.copy(target.center);
+          controls.target.copy(target.center);
         }
       }
       /* On ne reconstruit pas la liste ici : cela détacherait les boutons
@@ -466,7 +606,7 @@
           toTarget: new THREE.Vector3(c.x, c.y, c.z),
           t: 0,
         };
-        if (pivotMode === 'item') controls.target.set(c.x, c.y, c.z);
+        controls.target.set(c.x, c.y, c.z);
       });
       groupsEl.appendChild(b);
     }
@@ -501,48 +641,6 @@
     }
 
     /* Commandes de vue. */
-    document.getElementById('focus').addEventListener('click', () => {
-      if (!selected) return;
-      engine.setCategoryVisible(selected.category, true);
-      engine.isolate(selected);
-      const target = engine.focusTarget(selected);
-      if (target) {
-        const dir = camera.position.clone().sub(controls.target).normalize();
-        cameraTween = {
-          fromPos: camera.position.clone(),
-          toPos: target.center.clone().addScaledVector(dir, Math.max(0.16, target.radius * 2.6)),
-          fromTarget: controls.target.clone(),
-          toTarget: target.center,
-          t: 0,
-        };
-        if (pivotMode === 'item') controls.target.copy(target.center);
-      }
-      forceCulling = true;
-    });
-    document.getElementById('isolate').addEventListener('click', () => {
-      if (selected) { engine.isolate(selected); engine.setSkinVisible(false); forceCulling = true; }
-    });
-    document.getElementById('clear-iso').addEventListener('click', () => {
-      engine.isolate(null);
-      engine.setSkinVisible(false);
-      const skinBtn = document.querySelector('[data-cat="skin"]');
-      if (skinBtn) skinBtn.classList.remove("active");
-      engine.setWaypointsVisible(false);
-      waypointTour = null;
-      wpInfo.style.display = 'none';
-      forceCulling = true;
-      visibleCount = engine.updateVisibility(camera, lodBias);
-      renderer.shadowMap.needsUpdate = true;
-    });
-    document.getElementById('pivot').addEventListener('click', (e) => {
-      pivotMode = pivotMode === 'item' ? 'corps' : 'item';
-      e.currentTarget.textContent = pivotMode === 'item' ? '⟲ Item' : '⟲ Corps';
-      if (pivotMode === 'corps') controls.target.set(0, 1, 0);
-      else if (selected) {
-        const t = engine.focusTarget(selected);
-        if (t) controls.target.copy(t.center);
-      }
-    });
     document.querySelectorAll('[data-cat]').forEach((button) => {
       button.addEventListener('click', () => {
         button.classList.toggle('active');
@@ -565,6 +663,7 @@
       localStorage.setItem('corps-theme', dark ? 'dark' : 'light');
       themeToggle.textContent = dark ? 'Thème : sombre' : 'Thème : clair';
       scene.background = dark ? darkBg : lightBg;
+      needsRender = true;
     });
     document.getElementById('mobile-toggle').addEventListener('click', () => {
       document.getElementById('sidebar').classList.toggle('open');
@@ -636,8 +735,12 @@
     const drawEl = document.getElementById('draw');
     const qualityEl = document.getElementById('quality');
 
+    let rafId = 0, running = true;
+    let lastSignature = '', needsRender = true;
     async function loop() {
-      requestAnimationFrame(loop);
+      if (!running) return;
+      rafId = requestAnimationFrame(loop);
+      if (document.hidden) return;
       const nowFrame = performance.now();
       const dt = Math.min(0.05, (nowFrame - previousTime) / 1000);
       previousTime = nowFrame;
@@ -699,12 +802,32 @@
         forceCulling = false;
         visibleCount = engine.updateVisibility(camera, lodBias);
         renderer.shadowMap.needsUpdate = true;
+        needsRender = true;
       }
       if (groupAnim || engine.animation) renderer.shadowMap.needsUpdate = true;
-      const t0 = performance.now();
-      renderer.render(scene, camera);
-      const renderMs = performance.now() - t0;
-      frames++; frameSum += renderMs; frameCount++;
+      /* Rendu à la demande : avec plus de 2 000 instances, un frame en
+       * rendu logiciel peut prendre une seconde. On ne redessine que quand
+       * l'état 3D change, ce qui garde la page réactive au survol/clic. */
+      const signature = [
+        camera.position.x.toFixed(4), camera.position.y.toFixed(4), camera.position.z.toFixed(4),
+        controls.target.x.toFixed(4), controls.target.y.toFixed(4), controls.target.z.toFixed(4),
+        engine.currentVisible.size, engine.isolated ? 1 : 0,
+        engine.hoverMesh?.id || 0, engine.waypointGroup.visible ? 1 : 0,
+        engine.skinBatch?.visible ? 1 : 0,
+        ...[...engine.batches.values()].map((b) => (b.visible ? 1 : 0)),
+        scene.background?.getHexString?.() || '',
+        groupAnim ? groupAnim.t.toFixed(3) : '',
+        engine.animation ? engine.animation.t.toFixed(3) : '',
+      ].join('|');
+      if (needsRender || signature !== lastSignature) {
+        const t0 = performance.now();
+        renderer.render(scene, camera);
+        frameSum += performance.now() - t0;
+        frameCount++;
+        lastSignature = signature;
+        needsRender = false;
+      }
+      frames++;
       const now = performance.now();
       if (now - last >= 500) {
         const avg = frameSum / Math.max(1, frameCount);
@@ -718,7 +841,7 @@
         if (!autoLodDone && now - startedAt > 4000) {
           autoLodDone = true;
           const target = innerWidth > 820 && avg < 6 ? 'medium' : 'low';
-          if (target !== engine.globalLod) await engine.setGlobalLod(target);
+          if (target !== engine.globalLod) { await engine.setGlobalLod(target); needsRender = true; }
         }
         fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
         const triCount = renderer.info.render.triangles;
@@ -728,6 +851,22 @@
         frames = 0; frameSum = 0; frameCount = 0; last = now;
       }
     }
+    /* Arrêt explicite de la boucle et des timers : appelé à la fermeture de la
+     * page (et exposé aux tests) pour ne laisser tourner aucun rAF/Timer. */
+    function stop() {
+      if (!running) return;
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      if (detailTimer) clearTimeout(detailTimer);
+      detailTimer = null;
+      tourActive = false;
+      waypointTour = null;
+      groupAnim = null;
+      engine.clearHover();
+      engine.clearAnimation();
+    }
+    window.__v2Stop = stop;
+    window.addEventListener('pagehide', stop);
     loop();
     window.__v2 = engine;
     window.__renderer = renderer;

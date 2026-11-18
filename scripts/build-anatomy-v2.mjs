@@ -253,6 +253,7 @@ for (const s of structures) {
     side: s.side || null,
     source: s.best.source,
     materials: s.materials || [],
+    path: (s.collections || []).filter((c) => !/Bonus|Joints|Muscular insertions|Regions/i.test(c)),
     bounds: geometry.bounds,
     lod: {},
   };

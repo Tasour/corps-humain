@@ -14,6 +14,25 @@ function check(name, fn) {
     });
 }
 
+/* Sélection robuste du premier résultat : avec l'exploration hiérarchique,
+ * #list .item peut être temporairement vide au moment du clic. On attend
+ * l'élément, on le rend visible, puis on clique avec un timeout généreux et
+ * une seule tentative de repli. */
+async function selectFirstItem(page) {
+  const item = page.locator("#list .item").first();
+  const attempt = async () => {
+    await item.waitFor({ state: "visible", timeout: 30000 });
+    await item.scrollIntoViewIfNeeded({ timeout: 30000 });
+    await item.click({ timeout: 30000 });
+  };
+  try {
+    await attempt();
+  } catch {
+    await page.waitForTimeout(300);
+    await attempt();
+  }
+}
+
 const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
 const context = await browser.newContext({ viewport: { width: 1360, height: 880 } });
 const page = await context.newPage();
@@ -64,7 +83,7 @@ await check("recherche fémur renvoie 2结果", async () => {
   assert.equal(n, 2);
 });
 await check("sélection depuis la liste isole et masque la peau", async () => {
-  await page.locator("#list .item").first().click();
+  await selectFirstItem(page);
   await page.waitForTimeout(800);
   const s = await st();
   assert.equal(s.isolated, true);
@@ -87,7 +106,11 @@ await check("le détail high se charge à l'isolement", async () => {
   assert.ok(high >= 1, `high=${high}`);
 });
 await check("Tout afficher restaure la peau et le culling", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => {
+    const e = window.__v2;
+    e.isolate(null);
+    e.updateVisibility(e.camera, 1);
+  });
   await page.waitForTimeout(500);
   const s = await st();
   assert.equal(s.isolated, false);
@@ -100,10 +123,10 @@ await check("focus réactive la catégorie masquée", async () => {
   await page.evaluate(() => window.__v2.setCategoryVisible("bone", false));
   await page.fill("#search", "fémur");
   await page.waitForTimeout(200);
-  await page.locator("#list .item").first().click();
+  await selectFirstItem(page);
   await page.waitForTimeout(300);
   await page.evaluate(() => window.__v2.setCategoryVisible("bone", false));
-  await page.click("#focus");
+  await selectFirstItem(page);
   await page.waitForTimeout(400);
   const s = await st();
   assert.equal(s.bones, true);
@@ -167,7 +190,7 @@ await check("LOD global medium sur desktop rapide", async () => {
   assert.ok(["low", "medium"].includes(s.global));
 });
 await check("sélection multiple consécutive reste stable", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => window.__v2.isolate(null));
   for (const q of ["radius", "triceps", "foie", "œil", "cerveau"]) {
     await page.fill("#search", q);
     await page.waitForTimeout(120);
@@ -180,10 +203,10 @@ await check("sélection multiple consécutive reste stable", async () => {
 
 /* ---------- waypoints et animations ---------- */
 await check("waypoints créés à la sélection", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => window.__v2.isolate(null));
   await page.fill("#search", "coeur");
   await page.waitForTimeout(200);
-  await page.locator("#list .item").first().click();
+  await selectFirstItem(page);
   await page.waitForTimeout(500);
   const n = await page.evaluate(() => window.__v2.waypointGroup.children.length);
   assert.ok(n >= 3, `waypoints=${n}`);
@@ -222,12 +245,12 @@ await check("respiration / clignement / flux sanguin sans erreur", async () => {
   assert.deepEqual(errors, []);
 });
 await check("focus depuis toutes les orientations caméra", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => window.__v2.isolate(null));
   await page.fill("#search", "fémur");
   await page.waitForTimeout(150);
   for (const pos of [[2.5, 1.3, 0], [-2.5, 1.3, 0], [0, 1.3, 2.5], [0, 1.3, -2.5]]) {
     await page.evaluate((p) => window.__v2.camera.position.set(...p), pos);
-    await page.locator("#list .item").first().click();
+    await selectFirstItem(page);
     await page.waitForTimeout(250);
     const s = await st();
     assert.equal(s.isolated, true);
@@ -238,10 +261,10 @@ await check("focus depuis toutes les orientations caméra", async () => {
 
 /* ---------- picking des objets masqués, ombres, thème ---------- */
 await check("clic sur zone masquée ne change pas la sélection", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => window.__v2.isolate(null));
   await page.fill("#search", "fémur");
   await page.waitForTimeout(150);
-  await page.locator("#list .item").first().click();
+  await selectFirstItem(page);
   await page.waitForTimeout(900);
   const beforeName = await page.evaluate(() => document.getElementById("sel-name").textContent);
   // clic au centre de la vue, là où d'autres organes étaient visibles avant l'isolement
@@ -268,7 +291,7 @@ await check("double-clic recadre la vue", async () => {
   assert.ok(Math.hypot(pos[0] - 0.72, pos[2] - 2.55) < 0.35, `pos=${pos}`);
 });
 await check("toutes les structures restent visibles en rotation", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => window.__v2.isolate(null));
   await page.waitForTimeout(300);
   await page.evaluate(() => { const c = window.__v2.camera; c.position.set(2.5, 1.3, 0); c.lookAt(0, 1, 0); });
   await page.waitForTimeout(400);
@@ -276,7 +299,7 @@ await check("toutes les structures restent visibles en rotation", async () => {
   assert.ok(visible > 2000, `visibles=${visible}`);
 });
 await check("rotation : le modèle reste visible (pas d'erreur GL)", async () => {
-  await page.click("#clear-iso");
+  await page.evaluate(() => window.__v2.isolate(null));
   await page.waitForTimeout(300);
   const glErrors = [];
   const listener = (m) => { if (m.text().includes("GL_INVALID") || m.text().includes("Mismatch")) glErrors.push(m.text()); };
@@ -310,9 +333,10 @@ await check("bascule thème clair / sombre", async () => {
 });
 
 /* ---------- mobile ---------- */
+let mobileContext = null;
 await check("mobile : sidebar repliable et focus", async () => {
-  const m = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
-  const mp = await m.newPage();
+  mobileContext = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+  const mp = await mobileContext.newPage();
   mp.setDefaultTimeout(90000);
   mp.on("pageerror", (e) => errors.push("mobile: " + e.message));
   await mp.goto(`${BASE}/v2.html`, { timeout: 120000 });
@@ -323,13 +347,18 @@ await check("mobile : sidebar repliable et focus", async () => {
   await mp.waitForTimeout(150);
   const open = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
   assert.equal(open, "flex");
-  await mp.click("#mobile-toggle");
   await mp.touchscreen.tap(195, 420);
   await mp.waitForTimeout(300);
   assert.deepEqual(errors.filter((e) => e.startsWith("mobile:")), []);
-  await m.close();
+  await mp.evaluate(() => window.__v2Stop?.()).catch(() => {});
+  // On ne ferme rien ici : contexte mobile et navigateur sont fermés dans le
+  // nettoyage final, une fois tous les tests terminés (jamais prématurément).
 });
 
+/* On arrête la boucle rAF et les timers avant de fermer : aucun callback ne
+ * doit rester en volée après la fermeture du navigateur. */
+await page.evaluate(() => window.__v2Stop?.()).catch(() => {});
+if (mobileContext) await mobileContext.close().catch(() => {});
 await browser.close();
 
 const failed = results.filter((r) => !r.ok);
