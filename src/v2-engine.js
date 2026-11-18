@@ -636,7 +636,7 @@ export class AnatomyV2Engine {
       this.currentVisible = new Set(this.structureToInstance.keys());
       /* Vue corps entier : on repasse les structures promues au LOD bas.
        * Le détail n'apporte rien à cette échelle et rendrait le rendu logiciel
-       * prohibitive (des centaines de milliers de triangles en plus). */
+       * prohibitif (des centaines de milliers de triangles en plus). */
       this.resetLodsToLow();
       if (this.skinBatch) this.skinBatch.visible = this.skinDesired;
       if (this.camera) this.updateVisibility(this.camera, 1);
