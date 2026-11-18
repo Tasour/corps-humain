@@ -39,8 +39,13 @@
     .top-actions { display: flex; gap: 8px; }
     /* ---------- mise en page 3 colonnes ---------- */
     .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr) 330px; height: calc(100vh - 74px); }
-    .sidebar, .details { background: var(--paper-2); overflow: auto; }
-    .sidebar { border-right: 1px solid var(--line); padding: 18px 16px; }
+    .sidebar, .details { background: var(--paper-2); }
+    .sidebar {
+      border-right: 1px solid var(--line); padding: 18px 16px;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sidebar > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .sidebar > .section:last-child #list { flex: 1; min-height: 80px; overflow: auto; }
     .details { border-left: 1px solid var(--line); padding: 26px 24px; }
     .section { margin-bottom: 20px; }
     .section-title {
@@ -71,12 +76,7 @@
     /* ---------- vue 3D ---------- */
     .viewport { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fdfbf7 0%, #efe9df 72%, #e5ddd1 100%); }
     .viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
-    .view-toolbar {
-      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 4px; padding: 5px; background: rgba(255,253,249,.92);
-      border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); backdrop-filter: blur(8px);
-    }
-    .view-toolbar button { padding: 7px 9px; min-width: 34px; font-size: 11px; }
+
     .layers-list { display: flex; flex-direction: column; gap: 4px; }
     .layers-list button { width: 100%; text-align: left; display: flex; align-items: center; gap: 8px; }
     .layers-list .swatch { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
@@ -147,14 +147,15 @@
       .layout { grid-template-columns: 1fr; height: calc(100vh - 64px); }
       .sidebar { position: fixed; z-index: 12; top: 64px; bottom: 0; left: 0; width: 290px; display: none; box-shadow: var(--shadow); }
       .sidebar.open { display: flex; flex-direction: column; }
+      .sidebar.open > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
       .details { display: none; }
       #mobile-toggle { display: inline-block; }
-      .view-toolbar { top: 12px; flex-wrap: wrap; max-width: 94%; justify-content: center; }
       .anim-bar { bottom: 12px; }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-BMmVy5Gz.js"></script>
+  <script type="module" crossorigin src="./assets/v2-CVu-gow7.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-h0NbLq2s.js">
+  <link rel="stylesheet" crossorigin href="./assets/v2-C94nE80_.css">
 </head>
 <body>
   <header>
@@ -185,18 +186,19 @@
           <button data-cat="organ" class="active"><span class="swatch" style="--c:#a85f55"></span>Organes</button>
         </div>
       </div>
+      <div class="section">
+        <div class="section-title">Exploration hiérarchique</div>
+        <button id="tree-back" class="tree-back" type="button" disabled>← Retour</button>
+        <div class="breadcrumb" id="breadcrumb"></div>
+        <div class="tree" id="tree"></div>
+      </div>
       <div class="section"><div class="section-title">Accès rapide</div><div class="chips" id="shortcuts"></div></div>
       <div class="section"><div class="section-title">Groupes anatomiques</div><div class="chips" id="groups"></div></div>
       <div class="section"><div class="section-title">Explorer <span id="list-total"></span></div><div id="list"></div></div>
     </aside>
 
     <main class="viewport" id="viewport">
-      <div class="view-toolbar">
-        <button id="focus" title="Cadrer la structure">◎ Focus</button>
-        <button id="isolate" title="Isoler">◉ Isoler</button>
-        <button id="clear-iso" title="Tout afficher">◌ Tout</button>
-        <button id="pivot" title="Pivot de rotation">⟲ Item</button>
-      </div>
+      <div id="hover-label"></div>
       <div class="group-actions" id="group-actions">
         <button id="explode">Éclater</button>
         <button id="move">Mouvement</button>
