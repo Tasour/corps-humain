@@ -208,11 +208,15 @@ export class AnatomyV2Engine {
     this.structures = [];
     this.byId = new Map();
     this.batches = new Map();
+    this.mergedMeshes = new Map();
+    this.categoryEnabled = new Map();
+    this.mergedMode = true;
     this.index = null;
     this.instanceToStructure = new Map();
     this.structureToInstance = new Map();
     this.visibleBuffer = null;
     this.lodBuffers = new Map();
+    this.baseBuffers = {};  // buffers 'low' chargés à l'initialisation
     this.geometryIds = new Map();
     this.sourceGeometries = new Map();
     this.globalLod = "low";
@@ -256,6 +260,7 @@ export class AnatomyV2Engine {
       const lodName = category === "skin" ? "high" : this.lod;
       const buffer = await loadBinary(`${this.base}${category}.${lodName}.bin.gz`);
       buffers[category] = buffer;
+      this.baseBuffers[category] = buffer;
       done++;
       onProgress(done / total, `géométrie ${category}`);
     }
@@ -369,7 +374,7 @@ export class AnatomyV2Engine {
         normalMap: skinMaps?.normal || null,
         roughnessMap: skinMaps?.roughness || null,
         transparent: true,
-        opacity: 0.22,
+        opacity: 0.12,
         depthWrite: false,
         side: THREE.DoubleSide,
       });
@@ -380,6 +385,7 @@ export class AnatomyV2Engine {
       this.skinBatch = batch;
     }
 
+    this.buildMergedViews();
     this.stats.structures = idx;
     this.stats.triangles = this.structures.reduce(
       (sum, s) => sum + (s.lod?.[this.lod]?.indexCount || 0) / 3, 0,
@@ -388,10 +394,65 @@ export class AnatomyV2Engine {
     return this;
   }
 
+  /* Vue corps entier : UNE géométrie fusionnée par catégorie.
+   * Un BatchedMesh émet un draw range par instance (~2100 ranges) même avec
+   * multi-draw ; la fusion n'en émet qu'un seul par catégorie. Les batches
+   * restent utilisés dès qu'on isole/filtre (quelques dizaines d'instances). */
+  buildMergedViews(lod = this.lod) {
+    this.mergedMeshes = new Map();
+    for (const [category, batch] of this.batches) {
+      const list = this.structures.filter((s) => s.category === category && s.lod?.[lod]);
+      const positions = [], normals = [], indices = [];
+      let vertexBase = 0;
+      for (const s of list) {
+        const rec = s.lod[lod];
+        const buffer = this.lodBuffers.get(`${category}:${lod}`) || this.baseBuffers?.[category];
+        if (!buffer) continue;
+        /* `buffer` est un ArrayBuffer (décompressé) : ses offsets sont déjà
+         * absolus, pas de .buffer/.byteOffset dans Node. */
+        const p = new Float32Array(buffer, rec.positions, rec.vertexCount * 3);
+        const n = new Int16Array(buffer, rec.normals, rec.vertexCount * 3);
+        const idxArr = rec.indexType === "u16"
+          ? new Uint16Array(buffer, rec.indices, rec.indexCount)
+          : new Uint32Array(buffer, rec.indices, rec.indexCount);
+        for (let i = 0; i < p.length; i++) { positions.push(p[i]); normals.push(n[i]); }
+        for (let i = 0; i < idxArr.length; i++) indices.push(idxArr[i] + vertexBase);
+        vertexBase += rec.vertexCount;
+      }
+      if (!indices.length) continue;
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute("normal", new THREE.Int16BufferAttribute(normals, 3, true));
+      geometry.setIndex(new THREE.Uint32BufferAttribute(indices, 1));
+      geometry.computeBoundingSphere();
+      const mesh = new THREE.Mesh(geometry, batch.material);
+      mesh.name = `v2-merged-${category}`;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      this.mergedMeshes.set(category, mesh);
+    }
+  }
+
   addTo(scene) {
-    for (const batch of this.batches.values()) scene.add(batch);
+    /* Les vues fusionnées sont actives par défaut ; les batches sont masqués
+     * jusqu'à un isolement ou un filtre. */
+    for (const mesh of this.mergedMeshes.values()) scene.add(mesh);
+    for (const batch of this.batches.values()) { batch.visible = false; scene.add(batch); }
     if (this.skinBatch) scene.add(this.skinBatch);
     scene.add(this.waypointGroup);
+  }
+
+  /* Bascule entre vue fusionnée (corps entier) et lots (isolement). */
+  setMergedMode(enabled) {
+    this.mergedMode = !!enabled;
+    for (const [category, mesh] of this.mergedMeshes) {
+      mesh.visible = this.mergedMode && this.categoryEnabled?.get(category) !== false;
+    }
+    if (!this.mergedMode) {
+      for (const [category, batch] of this.batches) {
+        batch.visible = this.categoryEnabled?.get(category) !== false;
+      }
+    }
   }
 
   /* Marqueurs de waypoints d'une structure. */
@@ -457,6 +518,7 @@ export class AnatomyV2Engine {
     for (const category of new Set(members.map((s) => s.category))) {
       this.setCategoryVisible(category, true);
     }
+    this.setMergedMode(false);
     for (const [index, ref] of this.structureToInstance) {
       const batch = this.batches.get(ref.category);
       if (batch) batch.setVisibleAt(ref.instanceId, set.has(this.structures[index].id));
@@ -626,6 +688,7 @@ export class AnatomyV2Engine {
   isolate(structure) {
     this.isolated = structure || null;
     if (!structure) {
+      this.setMergedMode(true);
       /* Rétablit TOUTES les instances (y compris celles laissées visibles par
        * un isolement, un groupe ou une collection) puis réapplique le culling
        * frustum comme lors d'un mouvement de caméra. currentVisible reflète
@@ -645,6 +708,7 @@ export class AnatomyV2Engine {
     }
     /* Un item isolé ne doit pas rester derrière l'enveloppe de peau. */
     if (this.skinBatch) this.skinBatch.visible = false;
+    this.setMergedMode(false);
     for (const [structureIndex, ref] of this.structureToInstance) {
       const batch = this.batches.get(ref.category);
       if (batch) batch.setVisibleAt(ref.instanceId, structureIndex === structure._index);
@@ -660,6 +724,7 @@ export class AnatomyV2Engine {
     const ids = new Set(members.map((s) => s.id));
     const categories = new Set(members.map((s) => s.category));
     for (const category of categories) this.setCategoryVisible(category, true);
+    this.setMergedMode(false);
     const memberIndices = new Set(members.map((s) => s._index));
     for (const [structureIndex, ref] of this.structureToInstance) {
       const batch = this.batches.get(ref.category);
@@ -836,8 +901,11 @@ export class AnatomyV2Engine {
   }
 
   setCategoryVisible(category, visible) {
+    this.categoryEnabled.set(category, !!visible);
     const batch = this.batches.get(category);
-    if (batch) batch.visible = visible;
-    if (category === "skin" && this.skinBatch) this.skinBatch.visible = visible;
+    if (batch && !this.mergedMode) batch.visible = visible;
+    const merged = this.mergedMeshes.get(category);
+    if (merged) merged.visible = visible && this.mergedMode;
+    if (category === "skin" && this.skinBatch) this.skinBatch.visible = visible && !this.isolated;
   }
 }

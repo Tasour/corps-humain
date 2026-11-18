@@ -754,6 +754,7 @@
     let renderCount = 0;                        // nb total de rendus réels
     let fpsRenders = 0, fpsWindowStart = last;  // fenêtre de mesure du fps réel
     let animatedMs = 0;                          // temps animationné dans la fenêtre
+    const recentIntervals = [];                  // intervalles réels entre rendus (ms GPU)
     let frameSum = 0, frameCount = 0;           // coût CPU des rendus réels uniquement
     let avgRenderMs = 0;                        // coût CPU lissé d'un rendu (secours si 0 rendu)
     let autoLodDone = false;
@@ -853,8 +854,9 @@
         needsRender = true;
       }
       if (heavy !== wasHeavy) {
-        renderer.shadowMap.enabled = !heavy;
-        renderer.setPixelRatio(heavy ? 0.35 : pixelRatio);
+        /* On garde la netteté et les ombres en toutes circonstances. */
+        renderer.shadowMap.enabled = true;
+        renderer.setPixelRatio(pixelRatio);
         wasHeavy = heavy;
         needsRender = true;
       }
@@ -876,11 +878,11 @@
       /* Cadence adaptative : en vue corps entier on vise 30 fps (33 ms) au
        * lieu d'un palier fixe à 1 rendu/s. Le seuil s'ajuste au coût réel
        * mesuré, avec un plancher de 16 ms et un plafond de 250 ms. */
-      const targetInterval = heavy
-        ? Math.max(16, Math.min(250, (avgRenderMs || 30) * 1.6))
-        : 0;
-      if ((needsRender || signature !== lastSignature)
-        && nowFrame - lastRenderAt >= targetInterval) {
+      /* Rendu dès que l'état change : pas de throttle. Un throttle basé sur
+       * l'intervalle précédent crée un cercle vicieux (plus on attend, plus
+       * on attend) et donnait une image floue/saccadée. */
+      const targetInterval = 0;
+      if (needsRender || signature !== lastSignature) {
         const t0 = performance.now();
         renderer.render(scene, camera);
         const renderMs = performance.now() - t0;
@@ -888,6 +890,8 @@
         frameCount++;
         renderCount++;
         fpsRenders++;
+        if (lastRenderAt > 0) recentIntervals.push(nowFrame - lastRenderAt);
+        if (recentIntervals.length > 30) recentIntervals.shift();
         animatedMs += Math.max(renderMs, targetInterval);
         avgRenderMs = avgRenderMs ? avgRenderMs * 0.7 + renderMs * 0.3 : renderMs;
         lastRenderAt = nowFrame;
@@ -899,19 +903,18 @@
        * rendu n'a eu lieu dans la fenêtre, on conserve le dernier taux mesuré
        * plutôt que d'afficher un 120 fps fantôme (ou un 0 trompeur). */
       const fpsNow = performance.now();
-      if (fpsNow - fpsWindowStart >= (heavy ? 2000 : 1000)) {
-        if (fpsRenders > 0) {
-          /* On divise par le temps RÉELLEMENT animationné (fenêtre moins les
-           * périodes où rien ne change), pas par la fenêtre entière : sinon
-           * une vue statique affiche 1 fps alors qu'elle est fluide au mouvement. */
-          const realFps = fpsRenders * 1000 / Math.max(1, animatedMs);
-          fpsEl.textContent = Math.round(realFps) + ' fps';
+      if (fpsNow - fpsWindowStart >= 1000) {
+        if (recentIntervals.length) {
+          /* VRAI fps = intervalle réel entre rendus successifs. Le temps CPU de
+           * renderer.render() est trompeur : les appels GL sont asynchrones. */
+          const sorted = [...recentIntervals].sort((a, b) => a - b);
+          const median = sorted[Math.floor(sorted.length / 2)];
+          fpsEl.textContent = Math.round(1000 / Math.max(1, median)) + ' fps';
+          fpsEl.dataset.ms = median.toFixed(1);
           fpsEl.dataset.renders = String(renderCount);
-          fpsEl.dataset.mode = heavy ? 'réel · cadence adaptative' : 'réel · à la demande';
-          fpsEl.dataset.animatedMs = String(Math.round(animatedMs));
+          fpsEl.dataset.mode = 'réel · GPU';
         }
-        fpsRenders = 0;
-        animatedMs = 0;
+        recentIntervals.length = 0;
         fpsWindowStart = fpsNow;
       }
       const now = performance.now();
@@ -921,7 +924,7 @@
         const avg = frameCount ? frameSum / frameCount : avgRenderMs;
         if (avg > 8 && pixelRatio > 1) {
           pixelRatio = Math.max(1, pixelRatio - 0.25);
-          renderer.setPixelRatio(heavy ? 0.35 : pixelRatio);
+          renderer.setPixelRatio(pixelRatio);
           /* Le biais LOD reste à 1 : le seuil WASM garantit déjà que toutes
            * les structures restent visibles en vue corps entier. */
           forceCulling = true;
@@ -959,6 +962,7 @@
     loop();
     window.__v2 = engine;
     window.__renderer = renderer;
+    window.__scene = scene;
   </script>
 </body>
 </html>
