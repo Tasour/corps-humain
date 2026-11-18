@@ -402,8 +402,9 @@ export class AnatomyV2Engine {
     this.mergedMeshes = new Map();
     for (const [category, batch] of this.batches) {
       const list = this.structures.filter((s) => s.category === category && s.lod?.[lod]);
-      const positions = [], normals = [], indices = [];
+      const positions = [], normals = [], indices = [], colors = [];
       let vertexBase = 0;
+      const color = new THREE.Color();
       for (const s of list) {
         const rec = s.lod[lod];
         const buffer = this.lodBuffers.get(`${category}:${lod}`) || this.baseBuffers?.[category];
@@ -415,7 +416,14 @@ export class AnatomyV2Engine {
         const idxArr = rec.indexType === "u16"
           ? new Uint16Array(buffer, rec.indices, rec.indexCount)
           : new Uint32Array(buffer, rec.indices, rec.indexCount);
-        for (let i = 0; i < p.length; i++) { positions.push(p[i]); normals.push(n[i]); }
+        /* Chaque structure garde sa couleur : un attribut par vertex, sinon
+         * tout le corps fusionné serait blanc. */
+        color.set(colorFor(s));
+        for (let v = 0; v < rec.vertexCount; v++) {
+          positions.push(p[v * 3], p[v * 3 + 1], p[v * 3 + 2]);
+          normals.push(n[v * 3], n[v * 3 + 1], n[v * 3 + 2]);
+          colors.push(color.r, color.g, color.b);
+        }
         for (let i = 0; i < idxArr.length; i++) indices.push(idxArr[i] + vertexBase);
         vertexBase += rec.vertexCount;
       }
@@ -423,9 +431,12 @@ export class AnatomyV2Engine {
       const geometry = new THREE.BufferGeometry();
       geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
       geometry.setAttribute("normal", new THREE.Int16BufferAttribute(normals, 3, true));
+      geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
       geometry.setIndex(new THREE.Uint32BufferAttribute(indices, 1));
       geometry.computeBoundingSphere();
-      const mesh = new THREE.Mesh(geometry, batch.material);
+      const material = batch.material.clone();
+      material.vertexColors = true;
+      const mesh = new THREE.Mesh(geometry, material);
       mesh.name = `v2-merged-${category}`;
       mesh.castShadow = true;
       mesh.receiveShadow = true;
