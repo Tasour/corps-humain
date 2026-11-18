@@ -144,13 +144,177 @@ const HIDDEN_IDS = new Set([
   "organ:intercostal-nodes-r",    // idem, côté droit
   "organ:juxta-oesophageal-nodes", // 0,216 m : chaîne de ganglions
   "organ:prevertebral-nodes",      // 0,216 m : chaîne de ganglions
+  /* 5 doublons inter-sources (docs/analyses/coherence.json, check
+   * `duplicate-fr-source`) : la même structure anatomique existe à la fois
+   * dans BodyParts3D (IDs `bp-*`) et dans Z-Anatomy. On retire la version
+   * BodyParts3D et on garde Z-Anatomy, plus détaillée. */
+  "organ:bp-corpus-spongiosum-of-penis", // corps spongieux du pénis
+  "organ:bp-mesoappendix",               // méso-appendice
+  "organ:bp-taenia-libera",              // ténia libre
+  "organ:bp-taenia-mesocolica",          // ténia mésocolique
+  "organ:bp-taenia-omentalis",           // ténia omental
+
+  /* Fragments contradictoires des 4 artères dont le suffixe d'ID (-l/-r)
+   * contredit le nom TA2 : ce sont des éclats de quelques millimètres
+   * (certains de hauteur nulle) superposés à l'artère complète. On garde la
+   * version dont le suffixe correspond au nom. */
+  "organ:bp-left-common-carotid-artery-r",
+  "organ:bp-left-subclavian-artery-r",
+  "organ:bp-right-common-carotid-artery-l",
+  "organ:bp-right-subclavian-artery-l",
+  /* Variante nue de la même artère, sans côté, doublon de la version -l. */
+  "organ:bp-left-subclavian-artery",
 ]);
 
-const keptConcepts = allStructures.filter(
-  (s) => !(s.bodyParts3D?.parts > 20) && !EXCLUDED_CONCEPTS.has(s.id),
+/* Certains identifiants BodyParts3D portent un suffixe -l/-r erroné : le côté
+ * réel est celui indiqué par le nom TA2 (« Left/Right ... artery », TA2 4181 à
+ * 4184), pas par le suffixe de l'ID. On corrige le champ `side` du manifeste en
+ * conséquence (contrôle `ta2-name-side` de tests/coherence-modeles.mjs). */
+const SIDE_OVERRIDES = {
+  "organ:bp-left-common-carotid-artery-r": "left",
+  "organ:bp-left-subclavian-artery-r": "left",
+  "organ:bp-right-common-carotid-artery-l": "right",
+  "organ:bp-right-subclavian-artery-l": "right",
+};
+
+/* Un « agrégat » est un concept qui regroupe plusieurs structures (système,
+ * région, membre, type d'os générique). Le seuil brut « plus de 20 pièces »
+ * utilisé auparavant excluait aussi de VRAIS organes fragmentés en nombreux
+ * morceaux — dont l'intestin grêle (54 pièces), d'où un abdomen vide. On
+ * n'exclut donc que les noms qui désignent réellement un agrégat. */
+const AGGREGATE_NAME = new RegExp(
+  "^(human body|body|skeletal systems?|musculoskeletal systems?|cardiovascular systems?|" +
+  "nervous systems?|respiratory systems?|.*mediastinum|face|head|neck|abdomen|pelvis|" +
+  "thorax|back of thorax|trunk|axial skeleton|vertebral column|vertebra|" +
+  "(long|short|flat|irregular|sesamoid) bone|(left|right) (upper|lower) limb|" +
+  "liver|(left|right) lung|heart|brain)$",
+  "i",
 );
+function isAggregateConcept(s) {
+  if (!(s.bodyParts3D?.parts > 20)) return false;
+  const names = [s.english, s.french, s.canonical].filter(Boolean);
+  return names.some((n) => AGGREGATE_NAME.test(String(n).trim()));
+}
+/* L'intestin grêle contient déjà duodénum + jéjunum + iléon : garder en plus
+ * l'iléon et le jéjunum séparés superposerait trois fois la même géométrie. */
+const SUBSET_DUPLICATES = new Set(["organ:bp-ileum", "organ:bp-jejunum"]);
+
+const keptConcepts = allStructures.filter(
+  (s) => !EXCLUDED_CONCEPTS.has(s.id)
+    && !SUBSET_DUPLICATES.has(s.id)
+    && !isAggregateConcept(s),
+);
+/* L'inventaire contient parfois DEUX concepts FMA pour la même structure
+ * (« small intestine » et « zone of small intestine »), donc deux entrées de
+ * même id. Un id dupliqué casse byId() et le mapping _index → structure du
+ * moteur : on ne garde que le concept le plus détaillé. */
+const bestById = new Map();
+for (const s of keptConcepts) {
+  const prev = bestById.get(s.id);
+  const tris = s.bodyParts3D?.triangles || 0;
+  const prevTris = prev?.bodyParts3D?.triangles || 0;
+  if (!prev || tris > prevTris) bestById.set(s.id, s);
+}
+const dedupedConcepts = [...bestById.values()];
+
+/* BodyParts3D contient plusieurs concepts FMA pour la MÊME structure
+ * (« Left subclavian artery » en version nue, -l et -r ; « Tracheobronchial
+ * tree » entier + gauche + droit). Ils se superposent à l'écran et faussent
+ * le picking. On déduplique par (nom, côté) en gardant le maillage le plus
+ * détaillé ; le côté est déduit du champ `side` ou du suffixe d'ID. */
+function dedupeKey(s) {
+  const name = String(s.french || s.english || s.canonical || s.id).toLowerCase().trim();
+  /* Le côté vient du champ `side`, du suffixe d'ID, ou à défaut du nom
+   * ANGLAIS (« Left … »). On n'utilise pas le français : « droit » y signifie
+   * aussi « rectus » (muscle droit de l'abdomen). */
+  const side = s.side
+    || (/-(l|r)$/.test(s.id) ? s.id.slice(-1) : "")
+    || (/\bleft\b/i.test(s.english || "") ? "l" : /\bright\b/i.test(s.english || "") ? "r" : "");
+  return `${name}|${side}`;
+}
+function triCount(s) {
+  return (s.bodyParts3D?.triangles || 0) + (s.zAnatomy?.triangles || 0);
+}
+/* À nom égal, on préfère Z-Anatomy sauf si BodyParts3D est nettement plus
+ * détaillé (> 30 % de triangles en plus) : c'est la politique de la fusion. */
+function preferCandidate(candidate, current) {
+  const tc = triCount(candidate);
+  const tp = triCount(current);
+  const cz = /Z-Anatomy/.test(candidate.best?.source || "");
+  const pz = /Z-Anatomy/.test(current.best?.source || "");
+  if (cz && !pz && tc >= tp * 0.7) return true;
+  if (!cz && pz && tp >= tc * 0.7) return false;
+  return tc > tp;
+}
+
+/* HIDDEN_IDS est appliqué AVANT la déduplication : sinon un doublon BodyParts3D
+ * explicitement masqué pouvait gagner la déduplication puis disparaître,
+ * emportant avec lui la version Z-Anatomy qu'on voulait garder. */
+const preFiltered = dedupedConcepts.filter((s) => !HIDDEN_IDS.has(s.id));
+const bestByName = new Map();
+const dedupedAway = [];
+for (const s of preFiltered) {
+  const key = dedupeKey(s);
+  const prev = bestByName.get(key);
+  if (!prev) { bestByName.set(key, s); continue; }
+  if (preferCandidate(s, prev)) {
+    dedupedAway.push(prev.id);
+    bestByName.set(key, s);
+  } else {
+    dedupedAway.push(s.id);
+  }
+}
+const visibleStructures = [...bestByName.values()];
+if (dedupedAway.length) {
+  console.log(`Doublons de nom fusionnés : ${dedupedAway.length} (${dedupedAway.join(", ")})`);
+}
+
 const excludedAggregates = allStructures.length - keptConcepts.length;
-const structures = keptConcepts.filter((s) => !HIDDEN_IDS.has(s.id));
+
+/* Paires gauche/droite dont les deux côtés doivent provenir de la même source.
+ * Le contrôle `source-pair` de tests/coherence-modeles.mjs exige qu'une paire
+ * -l/-r ne mélange pas Z-Anatomy et BodyParts3D. Règle : privilégier Z-Anatomy
+ * (géométrie lue via readZObject). Si les deux côtés disposent d'un objet
+ * Z-Anatomy, la paire est gardée et son étiquette de source alignée sur
+ * Z-Anatomy ; si un seul côté existe en Z-Anatomy et l'autre uniquement dans
+ * BodyParts3D, la paire entière est exclue plutôt que de garder une paire
+ * asymétrique. */
+const MIXED_SOURCE_BASES = new Set([
+  "bone:corniculate-cartilage",
+  "bone:lateral-cuneiform-bone",
+  "bone:trapezoid-bone",
+  "muscle:iliococcygeus-muscle",
+  "muscle:pubococcygeus-muscle",
+  "muscle:straight-part-of-cricothyroid-muscle",
+  "organ:stria-terminalis",
+  "organ:thalamus",
+]);
+
+const SOURCE_OVERRIDES = new Map();  // id -> source imposée dans le manifeste
+const MISMATCH_DROP_IDS = new Set(); // ids des paires asymétriques à exclure
+
+const structuresById = new Map(visibleStructures.map((s) => [s.id, s]));
+const hasZGeometry = (s) => Boolean(s && s.object && zManifest.objects[s.object]);
+for (const base of MIXED_SOURCE_BASES) {
+  const left = structuresById.get(`${base}-l`);
+  const right = structuresById.get(`${base}-r`);
+  const leftZ = hasZGeometry(left);
+  const rightZ = hasZGeometry(right);
+  if (leftZ && rightZ) {
+    // Deux objets Z-Anatomy : on garde la paire (la géométrie est déjà lue
+    // depuis Z) et on aligne l'étiquette de source des deux côtés.
+    if (left) SOURCE_OVERRIDES.set(left.id, "Z-Anatomy");
+    if (right) SOURCE_OVERRIDES.set(right.id, "Z-Anatomy");
+  } else if (leftZ !== rightZ) {
+    // Un seul côté en Z-Anatomy : mieux vaut perdre les deux qu'une paire
+    // asymétrique.
+    if (left) MISMATCH_DROP_IDS.add(left.id);
+    if (right) MISMATCH_DROP_IDS.add(right.id);
+  }
+  // Aucun côté en Z-Anatomy : les deux viennent de BodyParts3D, déjà cohérents.
+}
+
+const structures = visibleStructures.filter((s) => !MISMATCH_DROP_IDS.has(s.id));
 
 const LOD = {
   low: { target: 300, label: "vue d'ensemble" },
@@ -333,8 +497,8 @@ for (const s of structures) {
     ta2: s.ta2Id,
     category: s.category,
     subsystem: s.subsystem || "",
-    side: s.side || null,
-    source: s.best.source,
+    side: SIDE_OVERRIDES[s.id] || s.side || null,
+    source: SOURCE_OVERRIDES.get(s.id) || s.best.source,
     materials: s.materials || [],
     path: (s.collections || []).filter((c) => !/Bonus|Joints|Muscular insertions|Regions/i.test(c)),
     bounds: geometry.bounds,

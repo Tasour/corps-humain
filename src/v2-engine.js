@@ -12,31 +12,105 @@ const CATEGORY_COLORS = {
   skin: "#67e8f9",
 };
 const CATEGORY_ORDER = ["bone", "muscle", "organ", "skin"];
+/* Séreuses et fascias : feuillets sans épaisseur. Rendus opaques, ils masquent
+ * les organes qu'ils recouvrent (le grand omentum cachait tout l'abdomen). */
+const MEMBRANE_RE = /omentum|mesenter|peritoneum|\bpleura\b|pericardium|serous|fascia|septum|retinacul/i;
+function isMembrane(structure) {
+  return MEMBRANE_RE.test(`${structure.en || ""} ${structure.fr || ""} ${structure.la || ""}`);
+}
 /* Nombre maximal de géométries de contour conservées au survol. Au-delà,
  * les plus anciennes sont libérées pour éviter une croissance sans borne. */
 const HOVER_CACHE_LIMIT = 20;
 
+/* Couleur d'une structure. Deux bases fusionnées cohabitent :
+ *   - Z-Anatomy fournit `materials` (Bone, Cartilage…) en français/anglais ;
+ *   - BodyParts3D n'a AUCUN matériau (497/606 vides) et ses 109 matériaux
+ *     restants sont hérités du jumeau Z-Anatomy (donc parfois faux : un
+ *     tentorium classé « Cartilage »). On ne fait donc JAMAIS confiance à
+ *     `materials` pour une structure BodyParts3D.
+ * L'ordre des règles est significatif : un vaisseau nommé (« artère spinale »)
+ * doit gagner contre le mot « spinal » (qui désigne un nerf), et un organe
+ * nommé (« lobe droit du foie ») doit gagner contre son sous-système
+ * `arterial`. Les sous-systèmes ne servent qu'en dernier recours, et les
+ * valeurs anglaises de BodyParts3D y sont normalisées. */
+const SUBSYSTEM_COLORS = {
+  arterial: "#b63a40",
+  venous: "#4a6ea8",
+  cardiovascular: "#b63a40",
+  cardiovasculaire: "#b63a40",
+  cardiac: "#8e2f3a",
+  nervous: "#cbb06a",
+  "nerveux et sens": "#cbb06a",
+  sensory: "#d9b36a",
+  respiratory: "#c47b78",
+  digestive: "#c98d7e",
+  urinary: "#c2a24a",
+  reproductive: "#b4743e",
+  endocrine: "#b4743e",
+  lymphatic: "#7fbfa8",
+  lymphoïde: "#7fbfa8",
+  integumentary: "#7fa8a6",
+};
+
 function colorFor(structure) {
-  const mats = (structure.materials || []).join(" ").toLowerCase();
-  const name = `${structure.en || ""} ${structure.fr || ""}`.toLowerCase();
+  const isBp = /BodyParts3D/i.test(structure.source || "");
+  const mats = isBp ? "" : (structure.materials || []).join(" ").toLowerCase();
+  const name = `${structure.en || ""} ${structure.fr || ""} ${structure.la || ""}`.toLowerCase();
   const sub = (structure.subsystem || "").toLowerCase();
-  if (/cartilage/.test(mats)) return "#c9d6d0";
-  if (/bone/.test(mats) || structure.category === "bone") return "#e6dcc9";
-  if (/tendon|fascia|ligament|bursa|sheath/.test(mats + " " + name)) return "#d8c9a8";
-  if (/nerve|nerv|gyrus|sulcus|brain|encephal|spinal|dura|meninx|plexus|tract|nucleus/.test(name + " " + sub)) return "#cbb06a";
-  if (/artery|arteria|artere|arter/.test(name + " " + sub)) return "#b63a40";
-  if (/vein|vena|veine|venous|sinus/.test(name + " " + sub)) return "#4a6ea8";
-  if (/lymph/.test(name + " " + sub)) return "#7fbfa8";
-  if (/heart|cardia|ventricl|atrium|myocard/.test(name)) return "#8e2f3a";
-  if (/lung|pulmon|bronch|alveol/.test(name)) return "#c47b78";
+  const cat = structure.category;
+
+  /* 1. Catégories structurelles : la source les renseigne de façon fiable.
+   * Le cartilage se reconnaît au NOM, pas à `materials` : Z-Anatomy étiquette
+   * parfois la patella « Cartilage » et la couleur d'os doit primer. */
+  if (cat === "bone") return /cartilage/.test(name) ? "#c9d6d0" : "#e6dcc9";
+  if (cat === "muscle") return "#a83b44";
+
+  /* 2. Vaisseaux explicitement nommés — AVANT les règles « spinal »/« pulmon »
+   * qui classeraient à tort une artère spinale en nerf et le tronc pulmonaire
+   * en poumon. `trunk`/`truncus` couvre les troncs artériels (pulmonaire,
+   * brachio-céphalique) ; le tronc lymphatique est déjà pris par `lymph`. */
+  if (/\barter(y|ies|ial)\b|\barteria\b|art[èe]re|\baorta\b|aortic|\btrunk\b|\btruncus\b/.test(name)) return "#b63a40";
+  if (/\bvein(s)?\b|\bvena\b|veine|venous\b/.test(name)) return "#4a6ea8";
+  if (/\blymph|lymphatic/.test(name)) return "#7fbfa8";
+
+  /* 3. Organes nommés — avant les règles par sous-système, pour qu'un « lobe
+   * droit du foie » (subsystem=arterial) reste couleur foie. */
+  if (/heart|myocard|ventricl|atrium|auricle|endocard|pericard|tricuspid|mitral/.test(name)) return "#8e2f3a";
+  if (/lung|pulmon|bronch|alveol|pleura/.test(name)) return "#c47b78";
   if (/liver|hepat/.test(name)) return "#83423a";
-  if (/kidney|renal|nephron/.test(name)) return "#9c4b44";
-  if (/stomach|gastr|intestin|colon|digest/.test(name)) return "#c98d7e";
-  if (/pancrea|spleen|thyroid|gland|adrenal/.test(name)) return "#b4743e";
-  if (/skin|epiderm/.test(name)) return "#7fa8a6";
-  if (structure.category === "muscle") return "#a83b44";
-  if (structure.category === "organ") return "#a85f55";
-  return CATEGORY_COLORS[structure.category] || "#ffffff";
+  if (/kidney|renal|nephron|glomerul|calyx/.test(name)) return "#9c4b44";
+  if (/ureter|urethra|bladder|vesic|prostat/.test(name)) return "#c2a24a";
+  if (/stomach|gastr|intestin|colon|jejun|ileum|duoden|caecum|cecum|rectum|anal|anus|appendix/.test(name)) return "#c98d7e";
+  if (/pancrea|spleen|thyroid|gland|adrenal|pituitary|hypophysis|pineal|thymus|parathyroid/.test(name)) return "#b4743e";
+  /* `\bretina\b` : sans borne, « retinaculum » (un tendon) serait pris pour
+   * la rétine. */
+  if (/\bretina\b|retinal\b|choroid|cornea|\biris\b|\blens\b|sclera|vitreous|conjunctiva/.test(name)) return "#d9b36a";
+  if (/nerve|nerv|gyrus|sulcus|brain|encephal|cerebell|cerebr|dura|meninx|mening|tentorium|falx|plexus|tract\b|nucleus|ganglion|spinal cord|medulla|pons\b|thalam|hypothalam|hippocamp/.test(name)) return "#cbb06a";
+  if (/cartilage/.test(mats + " " + name)) return "#c9d6d0";
+  if (/tendon|fascia|ligament|bursa|sheath|aponeuro|retinacul/.test(mats + " " + name)) return "#d8c9a8";
+  if (/skin|epiderm|derm\b|cutaneous/.test(name)) return "#7fa8a6";
+
+  /* 3 ter. Organes sans règle dédiée : muqueuses des voies aériennes et
+   * digestives hautes, organes génitaux, séreuses. Sans ces règles ils
+   * tombaient tous sur la teinte organe générique. */
+  if (/trachea|larynx|pharynx|epiglott|vocal|arytenoid/.test(name)) return "#c47b78";
+  if (/tongue|gingiva|mucosa|palate|uvula|oral|salivary|tonsil/.test(name)) return "#c9807e";
+  if (/testis|epididym|ovary|uterus|vagina|penis|prostat|seminal|scrotum|broad ligament/.test(name)) return "#b4743e";
+  if (/omentum|mesenter|peritoneum|pleura|pericardium/.test(name)) return "#d0a05a";
+
+  /* 3 bis. Os classés « organe » par BodyParts3D (viscerocranium, mandibule,
+   * vertèbres…) : sans cette règle ils tombaient sur un sous-système
+   * `sensory`/`Viscéral` et prenaient une couleur d'organe. */
+  if (/\bcranium\b|viscerocranium|neurocranium|mandible|maxilla|vertebra|\brib\b|sternum|scapula|clavicle|humerus|\bradius\b|\bulna\b|femur|tibia|fibula|patella|calcaneus|carpal|tarsal|metacarpal|metatarsal|phalan|sacrum|coccyx|ilium|ischium|\bpubis\b|\bbone\b|\bos\b/.test(name)) return "#e6dcc9";
+
+  /* 4. Repli sur le sous-système, à valeurs anglaises ET françaises. */
+  const bySub = SUBSYSTEM_COLORS[sub];
+  if (bySub) return bySub;
+
+  /* 5. Dernier repli : la catégorie, avec des teintes organe distinctes pour
+   * éviter un bloc monochrome quand le nom n'apprend rien. */
+  if (cat === "organ") return "#a85f55";
+  return CATEGORY_COLORS[cat] || "#ffffff";
 }
 
 /* Textures PBR : albedos générés, puis cartes normal/roughness dérivées
@@ -209,6 +283,13 @@ export class AnatomyV2Engine {
     this.byId = new Map();
     this.batches = new Map();
     this.mergedMeshes = new Map();
+    /* Par catégorie : Uint32Array[vertexIndex] = _index de la structure.
+     * Permet de remonter d'un hit sur un mesh fusionné (sans instanceId)
+     * jusqu'à la structure correspondante. */
+    this.mergedVertexMap = new Map();
+    /* Par catégorie : Map(_index structure → { start, count }) pour repeindre
+     * les vertices d'une structure dans la vue fusionnée (sélection). */
+    this.mergedRanges = new Map();
     this.categoryEnabled = new Map();
     this.mergedMode = true;
     this.index = null;
@@ -218,7 +299,12 @@ export class AnatomyV2Engine {
     this.lodBuffers = new Map();
     this.baseBuffers = {};  // buffers 'low' chargés à l'initialisation
     this.geometryIds = new Map();
+    /* sourceGeometries suit la géométrie AFFICHÉE (peut être promue en high
+     * pour le contour de survol) ; baseGeometries garde la géométrie low
+     * d'origine et n'est JAMAIS écrasée, sinon resetLodsToLow() ne peut plus
+     * revenir en arrière. */
     this.sourceGeometries = new Map();
+    this.baseGeometries = new Map();
     this.globalLod = "low";
     this.currentVisible = new Set();
     this.isolated = null;
@@ -354,6 +440,7 @@ export class AnatomyV2Engine {
         batch.setColorAt(instanceId, new THREE.Color(colorFor(structure)));
         this.geometryIds.set(structure.id, { category, geometryId });
         this.sourceGeometries.set(structure.id, structure._geometry);
+        this.baseGeometries.set(structure.id, structure._geometry);
         structure._geometryId = geometryId;
         structure._activeLod = this.lod;
         this.instanceToStructure.set(`${category}:${instanceId}`, structure);
@@ -400,48 +487,77 @@ export class AnatomyV2Engine {
    * restent utilisés dès qu'on isole/filtre (quelques dizaines d'instances). */
   buildMergedViews(lod = this.lod) {
     this.mergedMeshes = new Map();
+    this.mergedVertexMap = new Map();
+    this.mergedRanges = new Map();
     for (const [category, batch] of this.batches) {
       const list = this.structures.filter((s) => s.category === category && s.lod?.[lod]);
-      const positions = [], normals = [], indices = [], colors = [];
-      let vertexBase = 0;
-      const color = new THREE.Color();
-      for (const s of list) {
-        const rec = s.lod[lod];
-        const buffer = this.lodBuffers.get(`${category}:${lod}`) || this.baseBuffers?.[category];
-        if (!buffer) continue;
-        /* `buffer` est un ArrayBuffer (décompressé) : ses offsets sont déjà
-         * absolus, pas de .buffer/.byteOffset dans Node. */
-        const p = new Float32Array(buffer, rec.positions, rec.vertexCount * 3);
-        const n = new Int16Array(buffer, rec.normals, rec.vertexCount * 3);
-        const idxArr = rec.indexType === "u16"
-          ? new Uint16Array(buffer, rec.indices, rec.indexCount)
-          : new Uint32Array(buffer, rec.indices, rec.indexCount);
-        /* Chaque structure garde sa couleur : un attribut par vertex, sinon
-         * tout le corps fusionné serait blanc. */
-        color.set(colorFor(s));
-        for (let v = 0; v < rec.vertexCount; v++) {
-          positions.push(p[v * 3], p[v * 3 + 1], p[v * 3 + 2]);
-          normals.push(n[v * 3], n[v * 3 + 1], n[v * 3 + 2]);
-          colors.push(color.r, color.g, color.b);
-        }
-        for (let i = 0; i < idxArr.length; i++) indices.push(idxArr[i] + vertexBase);
-        vertexBase += rec.vertexCount;
+      /* Les séreuses (grand omentum, mésentère, péritoine, plèvre) sont des
+       * feuillets sans épaisseur : opaques, elles masquent tout l'abdomen et
+       * donnent l'impression que les intestins ont disparu. On les rend à part,
+       * translucides, pour que la vue « Organes » reste lisible. */
+      const solids = list.filter((s) => !isMembrane(s));
+      const membranes = list.filter((s) => isMembrane(s));
+      this.buildMergedMesh(category, category, solids, batch.material, lod);
+      if (membranes.length) {
+        const material = batch.material.clone();
+        material.transparent = true;
+        /* Très translucide : les séreuses se superposent en plusieurs
+         * couches, l'alpha se cumule vite et redeviendrait opaque. */
+        material.opacity = 0.15;
+        material.depthWrite = false;
+        material.roughness = 0.9;
+        this.buildMergedMesh(`${category}:membrane`, category, membranes, material, lod, { membrane: true });
       }
-      if (!indices.length) continue;
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-      geometry.setAttribute("normal", new THREE.Int16BufferAttribute(normals, 3, true));
-      geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-      geometry.setIndex(new THREE.Uint32BufferAttribute(indices, 1));
-      geometry.computeBoundingSphere();
-      const material = batch.material.clone();
-      material.vertexColors = true;
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.name = `v2-merged-${category}`;
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      this.mergedMeshes.set(category, mesh);
     }
+  }
+
+  /* Fusionne une liste de structures en un seul mesh, avec un attribut de
+   * couleur par vertex et une carte vertex → structure pour le picking. */
+  buildMergedMesh(key, category, list, baseMaterial, lod, options = {}) {
+    const positions = [], normals = [], indices = [], colors = [], vertexMap = [];
+    const ranges = new Map();
+    let vertexBase = 0;
+    const color = new THREE.Color();
+    for (const s of list) {
+      const rec = s.lod[lod];
+      const buffer = this.lodBuffers.get(`${category}:${lod}`) || this.baseBuffers?.[category];
+      if (!buffer) continue;
+      const p = new Float32Array(buffer, rec.positions, rec.vertexCount * 3);
+      const n = new Int16Array(buffer, rec.normals, rec.vertexCount * 3);
+      const idxArr = rec.indexType === "u16"
+        ? new Uint16Array(buffer, rec.indices, rec.indexCount)
+        : new Uint32Array(buffer, rec.indices, rec.indexCount);
+      color.set(colorFor(s));
+      if (s._index !== undefined) ranges.set(s._index, { start: vertexBase, count: rec.vertexCount });
+      for (let v = 0; v < rec.vertexCount; v++) {
+        positions.push(p[v * 3], p[v * 3 + 1], p[v * 3 + 2]);
+        normals.push(n[v * 3], n[v * 3 + 1], n[v * 3 + 2]);
+        colors.push(color.r, color.g, color.b);
+        vertexMap.push(s._index ?? 0xffffffff);
+      }
+      for (let i = 0; i < idxArr.length; i++) indices.push(idxArr[i] + vertexBase);
+      vertexBase += rec.vertexCount;
+    }
+    if (!indices.length) return null;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute("normal", new THREE.Int16BufferAttribute(normals, 3, true));
+    geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    geometry.setIndex(new THREE.Uint32BufferAttribute(indices, 1));
+    geometry.computeBoundingSphere();
+    const material = baseMaterial.clone();
+    material.vertexColors = true;
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = `v2-merged-${key}`;
+    mesh.userData.category = category;
+    mesh.userData.mapKey = key;
+    mesh.castShadow = !options.membrane;
+    mesh.receiveShadow = true;
+    if (options.membrane) mesh.renderOrder = 2;
+    this.mergedMeshes.set(key, mesh);
+    this.mergedVertexMap.set(key, new Uint32Array(vertexMap));
+    this.mergedRanges.set(key, ranges);
+    return mesh;
   }
 
   addTo(scene) {
@@ -456,13 +572,14 @@ export class AnatomyV2Engine {
   /* Bascule entre vue fusionnée (corps entier) et lots (isolement). */
   setMergedMode(enabled) {
     this.mergedMode = !!enabled;
-    for (const [category, mesh] of this.mergedMeshes) {
+    /* Un seul mode de rendu à la fois : sinon la vue fusionnée ET les lots
+     * dessinent les mêmes structures (double draw, z-fighting, picking ambigu). */
+    for (const mesh of this.mergedMeshes.values()) {
+      const category = mesh.userData.category;
       mesh.visible = this.mergedMode && this.categoryEnabled?.get(category) !== false;
     }
-    if (!this.mergedMode) {
-      for (const [category, batch] of this.batches) {
-        batch.visible = this.categoryEnabled?.get(category) !== false;
-      }
+    for (const [category, batch] of this.batches) {
+      batch.visible = !this.mergedMode && this.categoryEnabled?.get(category) !== false;
     }
   }
 
@@ -516,9 +633,11 @@ export class AnatomyV2Engine {
     if (hit < 0) return null;
     const structure = this.structures[hit] || null;
     if (!structure) return null;
+    /* L'autorité de visibilité est currentVisible (BVH + isolation), pas
+     * batch.visible : en vue corps entier tous les lots sont masqués alors
+     * que les structures sont bien affichées via les meshes fusionnés. */
+    if (!this.currentVisible.has(hit)) return null;
     if (this.isolated && !this.currentVisible.has(structure._index)) return null;
-    const batch = this.batches.get(structure.category);
-    if (batch && !batch.visible) return null;
     return structure;
   }
 
@@ -638,9 +757,38 @@ export class AnatomyV2Engine {
     this.hoverMesh = null;
   }
 
-  /* Picking exact sur les triangles des lots visibles (plus fiable que l'AABB
-   * du BVH pour les structures imbriquées). */
+  /* Picking sur les vues fusionnées VISIBLES (vue corps entier). Un hit sur un
+   * Mesh fusionné ne porte ni batchId ni instanceId : on remonte à la structure
+   * via mergedVertexMap[hit.face.a], construite dans buildMergedViews(). */
+  pickMerged(raycaster) {
+    if (!this.mergedMeshes.size) return null;
+    const targets = [];
+    for (const mesh of this.mergedMeshes.values()) {
+      if (mesh.visible) targets.push(mesh);
+    }
+    if (!targets.length) return null;
+    const hits = raycaster.intersectObjects(targets, false);
+    for (const hit of hits) {
+      const map = this.mergedVertexMap.get(hit.object.userData.mapKey || hit.object.userData.category);
+      if (!map || !hit.face) continue;
+      const structureIndex = map[hit.face.a];
+      const structure = this.structures[structureIndex] || null;
+      if (!structure) continue;
+      /* Garde-fou cohérent avec pick() : en vue isolée, une structure masquée
+       * ne doit jamais produire de survol ni de sélection. */
+      if (this.isolated && !this.currentVisible.has(structureIndex)) continue;
+      return structure;
+    }
+    return null;
+  }
+
+  /* Picking exact sur les triangles (meshes fusionnés d'abord, puis lots).
+   * Plus fiable que l'AABB du BVH pour les structures imbriquées. */
   pickExact(raycaster) {
+    /* En vue corps entier les lots sont masqués : les meshes fusionnés sont
+     * la seule représentation affichée et doivent être interrogés en premier. */
+    const merged = this.pickMerged(raycaster);
+    if (merged) return merged;
     if (!this.batches.size) return null;
     /* On ne teste que les catégories actuellement affichées. */
     const targets = [];
@@ -654,13 +802,17 @@ export class AnatomyV2Engine {
     if (!targets.length) return null;
     const hits = raycaster.intersectObjects(targets, false);
     for (const hit of hits) {
-      const category = byBatch.get(hit.object);
+      const batch = hit.object;
+      const category = byBatch.get(batch);
       if (!category) continue;
       /* Three.js r187 renseigne `batchId` (index d'instance) sur les hits
        * BatchedMesh ; `instanceId` n'est posé que par les Mesh classiques.
        * On accepte les deux pour rester compatible avec les versions voisines. */
       const instanceId = hit.batchId ?? hit.instanceId;
       if (instanceId === undefined || instanceId === null) continue;
+      /* Un lot visible peut encore contenir des instances masquées par
+       * isolate()/showGroup()/updateVisibility() : on les exclut explicitement. */
+      if (batch.getVisibleAt && !batch.getVisibleAt(instanceId)) continue;
       const structure = this.instanceToStructure.get(`${category}:${instanceId}`);
       if (!structure) continue;
       /* Même pour un BatchedMesh, on recoupe avec notre propre état de
@@ -721,8 +873,11 @@ export class AnatomyV2Engine {
     if (!record) return false;
     const ref = this.geometryIds.get(structure.id);
     if (!ref) return false;
-    const buffer = await this.ensureLod(ref.category, lod);
-    const geometry = geometryFromRecord(buffer, record);
+    /* Le LOD bas est déjà en mémoire : inutile de re-télécharger le chunk. */
+    const geometry = lod === "low"
+      ? this.baseGeometries.get(structure.id)
+      : geometryFromRecord(await this.ensureLod(ref.category, lod), record);
+    if (!geometry) return false;
     const batch = this.batches.get(ref.category);
     if (!batch) return false;
     batch.setGeometryAt(structure._geometryId, geometry);
@@ -742,13 +897,17 @@ export class AnatomyV2Engine {
   /* Repasse toutes les structures à leur géométrie source (LOD bas), sans
    * téléchargement : le corps entier n'a pas besoin du détail d'isolement. */
   resetLodsToLow() {
-    for (const [id, geometry] of this.sourceGeometries) {
+    for (const [id, geometry] of this.baseGeometries) {
       const structure = this.byId.get(id);
       const ref = this.geometryIds.get(id);
       if (!structure || !ref || structure._activeLod === "low") continue;
       const batch = this.batches.get(ref.category);
       if (!batch) continue;
       batch.setGeometryAt(structure._geometryId, geometry);
+      /* La géométrie affichée redevient la source : le contour de survol doit
+       * suivre, sinon il garde la forme high d'une structure revenue en low. */
+      this.sourceGeometries.set(id, geometry);
+      this.hoverGeometryCache.delete(id);
       structure._activeLod = "low";
     }
     this.globalLod = "low";
@@ -852,11 +1011,33 @@ export class AnatomyV2Engine {
   }
 
   /* Colorie une instance (sélection). La couleur par défaut est blanche. */
+  /* Couleur de sélection. `color === null` restaure la couleur anatomique
+   * (colorFor) au lieu de repeindre en blanc. La vue fusionnée n'a pas
+   * d'instanceColor : on repeint directement la plage de vertices de la
+   * structure, sinon la sélection serait invisible en corps entier. */
   highlight(structure, color = "#ffffff") {
     if (!structure) return;
+    const target = color === null || color === undefined
+      ? new THREE.Color(colorFor(structure))
+      : new THREE.Color(color);
     const ref = this.structureToInstance.get(structure._index);
     const batch = ref && this.batches.get(ref.category);
-    if (batch) batch.setColorAt(ref.instanceId, new THREE.Color(color));
+    if (batch) {
+      batch.setColorAt(ref.instanceId, target);
+      if (batch.instanceColor) batch.instanceColor.needsUpdate = true;
+    }
+    /* Une structure peut vivre dans le mesh solide ou dans le mesh des
+     * séreuses : on repeint celui qui la contient. */
+    for (const key of [structure.category, `${structure.category}:membrane`]) {
+      const mesh = this.mergedMeshes.get(key);
+      const range = this.mergedRanges.get(key)?.get(structure._index);
+      if (!mesh || !range) continue;
+      const attr = mesh.geometry.getAttribute("color");
+      for (let i = 0; i < range.count; i++) {
+        attr.setXYZ(range.start + i, target.r, target.g, target.b);
+      }
+      attr.needsUpdate = true;
+    }
   }
 
   /* Centre et rayon d'une structure, pour le cadrage. */
@@ -887,10 +1068,12 @@ export class AnatomyV2Engine {
       for (const structure of this.structures) {
         if (structure.category !== category || !structure._geometryId) continue;
         const geometry = lod === "low"
-          ? this.sourceGeometries.get(structure.id)
+          ? this.baseGeometries.get(structure.id)
           : geometryFromRecord(this.lodBuffers.get(`${category}:${lod}`), structure.lod[lod]);
         if (geometry) {
           batch.setGeometryAt(structure._geometryId, geometry);
+          this.sourceGeometries.set(structure.id, geometry);
+          this.hoverGeometryCache.delete(structure.id);
           structure._activeLod = lod;
         }
       }

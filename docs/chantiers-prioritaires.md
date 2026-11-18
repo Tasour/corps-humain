@@ -22,8 +22,27 @@
 | 16 | **FPS réels sous charge** | HUD honnête + cadence adaptative, plus d'image gelée au glisser | ✅ | HUD = rendus réels ; glisser = ~63 fps ; `MeshStandardMaterial` ; WASM pile fixe |
 | 17 | **Collisions visuelles (hover + cadrage)** | Contour plaqué, catégorie activée à l'isolement, cadrage sans débordement | ✅ | Test par dilatation euclidienne : 0 anomalie / 400 structures ; 63 IDs exclus |
 | 18 | **Classification respiratoire** | Poumons/trachée dans l'appareil respiratoire | ✅ | Remappage dans l'arbre, 15 structures, sous-nœuds Poumons/Bronches |
+| 19 | **Cohérence de la fusion des bases** | Paires G/D d'une même source, doublons inter-sources, suffixes TA2 | ✅ | 0 anomalie (`tests/coherence-modeles.mjs`), 2 039 structures |
+| 20 | **Arbre sans branches parallèles** | Rattacher BodyParts3D aux branches Z-Anatomy | ✅ | Table `BP3D_CANONICAL` + canonicalisation ; « Appareil digestif » unique (43) |
+| 21 | **Couche de sélection** | Picking en vue fusionnée, double rendu, LOD réinitialisable, restauration de couleur | ✅ | `pickMerged`, `baseGeometries`, `highlight(s, null)` ; captures runtime |
+| 22 | **Séreuses lisibles** | Omentum/mésentère/péritoine translucides | ✅ | Mesh membrane séparé, opacité 0,15 |
+| 23 | **Contrôle visuel par groupe** | 1 groupe = 1 capture par orientation | ✅ | `tests/screens-groupes.mjs` : 29 groupes × 4 = 116 captures |
 
 Légende : ✅ = terminé et vérifié · ⬜ = à faire.
+
+## Passe fusion des bases et sélection (18 novembre 2026)
+
+Détail et preuves : [`docs/analyses/passe-fusion-2026-11-18.md`](analyses/passe-fusion-2026-11-18.md).
+
+- **Données** : 8 paires G/D mixtes corrigées, 4 artères TA2 contradictoires et 5 doublons
+  inter-sources masqués, **intestin grêle restauré** (la règle « > 20 pièces = agrégat »
+  excluait un vrai organe), déduplication par `(nom, côté)`.
+- **Arbre** : fin des branches « Squelette (BodyParts3D) », « Musculature (BodyParts3D) » et du
+  double « Appareil digestif ».
+- **Sélection** : picking réparé en vue corps entier, plus de double rendu, LOD de retour au
+  bas après isolement, couleur anatomique restaurée à la désélection.
+- **Rendu** : couleurs corrigées pour 8 familles de structures, séreuses translucides.
+- **Tests** : 30/30, 0 collision AABB, 0 anomalie visuelle, 0 anomalie de cohérence.
 
 ## Corrections livrées (chantiers 11-15)
 

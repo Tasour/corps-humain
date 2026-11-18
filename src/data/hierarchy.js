@@ -289,6 +289,67 @@ function normalizeCategory(structure) {
   return corrected;
 }
 
+/* Les structures BodyParts3D n'ont qu'un pseudo-chemin `BodyParts3D:<sous-
+ * système>` : sans table de correspondance elles créaient des branches
+ * PARALLÈLES aux branches Z-Anatomy (« Appareil digestif » en double,
+ * « Squelette (BodyParts3D) » à côté de « Squelette », etc.). On les rattache
+ * explicitement à la branche canonique, au même niveau que Z-Anatomy. */
+const BP3D_CANONICAL = {
+  arterial: ["Réseau artériel"],
+  venous: ["Réseau veineux"],
+  cardiac: ["Système cardiovasculaire"],
+  lymphatic: ["Organes lymphoïdes"],
+  nervous: ["Système nerveux et organes des sens"],
+  sensory: ["Système nerveux et organes des sens"],
+  digestive: ["Systèmes viscéraux", "Abdomen", "Appareil digestif"],
+  urinary: ["Systèmes viscéraux", "Abdomen", "Appareil urinaire"],
+  /* Les organes respiratoires Z-Anatomy sont remontés à la racine par
+   * normalizeCategory() : on aligne BodyParts3D sur le même niveau, sinon
+   * « Appareil respiratoire » apparaît deux fois (racine + viscères). */
+  respiratory: ["Appareil respiratoire"],
+  reproductive: ["Systèmes viscéraux", "Appareils génitaux"],
+  endocrine: ["Systèmes viscéraux", "Glandes endocrines"],
+  integumentary: ["Système tégumentaire"],
+  skeletal: ["Squelette"],
+  muscular: ["Musculature"],
+};
+
+/* Structures classées « organe » par BodyParts3D alors que ce sont des os
+ * (viscerocranium, mandibule…). Sans ce garde-fou elles atterrissaient dans le
+ * système nerveux ou les viscères à cause de leur sous-système. */
+const BONE_LIKE = /\bcranium\b|viscerocranium|neurocranium|mandible|maxilla|vertebra|\brib\b|sternum|scapula|clavicle|humerus|\bradius\b|\bulna\b|femur|tibia|fibula|patella|calcaneus|carpal|tarsal|metacarpal|metatarsal|phalan|\bbone\b/;
+
+/* Z-Anatomy imbrique le MÊME appareil à des profondeurs différentes :
+ *   Systèmes viscéraux > Abdomen > Appareil digestif
+ *   Systèmes viscéraux > Appareil digestif > Bouche
+ *   Systèmes viscéraux > Abdomen > Tube digestif > Appareil digestif
+ * D'où plusieurs nœuds homonymes, chacun avec une fraction des organes.
+ * On ramène toute occurrence du label à une position canonique unique ;
+ * `keep` conserve les sous-régions qui suivent (Bouche, Tronc…), `drop`
+ * les supprime quand elles sont du bruit de collection. */
+const CANONICAL_LABELS = {
+  "Appareil digestif": { path: ["Systèmes viscéraux", "Abdomen", "Appareil digestif"], keep: true },
+  "Appareil urinaire": { path: ["Systèmes viscéraux", "Abdomen", "Appareil urinaire"], keep: true },
+  "Appareils génitaux": { path: ["Systèmes viscéraux", "Appareils génitaux"], keep: true },
+  "Glandes endocrines": { path: ["Systèmes viscéraux", "Glandes endocrines"], keep: true },
+  "Appareil respiratoire": { path: ["Appareil respiratoire"], keep: false },
+};
+
+function canonicalize(parts) {
+  /* « Système lymphoïde » est un niveau parasite présent une fois sur deux
+   * dans les chemins Z-Anatomy : on le supprime sans déplacer le reste. */
+  const cleaned = parts.filter((p) => p !== "Système lymphoïde");
+  for (let i = 0; i < cleaned.length; i++) {
+    const rule = CANONICAL_LABELS[cleaned[i]];
+    if (!rule) continue;
+    const tail = rule.keep
+      ? cleaned.slice(i + 1).filter((p) => !rule.path.includes(p))
+      : [];
+    return [...rule.path, ...tail];
+  }
+  return cleaned;
+}
+
 function cleanPath(structure) {
   const categoryRoot = {
     bone: "Système squelettique",
@@ -298,8 +359,29 @@ function cleanPath(structure) {
   const corrected = normalizeCategory(structure);
   if (corrected) return [categoryRoot, ...corrected];
   const raw = structure.path || [];
+  const first = raw[0] || "";
+  if (first.startsWith("BodyParts3D:")) {
+    const subsystem = first.slice("BodyParts3D:".length);
+    const canonical = BP3D_CANONICAL[subsystem];
+    if (canonical) {
+      const name = `${structure.en || ""} ${structure.fr || ""} ${structure.la || ""}`.toLowerCase();
+      if (BONE_LIKE.test(name)) return ["Système squelettique", "Squelette"];
+      if (structure.category === "muscle") return ["Système musculaire", "Musculature"];
+      return [categoryRoot, ...canonical];
+    }
+  }
   const parts = raw.filter((p) => p && !IGNORE.test(p)).map(translate);
-  return [categoryRoot, ...parts];
+  /* La canonicalisation ne concerne QUE les organes : un muscle de la langue
+   * ou une dent dont le chemin traverse « Appareil digestif » doit rester
+   * dans la musculature / le squelette. On retire même ces labels d'appareil
+   * des chemins osseux/musculaires : ils y créaient des nœuds parasites
+   * (« Squelette > Appareil digestif »). */
+  if (structure.category === "organ") return [categoryRoot, ...canonicalize(parts)];
+  const SYSTEM_LABELS = new Set([
+    ...Object.keys(CANONICAL_LABELS),
+    "Système lymphoïde",
+  ]);
+  return [categoryRoot, ...parts.filter((p) => !SYSTEM_LABELS.has(p))];
 }
 
 export class AnatomyTree {

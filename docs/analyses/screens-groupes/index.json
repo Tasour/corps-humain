@@ -1,0 +1,528 @@
+{
+  "generated": "2026-11-18T15:08:19.456Z",
+  "groups": [
+    {
+      "id": "bloc-organes",
+      "label": "Bloc Organes et systèmes",
+      "kind": "bloc",
+      "count": 993,
+      "center": [
+        0.000002995133399963379,
+        0.8611524477601051,
+        -0.000936649739742279
+      ],
+      "radius": 0.8474187478423119,
+      "files": [
+        "bloc-organes-face.jpg",
+        "bloc-organes-dos.jpg",
+        "bloc-organes-profil-gauche.jpg",
+        "bloc-organes-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "bloc-muscles",
+      "label": "Bloc Système musculaire",
+      "kind": "bloc",
+      "count": 695,
+      "center": [
+        -0.0026829391717910767,
+        0.8570121841039509,
+        0.0031595975160598755
+      ],
+      "radius": 0.8505628986749798,
+      "files": [
+        "bloc-muscles-face.jpg",
+        "bloc-muscles-dos.jpg",
+        "bloc-muscles-profil-gauche.jpg",
+        "bloc-muscles-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "bloc-squelette",
+      "label": "Bloc Système squelettique",
+      "kind": "bloc",
+      "count": 351,
+      "center": [
+        -0.0026680827140808105,
+        0.8613064279779792,
+        0.009653501212596893
+      ],
+      "radius": 0.8530148277059197,
+      "files": [
+        "bloc-squelette-face.jpg",
+        "bloc-squelette-dos.jpg",
+        "bloc-squelette-profil-gauche.jpg",
+        "bloc-squelette-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-appareil-respiratoire",
+      "label": "Appareil respiratoire",
+      "kind": "sous-bloc",
+      "count": 17,
+      "center": [
+        -0.0006105080246925354,
+        1.372306227684021,
+        0.01198149099946022
+      ],
+      "radius": 0.2239149808883667,
+      "files": [
+        "organes-et-syst-mes-appareil-respiratoire-face.jpg",
+        "organes-et-syst-mes-appareil-respiratoire-dos.jpg",
+        "organes-et-syst-mes-appareil-respiratoire-profil-gauche.jpg",
+        "organes-et-syst-mes-appareil-respiratoire-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-organes-lympho-des",
+      "label": "Organes lymphoïdes",
+      "kind": "sous-bloc",
+      "count": 161,
+      "center": [
+        3.650784492492676e-7,
+        0.9551908224821091,
+        0.005115095525979996
+      ],
+      "radius": 0.6378254443407059,
+      "files": [
+        "organes-et-syst-mes-organes-lympho-des-face.jpg",
+        "organes-et-syst-mes-organes-lympho-des-dos.jpg",
+        "organes-et-syst-mes-organes-lympho-des-profil-gauche.jpg",
+        "organes-et-syst-mes-organes-lympho-des-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-r-seau-art-riel",
+      "label": "Réseau artériel",
+      "kind": "sous-bloc",
+      "count": 207,
+      "center": [
+        0.000002995133399963379,
+        0.8405324593186378,
+        -0.0032238587737083435
+      ],
+      "radius": 0.8267987594008446,
+      "files": [
+        "organes-et-syst-mes-r-seau-art-riel-face.jpg",
+        "organes-et-syst-mes-r-seau-art-riel-dos.jpg",
+        "organes-et-syst-mes-r-seau-art-riel-profil-gauche.jpg",
+        "organes-et-syst-mes-r-seau-art-riel-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-r-seau-veineux",
+      "label": "Réseau veineux",
+      "kind": "sous-bloc",
+      "count": 94,
+      "center": [
+        -9.98377799987793e-7,
+        0.7468613721430302,
+        -0.004547648131847382
+      ],
+      "radius": 0.7129897736012936,
+      "files": [
+        "organes-et-syst-mes-r-seau-veineux-face.jpg",
+        "organes-et-syst-mes-r-seau-veineux-dos.jpg",
+        "organes-et-syst-mes-r-seau-veineux-profil-gauche.jpg",
+        "organes-et-syst-mes-r-seau-veineux-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-me-cardiovasculaire",
+      "label": "Système cardiovasculaire",
+      "kind": "sous-bloc",
+      "count": 28,
+      "center": [
+        0.022771794348955154,
+        1.4406619668006897,
+        0.024772075936198235
+      ],
+      "radius": 0.20392924547195435,
+      "files": [
+        "organes-et-syst-mes-syst-me-cardiovasculaire-face.jpg",
+        "organes-et-syst-mes-syst-me-cardiovasculaire-dos.jpg",
+        "organes-et-syst-mes-syst-me-cardiovasculaire-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-me-cardiovasculaire-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens",
+      "label": "Système nerveux et organes des sens",
+      "kind": "sous-bloc",
+      "count": 399,
+      "center": [
+        0,
+        1.2830806970596313,
+        -0.0009806491434574127
+      ],
+      "radius": 0.42549049854278564,
+      "files": [
+        "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens-face.jpg",
+        "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens-dos.jpg",
+        "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-me-t-gumentaire",
+      "label": "Système tégumentaire",
+      "kind": "sous-bloc",
+      "count": 2,
+      "center": [
+        -0.000925850123167038,
+        1.2336516976356506,
+        0.06852749921381474
+      ],
+      "radius": 0.39027947187423706,
+      "files": [
+        "organes-et-syst-mes-syst-me-t-gumentaire-face.jpg",
+        "organes-et-syst-mes-syst-me-t-gumentaire-dos.jpg",
+        "organes-et-syst-mes-syst-me-t-gumentaire-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-me-t-gumentaire-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux",
+      "label": "Systèmes viscéraux",
+      "kind": "sous-bloc",
+      "count": 85,
+      "center": [
+        -0.00475749745965004,
+        1.1731762886047363,
+        0.009699273854494095
+      ],
+      "radius": 0.44653093814849854,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "syst-me-musculaire-musculature",
+      "label": "Musculature",
+      "kind": "sous-bloc",
+      "count": 695,
+      "center": [
+        -0.0026829391717910767,
+        0.8570121841039509,
+        0.0031595975160598755
+      ],
+      "radius": 0.8505628986749798,
+      "files": [
+        "syst-me-musculaire-musculature-face.jpg",
+        "syst-me-musculaire-musculature-dos.jpg",
+        "syst-me-musculaire-musculature-profil-gauche.jpg",
+        "syst-me-musculaire-musculature-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "syst-me-squelettique-squelette",
+      "label": "Squelette",
+      "kind": "sous-bloc",
+      "count": 351,
+      "center": [
+        -0.0026680827140808105,
+        0.8613064279779792,
+        0.009653501212596893
+      ],
+      "radius": 0.8530148277059197,
+      "files": [
+        "syst-me-squelettique-squelette-face.jpg",
+        "syst-me-squelettique-squelette-dos.jpg",
+        "syst-me-squelettique-squelette-profil-gauche.jpg",
+        "syst-me-squelettique-squelette-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-abdomen",
+      "label": "Abdomen",
+      "kind": "appareil",
+      "count": 58,
+      "center": [
+        -0.00475749745965004,
+        1.1816068887710571,
+        0.00503428652882576
+      ],
+      "radius": 0.39492666721343994,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif",
+      "label": "Appareil digestif",
+      "kind": "appareil",
+      "count": 43,
+      "center": [
+        -0.00475749745965004,
+        1.1901414096355438,
+        0.00503428652882576
+      ],
+      "radius": 0.38639214634895325,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire",
+      "label": "Appareil urinaire",
+      "kind": "appareil",
+      "count": 11,
+      "center": [
+        0.0014038123190402985,
+        0.9776157140731812,
+        0.02034665085375309
+      ],
+      "radius": 0.19093549251556396,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales",
+      "label": "Structures péritonéales",
+      "kind": "appareil",
+      "count": 3,
+      "center": [
+        0.003352601081132889,
+        1.039783775806427,
+        0.043543503677938133
+      ],
+      "radius": 0.1602429747581482,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc",
+      "label": "Tronc",
+      "kind": "appareil",
+      "count": 1,
+      "center": [
+        -0.04726692475378513,
+        0.9686767756938934,
+        0.0035832831636071205
+      ],
+      "radius": 0.05,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux",
+      "label": "Appareils génitaux",
+      "kind": "appareil",
+      "count": 11,
+      "center": [
+        7.450580596923828e-9,
+        0.7985977828502655,
+        0.0309531819075346
+      ],
+      "radius": 0.07548227347433567,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines",
+      "label": "Glandes endocrines",
+      "kind": "appareil",
+      "count": 7,
+      "center": [
+        0.006478622555732727,
+        1.370005190372467,
+        0.0010081660002470016
+      ],
+      "radius": 0.24970203638076782,
+      "files": [
+        "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines-face.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines-dos.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines-profil-gauche.jpg",
+        "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-arm-l",
+      "label": "Membre supérieur gauche",
+      "kind": "groupe-ui",
+      "count": 7,
+      "center": [
+        0.14994072169065475,
+        1.1403978168964386,
+        -0.031148800626397133
+      ],
+      "radius": 0.28481754660606384,
+      "files": [
+        "ui-arm-l-face.jpg",
+        "ui-arm-l-dos.jpg",
+        "ui-arm-l-profil-gauche.jpg",
+        "ui-arm-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-arm-r",
+      "label": "Membre supérieur droit",
+      "kind": "groupe-ui",
+      "count": 7,
+      "center": [
+        -0.14994072914123535,
+        1.1403978168964386,
+        -0.031148800626397133
+      ],
+      "radius": 0.28481754660606384,
+      "files": [
+        "ui-arm-r-face.jpg",
+        "ui-arm-r-dos.jpg",
+        "ui-arm-r-profil-gauche.jpg",
+        "ui-arm-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-forearm-l",
+      "label": "Avant-bras gauche",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        0.2459520846605301,
+        0.9833000004291534,
+        -0.016828901134431362
+      ],
+      "radius": 0.1277197301387787,
+      "files": [
+        "ui-forearm-l-face.jpg",
+        "ui-forearm-l-dos.jpg",
+        "ui-forearm-l-profil-gauche.jpg",
+        "ui-forearm-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-forearm-r",
+      "label": "Avant-bras droit",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        -0.2459520697593689,
+        0.9833000004291534,
+        -0.016828901134431362
+      ],
+      "radius": 0.1277197301387787,
+      "files": [
+        "ui-forearm-r-face.jpg",
+        "ui-forearm-r-dos.jpg",
+        "ui-forearm-r-profil-gauche.jpg",
+        "ui-forearm-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-leg-l",
+      "label": "Membre inférieur gauche",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        0.07573402300477028,
+        0.5335756167769432,
+        -0.01535750925540924
+      ],
+      "radius": 0.47836462408304214,
+      "files": [
+        "ui-leg-l-face.jpg",
+        "ui-leg-l-dos.jpg",
+        "ui-leg-l-profil-gauche.jpg",
+        "ui-leg-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-leg-r",
+      "label": "Membre inférieur droit",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        -0.07573402300477028,
+        0.5335756167769432,
+        -0.01535750925540924
+      ],
+      "radius": 0.47836462408304214,
+      "files": [
+        "ui-leg-r-face.jpg",
+        "ui-leg-r-dos.jpg",
+        "ui-leg-r-profil-gauche.jpg",
+        "ui-leg-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-lungs",
+      "label": "Poumons et lobes",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        -0.0006414651870727539,
+        1.298999309539795,
+        0.009615585207939148
+      ],
+      "radius": 0.13201820850372314,
+      "files": [
+        "ui-lungs-face.jpg",
+        "ui-lungs-dos.jpg",
+        "ui-lungs-profil-gauche.jpg",
+        "ui-lungs-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-eye-r",
+      "label": "Œil droit et muscles",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        -0.00662972591817379,
+        1.5940386652946472,
+        0.05270978529006243
+      ],
+      "radius": 0.05,
+      "files": [
+        "ui-eye-r-face.jpg",
+        "ui-eye-r-dos.jpg",
+        "ui-eye-r-profil-gauche.jpg",
+        "ui-eye-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-heart",
+      "label": "Cœur et cavités",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        0.022771794348955154,
+        1.2907528281211853,
+        0.024772075936198235
+      ],
+      "radius": 0.05955914780497551,
+      "files": [
+        "ui-heart-face.jpg",
+        "ui-heart-dos.jpg",
+        "ui-heart-profil-gauche.jpg",
+        "ui-heart-profil-droit.jpg"
+      ]
+    }
+  ],
+  "errors": []
+}

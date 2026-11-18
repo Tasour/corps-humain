@@ -1,6 +1,6 @@
 # Rapport de collisions — jeu de données v2
 
-116 anomalie(s) sur 2041 structures.
+116 anomalie(s) sur 2039 structures.
 
 - **[doublon-aabb]** Fascia du muscle piriforme ↔ Muscle piriforme (muscle:piriformis-fascia-l, muscle:piriformis-muscle-l) : centres à 0.0001 m, ratio de volume 1.03 (imbrication anatomique probable)
 - **[doublon-aabb]** Fascia du muscle piriforme ↔ Muscle piriforme (muscle:piriformis-fascia-r, muscle:piriformis-muscle-r) : centres à 0.0001 m, ratio de volume 1.03 (imbrication anatomique probable)

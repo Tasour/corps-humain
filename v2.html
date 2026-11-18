@@ -384,6 +384,9 @@
       if (!node) return;
       currentNode = node;
       engine.clearHover();
+      /* Rendre sa couleur anatomique à l'item quitté, sinon il reste peint
+       * en couleur de sélection dans la vue fusionnée. */
+      if (selected) engine.highlight(selected, null);
       selected = null;
       document.getElementById('hover-label').style.display = 'none';
       let count;
@@ -486,7 +489,8 @@
     async function selectStructure(structure, focus) {
       if (!structure) return;
       const generation = ++selectGeneration;
-      if (selected) engine.highlight(selected, '#ffffff');
+      /* null = restaurer la couleur anatomique (colorFor), pas repeindre en blanc. */
+      if (selected) engine.highlight(selected, null);
       /* Le retour au LOD bas de l'ancienne structure se fait en arrière-plan :
        * l'isolement de la nouvelle reste synchrone, même si le chunk low n'est
        * pas encore en cache (un clic doit toujours sélectionner immédiatement). */

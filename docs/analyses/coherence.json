@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-11-18T15:01:03.469Z",
+  "manifest": "public/models/v2/manifest.json",
+  "manifestVersion": "2.0",
+  "manifestGenerated": "2026-11-18",
+  "method": {
+    "envelope": {
+      "x": [
+        -0.4,
+        0.4
+      ],
+      "y": [
+        -0.05,
+        1.8
+      ],
+      "z": [
+        -0.25,
+        0.25
+      ]
+    },
+    "toleranceMeters": 0.05,
+    "lateralTokens": [
+      "left",
+      "right"
+    ],
+    "note": "side=null est traité comme non latéralisé ; les termes français droit/gauche sont ambigus et exclus du contrôle 5."
+  },
+  "summary": {
+    "structures": 2039,
+    "pairsChecked": 833,
+    "anomalyCount": 0,
+    "byCheck": {
+      "source-pair": 0,
+      "bounds-envelope": 0,
+      "lod-complete": 0,
+      "duplicate-fr-source": 0,
+      "ta2-name-side": 0
+    },
+    "byType": {},
+    "ok": true
+  },
+  "checks": [
+    {
+      "id": "source-pair",
+      "label": "Cohérence de source des paires gauche/droite",
+      "anomalies": 0
+    },
+    {
+      "id": "bounds-envelope",
+      "label": "Bornes dans l'enveloppe corps",
+      "anomalies": 0
+    },
+    {
+      "id": "lod-complete",
+      "label": "Présence et validité des 3 LOD",
+      "anomalies": 0
+    },
+    {
+      "id": "duplicate-fr-source",
+      "label": "Unicité du nom français par source",
+      "anomalies": 0
+    },
+    {
+      "id": "ta2-name-side",
+      "label": "Cohérence TA2 nom / side",
+      "anomalies": 0
+    }
+  ],
+  "anomalies": []
+}

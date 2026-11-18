@@ -1,7 +1,15 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
 
 const BASE = process.env.TEST_BASE || "http://localhost:5199";
+/* Le nombre de structures vient du manifeste : il change dès qu'une règle de
+ * fusion (doublons inter-sources, exclusions) évolue. Le figer en dur faisait
+ * échouer le test à chaque correction de données sans qu'aucun bug n'existe. */
+const MANIFEST_COUNT = JSON.parse(
+  fs.readFileSync(path.resolve(import.meta.dirname, "../public/models/v2/manifest.json"), "utf8"),
+).structures.length;
 const results = [];
 const errors = [];
 
@@ -68,9 +76,9 @@ const st = () => page.evaluate(() => {
 });
 
 /* ---------- chargement ---------- */
-await check("chargement : 2041 structures et 3 lots", async () => {
+await check(`chargement : ${MANIFEST_COUNT} structures et 3 lots`, async () => {
   const s = await st();
-  assert.equal(s.count, 2041);
+  assert.equal(s.count, MANIFEST_COUNT);
   assert.equal(s.drawCalls, 3);
 });
 await check("aucune erreur console au chargement", () => assert.deepEqual(errors, []));
