@@ -746,13 +746,23 @@
     /* Boucle de rendu. */
     let visibleCount = engine.updateVisibility(camera);
     let lastCamera = camera.position.clone();
-    let frames = 0, last = performance.now(), frameSum = 0, frameCount = 0;
+    /* HUD : on mesure les RENDUS réels (renderer.render()), pas les frames rAF.
+     * La boucle rAF tourne à ~120 Hz alors que le rendu est à la demande :
+     * incrémenter un compteur à chaque frame rAF affichait donc 120 fps même
+     * quand une seule image était dessinée par seconde. */
+    let last = performance.now();
+    let renderCount = 0;                        // nb total de rendus réels
+    let fpsRenders = 0, fpsWindowStart = last;  // fenêtre de mesure du fps réel
+    let animatedMs = 0;                          // temps animationné dans la fenêtre
+    let frameSum = 0, frameCount = 0;           // coût CPU des rendus réels uniquement
+    let avgRenderMs = 0;                        // coût CPU lissé d'un rendu (secours si 0 rendu)
     let autoLodDone = false;
     const startedAt = performance.now();
     let previousTime = performance.now();
     const fpsEl = document.getElementById('fps');
     const drawEl = document.getElementById('draw');
     const qualityEl = document.getElementById('quality');
+    fpsEl.title = 'FPS réel : nombre de renderer.render() par seconde, et non des frames rAF';
 
     let rafId = 0, running = true;
     let lastSignature = '', needsRender = true, lastIsolated = !!engine.isolated;
@@ -833,7 +843,9 @@
        * alors la résolution, on désactive l'ombre portée et on limite la
        * fréquence de rendu, sans toucher à l'état logique de visibilité. */
       const heavy = Math.max(visibleCount, engine.currentVisible.size) > 800;
-      if ((camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) && !(heavy && dragging)) {
+      /* On culling pendant le glisser : bloquer le rendu donnait une image
+       * gelée en vue corps entier. La cadence adaptative limite déjà la charge. */
+      if (camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) {
         lastCamera.copy(camera.position);
         forceCulling = false;
         visibleCount = engine.updateVisibility(camera, lodBias);
@@ -861,20 +873,52 @@
         groupAnim ? groupAnim.t.toFixed(3) : '',
         engine.animation ? engine.animation.t.toFixed(3) : '',
       ].join('|');
-      if ((needsRender || signature !== lastSignature) && !(heavy && dragging)
-        && nowFrame - lastRenderAt >= (heavy ? 1000 : 0)) {
+      /* Cadence adaptative : en vue corps entier on vise 30 fps (33 ms) au
+       * lieu d'un palier fixe à 1 rendu/s. Le seuil s'ajuste au coût réel
+       * mesuré, avec un plancher de 16 ms et un plafond de 250 ms. */
+      const targetInterval = heavy
+        ? Math.max(16, Math.min(250, (avgRenderMs || 30) * 1.6))
+        : 0;
+      if ((needsRender || signature !== lastSignature)
+        && nowFrame - lastRenderAt >= targetInterval) {
         const t0 = performance.now();
         renderer.render(scene, camera);
-        frameSum += performance.now() - t0;
+        const renderMs = performance.now() - t0;
+        frameSum += renderMs;
         frameCount++;
+        renderCount++;
+        fpsRenders++;
+        animatedMs += Math.max(renderMs, targetInterval);
+        avgRenderMs = avgRenderMs ? avgRenderMs * 0.7 + renderMs * 0.3 : renderMs;
         lastRenderAt = nowFrame;
         lastSignature = signature;
         needsRender = false;
       }
-      frames++;
+      /* FPS RÉEL = rendus*1000/écoulement. La fenêtre dure au moins 1 s pour
+       * englober la limite d'un rendu par seconde du mode "heavy" ; si aucun
+       * rendu n'a eu lieu dans la fenêtre, on conserve le dernier taux mesuré
+       * plutôt que d'afficher un 120 fps fantôme (ou un 0 trompeur). */
+      const fpsNow = performance.now();
+      if (fpsNow - fpsWindowStart >= (heavy ? 2000 : 1000)) {
+        if (fpsRenders > 0) {
+          /* On divise par le temps RÉELLEMENT animationné (fenêtre moins les
+           * périodes où rien ne change), pas par la fenêtre entière : sinon
+           * une vue statique affiche 1 fps alors qu'elle est fluide au mouvement. */
+          const realFps = fpsRenders * 1000 / Math.max(1, animatedMs);
+          fpsEl.textContent = Math.round(realFps) + ' fps';
+          fpsEl.dataset.renders = String(renderCount);
+          fpsEl.dataset.mode = heavy ? 'réel · cadence adaptative' : 'réel · à la demande';
+          fpsEl.dataset.animatedMs = String(Math.round(animatedMs));
+        }
+        fpsRenders = 0;
+        animatedMs = 0;
+        fpsWindowStart = fpsNow;
+      }
       const now = performance.now();
       if (now - last >= 500) {
-        const avg = frameSum / Math.max(1, frameCount);
+        /* Coût CPU MOYEN DES RENDUS RÉELS : divisé par frameCount (les appels
+         * à renderer.render()), jamais par le nombre de frames rAF. */
+        const avg = frameCount ? frameSum / frameCount : avgRenderMs;
         if (avg > 8 && pixelRatio > 1) {
           pixelRatio = Math.max(1, pixelRatio - 0.25);
           renderer.setPixelRatio(heavy ? 0.35 : pixelRatio);
@@ -887,12 +931,13 @@
           const target = innerWidth > 820 && avg < 6 ? 'medium' : 'low';
           if (target !== engine.globalLod) { await engine.setGlobalLod(target); needsRender = true; }
         }
-        fpsEl.textContent = Math.round((frames * 1000) / (now - last)) + ' fps';
         const triCount = renderer.info.render.triangles;
         const triText = triCount < 1000 ? `${triCount} tris` : `${Math.round(triCount / 1000)}k tris`;
-        drawEl.textContent = `${renderer.info.render.calls} appels · ${triText} · ${visibleCount} visibles`;
-        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)} · ${engine.globalLod}`;
-        frames = 0; frameSum = 0; frameCount = 0; last = now;
+        drawEl.textContent = `${Math.round(avg)} ms CPU · ${renderer.info.render.calls} appels · ${triText} · ${visibleCount} visibles`;
+        drawEl.dataset.mode = heavy ? 'réel · limite 1 rendu/s' : 'réel · à la demande';
+        qualityEl.textContent = `qualité ${pixelRatio.toFixed(2)}× · LOD ${lodBias.toFixed(1)} · ${engine.globalLod}${heavy ? ' · cadence adaptative' : ''}`;
+        if (frameCount) { frameSum = 0; frameCount = 0; }
+        last = now;
       }
     }
     /* Arrêt explicite de la boucle et des timers : appelé à la fermeture de la

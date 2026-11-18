@@ -311,7 +311,10 @@ export class AnatomyV2Engine {
         indexCount += Math.max(...levels.map((r) => r.indexCount || 0));
       }
       const maps = this.textures[category] || this.textures.organ;
-      const material = new THREE.MeshPhysicalMaterial({
+      /* MeshStandardMaterial : le clearcoat de MeshPhysicalMaterial ajoute
+       * un lobe GGX + IBL par fragment, trop coûteux avec 2104 instances.
+       * L'environnement PMREM fournit déjà les reflets. */
+      const material = new THREE.MeshStandardMaterial({
         color: 0xffffff,
         map: maps?.map || null,
         normalMap: maps?.normal || null,
@@ -319,8 +322,6 @@ export class AnatomyV2Engine {
         roughnessMap: maps?.roughness || null,
         roughness: category === "bone" ? 0.9 : 0.7,
         metalness: 0,
-        clearcoat: category === "organ" ? 0.35 : 0.12,
-        clearcoatRoughness: 0.45,
         side: THREE.DoubleSide,
       });
       const batch = new THREE.BatchedMesh(list.length, vertexCount, indexCount, material);

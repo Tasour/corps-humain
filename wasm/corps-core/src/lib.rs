@@ -201,9 +201,13 @@ impl AnatomyIndex {
     pub fn visible(&self, planes: &[f32], camx: f32, camy: f32, camz: f32, lod_bias: f32) -> Vec<u32> {
         let mut out: Vec<u32> = Vec::with_capacity(self.order.len());
         if self.nodes.is_empty() { return out; }
-        let mut stack: Vec<i32> = Vec::with_capacity(64);
-        stack.push(0);
-        while let Some(node_index) = stack.pop() {
+        let mut stack: [i32; 64] = [0; 64];
+        let mut sp = 0usize;
+        stack[0] = 0;
+        sp = 1;
+        while sp > 0 {
+            sp -= 1;
+            let node_index = stack[sp];
             let node = &self.nodes[node_index as usize];
             let mut outside = false;
             for p in 0..6 {
@@ -219,8 +223,11 @@ impl AnatomyIndex {
             }
             if outside { continue; }
             if node.left >= 0 {
-                stack.push(node.left);
-                stack.push(node.right);
+                if sp + 2 < stack.len() {
+                    stack[sp] = node.left;
+                    stack[sp + 1] = node.right;
+                    sp += 2;
+                }
             } else {
                 for &id in &self.order[node.start as usize..node.end as usize] {
                     let i = id as usize;
@@ -259,9 +266,15 @@ impl AnatomyIndex {
                         lod_bias: f32, out: &mut [u32]) -> u32 {
         let mut written = 0u32;
         if self.nodes.is_empty() { return 0; }
-        let mut stack: Vec<i32> = Vec::with_capacity(64);
-        stack.push(0);
-        while let Some(node_index) = stack.pop() {
+        /* Pile sur la stack (pas de Vec alloué par appel). La profondeur d'un
+         * BVH équilibré sur 2104 feuilles reste < 64. */
+        let mut stack: [i32; 64] = [0; 64];
+        let mut sp = 0usize;
+        stack[0] = 0;
+        sp = 1;
+        while sp > 0 {
+            sp -= 1;
+            let node_index = stack[sp];
             let node = &self.nodes[node_index as usize];
             let mut outside = false;
             for p in 0..6 {
@@ -275,8 +288,11 @@ impl AnatomyIndex {
             }
             if outside { continue; }
             if node.left >= 0 {
-                stack.push(node.left);
-                stack.push(node.right);
+                if sp + 2 < stack.len() {
+                    stack[sp] = node.left;
+                    stack[sp + 1] = node.right;
+                    sp += 2;
+                }
             } else {
                 for &id in &self.order[node.start as usize..node.end as usize] {
                     let i = id as usize;

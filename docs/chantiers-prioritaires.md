@@ -19,6 +19,7 @@
 | 13 | **Bug cœur éclaté** | Le raccourci « Cœur » affichait les cavités dispersées au lieu du cœur | ✅ | Raccourci pointe vers une structure unique cohérente |
 | 14 | **Détection automatique des collisions** | Log des paires AABB suspectes, test qui échoue quand une collision est détectée | ✅ | `npm run test:collisions` + `docs/analyses/collisions.md` |
 | 15 | **Correction des collisions géométriques** | Structures qui traversent la peau / se chevauchent anormalement | ✅ | 3 structures hors peau exclues du build ; 0 erreur, 173 imbrications en avertissement |
+| 16 | **FPS réels sous charge** | HUD honnête + cadence adaptative, plus d'image gelée au glisser | ✅ | HUD = rendus réels ; glisser = ~63 fps ; `MeshStandardMaterial` ; WASM pile fixe |
 
 Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 
