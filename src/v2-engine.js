@@ -597,10 +597,28 @@ export class AnatomyV2Engine {
     const batch = this.batches.get(ref.category);
     if (!batch) return false;
     batch.setGeometryAt(structure._geometryId, geometry);
-    batch.computeBoundingBox();
-    batch.computeBoundingSphere();
+    /* getBoundingSphereAt() de BatchedMesh recalcule la sphère à la demande ;
+     * un computeBoundingSphere() sur un lot de 1000+ instances à chaque
+     * promotion coûte plusieurs ms et provoque des stalls GPU. */
+    batch.boundingBox = null;
+    batch.boundingSphere = null;
     structure._activeLod = lod;
     return true;
+  }
+
+  /* Repasse toutes les structures à leur géométrie source (LOD bas), sans
+   * téléchargement : le corps entier n'a pas besoin du détail d'isolement. */
+  resetLodsToLow() {
+    for (const [id, geometry] of this.sourceGeometries) {
+      const structure = this.byId.get(id);
+      const ref = this.geometryIds.get(id);
+      if (!structure || !ref || structure._activeLod === "low") continue;
+      const batch = this.batches.get(ref.category);
+      if (!batch) continue;
+      batch.setGeometryAt(structure._geometryId, geometry);
+      structure._activeLod = "low";
+    }
+    this.globalLod = "low";
   }
 
   /* Isole une structure : toutes les autres instances sont masquées. */
@@ -616,6 +634,10 @@ export class AnatomyV2Engine {
         if (batch) batch.setVisibleAt(ref.instanceId, true);
       }
       this.currentVisible = new Set(this.structureToInstance.keys());
+      /* Vue corps entier : on repasse les structures promues au LOD bas.
+       * Le détail n'apporte rien à cette échelle et rendrait le rendu logiciel
+       * prohibitive (des centaines de milliers de triangles en plus). */
+      this.resetLodsToLow();
       if (this.skinBatch) this.skinBatch.visible = this.skinDesired;
       if (this.camera) this.updateVisibility(this.camera, 1);
       return this.currentVisible.size;

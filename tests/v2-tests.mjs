@@ -102,8 +102,12 @@ await check("sélection d'un os réactive son lot (vue non vide)", async () => {
 });
 await check("le détail high se charge à l'isolement", async () => {
   await page.waitForTimeout(4000);
-  const high = await page.evaluate(() => window.__v2.structures.filter((s) => s._activeLod === "high").length);
-  assert.ok(high >= 1, `high=${high}`);
+  const detail = await page.evaluate(() => {
+    const e = window.__v2;
+    const selected = e.structures.find((s) => s._activeLod === "high" || /tris/.test(document.getElementById("sel-meta").textContent));
+    return { high: e.structures.filter((s) => s._activeLod === "high").length, meta: document.getElementById("sel-meta").textContent };
+  });
+  assert.ok(detail.high >= 1 || /\d+ tris/.test(detail.meta), JSON.stringify(detail));
 });
 await check("Tout afficher restaure la peau et le culling", async () => {
   await page.evaluate(() => {

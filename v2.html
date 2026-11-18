@@ -39,8 +39,13 @@
     .top-actions { display: flex; gap: 8px; }
     /* ---------- mise en page 3 colonnes ---------- */
     .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr) 330px; height: calc(100vh - 74px); }
-    .sidebar, .details { background: var(--paper-2); overflow: auto; }
-    .sidebar { border-right: 1px solid var(--line); padding: 18px 16px; }
+    .sidebar, .details { background: var(--paper-2); }
+    .sidebar {
+      border-right: 1px solid var(--line); padding: 18px 16px;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sidebar > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .sidebar > .section:last-child #list { flex: 1; min-height: 80px; overflow: auto; }
     .details { border-left: 1px solid var(--line); padding: 26px 24px; }
     .section { margin-bottom: 20px; }
     .section-title {
@@ -142,6 +147,7 @@
       .layout { grid-template-columns: 1fr; height: calc(100vh - 64px); }
       .sidebar { position: fixed; z-index: 12; top: 64px; bottom: 0; left: 0; width: 290px; display: none; box-shadow: var(--shadow); }
       .sidebar.open { display: flex; flex-direction: column; }
+      .sidebar.open > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
       .details { display: none; }
       #mobile-toggle { display: inline-block; }
       .anim-bar { bottom: 12px; }
@@ -687,7 +693,7 @@
     /* Picking : d'abord les waypoints visibles, puis un raycast exact. */
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
-    let downX = 0, downY = 0;
+    let downX = 0, downY = 0, dragging = false;
     renderer.domElement.addEventListener('dblclick', () => {
       camera.position.set(0.72, 1.28, 2.55);
       controls.target.set(0, 1, 0);
@@ -695,9 +701,22 @@
       tourActive = false;
       controls.update();
     });
-    renderer.domElement.addEventListener('pointerdown', (e) => { downX = e.clientX; downY = e.clientY; });
-    renderer.domElement.addEventListener('pointerup', async (e) => {
+    renderer.domElement.addEventListener('pointerdown', (e) => {
+      downX = e.clientX; downY = e.clientY; dragging = true;
+    });
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      forceCulling = true;
+      needsRender = true;
+    };
+    renderer.domElement.addEventListener('pointerup', (e) => {
+      endDrag();
       if (Math.hypot(e.clientX - downX, e.clientY - downY) > 5) return;
+      void handleCanvasClick(e);
+    });
+    renderer.domElement.addEventListener('pointercancel', endDrag);
+    async function handleCanvasClick(e) {
       const now = performance.now();
       if (now - lastClick < 220) return;
       lastClick = now;
@@ -722,7 +741,7 @@
         }
       }
       await selectStructure(engine.pickExact(raycaster) || engine.pick(raycaster), false);
-    });
+    }
 
     /* Boucle de rendu. */
     let visibleCount = engine.updateVisibility(camera);
@@ -736,11 +755,24 @@
     const qualityEl = document.getElementById('quality');
 
     let rafId = 0, running = true;
-    let lastSignature = '', needsRender = true;
+    let lastSignature = '', needsRender = true, lastIsolated = !!engine.isolated;
+    let lastRenderAt = 0, wasHeavy = false;
     async function loop() {
       if (!running) return;
       rafId = requestAnimationFrame(loop);
       if (document.hidden) return;
+      /* Lever l'isolement rend des milliers d'instances visibles : on arrête
+       * les animations en cours pour ne pas redessiner ce corps entier à chaque
+       * frame (coût prohibitif en rendu logiciel). */
+      if (lastIsolated && !engine.isolated) {
+        groupAnim = null;
+        cameraTween = null;
+        tourActive = false;
+        waypointTour = null;
+        engine.clearAnimation();
+        needsRender = true;
+      }
+      lastIsolated = !!engine.isolated;
       const nowFrame = performance.now();
       const dt = Math.min(0.05, (nowFrame - previousTime) / 1000);
       previousTime = nowFrame;
@@ -797,14 +829,24 @@
           } else labelEl.style.display = 'none';
         }
       } else labelEl.style.display = 'none';
-      if (camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) {
+      /* Vue corps entier : le rendu logiciel ne suit pas à 60 fps. On réduit
+       * alors la résolution, on désactive l'ombre portée et on limite la
+       * fréquence de rendu, sans toucher à l'état logique de visibilité. */
+      const heavy = Math.max(visibleCount, engine.currentVisible.size) > 800;
+      if ((camera.position.distanceToSquared(lastCamera) > 1e-6 || forceCulling) && !(heavy && dragging)) {
         lastCamera.copy(camera.position);
         forceCulling = false;
         visibleCount = engine.updateVisibility(camera, lodBias);
-        renderer.shadowMap.needsUpdate = true;
+        renderer.shadowMap.needsUpdate = visibleCount <= 800;
         needsRender = true;
       }
-      if (groupAnim || engine.animation) renderer.shadowMap.needsUpdate = true;
+      if (heavy !== wasHeavy) {
+        renderer.shadowMap.enabled = !heavy;
+        renderer.setPixelRatio(heavy ? 0.35 : pixelRatio);
+        wasHeavy = heavy;
+        needsRender = true;
+      }
+      renderer.shadowMap.needsUpdate = !heavy && (!!groupAnim || !!engine.animation);
       /* Rendu à la demande : avec plus de 2 000 instances, un frame en
        * rendu logiciel peut prendre une seconde. On ne redessine que quand
        * l'état 3D change, ce qui garde la page réactive au survol/clic. */
@@ -819,11 +861,13 @@
         groupAnim ? groupAnim.t.toFixed(3) : '',
         engine.animation ? engine.animation.t.toFixed(3) : '',
       ].join('|');
-      if (needsRender || signature !== lastSignature) {
+      if ((needsRender || signature !== lastSignature) && !(heavy && dragging)
+        && nowFrame - lastRenderAt >= (heavy ? 1000 : 0)) {
         const t0 = performance.now();
         renderer.render(scene, camera);
         frameSum += performance.now() - t0;
         frameCount++;
+        lastRenderAt = nowFrame;
         lastSignature = signature;
         needsRender = false;
       }
@@ -833,7 +877,7 @@
         const avg = frameSum / Math.max(1, frameCount);
         if (avg > 8 && pixelRatio > 1) {
           pixelRatio = Math.max(1, pixelRatio - 0.25);
-          renderer.setPixelRatio(pixelRatio);
+          renderer.setPixelRatio(heavy ? 0.35 : pixelRatio);
           /* Le biais LOD reste à 1 : le seuil WASM garantit déjà que toutes
            * les structures restent visibles en vue corps entier. */
           forceCulling = true;

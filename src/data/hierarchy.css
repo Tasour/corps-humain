@@ -1,5 +1,4 @@
-.tree { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow: auto; }
-#list { max-height: 340px; overflow: auto; }
+.tree { display: flex; flex-direction: column; gap: 2px; max-height: 180px; overflow: auto; }
 .tree-node { border: 0; background: transparent; width: 100%; text-align: left; }
 .tree-node:hover { background: #eef4f2; }
 body.dark .tree-node:hover { background: #1a2c3a; }
