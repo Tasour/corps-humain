@@ -1,14 +1,14 @@
 {
-  "generated": "2026-11-17T04:54:32.405Z",
+  "generated": "2026-11-18T05:23:43.366Z",
   "summary": {
-    "structures": 2107,
-    "triangles": 1123549,
+    "structures": 2041,
+    "triangles": 1052147,
     "degenerateTriangles": 300,
     "nanVertices": 0,
     "badNormals": 0,
     "badIndices": 0,
     "structuresWithIssues": 1,
-    "collisions": 25
+    "collisions": 20
   },
   "issues": [
     {
@@ -37,22 +37,6 @@
     }
   ],
   "collisions": [
-    {
-      "a": "bone:bp-nose",
-      "b": "organ:bp-nasal-septum",
-      "frA": "Nez",
-      "frB": "Septum nasal",
-      "ratio": 1,
-      "centerDist": 0
-    },
-    {
-      "a": "organ:bp-hepatic-portal-vein-l",
-      "b": "organ:bp-left-lobe-of-liver-l",
-      "frA": "Veine porte du foie",
-      "frB": "Lobe hépatique gauche",
-      "ratio": 1,
-      "centerDist": 0.0003
-    },
     {
       "a": "bone:second-rib-l",
       "b": "organ:bp-posterior-intercostal-artery-l",
@@ -119,14 +103,6 @@
     },
     {
       "a": "organ:mesocolic-taenia",
-      "b": "organ:bp-peritoneum",
-      "frA": "Ténia mésocolique",
-      "frB": "Péritoine",
-      "ratio": 0.96,
-      "centerDist": 0.0137
-    },
-    {
-      "a": "organ:mesocolic-taenia",
       "b": "organ:bp-visceral-peritoneum",
       "frA": "Ténia mésocolique",
       "frB": "Péritoine viscéral",
@@ -146,14 +122,6 @@
       "b": "organ:bp-right-testicular-vein-r",
       "frA": "Artère testiculaire droite",
       "frB": "Veine testiculaire droite",
-      "ratio": 0.95,
-      "centerDist": 0.01
-    },
-    {
-      "a": "organ:bp-right-testicular-vein-r",
-      "b": "organ:bp-testicular-artery-r",
-      "frA": "Veine testiculaire droite",
-      "frB": "Artère testiculaire",
       "ratio": 0.95,
       "centerDist": 0.01
     },
@@ -186,14 +154,6 @@
       "b": "organ:bp-left-testicular-vein-l",
       "frA": "Artère testiculaire gauche",
       "frB": "Veine testiculaire gauche",
-      "ratio": 0.92,
-      "centerDist": 0.007
-    },
-    {
-      "a": "organ:bp-left-testicular-vein-l",
-      "b": "organ:bp-testicular-artery-l",
-      "frA": "Veine testiculaire gauche",
-      "frB": "Artère testiculaire",
       "ratio": 0.92,
       "centerDist": 0.007
     },
@@ -320,9 +280,9 @@
     {
       "id": "lungs",
       "label": "Poumons et lobes",
-      "members": 6,
-      "missing": 0,
-      "triangles": 5351,
+      "members": 5,
+      "missing": 1,
+      "triangles": 1499,
       "box": [
         0.261,
         0.264,

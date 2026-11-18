@@ -212,7 +212,7 @@
       <div id="sel-name">Cliquez sur une structure</div>
       <div id="sel-meta">ou choisissez-la dans la liste</div>
       <div class="meta" id="detail-meta"></div>
-      <div class="fact" id="detail-fact">Explorez les 2 104 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+      <div class="fact" id="detail-fact">Explorez les 2 041 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
     </aside>
   </div>
 
@@ -247,9 +247,9 @@
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
     const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 30);
-    camera.position.set(0.72, 1.28, 2.55);
+    camera.position.set(0.72, 1.28, 2.85);
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 1.0, 0);
+    controls.target.set(0, 0.88, 0);
     controls.enableDamping = true;
     controls.minDistance = 0.12;
     controls.maxDistance = 6;
@@ -398,7 +398,9 @@
       const b = tree.bounds(node, engine.byId);
       if (b) {
         const dir = camera.position.clone().sub(controls.target).normalize();
-        const dist = Math.max(0.25, b.radius * 3.2);
+        /* Le rayon est le demi-côté maximum de la boîte : pour un bloc allongé
+         * (vaisseaux des jambes), 3.8 garde ~8 % de marge en haut et en bas. */
+        const dist = Math.max(0.25, b.radius * 3.8);
         cameraTween = {
           fromPos: camera.position.clone(),
           toPos: new THREE.Vector3(...b.center).addScaledVector(dir, dist),
@@ -552,7 +554,9 @@
           const dir = camera.position.clone().sub(controls.target).normalize();
           cameraTween = {
             fromPos: camera.position.clone(),
-            toPos: target.center.clone().addScaledVector(dir, Math.max(0.18, target.radius * 3)),
+            /* Facteur 3.5 : les structures allongées (grande saphène, fascia)
+             * restent cadrées avec ~8 % de marge au lieu de toucher les bords. */
+            toPos: target.center.clone().addScaledVector(dir, Math.max(0.18, target.radius * 3.5)),
             fromTarget: controls.target.clone(),
             toTarget: target.center,
             t: 0,
@@ -656,8 +660,8 @@
       });
     });
     document.getElementById('reset').addEventListener('click', () => {
-      camera.position.set(0.72, 1.28, 2.55);
-      controls.target.set(0, 1, 0);
+      camera.position.set(0.72, 1.28, 2.85);
+      controls.target.set(0, 0.88, 0);
       cameraTween = null;
       tourActive = false;
       controls.update();
@@ -695,8 +699,8 @@
     const pointer = new THREE.Vector2();
     let downX = 0, downY = 0, dragging = false;
     renderer.domElement.addEventListener('dblclick', () => {
-      camera.position.set(0.72, 1.28, 2.55);
-      controls.target.set(0, 1, 0);
+      camera.position.set(0.72, 1.28, 2.85);
+      controls.target.set(0, 0.88, 0);
       cameraTween = null;
       tourActive = false;
       controls.update();
@@ -963,6 +967,7 @@
     window.__v2 = engine;
     window.__renderer = renderer;
     window.__scene = scene;
+    window.__controls = controls;
   </script>
 </body>
 </html>

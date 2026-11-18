@@ -234,13 +234,70 @@ function translate(label) {
   return label.replace(/^\d+:\s*/, '').replace(/^BodyParts3D:/, '').trim() || label;
 }
 
+/* ---------- Correction d'affichage de l'appareil respiratoire ----------
+ * Les collections Z-Anatomy étiquettent poumons, lobes, trachée et plèvre
+ * « 8: Visceral systems » (sous-système « Viscéral »), et BodyParts3D a pu
+ * étiqueter le poumon droit « artériel ». Ces métadonnées sont laissées
+ * telles quelles dans le manifeste : on corrige UNIQUEMENT le chemin de
+ * l'arbre, donc le classement affiché et le fil d'Ariane. */
+const RESPIRATORY_LABEL = LABELS_FR["Respiratory system"]; // « Appareil respiratoire »
+
+/* Marqueurs excluant une structure respiratoire : vaisseaux, valves et
+ * ganglions (p. ex. « paratracheal nodes », « pulmonary artery »). */
+const NON_RESPIRATORY_HINT = /(arter|venous|vein|valve|semilunar|lymph|nodes?|trunk)/i;
+
+/* Dictionnaire de correction : motif d'ID → appareil affiché.
+ * Les organes des voies aériennes et du parenchyme pulmonaire sont toujours
+ * respiratoires, quel que soit le sous-système brut du manifeste (y compris
+ * un éventuel « artériel » erroné sur le poumon droit). */
+const CATEGORY_CORRECTIONS = [
+  {
+    match: /(lung|bronch|trachea|alveol|pleura)/i,
+    label: RESPIRATORY_LABEL,
+    unless: NON_RESPIRATORY_HINT,
+  },
+  {
+    /* « pulmon » / « diaphragm » sont ambigus : artères, veines, valves et
+     * ganglions pulmonaires ou diaphragmatiques ne sont pas respiratoires.
+     * Les structures musculaires (category 'muscle') sont exclues plus bas :
+     * le diaphragme reste dans la musculature. */
+    match: /(pulmon|diaphragm)/i,
+    label: RESPIRATORY_LABEL,
+    unless: NON_RESPIRATORY_HINT,
+  },
+];
+
+/* Sous-groupes conservés sous l'Appareil respiratoire (déjà traduits). */
+const RESPIRATORY_SUBGROUPS = [LABELS_FR["Lungs"], LABELS_FR["Bronchi"]].filter(Boolean);
+
+/* Renvoie le chemin corrigé (sans la racine de catégorie), ou null si la
+ * structure ne nécessite aucune correction. */
+function normalizeCategory(structure) {
+  if (structure.category !== "organ") return null;
+  const id = structure.id || "";
+  const rule = CATEGORY_CORRECTIONS.find(
+    (r) => r.match.test(id) && !(r.unless && r.unless.test(id)),
+  );
+  if (!rule) return null;
+
+  const corrected = [rule.label];
+  const translated = (structure.path || [])
+    .filter((p) => p && !IGNORE.test(p))
+    .map(translate);
+  const subgroup = translated.find((p) => RESPIRATORY_SUBGROUPS.includes(p));
+  if (subgroup) corrected.push(subgroup);
+  return corrected;
+}
+
 function cleanPath(structure) {
-  const raw = structure.path || [];
   const categoryRoot = {
     bone: "Système squelettique",
     muscle: "Système musculaire",
     organ: "Organes et systèmes",
   }[structure.category] || "Corps humain";
+  const corrected = normalizeCategory(structure);
+  if (corrected) return [categoryRoot, ...corrected];
+  const raw = structure.path || [];
   const parts = raw.filter((p) => p && !IGNORE.test(p)).map(translate);
   return [categoryRoot, ...parts];
 }

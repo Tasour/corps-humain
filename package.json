@@ -13,6 +13,8 @@
     "test:v2": "node tests/v2-tests.mjs",
     "check:collisions": "node scripts/check-collisions.mjs",
     "test:collisions": "node tests/collisions.test.mjs",
+    "test:visual": "node tests/visual-collisions.mjs",
+    "test:multi": "node tests/visual-multiangles.mjs",
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core"
   },
   "dependencies": {

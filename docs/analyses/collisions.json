@@ -1,80 +1,8 @@
 {
-  "generated": "2026-11-18T00:10:56.519Z",
-  "structures": 2104,
-  "count": 173,
+  "generated": "2026-11-18T06:32:35.258Z",
+  "structures": 2041,
+  "count": 116,
   "findings": [
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-bony-pelvis",
-      "b": "bone:bp-lower-limb",
-      "fr": "Pelvis osseux ↔ Membre inférieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-bony-pelvis",
-      "b": "bone:bp-pelvic-girdle",
-      "fr": "Pelvis osseux ↔ Ceinture pelvienne",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-bony-pelvis-l",
-      "b": "bone:bp-lower-limb-l",
-      "fr": "Pelvis osseux ↔ Membre inférieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-bony-pelvis-l",
-      "b": "bone:bp-pelvic-girdle-l",
-      "fr": "Pelvis osseux ↔ Ceinture pelvienne",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-bony-pelvis-r",
-      "b": "bone:bp-lower-limb-r",
-      "fr": "Pelvis osseux ↔ Membre inférieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-bony-pelvis-r",
-      "b": "bone:bp-pelvic-girdle-r",
-      "fr": "Pelvis osseux ↔ Ceinture pelvienne",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-lower-limb",
-      "b": "bone:bp-pelvic-girdle",
-      "fr": "Membre inférieur ↔ Ceinture pelvienne",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-lower-limb-l",
-      "b": "bone:bp-pelvic-girdle-l",
-      "fr": "Membre inférieur ↔ Ceinture pelvienne",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "bone:bp-lower-limb-r",
-      "b": "bone:bp-pelvic-girdle-r",
-      "fr": "Membre inférieur ↔ Ceinture pelvienne",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
     {
       "type": "doublon-aabb",
       "severity": "warning",
@@ -278,38 +206,6 @@
     {
       "type": "doublon-aabb",
       "severity": "warning",
-      "a": "organ:bp-anterior-mediastinum-l",
-      "b": "organ:bp-lobe-of-thymus-l",
-      "fr": "Médiastin antérieur ↔ Lobe du thymus",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-anterior-mediastinum-l",
-      "b": "organ:bp-thymus-l",
-      "fr": "Médiastin antérieur ↔ Thymus",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-anterior-mediastinum-r",
-      "b": "organ:bp-lobe-of-thymus-r",
-      "fr": "Médiastin antérieur ↔ Lobe du thymus",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-anterior-mediastinum-r",
-      "b": "organ:bp-thymus-r",
-      "fr": "Médiastin antérieur ↔ Thymus",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
       "a": "organ:anterior-spinocerebellar-tract",
       "b": "organ:lateral-fasciculus-proprius",
       "fr": "Tractus spinocérébelleux antérieur ↔ Faisceau latéral propre",
@@ -374,250 +270,10 @@
     {
       "type": "doublon-aabb",
       "severity": "warning",
-      "a": "organ:bp-aortic-valve-l",
-      "b": "organ:bp-fibrous-skeleton-of-heart-l",
-      "fr": "Valve aortique ↔ Squelette fibreux du coeur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-aortic-valve-r",
-      "b": "organ:bp-fibrous-skeleton-of-heart-r",
-      "fr": "Valve aortique ↔ Squelette fibreux du coeur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-basilar-artery",
-      "b": "organ:bp-left-subclavian-artery",
-      "fr": "Artère basilaire ↔ Artère subclavière gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-basilar-artery",
-      "b": "organ:bp-right-subclavian-artery",
-      "fr": "Artère basilaire ↔ Artère subclavière droite",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-basilar-artery-l",
-      "b": "organ:bp-right-subclavian-artery-l",
-      "fr": "Artère basilaire ↔ Artère subclavière droite",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bile-duct",
-      "b": "organ:bp-common-hepatic-duct",
-      "fr": "Canal biliaire ↔ Conduit hépatique commun",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bile-duct",
-      "b": "organ:bp-extrahepatic-bile-duct",
-      "fr": "Canal biliaire ↔ Conduits biliaires extrahépatiques",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bile-duct-l",
-      "b": "organ:bp-extrahepatic-bile-duct-l",
-      "fr": "Canal biliaire ↔ Conduits biliaires extrahépatiques",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bile-duct-l",
-      "b": "organ:bp-left-hepatic-duct-l",
-      "fr": "Canal biliaire ↔ Conduit hépatique gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bile-duct-r",
-      "b": "organ:bp-extrahepatic-bile-duct-r",
-      "fr": "Canal biliaire ↔ Conduits biliaires extrahépatiques",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bile-duct-r",
-      "b": "organ:bp-right-hepatic-duct-r",
-      "fr": "Canal biliaire ↔ Conduit hépatique droit",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-brachiocephalic-vein-l",
-      "b": "organ:bp-left-brachiocephalic-vein-l",
-      "fr": "Veine brachiocéphalique ↔ Veine brachiocéphalique gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bronchus-l",
-      "b": "organ:bp-left-main-bronchus-l",
-      "fr": "Bronche ↔ Bronche principale gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bronchus-l",
-      "b": "organ:bp-main-bronchus-l",
-      "fr": "Bronche ↔ Bronche principale",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bronchus-l",
-      "b": "organ:bp-posterior-mediastinum-l",
-      "fr": "Bronche ↔ Médiastin postérieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bronchus-r",
-      "b": "organ:bp-posterior-mediastinum-r",
-      "fr": "Bronche ↔ Médiastin postérieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-bronchus-r",
-      "b": "organ:bp-right-main-bronchus-r",
-      "fr": "Bronche ↔ Bronche principale droite",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-cerebral-arterial-circle-l",
-      "b": "organ:bp-right-common-carotid-artery-l",
-      "fr": "Cercle artériel du cerveau ↔ Artère carotide commune droite",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-cerebral-arterial-circle-r",
-      "b": "organ:bp-left-common-carotid-artery-r",
-      "fr": "Cercle artériel du cerveau ↔ Artère carotide commune gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-ciliary-ganglion-l",
-      "b": "organ:bp-parasympathetic-ganglion-l",
-      "fr": "Ganglion ciliaire ↔ Ganglion parasympathique",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-ciliary-ganglion-r",
-      "b": "organ:bp-parasympathetic-ganglion-r",
-      "fr": "Ganglion ciliaire ↔ Ganglion parasympathique",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-common-hepatic-artery-l",
-      "b": "organ:bp-left-hepatic-artery-l",
-      "fr": "Artère hépatique commune ↔ Artère hépatique gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-common-hepatic-duct",
-      "b": "organ:bp-extrahepatic-bile-duct",
-      "fr": "Conduit hépatique commun ↔ Conduits biliaires extrahépatiques",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-common-iliac-artery",
-      "b": "organ:bp-external-iliac-artery",
-      "fr": "Artère iliaque commune ↔ Artère iliaque externe",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-common-iliac-artery",
-      "b": "organ:bp-posterior-tibial-artery",
-      "fr": "Artère iliaque commune ↔ Artère tibiale postérieure",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-external-iliac-artery",
-      "b": "organ:bp-posterior-tibial-artery",
-      "fr": "Artère iliaque externe ↔ Artère tibiale postérieure",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-extrahepatic-bile-duct-l",
-      "b": "organ:bp-left-hepatic-duct-l",
-      "fr": "Conduits biliaires extrahépatiques ↔ Conduit hépatique gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-extrahepatic-bile-duct-r",
-      "b": "organ:bp-right-hepatic-duct-r",
-      "fr": "Conduits biliaires extrahépatiques ↔ Conduit hépatique droit",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
       "a": "organ:gracile-fasciculus",
       "b": "organ:nucleus-proprius",
       "fr": "Faisceau gracile ↔ Noyau propre",
       "detail": "centres à 0.0008 m, ratio de volume 0.63 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-hepatic-portal-vein-l",
-      "b": "organ:bp-left-lobe-of-liver-l",
-      "fr": "Veine porte du foie ↔ Lobe hépatique gauche",
-      "detail": "centres à 0.0005 m, ratio de volume 0.99 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-inferior-mesenteric-artery-l",
-      "b": "organ:bp-left-colic-artery-l",
-      "fr": "Artère mésentérique inférieure ↔ Artère colique gauche",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
     },
     {
       "type": "doublon-aabb",
@@ -966,74 +622,10 @@
     {
       "type": "doublon-aabb",
       "severity": "warning",
-      "a": "organ:bp-left-main-bronchus-l",
-      "b": "organ:bp-main-bronchus-l",
-      "fr": "Bronche principale gauche ↔ Bronche principale",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-left-main-bronchus-l",
-      "b": "organ:bp-posterior-mediastinum-l",
-      "fr": "Bronche principale gauche ↔ Médiastin postérieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-left-subclavian-artery",
-      "b": "organ:bp-right-subclavian-artery",
-      "fr": "Artère subclavière gauche ↔ Artère subclavière droite",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-left-subclavian-vein-l",
-      "b": "organ:bp-subclavian-vein-l",
-      "fr": "Veine sous-clavière gauche ↔ Veine sous-clavière",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-left-testicular-artery-l",
-      "b": "organ:bp-testicular-artery-l",
-      "fr": "Artère testiculaire gauche ↔ Artère testiculaire",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
       "a": "organ:lens-r",
       "b": "organ:zonular-fibres-r",
       "fr": "Cristalin ↔ Fibres zonulaires",
       "detail": "centres à 0.0015 m, ratio de volume 0.89 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-lobe-of-thymus-l",
-      "b": "organ:bp-thymus-l",
-      "fr": "Lobe du thymus ↔ Thymus",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-lobe-of-thymus-r",
-      "b": "organ:bp-thymus-r",
-      "fr": "Lobe du thymus ↔ Thymus",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-main-bronchus-l",
-      "b": "organ:bp-posterior-mediastinum-l",
-      "fr": "Bronche principale ↔ Médiastin postérieur",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
     },
     {
       "type": "doublon-aabb",
@@ -1050,14 +642,6 @@
       "b": "organ:tectospinal-tract",
       "fr": "Tractus vestibulospinal médial ↔ Tractus tectospinal",
       "detail": "centres à 0.0005 m, ratio de volume 1.29 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-mons-pubis",
-      "b": "organ:bp-pubic-hair",
-      "fr": "Mont du pubis ↔ Poils pubiens",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
     },
     {
       "type": "doublon-aabb",
@@ -1126,14 +710,6 @@
     {
       "type": "doublon-aabb",
       "severity": "warning",
-      "a": "organ:bp-peritoneum",
-      "b": "organ:bp-visceral-peritoneum",
-      "fr": "Péritoine ↔ Péritoine viscéral",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
       "a": "organ:posterior-fasciculus-proprius",
       "b": "organ:posterior-horn-of-spinal-cord",
       "fr": "Faisceau postérieur propre ↔ Corne postérieure de la moëlle épinière",
@@ -1186,14 +762,6 @@
       "b": "organ:bp-second-posterior-intercostal-artery-r",
       "fr": "Artère intercostale postérieure ↔ Deuxième artère intercostale postérieure",
       "detail": "centres à 0.0001 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-posterior-mediastinum-r",
-      "b": "organ:bp-right-main-bronchus-r",
-      "fr": "Médiastin postérieur ↔ Bronche principale droite",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
     },
     {
       "type": "doublon-aabb",
@@ -1318,34 +886,10 @@
     {
       "type": "doublon-aabb",
       "severity": "warning",
-      "a": "organ:bp-right-colic-artery-r",
-      "b": "organ:bp-superior-mesenteric-artery-r",
-      "fr": "Artère colique droite ↔ Artère mésentérique supérieure",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
       "a": "organ:bp-right-hepatic-artery",
       "b": "organ:bp-right-lobe-of-liver",
       "fr": "Artère hépatique droite ↔ Lobe hépatique droit",
       "detail": "centres à 0.0016 m, ratio de volume 0.97 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-right-subclavian-vein-r",
-      "b": "organ:bp-subclavian-vein-r",
-      "fr": "Veine sous-clavière droite ↔ Veine sous-clavière",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
-    },
-    {
-      "type": "doublon-aabb",
-      "severity": "warning",
-      "a": "organ:bp-right-testicular-artery-r",
-      "b": "organ:bp-testicular-artery-r",
-      "fr": "Artère testiculaire droite ↔ Artère testiculaire",
-      "detail": "centres à 0.0000 m, ratio de volume 1.00 (imbrication anatomique probable)"
     },
     {
       "type": "doublon-aabb",

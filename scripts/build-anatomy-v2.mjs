@@ -64,10 +64,93 @@ const EXCLUDED_CONCEPTS = new Set([
   "muscle:dorsal-fascia-of-hand-l",
   "muscle:palmar-aponeurosis-l",
 ]);
-const structures = allStructures.filter(
+
+/* Structures mises en quarantaine par l'audit des collisions anatomiques
+ * (docs/analyses/collisions-anatomiques.md, §§4-6 et §8.2) : 63 IDs uniques.
+ * Elles restent dans l'inventaire source mais sont retirées du jeu généré :
+ * doublons d'AABB (z-fighting), côté déclaré inversé et dimensions impossibles.
+ * Les 960 structures vasculaires/nerveuses anatomiquement normales sont gardées. */
+const HIDDEN_IDS = new Set([
+  /* 43 IDs « non spécifiques » des 30 groupes d'AABB identiques : dans chaque
+   * groupe on conserve le nom le plus spécifique (73 identifiants − 30 = 43). */
+  "bone:bp-lower-limb",
+  "bone:bp-lower-limb-l",
+  "bone:bp-lower-limb-r",
+  "bone:bp-nose",
+  "bone:bp-pelvic-girdle",
+  "bone:bp-pelvic-girdle-l",
+  "bone:bp-pelvic-girdle-r",
+  "organ:bp-anterior-mediastinum-l",
+  "organ:bp-anterior-mediastinum-r",
+  "organ:bp-aortic-valve-l",
+  "organ:bp-aortic-valve-r",
+  "organ:bp-basilar-artery",
+  "organ:bp-basilar-artery-l",
+  "organ:bp-bile-duct",
+  "organ:bp-bile-duct-l",
+  "organ:bp-bile-duct-r",
+  "organ:bp-brachiocephalic-vein-l",
+  "organ:bp-bronchus-l",
+  "organ:bp-bronchus-r",
+  "organ:bp-cerebral-arterial-circle-l",
+  "organ:bp-cerebral-arterial-circle-r",
+  "organ:bp-external-iliac-artery",
+  "organ:bp-extrahepatic-bile-duct",
+  "organ:bp-extrahepatic-bile-duct-l",
+  "organ:bp-extrahepatic-bile-duct-r",
+  "organ:bp-inferior-mesenteric-artery-l",
+  "organ:bp-left-hepatic-artery-l",
+  "organ:bp-main-bronchus-l",
+  "organ:bp-parasympathetic-ganglion-l",
+  "organ:bp-parasympathetic-ganglion-r",
+  "organ:bp-peritoneum",
+  "organ:bp-posterior-mediastinum-l",
+  "organ:bp-posterior-mediastinum-r",
+  "organ:bp-posterior-tibial-artery",
+  "organ:bp-pubic-hair",
+  "organ:bp-right-subclavian-artery",
+  "organ:bp-subclavian-vein-l",
+  "organ:bp-subclavian-vein-r",
+  "organ:bp-superior-mesenteric-artery-r",
+  "organ:bp-testicular-artery-l",
+  "organ:bp-testicular-artery-r",
+  "organ:bp-thymus-l",
+  "organ:bp-thymus-r",
+  /* 16 IDs dont le côté déclaré contredit le centre X réel (écart > 5 mm).
+   * 4 d'entre eux figurent aussi dans les doublons ; le Set les déduplique :
+   * 43 doublons + 16 côtés + 8 dimensions − 4 chevauchements = 63 IDs. */
+  "muscle:bp-flexor-pollicis-brevis-l",
+  "muscle:bp-flexor-pollicis-brevis-r",
+  "organ:bp-aortic-valve-r",
+  "organ:bp-bile-duct-l",
+  "organ:bp-brachium-of-superior-colliculus-l",
+  "organ:bp-brachium-of-superior-colliculus-r",
+  "organ:bp-common-hepatic-artery-l",
+  "organ:bp-extrahepatic-bile-duct-l",
+  "organ:bp-fibrous-skeleton-of-heart-r",
+  "organ:bp-hepatic-portal-vein-l",
+  "organ:bp-left-ascending-lumbar-vein-l",
+  "organ:bp-left-hepatic-artery-l",
+  "organ:bp-left-hepatic-duct-l",
+  "organ:bp-left-lobe-of-liver-l",
+  "organ:bp-pulmonary-valve-r",
+  "organ:bp-right-ascending-lumbar-vein-r",
+  /* 8 IDs aux dimensions absurdes du §5, jusqu'à correction de la source. */
+  "organ:hypothalamus",           // 0,476 m de haut au lieu de ~1 cm
+  "organ:bp-left-lung",           // 0,081 m de haut au lieu de ~0,25 m
+  "organ:spinal-ganglion-l",      // 0,466 m (mesh agrégé, pas un ganglion)
+  "organ:spinal-ganglion-r",      // idem, côté droit
+  "organ:intercostal-nodes-l",    // 0,298 m : chaîne, pas un nœud
+  "organ:intercostal-nodes-r",    // idem, côté droit
+  "organ:juxta-oesophageal-nodes", // 0,216 m : chaîne de ganglions
+  "organ:prevertebral-nodes",      // 0,216 m : chaîne de ganglions
+]);
+
+const keptConcepts = allStructures.filter(
   (s) => !(s.bodyParts3D?.parts > 20) && !EXCLUDED_CONCEPTS.has(s.id),
 );
-const excludedAggregates = allStructures.length - structures.length;
+const excludedAggregates = allStructures.length - keptConcepts.length;
+const structures = keptConcepts.filter((s) => !HIDDEN_IDS.has(s.id));
 
 const LOD = {
   low: { target: 300, label: "vue d'ensemble" },

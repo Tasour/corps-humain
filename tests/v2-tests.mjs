@@ -68,9 +68,9 @@ const st = () => page.evaluate(() => {
 });
 
 /* ---------- chargement ---------- */
-await check("chargement : 2104 structures et 3 lots", async () => {
+await check("chargement : 2041 structures et 3 lots", async () => {
   const s = await st();
-  assert.equal(s.count, 2104);
+  assert.equal(s.count, 2041);
   assert.equal(s.drawCalls, 3);
 });
 await check("aucune erreur console au chargement", () => assert.deepEqual(errors, []));
@@ -292,7 +292,7 @@ await check("double-clic recadre la vue", async () => {
   await page.locator("canvas").dblclick({ position: { x: 300, y: 300 } });
   await page.waitForTimeout(900);
   const pos = await page.evaluate(() => window.__v2.camera.position.toArray());
-  assert.ok(Math.hypot(pos[0] - 0.72, pos[2] - 2.55) < 0.35, `pos=${pos}`);
+  assert.ok(Math.hypot(pos[0] - 0.72, pos[2] - 2.85) < 0.35, `pos=${pos}`);
 });
 await check("toutes les structures restent visibles en rotation", async () => {
   await page.evaluate(() => window.__v2.isolate(null));

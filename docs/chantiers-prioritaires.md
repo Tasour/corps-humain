@@ -8,7 +8,7 @@
 | 2 | **Textures PBR photorealistes** | Remplacer les albedos procéduraux par des PBR scans (albedo/normal/roughness/AO) par tissu | ⬜ | Procedural en place ; chercher sources CC0/CC BY et pipeline KTX2 (crédit IA épuisé) |
 | 3 | **Audit qualité & tests visuels** | Un test par structure : normales, dégénérés, collisions, TA2 ; regression screenshots | ✅ | `npm run analyze:v2` + 28 tests ; ajouter captures visuelles automatiques |
 | 4 | **Groupes & cinématique complète** | Pivots réels, articulations, mouvements physiologiques pour tous les groupes | ⬜ | 9 groupes et animations de base ; étendre à ~40 groupes |
-| 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 104 structures, fiches multilingues | ⬜ | 3 waypoints génériques + 6 curés ; rédiger la suite |
+| 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 041 structures, fiches multilingues | ⬜ | 3 waypoints génériques + 6 curés ; rédiger la suite |
 | 6 | **Performance & sobriété énergétique** | LOD streaming, WebGPU optionnel, budget thermique, occlusion culling | ✅ | LOD auto + BatchedMesh (3 appels) + WASM ; mesurer sur vrais mobiles |
 | 7 | **Fusion v1 + v2** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies/jeux/coupe | ⬜ | Deux pages coexistent ; unifier le state par ID TA2 |
 | 8 | **Accessibilité & responsive** | Clavier, lecteur d'écran, contraste AA clair/sombre, gestes mobiles | ⬜ | Thèmes + sidebar mobile ; audit axe et navigation clavier |
@@ -20,6 +20,8 @@
 | 14 | **Détection automatique des collisions** | Log des paires AABB suspectes, test qui échoue quand une collision est détectée | ✅ | `npm run test:collisions` + `docs/analyses/collisions.md` |
 | 15 | **Correction des collisions géométriques** | Structures qui traversent la peau / se chevauchent anormalement | ✅ | 3 structures hors peau exclues du build ; 0 erreur, 173 imbrications en avertissement |
 | 16 | **FPS réels sous charge** | HUD honnête + cadence adaptative, plus d'image gelée au glisser | ✅ | HUD = rendus réels ; glisser = ~63 fps ; `MeshStandardMaterial` ; WASM pile fixe |
+| 17 | **Collisions visuelles (hover + cadrage)** | Contour plaqué, catégorie activée à l'isolement, cadrage sans débordement | ✅ | Test par dilatation euclidienne : 0 anomalie / 400 structures ; 63 IDs exclus |
+| 18 | **Classification respiratoire** | Poumons/trachée dans l'appareil respiratoire | ✅ | Remappage dans l'arbre, 15 structures, sous-nœuds Poumons/Bronches |
 
 Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 
@@ -36,7 +38,7 @@ Ordre restant : 2 → 4 → 5 → 7 → 8.
 ## Corrections livrées dans ce cycle (chantier 1)
 
 - **Organes invisibles au chargement** : la peau était affichée par défaut et recouvrait tout. Elle est désormais masquée par défaut (bouton « Peau » désactivé), organes visibles immédiatement.
-- **Organes disparaissant à la rotation** : le seuil LOD WASM éliminait les structures à distance. Plancher à 3,5 m ajouté → ~2 104 structures restent visibles quelle que soit l'orientation.
+- **Organes disparaissant à la rotation** : le seuil LOD WASM éliminait les structures à distance. Plancher à 3,5 m ajouté → ~2 041 structures restent visibles quelle que soit l'orientation.
 - **Clic sur zone masquée** : `pickExact` filtre les instances via `currentVisible` en plus de `batch.visible`; le BVH filtre aussi via `currentVisible`.
 - **Glisser** ne sélectionne plus ; **double-clic** recadre ; `touch-action: none` pour le tactile.
 - **Ombres** PCF soft avec update à la demande ; **thèmes** clair/sombre persistés.

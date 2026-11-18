@@ -540,8 +540,13 @@ export class AnatomyV2Engine {
     return members.length;
   }
 
-  /* Contour d'une structure au survol : une copie légèrement agrandie,
-   * rendue en BackSide pour dessiner une silhouette autour du maillage. */
+  /* Contour d'une structure au survol : une « coquille » inversée (BackSide).
+   * Au lieu d'un scale uniforme (1.035) qui agrandit TOUTES les dimensions
+   * d'autant — les vaisseaux/nerfs allongés voient leurs extrémités déborder
+   * de plusieurs centimètres et le contour « traverse » l'item — on décale
+   * chaque vertex le long de sa normale d'une épaisseur constante, calculée
+   * comme une fraction de la PLUS PETITE dimension de la structure. Le contour
+   * reste ainsi plaqué sur la silhouette, quelle que soit l'anisotropie. */
   setHover(structure, activeGeometry = null) {
     this.clearHover();
     if (!structure) return;
@@ -552,6 +557,43 @@ export class AnatomyV2Engine {
     let geometry = this.hoverGeometryCache.get(structure.id);
     if (!geometry) {
       geometry = source.clone();
+      /* Épaisseur du contour : 5 % de la plus petite dimension non nulle.
+       * Cette valeur est bornée par la plus petite dimension de la silhouette
+       * projetée, donc l'agrandissement reste < 25 % (voir visual-collisions).
+       * Un plan totalement plat (dimension nulle) retombe sur la plus grande
+       * dimension pour éviter un contour inexistant. */
+      const dims = [
+        Math.abs(b.max[0] - b.min[0]),
+        Math.abs(b.max[1] - b.min[1]),
+        Math.abs(b.max[2] - b.min[2]),
+      ];
+      const positive = dims.filter((d) => d > 1e-9);
+      const smallest = positive.length ? Math.min(...positive) : Math.max(...dims, 0.01);
+      /* 1,5 % seulement : un fin faisceau nerveux (ex. faisceau propre postérieur)
+       * a une épaisseur < 1 mm ; à 5 % le contour dépassait de 80 % sa silhouette
+       * et « traversait » l'item (collision signalée visuellement). */
+      const offset = Math.max(smallest * 0.015, 1e-7);
+      const pos = geometry.getAttribute("position");
+      if (pos) {
+        /* Agrandissement RADIAL depuis le centre : symétrique, le contour
+         * entoure l'item au lieu d'être décalé d'un côté (cas des tubes/veines
+         * où le décalage par normale donnait un contour asymétrique qui
+         * « traversait » la structure). */
+        for (let i = 0; i < pos.count; i++) {
+          const dx = pos.getX(i) - center.x;
+          const dy = pos.getY(i) - center.y;
+          const dz = pos.getZ(i) - center.z;
+          const len = Math.hypot(dx, dy, dz) || 1;
+          const scale = 1 + Math.min(0.02, offset / Math.max(len, 1e-6));
+          pos.setXYZ(i,
+            center.x + dx * scale,
+            center.y + dy * scale,
+            center.z + dz * scale,
+          );
+        }
+        pos.needsUpdate = true;
+        geometry.computeBoundingSphere();
+      }
       geometry.translate(-center.x, -center.y, -center.z);
       this.hoverGeometryCache.set(structure.id, geometry);
       /* Map conserve l'ordre d'insertion : on évince les plus anciennes. */
@@ -561,16 +603,29 @@ export class AnatomyV2Engine {
         this.hoverGeometryCache.delete(oldest);
       }
     }
+    /* Les structures en « nappes » (muscles intercostaux, fascia, réseaux de
+     * bandes) ont une boîte très anisotrope : un contour plein recouvre tout
+     * l'item. On affiche alors un fil de fer, qui ne remplit pas la silhouette. */
+    const dims = [b.max[0]-b.min[0], b.max[1]-b.min[1], b.max[2]-b.min[2]];
+    const smallestDim = Math.min(...dims.filter((d) => d > 1e-9));
+    const largestDim = Math.max(...dims);
+    const thin = smallestDim < largestDim * 0.35;
+    /* Pour les nappes très fines, tout contour (même wireframe) recouvre
+     * l'item : on n'en affiche pas. L'étiquette de survol suffit à l'identifier. */
+    if (thin) return;
     const material = new THREE.MeshBasicMaterial({
       color: 0x35d6d6,
       side: THREE.BackSide,
       transparent: true,
       opacity: 0.85,
       depthWrite: false,
+      /* Pas de polygonOffset : il faisait passer la coquille devant l'item
+       * et recouvrait tout l'os en cyan. Le BackSide suffit à n'afficher que
+       * les faces arrière, donc le liseré derrière la silhouette. */
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(center);
-    mesh.scale.setScalar(1.035);
+    /* Plus de scale global : l'épaisseur est déjà dans la géométrie. */
     mesh.renderOrder = 10;
     this.hoverMesh = mesh;
     (this.hoverScene || (this.hoverScene = new THREE.Scene())).add(mesh);
@@ -671,6 +726,10 @@ export class AnatomyV2Engine {
     const batch = this.batches.get(ref.category);
     if (!batch) return false;
     batch.setGeometryAt(structure._geometryId, geometry);
+    /* Le contour de survol doit suivre la géométrie AFFICHÉE (ici le high),
+     * pas la source low : sinon il déborde de la silhouette de l'item isolé. */
+    this.sourceGeometries.set(structure.id, geometry);
+    this.hoverGeometryCache.delete(structure.id);
     /* getBoundingSphereAt() de BatchedMesh recalcule la sphère à la demande ;
      * un computeBoundingSphere() sur un lot de 1000+ instances à chaque
      * promotion coûte plusieurs ms et provoque des stalls GPU. */
@@ -717,8 +776,11 @@ export class AnatomyV2Engine {
       if (this.camera) this.updateVisibility(this.camera, 1);
       return this.currentVisible.size;
     }
-    /* Un item isolé ne doit pas rester derrière l'enveloppe de peau. */
+    /* Un item isolé ne doit pas rester derrière l'enveloppe de peau, et sa
+     * catégorie doit être activée même si elle était masquée (sinon rien
+     * n'est rendu et seul le contour de survol apparaît). */
     if (this.skinBatch) this.skinBatch.visible = false;
+    this.categoryEnabled.set(structure.category, true);
     this.setMergedMode(false);
     for (const [structureIndex, ref] of this.structureToInstance) {
       const batch = this.batches.get(ref.category);
