@@ -119,9 +119,16 @@ un item, et d'animer les groupes (éclaté, mouvements articulaires). Un accès 
 
 Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
 vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
-AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 22 tests 3D**
+AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 30 tests 3D**
 (`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
 peau, les groupes, les animations, les waypoints, le tour du monde, le LOD et le mobile.
+**18 contrôles d'accessibilité** (`npm run test:a11y`) mesurent les contrastes réels,
+les noms accessibles, le focus visible, la navigation clavier du canvas et la
+feuille de détails mobile.
+
+**Au clavier** : `Tab` atteint le canvas, les flèches tournent autour du corps,
+`+`/`-` zooment, `Entrée` sélectionne la structure au centre, `Échap` désélectionne
+(ou ferme le tiroir mobile), `/` place le focus dans la recherche, `Début` recadre.
 
 Chaque structure possède des **waypoints** (3 par défaut, anecdotes et explications
 pour les structures majeures),masqués tant que le bouton « Waypoints » n'est pas

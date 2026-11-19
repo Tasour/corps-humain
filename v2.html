@@ -10,15 +10,43 @@
       --paper: #f7f3ec;
       --paper-2: #fffdf9;
       --ink: #22313a;
-      --muted: #6f7f88;
+      /* Contrastes vérifiés sur --paper (4,71:1) et --paper-2 (5,13:1).
+       * L'ancien #6f7f88 tombait à 3,75:1, sous le seuil AA de 4,5:1. */
+      --muted: #5f6f78;
+      /* Texte secondaire des listes (10–11 px) : même seuil AA. */
+      --small: #5f6f78;
       --line: #ded5c8;
       --teal: #1e7f8c;
       --teal-soft: #e2f1f0;
       --accent: #b4553f;
+      --focus: #1e7f8c;
       --shadow: 0 12px 40px -22px rgba(26, 46, 55, .45);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
+    /* ---------- utilitaires d'accessibilité ---------- */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .skip-link {
+      position: absolute; left: 12px; top: -64px; z-index: 60;
+      padding: 12px 18px; background: var(--teal); color: #fff;
+      border-radius: 0 0 8px 8px; text-decoration: none; font-weight: 600;
+      transition: top .15s;
+    }
+    .skip-link:focus { top: 0; }
+    /* Focus toujours visible, y compris sur le canvas et dans le thème sombre. */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    body.dark { --focus: #7ee7c7; }
+    /* Cibles tactiles : 36 px minimum au pointeur fin, 44 px au doigt. */
+    button { min-height: 36px; }
+    @media (pointer: coarse) {
+      button { min-height: 44px; }
+    }
     body {
       font: 14px/1.5 "Segoe UI", system-ui, sans-serif;
       color: var(--ink);
@@ -71,8 +99,8 @@
     }
     #list .item:hover { background: #eef4f2; }
     #list .item.active { background: var(--teal-soft); color: #105b66; }
-    #list .item small { float: right; color: #9aa7ad; font-size: 10px; }
-    .group { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #9aa7ad; padding: 10px 8px 5px; }
+    #list .item small { float: right; color: var(--small); font-size: 10px; }
+    .group { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--small); padding: 10px 8px 5px; }
     /* ---------- vue 3D ---------- */
     .viewport { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #fdfbf7 0%, #efe9df 72%, #e5ddd1 100%); }
     .viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
@@ -107,14 +135,15 @@
     }
     #wp-title { font: 600 15px Georgia, serif; color: var(--accent); }
     #wp-text { margin-top: 6px; font-size: 12.5px; color: #4d5d66; }
-    .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: #8b979e; text-align: right; }
+    .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* ---------- panneau détails ---------- */
-    .details h2 { margin: 0; font: 600 30px/1.1 Georgia, serif; }
+    .details #sel-name { margin: 0; font: 600 30px/1.1 Georgia, serif; }
     .details .latin { color: var(--accent); font: italic 13px Georgia, serif; margin-top: 6px; }
     .details .meta { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 16px; color: #4d5d66; font-size: 12.5px; }
-    .details .meta div { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted var(--line); }
-    .details .meta span:last-child { color: var(--ink); font-weight: 600; }
+    .details .meta div { display: flex; justify-content: space-between; gap: 14px; padding: 5px 0; border-bottom: 1px dotted var(--line); }
+    .details .meta span:first-child { flex: 0 0 auto; }
+    .details .meta span:last-child { color: var(--ink); font-weight: 600; text-align: right; overflow-wrap: anywhere; min-width: 0; }
     .fact { margin-top: 18px; padding: 14px; background: #fbf3e8; border-left: 3px solid var(--accent); border-radius: 6px; font-size: 12.5px; color: #5a4a3c; }
     #sel-name { font: 600 30px/1.1 Georgia, serif; }
     #sel-meta { color: var(--muted); font-size: 12px; }
@@ -145,78 +174,136 @@
     @media (max-width: 820px) {
       header { padding: 0 14px; height: 64px; }
       .layout { grid-template-columns: 1fr; height: calc(100vh - 64px); }
-      .sidebar { position: fixed; z-index: 12; top: 64px; bottom: 0; left: 0; width: 290px; display: none; box-shadow: var(--shadow); }
+      .sidebar { position: fixed; z-index: 12; top: 64px; bottom: 0; left: 0; width: min(290px, 86vw); display: none; box-shadow: var(--shadow); }
       .sidebar.open { display: flex; flex-direction: column; }
       .sidebar.open > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-      .details { display: none; }
+      /* Les détails ne disparaissent plus : ils deviennent une feuille
+       * inférieure ouverte à la sélection, sinon le choix restait invisible
+       * sur téléphone (ni nom, ni code TA2, ni source). */
+      .details {
+        display: block; position: fixed; z-index: 14; left: 0; right: 0; bottom: 0;
+        max-height: 46vh; overflow: auto; padding: 18px 16px 26px;
+        border-left: 0; border-top: 1px solid var(--line);
+        border-radius: 14px 14px 0 0;
+        box-shadow: 0 -14px 40px -24px rgba(0, 0, 0, .55);
+        transform: translateY(105%); transition: transform .22s ease;
+      }
+      body.has-selection .details { transform: translateY(0); }
+      .details-close {
+        display: inline-flex; align-items: center; justify-content: center;
+        position: absolute; right: 12px; top: 10px; width: 44px; height: 44px;
+        font-size: 18px; line-height: 1;
+      }
       #mobile-toggle { display: inline-block; }
-      .anim-bar { bottom: 12px; }
+      .anim-bar {
+        bottom: 10px; max-width: 96%; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden;
+        justify-content: flex-start; scrollbar-width: thin;
+      }
+      .anim-bar button { flex: 0 0 auto; white-space: nowrap; }
+      #scrim {
+        position: fixed; inset: 64px 0 0; z-index: 11; background: rgba(16, 30, 38, .38);
+        opacity: 0; pointer-events: none; transition: opacity .18s;
+      }
+      body.sidebar-open #scrim { opacity: 1; pointer-events: auto; }
+    }
+    @media (min-width: 821px) {
+      .details-close { display: none; }
+    }
+    @media (max-width: 560px) {
+      header { padding: 0 10px; }
+      .brand h1 { font-size: 18px; letter-spacing: .12em; }
+      .brand small, .top-meta .badge { display: none; }
+      .brand img { width: 32px; height: 32px; }
+      .top-meta { gap: 6px; }
+      .top-actions { gap: 4px; }
+      .details #sel-name { font-size: 24px; }
+    }
+    /* Les animations décoratives (transitions, rotation continue) sont
+     * supprimées quand le système demande moins de mouvement. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#viewport">Aller à la vue 3D</a>
+  <div id="a11y-status" class="sr-only" role="status" aria-live="polite"></div>
   <header>
     <div class="brand">
-      <img src="./logo.svg" alt="Logo CORPS" />
+      <img src="./logo.svg" alt="" />
       <div><h1>CORPS</h1><small>Atlas vivant · anatomie &amp; pathologies</small></div>
     </div>
     <div class="top-meta">
       <span class="badge" id="count">— structures</span>
       <span class="badge">Version 2.0</span>
       <div class="top-actions">
-        <button id="theme-toggle">Thème : clair</button>
-        <button id="mobile-toggle">Explorer</button>
-        <button id="reset">Recadrer</button>
+        <button id="theme-toggle" type="button" aria-pressed="false">Thème : clair</button>
+        <button id="mobile-toggle" type="button" aria-expanded="false" aria-controls="sidebar">Explorer</button>
+        <button id="reset" type="button">Recadrer</button>
       </div>
     </div>
   </header>
 
   <div class="layout">
-    <aside id="sidebar" class="sidebar">
-      <div class="section"><input id="search" type="search" placeholder="Organe, os, muscle, TA2…" autocomplete="off" /></div>
+    <aside id="sidebar" class="sidebar" aria-label="Explorateur anatomique">
       <div class="section">
-        <div class="section-title">Couches</div>
-        <div class="layers-list">
-          <button data-cat="skin"><span class="swatch" style="--c:#7fa8a6"></span>Peau</button>
-          <button data-cat="bone"><span class="swatch" style="--c:#e6dcc9"></span>Os</button>
-          <button data-cat="muscle"><span class="swatch" style="--c:#a83b44"></span>Muscles</button>
-          <button data-cat="organ" class="active"><span class="swatch" style="--c:#a85f55"></span>Organes</button>
+        <label class="sr-only" for="search">Rechercher une structure anatomique</label>
+        <input id="search" type="search" placeholder="Organe, os, muscle, TA2…" autocomplete="off" />
+      </div>
+      <div class="section">
+        <h2 class="section-title">Couches</h2>
+        <div class="layers-list" role="group" aria-label="Couches anatomiques">
+          <button type="button" data-cat="skin" aria-pressed="false"><span class="swatch" style="--c:#7fa8a6" aria-hidden="true"></span>Peau</button>
+          <button type="button" data-cat="bone" aria-pressed="false"><span class="swatch" style="--c:#e6dcc9" aria-hidden="true"></span>Os</button>
+          <button type="button" data-cat="muscle" aria-pressed="false"><span class="swatch" style="--c:#a83b44" aria-hidden="true"></span>Muscles</button>
+          <button type="button" data-cat="organ" class="active" aria-pressed="true"><span class="swatch" style="--c:#a85f55" aria-hidden="true"></span>Organes</button>
         </div>
       </div>
       <div class="section">
-        <div class="section-title">Exploration hiérarchique</div>
-        <button id="tree-back" class="tree-back" type="button" disabled>← Retour</button>
-        <div class="breadcrumb" id="breadcrumb"></div>
-        <div class="tree" id="tree"></div>
+        <h2 class="section-title">Exploration hiérarchique</h2>
+        <button id="tree-back" class="tree-back" type="button" disabled aria-label="Revenir au niveau supérieur">← Retour</button>
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Fil d'Ariane"></nav>
+        <div class="tree" id="tree" role="group" aria-label="Niveaux anatomiques"></div>
       </div>
-      <div class="section"><div class="section-title">Accès rapide</div><div class="chips" id="shortcuts"></div></div>
-      <div class="section"><div class="section-title">Groupes anatomiques</div><div class="chips" id="groups"></div></div>
-      <div class="section"><div class="section-title">Explorer <span id="list-total"></span></div><div id="list"></div></div>
+      <div class="section"><h2 class="section-title">Accès rapide</h2><div class="chips" id="shortcuts"></div></div>
+      <div class="section"><h2 class="section-title">Groupes anatomiques</h2><div class="chips" id="groups"></div></div>
+      <div class="section"><h2 class="section-title">Explorer <span id="list-total"></span></h2><div id="list" role="group" aria-label="Structures anatomiques"></div></div>
     </aside>
 
-    <main class="viewport" id="viewport">
-      <div id="hover-label"></div>
-      <div class="group-actions" id="group-actions">
-        <button id="explode">Éclater</button>
-        <button id="move">Mouvement</button>
-        <button id="group-reset">Réinitialiser</button>
+    <main class="viewport" id="viewport" tabindex="-1" aria-label="Vue 3D du corps humain">
+      <p id="canvas-help" class="sr-only">Vue 3D interactive. Flèches gauche et droite pour tourner autour du corps, flèches haut et bas pour incliner, touches plus et moins pour zoomer, Entrée pour sélectionner la structure au centre, Échap pour désélectionner, Début pour recadrer.</p>
+      <div id="hover-label" aria-hidden="true"></div>
+      <div class="group-actions" id="group-actions" role="group" aria-label="Actions du groupe sélectionné">
+        <button id="explode" type="button">Éclater</button>
+        <button id="move" type="button">Mouvement</button>
+        <button id="group-reset" type="button">Réinitialiser</button>
       </div>
-      <div class="perf"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
-      <div id="label"></div>
-      <div id="waypoint-info"><div id="wp-title">—</div><div id="wp-text">—</div></div>
-      <div class="anim-bar" id="animations"></div>
+      <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
+      <div id="label" aria-hidden="true"></div>
+      <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div></div>
+      <div class="anim-bar" id="animations" role="group" aria-label="Animations"></div>
     </main>
 
-    <aside class="details" id="info">
-      <div class="section-title">Structure sélectionnée</div>
-      <div id="sel-name">Cliquez sur une structure</div>
-      <div id="sel-meta">ou choisissez-la dans la liste</div>
+    <aside class="details" id="info" aria-label="Détails de la structure">
+      <button type="button" class="details-close" id="details-close" aria-label="Fermer les détails">✕</button>
+      <h2 class="section-title">Structure sélectionnée</h2>
+      <div id="selection-status" role="status" aria-live="polite">
+        <div id="sel-name">Cliquez sur une structure</div>
+        <div id="sel-meta">ou choisissez-la dans la liste</div>
+      </div>
       <div class="meta" id="detail-meta"></div>
-      <div class="fact" id="detail-fact">Explorez les 2 041 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+      <div class="fact" id="detail-fact">Explorez les 2 039 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
     </aside>
   </div>
 
-  <div id="loading"><div class="card"><img src="./logo.svg" alt="" /><h2>CORPS</h2><p id="load-text">Chargement de l'atlas…</p></div></div>
+  <div id="scrim" hidden></div>
+
+  <div id="loading" role="status" aria-live="polite" aria-busy="true"><div class="card"><img src="./logo.svg" alt="" /><h2>CORPS</h2><p id="load-text">Chargement de l'atlas…</p></div></div>
 
   <script type="module">
     import * as THREE from 'three';
@@ -237,6 +324,14 @@
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     viewport.insertBefore(renderer.domElement, viewport.firstChild);
+    /* Le canvas est le seul moyen de sélectionner une structure à la souris :
+     * il doit être focusable, décrit, et pilotable au clavier. */
+    renderer.domElement.tabIndex = 0;
+    renderer.domElement.setAttribute('role', 'application');
+    renderer.domElement.setAttribute('aria-label', 'Vue 3D interactive du corps humain');
+    renderer.domElement.setAttribute('aria-describedby', 'canvas-help');
+    renderer.domElement.style.cursor = 'grab';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const scene = new THREE.Scene();
     const lightBg = new THREE.Color('#f2ece2');
@@ -286,7 +381,20 @@
     engine.setSkinVisible(false);
     document.getElementById('count').textContent = `${engine.stats.structures} structures`;
     document.getElementById('list-total').textContent = `${engine.structures.length}`;
-    document.getElementById('loading').style.display = 'none';
+    /* Le texte d'accueil ne doit pas annoncer un nombre périmé. */
+    document.getElementById('detail-fact').textContent =
+      `Explorez les ${engine.stats.structures.toLocaleString('fr-FR')} structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.`;
+    const loadingEl = document.getElementById('loading');
+    loadingEl.setAttribute('aria-busy', 'false');
+    loadingEl.style.display = 'none';
+
+    /* Région live dédiée : les changements de sélection sont annoncés une
+     * fois, sans relire tout le panneau de détails à chaque frappe. */
+    const a11yStatus = document.getElementById('a11y-status');
+    function announce(message) {
+      a11yStatus.textContent = '';
+      requestAnimationFrame(() => { a11yStatus.textContent = message; });
+    }
 
     function resize() {
       const w = viewport.clientWidth, h = viewport.clientHeight;
@@ -311,8 +419,9 @@
     const labelEl = document.getElementById('label');
     const wpInfo = document.getElementById('waypoint-info');
 
+    const searchInput = document.getElementById('search');
     function renderList() {
-      const query = document.getElementById('search').value.trim().toLowerCase();
+      const query = searchInput.value.trim().toLowerCase();
       const matches = engine.structures.filter((s) =>
         !query || `${s.fr} ${s.en} ${s.la} ${s.ta2}`.toLowerCase().includes(query),
       ).slice(0, 400);
@@ -327,7 +436,8 @@
         html += `<div class="group">${labels[cat] || cat} (${items.length})</div>`;
         for (const s of items) {
           const side = s.side === 'left' ? ' · G' : s.side === 'right' ? ' · D' : '';
-          html += `<button class="item${selected === s ? ' active' : ''}" data-id="${s.id}">${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
+          const pressed = selected === s;
+          html += `<button type="button" class="item${pressed ? ' active' : ''}" data-id="${s.id}" aria-pressed="${pressed}">${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
         }
       }
       if (!matches.length) html = '<div class="group">Aucun résultat</div>';
@@ -351,8 +461,8 @@
        * reconstruisent correctement le niveau, même après traduction. */
       const chain = tree.breadcrumbNodes(currentNode);
       crumbEl.innerHTML = chain.map((node, i) => i < chain.length - 1
-        ? `<button data-crumb="${node.id}">${node.label}</button><span class="sep">›</span>`
-        : `<span>${node.label}</span>`).join('');
+        ? `<button type="button" data-crumb="${node.id}">${node.label}</button><span class="sep" aria-hidden="true">›</span>`
+        : `<span aria-current="page">${node.label}</span>`).join('');
       crumbEl.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
         const node = tree.get(b.dataset.crumb) || tree.root;
         focusNode(node);
@@ -370,8 +480,9 @@
         return;
       }
       treeEl.innerHTML = nodes.map((n) =>
-        `<button class="tree-node" data-node="${n.id}">` +
-        `<span class="tree-indent"></span><span class="tree-caret">${n.children.length ? '▸' : '·'}</span>` +
+        `<button type="button" class="tree-node" data-node="${n.id}"` +
+        (n.children.length ? ' aria-expanded="false"' : '') + `>` +
+        `<span class="tree-indent"></span><span class="tree-caret" aria-hidden="true">${n.children.length ? '▸' : '·'}</span>` +
         `${n.label}<span class="tree-count">${n.count}</span></button>`,
       ).join('');
       treeEl.querySelectorAll('.tree-node').forEach((b) => b.addEventListener('click', () => {
@@ -510,7 +621,10 @@
        * masqué (os/muscles le sont par défaut) et la vue devient vide. */
       engine.setCategoryVisible(structure.category, true);
       const catBtn = document.querySelector(`[data-cat="${structure.category}"]`);
-      if (catBtn) catBtn.classList.add('active');
+      if (catBtn) {
+        catBtn.classList.add('active');
+        catBtn.setAttribute('aria-pressed', 'true');
+      }
       engine.isolate(structure);
       engine.highlight(structure, '#ffffff');
       engine.showWaypoints(getWaypoints(structure));
@@ -521,6 +635,14 @@
       const side = structure.side === 'left' ? ' · G' : structure.side === 'right' ? ' · D' : '';
       document.getElementById('sel-name').textContent = structure.fr || structure.en;
       document.getElementById('sel-meta').textContent = `${labels[structure.category] || ''}${side} · TA2 ${structure.ta2 || '—'}`;
+      /* Sur téléphone, les détails sont une feuille inférieure : elle doit
+       * s'ouvrir à la sélection, sinon le choix reste invisible. */
+      document.body.classList.add('has-selection');
+      /* Sur téléphone le tiroir couvre la feuille de détails : on le referme
+       * dès qu'une structure est choisie dans la liste. */
+      if (innerWidth <= 820 && sidebarEl.classList.contains('open')) setSidebar(false);
+      syncDetailsSheet();
+      announce(`${structure.fr || structure.en} sélectionné. ${labels[structure.category] || ''}${side}.`);
       detailMeta.innerHTML =
         `<div><span>Nom latin</span><span>${structure.la || '—'}</span></div>` +
         `<div><span>Système</span><span>${labels[structure.category] || structure.category}</span></div>` +
@@ -571,13 +693,14 @@
       /* On ne reconstruit pas la liste ici : cela détacherait les boutons
        * pendant un clic Playwright/utilisateur et rendrait le clic instable. */
       document.querySelectorAll('#list .item').forEach((el) => {
-        el.classList.toggle('active', el.dataset.id === structure.id);
+        const on = el.dataset.id === structure.id;
+        el.classList.toggle('active', on);
+        el.setAttribute('aria-pressed', String(on));
       });
     }
 
     document.getElementById('search').addEventListener('input', renderList);
     renderList();
-
     /* Raccourcis et groupes. */
     const shortcutsEl = document.getElementById('shortcuts');
     for (const item of QUICK_ACCESS) {
@@ -603,6 +726,9 @@
         try { await engine.setGroupLod(group, level); } catch { /* garde le LOD courant */ }
         document.getElementById('sel-name').textContent = group.label;
         document.getElementById('sel-meta').textContent = `${count} structures · ${group.movement || 'vue de groupe'}`;
+        document.body.classList.add('has-selection');
+        syncDetailsSheet();
+        announce(`Groupe ${group.label} sélectionné, ${count} structures.`);
         document.getElementById('group-actions').style.display = 'flex';
         const members = group.members.map((id) => engine.byId.get(id)).filter(Boolean);
         const c = members.reduce((acc, s) => {
@@ -633,7 +759,8 @@
       engine.setSceneAnimation(type, ids);
     }
     const defs = [
-      { label: 'Tour du monde', action: () => {
+      { id: 'tour', label: 'Tour du monde', action: () => {
+        if (reduceMotion) { announce('Rotation continue désactivée par la préférence système de réduction des mouvements.'); return; }
         tourActive = !tourActive;
         if (tourActive) { cameraTween = null; tourAngle = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z); }
       } },
@@ -649,8 +776,13 @@
     ];
     for (const def of defs) {
       const b = document.createElement('button');
+      b.type = 'button';
       b.textContent = def.label;
-      b.addEventListener('click', def.action);
+      if (def.id === 'tour') b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', () => {
+        def.action();
+        if (def.id === 'tour') b.setAttribute('aria-pressed', String(tourActive));
+      });
       animationsEl.appendChild(b);
     }
 
@@ -658,30 +790,75 @@
     document.querySelectorAll('[data-cat]').forEach((button) => {
       button.addEventListener('click', () => {
         button.classList.toggle('active');
-        if (button.dataset.cat === 'skin') engine.setSkinVisible(button.classList.contains('active'));
-        else engine.setCategoryVisible(button.dataset.cat, button.classList.contains('active'));
+        const on = button.classList.contains('active');
+        button.setAttribute('aria-pressed', String(on));
+        if (button.dataset.cat === 'skin') engine.setSkinVisible(on);
+        else engine.setCategoryVisible(button.dataset.cat, on);
         forceCulling = true;
       });
     });
-    document.getElementById('reset').addEventListener('click', () => {
+    function resetView() {
       camera.position.set(0.72, 1.28, 2.85);
       controls.target.set(0, 0.88, 0);
       cameraTween = null;
       tourActive = false;
       controls.update();
+      forceCulling = true;
+      needsRender = true;
+    }
+    document.getElementById('reset').addEventListener('click', () => {
+      resetView();
+      announce('Vue recadrée sur le corps entier.');
     });
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.textContent = darkTheme ? 'Thème : sombre' : 'Thème : clair';
+    themeToggle.setAttribute('aria-pressed', String(darkTheme));
     themeToggle.addEventListener('click', () => {
       const dark = document.body.classList.toggle('dark');
       localStorage.setItem('corps-theme', dark ? 'dark' : 'light');
       themeToggle.textContent = dark ? 'Thème : sombre' : 'Thème : clair';
+      themeToggle.setAttribute('aria-pressed', String(dark));
       scene.background = dark ? darkBg : lightBg;
       needsRender = true;
+      announce(dark ? 'Thème sombre activé.' : 'Thème clair activé.');
     });
-    document.getElementById('mobile-toggle').addEventListener('click', () => {
-      document.getElementById('sidebar').classList.toggle('open');
+
+    /* ---------- panneau mobile et feuille de détails ---------- */
+    const sidebarEl = document.getElementById('sidebar');
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const scrimEl = document.getElementById('scrim');
+    const infoEl = document.getElementById('info');
+    function setSidebar(open) {
+      sidebarEl.classList.toggle('open', open);
+      document.body.classList.toggle('sidebar-open', open);
+      mobileToggle.setAttribute('aria-expanded', String(open));
+      scrimEl.hidden = !open;
+      if (open) {
+        const first = sidebarEl.querySelector('input, button');
+        if (first) first.focus();
+      } else {
+        mobileToggle.focus();
+      }
+    }
+    mobileToggle.addEventListener('click', () => {
+      setSidebar(!sidebarEl.classList.contains('open'));
     });
+    scrimEl.addEventListener('click', () => setSidebar(false));
+    /* Hors mobile la feuille n'existe pas : le panneau reste toujours lisible. */
+    function syncDetailsSheet() {
+      const mobile = innerWidth <= 820;
+      const open = mobile && document.body.classList.contains('has-selection');
+      infoEl.inert = mobile && !open;
+      if (mobile) infoEl.setAttribute('aria-hidden', String(!open));
+      else infoEl.removeAttribute('aria-hidden');
+    }
+    document.getElementById('details-close').addEventListener('click', () => {
+      document.body.classList.remove('has-selection');
+      syncDetailsSheet();
+      announce('Détails fermés.');
+    });
+    addEventListener('resize', syncDetailsSheet);
+    syncDetailsSheet();
     document.getElementById('explode').addEventListener('click', () => {
       engine.clearAnimation();
       if (activeGroup) groupAnim = { group: activeGroup, mode: 'explode', t: 0, dir: 1 };
@@ -702,13 +879,7 @@
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     let downX = 0, downY = 0, dragging = false;
-    renderer.domElement.addEventListener('dblclick', () => {
-      camera.position.set(0.72, 1.28, 2.85);
-      controls.target.set(0, 0.88, 0);
-      cameraTween = null;
-      tourActive = false;
-      controls.update();
-    });
+    renderer.domElement.addEventListener('dblclick', () => resetView());
     renderer.domElement.addEventListener('pointerdown', (e) => {
       downX = e.clientX; downY = e.clientY; dragging = true;
     });
@@ -750,6 +921,99 @@
       }
       await selectStructure(engine.pickExact(raycaster) || engine.pick(raycaster), false);
     }
+
+    /* ---------- navigation clavier de la vue 3D --------------------------
+     * Un canvas n'est pas atteignable au clavier par défaut : sans ce bloc,
+     * sélectionner une structure 3D exige une souris. Les touches reprennent
+     * les gestes de la souris, et Entrée sélectionne ce qui est au centre. */
+    const ORBIT_STEP = THREE.MathUtils.degToRad(6);
+    function orbitBy(dAzimuth, dPolar) {
+      const offset = camera.position.clone().sub(controls.target);
+      const spherical = new THREE.Spherical().setFromVector3(offset);
+      spherical.theta += dAzimuth;
+      spherical.phi = THREE.MathUtils.clamp(spherical.phi + dPolar, 0.15, Math.PI - 0.15);
+      camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(spherical));
+      camera.lookAt(controls.target);
+      controls.update();
+      forceCulling = true;
+      needsRender = true;
+    }
+    function zoomBy(factor) {
+      const offset = camera.position.clone().sub(controls.target);
+      const dist = THREE.MathUtils.clamp(offset.length() * factor, controls.minDistance, controls.maxDistance);
+      camera.position.copy(controls.target).add(offset.setLength(dist));
+      controls.update();
+      forceCulling = true;
+      needsRender = true;
+    }
+    function selectAtCenter() {
+      raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      const s = engine.pickExact(raycaster) || engine.pick(raycaster);
+      if (s) {
+        void selectStructure(s, false);
+        announce(`${s.fr || s.en} sélectionné au centre de la vue.`);
+      } else {
+        announce('Aucune structure au centre de la vue. Déplacez la caméra ou zoomez.');
+      }
+    }
+    renderer.domElement.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowLeft') { orbitBy(ORBIT_STEP, 0); e.preventDefault(); }
+      else if (k === 'ArrowRight') { orbitBy(-ORBIT_STEP, 0); e.preventDefault(); }
+      else if (k === 'ArrowUp') { orbitBy(0, -ORBIT_STEP); e.preventDefault(); }
+      else if (k === 'ArrowDown') { orbitBy(0, ORBIT_STEP); e.preventDefault(); }
+      else if (k === '+' || k === '=') { zoomBy(0.88); e.preventDefault(); }
+      else if (k === '-' || k === '_') { zoomBy(1.14); e.preventDefault(); }
+      else if (k === 'Home') { resetView(); announce('Vue recadrée.'); e.preventDefault(); }
+      else if (k === 'Enter' || k === ' ') { selectAtCenter(); e.preventDefault(); }
+    });
+
+    /* Échap et recherche rapide sont globaux : ils doivent fonctionner même
+     * quand le focus est dans la liste ou sur un bouton du panneau. */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        /* Le tiroir mobile est prioritaire : à son ouverture le focus est
+         * placé dans la recherche, et Échap doit fermer le tiroir, pas
+         * seulement vider le champ. */
+        if (sidebarEl.classList.contains('open')) {
+          setSidebar(false);
+          e.preventDefault();
+          return;
+        }
+        if (document.activeElement === searchInput) {
+          if (searchInput.value) {
+            searchInput.value = '';
+            renderList();
+            announce('Recherche effacée.');
+          } else {
+            searchInput.blur();
+          }
+          e.preventDefault();
+          return;
+        }
+        if (document.body.classList.contains('has-selection')) {
+          document.body.classList.remove('has-selection');
+          syncDetailsSheet();
+          if (selected) engine.highlight(selected, null);
+          selected = null;
+          labelEl.style.display = 'none';
+          document.getElementById('sel-name').textContent = 'Cliquez sur une structure';
+          document.getElementById('sel-meta').textContent = 'ou choisissez-la dans la liste';
+          document.getElementById('detail-meta').innerHTML = '';
+          document.querySelectorAll('#list .item').forEach((el) => {
+            el.classList.remove('active');
+            el.setAttribute('aria-pressed', 'false');
+          });
+          announce('Sélection effacée.');
+          e.preventDefault();
+        }
+        return;
+      }
+      if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
 
     /* Boucle de rendu. */
     let visibleCount = engine.updateVisibility(camera);
@@ -795,6 +1059,7 @@
       const nowFrame = performance.now();
       const dt = Math.min(0.05, (nowFrame - previousTime) / 1000);
       previousTime = nowFrame;
+      if (reduceMotion) tourActive = false;
       if (tourActive) {
         cameraTween = null;
         tourAngle += dt * 0.3;
@@ -823,7 +1088,7 @@
       }
       engine.updateAnimation(dt, nowFrame / 1000);
       if (cameraTween) {
-        cameraTween.t = Math.min(1, cameraTween.t + 0.045);
+        cameraTween.t = reduceMotion ? 1 : Math.min(1, cameraTween.t + 0.045);
         const e = 1 - Math.pow(1 - cameraTween.t, 3);
         camera.position.lerpVectors(cameraTween.fromPos, cameraTween.toPos, e);
         controls.target.lerpVectors(cameraTween.fromTarget, cameraTween.toTarget, e);

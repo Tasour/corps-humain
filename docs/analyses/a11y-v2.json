@@ -1,0 +1,79 @@
+{
+  "generated": "2026-11-19T00:01:44.412Z",
+  "passed": 18,
+  "total": 18,
+  "results": [
+    {
+      "name": "langue et titre du document",
+      "ok": true
+    },
+    {
+      "name": "un seul <main>, repères nommés",
+      "ok": true
+    },
+    {
+      "name": "canvas focusable, décrit et nommé",
+      "ok": true
+    },
+    {
+      "name": "tous les boutons visibles ont un nom accessible",
+      "ok": true
+    },
+    {
+      "name": "couches : aria-pressed suit l'état visuel",
+      "ok": true
+    },
+    {
+      "name": "contraste AA (4,5:1) des textes secondaires",
+      "ok": true
+    },
+    {
+      "name": "focus visible au clavier",
+      "ok": true
+    },
+    {
+      "name": "canvas : flèches font tourner la caméra",
+      "ok": true
+    },
+    {
+      "name": "canvas : Entrée sélectionne ou explique l'absence de cible",
+      "ok": true
+    },
+    {
+      "name": "Échap efface la sélection et rétablit le panneau",
+      "ok": true
+    },
+    {
+      "name": "touche / place le focus dans la recherche",
+      "ok": true
+    },
+    {
+      "name": "aucune erreur console",
+      "ok": true
+    },
+    {
+      "name": "mobile : pas de débordement horizontal",
+      "ok": true
+    },
+    {
+      "name": "mobile : le tiroir s'ouvre, se ferme et se nomme",
+      "ok": true
+    },
+    {
+      "name": "mobile : la feuille de détails s'ouvre à la sélection",
+      "ok": true
+    },
+    {
+      "name": "mobile : cibles tactiles principales ≥ 44 px",
+      "ok": true
+    },
+    {
+      "name": "mobile : aucune erreur console",
+      "ok": true
+    },
+    {
+      "name": "prefers-reduced-motion : transitions neutralisées",
+      "ok": true
+    }
+  ]
+}

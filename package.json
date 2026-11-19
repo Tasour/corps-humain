@@ -14,6 +14,7 @@
     "check:collisions": "node scripts/check-collisions.mjs",
     "test:collisions": "node tests/collisions.test.mjs",
     "test:visual": "node tests/visual-collisions.mjs",
+    "test:a11y": "node tests/a11y-v2.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core"
   },
