@@ -1,4 +1,4 @@
-# 15 chantiers prioritaires — atlas CORPS v2
+# 24 chantiers prioritaires — atlas CORPS v2
 
 État : après refonte UX, picking exact, ombres, thèmes, waypoints, **35 tests 3D**,
 **19 contrôles d'accessibilité**, **43 groupes d'animation** et une **chasse aux
@@ -29,6 +29,7 @@ organes** native v2, mesurés.
 | 21 | **Couche de sélection** | Picking en vue fusionnée, double rendu, LOD réinitialisable, restauration de couleur | ✅ | `pickMerged`, `baseGeometries`, `highlight(s, null)` ; captures runtime |
 | 22 | **Séreuses lisibles** | Omentum/mésentère/péritoine translucides | ✅ | Mesh membrane séparé, opacité 0,15 |
 | 23 | **Contrôle visuel par groupe** | 1 groupe = 1 capture par orientation | ✅ | `tests/screens-groupes.mjs` : 29 groupes × 4 = 116 captures |
+| 24 | **Qualité 3D — 100 % des structures** | Présence, intégrité, résolution et rendu vérifiés pour chaque élément, sous 8 angles, pour les étudiants en médecine | 🟡 | Audit mesuré (`npm run audit:3d`) : 54,3 % étanches, 466 windings inversés, 124 non-manifold, 24 structures plafonnées. Méthode : [`METHODOLOGIE-QUALITE-3D.md`](METHODOLOGIE-QUALITE-3D.md). Plan : [`plan-qualite-3d.md`](plan-qualite-3d.md) |
 
 Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 
@@ -155,6 +156,25 @@ Détail et limites : [`docs/analyses/chasse-2026-11-19.md`](analyses/chasse-2026
 - **Navigation v1 ↔ v2** : la fiche de structure v2 renvoie vers la version
   classique (pathologies, diagnostic, coupe), qui renvoie déjà vers v2.
 
+## Passe qualité 3D — socle de mesure (19 novembre 2026)
+
+Détail : [`docs/analyses/qualite-3d.md`](analyses/qualite-3d.md).
+
+- **Nouvel audit** : `npm run audit:3d` mesure en ~5 s les arêtes libres, arêtes
+  non-manifold, composantes connexes, faces dupliquées, faces inversées, winding
+  inversé, aire, volume, longueurs d'arête et densité, pour les 2 039 structures.
+- **Vérité mesurée** : 1 107/2 039 structures étanches et manifold (54,3 %),
+  907 avec bords, 124 non-manifold, 620 pluri-composantes, 466 windings inversés,
+  13 354 faces inversées (0,267 %), 0 dégénéré.
+- **Plafond identifié** : 24 structures sont exactement à 12 000 triangles ; les
+  sources contiennent 1 302 552 triangles au-delà de ce plafond, actuellement jetés.
+- **Résolution limitée par la source** : arête P99 médiane de 9,0 mm (os), 12,4 mm
+  (muscles), 6,9 mm (organes) — le détail sub-millimétrique exige de nouvelles sources.
+- **Aucune structure n'est déclarée « terminée »** : le statut réel est S1 (mesurée),
+  pas S3 (production). La méthode et le plan de route remplacent les affirmations par
+  des portes chiffrées.
+
 ## Ordre d'exécution recommandé (restant)
 
-2 → 5 → 7 (les chantiers 1, 3, 4, 6, 8, 9, 10, 11-15 sont achevés).
+**24 (qualité 3D) → 2 (matériaux, débloqué par le pilote P4) → 5 → 7.**
+Les chantiers 1, 3, 4, 6, 8, 9, 10, 11-15 sont achevés.

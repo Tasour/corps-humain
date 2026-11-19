@@ -5,7 +5,7 @@ Construit avec **Three.js** et **Vite**, il s'appuie sur les maillages libres **
 et **Z-Anatomy** pour la peau, les organes, les os et les muscles, avec une anatomie procédurale
 de secours.
 
-La feuille de route des **15 chantiers prioritaires** est dans
+La feuille de route des **24 chantiers prioritaires** est dans
 [`docs/chantiers-prioritaires.md`](docs/chantiers-prioritaires.md).
 Le contrôle des collisions est assuré par `npm run check:collisions` et
 `npm run test:collisions` (rapport `docs/analyses/collisions.md`).
@@ -122,7 +122,14 @@ physiologique (flexion du coude, abduction de l'épaule, ouverture de la mâchoi
 
 Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
 vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
-AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 35 tests 3D**
+AABB) et produit `docs/analyses/rapport-v2.md`. L'**audit topologique**
+(`scripts/audit-qualite-3d.mjs`, `npm run audit:3d`) mesure en plus les arêtes
+libres, les arêtes non-manifold, les composantes connexes, les faces dupliquées,
+le winding inversé, l'aire, le volume, les longueurs d'arête et la densité
+(tri/cm²) ; il produit `docs/analyses/qualite-3d.md`. Les critères d'acceptation
+sont définis dans [`docs/METHODOLOGIE-QUALITE-3D.md`](docs/METHODOLOGIE-QUALITE-3D.md)
+et la feuille de route dans [`docs/plan-qualite-3d.md`](docs/plan-qualite-3d.md).
+Une **batterie de 35 tests 3D**
 (`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
 peau, les groupes, les animations, les waypoints, la chasse aux organes, le tour
 du monde, le LOD et le mobile.

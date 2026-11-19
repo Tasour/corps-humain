@@ -1,0 +1,292 @@
+# Méthodologie qualité 3D — atlas CORPS
+
+**Version 1.0 — 19 novembre 2026**
+**Statut : normative.** Ce document définit ce que « détaillé, de haute qualité, sous tous les
+angles, avec un détail de qualité militaire » veut dire *mesurablement* pour l'atlas CORPS.
+Aucune structure ne peut être déclarée terminée sans satisfaire les portes définies ici.
+
+> **« Qualité militaire » n'est pas un adjectif marketing.** C'est un régime de preuve :
+> critères chiffrés, mesure reproductible, traçabilité de la source, revue visuelle à angles
+> fixes, et interdiction de déclarer « corrigé » sans rapport avant/après. Le jour où un chiffre
+> n'est pas disponible, on écrit « non mesuré », jamais « bon ».
+
+Public cible : **étudiants en médecine** qui doivent apprendre chaque élément du corps humain.
+Conséquence : la barre n'est pas « joli aperçu », c'est « utilisable pour réviser une structure
+isolée, sous n'importe quel angle, sans qu'une forme fausse induise en erreur ».
+
+Limite de responsabilité : l'atlas est un outil d'apprentissage, **pas un dispositif de
+diagnostic**. Aucune sortie de l'application ne doit être présentée comme un avis médical.
+
+---
+
+## 1. Les huit dimensions de la qualité
+
+Une structure est jugée sur huit axes indépendants. Un axe réussi ne compense jamais un axe
+échoué : une géométrie dense mais retournée reste un défaut bloquant.
+
+| # | Dimension | Question à laquelle elle répond | Métrique principale |
+|---|---|---|---|
+| D1 | **Complétude** | Tous les éléments attendus sont-ils présents, nommés, latéralisés ? | couverture de l'inventaire, paires G/D, TA2 |
+| D2 | **Exactitude anatomique** | La forme, la position, les rapports sont-ils justes ? | revue experte + écarts mesurés |
+| D3 | **Résolution géométrique** | La forme est-elle assez fine pour lire le détail ? | densité tri/cm², longueur d'arête P99, écart de silhouette |
+| D4 | **Intégrité topologique** | Le maillage est-il sain, sans trou ni couture ? | arêtes libres, non-manifold, composantes |
+| D5 | **Normales et orientation** | La surface est-elle orientée vers l'extérieur et éclairée juste ? | winding, faces inversées, normales nulles |
+| D6 | **Assemblage** | Les structures se raccordent-elles sans fente ni traversée ? | fentes aux articulations, interpénétrations |
+| D7 | **Matériaux et rendu** | Les tissus ont-ils l'aspect du tissu, sous tous les angles ? | cartes PBR, réponse à la lumière, albédo |
+| D8 | **Performance et traçabilité** | Reste-t-il utilisable, et sait-on d'où vient chaque triangle ? | fps, mémoire, source/licence par structure |
+
+---
+
+## 2. Portes d'acceptation
+
+Chaque porte est **bloquante** pour le statut correspondant. Les valeurs de référence sont
+mesurées par `npm run audit:3d` (voir §6) et publiées dans
+[`docs/analyses/qualite-3d.md`](analyses/qualite-3d.md).
+
+### G0 — Traçabilité (bloquante pour toute structure)
+
+- 100 % des structures ont une **source**, une **licence**, un **chemin hiérarchique** et un
+  identifiant de source.
+- Un code TA2 est exigé, sauf absence documentée dans la fiche de la structure.
+- Toute correction de géométrie est consignée : date, cause, méthode, métriques avant/après.
+
+### G1 — Complétude
+
+- 100 % des éléments de l'inventaire anatomique sont présents dans le manifeste.
+- Les paires latérales sont complètes, ou l'asymétrie est documentée.
+- Les éléments médians majeurs sont présents (ex. **œsophage**, poumons entiers, hémisphères).
+- Aucun élément n'est présent en double sous deux identifiants.
+
+### G2 — Intégrité topologique
+
+| Contrôle | Seuil |
+|---|---|
+| Arêtes non-manifold | **0** par structure |
+| Faces dupliquées | **0** par structure |
+| Triangles dégénérés (aire < 10⁻⁶ mm²) | **< 0,01 %** |
+| Arêtes libres sur une structure *fermée* (os plein, organe plein, ventre musculaire) | **0** |
+| Arêtes libres sur une structure *ouverte* (séreuse, fascia, peau, vaisseau coupé) | autorisées **si** chaque boucle correspond à un plan de coupe déclaré |
+| Composantes connexes | **1** pour une structure solide ; > 1 seulement avec justification anatomique (dents, sésamoïdes, ganglions) |
+
+### G3 — Normales et orientation
+
+| Contrôle | Seuil |
+|---|---|
+| Structures à volume signé négatif (winding inversé) | **0** |
+| Faces dont la normale s'oppose aux normales de sommet | **< 0,05 %** |
+| Normales nulles ou non finies | **0** |
+| Indices hors bornes, positions NaN | **0** |
+
+### G4 — Résolution géométrique
+
+- Le LOD `high` ne simplifie **jamais** en dessous du nombre de triangles de la source.
+- Le LOD `high` est dérivé de la **source la plus fine disponible**, pas d'un LOD intermédiaire.
+- Cibles de densité à terme (après acquisition de sources haute résolution) :
+
+| Classe | Densité cible | Arête P99 cible |
+|---|---:|---:|
+| Os (détail cortical, foramens) | ≥ 150 tri/cm² | ≤ 1,5 mm |
+| Muscle (fibres, insertions) | ≥ 80 tri/cm² | ≤ 2,0 mm |
+| Organe (lobes, hile, vaisseaux) | ≥ 200 tri/cm² | ≤ 1,5 mm |
+| Main, pied, face, encéphale | ≥ 400 tri/cm² | ≤ 0,8 mm |
+
+- Écart de silhouette entre la source et le LOD `high` : **≤ 0,5 mm** (distance de Hausdorff
+  échantillonnée), à mesurer avant toute publication d'une structure prioritaire.
+
+### G5 — Assemblage
+
+- Aucune fente visible **> 0,5 mm** aux articulations sur les captures à angles fixes.
+- Aucune ligne médiane visible sur les muscles abdominaux, le rachis ou la face.
+- Aucune interpénétration **> 2 mm** entre structures qui ne doivent pas se traverser.
+- Les contacts légitimes (séreuse contre organe, cartilage contre os) sont déclarés, pas corrigés.
+
+### G6 — Matériaux et rendu
+
+- Au moins une carte **albédo**, une carte **rugosité** et une carte **normale** par famille de
+  tissus (os, muscle, organe, peau, cartilage, vaisseau, nerf).
+- Pas d'albédo saturé uniforme de type « plastique rouge » : variation spatiale mesurable.
+- Réponse à la lumière vérifiée sous **8 angles** et sous deux températures de lumière.
+- Aucune information portée par la seule couleur (accessibilité).
+
+### G7 — Performance
+
+- 60 fps sur desktop à 1658 × 1150 avec un système anatomique visible.
+- Chargement initial ≤ 5 s sur 4G simulée ; LOD supérieurs chargés à la demande.
+- Budget mémoire GPU et taille de dépôt respectés (cible ≤ 350 Mo pour `public/models`).
+- Aucune régression des tests de performance existants.
+
+### G8 — Revue visuelle
+
+- **8 angles** par structure prioritaire : face, dos, gauche, droite, dessus, dessous,
+  trois-quarts avant-gauche, trois-quarts arrière-droit.
+- **4 angles** minimum pour toutes les autres structures.
+- Caméra, focale, distance, éclairage, fond et exposition **fixes** et versionnés.
+- Chaque capture est relue avec une grille de défauts (D-COMP…D-PERF) et un niveau de sévérité.
+- Une structure n'est « production » qu'après revue des 8 angles.
+
+---
+
+## 3. Niveaux de finition d'une structure
+
+| Statut | Nom | Critère d'entrée |
+|---|---|---|
+| S0 | Importée | présente dans le manifeste avec source et licence |
+| S1 | Mesurée | métriques `audit:3d` disponibles |
+| S2 | Saine | G0, G2, G3 satisfaits |
+| S3 | Production | S2 + G4 (résolution) + G5 (assemblage) + 8 angles relus |
+| S4 | Référence pédagogique | S3 + validation par un anatomiste + fiche vérifiée |
+
+**Aujourd'hui, aucune structure n'est officiellement S3.** Le statut réel est S1 pour les
+2 039 structures, S2 pour une partie seulement. C'est la vérité que le tableau de bord doit
+afficher, pas une moyenne flatteuse.
+
+---
+
+## 4. Taxonomie des défauts
+
+| Code | Défaut | Exemple observé | Sévérité par défaut |
+|---|---|---|---|
+| D-COMP | élément manquant, en double ou mal latéralisé | œsophage absent | S1 |
+| D-TOPO | trou, arête non-manifold, couture, face dupliquée | 124 structures non-manifold | S1 |
+| D-NORM | winding inversé, faces retournées, normales nulles | 466 structures retournées | S1 |
+| D-RES | silhouette facettée, détail insuffisant | 24 structures plafonnées à 12 000 tris | S2 |
+| D-ASSEMBLY | fente, ligne médiane, traversée | épaules, hanches, ligne blanche | S2 |
+| D-MAT | aspect plastique, albédo uniforme, rugosité absente | rendu rouge plat | S2 |
+| D-PERF | chute de fps, surcharge mémoire | LOD high sur tout le corps | S2 |
+| D-PROV | source ou licence manquante | — | S1 |
+
+Sévérités : **S1** bloquant (forme fausse ou invisible), **S2** majeur (gêne l'apprentissage),
+**S3** mineur (esthétique), **S4** cosmétique.
+
+---
+
+## 5. Règles de correction
+
+1. **Ne jamais simplifier sous la source** pour le LOD `high`.
+2. Construire la chaîne LOD **à partir du maillage le plus fin**, du `high` vers le `medium`
+   puis le `low` — pas trois simplifications indépendantes depuis la source.
+3. **Souder** les sommets confondus à 0,01 mm, **à l'intérieur d'une même structure uniquement**.
+   On ne soude jamais deux structures anatomiques distinctes.
+4. **Orienter chaque composante connexe** par son volume signé, puis recalculer les normales.
+   Une structure peut contenir des composantes d'orientations opposées.
+5. Préserver les arêtes vives par angle seuil lors du recalcul de normales ; ne pas lisser un
+   bord osseux ou un sillon.
+6. **Recoudre une fente intra-structure** (couture de symétrie, bord de coupe) ; ne pas recoudre
+   une fente inter-structures : c'est un défaut d'assemblage, traité en D6.
+7. Aucune opération booléenne entre structures ; aucune texture générée qui inventerait du détail
+   anatomique absent de la source.
+8. Toute correction produit : métriques avant/après, captures avant/après, et une entrée dans le
+   journal de la structure.
+
+---
+
+## 6. Protocole de mesure
+
+### 6.1 Audit topologique
+
+```bash
+npm run audit:3d                 # LOD high (défaut)
+npm run audit:3d -- --lod=all    # les trois LOD
+```
+
+Sorties :
+
+- `docs/analyses/qualite-3d.json` — une entrée par structure et par LOD ;
+- `docs/analyses/qualite-3d.md` — synthèse, classements des pires cas, limites.
+
+Métriques calculées : triangles, sommets, arêtes libres, arêtes non-manifold, composantes
+connexes, triangles dégénérés, faces dupliquées, faces inversées, normales nulles, indices hors
+bornes, aire (cm²), volume signé (cm³), longueurs d'arête min/médiane/P99/max (mm), densité
+(tri/cm²), winding inversé.
+
+### 6.2 Captures multi-angles
+
+Le protocole de capture doit être **déterministe** : même caméra, même focale, même distance
+relative à la boîte englobante, même éclairage, même fond, même exposition, aucune interface.
+Les captures sont nommées `<structure>__<angle>__<date>.jpg` et versionnées dans
+`docs/analyses/qualite-3d/`. Un rendu qui change sans que la géométrie change est un signal
+d'instabilité du moteur, pas une amélioration.
+
+### 6.3 Reproductibilité
+
+- Graine et version du pipeline affichées dans le rapport.
+- Toute mesure cite la version du manifeste et le commit.
+- Les chiffres de ce document sont ceux du rapport `qualite-3d.md` du 19 novembre 2026.
+
+---
+
+## 7. État des lieux mesuré — 19 novembre 2026
+
+Jeu de données : **2 039 structures**, **5 009 243 triangles** au LOD `high`.
+
+| Porte | Mesure | Verdict |
+|---|---|---|
+| G0 Traçabilité | 2 039/2 039 sources et licences ; 1 979/2 039 TA2 (97,1 %) | 🟡 |
+| G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents | ❌ |
+| G2 Intégrité | 1 107/2 039 étanches et manifold (54,3 %) ; 907 avec bords ; 124 non-manifold ; 620 pluri-composantes ; 496 faces dupliquées ; 0 dégénéré | ❌ |
+| G3 Normales | 466 windings inversés ; 13 354 faces inversées (0,267 %) ; 0 normale nulle ; 0 indice hors bornes | ❌ |
+| G4 Résolution | médiane 1 118 tris ; 954 structures < 1 000 tris ; 24 plafonnées à 12 000 ; 1,30 M triangles de source jetés par le plafond | ❌ |
+| G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
+| G6 Matériaux | procédural uniquement, pas de cartes PBR par tissu | ❌ |
+| G7 Performance | LOD et lots en place ; fps réels non mesurables en CI (SwiftShader) | 🟡 |
+| G8 Revue visuelle | 4 angles sur 63 groupes ; pas de revue 8 angles par structure | ❌ |
+
+**Lecture honnête :** deux portes sont partiellement tenues, sept sont échouées ou non mesurées.
+Le problème n'est donc pas cosmétique. Il est structurel : sources grossières, plafond de
+simplification, orientations incohérentes, absence de revue par structure.
+
+### 7.1 Ce que la mesure dit des causes
+
+- **Le plafond de 12 000 triangles est réel.** 24 structures sont exactement à 12 000 ; les
+  objets sources contiennent **1 165 088 triangles Z-Anatomy** et **137 464 triangles
+  BodyParts3D** au-delà de ce plafond. C'est une **borne supérieure** du gain : une partie de
+  ces objets sont des agrégats exclus du rendu et ne sera pas récupérée telle quelle.
+- **L'orientation est le défaut le plus répandu.** 442 des 1 443 structures Z-Anatomy (30,6 %)
+  et 24 des 596 structures BodyParts3D (4,0 %) ont un volume signé négatif. Pour 274 d'entre
+  elles, normales et winding sont inversés ensemble : la surface est éclairée comme si la
+  lumière venait de l'intérieur.
+- **La résolution est limitée par la source, pas seulement par le pipeline.** La longueur
+  d'arête P99 médiane est de **9,0 mm** pour les os, **12,4 mm** pour les muscles et **6,9 mm**
+  pour les organes. Même sans plafond, les sources actuelles ne permettent pas un détail
+  sub-millimétrique sur la main, la face ou le cœur.
+- **Les bords ne sont pas tous des défauts.** Les séreuses, fascias, la peau et les vaisseaux
+  coupés sont légitimement ouverts. Il faut les **classer** avant de les corriger, sinon on
+  « répare » une anatomie correcte.
+- **Les composantes multiples ne sont pas toutes des défauts.** Les dents, les sésamoïdes et
+  certains ganglions sont naturellement disjoints. Là encore, classification avant correction.
+
+---
+
+## 8. Gouvernance
+
+- Toute modification de seuil, de métrique ou de protocole se fait **d'abord ici**, puis dans
+  `scripts/audit-qualite-3d.mjs`, **dans le même commit**.
+- Un rapport de qualité est **daté** et **versionné** ; il n'est jamais réécrit après coup.
+- Une correction ne peut être annoncée que si elle cite : la métrique, la valeur avant, la
+  valeur après, le rapport, et les captures.
+- Le tableau de bord des chantiers doit refléter le statut réel (S0–S4), pas le statut rêvé.
+- Les limites sont publiées avec les résultats, pas cachées en note de bas de page.
+
+---
+
+## 9. Limites assumées de la version 1.0
+
+1. L'audit mesure la **topologie**, pas la **vérité anatomique**. Un maillage étanche peut être
+   faux. La fidélité exige une revue experte.
+2. L'écart de silhouette (Hausdorff) n'est **pas encore** instrumenté.
+3. Les fentes inter-structures et les lignes médianes ne sont **pas encore** mesurées
+   automatiquement ; elles sont constatées par captures.
+4. Les matériaux ne sont **pas encore** évalués par métrique objective (albédo, rugosité,
+   réponse angulaire).
+5. Les sources ouvertes actuelles ont un plafond de résolution qui rend la cible G4
+   inatteignable sans nouvelles sources. C'est un problème d'acquisition, pas de code.
+6. Aucune validation par un anatomiste n'a encore été réalisée à ce jour.
+
+---
+
+## 10. Documents liés
+
+- [`docs/analyses/qualite-3d.md`](analyses/qualite-3d.md) — mesures du 19 novembre 2026.
+- [`docs/plan-qualite-3d.md`](plan-qualite-3d.md) — plan de route et prochaine étape.
+- [`docs/chantiers-prioritaires.md`](chantiers-prioritaires.md) — statut des chantiers.
+- [`docs/jeu-de-donnees-v2.md`](jeu-de-donnees-v2.md) — format, LOD et sources.
