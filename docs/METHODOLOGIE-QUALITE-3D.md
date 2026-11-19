@@ -201,17 +201,57 @@ bornes, aire (cm²), volume signé (cm³), longueurs d'arête min/médiane/P99/m
 
 ### 6.2 Captures multi-angles
 
-Le protocole de capture doit être **déterministe** : même caméra, même focale, même distance
-relative à la boîte englobante, même éclairage, même fond, même exposition, aucune interface.
-Les captures sont nommées `<structure>__<angle>__<date>.jpg` et versionnées dans
-`docs/analyses/qualite-3d/`. Un rendu qui change sans que la géométrie change est un signal
-d'instabilité du moteur, pas une amélioration.
+Le protocole de capture est **déterministe** et implémenté par
+`scripts/captures-qualite-3d.mjs` (`npm run captures:3d`) :
 
-### 6.3 Reproductibilité
+- canvas forcé à **1024 × 1024**, `pixelRatio = 1`, aucun overlay DOM ;
+- fond neutre fixe `#1b1f24`, ombres et sol masqués, exposition `1.15`, LOD `high` promu
+  pour chaque structure du sujet ;
+- huit directions canoniques : face, dos, gauche, droite, dessus, dessous,
+  trois-quarts avant-gauche, trois-quarts arrière-droit ;
+- cadrage calculé sur les **huit coins** de la boîte englobante projetés sur la base de vue
+  (pas un simple rayon), marge de 12 % ;
+- sujets « région » (genou) recadrés sur une structure focale avec **plans de coupe locaux**,
+  pour ne pas compter les os longs comme débordants ;
+- analyse de pixels par image : couverture, marges, débordement (marge < 2 %) ;
+- **SHA-256** tronqué par image, pour détecter une dérive silencieuse du rendu.
+
+Sorties : `docs/analyses/qualite-3d/<sujet>/<angle>.jpg` et un index
+`docs/analyses/qualite-3d/index.json`. Un rendu qui change sans que la géométrie change est un
+signal d'instabilité du moteur, pas une amélioration.
+
+### 6.3 Écart de silhouette (Hausdorff)
+
+`npm run hausdorff:3d` compare chaque LOD à la référence `high` :
+
+- distance **point-triangle exacte** via un BVH de triangles, dans les deux directions ;
+- échantillon déterministe de 256 sommets par direction ;
+- sorties `docs/analyses/qualite-3d/hausdorff.json` et `.md`.
+
+Limite : la mesure compare **LOD contre LOD**, pas source contre LOD. Elle prouve la fidélité
+de la simplification, pas la fidélité au réel.
+
+### 6.4 Statuts et tableau de bord
+
+`npm run scorecard:3d` produit `docs/analyses/qualite-3d/scorecard.md` (statut S0–S4 par
+structure, portes G0/G2/G3, bloqueurs) et la classification provisoire ouvert/fermé
+`docs/qualite/classification-structures.provisional.json`.
+
+### 6.5 Porte CI
+
+`npm run audit:3d:baseline` écrit `docs/analyses/qualite-3d-baseline.json` (versionnée).
+`npm run audit:3d:check` compare **structure par structure**, pas seulement les totaux : une
+structure qui passe de saine à défectueuse est une régression même si la moyenne s'améliore
+ailleurs. Le check échoue si les arêtes libres, arêtes non-manifold, faces dupliquées,
+composantes, faces inversées, normales nulles, indices hors bornes ou positions NaN
+augmentent, ou si le nombre de triangles d'une structure baisse de plus de 2 %.
+
+### 6.6 Reproductibilité
 
 - Graine et version du pipeline affichées dans le rapport.
 - Toute mesure cite la version du manifeste et le commit.
-- Les chiffres de ce document sont ceux du rapport `qualite-3d.md` du 19 novembre 2026.
+- Les chiffres de ce document sont ceux des rapports `qualite-3d.md`, `scorecard.md`,
+  `hausdorff.md` et `index.json` du 19 novembre 2026.
 
 ---
 
@@ -255,6 +295,43 @@ simplification, orientations incohérentes, absence de revue par structure.
 - **Les composantes multiples ne sont pas toutes des défauts.** Les dents, les sésamoïdes et
   certains ganglions sont naturellement disjoints. Là encore, classification avant correction.
 
+### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
+
+**Statuts.** 1 399 structures en S1, 640 en S2, **0 en S3**. G0 : 1 979/2 039 (97,1 %).
+G2 : 1 324 (64,9 %) avec la classification provisoire, 1 898 (93,1 %) hors étanchéité.
+G3 : 1 017 (49,9 %). Aucune structure n'atteint S3 tant que G4 (résolution) et G5
+(assemblage) ne sont pas mesurés.
+
+**Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
+immédiatement révélé un défaut de complétude : `organ:bp-heart` ne contient que **11 pièces
+BodyParts3D** (valves, sinus coronaire, veines cardiaques) — **pas de myocarde**. Le sujet
+« cœur » a donc été redéfini comme l'union des quatre chambres Z-Anatomy
+(`organ:left-ventricle`, `organ:right-ventricle`, `organ:left-atrium`, `organ:right-atrium`)
+et des valves.
+
+**Écart de silhouette.** Référence `high`, 2 039 structures, 256 sommets par direction :
+
+| Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
+|---|---:|---:|---:|---:|---:|---:|
+| `medium` → `high` | 0,00 mm | 0,64 mm | 4,30 mm | 127,46 mm | 280 | 59 |
+| `low` → `high` | 0,40 mm | 2,65 mm | 15,66 mm | 127,46 mm | 914 | 309 |
+
+Le maximum `organ:bp-mediastinum` (127,46 mm) signale une simplification qui déplace la
+silhouette, pas un simple allègement.
+
+**Incohérence dataset / pipeline.** Le manifeste versionné n'a pas été produit par le script
+actuel :
+
+- `organ:cavernous-sinus-r` : source Z-Anatomy **9 728 triangles** ; manifeste `high` 512,
+  `medium` 1 375, `low` 324. Avec le script actuel, `high` vaudrait 9 728 (source < 12 000).
+- **16 structures non monotones** (`medium > high` ou `low > medium`), dont les deux sinus
+  caverneux.
+- **597 structures** ont un `high` inférieur à 98 % de `min(source, 12 000)`.
+
+Tant que le dataset n'est pas reconstruit ou le pipeline corrigé, toute mesure de résolution
+est ambiguë : on ne sait pas si une perte de détail vient de la source, du plafond ou d'un
+réglage disparu.
+
 ---
 
 ## 8. Gouvernance
@@ -273,7 +350,8 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 1. L'audit mesure la **topologie**, pas la **vérité anatomique**. Un maillage étanche peut être
    faux. La fidélité exige une revue experte.
-2. L'écart de silhouette (Hausdorff) n'est **pas encore** instrumenté.
+2. L'écart de silhouette est instrumenté **LOD contre LOD** ; la comparaison source contre
+   LOD reste à faire.
 3. Les fentes inter-structures et les lignes médianes ne sont **pas encore** mesurées
    automatiquement ; elles sont constatées par captures.
 4. Les matériaux ne sont **pas encore** évalués par métrique objective (albédo, rugosité,

@@ -1516,6 +1516,9 @@
     window.addEventListener('pagehide', stop);
     loop();
     window.__v2 = engine;
+    /* Three.js exposé pour les harnais de captures (plans de coupe locaux,
+     * cadrage) : le module n'est pas accessible depuis la page de test. */
+    window.__THREE = THREE;
     /* Groupes exposés pour les tests 3D : ils ne sont pas accessibles depuis
      * le module importé par la page autrement. */
     window.__v2Groups = GROUPS;

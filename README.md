@@ -126,9 +126,16 @@ AABB) et produit `docs/analyses/rapport-v2.md`. L'**audit topologique**
 (`scripts/audit-qualite-3d.mjs`, `npm run audit:3d`) mesure en plus les arêtes
 libres, les arêtes non-manifold, les composantes connexes, les faces dupliquées,
 le winding inversé, l'aire, le volume, les longueurs d'arête et la densité
-(tri/cm²) ; il produit `docs/analyses/qualite-3d.md`. Les critères d'acceptation
-sont définis dans [`docs/METHODOLOGIE-QUALITE-3D.md`](docs/METHODOLOGIE-QUALITE-3D.md)
-et la feuille de route dans [`docs/plan-qualite-3d.md`](docs/plan-qualite-3d.md).
+(tri/cm²) ; il produit `docs/analyses/qualite-3d.md`. Une **porte CI**
+(`npm run audit:3d:check`) le compare structure par structure à une baseline
+versionnée. Le **harnais de captures 8 angles** (`npm run captures:3d`) rend
+chaque sujet pilote sur fond neutre en 1024 × 1024 avec un cadrage calculé sur
+les huit coins de sa boîte ; le **scorecard** (`npm run scorecard:3d`) attribue
+un statut S0–S4 à chaque structure ; l'**écart de silhouette** (`npm run
+hausdorff:3d`) mesure la fidélité des LOD par BVH de triangles. Les critères
+d'acceptation sont définis dans
+[`docs/METHODOLOGIE-QUALITE-3D.md`](docs/METHODOLOGIE-QUALITE-3D.md) et la
+feuille de route dans [`docs/plan-qualite-3d.md`](docs/plan-qualite-3d.md).
 Une **batterie de 35 tests 3D**
 (`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
 peau, les groupes, les animations, les waypoints, la chasse aux organes, le tour

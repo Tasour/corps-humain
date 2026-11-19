@@ -19,6 +19,9 @@ const BASE = process.env.V2_DIR || path.resolve(import.meta.dirname, "../public/
 const OUT = process.env.QUALITE_OUT || path.resolve(import.meta.dirname, "../docs/analyses");
 const LOD_ARG = (process.argv.find((a) => a.startsWith("--lod=")) || "--lod=high").split("=")[1];
 const LODS = LOD_ARG === "all" ? ["low", "medium", "high"] : [LOD_ARG];
+const CHECK = process.argv.includes("--check");
+const WRITE_BASELINE = process.argv.includes("--baseline");
+const BASELINE_PATH = process.env.QUALITE_BASELINE || path.resolve(OUT, "qualite-3d-baseline.json");
 if (!["low", "medium", "high"].includes(LODS[0])) {
   console.error("LOD inconnu :", LOD_ARG);
   process.exit(1);
@@ -304,8 +307,97 @@ const report = {
   })),
 };
 
+/* --- Porte CI : comparaison à une baseline versionnée ---------------------
+ * On ne compare pas seulement les totaux : une structure qui passe de saine à
+ * défectueuse est une régression même si la moyenne s'améliore ailleurs. */
+if (CHECK) {
+  if (!fs.existsSync(BASELINE_PATH)) {
+    console.error(`[audit:3d:check] baseline absente : ${BASELINE_PATH}`);
+    console.error("  générez-la avec : npm run audit:3d:baseline");
+    process.exit(1);
+  }
+  const base = JSON.parse(fs.readFileSync(BASELINE_PATH, "utf8"));
+  if (base.lod !== LODS[0]) {
+    console.error(`[audit:3d:check] baseline ${base.lod} ≠ LOD analysé ${LODS[0]}`);
+    process.exit(1);
+  }
+  const regressions = [];
+  const current = new Map(rows.map((r) => [r.id, r]));
+  for (const [id, b] of Object.entries(base.structures)) {
+    const c = current.get(id);
+    if (!c) { regressions.push(`${id} : structure disparue`); continue; }
+    if (c.nonManifoldEdges > b.nonManifoldEdges) regressions.push(`${id} : non-manifold ${b.nonManifoldEdges} → ${c.nonManifoldEdges}`);
+    if (c.duplicateFaces > b.duplicateFaces) regressions.push(`${id} : faces dupliquées ${b.duplicateFaces} → ${c.duplicateFaces}`);
+    if (c.degenerate > b.degenerate) regressions.push(`${id} : dégénérés ${b.degenerate} → ${c.degenerate}`);
+    if (c.boundaryEdges > b.boundaryEdges) regressions.push(`${id} : arêtes libres ${b.boundaryEdges} → ${c.boundaryEdges}`);
+    if (c.components > b.components) regressions.push(`${id} : composantes ${b.components} → ${c.components}`);
+    if (c.invertedWinding && !b.invertedWinding) regressions.push(`${id} : winding inversé apparu`);
+    if (c.zeroNormals > b.zeroNormals) regressions.push(`${id} : normales nulles ${b.zeroNormals} → ${c.zeroNormals}`);
+    if (c.outOfRange > b.outOfRange) regressions.push(`${id} : indices hors bornes ${b.outOfRange} → ${c.outOfRange}`);
+    if (c.nan > b.nan) regressions.push(`${id} : positions NaN ${b.nan} → ${c.nan}`);
+    const flippedTolerance = Math.max(2, b.triangles * 0.0002);
+    if (c.flippedFaces > b.flippedFaces + flippedTolerance) regressions.push(`${id} : faces inversées ${b.flippedFaces} → ${c.flippedFaces}`);
+    if (c.triangles < b.triangles * 0.98) regressions.push(`${id} : détail perdu ${b.triangles} → ${c.triangles} triangles`);
+  }
+  const g = base.summary;
+  const globalChecks = [
+    ["structures étanches", report.summary.watertightStructures, g.watertightStructures, "baisse"],
+    ["structures non-manifold", report.summary.nonManifoldStructures, g.nonManifoldStructures, "hausse"],
+    ["structures à bords", report.summary.withBoundaryStructures, g.withBoundaryStructures, "hausse"],
+    ["structures pluri-composantes", report.summary.multiComponentStructures, g.multiComponentStructures, "hausse"],
+    ["triangles dégénérés", report.summary.degenerateTriangles, g.degenerateTriangles, "hausse"],
+    ["faces inversées", report.summary.flippedFaces, g.flippedFaces, "hausse"],
+    ["faces dupliquées", report.summary.duplicateFaces, g.duplicateFaces, "hausse"],
+    ["winding inversé", report.summary.invertedWindingStructures, g.invertedWindingStructures, "hausse"],
+    ["normales nulles", report.summary.zeroNormalVertices, g.zeroNormalVertices, "hausse"],
+    ["indices hors bornes", report.summary.outOfRangeIndices, g.outOfRangeIndices, "hausse"],
+    ["positions NaN", report.summary.nanPositions, g.nanPositions, "hausse"],
+  ];
+  for (const [label, value, reference, direction] of globalChecks) {
+    if (direction === "hausse" ? value > reference : value < reference) {
+      regressions.push(`${label} : ${reference} → ${value}`);
+    }
+  }
+  if (regressions.length) {
+    console.error(`[audit:3d:check] ÉCHEC · ${regressions.length} régression(s)`);
+    for (const r of regressions.slice(0, 50)) console.error(`  - ${r}`);
+    if (regressions.length > 50) console.error(`  … et ${regressions.length - 50} autre(s)`);
+    process.exit(1);
+  }
+  console.log(`[audit:3d:check] OK · ${rows.length} structures comparées à ${path.basename(BASELINE_PATH)}`);
+  process.exit(0);
+}
+
 fs.mkdirSync(OUT, { recursive: true });
 fs.writeFileSync(path.join(OUT, "qualite-3d.json"), JSON.stringify(report, null, 1));
+
+if (WRITE_BASELINE) {
+  if (LODS.length > 1) {
+    console.error("[audit:3d] une baseline s'écrit pour un seul LOD");
+    process.exit(1);
+  }
+  const baseline = {
+    version: 1,
+    generated: new Date().toISOString(),
+    lod: LODS[0],
+    summary: report.summary,
+    structures: Object.fromEntries(rows.map((r) => [r.id, {
+      triangles: r.triangles,
+      boundaryEdges: r.boundaryEdges,
+      nonManifoldEdges: r.nonManifoldEdges,
+      duplicateFaces: r.duplicateFaces,
+      components: r.components,
+      degenerate: r.degenerate,
+      flippedFaces: r.flippedFaces,
+      invertedWinding: r.invertedWinding,
+      zeroNormals: r.zeroNormals,
+      outOfRange: r.outOfRange,
+      nan: r.nan,
+    }])),
+  };
+  fs.writeFileSync(BASELINE_PATH, JSON.stringify(baseline));
+  console.log(`[audit:3d] baseline écrite : ${BASELINE_PATH}`);
+}
 
 /* Rapport Markdown lisible. */
 const fmt = (n, d = 0) => Number(n).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });

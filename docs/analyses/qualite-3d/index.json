@@ -1,0 +1,1409 @@
+{
+  "generated": "2026-11-19T01:51:38.162Z",
+  "base": "http://localhost:5199",
+  "protocol": {
+    "viewport": 1024,
+    "pixelRatio": 1,
+    "background": "#1b1f24",
+    "fov": 38,
+    "shadows": false,
+    "groundHidden": true,
+    "lod": "high",
+    "format": "jpeg",
+    "quality": 0.92,
+    "angles": [
+      {
+        "name": "face",
+        "dir": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "dos",
+        "dir": [
+          0,
+          0,
+          -1
+        ]
+      },
+      {
+        "name": "gauche",
+        "dir": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "droite",
+        "dir": [
+          -1,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "dessus",
+        "dir": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "dessous",
+        "dir": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "name": "trois-quarts-avant-gauche",
+        "dir": [
+          0.6738171205292091,
+          0.3032177042381441,
+          0.6738171205292091
+        ]
+      },
+      {
+        "name": "trois-quarts-arriere-droit",
+        "dir": [
+          -0.6738171205292091,
+          0.3032177042381441,
+          -0.6738171205292091
+        ]
+      }
+    ]
+  },
+  "subjects": [
+    {
+      "id": "coeur",
+      "label": "Cœur",
+      "ids": [
+        "organ:left-ventricle",
+        "organ:right-ventricle",
+        "organ:left-atrium",
+        "organ:right-atrium",
+        "organ:bp-heart",
+        "organ:bp-fibrous-skeleton-of-heart"
+      ],
+      "missing": [],
+      "focus": null,
+      "clip": null,
+      "center": [
+        0.022771794348955154,
+        1.2907528281211853,
+        0.024772075936198235
+      ],
+      "half": [
+        0.05955914780497551,
+        0.05402010679244995,
+        0.0564305130392313
+      ],
+      "promoted": 6,
+      "captures": [
+        {
+          "angle": "face",
+          "dir": [
+            0,
+            0,
+            1
+          ],
+          "distance": 0.25693,
+          "file": "docs/analyses/qualite-3d/coeur/face.jpg",
+          "bytes": 46777,
+          "sha256": "218da2b0d79df40e",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 34.9,
+          "bbox": {
+            "minX": 166,
+            "minY": 193,
+            "maxX": 888,
+            "maxY": 847
+          },
+          "margins": {
+            "gauche": 16.21,
+            "droite": 13.18,
+            "haut": 18.85,
+            "bas": 17.19
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dos",
+          "dir": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 0.25693,
+          "file": "docs/analyses/qualite-3d/coeur/dos.jpg",
+          "bytes": 50263,
+          "sha256": "22eeea51a61e3646",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 33.94,
+          "bbox": {
+            "minX": 174,
+            "minY": 177,
+            "maxX": 882,
+            "maxY": 822
+          },
+          "margins": {
+            "gauche": 16.99,
+            "droite": 13.77,
+            "haut": 17.29,
+            "bas": 19.63
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "gauche",
+          "dir": [
+            1,
+            0,
+            0
+          ],
+          "distance": 0.25026,
+          "file": "docs/analyses/qualite-3d/coeur/gauche.jpg",
+          "bytes": 48161,
+          "sha256": "6e346e8cee4720b1",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 34.18,
+          "bbox": {
+            "minX": 166,
+            "minY": 207,
+            "maxX": 855,
+            "maxY": 886
+          },
+          "margins": {
+            "gauche": 16.21,
+            "droite": 16.41,
+            "haut": 20.21,
+            "bas": 13.38
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "droite",
+          "dir": [
+            -1,
+            0,
+            0
+          ],
+          "distance": 0.25026,
+          "file": "docs/analyses/qualite-3d/coeur/droite.jpg",
+          "bytes": 48352,
+          "sha256": "31a89205e513c922",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 33.86,
+          "bbox": {
+            "minX": 101,
+            "minY": 110,
+            "maxX": 849,
+            "maxY": 840
+          },
+          "margins": {
+            "gauche": 9.86,
+            "droite": 16.99,
+            "haut": 10.74,
+            "bas": 17.87
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessus",
+          "dir": [
+            0,
+            1,
+            0
+          ],
+          "distance": 0.25423,
+          "file": "docs/analyses/qualite-3d/coeur/dessus.jpg",
+          "bytes": 59875,
+          "sha256": "e82616c7d9268a12",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 33.84,
+          "bbox": {
+            "minX": 128,
+            "minY": 172,
+            "maxX": 840,
+            "maxY": 841
+          },
+          "margins": {
+            "gauche": 12.5,
+            "droite": 17.87,
+            "haut": 16.8,
+            "bas": 17.77
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessous",
+          "dir": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 0.25423,
+          "file": "docs/analyses/qualite-3d/coeur/dessous.jpg",
+          "bytes": 52632,
+          "sha256": "d831221d5fef237c",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 37.49,
+          "bbox": {
+            "minX": 150,
+            "minY": 164,
+            "maxX": 902,
+            "maxY": 842
+          },
+          "margins": {
+            "gauche": 14.65,
+            "droite": 11.82,
+            "haut": 16.02,
+            "bas": 17.68
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-avant-gauche",
+          "dir": [
+            0.6738171205292091,
+            0.3032177042381441,
+            0.6738171205292091
+          ],
+          "distance": 0.37266,
+          "file": "docs/analyses/qualite-3d/coeur/trois-quarts-avant-gauche.jpg",
+          "bytes": 33848,
+          "sha256": "63a744b11ce30d80",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 15.79,
+          "bbox": {
+            "minX": 287,
+            "minY": 269,
+            "maxX": 719,
+            "maxY": 789
+          },
+          "margins": {
+            "gauche": 28.03,
+            "droite": 29.69,
+            "haut": 26.27,
+            "bas": 22.85
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-arriere-droit",
+          "dir": [
+            -0.6738171205292091,
+            0.3032177042381441,
+            -0.6738171205292091
+          ],
+          "distance": 0.37266,
+          "file": "docs/analyses/qualite-3d/coeur/trois-quarts-arriere-droit.jpg",
+          "bytes": 33257,
+          "sha256": "bd4f08fa3afd55a1",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 13.99,
+          "bbox": {
+            "minX": 283,
+            "minY": 311,
+            "maxX": 740,
+            "maxY": 752
+          },
+          "margins": {
+            "gauche": 27.64,
+            "droite": 27.64,
+            "haut": 30.37,
+            "bas": 26.46
+          },
+          "clipped": false,
+          "empty": false
+        }
+      ]
+    },
+    {
+      "id": "encephale",
+      "label": "Encéphale",
+      "ids": [
+        "organ:bp-brain"
+      ],
+      "missing": [],
+      "focus": null,
+      "clip": null,
+      "center": [
+        -0.020226450636982918,
+        1.5907061696052551,
+        -0.03880890132859349
+      ],
+      "half": [
+        0.0336738508194685,
+        0.04805499315261841,
+        0.04898590175434947
+      ],
+      "promoted": 1,
+      "captures": [
+        {
+          "angle": "face",
+          "dir": [
+            0,
+            0,
+            1
+          ],
+          "distance": 0.21117,
+          "file": "docs/analyses/qualite-3d/encephale/face.jpg",
+          "bytes": 33330,
+          "sha256": "d1a5a63d66ec7e7d",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 11.7,
+          "bbox": {
+            "minX": 290,
+            "minY": 118,
+            "maxX": 753,
+            "maxY": 847
+          },
+          "margins": {
+            "gauche": 28.32,
+            "droite": 26.37,
+            "haut": 11.52,
+            "bas": 17.19
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dos",
+          "dir": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 0.21117,
+          "file": "docs/analyses/qualite-3d/encephale/dos.jpg",
+          "bytes": 32386,
+          "sha256": "f8fdf89b79fa8875",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 12.2,
+          "bbox": {
+            "minX": 281,
+            "minY": 206,
+            "maxX": 771,
+            "maxY": 866
+          },
+          "margins": {
+            "gauche": 27.44,
+            "droite": 24.61,
+            "haut": 20.12,
+            "bas": 15.33
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "gauche",
+          "dir": [
+            1,
+            0,
+            0
+          ],
+          "distance": 0.19705,
+          "file": "docs/analyses/qualite-3d/encephale/gauche.jpg",
+          "bytes": 58071,
+          "sha256": "118fd9aae32d16d8",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 28.68,
+          "bbox": {
+            "minX": 102,
+            "minY": 110,
+            "maxX": 901,
+            "maxY": 914
+          },
+          "margins": {
+            "gauche": 9.96,
+            "droite": 11.91,
+            "haut": 10.74,
+            "bas": 10.64
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "droite",
+          "dir": [
+            -1,
+            0,
+            0
+          ],
+          "distance": 0.19705,
+          "file": "docs/analyses/qualite-3d/encephale/droite.jpg",
+          "bytes": 50278,
+          "sha256": "140cfb337bc1ddf1",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 21.51,
+          "bbox": {
+            "minX": 152,
+            "minY": 184,
+            "maxX": 848,
+            "maxY": 849
+          },
+          "margins": {
+            "gauche": 14.84,
+            "droite": 17.09,
+            "haut": 17.97,
+            "bas": 16.99
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessus",
+          "dir": [
+            0,
+            1,
+            0
+          ],
+          "distance": 0.21316,
+          "file": "docs/analyses/qualite-3d/encephale/dessus.jpg",
+          "bytes": 36790,
+          "sha256": "13d2983aa701e5b5",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 17,
+          "bbox": {
+            "minX": 273,
+            "minY": 171,
+            "maxX": 733,
+            "maxY": 900
+          },
+          "margins": {
+            "gauche": 26.66,
+            "droite": 28.32,
+            "haut": 16.7,
+            "bas": 12.01
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessous",
+          "dir": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 0.21316,
+          "file": "docs/analyses/qualite-3d/encephale/dessous.jpg",
+          "bytes": 37532,
+          "sha256": "b6c440107cbd5d45",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 15.07,
+          "bbox": {
+            "minX": 278,
+            "minY": 206,
+            "maxX": 756,
+            "maxY": 865
+          },
+          "margins": {
+            "gauche": 27.15,
+            "droite": 26.07,
+            "haut": 20.12,
+            "bas": 15.43
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-avant-gauche",
+          "dir": [
+            0.6738171205292091,
+            0.3032177042381441,
+            0.6738171205292091
+          ],
+          "distance": 0.2853,
+          "file": "docs/analyses/qualite-3d/encephale/trois-quarts-avant-gauche.jpg",
+          "bytes": 29872,
+          "sha256": "3785877586293094",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 9.03,
+          "bbox": {
+            "minX": 371,
+            "minY": 289,
+            "maxX": 723,
+            "maxY": 770
+          },
+          "margins": {
+            "gauche": 36.23,
+            "droite": 29.3,
+            "haut": 28.22,
+            "bas": 24.71
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-arriere-droit",
+          "dir": [
+            -0.6738171205292091,
+            0.3032177042381441,
+            -0.6738171205292091
+          ],
+          "distance": 0.2853,
+          "file": "docs/analyses/qualite-3d/encephale/trois-quarts-arriere-droit.jpg",
+          "bytes": 31227,
+          "sha256": "7b0eaa3110acb276",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 9.93,
+          "bbox": {
+            "minX": 266,
+            "minY": 240,
+            "maxX": 616,
+            "maxY": 727
+          },
+          "margins": {
+            "gauche": 25.98,
+            "droite": 39.75,
+            "haut": 23.44,
+            "bas": 28.91
+          },
+          "clipped": false,
+          "empty": false
+        }
+      ]
+    },
+    {
+      "id": "main-droite",
+      "label": "Main droite",
+      "ids": [
+        "bone:capitate-bone-r",
+        "bone:distal-phalanx-of-fifth-finger-of-hand-r",
+        "bone:distal-phalanx-of-first-finger-of-hand-r",
+        "bone:distal-phalanx-of-fourth-finger-of-hand-r",
+        "bone:distal-phalanx-of-second-finger-of-hand-r",
+        "bone:distal-phalanx-of-third-finger-of-hand-r",
+        "bone:fifth-metacarpal-bone-r",
+        "bone:first-metacarpal-bone-r",
+        "bone:fourth-metacarpal-bone-r",
+        "bone:hamate-bone-r",
+        "bone:lunate-bone-r",
+        "bone:bp-metacarpal-bone-r",
+        "bone:middle-phalanx-of-fifth-finger-of-hand-r",
+        "bone:middle-phalanx-of-fourth-finger-of-hand-r",
+        "bone:middle-phalanx-of-second-finger-of-hand-r",
+        "bone:middle-phalanx-of-third-finger-of-hand-r",
+        "bone:pisiform-bone-r",
+        "bone:proximal-phalanx-of-fifth-finger-of-hand-r",
+        "bone:proximal-phalanx-of-first-finger-of-hand-r",
+        "bone:proximal-phalanx-of-fourth-finger-of-hand-r",
+        "bone:proximal-phalanx-of-second-finger-of-hand-r",
+        "bone:proximal-phalanx-of-third-finger-of-hand-r",
+        "bone:scaphoid-bone-r",
+        "bone:second-metacarpal-bone-r",
+        "bone:third-metacarpal-bone-r",
+        "bone:trapezium-bone-r",
+        "bone:trapezoid-bone-r",
+        "bone:triquetrum-bone-r",
+        "muscle:abductor-digiti-minimi-of-hand-r",
+        "muscle:cruciform-part-of-fibrous-sheath-of-digit-of-hand-r",
+        "muscle:dorsal-fascia-of-hand-r",
+        "muscle:dorsal-interossei-muscles-of-hand-r",
+        "muscle:flexor-digiti-minimi-of-hand-r",
+        "muscle:lumbrical-muscles-of-hand-r",
+        "muscle:opponens-digiti-minimi-muscle-of-hand-r",
+        "muscle:superficial-transverse-metacarpal-ligament-r",
+        "muscle:synovial-sheaths-of-digits-of-hand-r",
+        "organ:bp-dorsal-carpal-branch-of-radial-artery-r",
+        "organ:bp-dorsal-carpal-branch-of-ulnar-artery-r",
+        "organ:bp-dorsal-venous-network-of-hand-r"
+      ],
+      "missing": [],
+      "focus": null,
+      "clip": null,
+      "center": [
+        -0.2802962064743042,
+        0.7916756570339203,
+        0.050706810085102916
+      ],
+      "half": [
+        0.05509421229362488,
+        0.09298953413963318,
+        0.04643968609161675
+      ],
+      "promoted": 40,
+      "captures": [
+        {
+          "angle": "face",
+          "dir": [
+            0,
+            0,
+            1
+          ],
+          "distance": 0.35448,
+          "file": "docs/analyses/qualite-3d/main-droite/face.jpg",
+          "bytes": 81309,
+          "sha256": "15be71a0a77f35a8",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 18.62,
+          "bbox": {
+            "minX": 264,
+            "minY": 143,
+            "maxX": 759,
+            "maxY": 957
+          },
+          "margins": {
+            "gauche": 25.78,
+            "droite": 25.78,
+            "haut": 13.96,
+            "bas": 6.45
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dos",
+          "dir": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 0.35448,
+          "file": "docs/analyses/qualite-3d/main-droite/dos.jpg",
+          "bytes": 55451,
+          "sha256": "86635d695c45187c",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 19.43,
+          "bbox": {
+            "minX": 274,
+            "minY": 98,
+            "maxX": 729,
+            "maxY": 858
+          },
+          "margins": {
+            "gauche": 26.76,
+            "droite": 28.71,
+            "haut": 9.57,
+            "bas": 16.11
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "gauche",
+          "dir": [
+            1,
+            0,
+            0
+          ],
+          "distance": 0.36417,
+          "file": "docs/analyses/qualite-3d/main-droite/gauche.jpg",
+          "bytes": 45003,
+          "sha256": "bb63ddfc1f6b6fdc",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 8.71,
+          "bbox": {
+            "minX": 313,
+            "minY": 86,
+            "maxX": 707,
+            "maxY": 884
+          },
+          "margins": {
+            "gauche": 30.57,
+            "droite": 30.86,
+            "haut": 8.4,
+            "bas": 13.57
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "droite",
+          "dir": [
+            -1,
+            0,
+            0
+          ],
+          "distance": 0.36417,
+          "file": "docs/analyses/qualite-3d/main-droite/droite.jpg",
+          "bytes": 50918,
+          "sha256": "05895b5a5f748dea",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 9.69,
+          "bbox": {
+            "minX": 326,
+            "minY": 168,
+            "maxX": 704,
+            "maxY": 899
+          },
+          "margins": {
+            "gauche": 31.84,
+            "droite": 31.15,
+            "haut": 16.41,
+            "bas": 12.11
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessus",
+          "dir": [
+            0,
+            1,
+            0
+          ],
+          "distance": 0.28335,
+          "file": "docs/analyses/qualite-3d/main-droite/dessus.jpg",
+          "bytes": 64682,
+          "sha256": "048d3f39112e46ee",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 15.95,
+          "bbox": {
+            "minX": 242,
+            "minY": 210,
+            "maxX": 886,
+            "maxY": 699
+          },
+          "margins": {
+            "gauche": 23.63,
+            "droite": 13.38,
+            "haut": 20.51,
+            "bas": 31.64
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessous",
+          "dir": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 0.28335,
+          "file": "docs/analyses/qualite-3d/main-droite/dessous.jpg",
+          "bytes": 53964,
+          "sha256": "469025ddc2e49727",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 15.41,
+          "bbox": {
+            "minX": 197,
+            "minY": 152,
+            "maxX": 879,
+            "maxY": 716
+          },
+          "margins": {
+            "gauche": 19.24,
+            "droite": 14.06,
+            "haut": 14.84,
+            "bas": 29.98
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-avant-gauche",
+          "dir": [
+            0.6738171205292091,
+            0.3032177042381441,
+            0.6738171205292091
+          ],
+          "distance": 0.46724,
+          "file": "docs/analyses/qualite-3d/main-droite/trois-quarts-avant-gauche.jpg",
+          "bytes": 61735,
+          "sha256": "15247c1a42b26a67",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 10.25,
+          "bbox": {
+            "minX": 345,
+            "minY": 216,
+            "maxX": 716,
+            "maxY": 818
+          },
+          "margins": {
+            "gauche": 33.69,
+            "droite": 29.98,
+            "haut": 21.09,
+            "bas": 20.02
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-arriere-droit",
+          "dir": [
+            -0.6738171205292091,
+            0.3032177042381441,
+            -0.6738171205292091
+          ],
+          "distance": 0.46724,
+          "file": "docs/analyses/qualite-3d/main-droite/trois-quarts-arriere-droit.jpg",
+          "bytes": 38521,
+          "sha256": "5e7d7708987205d1",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 8.32,
+          "bbox": {
+            "minX": 312,
+            "minY": 207,
+            "maxX": 693,
+            "maxY": 758
+          },
+          "margins": {
+            "gauche": 30.47,
+            "droite": 32.23,
+            "haut": 20.21,
+            "bas": 25.88
+          },
+          "clipped": false,
+          "empty": false
+        }
+      ]
+    },
+    {
+      "id": "face",
+      "label": "Face",
+      "ids": [
+        "organ:bp-face"
+      ],
+      "missing": [],
+      "focus": null,
+      "clip": null,
+      "center": [
+        -0.0006434489041566849,
+        1.5631561875343323,
+        0.04911085078492761
+      ],
+      "half": [
+        0.05567635037004948,
+        0.06341499090194702,
+        0.05925715109333396
+      ],
+      "promoted": 1,
+      "captures": [
+        {
+          "angle": "face",
+          "dir": [
+            0,
+            0,
+            1
+          ],
+          "distance": 0.27264,
+          "file": "docs/analyses/qualite-3d/face/face.jpg",
+          "bytes": 66602,
+          "sha256": "14aadedfb0215b6d",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 23.65,
+          "bbox": {
+            "minX": 236,
+            "minY": 190,
+            "maxX": 787,
+            "maxY": 880
+          },
+          "margins": {
+            "gauche": 23.05,
+            "droite": 23.05,
+            "haut": 18.55,
+            "bas": 13.96
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dos",
+          "dir": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 0.27264,
+          "file": "docs/analyses/qualite-3d/face/dos.jpg",
+          "bytes": 86588,
+          "sha256": "7e7ce601f88ac5a8",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 33.24,
+          "bbox": {
+            "minX": 149,
+            "minY": 136,
+            "maxX": 875,
+            "maxY": 890
+          },
+          "margins": {
+            "gauche": 14.55,
+            "droite": 14.45,
+            "haut": 13.28,
+            "bas": 12.99
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "gauche",
+          "dir": [
+            1,
+            0,
+            0
+          ],
+          "distance": 0.26863,
+          "file": "docs/analyses/qualite-3d/face/gauche.jpg",
+          "bytes": 64234,
+          "sha256": "42a88c53742735ee",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 29.23,
+          "bbox": {
+            "minX": 184,
+            "minY": 77,
+            "maxX": 903,
+            "maxY": 872
+          },
+          "margins": {
+            "gauche": 17.97,
+            "droite": 11.72,
+            "haut": 7.52,
+            "bas": 14.75
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "droite",
+          "dir": [
+            -1,
+            0,
+            0
+          ],
+          "distance": 0.26863,
+          "file": "docs/analyses/qualite-3d/face/droite.jpg",
+          "bytes": 65724,
+          "sha256": "71dfca09b7c1a20b",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 29.21,
+          "bbox": {
+            "minX": 120,
+            "minY": 77,
+            "maxX": 839,
+            "maxY": 874
+          },
+          "margins": {
+            "gauche": 11.72,
+            "droite": 17.97,
+            "haut": 7.52,
+            "bas": 14.55
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessus",
+          "dir": [
+            0,
+            1,
+            0
+          ],
+          "distance": 0.26377,
+          "file": "docs/analyses/qualite-3d/face/dessus.jpg",
+          "bytes": 55550,
+          "sha256": "9f631a6cf0d079f9",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 24.39,
+          "bbox": {
+            "minX": 108,
+            "minY": 143,
+            "maxX": 915,
+            "maxY": 849
+          },
+          "margins": {
+            "gauche": 10.55,
+            "droite": 10.55,
+            "haut": 13.96,
+            "bas": 16.99
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessous",
+          "dir": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 0.26377,
+          "file": "docs/analyses/qualite-3d/face/dessous.jpg",
+          "bytes": 58030,
+          "sha256": "8e6bba48048ca090",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 20.33,
+          "bbox": {
+            "minX": 225,
+            "minY": 178,
+            "maxX": 798,
+            "maxY": 888
+          },
+          "margins": {
+            "gauche": 21.97,
+            "droite": 21.97,
+            "haut": 17.38,
+            "bas": 13.18
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-avant-gauche",
+          "dir": [
+            0.6738171205292091,
+            0.3032177042381441,
+            0.6738171205292091
+          ],
+          "distance": 0.38499,
+          "file": "docs/analyses/qualite-3d/face/trois-quarts-avant-gauche.jpg",
+          "bytes": 46810,
+          "sha256": "7afbf3f66dac563a",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 13.72,
+          "bbox": {
+            "minX": 330,
+            "minY": 239,
+            "maxX": 810,
+            "maxY": 762
+          },
+          "margins": {
+            "gauche": 32.23,
+            "droite": 20.8,
+            "haut": 23.34,
+            "bas": 25.49
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-arriere-droit",
+          "dir": [
+            -0.6738171205292091,
+            0.3032177042381441,
+            -0.6738171205292091
+          ],
+          "distance": 0.38499,
+          "file": "docs/analyses/qualite-3d/face/trois-quarts-arriere-droit.jpg",
+          "bytes": 44777,
+          "sha256": "1cbcf1dff855c6aa",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 13.76,
+          "bbox": {
+            "minX": 208,
+            "minY": 254,
+            "maxX": 659,
+            "maxY": 781
+          },
+          "margins": {
+            "gauche": 20.31,
+            "droite": 35.55,
+            "haut": 24.8,
+            "bas": 23.63
+          },
+          "clipped": false,
+          "empty": false
+        }
+      ]
+    },
+    {
+      "id": "genou-droit",
+      "label": "Genou droit",
+      "ids": [
+        "bone:femur-r",
+        "bone:tibia-r",
+        "bone:patella-r"
+      ],
+      "missing": [],
+      "focus": "bone:patella-r",
+      "clip": {
+        "axis": "y",
+        "min": 0.33380577325820926,
+        "max": 0.5547279977798462
+      },
+      "center": [
+        -0.08444463461637497,
+        0.4442668855190277,
+        0.007288187276571989
+      ],
+      "half": [
+        0.12159282565116883,
+        0.12046111226081846,
+        0.111376126203686
+      ],
+      "promoted": 3,
+      "captures": [
+        {
+          "angle": "face",
+          "dir": [
+            0,
+            0,
+            1
+          ],
+          "distance": 0.52025,
+          "file": "docs/analyses/qualite-3d/genou-droit/face.jpg",
+          "bytes": 20752,
+          "sha256": "547e9ad689f032c6",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 8.46,
+          "bbox": {
+            "minX": 427,
+            "minY": 196,
+            "maxX": 650,
+            "maxY": 823
+          },
+          "margins": {
+            "gauche": 41.7,
+            "droite": 36.43,
+            "haut": 19.14,
+            "bas": 19.53
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dos",
+          "dir": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 0.52025,
+          "file": "docs/analyses/qualite-3d/genou-droit/dos.jpg",
+          "bytes": 25097,
+          "sha256": "f217426b8b27eb4b",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 10.6,
+          "bbox": {
+            "minX": 348,
+            "minY": 177,
+            "maxX": 609,
+            "maxY": 856
+          },
+          "margins": {
+            "gauche": 33.98,
+            "droite": 40.43,
+            "haut": 17.29,
+            "bas": 16.31
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "gauche",
+          "dir": [
+            1,
+            0,
+            0
+          ],
+          "distance": 0.52801,
+          "file": "docs/analyses/qualite-3d/genou-droit/gauche.jpg",
+          "bytes": 22394,
+          "sha256": "87ff05108a9026dd",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 8.22,
+          "bbox": {
+            "minX": 480,
+            "minY": 193,
+            "maxX": 719,
+            "maxY": 833
+          },
+          "margins": {
+            "gauche": 46.88,
+            "droite": 29.69,
+            "haut": 18.85,
+            "bas": 18.55
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "droite",
+          "dir": [
+            -1,
+            0,
+            0
+          ],
+          "distance": 0.52801,
+          "file": "docs/analyses/qualite-3d/genou-droit/droite.jpg",
+          "bytes": 22825,
+          "sha256": "6ce94138b1d079ec",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 7.94,
+          "bbox": {
+            "minX": 322,
+            "minY": 187,
+            "maxX": 544,
+            "maxY": 828
+          },
+          "margins": {
+            "gauche": 31.45,
+            "droite": 46.78,
+            "haut": 18.26,
+            "bas": 19.04
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessus",
+          "dir": [
+            0,
+            1,
+            0
+          ],
+          "distance": 0.53042,
+          "file": "docs/analyses/qualite-3d/genou-droit/dessus.jpg",
+          "bytes": 15639,
+          "sha256": "ffdb418c948ea478",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 3.86,
+          "bbox": {
+            "minX": 420,
+            "minY": 322,
+            "maxX": 665,
+            "maxY": 544
+          },
+          "margins": {
+            "gauche": 41.02,
+            "droite": 34.96,
+            "haut": 31.45,
+            "bas": 46.78
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "dessous",
+          "dir": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 0.53042,
+          "file": "docs/analyses/qualite-3d/genou-droit/dessous.jpg",
+          "bytes": 16199,
+          "sha256": "4b86d12226eb6af6",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 3.86,
+          "bbox": {
+            "minX": 419,
+            "minY": 480,
+            "maxX": 653,
+            "maxY": 719
+          },
+          "margins": {
+            "gauche": 40.92,
+            "droite": 36.13,
+            "haut": 46.88,
+            "bas": 29.69
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-avant-gauche",
+          "dir": [
+            0.6738171205292091,
+            0.3032177042381441,
+            0.6738171205292091
+          ],
+          "distance": 0.75258,
+          "file": "docs/analyses/qualite-3d/genou-droit/trois-quarts-avant-gauche.jpg",
+          "bytes": 15907,
+          "sha256": "a464948b9a8ef8b4",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 4.38,
+          "bbox": {
+            "minX": 476,
+            "minY": 285,
+            "maxX": 661,
+            "maxY": 707
+          },
+          "margins": {
+            "gauche": 46.48,
+            "droite": 35.35,
+            "haut": 27.83,
+            "bas": 30.86
+          },
+          "clipped": false,
+          "empty": false
+        },
+        {
+          "angle": "trois-quarts-arriere-droit",
+          "dir": [
+            -0.6738171205292091,
+            0.3032177042381441,
+            -0.6738171205292091
+          ],
+          "distance": 0.75258,
+          "file": "docs/analyses/qualite-3d/genou-droit/trois-quarts-arriere-droit.jpg",
+          "bytes": 18269,
+          "sha256": "5bab0066ea4d9e47",
+          "width": 1024,
+          "height": 1024,
+          "coveragePct": 4.75,
+          "bbox": {
+            "minX": 356,
+            "minY": 293,
+            "maxX": 548,
+            "maxY": 736
+          },
+          "margins": {
+            "gauche": 34.77,
+            "droite": 46.39,
+            "haut": 28.61,
+            "bas": 28.03
+          },
+          "clipped": false,
+          "empty": false
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

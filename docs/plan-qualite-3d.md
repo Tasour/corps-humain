@@ -38,7 +38,7 @@ résolution (plafond à retirer), et acquisition de sources fines (lent, structu
 
 | Phase | Objectif | Sortie mesurable | Effort indicatif | Dépend de |
 |---|---|---|---:|---|
-| **P0** | Instrumenter | audit `high` + rapport ; harnais 8 angles | 2 j (fait à 60 %) | — |
+| **P0** | Instrumenter | audit `high`, scorecard, 8 angles, Hausdorff, porte CI | 2 j (**fait**) | — |
 | **P1** | Vérité des données | 100 % inventaire, 0 doublon, TA2 complet | 3 j | P0 |
 | **P2** | Intégrité et orientation | 0 winding inversé, 0 non-manifold, 0 face dupliquée | 5 j | P0 |
 | **P3** | Restituer la résolution source | 0 structure plafonnée, +1,30 M tris | 3 j | P2 |
@@ -50,25 +50,41 @@ résolution (plafond à retirer), et acquisition de sources fines (lent, structu
 
 ---
 
-## 3. P0 — Instrumenter (en cours)
+## 3. P0 — Instrumenter (fait, 19 novembre 2026)
 
 **But :** rendre toute affirmation vérifiable.
 
-Déjà fait :
+Livré :
 
-- `scripts/audit-qualite-3d.mjs` : topologie, orientation, densité, arêtes, composantes.
-- `npm run audit:3d` : rapport JSON + Markdown reproductible en ~5 s.
-- Baseline publiée : `docs/analyses/qualite-3d.md`.
+1. **Audit topologique** — `scripts/audit-qualite-3d.mjs`, `npm run audit:3d` : topologie,
+   orientation, densité, arêtes, composantes ; rapport JSON + Markdown en ~5 s.
+2. **Harnais de captures 8 angles** — `scripts/captures-qualite-3d.mjs`, `npm run captures:3d` :
+   1024 × 1024, fond `#1b1f24`, ombres et sol masqués, LOD `high`, 8 directions canoniques,
+   cadrage sur les 8 coins de la boîte, coupe locale pour le genou, SHA-256 par image.
+   **40 captures, 0 débordement** sur les 5 pilotes.
+3. **Scorecard** — `scripts/scorecard-qualite-3d.mjs`, `npm run scorecard:3d` : statut S0–S4,
+   portes G0/G2/G3, bloqueurs par structure, classification provisoire ouvert/fermé.
+   Résultat : **1 399 S1, 640 S2, 0 S3** ; G0 1 979, G2 1 324, G3 1 017.
+4. **Porte CI** — `npm run audit:3d:baseline` puis `npm run audit:3d:check` : comparaison
+   **structure par structure** à `docs/analyses/qualite-3d-baseline.json`, pas seulement aux
+   totaux.
+5. **Écart de silhouette** — `scripts/hausdorff-v2.mjs`, `npm run hausdorff:3d` : Hausdorff
+   échantillonné LOD contre LOD avec BVH de triangles. `medium` : médiane 0 mm, 280 > 0,5 mm,
+   59 > 2 mm ; `low` : médiane 0,40 mm, 914 > 0,5 mm, 309 > 2 mm.
 
-Reste à faire :
+**Constats P0 qui commandent la suite :**
 
-1. **Harnais de captures 8 angles** : caméra déterministe, 1024 × 1024, fond neutre, éclairage
-   studio, aucune interface. Sortie `docs/analyses/qualite-3d/<structure>/<angle>.jpg`.
-2. **Fiche de score par structure** : statut S0–S4, défauts ouverts, métriques, captures liées.
-3. **Seuil CI** : `npm run audit:3d` échoue si une régression dépasse les tolérances G2/G3.
-4. **Mesure d'écart de silhouette** : distance de Hausdorff échantillonnée entre source et LOD.
+- `organ:bp-heart` ne contient **pas le myocarde** (11 pièces : valves, sinus coronaire, veines).
+  Le pilote « cœur » est l'union des 4 chambres Z-Anatomy et des valves.
+- **Le manifeste versionné n'a pas été produit par le pipeline actuel** : 597 structures ont un
+  `high` < 98 % de `min(source, 12 000)`, 16 LOD sont non monotones, et
+  `organ:cavernous-sinus-r` (source 9 728 tris) a un `high` de 512 tris. Reconstruire le
+  dataset ou corriger le pipeline est un prérequis à toute mesure de résolution.
+- Les pilotes révèlent des trous de complétude : pas de ménisques ni de ligaments du genou,
+  pas d'œsophage, pas de poumons entiers, pas d'hémisphères.
 
-**Sortie :** un tableau de bord unique où chaque structure a un statut et des preuves.
+**Sortie :** un tableau de bord unique où chaque structure a un statut et des preuves
+(`docs/analyses/qualite-3d/scorecard.md`, `hausdorff.md`, `index.json`).
 
 ---
 
@@ -289,16 +305,17 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 
 | Jour | Action | Preuve attendue |
 |---:|---|---|
-| 1 | Classifier les 907 structures à bords et les 620 pluri-composantes | `classification-structures.json` |
-| 1 | Écrire le harnais de captures 8 angles | 5 structures × 8 captures |
-| 2 | Corriger le winding par composante | 466 → 0, audit avant/après |
-| 3 | Supprimer faces dupliquées et corriger les non-manifold | 496 → 0, 124 → 0 |
-| 4 | Rebuild + audit complet + tests | 35/35 tests, rapport à jour |
-| 5 | Retirer le plafond 12 000 et reconstruire la chaîne LOD | 0 plafonnée, +1,30 M tris |
-| 6 | Mesurer poids, fps, mémoire ; ajuster le streaming | budget respecté |
-| 7 | Matrice de licences des sources haute résolution | tableau signé, 2 sources retenues |
-| 8 | Pilote cœur : acquisition, enregistrement, nettoyage | captures avant/après |
-| 9 | Pilote cœur : mesures G2–G4 + revue 8 angles | scorecard cœur |
+| 1 ✅ | Harnais de captures 8 angles | 5 structures × 8 captures, 0 débordement |
+| 1 ✅ | Scorecard et porte CI | 1 399 S1 / 640 S2 / 0 S3, check OK |
+| 2 ✅ | Écart de silhouette LOD | `hausdorff.md`, 280/59 medium, 914/309 low |
+| 2 | **Réconcilier dataset et pipeline** : reconstruire ou corriger | 0 LOD non monotone, 0 perte > 2 % |
+| 3 | Valider la classification ouvert/fermé (907 bords, 620 pluri-composantes) | `classification-structures.json` v2 |
+| 4 | Corriger le winding par composante | 466 → 0, audit avant/après |
+| 5 | Supprimer faces dupliquées et corriger les non-manifold | 496 → 0, 124 → 0 |
+| 6 | Rebuild + audit complet + tests | 35/35 tests, rapport à jour |
+| 7 | Retirer le plafond 12 000 et reconstruire la chaîne LOD | 0 plafonnée, +1,30 M tris |
+| 8 | Mesurer poids, fps, mémoire ; ajuster le streaming | budget respecté |
+| 9 | Matrice de licences des sources haute résolution | tableau signé, 2 sources retenues |
 | 10 | Décision go/no-go et rapport de phase | `docs/analyses/qualite-3d-p2.md` |
 
 ---
@@ -317,7 +334,7 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 | Densité médiane muscle | 35 tri/cm² | ≥ 50 | ≥ 80 |
 | Densité médiane organe | 111 tri/cm² | ≥ 150 | ≥ 200 |
 | Fentes > 0,5 mm (pilotes) | non mesuré | 0 | 0 |
-| Structures avec 8 angles relus | 0 | 5 | 2 039 |
+| Structures avec 8 angles capturés | 5 sujets (40 images) | 5 | 2 039 |
 | Validation anatomiste | 0 | 5 | 100 |
 
 ---

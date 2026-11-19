@@ -84,7 +84,7 @@ await check(`chargement : ${MANIFEST_COUNT} structures et 3 lots`, async () => {
 await check("aucune erreur console au chargement", () => assert.deepEqual(errors, []));
 
 /* ---------- recherche et sélection ---------- */
-await check("recherche fémur renvoie 2结果", async () => {
+await check("recherche fémur renvoie 2 résultats", async () => {
   await page.fill("#search", "fémur");
   await page.waitForTimeout(200);
   const n = await page.locator("#list .item").count();

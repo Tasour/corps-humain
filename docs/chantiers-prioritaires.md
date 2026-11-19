@@ -29,7 +29,7 @@ organes** native v2, mesurés.
 | 21 | **Couche de sélection** | Picking en vue fusionnée, double rendu, LOD réinitialisable, restauration de couleur | ✅ | `pickMerged`, `baseGeometries`, `highlight(s, null)` ; captures runtime |
 | 22 | **Séreuses lisibles** | Omentum/mésentère/péritoine translucides | ✅ | Mesh membrane séparé, opacité 0,15 |
 | 23 | **Contrôle visuel par groupe** | 1 groupe = 1 capture par orientation | ✅ | `tests/screens-groupes.mjs` : 29 groupes × 4 = 116 captures |
-| 24 | **Qualité 3D — 100 % des structures** | Présence, intégrité, résolution et rendu vérifiés pour chaque élément, sous 8 angles, pour les étudiants en médecine | 🟡 | Audit mesuré (`npm run audit:3d`) : 54,3 % étanches, 466 windings inversés, 124 non-manifold, 24 structures plafonnées. Méthode : [`METHODOLOGIE-QUALITE-3D.md`](METHODOLOGIE-QUALITE-3D.md). Plan : [`plan-qualite-3d.md`](plan-qualite-3d.md) |
+| 24 | **Qualité 3D — 100 % des structures** | Présence, intégrité, résolution et rendu vérifiés pour chaque élément, sous 8 angles, pour les étudiants en médecine | 🟡 | P0 instrumenté : audit, porte CI, 5 sujets × 8 captures (0 débordement), scorecard (1 399 S1 / 640 S2 / 0 S3), Hausdorff LOD. Défauts mesurés : 54,3 % étanches, 466 windings inversés, 124 non-manifold, 24 plafonnées, 597 pertes de détail anormales. Méthode : [`METHODOLOGIE-QUALITE-3D.md`](METHODOLOGIE-QUALITE-3D.md). Plan : [`plan-qualite-3d.md`](plan-qualite-3d.md) |
 
 Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 
