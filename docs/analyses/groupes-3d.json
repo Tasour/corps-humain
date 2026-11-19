@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T03:30:37.012Z",
+  "generated": "2026-11-19T04:04:26.466Z",
   "groups": 43,
   "passed": 52,
   "total": 52,
@@ -572,7 +572,7 @@
     {
       "id": "ui:knee-l",
       "ok": true,
-      "maxExplode": 0.006475919857621193
+      "maxExplode": 0.00863455981016159
     },
     {
       "id": "ui:jaw",

@@ -265,7 +265,7 @@ corrigées le 19 novembre 2026).
 |---|---|---|
 | G0 Traçabilité | 2 040/2 040 sources et licences ; 1 979/2 040 TA2 (96,9 %) | 🟡 |
 | G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
-| G2 Intégrité | 1 346/2 040 étanches et manifold (66,0 %) ; 691 avec bords ; 90 non-manifold ; 624 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
+| G2 Intégrité | 1 346/2 040 étanches et manifold (66,0 %) ; 694 avec bords ; **0 non-manifold** ; 693 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
 | G3 Normales | 0 winding inversé ; 10 937 faces inversées (0,168 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
 | G4 Résolution | `high` = source complète ; médiane 1 118 tris ; 954 structures < 1 000 tris (limite des sources) ; 0 structure plafonnée ; +1,44 M tris récupérés | 🟡 |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
@@ -299,8 +299,8 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts (source complète, œsophage ajouté).** 1 085 structures en S1, 955 en S2,
-**0 en S3**. G0 : 1 979/2 040 (96,9 %). G2 : 1 535 (75,2 %) avec la classification
+**Statuts (source complète, œsophage ajouté, maillages manifold).** 1 073 structures en S1,
+967 en S2, **0 en S3**. G0 : 1 979/2 040 (96,9 %). G2 : 1 585 (77,7 %) avec la classification
 provisoire, 1 949 (95,5 %) hors étanchéité. G3 : 1 296 (63,5 %). Aucune structure n'atteint S3
 tant que G4 (résolution qualitative) et G5 (assemblage) ne sont pas mesurés.
 
@@ -315,7 +315,7 @@ et des valves.
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
-| `medium` → `high` | 0,00 mm | 0,63 mm | 4,20 mm | 126,30 mm | 274 | 58 |
+| `medium` → `high` | 0,00 mm | 0,63 mm | 4,20 mm | 126,30 mm | 276 | 59 |
 | `low` → `high` | 0,41 mm | 2,79 mm | 17,39 mm | 126,30 mm | 920 | 323 |
 
 Le maximum (~121 mm) signale une simplification qui déplace la silhouette, pas un simple
@@ -401,6 +401,23 @@ Le surcoût de téléchargement est supportable car le `high` est chargé par ca
 uniquement à la sélection d'une structure ; la vue d'ensemble reste en `low`. Les risques
 restants sont la bande passante initiale et la mémoire sur mobile : à mesurer avant
 déploiement large (G7).
+
+### 7.5 Séparation des feuillets non-manifold (P2, 19 novembre 2026)
+
+`splitNonManifoldSheets()` réunit les faces qui traversent une arête commune en sens
+contraires (même feuillet), puis duplique chaque sommet par feuillet. Les faces qui ne se
+touchaient que le long d'une arête sont ainsi séparées : **90 structures non-manifold → 0**.
+Une seconde passe isole de force les rares faces restées dans le même feuillet.
+
+Ce que cette correction **n'est pas** : un changement de géométrie. Les positions, les
+normales et les triangles sont identiques ; seuls les index de sommets sont dupliqués.
+Preuve : les 8 captures avant/après de `organ:falx-cerebri` + `bone:mandible` ont un
+**SHA-256 strictement identique**. Le gain est topologique (maillages exploitables pour
+l'édition, les opérations booléennes et l'export), pas visuel.
+
+Coût assumé : davantage de composantes (624 → 693) et de structures avec bords
+(691 → 694), qui sont des feuillets désormais correctement séparés. Le scorecard passe de
+955 à **967 structures S2**, G2 de 1 535 à **1 585**.
 
 ---
 

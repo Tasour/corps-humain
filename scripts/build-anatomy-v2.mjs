@@ -559,6 +559,95 @@ function repairVertexNormals(geometry) {
   return geometry;
 }
 
+/* Séparation des feuillets partageant un sommet de façon non-manifold.
+ *
+ * Deux faces qui traversent une arête commune en sens contraires appartiennent
+ * au même feuillet : on les réunit. Les faces qui se touchent seulement le long
+ * d'une arête (trois faces ou plus sur la même arête) appartiennent à des
+ * feuillets distincts. On duplique alors les sommets par feuillet : la
+ * géométrie, les normales et le rendu restent strictement identiques, mais le
+ * maillage devient manifold. Les bords peuvent augmenter — c'est le prix
+ * honnête d'une surface ouverte correctement séparée. */
+function splitNonManifoldSheets(geometry) {
+  const { positions, normals, indices } = geometry;
+  const vertexCount = positions.length / 3;
+  const triCount = indices.length / 3;
+  if (!triCount) return geometry;
+
+  const edges = new Map();
+  for (let t = 0; t < triCount; t++) {
+    for (let k = 0; k < 3; k++) {
+      const a = indices[t * 3 + k], b = indices[t * 3 + (k + 1) % 3];
+      const key = a < b ? a * vertexCount + b : b * vertexCount + a;
+      let list = edges.get(key);
+      if (!list) { list = []; edges.set(key, list); }
+      list.push([t, a < b]);
+    }
+  }
+  let nonManifold = false;
+  for (const list of edges.values()) if (list.length > 2) { nonManifold = true; break; }
+  if (!nonManifold) return geometry;
+
+  const parent = new Int32Array(triCount);
+  for (let i = 0; i < triCount; i++) parent[i] = i;
+  const find = (x) => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+  const union = (a, b) => { const ra = find(a), rb = find(b); if (ra !== rb) parent[rb] = ra; };
+  for (const list of edges.values()) {
+    if (list.length !== 2 || list[0][1] === list[1][1]) continue;
+    union(list[0][0], list[1][0]);
+  }
+
+  const sheetOf = new Int32Array(triCount);
+  for (let t = 0; t < triCount; t++) sheetOf[t] = find(t);
+
+  /* Certaines faces restent dans le même feuillet bien qu'elles partagent
+   * une arête avec plus de deux faces (le feuillet se referme sur lui-même).
+   * On les sépare de force : la géométrie ne change pas, seul l'indexage des
+   * sommets est dupliqué. */
+  let nextSheet = 0;
+  for (let t = 0; t < triCount; t++) nextSheet = Math.max(nextSheet, sheetOf[t] + 1);
+  for (const list of edges.values()) {
+    if (list.length <= 2) continue;
+    const seen = new Map();
+    for (const [t] of list) {
+      const s = sheetOf[t];
+      if (seen.has(s)) sheetOf[t] = nextSheet++;
+      else seen.set(s, t);
+    }
+  }
+
+  const remap = new Map();
+  const outPos = [];
+  const outNorm = normals ? [] : null;
+  let next = 0;
+  for (let t = 0; t < triCount; t++) {
+    for (let k = 0; k < 3; k++) {
+      const old = indices[t * 3 + k];
+      /* Base = triCount+1 : sheetOf[t] ∈ [0, triCount[, donc pas de collission
+       * entre (sommet, feuillet) distincts. */
+      const key = old * (triCount + 1) + sheetOf[t];
+      let nv = remap.get(key);
+      if (nv === undefined) {
+        nv = next++;
+        remap.set(key, nv);
+        outPos.push(positions[old * 3], positions[old * 3 + 1], positions[old * 3 + 2]);
+        if (outNorm) outNorm.push(normals[old * 3], normals[old * 3 + 1], normals[old * 3 + 2]);
+      }
+      indices[t * 3 + k] = nv;
+    }
+  }
+  if (process.env.DEBUG_SPLIT === "1") {
+    console.log(`[split] ${triCount} faces, ${new Set(sheetOf).size} feuillets, ${vertexCount} -> ${next} sommets`);
+  }
+  return {
+    positions: new Float32Array(outPos),
+    normals: outNorm ? Int16Array.from(outNorm) : null,
+    indices,
+    vertexCount: next,
+    indexCount: indices.length,
+  };
+}
+
 /* Suppression des faces dupliquées (même triplet de sommets, ordre ignoré). */
 function removeDuplicateFaces(geometry) {
   const { indices } = geometry;
@@ -669,7 +758,7 @@ for (const s of structures) {
   const cleaned = removeDegenerate(geometry);
   const oriented = repairOrientation(cleaned);
   const deduped = removeDuplicateFaces(oriented);
-  const normalsFixed = repairVertexNormals(deduped);
+  const normalsFixed = splitNonManifoldSheets(repairVertexNormals(deduped));
   /* La simplification peut réintroduire des faces dupliquées : on déduplique
    * chaque niveau après simplification, pas seulement la source. */
   const highGeometry = removeDuplicateFaces(makeLod(normalsFixed, LOD.high.target));

@@ -19,13 +19,14 @@ import path from "node:path";
  */
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "public/models/v2/manifest.json"), "utf8"));
-const auditPath = path.join(ROOT, "docs/analyses/qualite-3d.json");
+const V2_DIR = process.env.V2_DIR || path.join(ROOT, "public/models/v2");
+const manifest = JSON.parse(fs.readFileSync(path.join(V2_DIR, "manifest.json"), "utf8"));
+const auditPath = process.env.QUALITE_AUDIT || path.join(ROOT, "docs/analyses/qualite-3d.json");
 const audit = JSON.parse(fs.readFileSync(auditPath, "utf8"));
 const capturePath = path.join(ROOT, "docs/analyses/qualite-3d/index.json");
 const captures = fs.existsSync(capturePath) ? JSON.parse(fs.readFileSync(capturePath, "utf8")) : null;
 
-const OUT = path.join(ROOT, "docs/analyses/qualite-3d");
+const OUT = process.env.QUALITE_OUT || path.join(ROOT, "docs/analyses/qualite-3d");
 const CLASSIF_OUT = path.join(ROOT, "docs/qualite");
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(CLASSIF_OUT, { recursive: true });

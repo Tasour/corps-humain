@@ -8,9 +8,9 @@ LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles
 | Indicateur | Valeur |
 |---|---:|
 | Structures étanches et manifold | **1 346 / 2 040** (66 %) |
-| Structures avec arêtes libres (bords) | 691 |
-| Structures avec arêtes non-manifold | 90 |
-| Structures en plusieurs composantes connexes | 624 |
+| Structures avec arêtes libres (bords) | 694 |
+| Structures avec arêtes non-manifold | 0 |
+| Structures en plusieurs composantes connexes | 693 |
 | Triangles dégénérés | 0 (0 %) |
 | Faces inversées (normale de face ≠ sommets) | 10 937 (0.168 %) |
 | Faces dupliquées | 0 |
@@ -22,22 +22,22 @@ LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles
 
 | Catégorie | LOD | Structures | Triangles | Médiane | P10 | P90 | Densité méd. (tri/cm²) | Étanches | Non-manifold | Pluri-composantes |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bone | high | 317 | 935 323 | 1 460 | 314 | 7 523 | 53.6 | 257 | 12 | 51 |
-| muscle | high | 695 | 2 372 709 | 1 472 | 330 | 6 760 | 35.8 | 591 | 13 | 87 |
-| organ | high | 1 028 | 3 201 741 | 818 | 274 | 6 606 | 111.9 | 498 | 65 | 486 |
+| bone | high | 317 | 935 323 | 1 460 | 314 | 7 523 | 53.6 | 257 | 0 | 62 |
+| muscle | high | 695 | 2 372 709 | 1 472 | 330 | 6 760 | 35.8 | 591 | 0 | 97 |
+| organ | high | 1 028 | 3 201 741 | 818 | 274 | 6 606 | 111.9 | 498 | 0 | 534 |
 
 ## Par source
 
 | Source | Structures | Triangles | Étanches | Winding inversé | Pluri-composantes |
 |---|---:|---:|---:|---:|---:|
-| Z-Anatomy | 1 443 | 4 767 278 | 1 200 | 0 | 291 |
-| BodyParts3D 4.0 | 597 | 1 742 495 | 146 | 0 | 333 |
+| Z-Anatomy | 1 443 | 4 767 278 | 1 200 | 0 | 342 |
+| BodyParts3D 4.0 | 597 | 1 742 495 | 146 | 0 | 351 |
 
 ## 15 structures les plus ouvertes (ratio arêtes libres / triangles)
 
 | Structure | Cat. | LOD | Tris | Arêtes libres | Ratio |
 |---|---|---|---:|---:|---:|
-| `organ:bp-eyebrow` | organ | high | 6 146 | 13 819 | 224.8 % |
+| `organ:bp-eyebrow` | organ | high | 6 146 | 13 826 | 225.0 % |
 | `organ:bp-mons-pubis` | organ | high | 2 718 | 5 228 | 192.3 % |
 | `organ:bp-visceral-peritoneum` | organ | high | 26 672 | 45 670 | 171.2 % |
 | `organ:bp-pancreatic-duct` | organ | high | 1 816 | 2 784 | 153.3 % |
@@ -47,7 +47,7 @@ LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles
 | `organ:bp-corona-ciliaris-l` | organ | high | 10 103 | 11 527 | 114.1 % |
 | `bone:bp-intervertebral-symphysis` | bone | high | 2 852 | 3 066 | 107.5 % |
 | `organ:bp-corona-ciliaris-r` | organ | high | 11 781 | 12 651 | 107.4 % |
-| `muscle:bp-levator-ani-r` | muscle | high | 5 889 | 6 220 | 105.6 % |
+| `muscle:bp-levator-ani-r` | muscle | high | 5 889 | 6 227 | 105.7 % |
 | `organ:bp-pericallosal-artery-r` | organ | high | 576 | 596 | 103.5 % |
 | `organ:bp-pericallosal-artery-l` | organ | high | 578 | 592 | 102.4 % |
 | `organ:bp-inferior-phrenic-artery-l` | organ | high | 1 232 | 1 218 | 98.9 % |
@@ -58,20 +58,20 @@ LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles
 | Structure | Cat. | LOD | Tris | Composantes |
 |---|---|---|---:|---:|
 | `organ:bp-visceral-peritoneum` | organ | high | 26 672 | 9 853 |
-| `organ:bp-eyebrow` | organ | high | 6 146 | 3 856 |
+| `organ:bp-eyebrow` | organ | high | 6 146 | 3 869 |
 | `organ:bp-large-intestine` | organ | high | 22 919 | 3 025 |
 | `organ:bp-corona-ciliaris-r` | organ | high | 11 781 | 1 948 |
 | `organ:bp-corona-ciliaris-l` | organ | high | 10 103 | 1 820 |
 | `organ:bp-mons-pubis` | organ | high | 2 718 | 1 341 |
 | `organ:bp-viscerocranium-r` | organ | high | 43 122 | 1 294 |
-| `muscle:bp-levator-ani-r` | muscle | high | 5 889 | 1 148 |
+| `muscle:bp-levator-ani-r` | muscle | high | 5 889 | 1 203 |
 | `muscle:bp-levator-ani-l` | muscle | high | 10 740 | 1 146 |
-| `organ:bp-left-subclavian-artery-l` | organ | high | 33 339 | 713 |
-| `organ:bp-right-subclavian-artery-r` | organ | high | 33 054 | 701 |
+| `organ:bp-left-subclavian-artery-l` | organ | high | 33 339 | 866 |
+| `organ:bp-right-subclavian-artery-r` | organ | high | 33 054 | 849 |
 | `organ:bp-viscerocranium-l` | organ | high | 37 464 | 682 |
 | `bone:bp-intervertebral-symphysis` | bone | high | 2 852 | 664 |
-| `organ:bp-nervous-system` | organ | high | 30 676 | 575 |
-| `organ:bp-brain` | organ | high | 30 516 | 573 |
+| `organ:bp-nervous-system` | organ | high | 30 676 | 655 |
+| `organ:bp-brain` | organ | high | 30 516 | 652 |
 
 ## 15 structures fermées à winding inversé (volume signé négatif)
 

@@ -143,8 +143,9 @@ Sans cette classification, on corrigerait des anatomies correctes.
    Le scorecard passe de 684 à **943 structures S2**, G3 de 950 à **1 269**.
 2. ✅ **Faces dupliquées** : suppression à la source **et après chaque simplification**.
    Résultat : **521 → 0**.
-3. **Arêtes non-manifold** : diagnostic par structure, correction ou exclusion documentée.
-   État : **126 → 90** (source complète) ; cible 0.
+3. ✅ **Arêtes non-manifold** : séparation des feuillets par duplication de sommets
+   (`splitNonManifoldSheets`), géométrie et rendu inchangés (captures avant/après au SHA-256
+   identique). Résultat : **126 → 90 → 0**.
 4. **Soudure intra-structure** à 0,01 mm, puis recalcul des normales avec angle seuil.
 5. **Faces dégénérées** : déjà à 0, maintenir.
 6. **Composantes** : conserver les justifiées, souder les fragments d'une même structure.
@@ -178,7 +179,7 @@ Réalisé :
 3. ✅ **Chargement paresseux** conservé : le `high` d'une catégorie n'est téléchargé
    qu'à la sélection d'une structure.
 4. ✅ **Mesures** : triangles **5,07 M → 6,51 M** ; gzip **101,4 → 119,0 Mo** ;
-   étanches **1 324 → 1 346** ; bords **712 → 690** ; non-manifold **128 → 90** ;
+   étanches **1 324 → 1 346** ; bords **712 → 690** ; non-manifold **128 → 90** (puis 0 en P2) ;
    faces inversées **13 793 → 10 937**.
 
 **Sortie :** 0 structure plafonnée ; `high` = source ; **+1,44 M triangles récupérés**.
@@ -341,9 +342,9 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 |---|---:|---:|---:|
 | Structures au statut S3 | 0 | 5 | 2 039 |
 | Winding inversé | 0 | 0 | 0 |
-| Non-manifold | 124 | 0 | 0 |
+| Non-manifold | 0 | 0 | 0 |
 | Faces dupliquées | 0 | 0 | 0 |
-| Structures plafonnées | 24 | 0 | 0 |
+| Structures plafonnées | 0 | 0 | 0 |
 | Triangles `high` | 6,51 M | 6,51 M (source complète) | selon sources |
 | Densité médiane os | 52 tri/cm² | ≥ 80 | ≥ 150 |
 | Densité médiane muscle | 35 tri/cm² | ≥ 50 | ≥ 80 |

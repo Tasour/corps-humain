@@ -7,20 +7,21 @@ Référence : LOD `high`. 2040 structures, 256 sommets échantillonnés par dire
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
-| medium → high | 0,00 mm | 0,63 mm | 4,20 mm | 126,30 mm | 274 | 58 |
-| low → high | 0,41 mm | 2,79 mm | 17,39 mm | 126,30 mm | 920 | 323 |
+| medium → high | 0,00 mm | 0,64 mm | 4,37 mm | 127,00 mm | 276 | 59 |
+| low → high | 0,41 mm | 2,80 mm | 17,39 mm | 127,00 mm | 921 | 324 |
 
 ## 20 écarts medium → high les plus grands
 
 | Structure | Cat. | Tris high | Tris medium | Écart max (mm) | Écart moyen (mm) |
 |---|---|---:|---:|---:|---:|
-| `organ:bp-left-subclavian-artery-l` | organ | 33 339 | 13 800 | 126,30 | 5,60 |
-| `organ:bp-right-subclavian-artery-r` | organ | 33 054 | 13 924 | 125,25 | 4,85 |
+| `organ:bp-right-subclavian-artery-r` | organ | 33 054 | 13 884 | 126,99 | 4,76 |
+| `organ:bp-left-subclavian-artery-l` | organ | 33 339 | 13 784 | 124,46 | 5,35 |
 | `organ:bp-mediastinum` | organ | 24 004 | 6 116 | 116,47 | 5,55 |
 | `organ:bp-inferior-mediastinum` | organ | 21 976 | 5 057 | 38,52 | 1,30 |
 | `organ:bp-nerve-l` | organ | 5 454 | 1 677 | 19,66 | 0,78 |
 | `organ:bp-hepatic-portal-vein-r` | organ | 6 370 | 4 311 | 14,64 | 0,14 |
 | `organ:bp-nerve-r` | organ | 5 346 | 1 642 | 14,05 | 0,41 |
+| `organ:falx-cerebri` | organ | 14 722 | 2 686 | 12,35 | 0,24 |
 | `organ:bp-middle-mediastinum` | organ | 21 038 | 5 050 | 10,34 | 0,50 |
 | `bone:bp-thoracic-vertebra` | bone | 22 420 | 5 106 | 9,14 | 0,40 |
 | `organ:bp-superior-mesenteric-artery` | organ | 5 058 | 2 882 | 8,20 | 0,10 |
@@ -33,7 +34,6 @@ Référence : LOD `high`. 2040 structures, 256 sommets échantillonnés par dire
 | `bone:bp-neurocranium-l` | bone | 6 560 | 2 864 | 4,58 | 0,17 |
 | `organ:bp-telencephalon-l` | organ | 54 920 | 12 402 | 4,56 | 0,28 |
 | `muscle:flexor-digitorum-profundus-l` | muscle | 7 110 | 1 494 | 4,45 | 0,08 |
-| `muscle:flexor-digitorum-profundus-r` | muscle | 7 110 | 1 494 | 4,45 | 0,08 |
 
 ## Limites
 
