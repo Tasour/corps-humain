@@ -20,7 +20,8 @@
     "test:multi": "node tests/visual-multiangles.mjs",
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core",
     "test:waypoints": "node tests/waypoints.test.mjs",
-    "test:chasse": "node tests/chasse.test.mjs"
+    "test:chasse": "node tests/chasse.test.mjs",
+    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions"
   },
   "dependencies": {
     "three": "^0.187.0"

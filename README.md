@@ -133,7 +133,8 @@ feuille de détails mobile. Les **43 groupes** sont couverts par
 (52 mesures 3D : isolement exact, éclaté, mouvement, réinitialisation).
 Les **waypoints** sont vérifiés par `npm run test:waypoints` (7 contrôles) et la
 **chasse aux organes** par `npm run test:chasse` (7 contrôles : cibles existantes,
-catégories, géométrie non vide).
+catégories, géométrie non vide). `npm test` enchaîne les contrôles hors navigateur
+(groupes, waypoints, chasse, collisions).
 
 **Au clavier** : `Tab` atteint le canvas, les flèches tournent autour du corps,
 `+`/`-` zooment, `Entrée` sélectionne la structure au centre, `Échap` désélectionne
