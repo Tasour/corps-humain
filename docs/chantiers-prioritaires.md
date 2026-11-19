@@ -1,17 +1,18 @@
 # 15 chantiers prioritaires — atlas CORPS v2
 
-État : après refonte UX, picking exact, ombres, thèmes, waypoints et **30 tests 3D**.
+État : après refonte UX, picking exact, ombres, thèmes, waypoints, **30 tests 3D**,
+**19 contrôles d'accessibilité** et **43 groupes d'animation** mesurés.
 
 | # | Chantier | Objectif | ✅ Fait | Prochaine action |
 |---:|---|---|:---:|---|
 | 1 | **Fiabilité du picking et des interactions** | Clic sur la géométrie visible uniquement, instances masquées ignorées, peau, glisser/double-clic/tactile | ✅ | Tests occlusion profonde, gestures multi-touch suivants |
 | 2 | **Textures PBR photorealistes** | Remplacer les albedos procéduraux par des PBR scans (albedo/normal/roughness/AO) par tissu | ⬜ | Procedural en place ; chercher sources CC0/CC BY et pipeline KTX2 (crédit IA épuisé) |
-| 3 | **Audit qualité & tests visuels** | Un test par structure : normales, dégénérés, collisions, TA2 ; regression screenshots | ✅ | `npm run analyze:v2` + 28 tests ; ajouter captures visuelles automatiques |
-| 4 | **Groupes & cinématique complète** | Pivots réels, articulations, mouvements physiologiques pour tous les groupes | ⬜ | 9 groupes et animations de base ; étendre à ~40 groupes |
+| 3 | **Audit qualité & tests visuels** | Un test par structure : normales, dégénérés, collisions, TA2 ; regression screenshots | ✅ | `npm run analyze:v2` + 30 tests ; **manque de données identifié** : aucun œsophage dans le manifeste (trou entre pharynx et estomac) |
+| 4 | **Groupes & cinématique complète** | Pivots réels, articulations, mouvements physiologiques pour tous les groupes | ✅ | 43 groupes (8/8 données, 52/52 3D) ; pivots et axes par articulation, captures 4 orientations |
 | 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 039 structures, fiches multilingues | ⬜ | 3 waypoints génériques + 6 curés ; rédiger la suite |
 | 6 | **Performance & sobriété énergétique** | LOD streaming, WebGPU optionnel, budget thermique, occlusion culling | ✅ | LOD auto + BatchedMesh (3 appels) + WASM ; mesurer sur vrais mobiles |
 | 7 | **Fusion v1 + v2** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies/jeux/coupe | ⬜ | Deux pages coexistent ; unifier le state par ID TA2 |
-| 8 | **Accessibilité & responsive** | Clavier, lecteur d'écran, contraste AA clair/sombre, gestes mobiles | ✅ | 18 contrôles mesurés (`npm run test:a11y`) ; voir `docs/analyses/accessibilite-2026-11-19.md` |
+| 8 | **Accessibilité & responsive** | Clavier, lecteur d'écran, contraste AA clair/sombre, gestes mobiles | ✅ | 19 contrôles mesurés (`npm run test:a11y`) ; voir `docs/analyses/accessibilite-2026-11-19.md` |
 | 9 | **Intégrité données & licences** | Provenance par structure, attributions CC, citations TA2, CI | ✅ | Manifest sources + README + `public/models/README.md` |
 | 10 | **PWA hors ligne robuste** | Cache versionné, streaming chunks, reprise après échec, quota | ✅ | SW `corps-v23` + hors ligne vérifié |
 | 11 | **Système d'ombres réaliste** | Ombres douces, contact, auto-prise en charge du thème | ✅ | `BasicShadowMap` (r187) + sol récepteur ; ombres portées par les lots |
@@ -62,7 +63,7 @@ Détail et mesures : [`docs/analyses/accessibilite-2026-11-19.md`](analyses/acce
   focus ; cibles principales à 44 px ; barre d'animations en défilement horizontal.
 - **Mouvement réduit** : transitions neutralisées, rotations de caméra instantanées, tour
   continu désactivé, avec annonce explicite.
-- **Preuve** : `npm run test:a11y` → **18/18** ; `npm run test:v2` → **30/30**.
+- **Preuve** : `npm run test:a11y` → **19/19** ; `npm run test:v2` → **30/30**.
 
 ## Corrections livrées (chantiers 11-15)
 
@@ -91,6 +92,26 @@ Ordre restant : 2 → 4 → 5 → 7 → 8.
   reste visible à la rotation.
 - **30 tests** (`npm run test:v2`) couvrent tous ces points, desktop et mobile tactile.
 
+## Passe groupes et cinématique (19 novembre 2026)
+
+Détail et limites : [`docs/analyses/groupes-2026-11-19.md`](analyses/groupes-2026-11-19.md).
+
+- **43 groupes** (contre 9) : articulations (coude, poignet, genou, cheville, cou,
+  mâchoire, tronc), ceintures scapulaires, muscles (biceps, triceps, deltoïde, pectoral,
+  grand dorsal, quadriceps, ischio-jambiers, mollet, fessiers, abdominaux, trapèzes) et
+  organes (cœur, poumons, yeux, encéphale).
+- **Convention d'axes documentée** : X = flexion sagittale, Z = abduction/élévation
+  frontale avec signe opposé à gauche et à droite.
+- **Preuves** : `npm run test:groupes` → 8/8 (identifiants, appartenance au manifeste,
+  doublons, pivots dans l'enveloppe du corps) ; `npm run test:groupes3d` → 52/52
+  (isolement exact, éclaté, mouvement distinct, réinitialisation) ; 12 groupes ×
+  4 orientations capturés et relus.
+- **Interface** : section « Groupes anatomiques » repliable (43 pastilles) pour que la
+  liste des structures reste visible ; ouverte, elle défile sans pousser le panneau.
+- **Correction de l'outil de capture** : le cadrage ignorait le champ de vision réel
+  (38°) et la profondeur de l'objet — la mâchoire sortait du cadre. La distance est
+  maintenant calculée par `rayon / tan(fov/2) + demi-profondeur`, avec 15 % de marge.
+
 ## Ordre d'exécution recommandé (restant)
 
-2 → 4 → 5 → 7 → 8 (les chantiers 1, 3, 6, 9, 10, 11-15 sont achevés).
+2 → 5 → 7 (les chantiers 1, 3, 4, 6, 8, 9, 10, 11-15 sont achevés).

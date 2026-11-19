@@ -115,16 +115,21 @@ procédurales** (albedo tissu-spécifique, normal et roughness dérivées locale
 Son explorateur latéral
 permet de rechercher et de cadrer chacune des 2 039 structures, d'isoler/focaliser
 un item, et d'animer les groupes (éclaté, mouvements articulaires). Un accès rapide
-« bras gauche », « poumons », « œil droit » etc. est disponible.
+« bras gauche », « poumons », « œil droit » etc. est disponible, ainsi que
+**43 groupes anatomiques** (articulations, ceintures, muscles, organes) répartis
+dans une section repliable : chaque groupe a son pivot, son axe et son mouvement
+physiologique (flexion du coude, abduction de l'épaule, ouverture de la mâchoire…).
 
 Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
 vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
 AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 30 tests 3D**
 (`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
 peau, les groupes, les animations, les waypoints, le tour du monde, le LOD et le mobile.
-**18 contrôles d'accessibilité** (`npm run test:a11y`) mesurent les contrastes réels,
+**19 contrôles d'accessibilité** (`npm run test:a11y`) mesurent les contrastes réels,
 les noms accessibles, le focus visible, la navigation clavier du canvas et la
-feuille de détails mobile.
+feuille de détails mobile. Les **43 groupes** sont couverts par
+`npm run test:groupes` (8 contrôles de données) et `npm run test:groupes3d`
+(52 mesures 3D : isolement exact, éclaté, mouvement, réinitialisation).
 
 **Au clavier** : `Tab` atteint le canvas, les flèches tournent autour du corps,
 `+`/`-` zooment, `Entrée` sélectionne la structure au centre, `Échap` désélectionne

@@ -1,6 +1,6 @@
 # Accessibilité et responsive — atlas CORPS v2
 
-Date : 19 novembre 2026 · Page : `/v2.html` · Preuve : `npm run test:a11y` → **18/18**,
+Date : 19 novembre 2026 · Page : `/v2.html` · Preuve : `npm run test:a11y` → **19/19**,
 `npm run test:v2` → **30/30**. Captures : `docs/analyses/a11y/`.
 
 Ce document ne décrit pas des intentions mais des mesures : les contrastes sont calculés
@@ -71,6 +71,9 @@ par `Tab`.
 - **Débordement** : `scrollWidth ≤ innerWidth` à 390 px.
 - **Barre d'animations** : défilement horizontal sur une ligne au lieu d'un empilement qui
   recouvrait le corps.
+- **Groupes anatomiques** : section repliable (`<details>`) avec compteur ; elle s'ouvre
+  au clavier (`Entrée` sur le résumé), ses 43 pastilles mesurent 44 px et son ouverture
+  ne pousse plus la liste des structures hors de l'écran.
 - **Fiche** : les valeurs longues (nom latin) reviennent à la ligne au lieu d'être coupées.
 
 ## 6. Mouvement réduit

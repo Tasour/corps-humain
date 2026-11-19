@@ -83,6 +83,12 @@ await page.goto(`${BASE}/v2.html`);
 await page.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 240000 });
 await page.waitForTimeout(1200);
 
+/* Le cadrage doit tenir compte du vrai champ de vision (38°) et de la
+ * profondeur de l'objet : un simple `radius * 3.4` plaçait la caméra trop
+ * près, et la mâchoire sortait du cadre. */
+const FOV = (await page.evaluate(() => window.__v2.camera.fov)) * Math.PI / 180;
+const FIT_MARGIN = 1.15;
+
 const report = { generated: new Date().toISOString(), groups: [], errors };
 for (const group of groups) {
   if (ONLY && !ONLY.has(group.id)) continue;
@@ -105,7 +111,11 @@ for (const group of groups) {
     (max[2] - min[2]) / 2,
     0.05,
   );
-  const dist = radius * 3.4;
+  /* Distance minimale pour que la boîte entière tienne : le rayon est divisé
+   * par la tangente du demi-champ, puis on ajoute la demi-profondeur, car le
+   * point le plus proche est plus près que le centre. */
+  const halfDepth = (max[2] - min[2]) / 2;
+  const dist = (radius / Math.tan(FOV / 2) + halfDepth) * FIT_MARGIN;
 
   await page.evaluate((ids) => {
     const e = window.__v2;
@@ -138,10 +148,22 @@ for (const group of groups) {
     fs.writeFileSync(file, Buffer.from(dataUrl, "base64"));
     files.push(path.basename(file));
   }
-  report.groups.push({ id: group.id, label: group.label, kind: group.kind, count: ids.length, center, radius, files });
+  report.groups.push({ id: group.id, label: group.label, kind: group.kind, count: ids.length, center, radius, dist, files });
   console.log(`${group.id} (${group.label}) : ${ids.length} structures, 4 orientations`);
 }
 
-fs.writeFileSync(path.join(OUT, "index.json"), JSON.stringify(report, null, 2));
-console.log(`GROUPES ${report.groups.length} · SCREENS ${report.groups.length * ANGLES.length} · ERREURS ${errors.length ? errors.join(" | ") : "aucune"}`);
+/* Un run ciblé (SCREENS_ONLY) ne doit pas effacer les entrées des autres
+ * groupes : l'index reste le catalogue complet des captures. */
+let finalReport = report;
+if (ONLY) {
+  const indexPath = path.join(OUT, "index.json");
+  if (fs.existsSync(indexPath)) {
+    const previous = JSON.parse(fs.readFileSync(indexPath, "utf8"));
+    const merged = new Map(previous.groups.map((g) => [g.id, g]));
+    for (const g of report.groups) merged.set(g.id, g);
+    finalReport = { ...previous, generated: report.generated, groups: [...merged.values()], errors: report.errors };
+  }
+}
+fs.writeFileSync(path.join(OUT, "index.json"), JSON.stringify(finalReport, null, 2));
+console.log(`GROUPES ${finalReport.groups.length} · SCREENS ${report.groups.length * ANGLES.length} · ERREURS ${errors.length ? errors.join(" | ") : "aucune"}`);
 await browser.close();

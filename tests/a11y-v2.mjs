@@ -317,6 +317,35 @@ await check("mobile : cibles tactiles principales ≥ 44 px", async () => {
   assert.deepEqual(small, [], `cibles trop petites : ${small.join(" | ")}`);
 });
 
+await check("mobile : section des groupes repliable, cibles 44 px", async () => {
+  /* Le tiroir doit être ouvert : replié, la section n'a pas de boîte. */
+  await mp.click("#mobile-toggle");
+  await mp.waitForTimeout(150);
+  const summary = mp.locator("#groups-details > summary");
+  assert.equal(await mp.evaluate(() => document.getElementById("groups-details").open), false,
+    "la section devrait être repliée par défaut");
+  await summary.focus();
+  await mp.keyboard.press("Enter");
+  await mp.waitForTimeout(150);
+  const d = await mp.evaluate(() => {
+    const g = document.getElementById("groups");
+    const small = [...g.querySelectorAll("button")]
+      .filter((b) => b.getClientRects().length && b.getBoundingClientRect().height < 44)
+      .map((b) => `${b.textContent} → ${b.getBoundingClientRect().height.toFixed(1)}px`);
+    return {
+      open: document.getElementById("groups-details").open,
+      chips: g.querySelectorAll("button").length,
+      small,
+      count: document.getElementById("groups-count").textContent,
+    };
+  });
+  assert.equal(d.open, true, "la section ne s'ouvre pas au clavier");
+  assert.ok(d.chips >= 40, `${d.chips} pastilles`);
+  assert.equal(d.count, String(d.chips), `compteur « ${d.count} » ≠ ${d.chips}`);
+  assert.deepEqual(d.small, [], `pastilles trop petites : ${d.small.join(" | ")}`);
+  await mp.keyboard.press("Enter"); // referme
+});
+
 await check("mobile : aucune erreur console", async () => {
   assert.deepEqual(mobileErrors, []);
 });

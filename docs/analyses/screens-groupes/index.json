@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-18T15:08:19.456Z",
+  "generated": "2026-11-19T00:32:43.121Z",
   "groups": [
     {
       "id": "bloc-organes",
@@ -12,6 +12,7 @@
         -0.000936649739742279
       ],
       "radius": 0.8474187478423119,
+      "dist": 2.9560467052338266,
       "files": [
         "bloc-organes-face.jpg",
         "bloc-organes-dos.jpg",
@@ -30,6 +31,7 @@
         0.0031595975160598755
       ],
       "radius": 0.8505628986749798,
+      "dist": 2.995159776036128,
       "files": [
         "bloc-muscles-face.jpg",
         "bloc-muscles-dos.jpg",
@@ -48,6 +50,7 @@
         0.009653501212596893
       ],
       "radius": 0.8530148277059197,
+      "dist": 2.9957378580101452,
       "files": [
         "bloc-squelette-face.jpg",
         "bloc-squelette-dos.jpg",
@@ -66,6 +69,7 @@
         0.01198149099946022
       ],
       "radius": 0.2239149808883667,
+      "dist": 0.8587864577853203,
       "files": [
         "organes-et-syst-mes-appareil-respiratoire-face.jpg",
         "organes-et-syst-mes-appareil-respiratoire-dos.jpg",
@@ -84,6 +88,7 @@
         0.005115095525979996
       ],
       "radius": 0.6378254443407059,
+      "dist": 2.24313441570895,
       "files": [
         "organes-et-syst-mes-organes-lympho-des-face.jpg",
         "organes-et-syst-mes-organes-lympho-des-dos.jpg",
@@ -102,6 +107,7 @@
         -0.0032238587737083435
       ],
       "radius": 0.8267987594008446,
+      "dist": 2.883813383687409,
       "files": [
         "organes-et-syst-mes-r-seau-art-riel-face.jpg",
         "organes-et-syst-mes-r-seau-art-riel-dos.jpg",
@@ -120,6 +126,7 @@
         -0.004547648131847382
       ],
       "radius": 0.7129897736012936,
+      "dist": 2.502622302945278,
       "files": [
         "organes-et-syst-mes-r-seau-veineux-face.jpg",
         "organes-et-syst-mes-r-seau-veineux-dos.jpg",
@@ -138,6 +145,7 @@
         0.024772075936198235
       ],
       "radius": 0.20392924547195435,
+      "dist": 0.7459866529173698,
       "files": [
         "organes-et-syst-mes-syst-me-cardiovasculaire-face.jpg",
         "organes-et-syst-mes-syst-me-cardiovasculaire-dos.jpg",
@@ -156,6 +164,7 @@
         -0.0009806491434574127
       ],
       "radius": 0.42549049854278564,
+      "dist": 1.5468222030229937,
       "files": [
         "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens-face.jpg",
         "organes-et-syst-mes-syst-me-nerveux-et-organes-des-sens-dos.jpg",
@@ -174,6 +183,7 @@
         0.06852749921381474
       ],
       "radius": 0.39027947187423706,
+      "dist": 1.3249533931113866,
       "files": [
         "organes-et-syst-mes-syst-me-t-gumentaire-face.jpg",
         "organes-et-syst-mes-syst-me-t-gumentaire-dos.jpg",
@@ -192,6 +202,7 @@
         0.009699273854494095
       ],
       "radius": 0.44653093814849854,
+      "dist": 1.6045030951950026,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-dos.jpg",
@@ -210,6 +221,7 @@
         0.0031595975160598755
       ],
       "radius": 0.8505628986749798,
+      "dist": 2.995159776036128,
       "files": [
         "syst-me-musculaire-musculature-face.jpg",
         "syst-me-musculaire-musculature-dos.jpg",
@@ -228,6 +240,7 @@
         0.009653501212596893
       ],
       "radius": 0.8530148277059197,
+      "dist": 2.9957378580101452,
       "files": [
         "syst-me-squelettique-squelette-face.jpg",
         "syst-me-squelettique-squelette-dos.jpg",
@@ -246,6 +259,7 @@
         0.00503428652882576
       ],
       "radius": 0.39492666721343994,
+      "dist": 1.4267882220387373,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-dos.jpg",
@@ -264,6 +278,7 @@
         0.00503428652882576
       ],
       "radius": 0.38639214634895325,
+      "dist": 1.3982842664587847,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-digestif-dos.jpg",
@@ -282,6 +297,7 @@
         0.02034665085375309
       ],
       "radius": 0.19093549251556396,
+      "dist": 0.7110890282717898,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-appareil-urinaire-dos.jpg",
@@ -300,6 +316,7 @@
         0.043543503677938133
       ],
       "radius": 0.1602429747581482,
+      "dist": 0.5863858293355242,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-structures-p-riton-ales-dos.jpg",
@@ -318,6 +335,7 @@
         0.0035832831636071205
       ],
       "radius": 0.05,
+      "dist": 0.1859008152427953,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-abdomen-tronc-dos.jpg",
@@ -336,6 +354,7 @@
         0.0309531819075346
       ],
       "radius": 0.07548227347433567,
+      "dist": 0.33890352014573294,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-appareils-g-nitaux-dos.jpg",
@@ -354,6 +373,7 @@
         0.0010081660002470016
       ],
       "radius": 0.24970203638076782,
+      "dist": 0.875389072863726,
       "files": [
         "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines-face.jpg",
         "organes-et-syst-mes-syst-mes-visc-raux-glandes-endocrines-dos.jpg",
@@ -372,6 +392,7 @@
         -0.031148800626397133
       ],
       "radius": 0.28481754660606384,
+      "dist": 1.0451531565764993,
       "files": [
         "ui-arm-l-face.jpg",
         "ui-arm-l-dos.jpg",
@@ -390,6 +411,7 @@
         -0.031148800626397133
       ],
       "radius": 0.28481754660606384,
+      "dist": 1.0451531565764993,
       "files": [
         "ui-arm-r-face.jpg",
         "ui-arm-r-dos.jpg",
@@ -408,6 +430,7 @@
         -0.016828901134431362
       ],
       "radius": 0.1277197301387787,
+      "dist": 0.4766568405847933,
       "files": [
         "ui-forearm-l-face.jpg",
         "ui-forearm-l-dos.jpg",
@@ -426,6 +449,7 @@
         -0.016828901134431362
       ],
       "radius": 0.1277197301387787,
+      "dist": 0.4766568405847933,
       "files": [
         "ui-forearm-r-face.jpg",
         "ui-forearm-r-dos.jpg",
@@ -444,6 +468,7 @@
         -0.01535750925540924
       ],
       "radius": 0.47836462408304214,
+      "dist": 1.6798025740631315,
       "files": [
         "ui-leg-l-face.jpg",
         "ui-leg-l-dos.jpg",
@@ -462,6 +487,7 @@
         -0.01535750925540924
       ],
       "radius": 0.47836462408304214,
+      "dist": 1.6798025740631315,
       "files": [
         "ui-leg-r-face.jpg",
         "ui-leg-r-dos.jpg",
@@ -480,6 +506,7 @@
         0.009615585207939148
       ],
       "radius": 0.13201820850372314,
+      "dist": 0.5477074891611211,
       "files": [
         "ui-lungs-face.jpg",
         "ui-lungs-dos.jpg",
@@ -498,11 +525,31 @@
         0.05270978529006243
       ],
       "radius": 0.05,
+      "dist": 0.19204209227290567,
       "files": [
         "ui-eye-r-face.jpg",
         "ui-eye-r-dos.jpg",
         "ui-eye-r-profil-gauche.jpg",
         "ui-eye-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-eye-l",
+      "label": "Œil gauche et muscles",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        0.02832472138106823,
+        1.5940386652946472,
+        0.05270978529006243
+      ],
+      "radius": 0.05,
+      "dist": 0.19204209227290567,
+      "files": [
+        "ui-eye-l-face.jpg",
+        "ui-eye-l-dos.jpg",
+        "ui-eye-l-profil-gauche.jpg",
+        "ui-eye-l-profil-droit.jpg"
       ]
     },
     {
@@ -516,11 +563,639 @@
         0.024772075936198235
       ],
       "radius": 0.05955914780497551,
+      "dist": 0.2638132636534748,
       "files": [
         "ui-heart-face.jpg",
         "ui-heart-dos.jpg",
         "ui-heart-profil-gauche.jpg",
         "ui-heart-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-elbow-l",
+      "label": "Coude gauche",
+      "kind": "groupe-ui",
+      "count": 10,
+      "center": [
+        0.2102588415145874,
+        1.1317553222179413,
+        -0.02950632106512785
+      ],
+      "radius": 0.27617505192756653,
+      "dist": 0.9870532679511358,
+      "files": [
+        "ui-elbow-l-face.jpg",
+        "ui-elbow-l-dos.jpg",
+        "ui-elbow-l-profil-gauche.jpg",
+        "ui-elbow-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-elbow-r",
+      "label": "Coude droit",
+      "kind": "groupe-ui",
+      "count": 10,
+      "center": [
+        -0.2102588638663292,
+        1.1317555010318756,
+        -0.029506324790418148
+      ],
+      "radius": 0.27617523074150085,
+      "dist": 0.9870538694455988,
+      "files": [
+        "ui-elbow-r-face.jpg",
+        "ui-elbow-r-dos.jpg",
+        "ui-elbow-r-profil-gauche.jpg",
+        "ui-elbow-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-wrist-l",
+      "label": "Poignet gauche",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        0.2459520846605301,
+        0.9833000004291534,
+        -0.016828901134431362
+      ],
+      "radius": 0.1277197301387787,
+      "dist": 0.4766568405847933,
+      "files": [
+        "ui-wrist-l-face.jpg",
+        "ui-wrist-l-dos.jpg",
+        "ui-wrist-l-profil-gauche.jpg",
+        "ui-wrist-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-wrist-r",
+      "label": "Poignet droit",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        -0.2459520697593689,
+        0.9833000004291534,
+        -0.016828901134431362
+      ],
+      "radius": 0.1277197301387787,
+      "dist": 0.4766568405847933,
+      "files": [
+        "ui-wrist-r-face.jpg",
+        "ui-wrist-r-dos.jpg",
+        "ui-wrist-r-profil-gauche.jpg",
+        "ui-wrist-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-knee-l",
+      "label": "Genou gauche",
+      "kind": "groupe-ui",
+      "count": 12,
+      "center": [
+        0.08699223026633263,
+        0.48550891131162643,
+        -0.008174652233719826
+      ],
+      "radius": 0.4302979186177254,
+      "dist": 1.515838322175754,
+      "files": [
+        "ui-knee-l-face.jpg",
+        "ui-knee-l-dos.jpg",
+        "ui-knee-l-profil-gauche.jpg",
+        "ui-knee-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-knee-r",
+      "label": "Genou droit",
+      "kind": "groupe-ui",
+      "count": 12,
+      "center": [
+        -0.08699219208210707,
+        0.48550885170698166,
+        -0.008174659684300423
+      ],
+      "radius": 0.4302978590130806,
+      "dist": 1.5158381059692925,
+      "files": [
+        "ui-knee-r-face.jpg",
+        "ui-knee-r-dos.jpg",
+        "ui-knee-r-profil-gauche.jpg",
+        "ui-knee-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-ankle-l",
+      "label": "Cheville gauche",
+      "kind": "groupe-ui",
+      "count": 7,
+      "center": [
+        0.0846802107989788,
+        0.2587887574918568,
+        -0.050679376581683755
+      ],
+      "radius": 0.24733937485143542,
+      "dist": 0.8901788062091384,
+      "files": [
+        "ui-ankle-l-face.jpg",
+        "ui-ankle-l-dos.jpg",
+        "ui-ankle-l-profil-gauche.jpg",
+        "ui-ankle-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-ankle-r",
+      "label": "Cheville droite",
+      "kind": "groupe-ui",
+      "count": 7,
+      "center": [
+        -0.08468018844723701,
+        0.25878869788721204,
+        -0.05067935795523226
+      ],
+      "radius": 0.24733931524679065,
+      "dist": 0.8901785857185928,
+      "files": [
+        "ui-ankle-r-face.jpg",
+        "ui-ankle-r-dos.jpg",
+        "ui-ankle-r-profil-gauche.jpg",
+        "ui-ankle-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-neck",
+      "label": "Cou",
+      "kind": "groupe-ui",
+      "count": 6,
+      "center": [
+        2.2351741790771484e-8,
+        1.4785749316215515,
+        -0.009269271045923233
+      ],
+      "radius": 0.096859872341156,
+      "dist": 0.4081873545580839,
+      "files": [
+        "ui-neck-face.jpg",
+        "ui-neck-dos.jpg",
+        "ui-neck-profil-gauche.jpg",
+        "ui-neck-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-jaw",
+      "label": "Mâchoire",
+      "kind": "groupe-ui",
+      "count": 7,
+      "center": [
+        1.4901161193847656e-8,
+        1.5791423320770264,
+        0.016589604318141937
+      ],
+      "radius": 0.08284568786621094,
+      "dist": 0.35387985933208804,
+      "files": [
+        "ui-jaw-face.jpg",
+        "ui-jaw-dos.jpg",
+        "ui-jaw-profil-gauche.jpg",
+        "ui-jaw-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-spine",
+      "label": "Tronc et colonne",
+      "kind": "groupe-ui",
+      "count": 14,
+      "center": [
+        0,
+        1.1480571031570435,
+        0.012639988213777542
+      ],
+      "radius": 0.30695414543151855,
+      "dist": 1.154735826223405,
+      "files": [
+        "ui-spine-face.jpg",
+        "ui-spine-dos.jpg",
+        "ui-spine-profil-gauche.jpg",
+        "ui-spine-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-shoulder-girdle-l",
+      "label": "Ceinture scapulaire gauche",
+      "kind": "groupe-ui",
+      "count": 4,
+      "center": [
+        0.08604180812835693,
+        1.3297526836395264,
+        -0.03981112502515316
+      ],
+      "radius": 0.20967352390289307,
+      "dist": 0.804145628289171,
+      "files": [
+        "ui-shoulder-girdle-l-face.jpg",
+        "ui-shoulder-girdle-l-dos.jpg",
+        "ui-shoulder-girdle-l-profil-gauche.jpg",
+        "ui-shoulder-girdle-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-shoulder-girdle-r",
+      "label": "Ceinture scapulaire droite",
+      "kind": "groupe-ui",
+      "count": 4,
+      "center": [
+        -0.08604180067777634,
+        1.3297526836395264,
+        -0.03981112502515316
+      ],
+      "radius": 0.20967352390289307,
+      "dist": 0.804145628289171,
+      "files": [
+        "ui-shoulder-girdle-r-face.jpg",
+        "ui-shoulder-girdle-r-dos.jpg",
+        "ui-shoulder-girdle-r-profil-gauche.jpg",
+        "ui-shoulder-girdle-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-biceps-l",
+      "label": "Biceps gauche",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        0.19053935259580612,
+        1.2293712496757507,
+        -0.016920275054872036
+      ],
+      "radius": 0.17855912446975708,
+      "dist": 0.625490872776387,
+      "files": [
+        "ui-biceps-l-face.jpg",
+        "ui-biceps-l-dos.jpg",
+        "ui-biceps-l-profil-gauche.jpg",
+        "ui-biceps-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-biceps-r",
+      "label": "Biceps droit",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        -0.1905393898487091,
+        1.2293716073036194,
+        -0.01692027971148491
+      ],
+      "radius": 0.17855912446975708,
+      "dist": 0.6254908759894499,
+      "files": [
+        "ui-biceps-r-face.jpg",
+        "ui-biceps-r-dos.jpg",
+        "ui-biceps-r-profil-gauche.jpg",
+        "ui-biceps-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-triceps-l",
+      "label": "Triceps gauche",
+      "kind": "groupe-ui",
+      "count": 4,
+      "center": [
+        0.18439070880413055,
+        1.190277874469757,
+        -0.05819925479590893
+      ],
+      "radius": 0.17507869005203247,
+      "dist": 0.6164104672305036,
+      "files": [
+        "ui-triceps-l-face.jpg",
+        "ui-triceps-l-dos.jpg",
+        "ui-triceps-l-profil-gauche.jpg",
+        "ui-triceps-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-triceps-r",
+      "label": "Triceps droit",
+      "kind": "groupe-ui",
+      "count": 4,
+      "center": [
+        -0.18439075350761414,
+        1.1902780532836914,
+        -0.05819926131516695
+      ],
+      "radius": 0.17507874965667725,
+      "dist": 0.6164106673716511,
+      "files": [
+        "ui-triceps-r-face.jpg",
+        "ui-triceps-r-dos.jpg",
+        "ui-triceps-r-profil-gauche.jpg",
+        "ui-triceps-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-deltoid-l",
+      "label": "Deltoïde gauche",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        0.15968863666057587,
+        1.337234616279602,
+        -0.04135377146303654
+      ],
+      "radius": 0.08647274971008301,
+      "dist": 0.3597890852990231,
+      "files": [
+        "ui-deltoid-l-face.jpg",
+        "ui-deltoid-l-dos.jpg",
+        "ui-deltoid-l-profil-gauche.jpg",
+        "ui-deltoid-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-deltoid-r",
+      "label": "Deltoïde droit",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        -0.15968864783644676,
+        1.337234616279602,
+        -0.041353777050971985
+      ],
+      "radius": 0.08647274971008301,
+      "dist": 0.35978907887289735,
+      "files": [
+        "ui-deltoid-r-face.jpg",
+        "ui-deltoid-r-dos.jpg",
+        "ui-deltoid-r-profil-gauche.jpg",
+        "ui-deltoid-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-pectoral-l",
+      "label": "Pectoral gauche",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        0.10171033069491386,
+        1.2906203269958496,
+        0.05474884994328022
+      ],
+      "radius": 0.11878800392150879,
+      "dist": 0.4790196434176545,
+      "files": [
+        "ui-pectoral-l-face.jpg",
+        "ui-pectoral-l-dos.jpg",
+        "ui-pectoral-l-profil-gauche.jpg",
+        "ui-pectoral-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-pectoral-r",
+      "label": "Pectoral droit",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        -0.10171030834317207,
+        1.2906203866004944,
+        0.054748935624957085
+      ],
+      "radius": 0.11878794431686401,
+      "dist": 0.47901939722260584,
+      "files": [
+        "ui-pectoral-r-face.jpg",
+        "ui-pectoral-r-dos.jpg",
+        "ui-pectoral-r-profil-gauche.jpg",
+        "ui-pectoral-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-latissimus-l",
+      "label": "Grand dorsal gauche",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        0.12329785153269768,
+        1.1680569648742676,
+        -0.06061177246738225
+      ],
+      "radius": 0.2365473508834839,
+      "dist": 0.8582863407086505,
+      "files": [
+        "ui-latissimus-l-face.jpg",
+        "ui-latissimus-l-dos.jpg",
+        "ui-latissimus-l-profil-gauche.jpg",
+        "ui-latissimus-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-latissimus-r",
+      "label": "Grand dorsal droit",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        -0.12329783663153648,
+        1.1680569648742676,
+        -0.06061177246738225
+      ],
+      "radius": 0.2365473508834839,
+      "dist": 0.8582863407086505,
+      "files": [
+        "ui-latissimus-r-face.jpg",
+        "ui-latissimus-r-dos.jpg",
+        "ui-latissimus-r-profil-gauche.jpg",
+        "ui-latissimus-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-quadriceps-l",
+      "label": "Quadriceps gauche",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        0.09630069322884083,
+        0.6431428343057632,
+        0.01226712018251419
+      ],
+      "radius": 0.27266399562358856,
+      "dist": 0.9658578069692572,
+      "files": [
+        "ui-quadriceps-l-face.jpg",
+        "ui-quadriceps-l-dos.jpg",
+        "ui-quadriceps-l-profil-gauche.jpg",
+        "ui-quadriceps-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-quadriceps-r",
+      "label": "Quadriceps droit",
+      "kind": "groupe-ui",
+      "count": 5,
+      "center": [
+        -0.0963006541132927,
+        0.6431428492069244,
+        0.01226712390780449
+      ],
+      "radius": 0.2726638615131378,
+      "dist": 0.9658573290728859,
+      "files": [
+        "ui-quadriceps-r-face.jpg",
+        "ui-quadriceps-r-dos.jpg",
+        "ui-quadriceps-r-profil-gauche.jpg",
+        "ui-quadriceps-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-hamstrings-l",
+      "label": "Ischio-jambiers gauches",
+      "kind": "groupe-ui",
+      "count": 4,
+      "center": [
+        0.07164527103304863,
+        0.5858204215764999,
+        -0.04534500278532505
+      ],
+      "radius": 0.23435671627521515,
+      "dist": 0.818679662129211,
+      "files": [
+        "ui-hamstrings-l-face.jpg",
+        "ui-hamstrings-l-dos.jpg",
+        "ui-hamstrings-l-profil-gauche.jpg",
+        "ui-hamstrings-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-hamstrings-r",
+      "label": "Ischio-jambiers droits",
+      "kind": "groupe-ui",
+      "count": 4,
+      "center": [
+        -0.07164523284882307,
+        0.5858204662799835,
+        -0.045345013961195946
+      ],
+      "radius": 0.23435655236244202,
+      "dist": 0.8186790932659441,
+      "files": [
+        "ui-hamstrings-r-face.jpg",
+        "ui-hamstrings-r-dos.jpg",
+        "ui-hamstrings-r-profil-gauche.jpg",
+        "ui-hamstrings-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-calf-l",
+      "label": "Mollet gauche",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        0.0846802107989788,
+        0.31994208693504333,
+        -0.06225274968892336
+      ],
+      "radius": 0.1861860454082489,
+      "dist": 0.6726269378745681,
+      "files": [
+        "ui-calf-l-face.jpg",
+        "ui-calf-l-dos.jpg",
+        "ui-calf-l-profil-gauche.jpg",
+        "ui-calf-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-calf-r",
+      "label": "Mollet droit",
+      "kind": "groupe-ui",
+      "count": 3,
+      "center": [
+        -0.08468018844723701,
+        0.31994209438562393,
+        -0.06225274223834276
+      ],
+      "radius": 0.18618591874837875,
+      "dist": 0.6726264805778788,
+      "files": [
+        "ui-calf-r-face.jpg",
+        "ui-calf-r-dos.jpg",
+        "ui-calf-r-profil-gauche.jpg",
+        "ui-calf-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-glutes-l",
+      "label": "Fessiers gauches",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        0.07559307292103767,
+        0.8534400761127472,
+        -0.04500983562320471
+      ],
+      "radius": 0.14372476935386658,
+      "dist": 0.5569727421833981,
+      "files": [
+        "ui-glutes-l-face.jpg",
+        "ui-glutes-l-dos.jpg",
+        "ui-glutes-l-profil-gauche.jpg",
+        "ui-glutes-l-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-glutes-r",
+      "label": "Fessiers droits",
+      "kind": "groupe-ui",
+      "count": 2,
+      "center": [
+        -0.07559311389923096,
+        0.8534398674964905,
+        -0.045009841211140156
+      ],
+      "radius": 0.14372467994689941,
+      "dist": 0.5569724285839152,
+      "files": [
+        "ui-glutes-r-face.jpg",
+        "ui-glutes-r-dos.jpg",
+        "ui-glutes-r-profil-gauche.jpg",
+        "ui-glutes-r-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-abdominals",
+      "label": "Abdominaux",
+      "kind": "groupe-ui",
+      "count": 8,
+      "center": [
+        0,
+        1.0606833696365356,
+        0.030975881963968277
+      ],
+      "radius": 0.21958041191101074,
+      "dist": 0.8418350390002671,
+      "files": [
+        "ui-abdominals-face.jpg",
+        "ui-abdominals-dos.jpg",
+        "ui-abdominals-profil-gauche.jpg",
+        "ui-abdominals-profil-droit.jpg"
+      ]
+    },
+    {
+      "id": "ui-trapezius",
+      "label": "Trapèzes",
+      "kind": "groupe-ui",
+      "count": 8,
+      "center": [
+        0,
+        1.3474085927009583,
+        -0.06487707843189128
+      ],
+      "radius": 0.22732943296432495,
+      "dist": 0.8342877374956076,
+      "files": [
+        "ui-trapezius-face.jpg",
+        "ui-trapezius-dos.jpg",
+        "ui-trapezius-profil-gauche.jpg",
+        "ui-trapezius-profil-droit.jpg"
       ]
     }
   ],

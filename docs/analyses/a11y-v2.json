@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-19T00:01:44.412Z",
-  "passed": 18,
-  "total": 18,
+  "generated": "2026-11-19T00:31:48.036Z",
+  "passed": 19,
+  "total": 19,
   "results": [
     {
       "name": "langue et titre du document",
@@ -65,6 +65,10 @@
     },
     {
       "name": "mobile : cibles tactiles principales ≥ 44 px",
+      "ok": true
+    },
+    {
+      "name": "mobile : section des groupes repliable, cibles 44 px",
       "ok": true
     },
     {

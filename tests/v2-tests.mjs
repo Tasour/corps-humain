@@ -151,6 +151,9 @@ await check("focus peau reste masquée", async () => {
 });
 
 /* ---------- groupes ---------- */
+/* La section des 43 groupes est repliée par défaut (pour laisser la liste
+ * des structures visible) : on l'ouvre comme le ferait l'utilisateur. */
+await page.evaluate(() => { document.getElementById("groups-details").open = true; });
 await check("groupe bras gauche : 7 membres, catégories réactivées", async () => {
   await page.locator("#groups button", { hasText: "Membre supérieur gauche" }).click();
   await page.waitForTimeout(600);
@@ -357,8 +360,16 @@ await check("mobile : sidebar repliable et focus", async () => {
   assert.equal(hidden, "none");
   await mp.click("#mobile-toggle", { force: true });
   await mp.waitForTimeout(150);
-  const open = await mp.evaluate(() => getComputedStyle(document.getElementById("sidebar")).display);
-  assert.equal(open, "flex");
+  /* Le tiroir est un conteneur défilant (display:block) et non plus une
+   * colonne flex : on vérifie l'état réel, pas une valeur de mise en page. */
+  const open = await mp.evaluate(() => ({
+    display: getComputedStyle(document.getElementById("sidebar")).display,
+    open: document.getElementById("sidebar").classList.contains("open"),
+    expanded: document.getElementById("mobile-toggle").getAttribute("aria-expanded"),
+  }));
+  assert.notEqual(open.display, "none");
+  assert.equal(open.open, true);
+  assert.equal(open.expanded, "true");
   await mp.touchscreen.tap(195, 420);
   await mp.waitForTimeout(300);
   assert.deepEqual(errors.filter((e) => e.startsWith("mobile:")), []);
