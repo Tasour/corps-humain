@@ -405,6 +405,18 @@ function compact(indices, positions, normals) {
   return { positions: p, normals: no, indices: idx, vertexCount: n, indexCount: idx.length };
 }
 
+/* Seuil de dégénérescence, exprimé en AIRE (m²), identique à celui de
+ * `scripts/audit-qualite-3d.mjs` (1e-12 m² = 1e-6 mm²).
+ *
+ * Historique : le seuil était `cross² >= 1e-16`, soit une aire de 0,005 mm².
+ * Sur les maillages Z-Anatomy tessellés à ~0,1 mm, 95 % des triangles d'un
+ * petit objet (sinus caverneux) tombaient sous ce seuil et étaient supprimés
+ * *après* simplification : le LOD `high` perdait 9 216 triangles sur 9 728,
+ * ce qui rendait les LOD non monotones (`medium` > `high`). Un seuil d'aire
+ * absolu doit rester très en dessous de la taille caractéristique des
+ * triangles de la source. */
+const DEGENERATE_AREA_M2 = 1e-12;
+
 function removeDegenerate(geometry) {
   const kept = [];
   const { positions, indices } = geometry;
@@ -413,7 +425,8 @@ function removeDegenerate(geometry) {
     const ux = positions[b] - positions[a], uy = positions[b + 1] - positions[a + 1], uz = positions[b + 2] - positions[a + 2];
     const vx = positions[c] - positions[a], vy = positions[c + 1] - positions[a + 1], vz = positions[c + 2] - positions[a + 2];
     const cx = uy * vz - uz * vy, cy = uz * vx - ux * vz, cz = ux * vy - uy * vx;
-    if (cx * cx + cy * cy + cz * cz >= 1e-16) kept.push(indices[i], indices[i + 1], indices[i + 2]);
+    const cross = Math.sqrt(cx * cx + cy * cy + cz * cz);
+    if (cross / 2 >= DEGENERATE_AREA_M2) kept.push(indices[i], indices[i + 1], indices[i + 2]);
   }
   if (kept.length === indices.length) return geometry;
   if (kept.length < 3) return geometry;
@@ -504,19 +517,30 @@ for (const s of structures) {
     bounds: geometry.bounds,
     lod: {},
   };
-  for (const [lodName, cfg] of Object.entries(LOD)) {
-    const lodGeometry = makeLod(geometry, cfg.target);
-    entry.lod[lodName] = writeGeometry(chunks[s.category][lodName], lodGeometry);
-  }
+  /* Chaîne de LOD du plus fin au plus grossier : `high` depuis la source,
+   * puis `medium` depuis `high`, puis `low` depuis `medium`. Simplifier chaque
+   * niveau depuis la source indépendamment laissait des LOD non monotones
+   * (`low` > `medium`) quand la simplification s'arrêtait avant la cible :
+   * dériver chaque niveau du précédent garantit `low ≤ medium ≤ high`. */
+  const cleaned = removeDegenerate(geometry);
+  const highGeometry = makeLod(cleaned, LOD.high.target);
+  const mediumGeometry = makeLod(highGeometry, LOD.medium.target);
+  const lowGeometry = makeLod(mediumGeometry, LOD.low.target);
+  entry.lod.low = writeGeometry(chunks[s.category].low, lowGeometry);
+  entry.lod.medium = writeGeometry(chunks[s.category].medium, mediumGeometry);
+  entry.lod.high = writeGeometry(chunks[s.category].high, highGeometry);
   manifest.structures.push(entry);
 }
 
 /* La peau, commune à toutes les vues. */
 manifest.skin = { lod: {} };
 const skin = readCurrentSkin();
-for (const [lodName, cfg] of Object.entries(LOD)) {
-  manifest.skin.lod[lodName] = writeGeometry(chunks.skin[lodName], makeLod(skin, cfg.target));
-}
+const skinHigh = makeLod(skin, LOD.high.target);
+const skinMedium = makeLod(skinHigh, LOD.medium.target);
+const skinLow = makeLod(skinMedium, LOD.low.target);
+manifest.skin.lod.low = writeGeometry(chunks.skin.low, skinLow);
+manifest.skin.lod.medium = writeGeometry(chunks.skin.medium, skinMedium);
+manifest.skin.lod.high = writeGeometry(chunks.skin.high, skinHigh);
 
 fs.mkdirSync(OUT, { recursive: true });
 let totalRaw = 0, totalGzip = 0;

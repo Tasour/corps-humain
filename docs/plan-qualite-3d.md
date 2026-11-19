@@ -64,24 +64,28 @@ Livré :
    **40 captures, 0 débordement** sur les 5 pilotes.
 3. **Scorecard** — `scripts/scorecard-qualite-3d.mjs`, `npm run scorecard:3d` : statut S0–S4,
    portes G0/G2/G3, bloqueurs par structure, classification provisoire ouvert/fermé.
-   Résultat : **1 399 S1, 640 S2, 0 S3** ; G0 1 979, G2 1 324, G3 1 017.
+   Résultat après reconstruction : **1 355 S1, 684 S2, 0 S3** ; G0 1 979, G2 1 515, G3 950.
 4. **Porte CI** — `npm run audit:3d:baseline` puis `npm run audit:3d:check` : comparaison
    **structure par structure** à `docs/analyses/qualite-3d-baseline.json`, pas seulement aux
    totaux.
 5. **Écart de silhouette** — `scripts/hausdorff-v2.mjs`, `npm run hausdorff:3d` : Hausdorff
-   échantillonné LOD contre LOD avec BVH de triangles. `medium` : médiane 0 mm, 280 > 0,5 mm,
-   59 > 2 mm ; `low` : médiane 0,40 mm, 914 > 0,5 mm, 309 > 2 mm.
+   échantillonné LOD contre LOD avec BVH de triangles. `medium` : médiane 0 mm, 271 > 0,5 mm,
+   47 > 2 mm ; `low` : médiane 0,39 mm, 916 > 0,5 mm, 323 > 2 mm.
+6. **Réconciliation dataset / pipeline** (jour 2) : le défaut n'était pas un manifeste périmé
+   mais un seuil de dégénérescence absolu (`cross² ≥ 1e-16` ≈ 0,005 mm²) qui supprimait
+   jusqu'à 95 % des triangles d'un petit objet. Corrigé (aire ≥ 1e-12 m², chaîne LOD
+   `high` → `medium` → `low`), puis dataset reconstruit. `organ:cavernous-sinus-r` :
+   **512 → 9 728 tris** ; LOD non monotones **16 → 0** ; étanches **1 107 → 1 341**.
 
 **Constats P0 qui commandent la suite :**
 
 - `organ:bp-heart` ne contient **pas le myocarde** (11 pièces : valves, sinus coronaire, veines).
   Le pilote « cœur » est l'union des 4 chambres Z-Anatomy et des valves.
-- **Le manifeste versionné n'a pas été produit par le pipeline actuel** : 597 structures ont un
-  `high` < 98 % de `min(source, 12 000)`, 16 LOD sont non monotones, et
-  `organ:cavernous-sinus-r` (source 9 728 tris) a un `high` de 512 tris. Reconstruire le
-  dataset ou corriger le pipeline est un prérequis à toute mesure de résolution.
-- Les pilotes révèlent des trous de complétude : pas de ménisques ni de ligaments du genou,
-  pas d'œsophage, pas de poumons entiers, pas d'hémisphères.
+- L'inventaire surestime les triangles de certains objets Z-Anatomy : ne pas en déduire des
+  « pertes de détail » ; comparer toujours le maillage généré au maillage source réel.
+- Les mains dépassent de ~2,5 cm l'enveloppe cutanée grossière : avertissement explicite,
+  à traiter en P5. Les pilotes révèlent aussi des trous de complétude : pas de ménisques ni
+  de ligaments du genou, pas d'œsophage, pas de poumons entiers, pas d'hémisphères.
 
 **Sortie :** un tableau de bord unique où chaque structure a un statut et des preuves
 (`docs/analyses/qualite-3d/scorecard.md`, `hausdorff.md`, `index.json`).
@@ -307,8 +311,8 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 |---:|---|---|
 | 1 ✅ | Harnais de captures 8 angles | 5 structures × 8 captures, 0 débordement |
 | 1 ✅ | Scorecard et porte CI | 1 399 S1 / 640 S2 / 0 S3, check OK |
-| 2 ✅ | Écart de silhouette LOD | `hausdorff.md`, 280/59 medium, 914/309 low |
-| 2 | **Réconcilier dataset et pipeline** : reconstruire ou corriger | 0 LOD non monotone, 0 perte > 2 % |
+| 2 ✅ | Écart de silhouette LOD | `hausdorff.md`, 271/47 medium, 916/323 low |
+| 2 ✅ | **Réconcilier dataset et pipeline** | 0 LOD non monotone, sinus caverneux 512 → 9 728 tris, 1 341 étanches |
 | 3 | Valider la classification ouvert/fermé (907 bords, 620 pluri-composantes) | `classification-structures.json` v2 |
 | 4 | Corriger le winding par composante | 466 → 0, audit avant/après |
 | 5 | Supprimer faces dupliquées et corriger les non-manifold | 496 → 0, 124 → 0 |
@@ -329,7 +333,7 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 | Non-manifold | 124 | 0 | 0 |
 | Faces dupliquées | 496 | 0 | 0 |
 | Structures plafonnées | 24 | 0 | 0 |
-| Triangles `high` | 5,01 M | jusqu'à 6,31 M | selon sources |
+| Triangles `high` | 5,07 M | jusqu'à 6,31 M | selon sources |
 | Densité médiane os | 52 tri/cm² | ≥ 80 | ≥ 150 |
 | Densité médiane muscle | 35 tri/cm² | ≥ 50 | ≥ 80 |
 | Densité médiane organe | 111 tri/cm² | ≥ 150 | ≥ 200 |

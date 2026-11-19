@@ -1,7 +1,20 @@
 # Rapport de collisions — jeu de données v2
 
-116 anomalie(s) sur 2039 structures.
+129 anomalie(s) sur 2039 structures.
 
+- **[hors-peau-exemptee]** Phalange distale du premier doigt de la main (bone:distal-phalanx-of-first-finger-of-hand-r) : bornes -0.335,0.767,0.057 → -0.321,0.791,0.074 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Phalange distale du deuxième doigt de la main (bone:distal-phalanx-of-second-finger-of-hand-r) : bornes -0.322,0.708,0.070 → -0.311,0.722,0.088 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Premier métacrapien (bone:first-metacarpal-bone-r) : bornes -0.320,0.809,0.023 → -0.281,0.848,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Phalange moyenne du deuxième doigt de la main (bone:middle-phalanx-of-second-finger-of-hand-r) : bornes -0.319,0.717,0.051 → -0.304,0.738,0.073 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Phalange proximale du premier doigt de la main (bone:proximal-phalanx-of-first-finger-of-hand-r) : bornes -0.329,0.784,0.042 → -0.308,0.816,0.065 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Fascia dorsal de la main (muscle:dorsal-fascia-of-hand-r) : bornes -0.335,0.700,0.004 → -0.225,0.856,0.097 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Muscle extenseur de l'index (muscle:extensor-indicis-r) : bornes -0.318,0.715,-0.007 → -0.237,0.921,0.074 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Court extenseur du pouce (muscle:extensor-pollicis-brevis-r) : bornes -0.322,0.807,-0.011 → -0.243,0.948,0.048 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Long extenseur du pouce (muscle:extensor-pollicis-longus-r) : bornes -0.330,0.781,-0.027 → -0.232,0.990,0.064 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Long fléchisseur du pouce (muscle:flexor-pollicis-longus-r) : bornes -0.324,0.784,-0.014 → -0.246,1.022,0.066 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Aponévrose palmaire (muscle:palmar-aponeurosis-r) : bornes -0.335,0.700,0.029 → -0.226,0.856,0.097 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Gaine tendineuse du long fléchisseur du pouce (muscle:tendon-sheath-of-flexor-pollicis-longus-r) : bornes -0.319,0.798,0.020 → -0.264,0.884,0.059 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
+- **[hors-peau-exemptee]** Artère principale du pouce (organ:bp-arteria-princeps-pollicis-r) : bornes -0.320,0.798,0.035 → -0.278,0.855,0.069 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[doublon-aabb]** Fascia du muscle piriforme ↔ Muscle piriforme (muscle:piriformis-fascia-l, muscle:piriformis-muscle-l) : centres à 0.0001 m, ratio de volume 1.03 (imbrication anatomique probable)
 - **[doublon-aabb]** Fascia du muscle piriforme ↔ Muscle piriforme (muscle:piriformis-fascia-r, muscle:piriformis-muscle-r) : centres à 0.0001 m, ratio de volume 1.03 (imbrication anatomique probable)
 - **[doublon-aabb]** Subfacial prepatellar bursa ↔ Bourse subtendineuse prépatellaire (muscle:subfacial-prepatellar-bursa-l, muscle:subtendinous-prepatellar-bursa-l) : centres à 0.0008 m, ratio de volume 0.62 (imbrication anatomique probable)

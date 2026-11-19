@@ -7,33 +7,33 @@ Référence : LOD `high`. 2039 structures, 256 sommets échantillonnés par dire
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
-| medium → high | 0,00 mm | 0,64 mm | 4,30 mm | 127,46 mm | 280 | 59 |
-| low → high | 0,40 mm | 2,65 mm | 15,66 mm | 127,46 mm | 914 | 309 |
+| medium → high | 0,00 mm | 0,61 mm | 3,72 mm | 121,23 mm | 271 | 47 |
+| low → high | 0,39 mm | 2,80 mm | 17,65 mm | 127,51 mm | 916 | 323 |
 
 ## 20 écarts medium → high les plus grands
 
 | Structure | Cat. | Tris high | Tris medium | Écart max (mm) | Écart moyen (mm) |
 |---|---|---:|---:|---:|---:|
-| `organ:bp-mediastinum` | organ | 11 984 | 6 106 | 127,46 | 3,44 |
-| `organ:bp-inferior-mediastinum` | organ | 11 984 | 5 056 | 40,39 | 0,96 |
-| `organ:bp-nerve-l` | organ | 5 438 | 1 665 | 19,40 | 0,71 |
-| `organ:bp-hepatic-portal-vein-r` | organ | 6 349 | 4 295 | 15,66 | 0,14 |
-| `organ:bp-nerve-r` | organ | 5 321 | 1 622 | 14,06 | 0,41 |
-| `organ:bp-middle-mediastinum` | organ | 11 985 | 5 045 | 13,02 | 0,40 |
-| `organ:intermediomedial-nucleus` | organ | 6 432 | 1 459 | 10,00 | 0,07 |
-| `bone:bp-thoracic-vertebra` | bone | 12 000 | 5 106 | 9,00 | 0,30 |
+| `organ:bp-mediastinum` | organ | 12 000 | 6 122 | 121,23 | 3,22 |
+| `organ:bp-inferior-mediastinum` | organ | 12 000 | 5 076 | 41,55 | 0,99 |
+| `organ:bp-middle-mediastinum` | organ | 12 000 | 5 076 | 27,33 | 0,59 |
+| `organ:bp-nerve-l` | organ | 5 454 | 1 680 | 19,66 | 0,78 |
+| `organ:bp-hepatic-portal-vein-r` | organ | 6 370 | 4 316 | 14,64 | 0,14 |
+| `organ:bp-nerve-r` | organ | 5 346 | 1 646 | 14,05 | 0,41 |
+| `organ:bp-viscerocranium-l` | organ | 12 270 | 12 198 | 10,26 | 0,02 |
 | `organ:bp-superior-mesenteric-artery` | organ | 5 058 | 2 886 | 8,20 | 0,10 |
-| `organ:bp-basilar-artery-r` | organ | 6 182 | 3 729 | 7,25 | 0,11 |
-| `organ:bp-right-pulmonary-artery-r` | organ | 11 990 | 11 354 | 5,98 | 0,04 |
-| `organ:bp-large-intestine` | organ | 13 030 | 13 024 | 5,55 | 0,01 |
-| `organ:cavernous-sinus-r` | organ | 512 | 1 375 | 5,52 | 0,95 |
-| `organ:cavernous-sinus-l` | organ | 512 | 1 336 | 5,52 | 0,91 |
-| `organ:lateral-reticulospinal-tract` | organ | 3 216 | 1 474 | 5,01 | 0,03 |
-| `organ:tectospinal-tract` | organ | 3 216 | 1 475 | 5,00 | 0,02 |
-| `organ:white-matter-of-telencephalon-l` | organ | 12 000 | 1 500 | 4,67 | 0,43 |
+| `organ:white-matter-of-telencephalon-l` | organ | 12 000 | 1 498 | 8,11 | 0,45 |
+| `bone:bp-thoracic-vertebra` | bone | 12 000 | 5 094 | 6,95 | 0,28 |
+| `organ:bp-basilar-artery-r` | organ | 6 190 | 3 738 | 5,79 | 0,09 |
+| `organ:bp-right-pulmonary-artery-r` | organ | 12 000 | 11 364 | 5,32 | 0,05 |
+| `bone:bp-sternum` | bone | 5 566 | 1 540 | 4,82 | 0,26 |
 | `bone:bp-neurocranium-l` | bone | 6 560 | 2 864 | 4,58 | 0,17 |
 | `muscle:flexor-digitorum-profundus-l` | muscle | 7 110 | 1 498 | 4,45 | 0,07 |
 | `muscle:flexor-digitorum-profundus-r` | muscle | 7 110 | 1 498 | 4,45 | 0,08 |
+| `organ:bp-left-pulmonary-artery-l` | organ | 8 070 | 6 906 | 4,37 | 0,14 |
+| `muscle:internal-intercostal-muscles-r` | muscle | 11 993 | 1 499 | 4,36 | 0,26 |
+| `bone:bp-neurocranium-r` | bone | 6 600 | 2 826 | 3,97 | 0,15 |
+| `muscle:external-abdominal-oblique-muscle-l` | muscle | 12 000 | 1 500 | 3,92 | 0,21 |
 
 ## Limites
 

@@ -257,14 +257,15 @@ augmentent, ou si le nombre de triangles d'une structure baisse de plus de 2 %.
 
 ## 7. État des lieux mesuré — 19 novembre 2026
 
-Jeu de données : **2 039 structures**, **5 009 243 triangles** au LOD `high`.
+Jeu de données : **2 039 structures**, **5 066 684 triangles** au LOD `high` (jeu
+reconstruit le 19 novembre 2026 ; le tableau ci-dessous reflète cette reconstruction).
 
 | Porte | Mesure | Verdict |
 |---|---|---|
 | G0 Traçabilité | 2 039/2 039 sources et licences ; 1 979/2 039 TA2 (97,1 %) | 🟡 |
-| G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents | ❌ |
-| G2 Intégrité | 1 107/2 039 étanches et manifold (54,3 %) ; 907 avec bords ; 124 non-manifold ; 620 pluri-composantes ; 496 faces dupliquées ; 0 dégénéré | ❌ |
-| G3 Normales | 466 windings inversés ; 13 354 faces inversées (0,267 %) ; 0 normale nulle ; 0 indice hors bornes | ❌ |
+| G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
+| G2 Intégrité | 1 341/2 039 étanches et manifold (65,8 %) ; 667 avec bords ; 126 non-manifold ; 623 pluri-composantes ; 521 faces dupliquées ; 0 dégénéré | ❌ |
+| G3 Normales | 566 windings inversés ; 14 055 faces inversées (0,277 %) ; 0 normale nulle ; 0 indice hors bornes | ❌ |
 | G4 Résolution | médiane 1 118 tris ; 954 structures < 1 000 tris ; 24 plafonnées à 12 000 ; 1,30 M triangles de source jetés par le plafond | ❌ |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
 | G6 Matériaux | procédural uniquement, pas de cartes PBR par tissu | ❌ |
@@ -297,10 +298,10 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts.** 1 399 structures en S1, 640 en S2, **0 en S3**. G0 : 1 979/2 039 (97,1 %).
-G2 : 1 324 (64,9 %) avec la classification provisoire, 1 898 (93,1 %) hors étanchéité.
-G3 : 1 017 (49,9 %). Aucune structure n'atteint S3 tant que G4 (résolution) et G5
-(assemblage) ne sont pas mesurés.
+**Statuts (jeu reconstruit).** 1 355 structures en S1, 684 en S2, **0 en S3**.
+G0 : 1 979/2 039 (97,1 %). G2 : 1 515 (74,3 %) avec la classification provisoire,
+1 896 (93,0 %) hors étanchéité. G3 : 950 (46,6 %). Aucune structure n'atteint S3 tant que
+G4 (résolution) et G5 (assemblage) ne sont pas mesurés.
 
 **Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
 immédiatement révélé un défaut de complétude : `organ:bp-heart` ne contient que **11 pièces
@@ -313,24 +314,36 @@ et des valves.
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
-| `medium` → `high` | 0,00 mm | 0,64 mm | 4,30 mm | 127,46 mm | 280 | 59 |
-| `low` → `high` | 0,40 mm | 2,65 mm | 15,66 mm | 127,46 mm | 914 | 309 |
+| `medium` → `high` | 0,00 mm | 0,61 mm | 3,72 mm | 121,23 mm | 271 | 47 |
+| `low` → `high` | 0,39 mm | 2,80 mm | 17,65 mm | 127,51 mm | 916 | 323 |
 
-Le maximum `organ:bp-mediastinum` (127,46 mm) signale une simplification qui déplace la
-silhouette, pas un simple allègement.
+Le maximum (~121 mm) signale une simplification qui déplace la silhouette, pas un simple
+allègement.
 
-**Incohérence dataset / pipeline.** Le manifeste versionné n'a pas été produit par le script
-actuel :
+**Défaut de pipeline trouvé et corrigé pendant P0.** Le manifeste initial *était* bien produit
+par le script, mais `removeDegenerate()` y employait un seuil `cross² ≥ 1e-16`, soit une aire
+de **0,005 mm²**. Sur les maillages finement tessellés de Z-Anatomy, ce seuil tombait au
+milieu de la distribution des tailles de triangles : par exemple **9 216 triangles sur 9 728**
+du sinus caverneux droit étaient supprimés *après* simplification. Effets mesurés :
 
-- `organ:cavernous-sinus-r` : source Z-Anatomy **9 728 triangles** ; manifeste `high` 512,
-  `medium` 1 375, `low` 324. Avec le script actuel, `high` vaudrait 9 728 (source < 12 000).
-- **16 structures non monotones** (`medium > high` ou `low > medium`), dont les deux sinus
-  caverneux.
-- **597 structures** ont un `high` inférieur à 98 % de `min(source, 12 000)`.
+- `organ:cavernous-sinus-r` : `high` 512 → **9 728** triangles (source complète) après correction ;
+- **16 LOD non monotones** (`medium > high` ou `low > medium`) → **0** ;
+- structures étanches : **1 107 (54,3 %) → 1 341 (65,8 %)** ; structures avec bords :
+  **907 → 667**. Les triangles « manquants » n'étaient pas du bruit mais la peau des maillages.
 
-Tant que le dataset n'est pas reconstruit ou le pipeline corrigé, toute mesure de résolution
-est ambiguë : on ne sait pas si une perte de détail vient de la source, du plafond ou d'un
-réglage disparu.
+Corrections apportées à `scripts/build-anatomy-v2.mjs` :
+
+1. seuil de dégénérescence exprimé en **aire** (`1e-12 m²`), aligné sur l'audit ;
+2. chaîne LOD dérivée du plus fin au plus grossier (`high` → `medium` → `low`) au lieu de
+   trois simplifications indépendantes depuis la source ; cela garantit `low ≤ medium ≤ high` ;
+3. baseline CI régénérée après reconstruction (changement de données voulu et tracé).
+
+Attention : l'inventaire `docs/inventaire-anatomique/structures.json` surestime le nombre de
+triangles de certains objets Z-Anatomy (ex. `bone:cricoid-cartilage` : 3 028 annoncés,
+1 882 réels dans l'export). Les « pertes de détail » déduites de l'inventaire ne sont donc pas
+une mesure fiable ; seule la comparaison au maillage source l'est. Les mains restent décalées
+d'environ 2,5 cm par rapport à l'enveloppe cutanée grossière : signalée en avertissement, à
+traiter en P5 (assemblage).
 
 ---
 

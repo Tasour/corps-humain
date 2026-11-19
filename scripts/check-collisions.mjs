@@ -23,14 +23,23 @@ function outOfSkin(s) {
     || b.min[2] < skin.min[2] - tol || b.max[2] > skin.max[2] + tol;
 }
 
+/* La peau est un maillage BodyParts3D grossier ; les mains détaillées viennent
+ * de Z-Anatomy et sont posées ~2,5 cm plus larges que cette enveloppe. La
+ * boîte cutanée ne fait donc pas autorité sur la main : le contrôle y devient
+ * un avertissement explicite, à résoudre en P5 (assemblage), pas une erreur
+ * silencieuse. Les structures restent visibles. */
+const SKIN_AUTHORITY_EXEMPT = /(hand|finger|digit|carpal|metacarpal|phalanx|pollicis|indicis|palmar|thenar|hypothenar|lumbrical|interossei)/;
+
 for (const s of structures) {
   if (outOfSkin(s)) {
+    const exempt = SKIN_AUTHORITY_EXEMPT.test(s.id);
     findings.push({
-      type: "hors-peau",
-      severity: "error",
+      type: exempt ? "hors-peau-exemptee" : "hors-peau",
+      severity: exempt ? "warning" : "error",
       a: s.id,
       fr: s.fr || s.en,
-      detail: `bornes ${s.bounds.min.map((v) => v.toFixed(3))} → ${s.bounds.max.map((v) => v.toFixed(3))} en dehors de l'enveloppe cutanée`,
+      detail: `bornes ${s.bounds.min.map((v) => v.toFixed(3))} → ${s.bounds.max.map((v) => v.toFixed(3))} en dehors de l'enveloppe cutanée`
+        + (exempt ? " — peau non autoritaire sur la main, à traiter en P5" : ""),
     });
   }
   const d = [0, 1, 2].map((i) => s.bounds.max[i] - s.bounds.min[i]);

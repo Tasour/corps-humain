@@ -1043,15 +1043,17 @@
       });
     });
     function resetView() {
-      camera.position.set(0.72, 1.28, 2.85);
-      controls.target.set(0, 0.88, 0);
       cameraTween = null;
       tourActive = false;
-      /* Sans cette pause, un reliquat d'amortissement du dernier glisser
-       * déplace la caméra juste après le recadrage : le double-clic ne
-       * revenait pas exactement à la vue de départ. */
+      /* Un glisser laisse un `sphericalDelta` résiduel dans OrbitControls.
+       * Il faut d'abord le consommer (amortissement désactivé) AVANT de poser
+       * la caméra : sinon le `update()` suivant l'applique au canton réglé et
+       * le double-clic atterrit à côté de la vue de départ. */
       const damping = controls.enableDamping;
       controls.enableDamping = false;
+      controls.update();
+      camera.position.set(0.72, 1.28, 2.85);
+      controls.target.set(0, 0.88, 0);
       controls.update();
       controls.enableDamping = damping;
       forceCulling = true;

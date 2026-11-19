@@ -1,8 +1,99 @@
 {
-  "generated": "2026-11-19T01:52:02.359Z",
+  "generated": "2026-11-19T02:06:11.250Z",
   "structures": 2039,
-  "count": 116,
+  "count": 129,
   "findings": [
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "bone:distal-phalanx-of-first-finger-of-hand-r",
+      "fr": "Phalange distale du premier doigt de la main",
+      "detail": "bornes -0.335,0.767,0.057 → -0.321,0.791,0.074 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "bone:distal-phalanx-of-second-finger-of-hand-r",
+      "fr": "Phalange distale du deuxième doigt de la main",
+      "detail": "bornes -0.322,0.708,0.070 → -0.311,0.722,0.088 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "bone:first-metacarpal-bone-r",
+      "fr": "Premier métacrapien",
+      "detail": "bornes -0.320,0.809,0.023 → -0.281,0.848,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "bone:middle-phalanx-of-second-finger-of-hand-r",
+      "fr": "Phalange moyenne du deuxième doigt de la main",
+      "detail": "bornes -0.319,0.717,0.051 → -0.304,0.738,0.073 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "bone:proximal-phalanx-of-first-finger-of-hand-r",
+      "fr": "Phalange proximale du premier doigt de la main",
+      "detail": "bornes -0.329,0.784,0.042 → -0.308,0.816,0.065 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:dorsal-fascia-of-hand-r",
+      "fr": "Fascia dorsal de la main",
+      "detail": "bornes -0.335,0.700,0.004 → -0.225,0.856,0.097 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:extensor-indicis-r",
+      "fr": "Muscle extenseur de l'index",
+      "detail": "bornes -0.318,0.715,-0.007 → -0.237,0.921,0.074 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:extensor-pollicis-brevis-r",
+      "fr": "Court extenseur du pouce",
+      "detail": "bornes -0.322,0.807,-0.011 → -0.243,0.948,0.048 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:extensor-pollicis-longus-r",
+      "fr": "Long extenseur du pouce",
+      "detail": "bornes -0.330,0.781,-0.027 → -0.232,0.990,0.064 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:flexor-pollicis-longus-r",
+      "fr": "Long fléchisseur du pouce",
+      "detail": "bornes -0.324,0.784,-0.014 → -0.246,1.022,0.066 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:palmar-aponeurosis-r",
+      "fr": "Aponévrose palmaire",
+      "detail": "bornes -0.335,0.700,0.029 → -0.226,0.856,0.097 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:tendon-sheath-of-flexor-pollicis-longus-r",
+      "fr": "Gaine tendineuse du long fléchisseur du pouce",
+      "detail": "bornes -0.319,0.798,0.020 → -0.264,0.884,0.059 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "organ:bp-arteria-princeps-pollicis-r",
+      "fr": "Artère principale du pouce",
+      "detail": "bornes -0.320,0.798,0.035 → -0.278,0.855,0.069 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
     {
       "type": "doublon-aabb",
       "severity": "warning",
