@@ -70,12 +70,15 @@
     .sidebar, .details { background: var(--paper-2); }
     .sidebar {
       border-right: 1px solid var(--line); padding: 18px 16px;
-      display: flex; flex-direction: column; overflow: hidden;
+      display: flex; flex-direction: column;
+      /* Avec 43 groupes, la somme des sections dépasse la hauteur d'un écran
+       * de 880 px : le panneau défile, et la liste garde sa propre zone. */
+      overflow-y: auto;
     }
-    .sidebar > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-    .sidebar > .section:last-child #list { flex: 1; min-height: 80px; overflow: auto; }
+    .sidebar > .section:last-child { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+    .sidebar > .section:last-child #list { flex: 1 1 auto; min-height: 112px; overflow: auto; }
     .details { border-left: 1px solid var(--line); padding: 26px 24px; }
-    .section { margin-bottom: 20px; }
+    .section { margin-bottom: 14px; }
     .section-title {
       font: 600 10px/1.3 "Segoe UI", sans-serif; letter-spacing: .18em; text-transform: uppercase;
       color: var(--muted); margin: 0 0 9px; display: flex; justify-content: space-between;
@@ -86,6 +89,19 @@
       color: var(--ink); font: inherit; font-size: 12.5px;
     }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    /* 43 groupes : le panneau est replié par défaut pour que la liste des
+     * structures reste visible sans défilement ; une fois ouvert, il défile. */
+    .groups-details > summary {
+      cursor: pointer; list-style: none; user-select: none;
+    }
+    .groups-details > summary::-webkit-details-marker { display: none; }
+    .groups-details > summary::before {
+      content: "▸"; font-size: 11px; margin-right: 6px; transition: transform .15s;
+      display: inline-block;
+    }
+    .groups-details[open] > summary::before { transform: rotate(90deg); }
+    .section-count { color: var(--small); font-weight: 600; margin-left: auto; padding-left: 8px; }
+    #groups { max-height: 142px; overflow-y: auto; padding-right: 2px; }
     button {
       cursor: pointer; font: inherit; font-size: 11.5px; color: var(--ink);
       border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 6px 10px;
@@ -175,8 +191,12 @@
       header { padding: 0 14px; height: 64px; }
       .layout { grid-template-columns: 1fr; height: calc(100vh - 64px); }
       .sidebar { position: fixed; z-index: 12; top: 64px; bottom: 0; left: 0; width: min(290px, 86vw); display: none; box-shadow: var(--shadow); }
-      .sidebar.open { display: flex; flex-direction: column; }
-      .sidebar.open > .section:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+      /* Le tiroir défile en entier : avec 43 groupes, la liste des structures
+       * ne doit pas être repoussée sous le bord inférieur. */
+      .sidebar.open { display: block; overflow-y: auto; }
+      .sidebar.open > .section:last-child { display: block; }
+      .sidebar.open #list { max-height: none; overflow: visible; }
+      #groups { max-height: none; overflow: visible; }
       /* Les détails ne disparaissent plus : ils deviennent une feuille
        * inférieure ouverte à la sélection, sinon le choix restait invisible
        * sur téléphone (ni nom, ni code TA2, ni source). */
@@ -229,7 +249,7 @@
       }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-BCi15OFz.js"></script>
+  <script type="module" crossorigin src="./assets/v2-BXR7ZzKh.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-V-jmH8En.js">
   <link rel="stylesheet" crossorigin href="./assets/v2-D_jL7VqJ.css">
 </head>
@@ -274,7 +294,12 @@
         <div class="tree" id="tree" role="group" aria-label="Niveaux anatomiques"></div>
       </div>
       <div class="section"><h2 class="section-title">Accès rapide</h2><div class="chips" id="shortcuts"></div></div>
-      <div class="section"><h2 class="section-title">Groupes anatomiques</h2><div class="chips" id="groups"></div></div>
+      <div class="section">
+        <details id="groups-details" class="groups-details">
+          <summary class="section-title">Groupes anatomiques <span id="groups-count" class="section-count"></span></summary>
+          <div class="chips" id="groups" role="group" aria-label="Groupes anatomiques animés"></div>
+        </details>
+      </div>
       <div class="section"><h2 class="section-title">Explorer <span id="list-total"></span></h2><div id="list" role="group" aria-label="Structures anatomiques"></div></div>
     </aside>
 
