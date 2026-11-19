@@ -135,6 +135,35 @@
       display: none; gap: 6px; padding: 6px; background: rgba(255,253,249,.92);
       border: 1px solid var(--line); border-radius: 10px;
     }
+    /* ---------- chasse aux organes ---------- */
+    .hunt-hud {
+      position: absolute; z-index: 7; top: 16px; left: 50%; transform: translateX(-50%);
+      width: min(430px, 92vw); padding: 12px 14px 10px;
+      background: rgba(255,253,249,.97); border: 1px solid var(--line);
+      border-radius: 12px; box-shadow: var(--shadow);
+    }
+    .hunt-hud[hidden] { display: none; }
+    .hunt-head { display: flex; align-items: flex-start; gap: 8px; }
+    #hunt-target { flex: 1; font: 600 16px/1.25 Georgia, serif; color: var(--accent); }
+    #hunt-close {
+      flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--line); background: #fff; color: var(--muted);
+      font-size: 13px; line-height: 1; cursor: pointer;
+    }
+    #hunt-hint { margin-top: 4px; font-size: 12px; color: #4d5d66; }
+    .hunt-stats {
+      display: flex; justify-content: space-between; margin-top: 8px;
+      font: 600 12px/1.2 "Segoe UI", sans-serif; color: var(--ink);
+    }
+    .hunt-bar { height: 5px; margin-top: 6px; border-radius: 3px; background: #e3e8e6; overflow: hidden; }
+    .hunt-bar i { display: block; height: 100%; width: 100%; background: var(--teal); transition: width .2s linear; }
+    .hunt-bar.low i { background: #c0392b; }
+    #hunt-feedback { margin-top: 6px; min-height: 15px; font-size: 11.5px; color: var(--muted); }
+    #hunt-feedback.ok { color: #1d7a4d; font-weight: 600; }
+    #hunt-feedback.err { color: #b03a2e; font-weight: 600; }
+    body.dark .hunt-hud { background: rgba(20,32,44,.96); }
+    body.dark #hunt-close { background: #182635; color: var(--muted); }
+    body.dark #hunt-hint { color: #a9bcc6; }
     #label {
       position: absolute; z-index: 4; pointer-events: none; display: none;
       transform: translate(-50%, -170%); padding: 4px 9px 4px 13px;
@@ -153,6 +182,9 @@
     #wp-text { margin-top: 6px; font-size: 12.5px; color: #4d5d66; }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
+    /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
+     * performance passait dessous et son texte dépassait à gauche. */
+    body.hunting .perf { display: none; }
     /* ---------- panneau détails ---------- */
     .details #sel-name { margin: 0; font: 600 30px/1.1 Georgia, serif; }
     .details .latin { color: var(--accent); font: italic 13px Georgia, serif; margin-top: 6px; }
@@ -161,6 +193,8 @@
     .details .meta span:first-child { flex: 0 0 auto; }
     .details .meta span:last-child { color: var(--ink); font-weight: 600; text-align: right; overflow-wrap: anywhere; min-width: 0; }
     .fact { margin-top: 18px; padding: 14px; background: #fbf3e8; border-left: 3px solid var(--accent); border-radius: 6px; font-size: 12.5px; color: #5a4a3c; }
+    .legacy-link { margin-top: 16px; font-size: 11px; color: var(--muted); }
+    .legacy-link a { color: var(--teal); }
     #sel-name { font: 600 30px/1.1 Georgia, serif; }
     #sel-meta { color: var(--muted); font-size: 12px; }
     /* ---------- chargement ---------- */
@@ -311,6 +345,16 @@
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
       <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div></div>
+      <div class="hunt-hud" id="hunt-hud" role="status" aria-live="polite" hidden>
+        <div class="hunt-head">
+          <div id="hunt-target">—</div>
+          <button id="hunt-close" type="button" aria-label="Quitter la chasse aux organes">✕</button>
+        </div>
+        <div id="hunt-hint"></div>
+        <div class="hunt-stats"><span id="hunt-score">0 pt</span><span id="hunt-time">90 s</span></div>
+        <div class="hunt-bar" id="hunt-bar"><i id="hunt-bar-fill"></i></div>
+        <div id="hunt-feedback"></div>
+      </div>
       <div class="anim-bar" id="animations" role="group" aria-label="Animations"></div>
     </main>
 
@@ -323,6 +367,7 @@
       </div>
       <div class="meta" id="detail-meta"></div>
       <div class="fact" id="detail-fact">Explorez les 2 039 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+      <p class="legacy-link"><a href="./index.html">Version classique</a> — pathologies simulées, jeux et coupe anatomique.</p>
     </aside>
   </div>
 
@@ -337,6 +382,7 @@
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
     import { getWaypoints } from './src/data/waypoints.js';
+    import { HUNT_TARGETS } from './src/data/hunt.js';
     import { AnatomyTree } from './src/data/hierarchy.js';
     import './src/data/hierarchy.css';
 
@@ -814,6 +860,177 @@
       animationsEl.appendChild(b);
     }
 
+    /* ---------- Chasse aux organes ---------------------------------------
+     * Jeu natif v2 : la cible est une structure réelle du manifeste et le clic
+     * passe par le picking exact. Rien n'est emprunté aux 47 entités de la v1. */
+    const huntHud = document.getElementById('hunt-hud');
+    const huntTargetEl = document.getElementById('hunt-target');
+    const huntHintEl = document.getElementById('hunt-hint');
+    const huntScoreEl = document.getElementById('hunt-score');
+    const huntTimeEl = document.getElementById('hunt-time');
+    const huntFeedbackEl = document.getElementById('hunt-feedback');
+    const huntBarEl = document.getElementById('hunt-bar');
+    const huntBarFill = document.getElementById('hunt-bar-fill');
+
+    const huntPool = HUNT_TARGETS
+      .map((t) => ({ ...t, structure: engine.byId.get(t.id) }))
+      .filter((t) => t.structure);
+
+    const hunt = {
+      active: false, target: null, last: null, score: 0, streak: 0, found: 0,
+      timeLeft: 0, duration: 90, lock: false,
+    };
+
+    /* Une seule couche visible à la fois : le joueur cherche la structure,
+     * pas un système noyé sous les autres. La peau reste toujours masquée. */
+    function setHuntLayers(category) {
+      for (const cat of ['bone', 'muscle', 'organ']) {
+        const on = cat === category;
+        engine.setCategoryVisible(cat, on);
+        const btn = document.querySelector(`[data-cat="${cat}"]`);
+        if (btn) { btn.classList.toggle('active', on); btn.setAttribute('aria-pressed', String(on)); }
+      }
+      engine.setSkinVisible(false);
+      const skinBtn = document.querySelector('[data-cat="skin"]');
+      if (skinBtn) { skinBtn.classList.remove('active'); skinBtn.setAttribute('aria-pressed', 'false'); }
+      forceCulling = true;
+      needsRender = true;
+    }
+
+    function updateHuntHud() {
+      huntScoreEl.textContent = `${hunt.score} pt${hunt.score > 1 ? 's' : ''}`;
+      huntTimeEl.textContent = `${Math.ceil(hunt.timeLeft)} s`;
+      huntBarFill.style.width = `${Math.max(0, (hunt.timeLeft / hunt.duration) * 100)}%`;
+      huntBarEl.classList.toggle('low', hunt.timeLeft < 20);
+    }
+
+    function flashStructure(structure, ok) {
+      if (!structure) return;
+      engine.highlight(structure, ok ? '#2fbf71' : '#d0453a');
+      setTimeout(() => {
+        if (structure !== selected) engine.highlight(structure, null);
+      }, 520);
+    }
+
+    function nextHuntTarget() {
+      if (!hunt.active) return;
+      let candidates = huntPool.filter((t) => t !== hunt.last);
+      if (!candidates.length) candidates = huntPool;
+      const entry = candidates[Math.floor(Math.random() * candidates.length)];
+      hunt.target = entry;
+      hunt.last = entry;
+      setHuntLayers(entry.structure.category);
+      huntTargetEl.textContent = `Trouvez ${entry.label}`;
+      huntHintEl.textContent = entry.hint;
+      huntFeedbackEl.textContent = '';
+      huntFeedbackEl.className = '';
+      updateHuntHud();
+      announce(`Trouvez ${entry.label}. ${entry.hint}.`);
+    }
+
+    function huntPick(structure) {
+      if (!hunt.active || hunt.lock || !hunt.target) return false;
+      const target = hunt.target;
+      if (structure && structure.id === target.id) {
+        hunt.lock = true;
+        const points = 10 + hunt.streak * 3;
+        hunt.score += points;
+        hunt.streak += 1;
+        hunt.found += 1;
+        huntFeedbackEl.textContent = `Exact : +${points} points`;
+        huntFeedbackEl.className = 'ok';
+        flashStructure(structure, true);
+        updateHuntHud();
+        announce(`Exact, ${target.label} trouvé. Plus ${points} points.`);
+        setTimeout(() => {
+          hunt.lock = false;
+          if (hunt.active) nextHuntTarget();
+        }, 700);
+      } else {
+        hunt.streak = 0;
+        hunt.timeLeft = Math.max(0, hunt.timeLeft - 2);
+        const name = structure ? (structure.fr || structure.en) : null;
+        huntFeedbackEl.textContent = name
+          ? `Raté : ${name} n'est pas ${target.label} (−2 s)`
+          : 'Rien sous le clic (−2 s)';
+        huntFeedbackEl.className = 'err';
+        if (structure) flashStructure(structure, false);
+        updateHuntHud();
+        announce(name ? `${name} n'est pas la cible.` : 'Aucune structure sous le clic.');
+        if (hunt.timeLeft <= 0) finishHunt();
+      }
+      return true;
+    }
+
+    function startHunt() {
+      hunt.active = true;
+      hunt.target = null;
+      hunt.last = null;
+      hunt.score = 0;
+      hunt.streak = 0;
+      hunt.found = 0;
+      hunt.timeLeft = hunt.duration;
+      hunt.lock = false;
+      activeGroup = null;
+      groupAnim = null;
+      engine.clearAnimation();
+      engine.resetGroupTransforms();
+      engine.isolate(null);
+      engine.setWaypointsVisible(false);
+      waypointTour = null;
+      wpInfo.style.display = 'none';
+      document.getElementById('group-actions').style.display = 'none';
+      document.body.classList.remove('has-selection');
+      syncDetailsSheet();
+      document.getElementById('sel-name').textContent = 'Chasse aux organes';
+      document.getElementById('sel-meta').textContent = 'Cliquez la structure demandée dans le corps';
+      document.getElementById('detail-meta').innerHTML = '';
+      huntHud.hidden = false;
+      document.body.classList.add('hunting');
+      huntButton.setAttribute('aria-pressed', 'true');
+      huntButton.textContent = 'Arrêter la chasse';
+      nextHuntTarget();
+    }
+
+    function finishHunt() {
+      if (!hunt.active) return;
+      hunt.active = false;
+      hunt.lock = false;
+      huntTargetEl.textContent = 'Temps écoulé';
+      huntHintEl.textContent = `${hunt.found} structure${hunt.found > 1 ? 's' : ''} trouvée${hunt.found > 1 ? 's' : ''} · ${hunt.score} point${hunt.score > 1 ? 's' : ''}`;
+      huntFeedbackEl.textContent = 'Relancez la chasse ou fermez cette fiche.';
+      huntFeedbackEl.className = '';
+      huntButton.setAttribute('aria-pressed', 'false');
+      huntButton.textContent = 'Chasse aux organes';
+      setHuntLayers('organ');
+      announce(`Partie terminée : ${hunt.found} trouvées, ${hunt.score} points.`);
+    }
+
+    function stopHunt() {
+      hunt.active = false;
+      hunt.lock = false;
+      huntHud.hidden = true;
+      document.body.classList.remove('hunting');
+      huntButton.setAttribute('aria-pressed', 'false');
+      huntButton.textContent = 'Chasse aux organes';
+      setHuntLayers('organ');
+      document.getElementById('sel-name').textContent = 'Cliquez sur une structure';
+      document.getElementById('sel-meta').textContent = 'ou choisissez-la dans la liste';
+      document.getElementById('detail-meta').innerHTML = '';
+      announce('Chasse aux organes fermée.');
+    }
+
+    const huntButton = document.createElement('button');
+    huntButton.type = 'button';
+    huntButton.textContent = 'Chasse aux organes';
+    huntButton.setAttribute('aria-pressed', 'false');
+    huntButton.addEventListener('click', () => {
+      if (hunt.active) stopHunt();
+      else startHunt();
+    });
+    animationsEl.appendChild(huntButton);
+    document.getElementById('hunt-close').addEventListener('click', stopHunt);
+
     /* Commandes de vue. */
     document.querySelectorAll('[data-cat]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -949,6 +1166,12 @@
       pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
+      /* En chasse, seul le picking exact compte : `pick()` peut renvoyer une
+       * structure d'une couche masquée, ce qui donnerait un « raté » injuste. */
+      if (hunt.active) {
+        huntPick(engine.pickExact(raycaster));
+        return;
+      }
       if (engine.waypointsVisible) {
         const wp = engine.pickWaypoint(raycaster);
         if (wp) {
@@ -995,6 +1218,10 @@
     function selectAtCenter() {
       raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
       const s = engine.pickExact(raycaster) || engine.pick(raycaster);
+      if (hunt.active) {
+        huntPick(engine.pickExact(raycaster));
+        return;
+      }
       if (s) {
         void selectStructure(s, false);
         announce(`${s.fr || s.en} sélectionné au centre de la vue.`);
@@ -1105,6 +1332,11 @@
       const nowFrame = performance.now();
       const dt = Math.min(0.05, (nowFrame - previousTime) / 1000);
       previousTime = nowFrame;
+      if (hunt.active) {
+        hunt.timeLeft = Math.max(0, hunt.timeLeft - dt);
+        updateHuntHud();
+        if (hunt.timeLeft <= 0) finishHunt();
+      }
       if (reduceMotion) tourActive = false;
       if (tourActive) {
         cameraTween = null;
@@ -1287,6 +1519,35 @@
     /* Groupes exposés pour les tests 3D : ils ne sont pas accessibles depuis
      * le module importé par la page autrement. */
     window.__v2Groups = GROUPS;
+    /* Chasse aux organes : mêmes raisons, plus un moyen de forcer une cible
+     * pour tester le picking sans dépendre du tirage aléatoire. */
+    window.__hunt = {
+      start: startHunt,
+      stop: stopHunt,
+      pick: huntPick,
+      forceTarget: (id) => {
+        const entry = huntPool.find((t) => t.id === id);
+        if (!entry) return false;
+        hunt.target = entry;
+        hunt.last = entry;
+        setHuntLayers(entry.structure.category);
+        huntTargetEl.textContent = `Trouvez ${entry.label}`;
+        huntHintEl.textContent = entry.hint;
+        huntFeedbackEl.textContent = '';
+        huntFeedbackEl.className = '';
+        updateHuntHud();
+        return true;
+      },
+      state: () => ({
+        active: hunt.active,
+        target: hunt.target?.id || null,
+        score: hunt.score,
+        streak: hunt.streak,
+        found: hunt.found,
+        timeLeft: hunt.timeLeft,
+        lock: hunt.lock,
+      }),
+    };
     window.__renderer = renderer;
     window.__scene = scene;
     window.__controls = controls;

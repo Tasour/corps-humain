@@ -289,6 +289,26 @@ await check("focus depuis toutes les orientations caméra", async () => {
 });
 
 /* ---------- picking des objets masqués, ombres, thème ---------- */
+await check("désactiver une couche masque aussi ses membranes", async () => {
+  await page.evaluate(() => window.__v2.isolate(null));
+  for (const cat of ["organ", "muscle", "bone"]) {
+    const state = await page.evaluate((category) => {
+      const e = window.__v2;
+      e.setCategoryVisible(category, false);
+      const base = e.mergedMeshes.get(category);
+      const membrane = e.mergedMeshes.get(`${category}:membrane`);
+      return { base: base?.visible ?? null, membrane: membrane?.visible ?? null };
+    }, cat);
+    assert.equal(state.base, false, `${cat} : mesh principal encore visible`);
+    assert.equal(state.membrane, false, `${cat} : membrane encore visible`);
+  }
+  await page.evaluate(() => {
+    const e = window.__v2;
+    e.setCategoryVisible("organ", true);
+    const btn = document.querySelector('[data-cat="organ"]');
+    if (btn) { btn.classList.add("active"); btn.setAttribute("aria-pressed", "true"); }
+  });
+});
 await check("clic sur zone masquée ne change pas la sélection", async () => {
   await page.evaluate(() => window.__v2.isolate(null));
   await page.fill("#search", "fémur");
@@ -359,6 +379,83 @@ await check("bascule thème clair / sombre", async () => {
   await page.click("#theme-toggle");
   await page.waitForTimeout(150);
   assert.deepEqual(errors, []);
+});
+
+/* ---------- chasse aux organes ---------- */
+await check("chasse : la cible réelle est cliquable dans le corps", async () => {
+  await page.evaluate(() => window.__hunt.start());
+  await page.waitForTimeout(300);
+  const started = await page.evaluate(() => window.__hunt.state());
+  assert.equal(started.active, true);
+  assert.ok(started.target, "aucune cible tirée");
+  assert.equal(await page.evaluate(() => document.body.classList.contains("hunting")), true);
+  assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector(".perf")).display), "none");
+
+  /* Cible osseuse : seule la couche os est visible, donc aucun organe ne
+   * masque le tibia. On cadre son centre puis on clique au centre du canvas,
+   * ce qui exerce le vrai picking (pas un appel direct à la logique du jeu). */
+  await page.evaluate(() => window.__hunt.forceTarget("bone:tibia-l"));
+  await page.waitForTimeout(200);
+  await page.evaluate(() => {
+    const e = window.__v2;
+    const s = e.byId.get("bone:tibia-l");
+    const c = [
+      (s.bounds.min[0] + s.bounds.max[0]) / 2,
+      (s.bounds.min[1] + s.bounds.max[1]) / 2,
+      (s.bounds.min[2] + s.bounds.max[2]) / 2,
+    ];
+    /* Les tests précédents ont pu laisser un reliquat d'amortissement :
+     * sans cette pause, OrbitControls déplace la caméra après le cadrage. */
+    window.__controls.enableDamping = false;
+    window.__controls.target.set(c[0], c[1], c[2]);
+    e.camera.position.set(c[0], c[1], c[2] + 0.5);
+    e.camera.lookAt(c[0], c[1], c[2]);
+    window.__controls.update();
+    window.__renderer.render(window.__scene, e.camera);
+  });
+  const box = await page.locator("canvas").first().boundingBox();
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await page.waitForTimeout(500);
+  const scored = await page.evaluate(() => ({
+    state: window.__hunt.state(),
+    feedback: document.getElementById("hunt-feedback").textContent,
+  }));
+  assert.ok(scored.state.score >= 10, `score=${scored.state.score} · ${scored.feedback}`);
+  assert.equal(scored.state.found, 1);
+  assert.match(scored.feedback, /^Exact/);
+});
+
+await check("chasse : une mauvaise structure coûte 2 secondes", async () => {
+  /* Le bon clic verrouille le jeu 700 ms puis tire une nouvelle cible. */
+  await page.waitForFunction(() => window.__hunt.state().lock === false, null, { timeout: 5000 });
+  await page.evaluate(() => window.__hunt.forceTarget("organ:bp-heart"));
+  const before = await page.evaluate(() => window.__hunt.state().timeLeft);
+  await page.evaluate(() => {
+    window.__hunt.pick(window.__v2.byId.get("bone:humerus-l"));
+  });
+  const after = await page.evaluate(() => window.__hunt.state());
+  assert.ok(after.timeLeft < before - 1.5, `temps ${before} → ${after.timeLeft}`);
+  assert.equal(after.score, 10);
+  assert.equal(after.streak, 0);
+});
+
+await check("chasse : arrêter restaure les couches et la fiche", async () => {
+  await page.click("#hunt-close");
+  await page.waitForTimeout(250);
+  const d = await page.evaluate(() => ({
+    hidden: document.getElementById("hunt-hud").hidden,
+    hunting: document.body.classList.contains("hunting"),
+    organ: document.querySelector('[data-cat="organ"]').getAttribute("aria-pressed"),
+    bone: document.querySelector('[data-cat="bone"]').getAttribute("aria-pressed"),
+    muscle: document.querySelector('[data-cat="muscle"]').getAttribute("aria-pressed"),
+    name: document.getElementById("sel-name").textContent,
+  }));
+  assert.equal(d.hidden, true);
+  assert.equal(d.hunting, false);
+  assert.equal(d.organ, "true");
+  assert.equal(d.bone, "false");
+  assert.equal(d.muscle, "false");
+  assert.equal(d.name, "Cliquez sur une structure");
 });
 
 /* ---------- mobile ---------- */

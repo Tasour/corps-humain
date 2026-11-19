@@ -1,7 +1,8 @@
 # 15 chantiers prioritaires — atlas CORPS v2
 
-État : après refonte UX, picking exact, ombres, thèmes, waypoints, **30 tests 3D**,
-**19 contrôles d'accessibilité** et **43 groupes d'animation** mesurés.
+État : après refonte UX, picking exact, ombres, thèmes, waypoints, **35 tests 3D**,
+**19 contrôles d'accessibilité**, **43 groupes d'animation** et une **chasse aux
+organes** native v2, mesurés.
 
 | # | Chantier | Objectif | ✅ Fait | Prochaine action |
 |---:|---|---|:---:|---|
@@ -11,7 +12,7 @@
 | 4 | **Groupes & cinématique complète** | Pivots réels, articulations, mouvements physiologiques pour tous les groupes | ✅ | 43 groupes (8/8 données, 52/52 3D) ; pivots et axes par articulation, captures 4 orientations |
 | 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 039 structures, fiches multilingues | 🟡 | **22 structures curées** (2–6 anecdotes) + 3 génériques ; `npm run test:waypoints` → 7/7 ; poursuivre la rédaction |
 | 6 | **Performance & sobriété énergétique** | LOD streaming, WebGPU optionnel, budget thermique, occlusion culling | ✅ | LOD auto + BatchedMesh (3 appels) + WASM ; mesurer sur vrais mobiles |
-| 7 | **Fusion v1 + v2** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies/jeux/coupe | ⬜ | Deux pages coexistent ; unifier le state par ID TA2 |
+| 7 | **Fusion v1 + v2** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies/jeux/coupe | 🟡 | **Chasse aux organes portée dans v2** (27 cibles, 7/7 + 3 tests 3D) ; lien croisé v1 ↔ v2 ; pathologies, diagnostic et coupe restent en v1 |
 | 8 | **Accessibilité & responsive** | Clavier, lecteur d'écran, contraste AA clair/sombre, gestes mobiles | ✅ | 19 contrôles mesurés (`npm run test:a11y`) ; voir `docs/analyses/accessibilite-2026-11-19.md` |
 | 9 | **Intégrité données & licences** | Provenance par structure, attributions CC, citations TA2, CI | ✅ | Manifest sources + README + `public/models/README.md` |
 | 10 | **PWA hors ligne robuste** | Cache versionné, streaming chunks, reprise après échec, quota | ✅ | SW `corps-v23` + hors ligne vérifié |
@@ -135,6 +136,24 @@ Détail et limites : [`docs/analyses/groupes-2026-11-19.md`](analyses/groupes-20
 - **Limite** : les 2 017 autres structures gardent 3 waypoints génériques
   (« pôle supérieur / partie centrale / pôle inférieur »), honnêtes mais peu
   instructifs ; le chantier reste ouvert.
+
+## Passe chasse aux organes (19 novembre 2026)
+
+Détail et limites : [`docs/analyses/chasse-2026-11-19.md`](analyses/chasse-2026-11-19.md).
+
+- **Premier jeu natif v2** : 27 cibles (22 organes, 4 os, 1 muscle) tirées au hasard
+  dans `src/data/hunt.js` ; la cible est une structure réelle du manifeste, le clic
+  passe par `pickExact` et non par les 47 entités de la v1.
+- **Règles mesurables** : une seule couche visible, 90 s, +10 points (+3 par série),
+  −2 s par erreur ; HUD avec cible, indice, score, temps et barre.
+- **Défaut moteur corrigé** : `setCategoryVisible()` masquait le mesh fusionné
+  principal mais pas `<catégorie>:membrane` ; le fascia crural restait cliquable
+  alors que la couche muscle était éteinte. Les deux meshes suivent maintenant la
+  même visibilité, avec un contrôle de régression dédié.
+- **Preuves** : `npm run test:chasse` → 7/7 ; `npm run test:v2` → 35/35 (dont un
+  clic réel sur le tibia cadré) ; captures bureau/mobile dans `docs/analyses/chasse/`.
+- **Navigation v1 ↔ v2** : la fiche de structure v2 renvoie vers la version
+  classique (pathologies, diagnostic, coupe), qui renvoie déjà vers v2.
 
 ## Ordre d'exécution recommandé (restant)
 

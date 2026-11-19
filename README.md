@@ -122,17 +122,18 @@ physiologique (flexion du coude, abduction de l'épaule, ouverture de la mâchoi
 
 Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
 vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
-AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 31 tests 3D**
+AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 35 tests 3D**
 (`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
-peau, les groupes, les animations, les waypoints, le tour du monde, le LOD et le mobile.
+peau, les groupes, les animations, les waypoints, la chasse aux organes, le tour
+du monde, le LOD et le mobile.
 **19 contrôles d'accessibilité** (`npm run test:a11y`) mesurent les contrastes réels,
 les noms accessibles, le focus visible, la navigation clavier du canvas et la
 feuille de détails mobile. Les **43 groupes** sont couverts par
 `npm run test:groupes` (8 contrôles de données) et `npm run test:groupes3d`
 (52 mesures 3D : isolement exact, éclaté, mouvement, réinitialisation).
-Les **waypoints** sont vérifiés par `npm run test:waypoints` (7 contrôles :
-identifiants curés existants, 2 à 6 anecdotes par structure, positions dans
-la boîte englobante).
+Les **waypoints** sont vérifiés par `npm run test:waypoints` (7 contrôles) et la
+**chasse aux organes** par `npm run test:chasse` (7 contrôles : cibles existantes,
+catégories, géométrie non vide).
 
 **Au clavier** : `Tab` atteint le canvas, les flèches tournent autour du corps,
 `+`/`-` zooment, `Entrée` sélectionne la structure au centre, `Échap` désélectionne
@@ -145,6 +146,13 @@ cerveau, œil…), masqués tant que le bouton « Waypoints » n'est pas activé
 visite guidée et plusieurs animations de scène : tour du monde, battement cardiaque,
 respiration, clignement et flux sanguin. Les marqueurs sont des sprites de taille
 constante à l'écran : ils restent visibles et cliquables à toute distance.
+
+Une **chasse aux organes** est intégrée : 27 cibles (organes, os, muscle) tirées au
+hasard, une seule couche visible à la fois, 90 secondes, +10 points par bonne réponse
+et −2 secondes par erreur. Le clic passe par le picking exact du moteur v2, pas par
+le modèle d'entités de la v1. La version classique (`/index.html`), qui conserve les
+pathologies simulées, le jeu de diagnostic et la coupe anatomique, reste accessible
+par un lien dans la fiche de structure.
 
 L'interface v2 a été entièrement repensée : thème clair inspiré des atlas
 médicaux, mise en page trois colonnes (explorateur / vue 3D / fiche), logo

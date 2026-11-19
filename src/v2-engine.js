@@ -1179,6 +1179,12 @@ export class AnatomyV2Engine {
     if (batch && !this.mergedMode) batch.visible = visible;
     const merged = this.mergedMeshes.get(category);
     if (merged) merged.visible = visible && this.mergedMode;
+    /* Les séreuses/fascia sont un mesh séparé (`<catégorie>:membrane`) : sans
+     * cette ligne, désactiver « Organes » laissait le péritoine visible et
+     * cliquable, et une chasse aux organes pouvait toucher une membrane
+     * masquée. */
+    const membrane = this.mergedMeshes.get(`${category}:membrane`);
+    if (membrane) membrane.visible = visible && this.mergedMode;
     if (category === "skin" && this.skinBatch) this.skinBatch.visible = visible && !this.isolated;
   }
 }
