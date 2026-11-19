@@ -257,15 +257,16 @@ augmentent, ou si le nombre de triangles d'une structure baisse de plus de 2 %.
 
 ## 7. État des lieux mesuré — 19 novembre 2026
 
-Jeu de données : **2 039 structures**, **5 066 684 triangles** au LOD `high` (jeu
-reconstruit le 19 novembre 2026 ; le tableau ci-dessous reflète cette reconstruction).
+Jeu de données : **2 039 structures**, **5 066 169 triangles** au LOD `high` (jeu
+reconstruit le 19 novembre 2026, puis orientation et faces dupliquées corrigées ;
+le tableau ci-dessous reflète cet état).
 
 | Porte | Mesure | Verdict |
 |---|---|---|
 | G0 Traçabilité | 2 039/2 039 sources et licences ; 1 979/2 039 TA2 (97,1 %) | 🟡 |
 | G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
-| G2 Intégrité | 1 341/2 039 étanches et manifold (65,8 %) ; 667 avec bords ; 126 non-manifold ; 623 pluri-composantes ; 521 faces dupliquées ; 0 dégénéré | ❌ |
-| G3 Normales | 566 windings inversés ; 14 055 faces inversées (0,277 %) ; 0 normale nulle ; 0 indice hors bornes | ❌ |
+| G2 Intégrité | 1 324/2 039 étanches et manifold (64,9 %) ; 712 avec bords ; 128 non-manifold ; 623 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
+| G3 Normales | 0 winding inversé ; 13 793 faces inversées (0,272 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
 | G4 Résolution | médiane 1 118 tris ; 954 structures < 1 000 tris ; 24 plafonnées à 12 000 ; 1,30 M triangles de source jetés par le plafond | ❌ |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
 | G6 Matériaux | procédural uniquement, pas de cartes PBR par tissu | ❌ |
@@ -298,10 +299,10 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts (jeu reconstruit).** 1 355 structures en S1, 684 en S2, **0 en S3**.
-G0 : 1 979/2 039 (97,1 %). G2 : 1 515 (74,3 %) avec la classification provisoire,
-1 896 (93,0 %) hors étanchéité. G3 : 950 (46,6 %). Aucune structure n'atteint S3 tant que
-G4 (résolution) et G5 (assemblage) ne sont pas mesurés.
+**Statuts (jeu reconstruit, orientation corrigée).** 1 096 structures en S1, 943 en S2,
+**0 en S3**. G0 : 1 979/2 039 (97,1 %). G2 : 1 517 (74,4 %) avec la classification
+provisoire, 1 911 (93,7 %) hors étanchéité. G3 : 1 269 (62,2 %). Aucune structure
+n'atteint S3 tant que G4 (résolution) et G5 (assemblage) ne sont pas mesurés.
 
 **Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
 immédiatement révélé un défaut de complétude : `organ:bp-heart` ne contient que **11 pièces
@@ -314,8 +315,8 @@ et des valves.
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
-| `medium` → `high` | 0,00 mm | 0,61 mm | 3,72 mm | 121,23 mm | 271 | 47 |
-| `low` → `high` | 0,39 mm | 2,80 mm | 17,65 mm | 127,51 mm | 916 | 323 |
+| `medium` → `high` | 0,00 mm | 0,61 mm | 3,69 mm | 121,23 mm | 268 | 48 |
+| `low` → `high` | 0,40 mm | 2,76 mm | 17,39 mm | 121,23 mm | 915 | 316 |
 
 Le maximum (~121 mm) signale une simplification qui déplace la silhouette, pas un simple
 allègement.
@@ -344,6 +345,36 @@ triangles de certains objets Z-Anatomy (ex. `bone:cricoid-cartilage` : 3 028 ann
 une mesure fiable ; seule la comparaison au maillage source l'est. Les mains restent décalées
 d'environ 2,5 cm par rapport à l'enveloppe cutanée grossière : signalée en avertissement, à
 traiter en P5 (assemblage).
+
+### 7.3 Correction de l'orientation et des faces dupliquées (P2, 19 novembre 2026)
+
+`scripts/build-anatomy-v2.mjs` corrige désormais la géométrie **à la source**, avant
+simplification :
+
+- **orientation par composante** : composantes connexes fermées dont le volume signé, calculé
+  dans le repère local de la composante, est négatif → inversion des indices **et** des
+  normales. Les surfaces ouvertes (fascias, séreuses, vaisseaux coupés) sont exclues de la
+  correction : leur volume signé n'a pas de sens anatomique.
+- **faces dupliquées** : suppression après chaque étape de simplification, car
+  `MeshoptSimplifier` peut en réintroduire.
+
+Résultats mesurés, mêmes paramètres d'audit :
+
+| Indicateur | Avant | Après |
+|---|---:|---:|
+| Structures à winding inversé | 566 | **0** |
+| Faces dupliquées | 521 | **0** |
+| Faces inversées (normales de sommets) | 14 055 | 13 793 |
+| S2 (scorecard) | 684 | **943** |
+| G3 normales | 950 | **1 269** |
+| Structures étanches | 1 341 | 1 324 |
+| Structures avec bords | 667 | 712 |
+
+La baisse de 17 structures étanches est le prix de la suppression des faces dupliquées qui
+« collaient » deux feuillets : elle sera récupérée par la soudure intra-structure prévue en
+P2. Une capture avant/après de `organ:white-matter-of-telencephalon-r` (8 angles) confirme
+que le rendu reste cohérent ; les écarts de teinte sont locaux et attendus après inversion
+des normales.
 
 ---
 

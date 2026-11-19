@@ -29,7 +29,7 @@ organes** native v2, mesurés.
 | 21 | **Couche de sélection** | Picking en vue fusionnée, double rendu, LOD réinitialisable, restauration de couleur | ✅ | `pickMerged`, `baseGeometries`, `highlight(s, null)` ; captures runtime |
 | 22 | **Séreuses lisibles** | Omentum/mésentère/péritoine translucides | ✅ | Mesh membrane séparé, opacité 0,15 |
 | 23 | **Contrôle visuel par groupe** | 1 groupe = 1 capture par orientation | ✅ | `tests/screens-groupes.mjs` : 29 groupes × 4 = 116 captures |
-| 24 | **Qualité 3D — 100 % des structures** | Présence, intégrité, résolution et rendu vérifiés pour chaque élément, sous 8 angles, pour les étudiants en médecine | 🟡 | P0 instrumenté : audit, porte CI, 5 sujets × 8 captures (0 débordement), scorecard (1 355 S1 / 684 S2 / 0 S3), Hausdorff LOD. Pipeline corrigé puis dataset reconstruit : 65,8 % étanches, 0 LOD non monotone, sinus caverneux 512 → 9 728 tris. Reste : 566 windings inversés, 126 non-manifold, 24 plafonnées. Méthode : [`METHODOLOGIE-QUALITE-3D.md`](METHODOLOGIE-QUALITE-3D.md). Plan : [`plan-qualite-3d.md`](plan-qualite-3d.md) |
+| 24 | **Qualité 3D — 100 % des structures** | Présence, intégrité, résolution et rendu vérifiés pour chaque élément, sous 8 angles, pour les étudiants en médecine | 🟡 | P0 instrumenté puis P2 partiel : audit, porte CI, 5 sujets × 8 captures (0 débordement), scorecard (1 096 S1 / **943 S2** / 0 S3), Hausdorff LOD. Pipeline corrigé, dataset reconstruit, winding **566 → 0**, faces dupliquées **521 → 0**, 0 LOD non monotone, sinus caverneux 512 → 9 728 tris. Reste : 128 non-manifold, 712 avec bords, 24 plafonnées. Méthode : [`METHODOLOGIE-QUALITE-3D.md`](METHODOLOGIE-QUALITE-3D.md). Plan : [`plan-qualite-3d.md`](plan-qualite-3d.md) |
 
 Légende : ✅ = terminé et vérifié · ⬜ = à faire.
 

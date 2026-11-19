@@ -11,8 +11,8 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Statut | Structures | Part |
 |---|---:|---:|
 | S0 | 0 | 0.0 % |
-| S1 | 1 355 | 66.5 % |
-| S2 | 684 | 33.5 % |
+| S1 | 1 096 | 53.8 % |
+| S2 | 943 | 46.2 % |
 | S3 | 0 | 0.0 % |
 | S4 | 0 | 0.0 % |
 
@@ -21,16 +21,16 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Porte | Structures qui passent | Part |
 |---|---:|---:|
 | G0 traçabilité (source, chemin, TA2) | 1 979 | 97.1 % |
-| G2 topologie + étanchéité (classification provisoire) | 1 515 | 74.3 % |
-| G2 topologie seule (hors étanchéité) | 1 896 | 93.0 % |
-| G3 orientation et normales | 950 | 46.6 % |
+| G2 topologie + étanchéité (classification provisoire) | 1 517 | 74.4 % |
+| G2 topologie seule (hors étanchéité) | 1 911 | 93.7 % |
+| G3 orientation et normales | 1 269 | 62.2 % |
 
 ## Pilotes — 5 structures prioritaires
 
 | Sujet | Structures | S2 | Captures | Débordements | Principaux bloqueurs |
 |---|---:|---:|---:|---:|---|
-| Cœur | 6 | 4 | 8/8 | 0 | 37 faces inversées ; 7 faces inversées |
-| Encéphale | 1 | 0 | 8/8 | 0 | 7 arêtes non-manifold ; 4 faces dupliquées ; 7142 arêtes libres ; 572 composantes |
+| Cœur | 6 | 3 | 8/8 | 0 | 1 arêtes non-manifold ; 37 faces inversées ; 7 faces inversées |
+| Encéphale | 1 | 0 | 8/8 | 0 | 5 arêtes non-manifold ; 7150 arêtes libres ; 572 composantes ; 53 faces inversées |
 | Main droite | 40 | 32 | 8/8 | 0 | 532 arêtes libres ; 6 composantes ; 11 faces inversées ; G0 TA2 absent |
 | Face | 1 | 0 | 8/8 | 0 | 2 arêtes non-manifold ; 4747 arêtes libres ; 290 composantes ; 49 faces inversées |
 | Genou droit | 3 | 3 | 8/8 | 0 | — |
@@ -39,26 +39,26 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 
 | Structure | Cat. | Statut | Bloqueurs |
 |---|---|---|---|
-| `bone:bp-neurocranium` | bone | S1 | 1 arêtes non-manifold ; 1 faces dupliquées ; 4755 arêtes libres ; 301 composantes |
-| `bone:bp-rib-r` | bone | S1 | 1 arêtes non-manifold ; 1 faces dupliquées ; 284 arêtes libres ; 17 composantes |
-| `bone:bp-thoracic-vertebra` | bone | S1 | 1 arêtes non-manifold ; 1 faces dupliquées ; 4766 arêtes libres ; 75 composantes |
-| `bone:ethmoid-bone` | bone | S1 | 31 arêtes non-manifold ; 3 faces dupliquées ; 27 arêtes libres ; 13 composantes |
-| `muscle:bp-levator-ani-r` | muscle | S1 | 1 arêtes non-manifold ; 1 faces dupliquées ; 6218 arêtes libres ; 1148 composantes |
-| `muscle:internal-intercostal-muscles-l` | muscle | S1 | 62 arêtes non-manifold ; 35 faces dupliquées ; 18 arêtes libres ; 10 composantes |
-| `muscle:internal-intercostal-muscles-r` | muscle | S1 | 65 arêtes non-manifold ; 35 faces dupliquées ; 18 arêtes libres ; 10 composantes |
-| `organ:bp-brainstem` | organ | S1 | 4 arêtes non-manifold ; 4 faces dupliquées ; 4800 arêtes libres ; 394 composantes |
-| `organ:bp-telencephalon-l` | organ | S1 | 13 arêtes non-manifold ; 1 faces dupliquées ; 10257 arêtes libres ; 255 composantes |
-| `organ:bp-telencephalon-r` | organ | S1 | 11 arêtes non-manifold ; 2 faces dupliquées ; 10524 arêtes libres ; 264 composantes |
-| `organ:bp-viscerocranium` | organ | S1 | 1 arêtes non-manifold ; 1 faces dupliquées ; 4061 arêtes libres ; 255 composantes |
-| `organ:bp-viscerocranium-l` | organ | S1 | 3 arêtes non-manifold ; 2 faces dupliquées ; 9740 arêtes libres ; 674 composantes |
-| `bone:cricoid-cartilage` | bone | S1 | 3 arêtes non-manifold ; 1 faces dupliquées ; 2 arêtes libres ; 1 faces inversées |
-| `bone:mandible` | bone | S1 | 39 arêtes non-manifold ; 4 faces dupliquées ; 6 arêtes libres ; 29 faces inversées |
-| `bone:sacrum` | bone | S1 | 4 arêtes non-manifold ; 1 faces dupliquées ; 13 arêtes libres ; 12 faces inversées |
-| `muscle:extensor-carpi-radialis-longus-l` | muscle | S1 | 1 faces dupliquées ; 2 composantes ; winding inversé ; 6 faces inversées |
-| `muscle:external-intercostal-muscles-l` | muscle | S1 | 56 arêtes non-manifold ; 39 faces dupliquées ; 11 composantes ; 420 faces inversées |
-| `muscle:external-intercostal-muscles-r` | muscle | S1 | 73 arêtes non-manifold ; 52 faces dupliquées ; 11 composantes ; 425 faces inversées |
-| `muscle:innermost-intercostal-muscles-l` | muscle | S1 | 80 arêtes non-manifold ; 55 faces dupliquées ; 9 composantes ; 477 faces inversées |
-| `muscle:innermost-intercostal-muscles-r` | muscle | S1 | 84 arêtes non-manifold ; 60 faces dupliquées ; 9 composantes ; 474 faces inversées |
+| `bone:bp-neurocranium` | bone | S1 | 1 arêtes non-manifold ; 4757 arêtes libres ; 301 composantes ; 40 faces inversées |
+| `bone:bp-rib-r` | bone | S1 | 1 arêtes non-manifold ; 286 arêtes libres ; 17 composantes ; 12 faces inversées |
+| `bone:bp-thoracic-vertebra` | bone | S1 | 1 arêtes non-manifold ; 4768 arêtes libres ; 75 composantes ; 24 faces inversées |
+| `bone:ethmoid-bone` | bone | S1 | 31 arêtes non-manifold ; 33 arêtes libres ; 13 composantes ; 27 faces inversées |
+| `muscle:bp-levator-ani-r` | muscle | S1 | 1 arêtes non-manifold ; 6220 arêtes libres ; 1148 composantes ; 7 faces inversées |
+| `muscle:external-intercostal-muscles-l` | muscle | S1 | 58 arêtes non-manifold ; 71 arêtes libres ; 11 composantes ; 405 faces inversées |
+| `muscle:external-intercostal-muscles-r` | muscle | S1 | 64 arêtes non-manifold ; 79 arêtes libres ; 11 composantes ; 400 faces inversées |
+| `muscle:innermost-intercostal-muscles-l` | muscle | S1 | 72 arêtes non-manifold ; 84 arêtes libres ; 9 composantes ; 456 faces inversées |
+| `muscle:innermost-intercostal-muscles-r` | muscle | S1 | 77 arêtes non-manifold ; 99 arêtes libres ; 9 composantes ; 444 faces inversées |
+| `muscle:internal-intercostal-muscles-l` | muscle | S1 | 61 arêtes non-manifold ; 80 arêtes libres ; 11 composantes ; 323 faces inversées |
+| `muscle:internal-intercostal-muscles-r` | muscle | S1 | 57 arêtes non-manifold ; 72 arêtes libres ; 11 composantes ; 330 faces inversées |
+| `muscle:latissimus-dorsi-muscle-l` | muscle | S1 | 4 arêtes non-manifold ; 8 arêtes libres ; 3 composantes ; 56 faces inversées |
+| `muscle:latissimus-dorsi-muscle-r` | muscle | S1 | 5 arêtes non-manifold ; 10 arêtes libres ; 3 composantes ; 54 faces inversées |
+| `organ:base-of-peduncle-l` | organ | S1 | 1 arêtes non-manifold ; 7 arêtes libres ; 3 composantes ; 10 faces inversées |
+| `organ:base-of-peduncle-r` | organ | S1 | 1 arêtes non-manifold ; 7 arêtes libres ; 3 composantes ; 10 faces inversées |
+| `organ:bp-brainstem` | organ | S1 | 2 arêtes non-manifold ; 4808 arêtes libres ; 394 composantes ; 24 faces inversées |
+| `organ:bp-telencephalon-l` | organ | S1 | 13 arêtes non-manifold ; 10259 arêtes libres ; 255 composantes ; 295 faces inversées |
+| `organ:bp-telencephalon-r` | organ | S1 | 11 arêtes non-manifold ; 10528 arêtes libres ; 264 composantes ; 307 faces inversées |
+| `organ:bp-tracheobronchial-tree-r` | organ | S1 | 1 arêtes non-manifold ; 4574 arêtes libres ; 365 composantes ; 17 faces inversées |
+| `organ:bp-viscerocranium` | organ | S1 | 1 arêtes non-manifold ; 4063 arêtes libres ; 255 composantes ; 37 faces inversées |
 
 ## Trous de complétude constatés
 

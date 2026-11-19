@@ -64,7 +64,8 @@ Livré :
    **40 captures, 0 débordement** sur les 5 pilotes.
 3. **Scorecard** — `scripts/scorecard-qualite-3d.mjs`, `npm run scorecard:3d` : statut S0–S4,
    portes G0/G2/G3, bloqueurs par structure, classification provisoire ouvert/fermé.
-   Résultat après reconstruction : **1 355 S1, 684 S2, 0 S3** ; G0 1 979, G2 1 515, G3 950.
+   Résultat après reconstruction : **1 355 S1, 684 S2, 0 S3** ; G0 1 979, G2 1 515, G3 950
+   (puis P2 : 1 096 S1, **943 S2**, G3 **1 269**).
 4. **Porte CI** — `npm run audit:3d:baseline` puis `npm run audit:3d:check` : comparaison
    **structure par structure** à `docs/analyses/qualite-3d-baseline.json`, pas seulement aux
    totaux.
@@ -133,9 +134,11 @@ Sans cette classification, on corrigerait des anatomies correctes.
 
 ### 5.2 Corrections, dans cet ordre
 
-1. **Winding par composante** : volume signé de chaque composante ; inverser indices et normales
-   si négatif. Cible : **466 → 0**.
-2. **Faces dupliquées** : suppression. Cible : **496 → 0**.
+1. ✅ **Winding par composante** : volume signé local, composantes fermées uniquement ;
+   inverser indices et normales si négatif. Résultat : **566 → 0**.
+   Le scorecard passe de 684 à **943 structures S2**, G3 de 950 à **1 269**.
+2. ✅ **Faces dupliquées** : suppression à la source **et après chaque simplification**.
+   Résultat : **521 → 0**.
 3. **Arêtes non-manifold** : diagnostic par structure, correction ou exclusion documentée.
    Cible : **124 → 0**.
 4. **Soudure intra-structure** à 0,01 mm, puis recalcul des normales avec angle seuil.
@@ -314,8 +317,8 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 | 2 ✅ | Écart de silhouette LOD | `hausdorff.md`, 271/47 medium, 916/323 low |
 | 2 ✅ | **Réconcilier dataset et pipeline** | 0 LOD non monotone, sinus caverneux 512 → 9 728 tris, 1 341 étanches |
 | 3 | Valider la classification ouvert/fermé (907 bords, 620 pluri-composantes) | `classification-structures.json` v2 |
-| 4 | Corriger le winding par composante | 466 → 0, audit avant/après |
-| 5 | Supprimer faces dupliquées et corriger les non-manifold | 496 → 0, 124 → 0 |
+| 4 ✅ | Corriger le winding par composante | 566 → 0, audit avant/après, captures témoin |
+| 5 ✅ | Supprimer les faces dupliquées | 521 → 0 ; non-manifold 126 → 128 (à traiter jour 6) |
 | 6 | Rebuild + audit complet + tests | 35/35 tests, rapport à jour |
 | 7 | Retirer le plafond 12 000 et reconstruire la chaîne LOD | 0 plafonnée, +1,30 M tris |
 | 8 | Mesurer poids, fps, mémoire ; ajuster le streaming | budget respecté |
@@ -329,9 +332,9 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 | Indicateur | Aujourd'hui | Cible P3 | Cible P7 |
 |---|---:|---:|---:|
 | Structures au statut S3 | 0 | 5 | 2 039 |
-| Winding inversé | 466 | 0 | 0 |
+| Winding inversé | 0 | 0 | 0 |
 | Non-manifold | 124 | 0 | 0 |
-| Faces dupliquées | 496 | 0 | 0 |
+| Faces dupliquées | 0 | 0 | 0 |
 | Structures plafonnées | 24 | 0 | 0 |
 | Triangles `high` | 5,07 M | jusqu'à 6,31 M | selon sources |
 | Densité médiane os | 52 tri/cm² | ≥ 80 | ≥ 150 |

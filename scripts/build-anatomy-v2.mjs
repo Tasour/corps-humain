@@ -433,6 +433,112 @@ function removeDegenerate(geometry) {
   return compact(Uint32Array.from(kept), geometry.positions, geometry.normals);
 }
 
+/* Correction de l'orientation PAR COMPOSANTE.
+ *
+ * Un volume signé négatif sur toute une structure peut masquer des
+ * composantes internes inversées (et inversement). On calcule donc le volume
+ * de chaque composante connexe dans son propre repère (centroïde local), et
+ * on ne retourne que les composantes **fermées** dont le volume est
+ * négatif de façon significative. Les surfaces ouvertes (fascias, séreuses,
+ * vaisseaux coupés) sont laissées telles quelles : leur « volume » n'a pas de
+ * sens anatomique et le retourner serait une correction fantaisiste. */
+function repairOrientation(geometry) {
+  const { positions, normals, indices } = geometry;
+  const vertexCount = positions.length / 3;
+  const triCount = indices.length / 3;
+  if (!triCount) return geometry;
+
+  const parent = new Int32Array(vertexCount);
+  for (let i = 0; i < vertexCount; i++) parent[i] = i;
+  const find = (x) => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+  const union = (a, b) => { const ra = find(a), rb = find(b); if (ra !== rb) parent[rb] = ra; };
+  for (let i = 0; i < indices.length; i += 3) {
+    union(indices[i], indices[i + 1]);
+    union(indices[i + 1], indices[i + 2]);
+  }
+
+  const groups = new Map();
+  for (let t = 0; t < triCount; t++) {
+    const root = find(indices[t * 3]);
+    let g = groups.get(root);
+    if (!g) { g = { tris: [], cx: 0, cy: 0, cz: 0, n: 0 }; groups.set(root, g); }
+    g.tris.push(t);
+    for (let k = 0; k < 3; k++) {
+      const v = indices[t * 3 + k] * 3;
+      g.cx += positions[v]; g.cy += positions[v + 1]; g.cz += positions[v + 2]; g.n++;
+    }
+  }
+
+  let flippedComponents = 0;
+  for (const g of groups.values()) {
+    g.cx /= g.n; g.cy /= g.n; g.cz /= g.n;
+    let area = 0, volume = 0, diag = 0;
+    const mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity];
+    const vertices = new Set();
+    const edgeCounts = new Map();
+    for (const t of g.tris) {
+      const ia = indices[t * 3], ib = indices[t * 3 + 1], ic = indices[t * 3 + 2];
+      vertices.add(ia); vertices.add(ib); vertices.add(ic);
+      for (const [a, b] of [[ia, ib], [ib, ic], [ic, ia]]) {
+        const key = a < b ? a * vertexCount + b : b * vertexCount + a;
+        edgeCounts.set(key, (edgeCounts.get(key) || 0) + 1);
+      }
+      const a = ia * 3, b = ib * 3, c = ic * 3;
+      const ax = positions[a] - g.cx, ay = positions[a + 1] - g.cy, az = positions[a + 2] - g.cz;
+      const bx = positions[b] - g.cx, by = positions[b + 1] - g.cy, bz = positions[b + 2] - g.cz;
+      const cx = positions[c] - g.cx, cy = positions[c + 1] - g.cy, cz = positions[c + 2] - g.cz;
+      area += 0.5 * Math.hypot(
+        (by - ay) * (cz - az) - (bz - az) * (cy - ay),
+        (bz - az) * (cx - ax) - (bx - ax) * (cz - az),
+        (bx - ax) * (cy - ay) - (by - ay) * (cx - ax),
+      );
+      volume += (ax * (by * cz - bz * cy) + ay * (bz * cx - bx * cz) + az * (bx * cy - by * cx)) / 6;
+      for (const v of [a, b, c]) for (let k = 0; k < 3; k++) {
+        mn[k] = Math.min(mn[k], positions[v + k]);
+        mx[k] = Math.max(mx[k], positions[v + k]);
+      }
+    }
+    diag = Math.hypot(mx[0] - mn[0], mx[1] - mn[1], mx[2] - mn[2]);
+    const closed = [...edgeCounts.values()].every((n) => n === 2);
+    const tolerance = Math.max(1e-18, 1e-9 * diag ** 3);
+    if (!closed || volume >= -tolerance) continue;
+    for (const t of g.tris) {
+      const b = indices[t * 3 + 1], c = indices[t * 3 + 2];
+      indices[t * 3 + 1] = c; indices[t * 3 + 2] = b;
+    }
+    for (const v of vertices) {
+      if (!normals) continue;
+      for (let k = 0; k < 3; k++) {
+        const value = -normals[v * 3 + k];
+        normals[v * 3 + k] = Math.max(-32767, Math.min(32767, value));
+      }
+    }
+    flippedComponents++;
+  }
+  if (process.env.DEBUG_ORIENTATION === "1") {
+    console.log(`[orientation] ${groups.size} composantes, ${flippedComponents} retournées`);
+  }
+  return geometry;
+}
+
+/* Suppression des faces dupliquées (même triplet de sommets, ordre ignoré). */
+function removeDuplicateFaces(geometry) {
+  const { indices } = geometry;
+  const seen = new Set();
+  const kept = [];
+  for (let i = 0; i < indices.length; i += 3) {
+    const a = indices[i], b = indices[i + 1], c = indices[i + 2];
+    const lo = Math.min(a, b, c), hi = Math.max(a, b, c);
+    const mid = a + b + c - lo - hi;
+    const key = (lo * geometry.positions.length / 3 + mid) * geometry.positions.length / 3 + hi;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    kept.push(a, b, c);
+  }
+  if (kept.length === indices.length) return geometry;
+  return compact(Uint32Array.from(kept), geometry.positions, geometry.normals);
+}
+
 function makeLod(geometry, targetTriangles) {
   const triangles = geometry.indexCount / 3;
   if (triangles <= targetTriangles) return geometry;
@@ -523,9 +629,13 @@ for (const s of structures) {
    * (`low` > `medium`) quand la simplification s'arrêtait avant la cible :
    * dériver chaque niveau du précédent garantit `low ≤ medium ≤ high`. */
   const cleaned = removeDegenerate(geometry);
-  const highGeometry = makeLod(cleaned, LOD.high.target);
-  const mediumGeometry = makeLod(highGeometry, LOD.medium.target);
-  const lowGeometry = makeLod(mediumGeometry, LOD.low.target);
+  const oriented = repairOrientation(cleaned);
+  const deduped = removeDuplicateFaces(oriented);
+  /* La simplification peut réintroduire des faces dupliquées : on déduplique
+   * chaque niveau après simplification, pas seulement la source. */
+  const highGeometry = removeDuplicateFaces(makeLod(deduped, LOD.high.target));
+  const mediumGeometry = removeDuplicateFaces(makeLod(highGeometry, LOD.medium.target));
+  const lowGeometry = removeDuplicateFaces(makeLod(mediumGeometry, LOD.low.target));
   entry.lod.low = writeGeometry(chunks[s.category].low, lowGeometry);
   entry.lod.medium = writeGeometry(chunks[s.category].medium, mediumGeometry);
   entry.lod.high = writeGeometry(chunks[s.category].high, highGeometry);
