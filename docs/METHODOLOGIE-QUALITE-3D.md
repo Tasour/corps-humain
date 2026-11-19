@@ -266,7 +266,7 @@ corrigées le 19 novembre 2026).
 | G0 Traçabilité | 2 039/2 039 sources et licences ; 1 979/2 039 TA2 (97,1 %) | 🟡 |
 | G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
 | G2 Intégrité | 1 346/2 039 étanches et manifold (66,0 %) ; 690 avec bords ; 90 non-manifold ; 623 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
-| G3 Normales | 0 winding inversé ; 11 067 faces inversées (0,170 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
+| G3 Normales | 0 winding inversé ; 10 937 faces inversées (0,168 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
 | G4 Résolution | `high` = source complète ; médiane 1 118 tris ; 954 structures < 1 000 tris (limite des sources) ; 0 structure plafonnée ; +1,44 M tris récupérés | 🟡 |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
 | G6 Matériaux | procédural uniquement, pas de cartes PBR par tissu | ❌ |
@@ -299,9 +299,9 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts (source complète).** 1 087 structures en S1, 952 en S2, **0 en S3**.
+**Statuts (source complète).** 1 084 structures en S1, 955 en S2, **0 en S3**.
 G0 : 1 979/2 039 (97,1 %). G2 : 1 534 (75,2 %) avec la classification provisoire,
-1 949 (95,6 %) hors étanchéité. G3 : 1 292 (63,4 %). Aucune structure n'atteint S3
+1 949 (95,6 %) hors étanchéité. G3 : 1 295 (63,5 %). Aucune structure n'atteint S3
 tant que G4 (résolution qualitative) et G5 (assemblage) ne sont pas mesurés.
 
 **Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
@@ -390,8 +390,12 @@ des normales.
 | Structures étanches | 1 324 | **1 346** |
 | Structures avec bords | 712 | **690** |
 | Arêtes non-manifold | 128 | **90** |
-| Faces inversées | 13 793 | **11 067** |
+| Faces inversées | 13 793 | **10 937** |
 | LOD non monotones | 0 | 0 |
+
+Une passe complémentaire (`repairVertexNormals`) ne recalcule que les normales de sommets
+franchement opposées aux faces incidentes ; 130 faces inversées de moins (11 067 → 10 937),
+sans modifier le shading du reste des maillages.
 
 Le surcoût de téléchargement est supportable car le `high` est chargé par catégorie
 uniquement à la sélection d'une structure ; la vue d'ensemble reste en `low`. Les risques

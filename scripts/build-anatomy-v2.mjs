@@ -524,6 +524,41 @@ function repairOrientation(geometry) {
   return geometry;
 }
 
+/* Normales de sommets franchement opposées aux faces incidentes.
+ *
+ * Certaines sources (feuillets méningés, muscles intercostaux) exportent des
+ * normales de sommets tournées vers l'intérieur sur une partie du maillage. On
+ * ne recalcule QUE ces sommets-là, à partir de la moyenne des normales de
+ * faces incidentes : le reste du shading d'origine est préservé. */
+function repairVertexNormals(geometry) {
+  const { positions, normals, indices } = geometry;
+  if (!normals) return geometry;
+  const vertexCount = positions.length / 3;
+  const accum = new Float64Array(vertexCount * 3);
+  for (let i = 0; i < indices.length; i += 3) {
+    const a = indices[i] * 3, b = indices[i + 1] * 3, c = indices[i + 2] * 3;
+    const ux = positions[b] - positions[a], uy = positions[b + 1] - positions[a + 1], uz = positions[b + 2] - positions[a + 2];
+    const vx = positions[c] - positions[a], vy = positions[c + 1] - positions[a + 1], vz = positions[c + 2] - positions[a + 2];
+    const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+    for (const v of [a, b, c]) { accum[v] += nx; accum[v + 1] += ny; accum[v + 2] += nz; }
+  }
+  let repaired = 0;
+  for (let v = 0; v < vertexCount; v++) {
+    const o = v * 3;
+    const len = Math.hypot(accum[o], accum[o + 1], accum[o + 2]);
+    if (len < 1e-20) continue;
+    const ax = accum[o] / len, ay = accum[o + 1] / len, az = accum[o + 2] / len;
+    const dot = normals[o] * ax + normals[o + 1] * ay + normals[o + 2] * az;
+    if (dot >= 0) continue;
+    normals[o] = Math.round(Math.max(-32767, Math.min(32767, ax * 32767)));
+    normals[o + 1] = Math.round(Math.max(-32767, Math.min(32767, ay * 32767)));
+    normals[o + 2] = Math.round(Math.max(-32767, Math.min(32767, az * 32767)));
+    repaired++;
+  }
+  if (process.env.DEBUG_NORMALS === "1") console.log(`[normales] ${repaired} sommets recalculés`);
+  return geometry;
+}
+
 /* Suppression des faces dupliquées (même triplet de sommets, ordre ignoré). */
 function removeDuplicateFaces(geometry) {
   const { indices } = geometry;
@@ -634,9 +669,10 @@ for (const s of structures) {
   const cleaned = removeDegenerate(geometry);
   const oriented = repairOrientation(cleaned);
   const deduped = removeDuplicateFaces(oriented);
+  const normalsFixed = repairVertexNormals(deduped);
   /* La simplification peut réintroduire des faces dupliquées : on déduplique
    * chaque niveau après simplification, pas seulement la source. */
-  const highGeometry = removeDuplicateFaces(makeLod(deduped, LOD.high.target));
+  const highGeometry = removeDuplicateFaces(makeLod(normalsFixed, LOD.high.target));
   const mediumGeometry = removeDuplicateFaces(makeLod(highGeometry, LOD.medium.target));
   const lowGeometry = removeDuplicateFaces(makeLod(mediumGeometry, LOD.low.target));
   entry.lod.low = writeGeometry(chunks[s.category].low, lowGeometry);

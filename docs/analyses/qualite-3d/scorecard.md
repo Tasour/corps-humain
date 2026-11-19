@@ -11,8 +11,8 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Statut | Structures | Part |
 |---|---:|---:|
 | S0 | 0 | 0.0 % |
-| S1 | 1 087 | 53.3 % |
-| S2 | 952 | 46.7 % |
+| S1 | 1 084 | 53.2 % |
+| S2 | 955 | 46.8 % |
 | S3 | 0 | 0.0 % |
 | S4 | 0 | 0.0 % |
 
@@ -23,14 +23,14 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | G0 traçabilité (source, chemin, TA2) | 1 979 | 97.1 % |
 | G2 topologie + étanchéité (classification provisoire) | 1 534 | 75.2 % |
 | G2 topologie seule (hors étanchéité) | 1 949 | 95.6 % |
-| G3 orientation et normales | 1 292 | 63.4 % |
+| G3 orientation et normales | 1 295 | 63.5 % |
 
 ## Pilotes — 5 structures prioritaires
 
 | Sujet | Structures | S2 | Captures | Débordements | Principaux bloqueurs |
 |---|---:|---:|---:|---:|---|
-| Cœur | 6 | 3 | 8/8 | 0 | 1 arêtes non-manifold ; 17 faces inversées ; 7 faces inversées |
-| Encéphale | 1 | 0 | 8/8 | 0 | 2 arêtes non-manifold ; 7240 arêtes libres ; 573 composantes ; 34 faces inversées |
+| Cœur | 6 | 3 | 8/8 | 0 | 1 arêtes non-manifold ; 15 faces inversées ; 7 faces inversées |
+| Encéphale | 1 | 0 | 8/8 | 0 | 2 arêtes non-manifold ; 7240 arêtes libres ; 573 composantes ; 26 faces inversées |
 | Main droite | 40 | 32 | 8/8 | 0 | 532 arêtes libres ; 6 composantes ; 11 faces inversées ; G0 TA2 absent |
 | Face | 1 | 0 | 8/8 | 0 | 5135 arêtes libres ; 294 composantes ; 12 faces inversées |
 | Genou droit | 3 | 3 | 8/8 | 0 | — |
@@ -40,17 +40,17 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Structure | Cat. | Statut | Bloqueurs |
 |---|---|---|---|
 | `bone:ethmoid-bone` | bone | S1 | 31 arêtes non-manifold ; 33 arêtes libres ; 13 composantes ; 27 faces inversées |
-| `muscle:bp-levator-ani-r` | muscle | S1 | 1 arêtes non-manifold ; 6220 arêtes libres ; 1148 composantes ; 7 faces inversées |
+| `muscle:bp-levator-ani-r` | muscle | S1 | 1 arêtes non-manifold ; 6220 arêtes libres ; 1148 composantes ; 6 faces inversées |
 | `muscle:internal-intercostal-muscles-l` | muscle | S1 | 15 arêtes non-manifold ; 22 arêtes libres ; 12 composantes ; 264 faces inversées |
-| `muscle:internal-intercostal-muscles-r` | muscle | S1 | 15 arêtes non-manifold ; 22 arêtes libres ; 12 composantes ; 265 faces inversées |
+| `muscle:internal-intercostal-muscles-r` | muscle | S1 | 15 arêtes non-manifold ; 22 arêtes libres ; 12 composantes ; 264 faces inversées |
 | `organ:base-of-peduncle-l` | organ | S1 | 1 arêtes non-manifold ; 7 arêtes libres ; 3 composantes ; 10 faces inversées |
 | `organ:base-of-peduncle-r` | organ | S1 | 1 arêtes non-manifold ; 7 arêtes libres ; 3 composantes ; 10 faces inversées |
-| `organ:bp-brainstem` | organ | S1 | 2 arêtes non-manifold ; 4812 arêtes libres ; 394 composantes ; 24 faces inversées |
+| `organ:bp-brainstem` | organ | S1 | 2 arêtes non-manifold ; 4812 arêtes libres ; 394 composantes ; 16 faces inversées |
 | `organ:habenula` | organ | S1 | 12 arêtes non-manifold ; 10 arêtes libres ; 3 composantes ; 9 faces inversées |
-| `bone:bp-bony-pelvis` | bone | S1 | 658 arêtes libres ; 16 composantes ; 4 faces inversées ; captures absentes |
-| `bone:bp-neurocranium` | bone | S1 | 4947 arêtes libres ; 304 composantes ; 26 faces inversées ; captures absentes |
-| `bone:bp-neurocranium-l` | bone | S1 | 3246 arêtes libres ; 121 composantes ; 19 faces inversées ; captures absentes |
-| `bone:bp-neurocranium-r` | bone | S1 | 3072 arêtes libres ; 122 composantes ; 18 faces inversées ; captures absentes |
+| `bone:bp-bony-pelvis` | bone | S1 | 658 arêtes libres ; 16 composantes ; 3 faces inversées ; captures absentes |
+| `bone:bp-neurocranium` | bone | S1 | 4947 arêtes libres ; 304 composantes ; 25 faces inversées ; captures absentes |
+| `bone:bp-neurocranium-l` | bone | S1 | 3246 arêtes libres ; 121 composantes ; 16 faces inversées ; captures absentes |
+| `bone:bp-neurocranium-r` | bone | S1 | 3072 arêtes libres ; 122 composantes ; 16 faces inversées ; captures absentes |
 | `bone:cricoid-cartilage` | bone | S1 | 2 arêtes non-manifold ; 3 arêtes libres ; 1 faces inversées ; captures absentes |
 | `bone:lateral-process-of-nasal-septal-cartilage-l` | bone | S1 | 1 arêtes non-manifold ; 2 arêtes libres ; 1 faces inversées ; captures absentes |
 | `bone:lateral-process-of-nasal-septal-cartilage-r` | bone | S1 | 1 arêtes non-manifold ; 2 arêtes libres ; 1 faces inversées ; captures absentes |

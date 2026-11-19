@@ -144,7 +144,7 @@ Sans cette classification, on corrigerait des anatomies correctes.
 4. **Soudure intra-structure** à 0,01 mm, puis recalcul des normales avec angle seuil.
 5. **Faces dégénérées** : déjà à 0, maintenir.
 6. **Composantes** : conserver les justifiées, souder les fragments d'une même structure.
-7. **Normales de sommets incohérentes** : 11 067 faces (0,17 %) ; recalcul avec angle seuil
+7. **Normales de sommets incohérentes** : 10 937 faces (0,168 %) ; recalcul avec angle seuil
    sans écraser les normales anatomiques correctes.
 
 ### 5.3 Preuve
@@ -175,7 +175,7 @@ Réalisé :
    qu'à la sélection d'une structure.
 4. ✅ **Mesures** : triangles **5,07 M → 6,51 M** ; gzip **101,4 → 119,0 Mo** ;
    étanches **1 324 → 1 346** ; bords **712 → 690** ; non-manifold **128 → 90** ;
-   faces inversées **13 793 → 11 067**.
+   faces inversées **13 793 → 10 937**.
 
 **Sortie :** 0 structure plafonnée ; `high` = source ; **+1,44 M triangles récupérés**.
 Le budget gzip (119 Mo) dépasse l'objectif initial de 90 Mo : le streaming par catégorie

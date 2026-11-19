@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T02:53:39.150Z",
+  "generated": "2026-11-19T03:18:10.258Z",
   "base": "http://localhost:5199",
   "protocol": {
     "viewport": 1024,
@@ -456,8 +456,8 @@
           ],
           "distance": 0.19705,
           "file": "docs/analyses/qualite-3d/encephale/droite.jpg",
-          "bytes": 50294,
-          "sha256": "a38925614bcfbe9d",
+          "bytes": 50286,
+          "sha256": "3cda1064c16c2195",
           "width": 1024,
           "height": 1024,
           "coveragePct": 21.51,
@@ -573,7 +573,7 @@
           "distance": 0.2853,
           "file": "docs/analyses/qualite-3d/encephale/trois-quarts-arriere-droit.jpg",
           "bytes": 31227,
-          "sha256": "7b0eaa3110acb276",
+          "sha256": "05e8dcecc26570f3",
           "width": 1024,
           "height": 1024,
           "coveragePct": 9.93,

@@ -12,7 +12,7 @@ LOD analysé(s) : **high** · 2 039 enregistrements · 6 509 477 triangles
 | Structures avec arêtes non-manifold | 90 |
 | Structures en plusieurs composantes connexes | 623 |
 | Triangles dégénérés | 0 (0 %) |
-| Faces inversées (normale de face ≠ sommets) | 11 067 (0.17 %) |
+| Faces inversées (normale de face ≠ sommets) | 10 937 (0.168 %) |
 | Faces dupliquées | 0 |
 | Structures à volume signé négatif (winding inversé) | 0 |
 | Normales nulles | 0 |
@@ -127,8 +127,8 @@ LOD analysé(s) : **high** · 2 039 enregistrements · 6 509 477 triangles
 | `organ:falx-cerebri` | organ | high | 14 722 | 442 | 3.0 % |
 | `muscle:innermost-intercostal-muscles-l` | muscle | high | 38 254 | 303 | 0.8 % |
 | `muscle:innermost-intercostal-muscles-r` | muscle | high | 38 254 | 303 | 0.8 % |
-| `muscle:internal-intercostal-muscles-r` | muscle | high | 40 183 | 265 | 0.7 % |
 | `muscle:internal-intercostal-muscles-l` | muscle | high | 40 183 | 264 | 0.7 % |
+| `muscle:internal-intercostal-muscles-r` | muscle | high | 40 183 | 264 | 0.7 % |
 | `organ:hippocampal-commissure` | organ | high | 9 860 | 207 | 2.1 % |
 | `organ:septum-pellucidum` | organ | high | 2 388 | 110 | 4.6 % |
 | `organ:white-matter-of-spinal-cord` | organ | high | 15 554 | 100 | 0.6 % |
@@ -136,7 +136,7 @@ LOD analysé(s) : **high** · 2 039 enregistrements · 6 509 477 triangles
 | `muscle:internal-abdominal-oblique-muscle-r` | muscle | high | 28 869 | 88 | 0.3 % |
 | `muscle:multifidus-thoracis-muscle-l` | muscle | high | 3 902 | 78 | 2.0 % |
 | `muscle:multifidus-thoracis-muscle-r` | muscle | high | 3 902 | 78 | 2.0 % |
-| `organ:bp-large-intestine` | organ | high | 22 919 | 73 | 0.3 % |
+| `organ:mucosa-of-nasal-cavity` | organ | high | 9 796 | 73 | 0.7 % |
 
 ## Limites de cet audit
 

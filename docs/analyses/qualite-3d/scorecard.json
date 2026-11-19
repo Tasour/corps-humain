@@ -1,20 +1,20 @@
 {
  "summary": {
-  "generated": "2026-11-19T02:52:52.383Z",
+  "generated": "2026-11-19T03:17:27.986Z",
   "structures": 2039,
   "counts": {
    "S0": 0,
-   "S1": 1087,
-   "S2": 952,
+   "S1": 1084,
+   "S2": 955,
    "S3": 0,
    "S4": 0
   },
   "gatePass": {
    "G0": 1979,
    "G2": 1534,
-   "G3": 1292,
+   "G3": 1295,
    "G2closed": 1949,
-   "G3strict": 1292
+   "G3strict": 1295
   },
   "captures": {
    "subjects": 5,
@@ -32,7 +32,7 @@
    "clipped": 0,
    "blockers": [
     "1 arêtes non-manifold",
-    "17 faces inversées",
+    "15 faces inversées",
     "7 faces inversées"
    ]
   },
@@ -47,7 +47,7 @@
     "2 arêtes non-manifold",
     "7240 arêtes libres",
     "573 composantes",
-    "34 faces inversées"
+    "26 faces inversées"
    ]
   },
   {
@@ -148,7 +148,7 @@
     "duplicateFaces": 0,
     "components": 1148,
     "degenerate": 0,
-    "flippedFaces": 7,
+    "flippedFaces": 6,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 37.58,
@@ -159,7 +159,7 @@
     "1 arêtes non-manifold",
     "6220 arêtes libres",
     "1148 composantes",
-    "7 faces inversées",
+    "6 faces inversées",
     "captures absentes"
    ]
   },
@@ -218,7 +218,7 @@
     "duplicateFaces": 0,
     "components": 12,
     "degenerate": 0,
-    "flippedFaces": 265,
+    "flippedFaces": 264,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 42.98,
@@ -229,7 +229,7 @@
     "15 arêtes non-manifold",
     "22 arêtes libres",
     "12 composantes",
-    "265 faces inversées",
+    "264 faces inversées",
     "captures absentes"
    ]
   },
@@ -323,7 +323,7 @@
     "duplicateFaces": 0,
     "components": 394,
     "degenerate": 0,
-    "flippedFaces": 24,
+    "flippedFaces": 16,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 88.08,
@@ -334,7 +334,7 @@
     "2 arêtes non-manifold",
     "4812 arêtes libres",
     "394 composantes",
-    "24 faces inversées",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -393,7 +393,7 @@
     "duplicateFaces": 0,
     "components": 16,
     "degenerate": 0,
-    "flippedFaces": 4,
+    "flippedFaces": 3,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 14.82,
@@ -403,7 +403,7 @@
    "blockers": [
     "658 arêtes libres",
     "16 composantes",
-    "4 faces inversées",
+    "3 faces inversées",
     "captures absentes"
    ]
   },
@@ -427,7 +427,7 @@
     "duplicateFaces": 0,
     "components": 304,
     "degenerate": 0,
-    "flippedFaces": 26,
+    "flippedFaces": 25,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 21.74,
@@ -437,7 +437,7 @@
    "blockers": [
     "4947 arêtes libres",
     "304 composantes",
-    "26 faces inversées",
+    "25 faces inversées",
     "captures absentes"
    ]
   },
@@ -461,7 +461,7 @@
     "duplicateFaces": 0,
     "components": 121,
     "degenerate": 0,
-    "flippedFaces": 19,
+    "flippedFaces": 16,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 12.28,
@@ -471,7 +471,7 @@
    "blockers": [
     "3246 arêtes libres",
     "121 composantes",
-    "19 faces inversées",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -495,7 +495,7 @@
     "duplicateFaces": 0,
     "components": 122,
     "degenerate": 0,
-    "flippedFaces": 18,
+    "flippedFaces": 16,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 12.5,
@@ -505,7 +505,7 @@
    "blockers": [
     "3072 arêtes libres",
     "122 composantes",
-    "18 faces inversées",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -937,7 +937,7 @@
     "duplicateFaces": 0,
     "components": 1146,
     "degenerate": 0,
-    "flippedFaces": 14,
+    "flippedFaces": 12,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 34.43,
@@ -947,7 +947,7 @@
    "blockers": [
     "8008 arêtes libres",
     "1146 composantes",
-    "14 faces inversées",
+    "12 faces inversées",
     "captures absentes"
    ]
   },
@@ -1141,7 +1141,7 @@
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 6,
+    "flippedFaces": 5,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 34.02,
@@ -1151,7 +1151,7 @@
    "blockers": [
     "3 arêtes libres",
     "2 composantes",
-    "6 faces inversées",
+    "5 faces inversées",
     "captures absentes"
    ]
   },
@@ -1243,7 +1243,7 @@
     "duplicateFaces": 0,
     "components": 12,
     "degenerate": 0,
-    "flippedFaces": 34,
+    "flippedFaces": 33,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 33.52,
@@ -1253,7 +1253,7 @@
    "blockers": [
     "3 arêtes libres",
     "12 composantes",
-    "34 faces inversées",
+    "33 faces inversées",
     "captures absentes"
    ]
   },
@@ -1311,7 +1311,7 @@
     "duplicateFaces": 0,
     "components": 15,
     "degenerate": 0,
-    "flippedFaces": 21,
+    "flippedFaces": 19,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 35.53,
@@ -1321,7 +1321,7 @@
    "blockers": [
     "6 arêtes libres",
     "15 composantes",
-    "21 faces inversées",
+    "19 faces inversées",
     "captures absentes"
    ]
   },
@@ -1379,7 +1379,7 @@
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 11,
+    "flippedFaces": 10,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 36.1,
@@ -1389,7 +1389,7 @@
    "blockers": [
     "3 arêtes libres",
     "2 composantes",
-    "11 faces inversées",
+    "10 faces inversées",
     "captures absentes"
    ]
   },
@@ -1447,7 +1447,7 @@
     "duplicateFaces": 0,
     "components": 3,
     "degenerate": 0,
-    "flippedFaces": 8,
+    "flippedFaces": 6,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 15.83,
@@ -1457,7 +1457,7 @@
    "blockers": [
     "6 arêtes libres",
     "3 composantes",
-    "8 faces inversées",
+    "6 faces inversées",
     "captures absentes"
    ]
   },
@@ -1515,7 +1515,7 @@
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 5,
+    "flippedFaces": 4,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 16.63,
@@ -1525,7 +1525,7 @@
    "blockers": [
     "3 arêtes libres",
     "2 composantes",
-    "5 faces inversées",
+    "4 faces inversées",
     "captures absentes"
    ]
   },
@@ -1651,7 +1651,7 @@
     "duplicateFaces": 0,
     "components": 573,
     "degenerate": 0,
-    "flippedFaces": 34,
+    "flippedFaces": 26,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 81.92,
@@ -1676,7 +1676,7 @@
     "2 arêtes non-manifold",
     "7240 arêtes libres",
     "573 composantes",
-    "34 faces inversées"
+    "26 faces inversées"
    ]
   },
   {
@@ -1767,7 +1767,7 @@
     "duplicateFaces": 0,
     "components": 390,
     "degenerate": 0,
-    "flippedFaces": 10,
+    "flippedFaces": 8,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 234.68,
@@ -1777,7 +1777,7 @@
    "blockers": [
     "3060 arêtes libres",
     "390 composantes",
-    "10 faces inversées",
+    "8 faces inversées",
     "captures absentes"
    ]
   },
@@ -1801,7 +1801,7 @@
     "duplicateFaces": 0,
     "components": 1820,
     "degenerate": 0,
-    "flippedFaces": 24,
+    "flippedFaces": 11,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 1798.41,
@@ -1811,7 +1811,7 @@
    "blockers": [
     "11527 arêtes libres",
     "1820 composantes",
-    "24 faces inversées",
+    "11 faces inversées",
     "captures absentes"
    ]
   },
@@ -1835,7 +1835,7 @@
     "duplicateFaces": 0,
     "components": 1948,
     "degenerate": 0,
-    "flippedFaces": 17,
+    "flippedFaces": 9,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 1994.34,
@@ -1845,7 +1845,7 @@
    "blockers": [
     "12651 arêtes libres",
     "1948 composantes",
-    "17 faces inversées",
+    "9 faces inversées",
     "captures absentes"
    ]
   },
@@ -1937,7 +1937,7 @@
     "duplicateFaces": 0,
     "components": 203,
     "degenerate": 0,
-    "flippedFaces": 18,
+    "flippedFaces": 16,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 84.52,
@@ -1947,7 +1947,7 @@
    "blockers": [
     "3836 arêtes libres",
     "203 composantes",
-    "18 faces inversées",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -2005,7 +2005,7 @@
     "duplicateFaces": 0,
     "components": 231,
     "degenerate": 0,
-    "flippedFaces": 18,
+    "flippedFaces": 16,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 82.77,
@@ -2015,7 +2015,7 @@
    "blockers": [
     "4556 arêtes libres",
     "231 composantes",
-    "18 faces inversées",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -2039,7 +2039,7 @@
     "duplicateFaces": 0,
     "components": 202,
     "degenerate": 0,
-    "flippedFaces": 18,
+    "flippedFaces": 16,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 84.51,
@@ -2049,7 +2049,7 @@
    "blockers": [
     "3836 arêtes libres",
     "202 composantes",
-    "18 faces inversées",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -2141,7 +2141,7 @@
     "duplicateFaces": 0,
     "components": 177,
     "degenerate": 0,
-    "flippedFaces": 9,
+    "flippedFaces": 8,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 86.89,
@@ -2151,7 +2151,7 @@
    "blockers": [
     "3104 arêtes libres",
     "177 composantes",
-    "9 faces inversées",
+    "8 faces inversées",
     "captures absentes"
    ]
   },
@@ -2209,7 +2209,7 @@
     "duplicateFaces": 0,
     "components": 1294,
     "degenerate": 0,
-    "flippedFaces": 35,
+    "flippedFaces": 24,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 95.13,
@@ -2219,7 +2219,7 @@
    "blockers": [
     "13112 arêtes libres",
     "1294 composantes",
-    "35 faces inversées",
+    "24 faces inversées",
     "captures absentes"
    ]
   },
@@ -6829,7 +6829,7 @@
     "duplicateFaces": 0,
     "components": 254,
     "degenerate": 0,
-    "flippedFaces": 3,
+    "flippedFaces": 2,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 236.1,
@@ -6994,7 +6994,7 @@
     "duplicateFaces": 0,
     "components": 713,
     "degenerate": 0,
-    "flippedFaces": 32,
+    "flippedFaces": 31,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 105.68,
@@ -7003,7 +7003,7 @@
    "captures": null,
    "blockers": [
     "1 arêtes non-manifold",
-    "32 faces inversées",
+    "31 faces inversées",
     "captures absentes"
    ]
   },
@@ -7126,7 +7126,7 @@
     "duplicateFaces": 0,
     "components": 575,
     "degenerate": 0,
-    "flippedFaces": 34,
+    "flippedFaces": 26,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 81.92,
@@ -7135,7 +7135,7 @@
    "captures": null,
    "blockers": [
     "2 arêtes non-manifold",
-    "34 faces inversées",
+    "26 faces inversées",
     "captures absentes"
    ]
   },
@@ -7588,7 +7588,7 @@
     "duplicateFaces": 0,
     "components": 273,
     "degenerate": 0,
-    "flippedFaces": 16,
+    "flippedFaces": 15,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 26.62,
@@ -13064,7 +13064,7 @@
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 10,
+    "flippedFaces": 9,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 34.63,
@@ -13072,7 +13072,7 @@
    },
    "captures": null,
    "blockers": [
-    "10 faces inversées",
+    "9 faces inversées",
     "captures absentes"
    ]
   },
@@ -18564,7 +18564,7 @@
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 4,
+    "flippedFaces": 3,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 36.94,
@@ -18572,7 +18572,7 @@
    },
    "captures": null,
    "blockers": [
-    "4 faces inversées",
+    "3 faces inversées",
     "captures absentes"
    ]
   },
@@ -25284,7 +25284,7 @@
     "duplicateFaces": 0,
     "components": 223,
     "degenerate": 0,
-    "flippedFaces": 6,
+    "flippedFaces": 5,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 285.33,
@@ -25292,7 +25292,7 @@
    },
    "captures": null,
    "blockers": [
-    "6 faces inversées",
+    "5 faces inversées",
     "captures absentes"
    ]
   },
@@ -25828,7 +25828,7 @@
     "duplicateFaces": 0,
     "components": 273,
     "degenerate": 0,
-    "flippedFaces": 17,
+    "flippedFaces": 13,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 61.65,
@@ -25836,7 +25836,7 @@
    },
    "captures": null,
    "blockers": [
-    "17 faces inversées",
+    "13 faces inversées",
     "captures absentes"
    ]
   },
@@ -26180,7 +26180,7 @@
     "duplicateFaces": 0,
     "components": 3025,
     "degenerate": 0,
-    "flippedFaces": 73,
+    "flippedFaces": 54,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 14.76,
@@ -26188,7 +26188,7 @@
    },
    "captures": null,
    "blockers": [
-    "73 faces inversées",
+    "54 faces inversées",
     "captures absentes"
    ]
   },
@@ -26500,7 +26500,7 @@
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 4,
+    "flippedFaces": 3,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 136.79,
@@ -26508,7 +26508,7 @@
    },
    "captures": null,
    "blockers": [
-    "4 faces inversées",
+    "3 faces inversées",
     "captures absentes"
    ]
   },
@@ -26577,38 +26577,6 @@
    ]
   },
   {
-   "id": "organ:bp-medial-occipital-artery-l",
-   "fr": "Artère occipitale médiale",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "4574",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": true,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 660,
-    "boundaryEdges": 506,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 33,
-    "degenerate": 0,
-    "flippedFaces": 1,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 228.63,
-    "edgeP99Mm": 7.358
-   },
-   "captures": null,
-   "blockers": [
-    "1 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "organ:bp-medial-occipital-artery-r",
    "fr": "Artère occipitale médiale",
    "category": "organ",
@@ -26628,7 +26596,7 @@
     "duplicateFaces": 0,
     "components": 40,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 1,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 230.21,
@@ -26636,7 +26604,7 @@
    },
    "captures": null,
    "blockers": [
-    "2 faces inversées",
+    "1 faces inversées",
     "captures absentes"
    ]
   },
@@ -26697,38 +26665,6 @@
     "zeroNormals": 0,
     "densityPerCm2": 64.29,
     "edgeP99Mm": 25.608
-   },
-   "captures": null,
-   "blockers": [
-    "1 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-median-sacral-vein",
-   "fr": "Veine sacrée médiane",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "5022",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": true,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 1026,
-    "boundaryEdges": 68,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 9,
-    "degenerate": 0,
-    "flippedFaces": 1,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 138.62,
-    "edgeP99Mm": 12.283
    },
    "captures": null,
    "blockers": [
@@ -26820,7 +26756,7 @@
     "duplicateFaces": 0,
     "components": 74,
     "degenerate": 0,
-    "flippedFaces": 5,
+    "flippedFaces": 4,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 345.86,
@@ -26828,7 +26764,7 @@
    },
    "captures": null,
    "blockers": [
-    "5 faces inversées",
+    "4 faces inversées",
     "captures absentes"
    ]
   },
@@ -27300,7 +27236,7 @@
     "duplicateFaces": 0,
     "components": 89,
     "degenerate": 0,
-    "flippedFaces": 5,
+    "flippedFaces": 4,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 41.63,
@@ -27308,7 +27244,7 @@
    },
    "captures": null,
    "blockers": [
-    "5 faces inversées",
+    "4 faces inversées",
     "captures absentes"
    ]
   },
@@ -27364,7 +27300,7 @@
     "duplicateFaces": 0,
     "components": 701,
     "degenerate": 0,
-    "flippedFaces": 15,
+    "flippedFaces": 14,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 106.95,
@@ -27437,38 +27373,6 @@
    "captures": null,
    "blockers": [
     "3 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-splenic-artery",
-   "fr": "Artère splénique",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "4239",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": true,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 3720,
-    "boundaryEdges": 2616,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 128,
-    "degenerate": 0,
-    "flippedFaces": 4,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 70.23,
-    "edgeP99Mm": 9.034
-   },
-   "captures": null,
-   "blockers": [
-    "4 faces inversées",
     "captures absentes"
    ]
   },
@@ -27716,7 +27620,7 @@
     "duplicateFaces": 0,
     "components": 7,
     "degenerate": 0,
-    "flippedFaces": 5,
+    "flippedFaces": 4,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 321.75,
@@ -27724,7 +27628,7 @@
    },
    "captures": null,
    "blockers": [
-    "5 faces inversées",
+    "4 faces inversées",
     "captures absentes"
    ]
   },
@@ -27812,7 +27716,7 @@
     "duplicateFaces": 0,
     "components": 9853,
     "degenerate": 0,
-    "flippedFaces": 32,
+    "flippedFaces": 29,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 14.01,
@@ -27820,7 +27724,7 @@
    },
    "captures": null,
    "blockers": [
-    "32 faces inversées",
+    "29 faces inversées",
     "captures absentes"
    ]
   },
@@ -52615,7 +52519,7 @@
     "duplicateFaces": 0,
     "components": 170,
     "degenerate": 0,
-    "flippedFaces": 17,
+    "flippedFaces": 15,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 100.35,
@@ -52637,7 +52541,7 @@
     ]
    },
    "blockers": [
-    "17 faces inversées"
+    "15 faces inversées"
    ]
   },
   {
@@ -54501,6 +54405,37 @@
    ]
   },
   {
+   "id": "organ:bp-medial-occipital-artery-l",
+   "fr": "Artère occipitale médiale",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "4574",
+   "status": "S2",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 660,
+    "boundaryEdges": 506,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 33,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 228.63,
+    "edgeP99Mm": 7.358
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:bp-medial-plantar-artery-r",
    "fr": "Artère plantaire médiale",
    "category": "organ",
@@ -54618,6 +54553,37 @@
     "zeroNormals": 0,
     "densityPerCm2": 67.28,
     "edgeP99Mm": 14.426
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:bp-median-sacral-vein",
+   "fr": "Veine sacrée médiane",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "5022",
+   "status": "S2",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 1026,
+    "boundaryEdges": 68,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 9,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 138.62,
+    "edgeP99Mm": 12.283
    },
    "captures": null,
    "blockers": [
@@ -56788,6 +56754,37 @@
     "zeroNormals": 0,
     "densityPerCm2": 61.92,
     "edgeP99Mm": 23.531
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:bp-splenic-artery",
+   "fr": "Artère splénique",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "4239",
+   "status": "S2",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 3720,
+    "boundaryEdges": 2616,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 128,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 70.23,
+    "edgeP99Mm": 9.034
    },
    "captures": null,
    "blockers": [
