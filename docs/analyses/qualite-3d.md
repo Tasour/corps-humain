@@ -1,16 +1,16 @@
 # Audit qualité 3D — mesures topologiques
 
 Généré le 2026-11-19 par `npm run audit:3d`.
-LOD analysé(s) : **high** · 2 039 enregistrements · 6 509 477 triangles.
+LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles.
 
 ## Synthèse
 
 | Indicateur | Valeur |
 |---|---:|
-| Structures étanches et manifold | **1 346 / 2 039** (66 %) |
-| Structures avec arêtes libres (bords) | 690 |
+| Structures étanches et manifold | **1 346 / 2 040** (66 %) |
+| Structures avec arêtes libres (bords) | 691 |
 | Structures avec arêtes non-manifold | 90 |
-| Structures en plusieurs composantes connexes | 623 |
+| Structures en plusieurs composantes connexes | 624 |
 | Triangles dégénérés | 0 (0 %) |
 | Faces inversées (normale de face ≠ sommets) | 10 937 (0.168 %) |
 | Faces dupliquées | 0 |
@@ -24,14 +24,14 @@ LOD analysé(s) : **high** · 2 039 enregistrements · 6 509 477 triangles
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | bone | high | 317 | 935 323 | 1 460 | 314 | 7 523 | 53.6 | 257 | 12 | 51 |
 | muscle | high | 695 | 2 372 709 | 1 472 | 330 | 6 760 | 35.8 | 591 | 13 | 87 |
-| organ | high | 1 027 | 3 201 445 | 824 | 274 | 6 606 | 113.1 | 498 | 65 | 485 |
+| organ | high | 1 028 | 3 201 741 | 818 | 274 | 6 606 | 111.9 | 498 | 65 | 486 |
 
 ## Par source
 
 | Source | Structures | Triangles | Étanches | Winding inversé | Pluri-composantes |
 |---|---:|---:|---:|---:|---:|
 | Z-Anatomy | 1 443 | 4 767 278 | 1 200 | 0 | 291 |
-| BodyParts3D 4.0 | 596 | 1 742 199 | 146 | 0 | 332 |
+| BodyParts3D 4.0 | 597 | 1 742 495 | 146 | 0 | 333 |
 
 ## 15 structures les plus ouvertes (ratio arêtes libres / triangles)
 
@@ -90,13 +90,13 @@ LOD analysé(s) : **high** · 2 039 enregistrements · 6 509 477 triangles
 | `organ:bp-femoral-vein-l` | organ | high | 228 | 110,35 | 2.1 | 131,7 |
 | `muscle:posterior-layer-of-thoracolumbar-fascia-l` | muscle | high | 313 | 142,96 | 2.2 | 37,9 |
 | `muscle:posterior-layer-of-thoracolumbar-fascia-r` | muscle | high | 313 | 142,96 | 2.2 | 37,9 |
+| `organ:bp-esophagus` | organ | high | 296 | 125,38 | 2.4 | 61,6 |
 | `muscle:middle-layer-of-thoracolumbar-fascia-l` | muscle | high | 160 | 63,35 | 2.5 | 27,1 |
 | `muscle:middle-layer-of-thoracolumbar-fascia-r` | muscle | high | 160 | 63,35 | 2.5 | 27,1 |
 | `muscle:transverse-intermuscular-septum-of-leg-l` | muscle | high | 495 | 175,13 | 2.8 | 31,9 |
 | `muscle:transverse-intermuscular-septum-of-leg-r` | muscle | high | 495 | 175,13 | 2.8 | 31,9 |
 | `bone:bp-bony-pelvis-l` | bone | high | 1 808 | 561,00 | 3.2 | 51,4 |
 | `bone:bp-bony-pelvis-r` | bone | high | 1 898 | 563,83 | 3.4 | 51,8 |
-| `muscle:anterior-layer-of-thoracolumbar-fascia-l` | muscle | high | 176 | 46,67 | 3.8 | 24,4 |
 
 ## 15 arêtes les plus longues
 

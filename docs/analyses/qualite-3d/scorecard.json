@@ -1,20 +1,20 @@
 {
  "summary": {
-  "generated": "2026-11-19T03:17:27.986Z",
-  "structures": 2039,
+  "generated": "2026-11-19T03:27:38.034Z",
+  "structures": 2040,
   "counts": {
    "S0": 0,
-   "S1": 1084,
+   "S1": 1085,
    "S2": 955,
    "S3": 0,
    "S4": 0
   },
   "gatePass": {
    "G0": 1979,
-   "G2": 1534,
-   "G3": 1295,
-   "G2closed": 1949,
-   "G3strict": 1295
+   "G2": 1535,
+   "G3": 1296,
+   "G2closed": 1950,
+   "G3strict": 1296
   },
   "captures": {
    "subjects": 5,
@@ -25709,6 +25709,38 @@
    "captures": null,
    "blockers": [
     "1 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:bp-esophagus",
+   "fr": "Œsophage",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": null,
+   "status": "S1",
+   "closed": false,
+   "gates": {
+    "G0": false,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 296,
+    "boundaryEdges": 52,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 4,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 2.36,
+    "edgeP99Mm": 58.291
+   },
+   "captures": null,
+   "blockers": [
+    "G0 TA2 absent",
     "captures absentes"
    ]
   },

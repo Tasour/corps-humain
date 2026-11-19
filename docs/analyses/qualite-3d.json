@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T03:17:22.943Z",
+ "generated": "2026-11-19T03:26:47.655Z",
  "dataset": {
-  "structures": 2039,
+  "structures": 2040,
   "lodAnalyzed": [
    "high"
   ],
-  "rows": 2039,
-  "triangles": 6509477,
+  "rows": 2040,
+  "triangles": 6509773,
   "sources": [
    {
     "name": "BodyParts3D 4.0",
@@ -24,8 +24,8 @@
   "watertightStructures": 1346,
   "watertightPct": 66,
   "nonManifoldStructures": 90,
-  "withBoundaryStructures": 690,
-  "multiComponentStructures": 623,
+  "withBoundaryStructures": 691,
+  "multiComponentStructures": 624,
   "degenerateTriangles": 0,
   "degeneratePct": 0,
   "flippedFaces": 10937,
@@ -74,16 +74,16 @@
   {
    "category": "organ",
    "lod": "high",
-   "structures": 1027,
-   "triangles": 3201445,
-   "triMedian": 824,
+   "structures": 1028,
+   "triangles": 3201741,
+   "triMedian": 818,
    "triP10": 274,
    "triP90": 6606,
-   "densityMedian": 113.1,
+   "densityMedian": 111.9,
    "watertight": 498,
    "nonManifold": 65,
-   "withBoundary": 526,
-   "multiComponent": 485,
+   "withBoundary": 527,
+   "multiComponent": 486,
    "degenerate": 0,
    "flipped": 3394,
    "inverted": 0
@@ -100,11 +100,11 @@
   },
   {
    "source": "BodyParts3D 4.0",
-   "structures": 596,
+   "structures": 597,
    "watertight": 146,
    "inverted": 0,
-   "multiComponent": 332,
-   "triangles": 1742199
+   "multiComponent": 333,
+   "triangles": 1742495
   }
  ],
  "worst": {
@@ -1610,6 +1610,24 @@
     "volumeCm3": null
    },
    {
+    "id": "organ:bp-esophagus",
+    "fr": "Œsophage",
+    "category": "organ",
+    "lod": "high",
+    "triangles": 296,
+    "boundaryEdges": 52,
+    "nonManifoldEdges": 0,
+    "components": 4,
+    "densityPerCm2": 2.4,
+    "edgeP99Mm": 58.29,
+    "edgeMaxMm": 61.62,
+    "areaCm2": 125.38,
+    "flippedFaces": 0,
+    "degenerate": 0,
+    "duplicateFaces": 0,
+    "volumeCm3": null
+   },
+   {
     "id": "muscle:middle-layer-of-thoracolumbar-fascia-l",
     "fr": "Lame moyenne du fascia thoracolombaire",
     "category": "muscle",
@@ -1881,24 +1899,6 @@
    },
    {
     "id": "muscle:clavipectoral-fascia-l",
-    "fr": "Fascia clavipectoral",
-    "category": "muscle",
-    "lod": "high",
-    "triangles": 1280,
-    "boundaryEdges": 121,
-    "nonManifoldEdges": 43,
-    "components": 1,
-    "densityPerCm2": 4.8,
-    "edgeP99Mm": 20.78,
-    "edgeMaxMm": 26.51,
-    "areaCm2": 269.22,
-    "flippedFaces": 6,
-    "degenerate": 0,
-    "duplicateFaces": 0,
-    "volumeCm3": null
-   },
-   {
-    "id": "muscle:clavipectoral-fascia-r",
     "fr": "Fascia clavipectoral",
     "category": "muscle",
     "lod": "high",
@@ -59912,6 +59912,34 @@
    "edgeP99Mm": 0.186,
    "edgeMaxMm": 0.199,
    "densityPerCm2": 15879.7,
+   "invertedWinding": false
+  },
+  {
+   "id": "organ:bp-esophagus",
+   "fr": "Œsophage",
+   "category": "organ",
+   "subsystem": "digestive",
+   "source": "BodyParts3D 4.0",
+   "lod": "high",
+   "triangles": 296,
+   "vertices": 173,
+   "degenerate": 0,
+   "duplicateFaces": 0,
+   "outOfRange": 0,
+   "nan": 0,
+   "zeroNormals": 0,
+   "flippedFaces": 0,
+   "boundaryEdges": 52,
+   "nonManifoldEdges": 0,
+   "components": 4,
+   "isolatedVertices": 0,
+   "areaCm2": 125.384,
+   "volumeCm3": null,
+   "edgeMinMm": 1.6248,
+   "edgeMedianMm": 14.034,
+   "edgeP99Mm": 58.291,
+   "edgeMaxMm": 61.617,
+   "densityPerCm2": 2.36,
    "invertedWinding": false
   }
  ]

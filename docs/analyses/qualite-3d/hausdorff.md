@@ -1,7 +1,7 @@
 # Écart de silhouette entre LOD — Hausdorff échantillonné
 
 Généré le 2026-11-19 par `npm run hausdorff:3d`.
-Référence : LOD `high`. 2039 structures, 256 sommets échantillonnés par direction.
+Référence : LOD `high`. 2040 structures, 256 sommets échantillonnés par direction.
 
 ## Synthèse
 

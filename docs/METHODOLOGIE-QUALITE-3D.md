@@ -257,15 +257,15 @@ augmentent, ou si le nombre de triangles d'une structure baisse de plus de 2 %.
 
 ## 7. État des lieux mesuré — 19 novembre 2026
 
-Jeu de données : **2 039 structures**, **6 509 477 triangles** au LOD `high`
+Jeu de données : **2 040 structures**, **6 509 773 triangles** au LOD `high`
 (source complète, sans plafond ; jeu reconstruit, orientation et faces dupliquées
 corrigées le 19 novembre 2026).
 
 | Porte | Mesure | Verdict |
 |---|---|---|
-| G0 Traçabilité | 2 039/2 039 sources et licences ; 1 979/2 039 TA2 (97,1 %) | 🟡 |
+| G0 Traçabilité | 2 040/2 040 sources et licences ; 1 979/2 040 TA2 (96,9 %) | 🟡 |
 | G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
-| G2 Intégrité | 1 346/2 039 étanches et manifold (66,0 %) ; 690 avec bords ; 90 non-manifold ; 623 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
+| G2 Intégrité | 1 346/2 040 étanches et manifold (66,0 %) ; 691 avec bords ; 90 non-manifold ; 624 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
 | G3 Normales | 0 winding inversé ; 10 937 faces inversées (0,168 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
 | G4 Résolution | `high` = source complète ; médiane 1 118 tris ; 954 structures < 1 000 tris (limite des sources) ; 0 structure plafonnée ; +1,44 M tris récupérés | 🟡 |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
@@ -299,9 +299,9 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts (source complète).** 1 084 structures en S1, 955 en S2, **0 en S3**.
-G0 : 1 979/2 039 (97,1 %). G2 : 1 534 (75,2 %) avec la classification provisoire,
-1 949 (95,6 %) hors étanchéité. G3 : 1 295 (63,5 %). Aucune structure n'atteint S3
+**Statuts (source complète, œsophage ajouté).** 1 085 structures en S1, 955 en S2,
+**0 en S3**. G0 : 1 979/2 040 (96,9 %). G2 : 1 535 (75,2 %) avec la classification
+provisoire, 1 949 (95,5 %) hors étanchéité. G3 : 1 296 (63,5 %). Aucune structure n'atteint S3
 tant que G4 (résolution qualitative) et G5 (assemblage) ne sont pas mesurés.
 
 **Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
@@ -311,7 +311,7 @@ BodyParts3D** (valves, sinus coronaire, veines cardiaques) — **pas de myocarde
 (`organ:left-ventricle`, `organ:right-ventricle`, `organ:left-atrium`, `organ:right-atrium`)
 et des valves.
 
-**Écart de silhouette.** Référence `high`, 2 039 structures, 256 sommets par direction :
+**Écart de silhouette.** Référence `high`, 2 040 structures, 256 sommets par direction :
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
@@ -435,6 +435,9 @@ déploiement large (G7).
 ## 10. Documents liés
 
 - [`docs/analyses/qualite-3d.md`](analyses/qualite-3d.md) — mesures du 19 novembre 2026.
+- [`docs/analyses/completude-3d.md`](analyses/completude-3d.md) — présence et trous de source.
+- [`docs/analyses/qualite-3d/scorecard.md`](analyses/qualite-3d/scorecard.md) — statuts S0–S4.
+- [`docs/analyses/qualite-3d/hausdorff.md`](analyses/qualite-3d/hausdorff.md) — fidélité des LOD.
 - [`docs/plan-qualite-3d.md`](plan-qualite-3d.md) — plan de route et prochaine étape.
 - [`docs/chantiers-prioritaires.md`](chantiers-prioritaires.md) — statut des chantiers.
 - [`docs/jeu-de-donnees-v2.md`](jeu-de-donnees-v2.md) — format, LOD et sources.

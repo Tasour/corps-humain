@@ -11,7 +11,7 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Statut | Structures | Part |
 |---|---:|---:|
 | S0 | 0 | 0.0 % |
-| S1 | 1 084 | 53.2 % |
+| S1 | 1 085 | 53.2 % |
 | S2 | 955 | 46.8 % |
 | S3 | 0 | 0.0 % |
 | S4 | 0 | 0.0 % |
@@ -20,10 +20,10 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 
 | Porte | Structures qui passent | Part |
 |---|---:|---:|
-| G0 traçabilité (source, chemin, TA2) | 1 979 | 97.1 % |
-| G2 topologie + étanchéité (classification provisoire) | 1 534 | 75.2 % |
-| G2 topologie seule (hors étanchéité) | 1 949 | 95.6 % |
-| G3 orientation et normales | 1 295 | 63.5 % |
+| G0 traçabilité (source, chemin, TA2) | 1 979 | 97.0 % |
+| G2 topologie + étanchéité (classification provisoire) | 1 535 | 75.2 % |
+| G2 topologie seule (hors étanchéité) | 1 950 | 95.6 % |
+| G3 orientation et normales | 1 296 | 63.5 % |
 
 ## Pilotes — 5 structures prioritaires
 

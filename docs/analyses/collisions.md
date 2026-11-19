@@ -1,6 +1,6 @@
 # Rapport de collisions — jeu de données v2
 
-146 anomalie(s) sur 2039 structures.
+146 anomalie(s) sur 2040 structures.
 
 - **[hors-peau-exemptee]** Phalange distale du premier doigt de la main (bone:distal-phalanx-of-first-finger-of-hand-r) : bornes -0.335,0.767,0.057 → -0.321,0.791,0.074 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[hors-peau-exemptee]** Phalange distale du deuxième doigt de la main (bone:distal-phalanx-of-second-finger-of-hand-r) : bornes -0.322,0.708,0.070 → -0.311,0.722,0.088 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5

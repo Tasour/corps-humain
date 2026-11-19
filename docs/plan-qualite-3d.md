@@ -99,13 +99,17 @@ Livré :
 
 Tâches :
 
-1. **Réconcilier l'inventaire** avec le manifeste : 2 039 structures rendues contre l'inventaire
-   anatomique complet ; lister les absents.
-2. **Combler les trous médians** : œsophage (entre pharynx et estomac), poumons entiers,
-   hémisphères cérébraux, veines caves, uretères, surrénales — vérifier chaque absent.
+1. ✅ **Réconcilier l'inventaire** : rapport
+   [`docs/analyses/completude-3d.md`](analyses/completude-3d.md). L'œsophage avait une pièce
+   dans BodyParts3D mais aucun concept dans l'inventaire : entrée ajoutée, jeu reconstruit,
+   **2 040 structures**.
+2. ✅ **Trous médians vérifiés** : œsophage ajouté (`organ:bp-esophagus`, FMA7131) ;
+   veines caves, uretères et surrénales déjà présents ; les télencéphales gauche et droit
+   sont les hémisphères ; myocarde, ménisques, ligaments croisés et poumons entiers sont
+   absents des deux sources (documenté, rien n'est fabriqué).
 3. **Paires latérales** : détecter les structures sans pendantcontrolatéral et documenter.
 4. **Doublons inter-sources** : étendre la déduplication par `(nom, côté)` aux cas de synonymie.
-5. **TA2** : passer de 1 979/2 039 à 100 %, ou documenter chaque absence.
+5. **TA2** : passer de 1 979/2 040 à 100 %, ou documenter chaque absence.
 6. **Fiche de provenance** par structure : source, identifiant source, licence, version, auteur
    de la correction.
 

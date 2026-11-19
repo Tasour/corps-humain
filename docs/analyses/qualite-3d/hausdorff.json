@@ -1,7 +1,7 @@
 {
  "summary": {
-  "generated": "2026-11-19T03:17:50.075Z",
-  "structures": 2039,
+  "generated": "2026-11-19T03:27:55.484Z",
+  "structures": 2040,
   "samplesPerDirection": 256,
   "medium": {
    "medianMm": 0,
@@ -12,7 +12,7 @@
    "over2": 58
   },
   "low": {
-   "medianMm": 0.406,
+   "medianMm": 0.405,
    "p90Mm": 2.792,
    "p99Mm": 17.385,
    "maxMm": 126.303,
@@ -48955,6 +48955,30 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.4891546024384911,
     "samples": 589
+   }
+  },
+  {
+   "id": "organ:bp-esophagus",
+   "fr": "Œsophage",
+   "category": "organ",
+   "triangles": {
+    "high": 296,
+    "medium": 296,
+    "low": 296
+   },
+   "medium": {
+    "maxMm": 0,
+    "meanMm": 0,
+    "coarseToFineMaxMm": 0,
+    "fineToCoarseMaxMm": 0,
+    "samples": 0
+   },
+   "low": {
+    "maxMm": 0,
+    "meanMm": 0,
+    "coarseToFineMaxMm": 0,
+    "fineToCoarseMaxMm": 0,
+    "samples": 0
    }
   }
  ]

@@ -106984,6 +106984,45 @@
           "url": "https://github.com/Z-Anatomy/Models-of-human-anatomy"
         },
         "alternatives": []
+      },
+      {
+        "id": "organ:bp-esophagus",
+        "category": "organ",
+        "canonical": "oesophagus",
+        "subsystem": "digestive",
+        "object": "",
+        "side": null,
+        "english": "Oesophagus",
+        "latin": "Oesophagus",
+        "french": "Œsophage",
+        "ta2Id": null,
+        "collections": [
+          "BodyParts3D:digestive"
+        ],
+        "dimensions": null,
+        "materials": [],
+        "zAnatomy": null,
+        "bodyParts3D": {
+          "concept": "oesophagus",
+          "conceptId": "FMA7131",
+          "parts": 1,
+          "triangles": 296,
+          "partNames": [
+            "Esophagus"
+          ]
+        },
+        "best": {
+          "source": "BodyParts3D 4.0",
+          "model": "oesophagus",
+          "modelId": "FMA7131",
+          "triangles": 296,
+          "parts": 1,
+          "license": "CC BY 4.0",
+          "url": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html"
+        },
+        "alternatives": [],
+        "onlyInBodyParts3D": true,
+        "provenance": "Ajoute le 2026-11-19 (P1) : la piece Esophagus existe dans BodyParts3D 4.0 (FMA7131) mais navoit pas de concept dans l inventaire."
       }
     ]
   }

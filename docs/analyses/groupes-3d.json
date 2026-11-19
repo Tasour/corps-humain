@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T03:21:05.143Z",
+  "generated": "2026-11-19T03:30:37.012Z",
   "groups": 43,
   "passed": 52,
   "total": 52,
@@ -567,12 +567,12 @@
     {
       "id": "ui:elbow-l",
       "ok": true,
-      "maxExplode": 0.010694922879338264
+      "maxExplode": 0.012833907268941402
     },
     {
       "id": "ui:knee-l",
       "ok": true,
-      "maxExplode": 0.00863455981016159
+      "maxExplode": 0.006475919857621193
     },
     {
       "id": "ui:jaw",
@@ -587,22 +587,22 @@
     {
       "id": "ui:biceps-l",
       "ok": true,
-      "maxExplode": 0.00996165256947279
+      "maxExplode": 0.013946314342319965
     },
     {
       "id": "ui:quadriceps-l",
       "ok": true,
-      "maxExplode": 0.008590425364673138
+      "maxExplode": 0.010738031938672066
     },
     {
       "id": "ui:trapezius",
       "ok": true,
-      "maxExplode": 0.008624335750937462
+      "maxExplode": 0.01078041922301054
     },
     {
       "id": "ui:heart",
       "ok": true,
-      "maxExplode": 0.00859667919576168
+      "maxExplode": 0.010745848529040813
     },
     {
       "id": "console",

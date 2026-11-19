@@ -33,7 +33,7 @@ fs.mkdirSync(CLASSIF_OUT, { recursive: true });
 /* Classification provisoire : ouvert si le nom désigne une surface, une
  * membrane, un conduit ou une structure en feuille. Les os et les ventres
  * musculaires sont fermés par défaut. */
-const OPEN_PATTERN = /(fascia|membrane|peritoneum|pleura|mesentery|mesocolon|omentum|ligament|tendon|sheath|bursa|capsule|skin|serous|retinaculum|aponeurosis|septum|sulcus|fissure|gyrus|nerve|artery|vein|vessel|duct|sinus|canal|ureter|urethra|trachea|bronchus|intestine|colon|stomach|bladder|gallbladder|atrium|ventricle|heart)/i;
+const OPEN_PATTERN = /(fascia|membrane|peritoneum|pleura|mesentery|mesocolon|omentum|ligament|tendon|sheath|bursa|capsule|skin|serous|retinaculum|aponeurosis|septum|sulcus|fissure|gyrus|nerve|artery|vein|vessel|duct|sinus|canal|ureter|urethra|trachea|bronchus|esophag|oesophag|intestine|colon|stomach|bladder|gallbladder|atrium|ventricle|heart)/i;
 
 function classify(s) {
   const hay = `${s.id} ${s.fr} ${s.en}`;
