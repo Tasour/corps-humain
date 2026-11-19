@@ -319,7 +319,10 @@ const structures = visibleStructures.filter((s) => !MISMATCH_DROP_IDS.has(s.id))
 const LOD = {
   low: { target: 300, label: "vue d'ensemble" },
   medium: { target: 1500, label: "vue d'un système" },
-  high: { target: 12000, label: "structure isolée" },
+  /* P3 : le `high` est la source complète, sans plafond arbitraire. Le
+   * maillage fin n'est chargé qu'à l'isolement d'une structure, jamais pour
+   * tout le corps en même temps. `null` = aucune simplification. */
+  high: { target: null, label: "source complète (structure isolée)" },
 };
 const CATEGORIES = ["bone", "muscle", "organ", "skin"];
 
@@ -541,7 +544,7 @@ function removeDuplicateFaces(geometry) {
 
 function makeLod(geometry, targetTriangles) {
   const triangles = geometry.indexCount / 3;
-  if (triangles <= targetTriangles) return geometry;
+  if (targetTriangles == null || triangles <= targetTriangles) return geometry;
   const target = Math.max(3, Math.floor(targetTriangles) * 3);
   try {
     const [simplified] = MeshoptSimplifier.simplify(

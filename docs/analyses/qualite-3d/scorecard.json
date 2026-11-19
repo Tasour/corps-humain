@@ -1,20 +1,20 @@
 {
  "summary": {
-  "generated": "2026-11-19T02:45:01.221Z",
+  "generated": "2026-11-19T02:52:52.383Z",
   "structures": 2039,
   "counts": {
    "S0": 0,
-   "S1": 1096,
-   "S2": 943,
+   "S1": 1087,
+   "S2": 952,
    "S3": 0,
    "S4": 0
   },
   "gatePass": {
    "G0": 1979,
-   "G2": 1517,
-   "G3": 1269,
-   "G2closed": 1911,
-   "G3strict": 1269
+   "G2": 1534,
+   "G3": 1292,
+   "G2closed": 1949,
+   "G3strict": 1292
   },
   "captures": {
    "subjects": 5,
@@ -32,7 +32,7 @@
    "clipped": 0,
    "blockers": [
     "1 arêtes non-manifold",
-    "37 faces inversées",
+    "17 faces inversées",
     "7 faces inversées"
    ]
   },
@@ -44,10 +44,10 @@
    "captures": 8,
    "clipped": 0,
    "blockers": [
-    "5 arêtes non-manifold",
-    "7150 arêtes libres",
-    "572 composantes",
-    "53 faces inversées"
+    "2 arêtes non-manifold",
+    "7240 arêtes libres",
+    "573 composantes",
+    "34 faces inversées"
    ]
   },
   {
@@ -77,10 +77,9 @@
    "captures": 8,
    "clipped": 0,
    "blockers": [
-    "2 arêtes non-manifold",
-    "4747 arêtes libres",
-    "290 composantes",
-    "49 faces inversées"
+    "5135 arêtes libres",
+    "294 composantes",
+    "12 faces inversées"
    ]
   },
   {
@@ -94,111 +93,6 @@
   }
  ],
  "structures": [
-  {
-   "id": "bone:bp-neurocranium",
-   "fr": "Neurocrâne",
-   "category": "bone",
-   "source": "BodyParts3D 4.0",
-   "ta2": "354",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11998,
-    "boundaryEdges": 4757,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 301,
-    "degenerate": 0,
-    "flippedFaces": 40,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 14.01,
-    "edgeP99Mm": 17.132
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "4757 arêtes libres",
-    "301 composantes",
-    "40 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "bone:bp-rib-r",
-   "fr": "Côte",
-   "category": "bone",
-   "source": "BodyParts3D 4.0",
-   "ta2": "1118",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 286,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 17,
-    "degenerate": 0,
-    "flippedFaces": 12,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 11.59,
-    "edgeP99Mm": 21.164
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "286 arêtes libres",
-    "17 composantes",
-    "12 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "bone:bp-thoracic-vertebra",
-   "fr": "Vertèbre thoracique",
-   "category": "bone",
-   "source": "BodyParts3D 4.0",
-   "ta2": "1059",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 4768,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 75,
-    "degenerate": 0,
-    "flippedFaces": 24,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 11.9,
-    "edgeP99Mm": 15.79
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "4768 arêtes libres",
-    "75 composantes",
-    "24 faces inversées",
-    "captures absentes"
-   ]
-  },
   {
    "id": "bone:ethmoid-bone",
    "fr": "Os ethmoïde",
@@ -270,146 +164,6 @@
    ]
   },
   {
-   "id": "muscle:external-intercostal-muscles-l",
-   "fr": "Muscles intercostaux externes",
-   "category": "muscle",
-   "source": "BodyParts3D 4.0",
-   "ta2": "2311",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11930,
-    "boundaryEdges": 71,
-    "nonManifoldEdges": 58,
-    "duplicateFaces": 0,
-    "components": 11,
-    "degenerate": 0,
-    "flippedFaces": 405,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 11.18,
-    "edgeP99Mm": 19.623
-   },
-   "captures": null,
-   "blockers": [
-    "58 arêtes non-manifold",
-    "71 arêtes libres",
-    "11 composantes",
-    "405 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:external-intercostal-muscles-r",
-   "fr": "Muscles intercostaux externes",
-   "category": "muscle",
-   "source": "BodyParts3D 4.0",
-   "ta2": "2311",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11924,
-    "boundaryEdges": 79,
-    "nonManifoldEdges": 64,
-    "duplicateFaces": 0,
-    "components": 11,
-    "degenerate": 0,
-    "flippedFaces": 400,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 11.17,
-    "edgeP99Mm": 19.608
-   },
-   "captures": null,
-   "blockers": [
-    "64 arêtes non-manifold",
-    "79 arêtes libres",
-    "11 composantes",
-    "400 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:innermost-intercostal-muscles-l",
-   "fr": "Muscles intercostaux intimes",
-   "category": "muscle",
-   "source": "BodyParts3D 4.0",
-   "ta2": "2313",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11911,
-    "boundaryEdges": 84,
-    "nonManifoldEdges": 72,
-    "duplicateFaces": 0,
-    "components": 9,
-    "degenerate": 0,
-    "flippedFaces": 456,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 13.8,
-    "edgeP99Mm": 17.376
-   },
-   "captures": null,
-   "blockers": [
-    "72 arêtes non-manifold",
-    "84 arêtes libres",
-    "9 composantes",
-    "456 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:innermost-intercostal-muscles-r",
-   "fr": "Muscles intercostaux intimes",
-   "category": "muscle",
-   "source": "BodyParts3D 4.0",
-   "ta2": "2313",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11900,
-    "boundaryEdges": 99,
-    "nonManifoldEdges": 77,
-    "duplicateFaces": 0,
-    "components": 9,
-    "degenerate": 0,
-    "flippedFaces": 444,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 13.8,
-    "edgeP99Mm": 17.462
-   },
-   "captures": null,
-   "blockers": [
-    "77 arêtes non-manifold",
-    "99 arêtes libres",
-    "9 composantes",
-    "444 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "muscle:internal-intercostal-muscles-l",
    "fr": "Muscles intercostaux internes",
    "category": "muscle",
@@ -423,24 +177,24 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 11957,
-    "boundaryEdges": 80,
-    "nonManifoldEdges": 61,
+    "triangles": 40183,
+    "boundaryEdges": 22,
+    "nonManifoldEdges": 15,
     "duplicateFaces": 0,
-    "components": 11,
+    "components": 12,
     "degenerate": 0,
-    "flippedFaces": 323,
+    "flippedFaces": 264,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 12.95,
-    "edgeP99Mm": 17.294
+    "densityPerCm2": 42.98,
+    "edgeP99Mm": 11.873
    },
    "captures": null,
    "blockers": [
-    "61 arêtes non-manifold",
-    "80 arêtes libres",
-    "11 composantes",
-    "323 faces inversées",
+    "15 arêtes non-manifold",
+    "22 arêtes libres",
+    "12 composantes",
+    "264 faces inversées",
     "captures absentes"
    ]
   },
@@ -458,94 +212,24 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 11962,
-    "boundaryEdges": 72,
-    "nonManifoldEdges": 57,
+    "triangles": 40183,
+    "boundaryEdges": 22,
+    "nonManifoldEdges": 15,
     "duplicateFaces": 0,
-    "components": 11,
+    "components": 12,
     "degenerate": 0,
-    "flippedFaces": 330,
+    "flippedFaces": 265,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 12.96,
-    "edgeP99Mm": 17.261
+    "densityPerCm2": 42.98,
+    "edgeP99Mm": 11.873
    },
    "captures": null,
    "blockers": [
-    "57 arêtes non-manifold",
-    "72 arêtes libres",
-    "11 composantes",
-    "330 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:latissimus-dorsi-muscle-l",
-   "fr": "Muscle grand dorsal",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2231",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11996,
-    "boundaryEdges": 8,
-    "nonManifoldEdges": 4,
-    "duplicateFaces": 0,
-    "components": 3,
-    "degenerate": 0,
-    "flippedFaces": 56,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 8.63,
-    "edgeP99Mm": 29.017
-   },
-   "captures": null,
-   "blockers": [
-    "4 arêtes non-manifold",
-    "8 arêtes libres",
-    "3 composantes",
-    "56 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:latissimus-dorsi-muscle-r",
-   "fr": "Muscle grand dorsal",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2231",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11995,
-    "boundaryEdges": 10,
-    "nonManifoldEdges": 5,
-    "duplicateFaces": 0,
-    "components": 3,
-    "degenerate": 0,
-    "flippedFaces": 54,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 8.63,
-    "edgeP99Mm": 29.132
-   },
-   "captures": null,
-   "blockers": [
-    "5 arêtes non-manifold",
-    "10 arêtes libres",
-    "3 composantes",
-    "54 faces inversées",
+    "15 arêtes non-manifold",
+    "22 arêtes libres",
+    "12 composantes",
+    "265 faces inversées",
     "captures absentes"
    ]
   },
@@ -633,8 +317,8 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 4808,
+    "triangles": 12064,
+    "boundaryEdges": 4812,
     "nonManifoldEdges": 2,
     "duplicateFaces": 0,
     "components": 394,
@@ -642,260 +326,15 @@
     "flippedFaces": 24,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 87.61,
+    "densityPerCm2": 88.08,
     "edgeP99Mm": 10.991
    },
    "captures": null,
    "blockers": [
     "2 arêtes non-manifold",
-    "4808 arêtes libres",
+    "4812 arêtes libres",
     "394 composantes",
     "24 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-telencephalon-l",
-   "fr": "Télencéphale",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "5430",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12385,
-    "boundaryEdges": 10259,
-    "nonManifoldEdges": 13,
-    "duplicateFaces": 0,
-    "components": 255,
-    "degenerate": 0,
-    "flippedFaces": 295,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 6.26,
-    "edgeP99Mm": 25.864
-   },
-   "captures": null,
-   "blockers": [
-    "13 arêtes non-manifold",
-    "10259 arêtes libres",
-    "255 composantes",
-    "295 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-telencephalon-r",
-   "fr": "Télencéphale",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "5430",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12582,
-    "boundaryEdges": 10528,
-    "nonManifoldEdges": 11,
-    "duplicateFaces": 0,
-    "components": 264,
-    "degenerate": 0,
-    "flippedFaces": 307,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 6.38,
-    "edgeP99Mm": 25.849
-   },
-   "captures": null,
-   "blockers": [
-    "11 arêtes non-manifold",
-    "10528 arêtes libres",
-    "264 composantes",
-    "307 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-tracheobronchial-tree-r",
-   "fr": "Arbre bronchique",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "3212",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12548,
-    "boundaryEdges": 4574,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 365,
-    "degenerate": 0,
-    "flippedFaces": 17,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 110.79,
-    "edgeP99Mm": 9.139
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "4574 arêtes libres",
-    "365 composantes",
-    "17 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-viscerocranium",
-   "fr": "Viscérocrâne",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "355",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11998,
-    "boundaryEdges": 4063,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 255,
-    "degenerate": 0,
-    "flippedFaces": 37,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 24.58,
-    "edgeP99Mm": 13.8
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "4063 arêtes libres",
-    "255 composantes",
-    "37 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:bp-viscerocranium-l",
-   "fr": "Viscérocrâne",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "355",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12268,
-    "boundaryEdges": 9745,
-    "nonManifoldEdges": 3,
-    "duplicateFaces": 0,
-    "components": 674,
-    "degenerate": 0,
-    "flippedFaces": 116,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 30.82,
-    "edgeP99Mm": 16.454
-   },
-   "captures": null,
-   "blockers": [
-    "3 arêtes non-manifold",
-    "9745 arêtes libres",
-    "674 composantes",
-    "116 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:ganglia-of-sympathetic-trunk-l",
-   "fr": "Ganglions du tronc sympathique",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "6606",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11990,
-    "boundaryEdges": 20,
-    "nonManifoldEdges": 10,
-    "duplicateFaces": 0,
-    "components": 18,
-    "degenerate": 0,
-    "flippedFaces": 113,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 6674.59,
-    "edgeP99Mm": 0.51
-   },
-   "captures": null,
-   "blockers": [
-    "10 arêtes non-manifold",
-    "20 arêtes libres",
-    "18 composantes",
-    "113 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:ganglia-of-sympathetic-trunk-r",
-   "fr": "Ganglions du tronc sympathique",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "6606",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11987,
-    "boundaryEdges": 26,
-    "nonManifoldEdges": 13,
-    "duplicateFaces": 0,
-    "components": 18,
-    "degenerate": 0,
-    "flippedFaces": 95,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 6687.35,
-    "edgeP99Mm": 0.51
-   },
-   "captures": null,
-   "blockers": [
-    "13 arêtes non-manifold",
-    "26 arêtes libres",
-    "18 composantes",
-    "95 faces inversées",
     "captures absentes"
    ]
   },
@@ -969,11 +408,11 @@
    ]
   },
   {
-   "id": "bone:bp-lumbar-vertebra",
-   "fr": "Vertèbre lombaire",
+   "id": "bone:bp-neurocranium",
+   "fr": "Neurocrâne",
    "category": "bone",
    "source": "BodyParts3D 4.0",
-   "ta2": "1068",
+   "ta2": "354",
    "status": "S1",
    "closed": true,
    "gates": {
@@ -982,23 +421,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 2436,
+    "triangles": 18635,
+    "boundaryEdges": 4947,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 18,
+    "components": 304,
     "degenerate": 0,
-    "flippedFaces": 7,
+    "flippedFaces": 26,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 19.96,
-    "edgeP99Mm": 12.096
+    "densityPerCm2": 21.74,
+    "edgeP99Mm": 14.699
    },
    "captures": null,
    "blockers": [
-    "2436 arêtes libres",
-    "18 composantes",
-    "7 faces inversées",
+    "4947 arêtes libres",
+    "304 composantes",
+    "26 faces inversées",
     "captures absentes"
    ]
   },
@@ -1067,40 +506,6 @@
     "3072 arêtes libres",
     "122 composantes",
     "18 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "bone:bp-rib-l",
-   "fr": "Côte",
-   "category": "bone",
-   "source": "BodyParts3D 4.0",
-   "ta2": "1118",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 282,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 19,
-    "degenerate": 0,
-    "flippedFaces": 7,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 11.58,
-    "edgeP99Mm": 21.538
-   },
-   "captures": null,
-   "blockers": [
-    "282 arêtes libres",
-    "19 composantes",
-    "7 faces inversées",
     "captures absentes"
    ]
   },
@@ -1288,23 +693,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 11997,
+    "triangles": 18834,
     "boundaryEdges": 6,
-    "nonManifoldEdges": 27,
+    "nonManifoldEdges": 52,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 28,
+    "flippedFaces": 53,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 62.65,
-    "edgeP99Mm": 10.694
+    "densityPerCm2": 98.36,
+    "edgeP99Mm": 8.198
    },
    "captures": null,
    "blockers": [
-    "27 arêtes non-manifold",
+    "52 arêtes non-manifold",
     "6 arêtes libres",
-    "28 faces inversées",
+    "53 faces inversées",
     "captures absentes"
    ]
   },
@@ -1751,210 +1156,6 @@
    ]
   },
   {
-   "id": "muscle:external-abdominal-oblique-muscle-l",
-   "fr": "Muscle oblique externe de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2364",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11993,
-    "boundaryEdges": 10,
-    "nonManifoldEdges": 5,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 91,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 8.01,
-    "edgeP99Mm": 23.13
-   },
-   "captures": null,
-   "blockers": [
-    "5 arêtes non-manifold",
-    "10 arêtes libres",
-    "91 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:external-abdominal-oblique-muscle-r",
-   "fr": "Muscle oblique externe de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2364",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11988,
-    "boundaryEdges": 24,
-    "nonManifoldEdges": 12,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 92,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 8,
-    "edgeP99Mm": 23.094
-   },
-   "captures": null,
-   "blockers": [
-    "12 arêtes non-manifold",
-    "24 arêtes libres",
-    "92 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:iliotibial-tract-l",
-   "fr": "Tractus iliotibial",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2690",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11989,
-    "boundaryEdges": 7,
-    "nonManifoldEdges": 2,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 51,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 15.99,
-    "edgeP99Mm": 22.619
-   },
-   "captures": null,
-   "blockers": [
-    "2 arêtes non-manifold",
-    "7 arêtes libres",
-    "51 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:iliotibial-tract-r",
-   "fr": "Tractus iliotibial",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2690",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11987,
-    "boundaryEdges": 6,
-    "nonManifoldEdges": 5,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 51,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 15.99,
-    "edgeP99Mm": 22.622
-   },
-   "captures": null,
-   "blockers": [
-    "5 arêtes non-manifold",
-    "6 arêtes libres",
-    "51 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:internal-abdominal-oblique-muscle-l",
-   "fr": "Muscle oblique interne de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2373",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11964,
-    "boundaryEdges": 28,
-    "nonManifoldEdges": 14,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 153,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 9.82,
-    "edgeP99Mm": 20.783
-   },
-   "captures": null,
-   "blockers": [
-    "14 arêtes non-manifold",
-    "28 arêtes libres",
-    "153 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:internal-abdominal-oblique-muscle-r",
-   "fr": "Muscle oblique interne de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2373",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11973,
-    "boundaryEdges": 26,
-    "nonManifoldEdges": 14,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 147,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 9.83,
-    "edgeP99Mm": 20.742
-   },
-   "captures": null,
-   "blockers": [
-    "14 arêtes non-manifold",
-    "26 arêtes libres",
-    "147 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "muscle:lateral-crico-arytenoid-muscle-l",
    "fr": "Muscle crico-aryténoïdien latéral",
    "category": "muscle",
@@ -2363,210 +1564,6 @@
    ]
   },
   {
-   "id": "muscle:rectus-abdominis-muscle-l",
-   "fr": "Muscle droit de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2357",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11995,
-    "boundaryEdges": 6,
-    "nonManifoldEdges": 3,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 60,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 20.76,
-    "edgeP99Mm": 17.935
-   },
-   "captures": null,
-   "blockers": [
-    "3 arêtes non-manifold",
-    "6 arêtes libres",
-    "60 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:rectus-abdominis-muscle-r",
-   "fr": "Muscle droit de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2357",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11994,
-    "boundaryEdges": 8,
-    "nonManifoldEdges": 4,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 54,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 20.75,
-    "edgeP99Mm": 17.753
-   },
-   "captures": null,
-   "blockers": [
-    "4 arêtes non-manifold",
-    "8 arêtes libres",
-    "54 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:serratus-anterior-muscle-l",
-   "fr": "Muscle dentelé antérieur",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2307",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11998,
-    "boundaryEdges": 4,
-    "nonManifoldEdges": 4,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 47,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 17,
-    "edgeP99Mm": 18.427
-   },
-   "captures": null,
-   "blockers": [
-    "4 arêtes non-manifold",
-    "4 arêtes libres",
-    "47 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:serratus-anterior-muscle-r",
-   "fr": "Muscle dentelé antérieur",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2307",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11996,
-    "boundaryEdges": 8,
-    "nonManifoldEdges": 6,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 49,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 16.99,
-    "edgeP99Mm": 18.403
-   },
-   "captures": null,
-   "blockers": [
-    "6 arêtes non-manifold",
-    "8 arêtes libres",
-    "49 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:transversus-abdominis-muscle-l",
-   "fr": "Muscle transverse de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2375",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11990,
-    "boundaryEdges": 16,
-    "nonManifoldEdges": 8,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 51,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 8.45,
-    "edgeP99Mm": 22.077
-   },
-   "captures": null,
-   "blockers": [
-    "8 arêtes non-manifold",
-    "16 arêtes libres",
-    "51 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:transversus-abdominis-muscle-r",
-   "fr": "Muscle transverse de l'abdomen",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2375",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11996,
-    "boundaryEdges": 8,
-    "nonManifoldEdges": 4,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 58,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 8.45,
-    "edgeP99Mm": 22.031
-   },
-   "captures": null,
-   "blockers": [
-    "4 arêtes non-manifold",
-    "8 arêtes libres",
-    "58 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "organ:anterior-commissure",
    "fr": "Commissure antérieure",
    "category": "organ",
@@ -2648,17 +1645,17 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 26332,
-    "boundaryEdges": 7150,
-    "nonManifoldEdges": 5,
+    "triangles": 30516,
+    "boundaryEdges": 7240,
+    "nonManifoldEdges": 2,
     "duplicateFaces": 0,
-    "components": 572,
+    "components": 573,
     "degenerate": 0,
-    "flippedFaces": 53,
+    "flippedFaces": 34,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 71.4,
-    "edgeP99Mm": 9.74
+    "densityPerCm2": 81.92,
+    "edgeP99Mm": 8.482
    },
    "captures": {
     "subject": "encephale",
@@ -2676,10 +1673,10 @@
     ]
    },
    "blockers": [
-    "5 arêtes non-manifold",
-    "7150 arêtes libres",
-    "572 composantes",
-    "53 faces inversées"
+    "2 arêtes non-manifold",
+    "7240 arêtes libres",
+    "573 composantes",
+    "34 faces inversées"
    ]
   },
   {
@@ -2921,54 +1918,6 @@
    ]
   },
   {
-   "id": "organ:bp-face",
-   "fr": "Face",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "112",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 4747,
-    "nonManifoldEdges": 2,
-    "duplicateFaces": 0,
-    "components": 290,
-    "degenerate": 0,
-    "flippedFaces": 49,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 17.06,
-    "edgeP99Mm": 16.634
-   },
-   "captures": {
-    "subject": "face",
-    "angles": 8,
-    "clipped": 0,
-    "files": [
-     "docs/analyses/qualite-3d/face/face.jpg",
-     "docs/analyses/qualite-3d/face/dos.jpg",
-     "docs/analyses/qualite-3d/face/gauche.jpg",
-     "docs/analyses/qualite-3d/face/droite.jpg",
-     "docs/analyses/qualite-3d/face/dessus.jpg",
-     "docs/analyses/qualite-3d/face/dessous.jpg",
-     "docs/analyses/qualite-3d/face/trois-quarts-avant-gauche.jpg",
-     "docs/analyses/qualite-3d/face/trois-quarts-arriere-droit.jpg"
-    ]
-   },
-   "blockers": [
-    "2 arêtes non-manifold",
-    "4747 arêtes libres",
-    "290 composantes",
-    "49 faces inversées"
-   ]
-  },
-  {
    "id": "organ:bp-inferior-mediastinum",
    "fr": "Médiastin inférieur",
    "category": "organ",
@@ -2982,23 +1931,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 3556,
+    "triangles": 21976,
+    "boundaryEdges": 3836,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 203,
     "degenerate": 0,
-    "flippedFaces": 47,
+    "flippedFaces": 18,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 46.33,
-    "edgeP99Mm": 13.823
+    "densityPerCm2": 84.52,
+    "edgeP99Mm": 9.928
    },
    "captures": null,
    "blockers": [
-    "3556 arêtes libres",
+    "3836 arêtes libres",
     "203 composantes",
-    "47 faces inversées",
+    "18 faces inversées",
     "captures absentes"
    ]
   },
@@ -3050,23 +1999,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 4162,
+    "triangles": 24004,
+    "boundaryEdges": 4556,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 231,
     "degenerate": 0,
-    "flippedFaces": 65,
+    "flippedFaces": 18,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 41.61,
-    "edgeP99Mm": 14.429
+    "densityPerCm2": 82.77,
+    "edgeP99Mm": 10.014
    },
    "captures": null,
    "blockers": [
-    "4162 arêtes libres",
+    "4556 arêtes libres",
     "231 composantes",
-    "65 faces inversées",
+    "18 faces inversées",
     "captures absentes"
    ]
   },
@@ -3084,23 +2033,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 3582,
+    "triangles": 21038,
+    "boundaryEdges": 3836,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 202,
     "degenerate": 0,
-    "flippedFaces": 43,
+    "flippedFaces": 18,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 48.36,
-    "edgeP99Mm": 13.089
+    "densityPerCm2": 84.51,
+    "edgeP99Mm": 9.606
    },
    "captures": null,
    "blockers": [
-    "3582 arêtes libres",
+    "3836 arêtes libres",
     "202 composantes",
-    "43 faces inversées",
+    "18 faces inversées",
     "captures absentes"
    ]
   },
@@ -3207,6 +2156,40 @@
    ]
   },
   {
+   "id": "organ:bp-viscerocranium",
+   "fr": "Viscérocrâne",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "355",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 18855,
+    "boundaryEdges": 4217,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 257,
+    "degenerate": 0,
+    "flippedFaces": 12,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 38.61,
+    "edgeP99Mm": 11.453
+   },
+   "captures": null,
+   "blockers": [
+    "4217 arêtes libres",
+    "257 composantes",
+    "12 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:bp-viscerocranium-r",
    "fr": "Viscérocrâne",
    "category": "organ",
@@ -3220,23 +2203,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 20449,
-    "boundaryEdges": 12119,
+    "triangles": 43122,
+    "boundaryEdges": 13112,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 1287,
+    "components": 1294,
     "degenerate": 0,
-    "flippedFaces": 134,
+    "flippedFaces": 35,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 47.03,
-    "edgeP99Mm": 14.359
+    "densityPerCm2": 95.13,
+    "edgeP99Mm": 7.856
    },
    "captures": null,
    "blockers": [
-    "12119 arêtes libres",
-    "1287 composantes",
-    "134 faces inversées",
+    "13112 arêtes libres",
+    "1294 composantes",
+    "35 faces inversées",
     "captures absentes"
    ]
   },
@@ -3322,23 +2305,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 11959,
+    "triangles": 14722,
     "boundaryEdges": 4,
-    "nonManifoldEdges": 429,
+    "nonManifoldEdges": 546,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 335,
+    "flippedFaces": 442,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 42.97,
-    "edgeP99Mm": 38.767
+    "densityPerCm2": 52.9,
+    "edgeP99Mm": 24.315
    },
    "captures": null,
    "blockers": [
-    "429 arêtes non-manifold",
+    "546 arêtes non-manifold",
     "4 arêtes libres",
-    "335 faces inversées",
+    "442 faces inversées",
     "captures absentes"
    ]
   },
@@ -3730,22 +2713,22 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 6887,
+    "triangles": 24902,
+    "boundaryEdges": 8613,
     "nonManifoldEdges": 3,
     "duplicateFaces": 0,
     "components": 36,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 48.78,
-    "edgeP99Mm": 12.771
+    "densityPerCm2": 101.19,
+    "edgeP99Mm": 5.251
    },
    "captures": null,
    "blockers": [
     "3 arêtes non-manifold",
-    "6887 arêtes libres",
+    "8613 arêtes libres",
     "36 composantes",
     "captures absentes"
    ]
@@ -3832,23 +2815,23 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 11995,
+    "triangles": 15554,
     "boundaryEdges": 255,
-    "nonManifoldEdges": 80,
+    "nonManifoldEdges": 101,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 82,
+    "flippedFaces": 100,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 52.96,
-    "edgeP99Mm": 19.998
+    "densityPerCm2": 68.68,
+    "edgeP99Mm": 5.494
    },
    "captures": null,
    "blockers": [
-    "80 arêtes non-manifold",
+    "101 arêtes non-manifold",
     "255 arêtes libres",
-    "82 faces inversées",
+    "100 faces inversées",
     "captures absentes"
    ]
   },
@@ -3866,21 +2849,21 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 5288,
+    "triangles": 12752,
+    "boundaryEdges": 5324,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 135,
     "degenerate": 0,
-    "flippedFaces": 0,
+    "flippedFaces": 1,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 33.66,
-    "edgeP99Mm": 10.334
+    "densityPerCm2": 35.77,
+    "edgeP99Mm": 10.195
    },
    "captures": null,
    "blockers": [
-    "5288 arêtes libres",
+    "5324 arêtes libres",
     "135 composantes",
     "captures absentes"
    ]
@@ -4183,6 +3166,39 @@
    ]
   },
   {
+   "id": "bone:bp-lumbar-vertebra",
+   "fr": "Vertèbre lombaire",
+   "category": "bone",
+   "source": "BodyParts3D 4.0",
+   "ta2": "1068",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 12620,
+    "boundaryEdges": 2464,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 18,
+    "degenerate": 0,
+    "flippedFaces": 3,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 21,
+    "edgeP99Mm": 11.785
+   },
+   "captures": null,
+   "blockers": [
+    "2464 arêtes libres",
+    "18 composantes",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "bone:bp-metacarpal-bone-l",
    "fr": "Os métacarpien",
    "category": "bone",
@@ -4480,6 +3496,72 @@
    ]
   },
   {
+   "id": "bone:bp-rib-l",
+   "fr": "Côte",
+   "category": "bone",
+   "source": "BodyParts3D 4.0",
+   "ta2": "1118",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 19178,
+    "boundaryEdges": 332,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 19,
+    "degenerate": 0,
+    "flippedFaces": 1,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 18.49,
+    "edgeP99Mm": 16.486
+   },
+   "captures": null,
+   "blockers": [
+    "332 arêtes libres",
+    "19 composantes",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "bone:bp-rib-r",
+   "fr": "Côte",
+   "category": "bone",
+   "source": "BodyParts3D 4.0",
+   "ta2": "1118",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 19202,
+    "boundaryEdges": 308,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 17,
+    "degenerate": 0,
+    "flippedFaces": 3,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 18.52,
+    "edgeP99Mm": 16.493
+   },
+   "captures": null,
+   "blockers": [
+    "308 arêtes libres",
+    "17 composantes",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "bone:bp-root-of-nose-l",
    "fr": "Racine du nez",
    "category": "bone",
@@ -4579,6 +3661,39 @@
    ]
   },
   {
+   "id": "bone:bp-thoracic-vertebra",
+   "fr": "Vertèbre thoracique",
+   "category": "bone",
+   "source": "BodyParts3D 4.0",
+   "ta2": "1059",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 22420,
+    "boundaryEdges": 5304,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 75,
+    "degenerate": 0,
+    "flippedFaces": 1,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 22.21,
+    "edgeP99Mm": 12.104
+   },
+   "captures": null,
+   "blockers": [
+    "5304 arêtes libres",
+    "75 composantes",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "bone:bp-tooth-l",
    "fr": "Dent",
    "category": "bone",
@@ -4592,21 +3707,21 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 184,
+    "triangles": 14802,
+    "boundaryEdges": 188,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 18,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 1,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 150.51,
-    "edgeP99Mm": 5.118
+    "densityPerCm2": 185.46,
+    "edgeP99Mm": 4.506
    },
    "captures": null,
    "blockers": [
-    "184 arêtes libres",
+    "188 arêtes libres",
     "18 composantes",
     "captures absentes"
    ]
@@ -4625,21 +3740,21 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 212,
+    "triangles": 14754,
+    "boundaryEdges": 216,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 20,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 150.59,
-    "edgeP99Mm": 5.179
+    "densityPerCm2": 184.95,
+    "edgeP99Mm": 4.65
    },
    "captures": null,
    "blockers": [
-    "212 arêtes libres",
+    "216 arêtes libres",
     "20 composantes",
     "captures absentes"
    ]
@@ -4777,72 +3892,6 @@
    ]
   },
   {
-   "id": "bone:scapula-l",
-   "fr": "Scapula",
-   "category": "bone",
-   "source": "Z-Anatomy",
-   "ta2": "1143",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": true
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 6,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 5,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 35.47,
-    "edgeP99Mm": 11.33
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "6 arêtes libres",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "bone:scapula-r",
-   "fr": "Scapula",
-   "category": "bone",
-   "source": "Z-Anatomy",
-   "ta2": "1143",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": true
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 6,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 4,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 35.47,
-    "edgeP99Mm": 11.208
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "6 arêtes libres",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "bone:sphenoid-bone",
    "fr": "Os sphénoïde",
    "category": "bone",
@@ -4889,22 +3938,22 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 14094,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 3,
     "degenerate": 0,
-    "flippedFaces": 27,
+    "flippedFaces": 29,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 78.22,
-    "edgeP99Mm": 8.529
+    "densityPerCm2": 91.87,
+    "edgeP99Mm": 6.949
    },
    "captures": null,
    "blockers": [
     "3 composantes",
-    "27 faces inversées",
+    "29 faces inversées",
     "captures absentes"
    ]
   },
@@ -4922,22 +3971,22 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 14094,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 3,
     "degenerate": 0,
-    "flippedFaces": 28,
+    "flippedFaces": 29,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 78.23,
-    "edgeP99Mm": 8.52
+    "densityPerCm2": 91.87,
+    "edgeP99Mm": 6.949
    },
    "captures": null,
    "blockers": [
     "3 composantes",
-    "28 faces inversées",
+    "29 faces inversées",
     "captures absentes"
    ]
   },
@@ -5536,72 +4585,6 @@
    ]
   },
   {
-   "id": "muscle:epicranial-aponeurosis-l",
-   "fr": "Aponévrose épicrânienne",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2059",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11987,
-    "boundaryEdges": 9,
-    "nonManifoldEdges": 7,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 83,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 36.82,
-    "edgeP99Mm": 13.263
-   },
-   "captures": null,
-   "blockers": [
-    "7 arêtes non-manifold",
-    "83 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:epicranial-aponeurosis-r",
-   "fr": "Aponévrose épicrânienne",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2059",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11986,
-    "boundaryEdges": 15,
-    "nonManifoldEdges": 10,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 78,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 36.81,
-    "edgeP99Mm": 13.382
-   },
-   "captures": null,
-   "blockers": [
-    "10 arêtes non-manifold",
-    "78 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "muscle:extensor-digitorum-brevis-l",
    "fr": "Court extenseur des orteils",
    "category": "muscle",
@@ -5730,6 +4713,72 @@
    "blockers": [
     "24 arêtes libres",
     "20 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:external-intercostal-muscles-l",
+   "fr": "Muscles intercostaux externes",
+   "category": "muscle",
+   "source": "BodyParts3D 4.0",
+   "ta2": "2311",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 41410,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 11,
+    "degenerate": 0,
+    "flippedFaces": 450,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 38.42,
+    "edgeP99Mm": 12.794
+   },
+   "captures": null,
+   "blockers": [
+    "11 composantes",
+    "450 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:external-intercostal-muscles-r",
+   "fr": "Muscles intercostaux externes",
+   "category": "muscle",
+   "source": "BodyParts3D 4.0",
+   "ta2": "2311",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 41410,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 11,
+    "degenerate": 0,
+    "flippedFaces": 450,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 38.42,
+    "edgeP99Mm": 12.794
+   },
+   "captures": null,
+   "blockers": [
+    "11 composantes",
+    "450 faces inversées",
     "captures absentes"
    ]
   },
@@ -5932,6 +4981,138 @@
    ]
   },
   {
+   "id": "muscle:innermost-intercostal-muscles-l",
+   "fr": "Muscles intercostaux intimes",
+   "category": "muscle",
+   "source": "BodyParts3D 4.0",
+   "ta2": "2313",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 38254,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 9,
+    "degenerate": 0,
+    "flippedFaces": 303,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 43.77,
+    "edgeP99Mm": 11.877
+   },
+   "captures": null,
+   "blockers": [
+    "9 composantes",
+    "303 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:innermost-intercostal-muscles-r",
+   "fr": "Muscles intercostaux intimes",
+   "category": "muscle",
+   "source": "BodyParts3D 4.0",
+   "ta2": "2313",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 38254,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 9,
+    "degenerate": 0,
+    "flippedFaces": 303,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 43.77,
+    "edgeP99Mm": 11.877
+   },
+   "captures": null,
+   "blockers": [
+    "9 composantes",
+    "303 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:internal-abdominal-oblique-muscle-l",
+   "fr": "Muscle oblique interne de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2373",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 28869,
+    "boundaryEdges": 5,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 88,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 23.68,
+    "edgeP99Mm": 14.525
+   },
+   "captures": null,
+   "blockers": [
+    "5 arêtes libres",
+    "88 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:internal-abdominal-oblique-muscle-r",
+   "fr": "Muscle oblique interne de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2373",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 28869,
+    "boundaryEdges": 5,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 88,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 23.68,
+    "edgeP99Mm": 14.525
+   },
+   "captures": null,
+   "blockers": [
+    "5 arêtes libres",
+    "88 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "muscle:interspinales-colli-muscles-l",
    "fr": "Muscles interépineux du cou",
    "category": "muscle",
@@ -6126,6 +5307,72 @@
    "blockers": [
     "2 composantes",
     "1 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:latissimus-dorsi-muscle-l",
+   "fr": "Muscle grand dorsal",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2231",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 21580,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 3,
+    "degenerate": 0,
+    "flippedFaces": 16,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 15.53,
+    "edgeP99Mm": 22.242
+   },
+   "captures": null,
+   "blockers": [
+    "3 composantes",
+    "16 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:latissimus-dorsi-muscle-r",
+   "fr": "Muscle grand dorsal",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2231",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 21580,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 3,
+    "degenerate": 0,
+    "flippedFaces": 16,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 15.53,
+    "edgeP99Mm": 22.242
+   },
+   "captures": null,
+   "blockers": [
+    "3 composantes",
+    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -6988,39 +6235,6 @@
    ]
   },
   {
-   "id": "organ:basilar-venous-plexus",
-   "fr": "Plexus veineux basilaire",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "4866",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11989,
-    "boundaryEdges": 598,
-    "nonManifoldEdges": 11,
-    "duplicateFaces": 0,
-    "components": 7,
-    "degenerate": 0,
-    "flippedFaces": 58,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 1994.74,
-    "edgeP99Mm": 1.669
-   },
-   "captures": null,
-   "blockers": [
-    "11 arêtes non-manifold",
-    "58 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "organ:biventral-lobule-l",
    "fr": "Lobule biventral",
    "category": "organ",
@@ -7516,6 +6730,53 @@
    ]
   },
   {
+   "id": "organ:bp-face",
+   "fr": "Face",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "112",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 23705,
+    "boundaryEdges": 5135,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 294,
+    "degenerate": 0,
+    "flippedFaces": 12,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 33.67,
+    "edgeP99Mm": 12.041
+   },
+   "captures": {
+    "subject": "face",
+    "angles": 8,
+    "clipped": 0,
+    "files": [
+     "docs/analyses/qualite-3d/face/face.jpg",
+     "docs/analyses/qualite-3d/face/dos.jpg",
+     "docs/analyses/qualite-3d/face/gauche.jpg",
+     "docs/analyses/qualite-3d/face/droite.jpg",
+     "docs/analyses/qualite-3d/face/dessus.jpg",
+     "docs/analyses/qualite-3d/face/dessous.jpg",
+     "docs/analyses/qualite-3d/face/trois-quarts-avant-gauche.jpg",
+     "docs/analyses/qualite-3d/face/trois-quarts-arriere-droit.jpg"
+    ]
+   },
+   "blockers": [
+    "5135 arêtes libres",
+    "294 composantes",
+    "12 faces inversées"
+   ]
+  },
+  {
    "id": "organ:bp-fibrous-layer-of-eyeball-l",
    "fr": "Tunique fibreuse du globe oculaire",
    "category": "organ",
@@ -7714,39 +6975,6 @@
    ]
   },
   {
-   "id": "organ:bp-large-intestine",
-   "fr": "Gros intestin",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "2963",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 13493,
-    "boundaryEdges": 20250,
-    "nonManifoldEdges": 2,
-    "duplicateFaces": 0,
-    "components": 3018,
-    "degenerate": 0,
-    "flippedFaces": 95,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 9.5,
-    "edgeP99Mm": 28.972
-   },
-   "captures": null,
-   "blockers": [
-    "2 arêtes non-manifold",
-    "95 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "organ:bp-left-subclavian-artery-l",
    "fr": "Artère subclavière gauche",
    "category": "organ",
@@ -7760,22 +6988,22 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 13804,
-    "boundaryEdges": 10670,
-    "nonManifoldEdges": 24,
+    "triangles": 33339,
+    "boundaryEdges": 11248,
+    "nonManifoldEdges": 1,
     "duplicateFaces": 0,
-    "components": 704,
+    "components": 713,
     "degenerate": 0,
-    "flippedFaces": 217,
+    "flippedFaces": 32,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 135.24,
-    "edgeP99Mm": 11.929
+    "densityPerCm2": 105.68,
+    "edgeP99Mm": 16.858
    },
    "captures": null,
    "blockers": [
-    "24 arêtes non-manifold",
-    "217 faces inversées",
+    "1 arêtes non-manifold",
+    "32 faces inversées",
     "captures absentes"
    ]
   },
@@ -7892,22 +7120,22 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 26364,
-    "boundaryEdges": 7188,
-    "nonManifoldEdges": 3,
+    "triangles": 30676,
+    "boundaryEdges": 7306,
+    "nonManifoldEdges": 2,
     "duplicateFaces": 0,
-    "components": 574,
+    "components": 575,
     "degenerate": 0,
-    "flippedFaces": 54,
+    "flippedFaces": 34,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 70.96,
-    "edgeP99Mm": 9.903
+    "densityPerCm2": 81.92,
+    "edgeP99Mm": 8.572
    },
    "captures": null,
    "blockers": [
-    "3 arêtes non-manifold",
-    "54 faces inversées",
+    "2 arêtes non-manifold",
+    "34 faces inversées",
     "captures absentes"
    ]
   },
@@ -8176,39 +7404,6 @@
    ]
   },
   {
-   "id": "organ:bp-right-subclavian-artery-r",
-   "fr": "Artère subclavière droite",
-   "category": "organ",
-   "source": "BodyParts3D 4.0",
-   "ta2": "4182",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 13921,
-    "boundaryEdges": 10642,
-    "nonManifoldEdges": 24,
-    "duplicateFaces": 0,
-    "components": 692,
-    "degenerate": 0,
-    "flippedFaces": 217,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 134.8,
-    "edgeP99Mm": 12.012
-   },
-   "captures": null,
-   "blockers": [
-    "24 arêtes non-manifold",
-    "217 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "organ:bp-right-testicular-artery-r",
    "fr": "Artère testiculaire droite",
    "category": "organ",
@@ -8337,6 +7532,72 @@
    "blockers": [
     "720 arêtes libres",
     "28 composantes",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:bp-telencephalon-l",
+   "fr": "Télencéphale",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "5430",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 54920,
+    "boundaryEdges": 12274,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 266,
+    "degenerate": 0,
+    "flippedFaces": 15,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 26.42,
+    "edgeP99Mm": 11.078
+   },
+   "captures": null,
+   "blockers": [
+    "12274 arêtes libres",
+    "266 composantes",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:bp-telencephalon-r",
+   "fr": "Télencéphale",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "5430",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 55452,
+    "boundaryEdges": 12494,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 273,
+    "degenerate": 0,
+    "flippedFaces": 16,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 26.62,
+    "edgeP99Mm": 11.075
+   },
+   "captures": null,
+   "blockers": [
+    "12494 arêtes libres",
+    "273 composantes",
     "captures absentes"
    ]
   },
@@ -8473,6 +7734,39 @@
    ]
   },
   {
+   "id": "organ:bp-tracheobronchial-tree-r",
+   "fr": "Arbre bronchique",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "3212",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 14356,
+    "boundaryEdges": 4702,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 365,
+    "degenerate": 0,
+    "flippedFaces": 2,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 122.74,
+    "edgeP99Mm": 8.587
+   },
+   "captures": null,
+   "blockers": [
+    "4702 arêtes libres",
+    "365 composantes",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:bp-tuber-cinereum",
    "fr": "Tuber cinereum",
    "category": "organ",
@@ -8605,35 +7899,35 @@
    ]
   },
   {
-   "id": "organ:bp-visceral-peritoneum",
-   "fr": "Péritoine viscéral",
+   "id": "organ:bp-viscerocranium-l",
+   "fr": "Viscérocrâne",
    "category": "organ",
    "source": "BodyParts3D 4.0",
-   "ta2": "3732",
+   "ta2": "355",
    "status": "S1",
-   "closed": false,
+   "closed": true,
    "gates": {
     "G0": true,
     "G2": false,
-    "G3": false
+    "G3": true
    },
    "metrics": {
-    "triangles": 25000,
-    "boundaryEdges": 45078,
-    "nonManifoldEdges": 1,
+    "triangles": 37464,
+    "boundaryEdges": 10844,
+    "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 9850,
+    "components": 682,
     "degenerate": 0,
-    "flippedFaces": 53,
+    "flippedFaces": 18,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 13.15,
-    "edgeP99Mm": 49.603
+    "densityPerCm2": 88.97,
+    "edgeP99Mm": 8.378
    },
    "captures": null,
    "blockers": [
-    "1 arêtes non-manifold",
-    "53 faces inversées",
+    "10844 arêtes libres",
+    "682 composantes",
     "captures absentes"
    ]
   },
@@ -9228,39 +8522,6 @@
    "blockers": [
     "9 arêtes libres",
     "3 composantes",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:greater-omentum",
-   "fr": "Grand omentum",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "3757",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 2,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 1,
-    "degenerate": 0,
-    "flippedFaces": 16,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 12.07,
-    "edgeP99Mm": 16.376
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "16 faces inversées",
     "captures absentes"
    ]
   },
@@ -9938,17 +9199,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 20200,
     "boundaryEdges": 200,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 4,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 100.68,
-    "edgeP99Mm": 20.033
+    "densityPerCm2": 169.53,
+    "edgeP99Mm": 5.167
    },
    "captures": null,
    "blockers": [
@@ -10783,39 +10044,6 @@
    ]
   },
   {
-   "id": "organ:pleura",
-   "fr": "Plèvre",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "3322",
-   "status": "S1",
-   "closed": false,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 11999,
-    "boundaryEdges": 2,
-    "nonManifoldEdges": 1,
-    "duplicateFaces": 0,
-    "components": 8,
-    "degenerate": 0,
-    "flippedFaces": 12,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 1.22,
-    "edgeP99Mm": 48.59
-   },
-   "captures": null,
-   "blockers": [
-    "1 arêtes non-manifold",
-    "12 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "organ:postcentral-gyrus-l",
    "fr": "Gyrus postcentral",
    "category": "organ",
@@ -10961,17 +10189,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 12928,
     "boundaryEdges": 128,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 153.57,
-    "edgeP99Mm": 10.002
+    "densityPerCm2": 165.46,
+    "edgeP99Mm": 5.18
    },
    "captures": null,
    "blockers": [
@@ -12235,105 +11463,6 @@
    ]
   },
   {
-   "id": "organ:white-matter-of-telencephalon-l",
-   "fr": "Substance blanche du télencéphale",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "5573",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 0,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 2,
-    "degenerate": 0,
-    "flippedFaces": 52,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 13.41,
-    "edgeP99Mm": 12.966
-   },
-   "captures": null,
-   "blockers": [
-    "2 composantes",
-    "52 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:white-matter-of-telencephalon-r",
-   "fr": "Substance blanche du télencéphale",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "5573",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 0,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 2,
-    "degenerate": 0,
-    "flippedFaces": 42,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 13.42,
-    "edgeP99Mm": 13.121
-   },
-   "captures": null,
-   "blockers": [
-    "2 composantes",
-    "42 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:zonular-fibres-r",
-   "fr": "Fibres zonulaires",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "6796",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 0,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 97,
-    "degenerate": 0,
-    "flippedFaces": 8,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 2812.9,
-    "edgeP99Mm": 1.743
-   },
-   "captures": null,
-   "blockers": [
-    "97 composantes",
-    "8 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
    "id": "bone:anterior-cells-of-ethmoid-bone-l",
    "fr": "Cellules osseuses ethmoïdales antérieures",
    "category": "bone",
@@ -13432,6 +12561,70 @@
    "captures": null,
    "blockers": [
     "2 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "bone:scapula-l",
+   "fr": "Scapula",
+   "category": "bone",
+   "source": "Z-Anatomy",
+   "ta2": "1143",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 25324,
+    "boundaryEdges": 4,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 1,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 74.83,
+    "edgeP99Mm": 8.283
+   },
+   "captures": null,
+   "blockers": [
+    "4 arêtes libres",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "bone:scapula-r",
+   "fr": "Scapula",
+   "category": "bone",
+   "source": "Z-Anatomy",
+   "ta2": "1143",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 25324,
+    "boundaryEdges": 4,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 1,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 74.83,
+    "edgeP99Mm": 8.283
+   },
+   "captures": null,
+   "blockers": [
+    "4 arêtes libres",
     "captures absentes"
    ]
   },
@@ -15401,17 +14594,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 38868,
     "boundaryEdges": 12,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 3,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 4.95,
-    "edgeP99Mm": 25.297
+    "densityPerCm2": 16.03,
+    "edgeP99Mm": 5.779
    },
    "captures": null,
    "blockers": [
@@ -15463,6 +14656,70 @@
    "blockers": [
     "4 composantes",
     "11 faces inversées"
+   ]
+  },
+  {
+   "id": "muscle:epicranial-aponeurosis-l",
+   "fr": "Aponévrose épicrânienne",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2059",
+   "status": "S1",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 20118,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 39,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 61.78,
+    "edgeP99Mm": 10.517
+   },
+   "captures": null,
+   "blockers": [
+    "39 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:epicranial-aponeurosis-r",
+   "fr": "Aponévrose épicrânienne",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2059",
+   "status": "S1",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 20118,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 39,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 61.78,
+    "edgeP99Mm": 10.517
+   },
+   "captures": null,
+   "blockers": [
+    "39 faces inversées",
+    "captures absentes"
    ]
   },
   {
@@ -15910,6 +15167,70 @@
    "captures": null,
    "blockers": [
     "7 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:external-abdominal-oblique-muscle-l",
+   "fr": "Muscle oblique externe de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2364",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 29622,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 67,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 19.75,
+    "edgeP99Mm": 15.339
+   },
+   "captures": null,
+   "blockers": [
+    "67 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:external-abdominal-oblique-muscle-r",
+   "fr": "Muscle oblique externe de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2364",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 29622,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 67,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 19.75,
+    "edgeP99Mm": 15.339
+   },
+   "captures": null,
+   "blockers": [
+    "67 faces inversées",
     "captures absentes"
    ]
   },
@@ -16983,21 +16304,21 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 12798,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 13,
+    "flippedFaces": 12,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 55.75,
-    "edgeP99Mm": 14.324
+    "densityPerCm2": 59.46,
+    "edgeP99Mm": 13.798
    },
    "captures": null,
    "blockers": [
-    "13 faces inversées",
+    "12 faces inversées",
     "captures absentes"
    ]
   },
@@ -17015,21 +16336,21 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 12798,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 16,
+    "flippedFaces": 12,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 55.74,
-    "edgeP99Mm": 14.447
+    "densityPerCm2": 59.46,
+    "edgeP99Mm": 13.799
    },
    "captures": null,
    "blockers": [
-    "16 faces inversées",
+    "12 faces inversées",
     "captures absentes"
    ]
   },
@@ -22008,6 +21329,70 @@
    ]
   },
   {
+   "id": "muscle:serratus-anterior-muscle-l",
+   "fr": "Muscle dentelé antérieur",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2307",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 25240,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 23,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 35.8,
+    "edgeP99Mm": 13.011
+   },
+   "captures": null,
+   "blockers": [
+    "23 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:serratus-anterior-muscle-r",
+   "fr": "Muscle dentelé antérieur",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2307",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 25240,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 23,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 35.8,
+    "edgeP99Mm": 13.011
+   },
+   "captures": null,
+   "blockers": [
+    "23 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "muscle:serratus-posterior-inferior-muscle-l",
    "fr": "Muscle dentelé postéro-inférieur",
    "category": "muscle",
@@ -26776,6 +26161,38 @@
    ]
   },
   {
+   "id": "organ:bp-large-intestine",
+   "fr": "Gros intestin",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "2963",
+   "status": "S1",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 22919,
+    "boundaryEdges": 21655,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 3025,
+    "degenerate": 0,
+    "flippedFaces": 73,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 14.76,
+    "edgeP99Mm": 13.477
+   },
+   "captures": null,
+   "blockers": [
+    "73 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:bp-lateral-tarsal-artery-l",
    "fr": "Artère tarsienne latérale",
    "category": "organ",
@@ -27928,6 +27345,38 @@
    ]
   },
   {
+   "id": "organ:bp-right-subclavian-artery-r",
+   "fr": "Artère subclavière droite",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "4182",
+   "status": "S1",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 33054,
+    "boundaryEdges": 11212,
+    "nonManifoldEdges": 1,
+    "duplicateFaces": 0,
+    "components": 701,
+    "degenerate": 0,
+    "flippedFaces": 15,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 106.95,
+    "edgeP99Mm": 16.822
+   },
+   "captures": null,
+   "blockers": [
+    "1 arêtes non-manifold",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:bp-right-suprarenal-vein-r",
    "fr": "Veine surrénale droite",
    "category": "organ",
@@ -28340,6 +27789,38 @@
    "captures": null,
    "blockers": [
     "1 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:bp-visceral-peritoneum",
+   "fr": "Péritoine viscéral",
+   "category": "organ",
+   "source": "BodyParts3D 4.0",
+   "ta2": "3732",
+   "status": "S1",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 26672,
+    "boundaryEdges": 45670,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 9853,
+    "degenerate": 0,
+    "flippedFaces": 32,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 14.01,
+    "edgeP99Mm": 45.436
+   },
+   "captures": null,
+   "blockers": [
+    "32 faces inversées",
     "captures absentes"
    ]
   },
@@ -29432,6 +28913,70 @@
    ]
   },
   {
+   "id": "organ:ganglia-of-sympathetic-trunk-l",
+   "fr": "Ganglions du tronc sympathique",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "6606",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 25344,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 18,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 14105.04,
+    "edgeP99Mm": 0.21
+   },
+   "captures": null,
+   "blockers": [
+    "18 composantes",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:ganglia-of-sympathetic-trunk-r",
+   "fr": "Ganglions du tronc sympathique",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "6606",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 25344,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 18,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 14105.05,
+    "edgeP99Mm": 0.21
+   },
+   "captures": null,
+   "blockers": [
+    "18 composantes",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:gingiva",
    "fr": "Gencive",
    "category": "organ",
@@ -29445,17 +28990,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 24596,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 3,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 93.26,
-    "edgeP99Mm": 7.087
+    "densityPerCm2": 191.1,
+    "edgeP99Mm": 5.211
    },
    "captures": null,
    "blockers": [
@@ -30917,17 +30462,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 13332,
     "boundaryEdges": 132,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 144.96,
-    "edgeP99Mm": 10.004
+    "densityPerCm2": 161.08,
+    "edgeP99Mm": 5.055
    },
    "captures": null,
    "blockers": [
@@ -32773,17 +32318,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 12928,
     "boundaryEdges": 128,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 126.15,
-    "edgeP99Mm": 10.002
+    "densityPerCm2": 135.92,
+    "edgeP99Mm": 5.19
    },
    "captures": null,
    "blockers": [
@@ -35416,6 +34961,70 @@
    ]
   },
   {
+   "id": "organ:white-matter-of-telencephalon-l",
+   "fr": "Substance blanche du télencéphale",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "5573",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 135288,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 2,
+    "degenerate": 0,
+    "flippedFaces": 2,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 149.43,
+    "edgeP99Mm": 3.649
+   },
+   "captures": null,
+   "blockers": [
+    "2 composantes",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:white-matter-of-telencephalon-r",
+   "fr": "Substance blanche du télencéphale",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "5573",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 135288,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 2,
+    "degenerate": 0,
+    "flippedFaces": 2,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 149.43,
+    "edgeP99Mm": 3.649
+   },
+   "captures": null,
+   "blockers": [
+    "2 composantes",
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:wing-of-central-lobule-l",
    "fr": "Aile du lobule central",
    "category": "organ",
@@ -35476,6 +35085,38 @@
    "captures": null,
    "blockers": [
     "26 arêtes libres",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:zonular-fibres-r",
+   "fr": "Fibres zonulaires",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "6796",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 68288,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 97,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 15879.7,
+    "edgeP99Mm": 0.186
+   },
+   "captures": null,
+   "blockers": [
+    "97 composantes",
     "captures absentes"
    ]
   },
@@ -36175,7 +35816,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 13764,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
@@ -36184,8 +35825,8 @@
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 182.13,
-    "edgeP99Mm": 6.178
+    "densityPerCm2": 208.9,
+    "edgeP99Mm": 5.798
    },
    "captures": null,
    "blockers": [
@@ -36206,7 +35847,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 13764,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
@@ -36215,8 +35856,8 @@
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 182.13,
-    "edgeP99Mm": 6.291
+    "densityPerCm2": 208.9,
+    "edgeP99Mm": 5.798
    },
    "captures": null,
    "blockers": [
@@ -42110,17 +41751,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 13968,
     "boundaryEdges": 224,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 154.34,
-    "edgeP99Mm": 5.415
+    "densityPerCm2": 179.65,
+    "edgeP99Mm": 3.028
    },
    "captures": null,
    "blockers": [
@@ -42837,7 +42478,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 11999,
+    "triangles": 12907,
     "boundaryEdges": 457,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
@@ -42846,8 +42487,8 @@
     "flippedFaces": 2,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 7.19,
-    "edgeP99Mm": 12.914
+    "densityPerCm2": 7.73,
+    "edgeP99Mm": 11.49
    },
    "captures": null,
    "blockers": [
@@ -42868,7 +42509,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 11999,
+    "triangles": 12907,
     "boundaryEdges": 457,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
@@ -42877,8 +42518,8 @@
     "flippedFaces": 2,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 7.19,
-    "edgeP99Mm": 13.219
+    "densityPerCm2": 7.73,
+    "edgeP99Mm": 11.49
    },
    "captures": null,
    "blockers": [
@@ -43265,6 +42906,68 @@
     "zeroNormals": 0,
     "densityPerCm2": 113.78,
     "edgeP99Mm": 3.081
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:iliotibial-tract-l",
+   "fr": "Tractus iliotibial",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2690",
+   "status": "S2",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 48612,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 11,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 64.77,
+    "edgeP99Mm": 12.855
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:iliotibial-tract-r",
+   "fr": "Tractus iliotibial",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2690",
+   "status": "S2",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 48612,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 11,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 64.77,
+    "edgeP99Mm": 12.855
    },
    "captures": null,
    "blockers": [
@@ -44849,17 +44552,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 15282,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 3,
+    "flippedFaces": 4,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 503.91,
-    "edgeP99Mm": 4.681
+    "densityPerCm2": 641.68,
+    "edgeP99Mm": 3.619
    },
    "captures": null,
    "blockers": [
@@ -44880,17 +44583,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 15282,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 4,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 503.89,
-    "edgeP99Mm": 4.731
+    "densityPerCm2": 641.68,
+    "edgeP99Mm": 3.619
    },
    "captures": null,
    "blockers": [
@@ -45418,6 +45121,68 @@
     "zeroNormals": 0,
     "densityPerCm2": 2.19,
     "edgeP99Mm": 31.236
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:rectus-abdominis-muscle-l",
+   "fr": "Muscle droit de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2357",
+   "status": "S2",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 20604,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 5,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 35.68,
+    "edgeP99Mm": 14.126
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:rectus-abdominis-muscle-r",
+   "fr": "Muscle droit de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2357",
+   "status": "S2",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 20604,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 5,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 35.68,
+    "edgeP99Mm": 14.126
    },
    "captures": null,
    "blockers": [
@@ -48618,6 +48383,68 @@
    ]
   },
   {
+   "id": "muscle:transversus-abdominis-muscle-l",
+   "fr": "Muscle transverse de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2375",
+   "status": "S2",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 34328,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 16,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 24.14,
+    "edgeP99Mm": 13.986
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:transversus-abdominis-muscle-r",
+   "fr": "Muscle transverse de l'abdomen",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2375",
+   "status": "S2",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 34328,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 16,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 24.14,
+    "edgeP99Mm": 13.986
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
    "id": "muscle:trochanteric-bursa-of-gluteus-maximus-muscle-l",
    "fr": "Bourse trochantérique du muscle grand fessier",
    "category": "muscle",
@@ -49499,17 +49326,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 17512,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 22.26,
-    "edgeP99Mm": 8.179
+    "densityPerCm2": 32.46,
+    "edgeP99Mm": 5.095
    },
    "captures": null,
    "blockers": [
@@ -49572,6 +49399,37 @@
     "zeroNormals": 0,
     "densityPerCm2": 348.71,
     "edgeP99Mm": 4.396
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:basilar-venous-plexus",
+   "fr": "Plexus veineux basilaire",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "4866",
+   "status": "S2",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 56192,
+    "boundaryEdges": 576,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 7,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 9354.47,
+    "edgeP99Mm": 0.968
    },
    "captures": null,
    "blockers": [
@@ -52751,17 +52609,17 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 3328,
+    "triangles": 16064,
+    "boundaryEdges": 3496,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 170,
     "degenerate": 0,
-    "flippedFaces": 37,
+    "flippedFaces": 17,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 75.06,
-    "edgeP99Mm": 10.728
+    "densityPerCm2": 100.35,
+    "edgeP99Mm": 8.904
    },
    "captures": {
     "subject": "coeur",
@@ -52779,7 +52637,7 @@
     ]
    },
    "blockers": [
-    "37 faces inversées"
+    "17 faces inversées"
    ]
   },
   {
@@ -56547,8 +56405,8 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
-    "boundaryEdges": 3792,
+    "triangles": 12694,
+    "boundaryEdges": 3842,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 296,
@@ -56556,8 +56414,8 @@
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 59.7,
-    "edgeP99Mm": 13.398
+    "densityPerCm2": 62.93,
+    "edgeP99Mm": 11.575
    },
    "captures": null,
    "blockers": [
@@ -56888,17 +56746,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 16380,
-    "boundaryEdges": 1514,
+    "triangles": 18190,
+    "boundaryEdges": 1548,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 76,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 6.78,
-    "edgeP99Mm": 19.905
+    "densityPerCm2": 7.46,
+    "edgeP99Mm": 18.682
    },
    "captures": null,
    "blockers": [
@@ -58686,7 +58544,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 24744,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
@@ -58695,8 +58553,8 @@
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 15.2,
-    "edgeP99Mm": 9.433
+    "densityPerCm2": 31.28,
+    "edgeP99Mm": 5.134
    },
    "captures": null,
    "blockers": [
@@ -58945,6 +58803,37 @@
     "zeroNormals": 0,
     "densityPerCm2": 483.03,
     "edgeP99Mm": 3.314
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:greater-omentum",
+   "fr": "Grand omentum",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "3757",
+   "status": "S2",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 77968,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 0,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 78.48,
+    "edgeP99Mm": 2.912
    },
    "captures": null,
    "blockers": [
@@ -60391,17 +60280,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 15768,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 1,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 78.44,
-    "edgeP99Mm": 5.055
+    "densityPerCm2": 103.07,
+    "edgeP99Mm": 3.033
    },
    "captures": null,
    "blockers": [
@@ -61618,6 +61507,37 @@
    ]
   },
   {
+   "id": "organ:pleura",
+   "fr": "Plèvre",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "3322",
+   "status": "S2",
+   "closed": false,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": true
+   },
+   "metrics": {
+    "triangles": 112288,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 8,
+    "degenerate": 0,
+    "flippedFaces": 4,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 11.4,
+    "edgeP99Mm": 7.408
+   },
+   "captures": null,
+   "blockers": [
+    "captures absentes"
+   ]
+  },
+  {
    "id": "organ:posterior-cochlear-nucleus-l",
    "fr": "Noyau cochléaire postérieur",
    "category": "organ",
@@ -62468,7 +62388,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 11999,
+    "triangles": 22681,
     "boundaryEdges": 240,
     "nonManifoldEdges": 1,
     "duplicateFaces": 0,
@@ -62477,8 +62397,8 @@
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 50.75,
-    "edgeP99Mm": 7.581
+    "densityPerCm2": 95.93,
+    "edgeP99Mm": 2.394
    },
    "captures": {
     "subject": "coeur",
@@ -63629,7 +63549,7 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 16616,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
@@ -63638,8 +63558,8 @@
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 27.98,
-    "edgeP99Mm": 6.554
+    "densityPerCm2": 38.72,
+    "edgeP99Mm": 4.805
    },
    "captures": null,
    "blockers": [
@@ -65456,17 +65376,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 22252,
     "boundaryEdges": 360,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 2,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 49.8,
-    "edgeP99Mm": 6.396
+    "densityPerCm2": 92.34,
+    "edgeP99Mm": 2.401
    },
    "captures": {
     "subject": "coeur",
@@ -65499,17 +65419,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 12000,
+    "triangles": 22322,
     "boundaryEdges": 334,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
     "components": 1,
     "degenerate": 0,
-    "flippedFaces": 2,
+    "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 50.18,
-    "edgeP99Mm": 6.594
+    "densityPerCm2": 93.35,
+    "edgeP99Mm": 2.433
    },
    "captures": {
     "subject": "coeur",

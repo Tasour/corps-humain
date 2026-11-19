@@ -1,23 +1,23 @@
 {
  "summary": {
-  "generated": "2026-11-19T02:45:16.660Z",
+  "generated": "2026-11-19T02:53:27.948Z",
   "structures": 2039,
   "samplesPerDirection": 256,
   "medium": {
    "medianMm": 0,
-   "p90Mm": 0.609,
-   "p99Mm": 3.689,
-   "maxMm": 121.232,
-   "over05": 268,
-   "over2": 48
+   "p90Mm": 0.631,
+   "p99Mm": 4.197,
+   "maxMm": 126.303,
+   "over05": 274,
+   "over2": 58
   },
   "low": {
-   "medianMm": 0.397,
-   "p90Mm": 2.758,
+   "medianMm": 0.406,
+   "p90Mm": 2.792,
    "p99Mm": 17.385,
-   "maxMm": 121.232,
-   "over05": 915,
-   "over2": 316
+   "maxMm": 126.303,
+   "over05": 920,
+   "over2": 323
   }
  },
  "structures": [
@@ -434,23 +434,23 @@
    "fr": "Vertèbre cervicale",
    "category": "bone",
    "triangles": {
-    "high": 12000,
-    "medium": 4756,
+    "high": 12752,
+    "medium": 4760,
     "low": 4736
    },
    "medium": {
-    "maxMm": 2.2763507219819505,
-    "meanMm": 0.12557084698786797,
+    "maxMm": 1.7413651387112457,
+    "meanMm": 0.11043142894238941,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.2763507219819505,
-    "samples": 533
+    "fineToCoarseMaxMm": 1.7413651387112457,
+    "samples": 530
    },
    "low": {
-    "maxMm": 3.1263778834858345,
-    "meanMm": 0.12914358841463988,
+    "maxMm": 3.096429998099403,
+    "meanMm": 0.12146172295651965,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.1263778834858345,
-    "samples": 532
+    "fineToCoarseMaxMm": 3.096429998099403,
+    "samples": 529
    }
   },
   {
@@ -866,23 +866,23 @@
    "fr": "Cartilage costal de la septième côte",
    "category": "bone",
    "triangles": {
-    "high": 12000,
+    "high": 13764,
     "medium": 1499,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.12321289791873148,
-    "meanMm": 0.018365336647198298,
+    "maxMm": 0.15363653350419232,
+    "meanMm": 0.020812560534285637,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.12321289791873148,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.15363653350419232,
+    "samples": 641
    },
    "low": {
-    "maxMm": 0.683795048461198,
-    "meanMm": 0.0945294313397508,
+    "maxMm": 0.6810772523421632,
+    "meanMm": 0.0994863437691408,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.683795048461198,
-    "samples": 413
+    "fineToCoarseMaxMm": 0.6810772523421632,
+    "samples": 417
    }
   },
   {
@@ -890,23 +890,23 @@
    "fr": "Cartilage costal de la septième côte",
    "category": "bone",
    "triangles": {
-    "high": 12000,
+    "high": 13764,
     "medium": 1499,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.15230754588751236,
-    "meanMm": 0.019998472333103978,
+    "maxMm": 0.16335269590188156,
+    "meanMm": 0.019010718514623715,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.15230754588751236,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.16335269590188156,
+    "samples": 641
    },
    "low": {
-    "maxMm": 0.7119394525139845,
-    "meanMm": 0.09071680185650983,
+    "maxMm": 0.5435697099861956,
+    "meanMm": 0.10065741233736546,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7119394525139845,
-    "samples": 413
+    "fineToCoarseMaxMm": 0.5435697099861956,
+    "samples": 417
    }
   },
   {
@@ -3338,23 +3338,23 @@
    "fr": "Vertèbre lombaire",
    "category": "bone",
    "triangles": {
-    "high": 12000,
-    "medium": 2544,
+    "high": 12620,
+    "medium": 2542,
     "low": 2504
    },
    "medium": {
-    "maxMm": 3.533412231346329,
-    "meanMm": 0.28620193715656495,
+    "maxMm": 3.2913172024553035,
+    "meanMm": 0.30643437300955984,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.533412231346329,
-    "samples": 541
+    "fineToCoarseMaxMm": 3.2913172024553035,
+    "samples": 543
    },
    "low": {
-    "maxMm": 6.769530742073519,
-    "meanMm": 0.3361942398479006,
+    "maxMm": 5.372195080841839,
+    "meanMm": 0.33536452994431115,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.769530742073519,
-    "samples": 538
+    "fineToCoarseMaxMm": 5.372195080841839,
+    "samples": 540
    }
   },
   {
@@ -3506,23 +3506,23 @@
    "fr": "Mandibule",
    "category": "bone",
    "triangles": {
-    "high": 11997,
-    "medium": 1497,
+    "high": 18834,
+    "medium": 1492,
     "low": 293
    },
    "medium": {
-    "maxMm": 0.7443045550216696,
-    "meanMm": 0.10338387883782874,
+    "maxMm": 0.6283694234899462,
+    "meanMm": 0.08585335871737569,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7443045550216696,
+    "fineToCoarseMaxMm": 0.6283694234899462,
     "samples": 631
    },
    "low": {
-    "maxMm": 4.7108537056026,
-    "meanMm": 0.5092333082980637,
+    "maxMm": 4.626407217885555,
+    "meanMm": 0.5552643739181916,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.7108537056026,
-    "samples": 411
+    "fineToCoarseMaxMm": 4.626407217885555,
+    "samples": 414
    }
   },
   {
@@ -4346,23 +4346,23 @@
    "fr": "Neurocrâne",
    "category": "bone",
    "triangles": {
-    "high": 11998,
-    "medium": 4553,
-    "low": 4497
+    "high": 18635,
+    "medium": 4569,
+    "low": 4511
    },
    "medium": {
-    "maxMm": 3.7214068671584886,
-    "meanMm": 0.26192530526084906,
+    "maxMm": 3.9988297913477475,
+    "meanMm": 0.2851725450995854,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.7214068671584886,
-    "samples": 531
+    "fineToCoarseMaxMm": 3.9988297913477475,
+    "samples": 526
    },
    "low": {
-    "maxMm": 3.799560043672847,
-    "meanMm": 0.2881620974560391,
+    "maxMm": 4.190898024013731,
+    "meanMm": 0.32277162998771525,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.799560043672847,
-    "samples": 529
+    "fineToCoarseMaxMm": 4.190898024013731,
+    "samples": 524
    }
   },
   {
@@ -5354,23 +5354,23 @@
    "fr": "Côte",
    "category": "bone",
    "triangles": {
-    "high": 12000,
-    "medium": 1500,
-    "low": 351
+    "high": 19178,
+    "medium": 1499,
+    "low": 352
    },
    "medium": {
-    "maxMm": 2.4246077439163956,
-    "meanMm": 0.29730109841590535,
+    "maxMm": 2.5120814885632106,
+    "meanMm": 0.29019206889421695,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.4246077439163956,
-    "samples": 556
+    "fineToCoarseMaxMm": 2.5120814885632106,
+    "samples": 546
    },
    "low": {
-    "maxMm": 29.481808137806915,
-    "meanMm": 2.8190545893459267,
+    "maxMm": 26.21077279779296,
+    "meanMm": 2.5762590356625106,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 29.481808137806915,
-    "samples": 579
+    "fineToCoarseMaxMm": 26.21077279779296,
+    "samples": 571
    }
   },
   {
@@ -5378,23 +5378,23 @@
    "fr": "Côte",
    "category": "bone",
    "triangles": {
-    "high": 11999,
+    "high": 19202,
     "medium": 1499,
-    "low": 373
+    "low": 381
    },
    "medium": {
-    "maxMm": 2.5068008925075977,
-    "meanMm": 0.29206452338891997,
+    "maxMm": 1.9545440415398336,
+    "meanMm": 0.29091624072218897,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.5068008925075977,
-    "samples": 558
+    "fineToCoarseMaxMm": 1.9545440415398336,
+    "samples": 548
    },
    "low": {
-    "maxMm": 30.787027864233252,
-    "meanMm": 2.7209973078283882,
+    "maxMm": 50.5760035833427,
+    "meanMm": 3.2328009123016077,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 30.787027864233252,
-    "samples": 598
+    "fineToCoarseMaxMm": 50.5760035833427,
+    "samples": 584
    }
   },
   {
@@ -5522,23 +5522,23 @@
    "fr": "Scapula",
    "category": "bone",
    "triangles": {
-    "high": 11999,
-    "medium": 1499,
-    "low": 299
+    "high": 25324,
+    "medium": 1500,
+    "low": 300
    },
    "medium": {
-    "maxMm": 0.5203614987762283,
-    "meanMm": 0.07226960189402662,
+    "maxMm": 0.579979736393976,
+    "meanMm": 0.07347260287381595,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5203614987762283,
-    "samples": 638
+    "fineToCoarseMaxMm": 0.579979736393976,
+    "samples": 636
    },
    "low": {
-    "maxMm": 1.8444063103228758,
-    "meanMm": 0.27395348357334287,
+    "maxMm": 2.2214295200014114,
+    "meanMm": 0.32053578042941305,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.8444063103228758,
-    "samples": 414
+    "fineToCoarseMaxMm": 2.2214295200014114,
+    "samples": 412
    }
   },
   {
@@ -5546,23 +5546,23 @@
    "fr": "Scapula",
    "category": "bone",
    "triangles": {
-    "high": 11999,
-    "medium": 1499,
-    "low": 299
+    "high": 25324,
+    "medium": 1500,
+    "low": 300
    },
    "medium": {
-    "maxMm": 0.5288208643726842,
-    "meanMm": 0.06970844916957136,
+    "maxMm": 0.578624020748988,
+    "meanMm": 0.0772944671242424,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5288208643726842,
-    "samples": 638
+    "fineToCoarseMaxMm": 0.578624020748988,
+    "samples": 636
    },
    "low": {
-    "maxMm": 1.745134204188141,
-    "meanMm": 0.2746130879240891,
+    "maxMm": 2.0916682408666687,
+    "meanMm": 0.3056955476511068,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.745134204188141,
-    "samples": 414
+    "fineToCoarseMaxMm": 2.0916682408666687,
+    "samples": 412
    }
   },
   {
@@ -6050,23 +6050,23 @@
    "fr": "Os temporal",
    "category": "bone",
    "triangles": {
-    "high": 12000,
-    "medium": 1493,
-    "low": 297
+    "high": 14094,
+    "medium": 1490,
+    "low": 288
    },
    "medium": {
-    "maxMm": 0.9032408527555943,
-    "meanMm": 0.0893875026810784,
+    "maxMm": 0.658826737892308,
+    "meanMm": 0.08257804058573674,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.9032408527555943,
-    "samples": 641
+    "fineToCoarseMaxMm": 0.658826737892308,
+    "samples": 640
    },
    "low": {
-    "maxMm": 3.538318029106461,
-    "meanMm": 0.36418531594907005,
+    "maxMm": 3.5294785271362694,
+    "meanMm": 0.3765337581908451,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.538318029106461,
-    "samples": 425
+    "fineToCoarseMaxMm": 3.5294785271362694,
+    "samples": 423
    }
   },
   {
@@ -6074,23 +6074,23 @@
    "fr": "Os temporal",
    "category": "bone",
    "triangles": {
-    "high": 12000,
-    "medium": 1492,
-    "low": 287
+    "high": 14094,
+    "medium": 1489,
+    "low": 295
    },
    "medium": {
-    "maxMm": 0.7667493460553734,
-    "meanMm": 0.0870408314905062,
+    "maxMm": 0.5947349468144616,
+    "meanMm": 0.08534881726374438,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7667493460553734,
-    "samples": 640
+    "fineToCoarseMaxMm": 0.5947349468144616,
+    "samples": 638
    },
    "low": {
-    "maxMm": 3.806598661921015,
-    "meanMm": 0.3760998027035001,
+    "maxMm": 3.334192631574952,
+    "meanMm": 0.35368829485567094,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.806598661921015,
-    "samples": 421
+    "fineToCoarseMaxMm": 3.334192631574952,
+    "samples": 422
    }
   },
   {
@@ -6290,23 +6290,23 @@
    "fr": "Vertèbre thoracique",
    "category": "bone",
    "triangles": {
-    "high": 11999,
-    "medium": 5099,
-    "low": 5089
+    "high": 22420,
+    "medium": 5106,
+    "low": 5082
    },
    "medium": {
-    "maxMm": 6.9534324717497,
-    "meanMm": 0.2802635136666719,
+    "maxMm": 9.140616840676774,
+    "meanMm": 0.4004637123276075,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.9534324717497,
-    "samples": 526
+    "fineToCoarseMaxMm": 9.140616840676774,
+    "samples": 520
    },
    "low": {
-    "maxMm": 8.998241972229712,
-    "meanMm": 0.2906673598066921,
+    "maxMm": 12.229317028749477,
+    "meanMm": 0.45784062848767215,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 8.998241972229712,
-    "samples": 525
+    "fineToCoarseMaxMm": 12.229317028749477,
+    "samples": 519
    }
   },
   {
@@ -6386,23 +6386,23 @@
    "fr": "Dent",
    "category": "bone",
    "triangles": {
-    "high": 12000,
+    "high": 14802,
     "medium": 1500,
-    "low": 566
+    "low": 582
    },
    "medium": {
-    "maxMm": 0.6080620668456275,
-    "meanMm": 0.10004774336250874,
+    "maxMm": 0.7154472668017654,
+    "meanMm": 0.10178251289957051,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6080620668456275,
-    "samples": 543
+    "fineToCoarseMaxMm": 0.7154472668017654,
+    "samples": 537
    },
    "low": {
-    "maxMm": 1.7333022167009031,
-    "meanMm": 0.25639667071957034,
+    "maxMm": 1.7023009927794854,
+    "meanMm": 0.2580335702159258,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.7333022167009031,
-    "samples": 630
+    "fineToCoarseMaxMm": 1.7023009927794854,
+    "samples": 633
    }
   },
   {
@@ -6410,23 +6410,23 @@
    "fr": "Dent",
    "category": "bone",
    "triangles": {
-    "high": 12000,
+    "high": 14754,
     "medium": 1500,
-    "low": 604
+    "low": 620
    },
    "medium": {
-    "maxMm": 0.6227145006049958,
-    "meanMm": 0.08985018995488686,
+    "maxMm": 0.7875373614284431,
+    "meanMm": 0.0967959804631462,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6227145006049958,
-    "samples": 548
+    "fineToCoarseMaxMm": 0.7875373614284431,
+    "samples": 541
    },
    "low": {
-    "maxMm": 2.7302857436582384,
-    "meanMm": 0.2486617063888567,
+    "maxMm": 1.5081173019242087,
+    "meanMm": 0.24156574306319892,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.7302857436582384,
-    "samples": 661
+    "fineToCoarseMaxMm": 1.5081173019242087,
+    "samples": 663
    }
   },
   {
@@ -9098,23 +9098,23 @@
    "fr": "Gaine tendineuse commune des fléchisseurs",
    "category": "muscle",
    "triangles": {
-    "high": 12000,
+    "high": 13968,
     "medium": 1500,
     "low": 300
    },
    "medium": {
-    "maxMm": 0.1923070638697608,
-    "meanMm": 0.02572877830645546,
+    "maxMm": 0.19367247405052684,
+    "meanMm": 0.023860002191726078,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.1923070638697608,
-    "samples": 553
+    "fineToCoarseMaxMm": 0.19367247405052684,
+    "samples": 550
    },
    "low": {
-    "maxMm": 2.3629910774147134,
-    "meanMm": 0.28249678750397944,
+    "maxMm": 2.517464581369914,
+    "meanMm": 0.26086974208980684,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.3629910774147134,
-    "samples": 526
+    "fineToCoarseMaxMm": 2.517464581369914,
+    "samples": 523
    }
   },
   {
@@ -9890,23 +9890,23 @@
    "fr": "Diaphragme",
    "category": "muscle",
    "triangles": {
-    "high": 12000,
+    "high": 38868,
     "medium": 1500,
-    "low": 299
+    "low": 298
    },
    "medium": {
-    "maxMm": 1.364199846379005,
-    "meanMm": 0.23646294038331347,
+    "maxMm": 1.4828899640979898,
+    "meanMm": 0.2403528648473121,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.364199846379005,
-    "samples": 637
+    "fineToCoarseMaxMm": 1.4828899640979898,
+    "samples": 636
    },
    "low": {
-    "maxMm": 6.63565336520465,
-    "meanMm": 0.9548033548266249,
+    "maxMm": 5.929138930600926,
+    "meanMm": 1.0134381843819729,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.63565336520465,
-    "samples": 412
+    "fineToCoarseMaxMm": 5.929138930600926,
+    "samples": 411
    }
   },
   {
@@ -10106,23 +10106,23 @@
    "fr": "Aponévrose épicrânienne",
    "category": "muscle",
    "triangles": {
-    "high": 11987,
-    "medium": 1494,
-    "low": 299
+    "high": 20118,
+    "medium": 1496,
+    "low": 300
    },
    "medium": {
-    "maxMm": 0.616560890653435,
-    "meanMm": 0.07692148506275662,
+    "maxMm": 1.3125627359284504,
+    "meanMm": 0.07260940579819028,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.616560890653435,
-    "samples": 638
+    "fineToCoarseMaxMm": 1.3125627359284504,
+    "samples": 634
    },
    "low": {
-    "maxMm": 3.6129741993163798,
-    "meanMm": 0.22486921745107566,
+    "maxMm": 1.5717754837820597,
+    "meanMm": 0.19893638363840008,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.6129741993163798,
-    "samples": 417
+    "fineToCoarseMaxMm": 1.5717754837820597,
+    "samples": 412
    }
   },
   {
@@ -10130,23 +10130,23 @@
    "fr": "Aponévrose épicrânienne",
    "category": "muscle",
    "triangles": {
-    "high": 11986,
-    "medium": 1494,
-    "low": 299
+    "high": 20118,
+    "medium": 1500,
+    "low": 300
    },
    "medium": {
-    "maxMm": 0.6436943311837424,
-    "meanMm": 0.07616837220537387,
+    "maxMm": 0.9903401805543177,
+    "meanMm": 0.0812251872922105,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6436943311837424,
-    "samples": 638
+    "fineToCoarseMaxMm": 0.9903401805543177,
+    "samples": 634
    },
    "low": {
-    "maxMm": 1.74413950238965,
-    "meanMm": 0.20976089307938775,
+    "maxMm": 1.4114158502145941,
+    "meanMm": 0.19708616840445764,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.74413950238965,
-    "samples": 418
+    "fineToCoarseMaxMm": 1.4114158502145941,
+    "samples": 410
    }
   },
   {
@@ -10778,23 +10778,23 @@
    "fr": "Muscle oblique externe de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11993,
+    "high": 29622,
     "medium": 1498,
     "low": 298
    },
    "medium": {
-    "maxMm": 1.9149112644684092,
-    "meanMm": 0.19148500369960925,
+    "maxMm": 2.4218259946538416,
+    "meanMm": 0.19096753297112026,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.9149112644684092,
-    "samples": 638
+    "fineToCoarseMaxMm": 2.4218259946538416,
+    "samples": 636
    },
    "low": {
-    "maxMm": 6.1066000896725985,
-    "meanMm": 0.5042112626239039,
+    "maxMm": 12.350951580385537,
+    "meanMm": 0.4998824857421149,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.1066000896725985,
-    "samples": 415
+    "fineToCoarseMaxMm": 12.350951580385537,
+    "samples": 412
    }
   },
   {
@@ -10802,23 +10802,23 @@
    "fr": "Muscle oblique externe de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11988,
-    "medium": 1498,
-    "low": 298
+    "high": 29622,
+    "medium": 1499,
+    "low": 296
    },
    "medium": {
-    "maxMm": 1.6138810189995298,
-    "meanMm": 0.18403843446312754,
+    "maxMm": 5.455812407664475,
+    "meanMm": 0.20659495939061676,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.6138810189995298,
-    "samples": 640
+    "fineToCoarseMaxMm": 5.455812407664475,
+    "samples": 636
    },
    "low": {
-    "maxMm": 6.798311012232261,
-    "meanMm": 0.6040100498438407,
+    "maxMm": 22.304440158619368,
+    "meanMm": 0.604531202778013,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.798311012232261,
-    "samples": 419
+    "fineToCoarseMaxMm": 22.304440158619368,
+    "samples": 411
    }
   },
   {
@@ -10874,23 +10874,23 @@
    "fr": "Muscles intercostaux externes",
    "category": "muscle",
    "triangles": {
-    "high": 11930,
-    "medium": 1485,
-    "low": 249
+    "high": 41410,
+    "medium": 1474,
+    "low": 233
    },
    "medium": {
-    "maxMm": 3.6887494712081836,
-    "meanMm": 0.2874098136929555,
+    "maxMm": 3.174346992836966,
+    "meanMm": 0.25509896946052446,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.6887494712081836,
-    "samples": 523
+    "fineToCoarseMaxMm": 3.174346992836966,
+    "samples": 516
    },
    "low": {
-    "maxMm": 24.456106654303905,
-    "meanMm": 2.189754264742598,
+    "maxMm": 19.56216307393958,
+    "meanMm": 1.5008115091377798,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 24.456106654303905,
-    "samples": 461
+    "fineToCoarseMaxMm": 19.56216307393958,
+    "samples": 449
    }
   },
   {
@@ -10898,23 +10898,23 @@
    "fr": "Muscles intercostaux externes",
    "category": "muscle",
    "triangles": {
-    "high": 11924,
-    "medium": 1486,
-    "low": 243
+    "high": 41410,
+    "medium": 1482,
+    "low": 214
    },
    "medium": {
-    "maxMm": 2.243729417509656,
-    "meanMm": 0.2736447583304667,
+    "maxMm": 3.0710284508042607,
+    "meanMm": 0.2625516244906797,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.243729417509656,
-    "samples": 523
+    "fineToCoarseMaxMm": 3.0710284508042607,
+    "samples": 516
    },
    "low": {
-    "maxMm": 27.86882856898709,
-    "meanMm": 2.2634506985788034,
+    "maxMm": 24.455621245792347,
+    "meanMm": 1.1940842490170103,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 27.86882856898709,
-    "samples": 467
+    "fineToCoarseMaxMm": 24.455621245792347,
+    "samples": 444
    }
   },
   {
@@ -10970,23 +10970,23 @@
    "fr": "Fascia lata",
    "category": "muscle",
    "triangles": {
-    "high": 11999,
+    "high": 12907,
     "medium": 1499,
-    "low": 506
+    "low": 507
    },
    "medium": {
-    "maxMm": 0.809401121859229,
-    "meanMm": 0.1103624260774686,
+    "maxMm": 0.9720869863807137,
+    "meanMm": 0.1143427006854139,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.809401121859229,
-    "samples": 586
+    "fineToCoarseMaxMm": 0.9720869863807137,
+    "samples": 583
    },
    "low": {
-    "maxMm": 9.87210168613298,
-    "meanMm": 1.3677149211493427,
+    "maxMm": 11.363886977993927,
+    "meanMm": 1.1925166071313276,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 9.87210168613298,
-    "samples": 742
+    "fineToCoarseMaxMm": 11.363886977993927,
+    "samples": 739
    }
   },
   {
@@ -10994,23 +10994,23 @@
    "fr": "Fascia lata",
    "category": "muscle",
    "triangles": {
-    "high": 11999,
+    "high": 12907,
     "medium": 1499,
-    "low": 501
+    "low": 513
    },
    "medium": {
-    "maxMm": 0.9887046771025235,
-    "meanMm": 0.1121212185793634,
+    "maxMm": 0.849876479814689,
+    "meanMm": 0.10088133638094565,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.9887046771025235,
-    "samples": 586
+    "fineToCoarseMaxMm": 0.849876479814689,
+    "samples": 583
    },
    "low": {
-    "maxMm": 11.997679987632406,
-    "meanMm": 1.4790600894375028,
+    "maxMm": 10.654976817923803,
+    "meanMm": 1.3593592036877786,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 11.997679987632406,
-    "samples": 739
+    "fineToCoarseMaxMm": 10.654976817923803,
+    "samples": 742
    }
   },
   {
@@ -12122,23 +12122,23 @@
    "fr": "Chef huméro-ulnaire du fléchisseur superficiel des doigts",
    "category": "muscle",
    "triangles": {
-    "high": 12000,
-    "medium": 1498,
-    "low": 276
+    "high": 12798,
+    "medium": 1496,
+    "low": 283
    },
    "medium": {
-    "maxMm": 0.6025228531120681,
-    "meanMm": 0.0712222694492424,
+    "maxMm": 0.7920160048883722,
+    "meanMm": 0.0803845274296769,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6025228531120681,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.7920160048883722,
+    "samples": 633
    },
    "low": {
-    "maxMm": 11.074098423201036,
-    "meanMm": 0.32639335851683793,
+    "maxMm": 9.976552513224318,
+    "meanMm": 0.3419925255769315,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 11.074098423201036,
-    "samples": 411
+    "fineToCoarseMaxMm": 9.976552513224318,
+    "samples": 409
    }
   },
   {
@@ -12146,23 +12146,23 @@
    "fr": "Chef huméro-ulnaire du fléchisseur superficiel des doigts",
    "category": "muscle",
    "triangles": {
-    "high": 12000,
-    "medium": 1499,
-    "low": 278
+    "high": 12798,
+    "medium": 1497,
+    "low": 286
    },
    "medium": {
-    "maxMm": 0.6708245245273482,
-    "meanMm": 0.07333023309369786,
+    "maxMm": 0.6046175848468694,
+    "meanMm": 0.0744104538197055,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6708245245273482,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.6046175848468694,
+    "samples": 633
    },
    "low": {
-    "maxMm": 7.179764202392586,
-    "meanMm": 0.29937748886503784,
+    "maxMm": 11.129533140184837,
+    "meanMm": 0.36834460326865787,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 7.179764202392586,
-    "samples": 413
+    "fineToCoarseMaxMm": 11.129533140184837,
+    "samples": 408
    }
   },
   {
@@ -12602,23 +12602,23 @@
    "fr": "Tractus iliotibial",
    "category": "muscle",
    "triangles": {
-    "high": 11989,
-    "medium": 1499,
-    "low": 298
+    "high": 48612,
+    "medium": 1500,
+    "low": 299
    },
    "medium": {
-    "maxMm": 0.6761903474667625,
-    "meanMm": 0.07546789263992684,
+    "maxMm": 0.6354633045010725,
+    "meanMm": 0.08006606254806709,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6761903474667625,
-    "samples": 638
+    "fineToCoarseMaxMm": 0.6354633045010725,
+    "samples": 635
    },
    "low": {
-    "maxMm": 5.651483240980423,
-    "meanMm": 0.3097541018713471,
+    "maxMm": 2.160977592588583,
+    "meanMm": 0.2748038160194077,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.651483240980423,
-    "samples": 416
+    "fineToCoarseMaxMm": 2.160977592588583,
+    "samples": 411
    }
   },
   {
@@ -12626,23 +12626,23 @@
    "fr": "Tractus iliotibial",
    "category": "muscle",
    "triangles": {
-    "high": 11987,
-    "medium": 1498,
+    "high": 48612,
+    "medium": 1500,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.6592967554344628,
-    "meanMm": 0.08006501903064324,
+    "maxMm": 1.0533628669860475,
+    "meanMm": 0.0833254582548205,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6592967554344628,
-    "samples": 638
+    "fineToCoarseMaxMm": 1.0533628669860475,
+    "samples": 635
    },
    "low": {
-    "maxMm": 5.651483240980423,
-    "meanMm": 0.28189753849801324,
+    "maxMm": 2.619267889368113,
+    "meanMm": 0.28325460234287453,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.651483240980423,
-    "samples": 415
+    "fineToCoarseMaxMm": 2.619267889368113,
+    "samples": 411
    }
   },
   {
@@ -13178,23 +13178,23 @@
    "fr": "Muscles intercostaux intimes",
    "category": "muscle",
    "triangles": {
-    "high": 11911,
-    "medium": 1485,
-    "low": 267
+    "high": 38254,
+    "medium": 1493,
+    "low": 261
    },
    "medium": {
-    "maxMm": 2.9491036615051773,
-    "meanMm": 0.25935451778327967,
+    "maxMm": 2.7233756040006885,
+    "meanMm": 0.222877638057625,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.9491036615051773,
-    "samples": 521
+    "fineToCoarseMaxMm": 2.7233756040006885,
+    "samples": 641
    },
    "low": {
-    "maxMm": 35.111132191332445,
-    "meanMm": 1.716480410423319,
+    "maxMm": 9.822785709586016,
+    "meanMm": 0.7077806832800198,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 35.111132191332445,
-    "samples": 449
+    "fineToCoarseMaxMm": 9.822785709586016,
+    "samples": 427
    }
   },
   {
@@ -13202,23 +13202,23 @@
    "fr": "Muscles intercostaux intimes",
    "category": "muscle",
    "triangles": {
-    "high": 11900,
-    "medium": 1495,
-    "low": 260
+    "high": 38254,
+    "medium": 1496,
+    "low": 255
    },
    "medium": {
-    "maxMm": 2.6606477912029134,
-    "meanMm": 0.23011102215764648,
+    "maxMm": 2.357484626657744,
+    "meanMm": 0.21646158336426263,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.6606477912029134,
-    "samples": 523
+    "fineToCoarseMaxMm": 2.357484626657744,
+    "samples": 642
    },
    "low": {
-    "maxMm": 26.295140147894575,
-    "meanMm": 1.7769220940698627,
+    "maxMm": 11.911380577921111,
+    "meanMm": 0.7401987924759558,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 26.295140147894575,
-    "samples": 453
+    "fineToCoarseMaxMm": 11.911380577921111,
+    "samples": 428
    }
   },
   {
@@ -13322,23 +13322,23 @@
    "fr": "Muscle oblique interne de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11964,
-    "medium": 1496,
-    "low": 298
+    "high": 28869,
+    "medium": 1498,
+    "low": 300
    },
    "medium": {
-    "maxMm": 1.6827292049241733,
-    "meanMm": 0.1601929655240837,
+    "maxMm": 1.7678254490332206,
+    "meanMm": 0.17087033864552648,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.6827292049241733,
-    "samples": 640
+    "fineToCoarseMaxMm": 1.7678254490332206,
+    "samples": 635
    },
    "low": {
-    "maxMm": 10.714074347284633,
-    "meanMm": 0.4912001920191199,
+    "maxMm": 12.144401798342926,
+    "meanMm": 0.5530682641981678,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 10.714074347284633,
-    "samples": 420
+    "fineToCoarseMaxMm": 12.144401798342926,
+    "samples": 412
    }
   },
   {
@@ -13346,23 +13346,23 @@
    "fr": "Muscle oblique interne de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11973,
+    "high": 28869,
     "medium": 1498,
-    "low": 299
+    "low": 300
    },
    "medium": {
-    "maxMm": 1.5865047163064214,
-    "meanMm": 0.14826433083125207,
+    "maxMm": 1.7857290070434517,
+    "meanMm": 0.15947053497666766,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.5865047163064214,
-    "samples": 640
+    "fineToCoarseMaxMm": 1.7857290070434517,
+    "samples": 635
    },
    "low": {
-    "maxMm": 8.424231490662551,
-    "meanMm": 0.5317479888742135,
+    "maxMm": 5.320862308677436,
+    "meanMm": 0.461457475760294,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 8.424231490662551,
-    "samples": 419
+    "fineToCoarseMaxMm": 5.320862308677436,
+    "samples": 412
    }
   },
   {
@@ -13370,23 +13370,23 @@
    "fr": "Muscles intercostaux internes",
    "category": "muscle",
    "triangles": {
-    "high": 11957,
-    "medium": 1457,
-    "low": 282
+    "high": 40183,
+    "medium": 1425,
+    "low": 245
    },
    "medium": {
-    "maxMm": 1.7490762299122309,
-    "meanMm": 0.23898045214923927,
+    "maxMm": 2.237464951246776,
+    "meanMm": 0.2730441209912993,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.7490762299122309,
-    "samples": 523
+    "fineToCoarseMaxMm": 2.237464951246776,
+    "samples": 517
    },
    "low": {
-    "maxMm": 33.8763354919932,
-    "meanMm": 2.877165573651603,
+    "maxMm": 23.32293914375266,
+    "meanMm": 2.3602952141135,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 33.8763354919932,
-    "samples": 495
+    "fineToCoarseMaxMm": 23.32293914375266,
+    "samples": 481
    }
   },
   {
@@ -13394,22 +13394,22 @@
    "fr": "Muscles intercostaux internes",
    "category": "muscle",
    "triangles": {
-    "high": 11962,
-    "medium": 1471,
-    "low": 249
+    "high": 40183,
+    "medium": 1427,
+    "low": 232
    },
    "medium": {
-    "maxMm": 2.1856995710867606,
-    "meanMm": 0.23738679030054752,
+    "maxMm": 2.2373920903890987,
+    "meanMm": 0.2725216751256227,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.1856995710867606,
-    "samples": 524
+    "fineToCoarseMaxMm": 2.2373920903890987,
+    "samples": 516
    },
    "low": {
-    "maxMm": 30.659325671892546,
-    "meanMm": 3.1585866294719938,
+    "maxMm": 25.171599633165435,
+    "meanMm": 2.3419731883608685,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 30.659325671892546,
+    "fineToCoarseMaxMm": 25.171599633165435,
     "samples": 475
    }
   },
@@ -14090,23 +14090,23 @@
    "fr": "Muscle grand dorsal",
    "category": "muscle",
    "triangles": {
-    "high": 11996,
-    "medium": 1500,
-    "low": 299
+    "high": 21580,
+    "medium": 1498,
+    "low": 300
    },
    "medium": {
-    "maxMm": 1.7593092575534446,
-    "meanMm": 0.19079112615269686,
+    "maxMm": 1.7776510330468691,
+    "meanMm": 0.18419143073882757,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.7593092575534446,
-    "samples": 641
+    "fineToCoarseMaxMm": 1.7776510330468691,
+    "samples": 636
    },
    "low": {
-    "maxMm": 5.568534842020754,
-    "meanMm": 0.5056651748530817,
+    "maxMm": 3.5566885006795816,
+    "meanMm": 0.4374705395743889,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.568534842020754,
-    "samples": 420
+    "fineToCoarseMaxMm": 3.5566885006795816,
+    "samples": 415
    }
   },
   {
@@ -14114,23 +14114,23 @@
    "fr": "Muscle grand dorsal",
    "category": "muscle",
    "triangles": {
-    "high": 11995,
-    "medium": 1498,
-    "low": 299
+    "high": 21580,
+    "medium": 1499,
+    "low": 298
    },
    "medium": {
-    "maxMm": 1.8639853358036054,
-    "meanMm": 0.17525645575315435,
+    "maxMm": 1.5098092229088609,
+    "meanMm": 0.1729790111520916,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.8639853358036054,
-    "samples": 641
+    "fineToCoarseMaxMm": 1.5098092229088609,
+    "samples": 636
    },
    "low": {
-    "maxMm": 4.17689482449463,
-    "meanMm": 0.4392384406429261,
+    "maxMm": 10.688590085033207,
+    "meanMm": 0.4787924873162398,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.17689482449463,
-    "samples": 421
+    "fineToCoarseMaxMm": 10.688590085033207,
+    "samples": 414
    }
   },
   {
@@ -16682,23 +16682,23 @@
    "fr": "Muscle palatopharyngien",
    "category": "muscle",
    "triangles": {
-    "high": 12000,
+    "high": 15282,
     "medium": 1500,
-    "low": 298
+    "low": 299
    },
    "medium": {
-    "maxMm": 0.10676019226205434,
-    "meanMm": 0.01676143604534322,
+    "maxMm": 0.1332306829830397,
+    "meanMm": 0.016905217520788482,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.10676019226205434,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.1332306829830397,
+    "samples": 640
    },
    "low": {
-    "maxMm": 0.45029319476554375,
-    "meanMm": 0.06984635849571477,
+    "maxMm": 0.49558564517137854,
+    "meanMm": 0.0690428514455528,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.45029319476554375,
-    "samples": 412
+    "fineToCoarseMaxMm": 0.49558564517137854,
+    "samples": 415
    }
   },
   {
@@ -16706,23 +16706,23 @@
    "fr": "Muscle palatopharyngien",
    "category": "muscle",
    "triangles": {
-    "high": 12000,
+    "high": 15282,
     "medium": 1500,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.11935572436820537,
-    "meanMm": 0.016703067381167416,
+    "maxMm": 0.1302677589278273,
+    "meanMm": 0.01661014133969859,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.11935572436820537,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.1302677589278273,
+    "samples": 640
    },
    "low": {
-    "maxMm": 0.3844672296959101,
-    "meanMm": 0.06389573172702487,
+    "maxMm": 0.4347325277987274,
+    "meanMm": 0.06867902647245355,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.3844672296959101,
-    "samples": 412
+    "fineToCoarseMaxMm": 0.4347325277987274,
+    "samples": 415
    }
   },
   {
@@ -18170,23 +18170,23 @@
    "fr": "Muscle droit de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11995,
-    "medium": 1499,
-    "low": 299
+    "high": 20604,
+    "medium": 1498,
+    "low": 300
    },
    "medium": {
-    "maxMm": 1.1012615423213905,
-    "meanMm": 0.129455761543064,
+    "maxMm": 0.8224366113208615,
+    "meanMm": 0.11771587414507105,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.1012615423213905,
-    "samples": 638
+    "fineToCoarseMaxMm": 0.8224366113208615,
+    "samples": 634
    },
    "low": {
-    "maxMm": 2.759606819143499,
-    "meanMm": 0.28222903485922096,
+    "maxMm": 2.830528603807409,
+    "meanMm": 0.3163615671707082,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.759606819143499,
-    "samples": 414
+    "fineToCoarseMaxMm": 2.830528603807409,
+    "samples": 411
    }
   },
   {
@@ -18194,23 +18194,23 @@
    "fr": "Muscle droit de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11994,
-    "medium": 1499,
+    "high": 20604,
+    "medium": 1497,
     "low": 299
    },
    "medium": {
-    "maxMm": 1.4415232408298186,
-    "meanMm": 0.13627764541606785,
+    "maxMm": 0.8224298461075407,
+    "meanMm": 0.11680695215091477,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.4415232408298186,
-    "samples": 638
+    "fineToCoarseMaxMm": 0.8224298461075407,
+    "samples": 634
    },
    "low": {
-    "maxMm": 2.6954740614085164,
-    "meanMm": 0.3082561608609571,
+    "maxMm": 2.099750079476034,
+    "meanMm": 0.2806021881545527,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.6954740614085164,
-    "samples": 415
+    "fineToCoarseMaxMm": 2.099750079476034,
+    "samples": 411
    }
   },
   {
@@ -19226,23 +19226,23 @@
    "fr": "Muscle dentelé antérieur",
    "category": "muscle",
    "triangles": {
-    "high": 11998,
-    "medium": 1498,
-    "low": 300
+    "high": 25240,
+    "medium": 1493,
+    "low": 299
    },
    "medium": {
-    "maxMm": 1.696433368413684,
-    "meanMm": 0.16731694623220544,
+    "maxMm": 2.456169457747106,
+    "meanMm": 0.17280417099814763,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.696433368413684,
-    "samples": 638
+    "fineToCoarseMaxMm": 2.456169457747106,
+    "samples": 634
    },
    "low": {
-    "maxMm": 5.386211891015554,
-    "meanMm": 0.4925641947259407,
+    "maxMm": 3.733364509219281,
+    "meanMm": 0.44732767430780845,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.386211891015554,
-    "samples": 415
+    "fineToCoarseMaxMm": 3.733364509219281,
+    "samples": 413
    }
   },
   {
@@ -19250,23 +19250,23 @@
    "fr": "Muscle dentelé antérieur",
    "category": "muscle",
    "triangles": {
-    "high": 11996,
-    "medium": 1496,
-    "low": 298
+    "high": 25240,
+    "medium": 1493,
+    "low": 299
    },
    "medium": {
-    "maxMm": 1.380425954643088,
-    "meanMm": 0.17522744423443012,
+    "maxMm": 2.4472747795990486,
+    "meanMm": 0.1708273965234924,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.380425954643088,
-    "samples": 638
+    "fineToCoarseMaxMm": 2.4472747795990486,
+    "samples": 634
    },
    "low": {
-    "maxMm": 6.335004907429701,
-    "meanMm": 0.5853538090347679,
+    "maxMm": 6.204870045263347,
+    "meanMm": 0.45672556258943714,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.335004907429701,
-    "samples": 417
+    "fineToCoarseMaxMm": 6.204870045263347,
+    "samples": 413
    }
   },
   {
@@ -23642,23 +23642,23 @@
    "fr": "Muscle transverse de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11990,
-    "medium": 1500,
+    "high": 34328,
+    "medium": 1499,
     "low": 299
    },
    "medium": {
-    "maxMm": 1.8502756626227825,
-    "meanMm": 0.18970853882876534,
+    "maxMm": 1.3665588356603937,
+    "meanMm": 0.17860268233951265,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.8502756626227825,
-    "samples": 639
+    "fineToCoarseMaxMm": 1.3665588356603937,
+    "samples": 633
    },
    "low": {
-    "maxMm": 7.730812050290314,
-    "meanMm": 0.5421614876386506,
+    "maxMm": 7.198506468872999,
+    "meanMm": 0.5209847338155872,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 7.730812050290314,
-    "samples": 417
+    "fineToCoarseMaxMm": 7.198506468872999,
+    "samples": 409
    }
   },
   {
@@ -23666,23 +23666,23 @@
    "fr": "Muscle transverse de l'abdomen",
    "category": "muscle",
    "triangles": {
-    "high": 11996,
+    "high": 34328,
     "medium": 1500,
     "low": 298
    },
    "medium": {
-    "maxMm": 1.6780060017536433,
-    "meanMm": 0.17042072550092405,
+    "maxMm": 1.859378519624118,
+    "meanMm": 0.20705919585645807,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.6780060017536433,
-    "samples": 638
+    "fineToCoarseMaxMm": 1.859378519624118,
+    "samples": 633
    },
    "low": {
-    "maxMm": 8.25199253665723,
-    "meanMm": 0.5350464953535258,
+    "maxMm": 12.525962527743001,
+    "meanMm": 0.5098274113546784,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 8.25199253665723,
-    "samples": 415
+    "fineToCoarseMaxMm": 12.525962527743001,
+    "samples": 409
    }
   },
   {
@@ -26210,23 +26210,23 @@
    "fr": "Côlon ascendant",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 17512,
     "medium": 1500,
-    "low": 299
+    "low": 300
    },
    "medium": {
-    "maxMm": 1.251277818972308,
-    "meanMm": 0.2258401550871551,
+    "maxMm": 1.4894825638634932,
+    "meanMm": 0.22364722384420538,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.251277818972308,
-    "samples": 637
+    "fineToCoarseMaxMm": 1.4894825638634932,
+    "samples": 634
    },
    "low": {
-    "maxMm": 3.9809542641687305,
-    "meanMm": 0.6500964202009096,
+    "maxMm": 4.041239696397528,
+    "meanMm": 0.5599542208379515,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.9809542641687305,
-    "samples": 413
+    "fineToCoarseMaxMm": 4.041239696397528,
+    "samples": 410
    }
   },
   {
@@ -26474,23 +26474,23 @@
    "fr": "Plexus veineux basilaire",
    "category": "organ",
    "triangles": {
-    "high": 11989,
-    "medium": 1499,
-    "low": 771
+    "high": 56192,
+    "medium": 1500,
+    "low": 730
    },
    "medium": {
-    "maxMm": 0.0933985586444213,
-    "meanMm": 0.013418267826649873,
+    "maxMm": 0.0876281751050934,
+    "meanMm": 0.012390097721829968,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.0933985586444213,
-    "samples": 525
+    "fineToCoarseMaxMm": 0.0876281751050934,
+    "samples": 519
    },
    "low": {
-    "maxMm": 0.5288414924081463,
-    "meanMm": 0.0642563170670602,
+    "maxMm": 0.38132341622503324,
+    "meanMm": 0.043386793216963475,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5288414924081463,
-    "samples": 604
+    "fineToCoarseMaxMm": 0.38132341622503324,
+    "samples": 587
    }
   },
   {
@@ -26786,23 +26786,23 @@
    "fr": "Encéphale",
    "category": "organ",
    "triangles": {
-    "high": 26332,
-    "medium": 26310,
-    "low": 26306
+    "high": 30516,
+    "medium": 26332,
+    "low": 26310
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 2.220891235838277,
+    "meanMm": 0.03547920364070338,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 516
+    "fineToCoarseMaxMm": 2.220891235838277,
+    "samples": 517
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 2.924903325314092,
+    "meanMm": 0.03523859650209732,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 516
+    "fineToCoarseMaxMm": 2.924903325314092,
+    "samples": 517
    }
   },
   {
@@ -26810,23 +26810,23 @@
    "fr": "Tronc cérébral",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 12064,
     "medium": 11780,
     "low": 11780
    },
    "medium": {
-    "maxMm": 0.8344067767390609,
-    "meanMm": 0.0022190376030499655,
+    "maxMm": 0.4101650594096256,
+    "meanMm": 0.002211654531102518,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.8344067767390609,
-    "samples": 518
+    "fineToCoarseMaxMm": 0.4101650594096256,
+    "samples": 519
    },
    "low": {
-    "maxMm": 0.8344067767390609,
-    "meanMm": 0.0022190376030499655,
+    "maxMm": 0.4101650594096256,
+    "meanMm": 0.002211654531102518,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.8344067767390609,
-    "samples": 518
+    "fineToCoarseMaxMm": 0.4101650594096256,
+    "samples": 519
    }
   },
   {
@@ -29306,23 +29306,23 @@
    "fr": "Côlon descendant",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 24744,
     "medium": 1500,
     "low": 300
    },
    "medium": {
-    "maxMm": 1.764333826916553,
-    "meanMm": 0.2758196745297773,
+    "maxMm": 1.9333138694697733,
+    "meanMm": 0.3103685263889587,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.764333826916553,
-    "samples": 636
+    "fineToCoarseMaxMm": 1.9333138694697733,
+    "samples": 633
    },
    "low": {
-    "maxMm": 12.503760930519656,
-    "meanMm": 0.8936200035943813,
+    "maxMm": 5.467088861505821,
+    "meanMm": 0.7525448723365141,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 12.503760930519656,
-    "samples": 411
+    "fineToCoarseMaxMm": 5.467088861505821,
+    "samples": 408
    }
   },
   {
@@ -30074,23 +30074,23 @@
    "fr": "Face",
    "category": "organ",
    "triangles": {
-    "high": 11999,
-    "medium": 6503,
-    "low": 6433
+    "high": 23705,
+    "medium": 6521,
+    "low": 6439
    },
    "medium": {
-    "maxMm": 2.8506815532477856,
-    "meanMm": 0.14481966559468654,
+    "maxMm": 3.403739047532121,
+    "meanMm": 0.17051208514391314,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.8506815532477856,
-    "samples": 526
+    "fineToCoarseMaxMm": 3.403739047532121,
+    "samples": 521
    },
    "low": {
-    "maxMm": 2.9847768194492823,
-    "meanMm": 0.17509937690826108,
+    "maxMm": 3.403739047532121,
+    "meanMm": 0.20222729215899382,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.9847768194492823,
-    "samples": 524
+    "fineToCoarseMaxMm": 3.403739047532121,
+    "samples": 519
    }
   },
   {
@@ -30098,23 +30098,23 @@
    "fr": "Faux du cerveau",
    "category": "organ",
    "triangles": {
-    "high": 11959,
-    "medium": 1499,
-    "low": 288
+    "high": 14722,
+    "medium": 1479,
+    "low": 293
    },
    "medium": {
-    "maxMm": 0.3021144675127215,
-    "meanMm": 0.0330360492421878,
+    "maxMm": 0.34831012074552453,
+    "meanMm": 0.03401149304732621,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.3021144675127215,
-    "samples": 607
+    "fineToCoarseMaxMm": 0.34831012074552453,
+    "samples": 606
    },
    "low": {
-    "maxMm": 5.294186857181186,
-    "meanMm": 0.15950697589797128,
+    "maxMm": 2.895880188927219,
+    "meanMm": 0.1517048725150323,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.294186857181186,
-    "samples": 389
+    "fineToCoarseMaxMm": 2.895880188927219,
+    "samples": 391
    }
   },
   {
@@ -30698,23 +30698,23 @@
    "fr": "Ganglions du tronc sympathique",
    "category": "organ",
    "triangles": {
-    "high": 11990,
-    "medium": 1492,
-    "low": 300
+    "high": 25344,
+    "medium": 1493,
+    "low": 299
    },
    "medium": {
-    "maxMm": 0.12575622657079832,
-    "meanMm": 0.025342052060928894,
+    "maxMm": 0.137797751592492,
+    "meanMm": 0.02606914634781129,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.12575622657079832,
-    "samples": 527
+    "fineToCoarseMaxMm": 0.137797751592492,
+    "samples": 522
    },
    "low": {
-    "maxMm": 0.5065450928984014,
-    "meanMm": 0.09646740137924992,
+    "maxMm": 0.4632421332800776,
+    "meanMm": 0.09663548895091048,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5065450928984014,
-    "samples": 458
+    "fineToCoarseMaxMm": 0.4632421332800776,
+    "samples": 449
    }
   },
   {
@@ -30722,23 +30722,23 @@
    "fr": "Ganglions du tronc sympathique",
    "category": "organ",
    "triangles": {
-    "high": 11987,
-    "medium": 1492,
+    "high": 25344,
+    "medium": 1488,
     "low": 300
    },
    "medium": {
-    "maxMm": 0.17134101379998123,
-    "meanMm": 0.024891333981165463,
+    "maxMm": 0.16022492741360375,
+    "meanMm": 0.02652489276043594,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.17134101379998123,
-    "samples": 527
+    "fineToCoarseMaxMm": 0.16022492741360375,
+    "samples": 522
    },
    "low": {
-    "maxMm": 0.47684830640635106,
-    "meanMm": 0.10409849349779578,
+    "maxMm": 0.5153341493974805,
+    "meanMm": 0.09952032437031327,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.47684830640635106,
-    "samples": 458
+    "fineToCoarseMaxMm": 0.5153341493974805,
+    "samples": 452
    }
   },
   {
@@ -30794,23 +30794,23 @@
    "fr": "Gencive",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 24596,
     "medium": 1499,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.39259188115198357,
-    "meanMm": 0.0445628926923751,
+    "maxMm": 0.3530098466284772,
+    "meanMm": 0.04576887379123071,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.39259188115198357,
-    "samples": 640
+    "fineToCoarseMaxMm": 0.3530098466284772,
+    "samples": 635
    },
    "low": {
-    "maxMm": 1.291913467894045,
-    "meanMm": 0.18311248121668083,
+    "maxMm": 1.7977910681862026,
+    "meanMm": 0.17141781102335285,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.291913467894045,
-    "samples": 418
+    "fineToCoarseMaxMm": 1.7977910681862026,
+    "samples": 413
    }
   },
   {
@@ -31058,23 +31058,23 @@
    "fr": "Grand omentum",
    "category": "organ",
    "triangles": {
-    "high": 11999,
-    "medium": 1499,
-    "low": 299
+    "high": 77968,
+    "medium": 1500,
+    "low": 300
    },
    "medium": {
-    "maxMm": 0.5298437142550262,
-    "meanMm": 0.05828590149429395,
+    "maxMm": 0.6438936157441228,
+    "meanMm": 0.05812208856725108,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5298437142550262,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.6438936157441228,
+    "samples": 633
    },
    "low": {
-    "maxMm": 4.094730561218993,
-    "meanMm": 0.18675547005812593,
+    "maxMm": 2.050569693707775,
+    "meanMm": 0.1743855081678136,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.094730561218993,
-    "samples": 413
+    "fineToCoarseMaxMm": 2.050569693707775,
+    "samples": 409
    }
   },
   {
@@ -31106,22 +31106,22 @@
    "fr": "Coeur",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 4975,
-    "low": 4920
+    "high": 16064,
+    "medium": 4963,
+    "low": 4895
    },
    "medium": {
-    "maxMm": 1.872335764320735,
-    "meanMm": 0.1289839868374531,
+    "maxMm": 1.9171113062044336,
+    "meanMm": 0.18699470212405575,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.872335764320735,
-    "samples": 530
+    "fineToCoarseMaxMm": 1.9171113062044336,
+    "samples": 531
    },
    "low": {
-    "maxMm": 3.089507064558278,
-    "meanMm": 0.1506308472115479,
+    "maxMm": 11.517507243943047,
+    "meanMm": 0.2768287600818387,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.089507064558278,
+    "fineToCoarseMaxMm": 11.517507243943047,
     "samples": 528
    }
   },
@@ -31994,23 +31994,23 @@
    "fr": "Médiastin inférieur",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 5060,
-    "low": 5028
+    "high": 21976,
+    "medium": 5057,
+    "low": 5029
    },
    "medium": {
-    "maxMm": 41.55045765922668,
-    "meanMm": 0.9877896760528461,
+    "maxMm": 38.52434997805126,
+    "meanMm": 1.2981577968950497,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 41.55045765922668,
-    "samples": 530
+    "fineToCoarseMaxMm": 38.52434997805126,
+    "samples": 528
    },
    "low": {
-    "maxMm": 41.55045765922668,
-    "meanMm": 1.0984240062608508,
+    "maxMm": 102.64027398995403,
+    "meanMm": 3.0786465336988105,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 41.55045765922668,
-    "samples": 529
+    "fineToCoarseMaxMm": 102.64027398995403,
+    "samples": 527
    }
   },
   {
@@ -34202,22 +34202,22 @@
    "fr": "Gros intestin",
    "category": "organ",
    "triangles": {
-    "high": 13493,
-    "medium": 13451,
-    "low": 13449
+    "high": 22919,
+    "medium": 13489,
+    "low": 13451
    },
    "medium": {
-    "maxMm": 2.4024176674179456,
-    "meanMm": 0.005720284484793206,
+    "maxMm": 7.652576595690715,
+    "meanMm": 0.2246983037460271,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.4024176674179456,
-    "samples": 515
+    "fineToCoarseMaxMm": 7.652576595690715,
+    "samples": 516
    },
    "low": {
-    "maxMm": 2.4024176674179456,
-    "meanMm": 0.005720284484793206,
+    "maxMm": 9.169177105961214,
+    "meanMm": 0.24941164183116704,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.4024176674179456,
+    "fineToCoarseMaxMm": 9.169177105961214,
     "samples": 515
    }
   },
@@ -34586,23 +34586,23 @@
    "fr": "Faisceau latéral propre",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 1500,
-    "low": 292
+    "high": 20200,
+    "medium": 1498,
+    "low": 293
    },
    "medium": {
-    "maxMm": 0.33890857539257585,
-    "meanMm": 0.026673631333795307,
+    "maxMm": 0.2232405270890822,
+    "meanMm": 0.024067561127621994,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.33890857539257585,
-    "samples": 550
+    "fineToCoarseMaxMm": 0.2232405270890822,
+    "samples": 546
    },
    "low": {
-    "maxMm": 5.040024125074557,
-    "meanMm": 0.24718638599372525,
+    "maxMm": 7.133097118361065,
+    "meanMm": 0.25423074158372605,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.040024125074557,
-    "samples": 519
+    "fineToCoarseMaxMm": 7.133097118361065,
+    "samples": 515
    }
   },
   {
@@ -34658,23 +34658,23 @@
    "fr": "Substance intermédiaire latérale",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 13332,
     "medium": 1500,
     "low": 300
    },
    "medium": {
-    "maxMm": 0.15132896476073165,
-    "meanMm": 0.021351265813612796,
+    "maxMm": 0.17624868207928066,
+    "meanMm": 0.018595441060192886,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.15132896476073165,
-    "samples": 536
+    "fineToCoarseMaxMm": 0.17624868207928066,
+    "samples": 531
    },
    "low": {
-    "maxMm": 0.8809371316191542,
-    "meanMm": 0.11578444568460716,
+    "maxMm": 0.731229520300531,
+    "meanMm": 0.1246800352847768,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.8809371316191542,
-    "samples": 481
+    "fineToCoarseMaxMm": 0.731229520300531,
+    "samples": 476
    }
   },
   {
@@ -35906,23 +35906,23 @@
    "fr": "Artère subclavière gauche",
    "category": "organ",
    "triangles": {
-    "high": 13804,
-    "medium": 13796,
-    "low": 13790
+    "high": 33339,
+    "medium": 13800,
+    "low": 13785
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 126.30308611191188,
+    "meanMm": 5.602049938699184,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 514
+    "fineToCoarseMaxMm": 126.30308611191188,
+    "samples": 515
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 126.30308611191188,
+    "meanMm": 5.603526775419018,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 514
+    "fineToCoarseMaxMm": 126.30308611191188,
+    "samples": 515
    }
   },
   {
@@ -36122,23 +36122,23 @@
    "fr": "Ventricule gauche",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 22252,
     "medium": 1500,
-    "low": 576
+    "low": 564
    },
    "medium": {
-    "maxMm": 0.543619029726453,
-    "meanMm": 0.07306329568957971,
+    "maxMm": 0.5826185971181841,
+    "meanMm": 0.07324318245459054,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.543619029726453,
-    "samples": 568
+    "fineToCoarseMaxMm": 0.5826185971181841,
+    "samples": 567
    },
    "low": {
-    "maxMm": 2.0100959082034917,
-    "meanMm": 0.3505774187945512,
+    "maxMm": 2.51552132358074,
+    "meanMm": 0.41296163012420484,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.0100959082034917,
-    "samples": 726
+    "fineToCoarseMaxMm": 2.51552132358074,
+    "samples": 719
    }
   },
   {
@@ -37106,23 +37106,23 @@
    "fr": "Médiastin",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 6113,
-    "low": 6097
+    "high": 24004,
+    "medium": 6116,
+    "low": 6096
    },
    "medium": {
-    "maxMm": 121.23228880541083,
-    "meanMm": 3.2199468619432774,
+    "maxMm": 116.47350627574976,
+    "meanMm": 5.546525152590227,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 121.23228880541083,
-    "samples": 530
+    "fineToCoarseMaxMm": 116.47350627574976,
+    "samples": 529
    },
    "low": {
-    "maxMm": 121.23228880541083,
-    "meanMm": 3.2363252774384565,
+    "maxMm": 116.47350627574976,
+    "meanMm": 5.5845529572958865,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 121.23228880541083,
-    "samples": 529
+    "fineToCoarseMaxMm": 116.47350627574976,
+    "samples": 528
    }
   },
   {
@@ -37226,23 +37226,23 @@
    "fr": "Mésocôlon",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 15768,
     "medium": 1500,
     "low": 300
    },
    "medium": {
-    "maxMm": 0.1834293512856203,
-    "meanMm": 0.021502247690567043,
+    "maxMm": 0.1614093625242645,
+    "meanMm": 0.02115567922734948,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.1834293512856203,
-    "samples": 637
+    "fineToCoarseMaxMm": 0.1614093625242645,
+    "samples": 639
    },
    "low": {
-    "maxMm": 0.7161577848672286,
-    "meanMm": 0.08559481600679704,
+    "maxMm": 0.6719372148123259,
+    "meanMm": 0.09805240352139451,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7161577848672286,
-    "samples": 413
+    "fineToCoarseMaxMm": 0.6719372148123259,
+    "samples": 415
    }
   },
   {
@@ -37466,23 +37466,23 @@
    "fr": "Médiastin moyen",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 5067,
-    "low": 5039
+    "high": 21038,
+    "medium": 5050,
+    "low": 5023
    },
    "medium": {
-    "maxMm": 27.33461525249248,
-    "meanMm": 0.5941670294493606,
+    "maxMm": 10.339130568332191,
+    "meanMm": 0.4980800594450766,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 27.33461525249248,
-    "samples": 530
+    "fineToCoarseMaxMm": 10.339130568332191,
+    "samples": 529
    },
    "low": {
-    "maxMm": 27.33461525249248,
-    "meanMm": 0.6792990401318569,
+    "maxMm": 10.339130568332191,
+    "meanMm": 0.5546154494839314,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 27.33461525249248,
-    "samples": 529
+    "fineToCoarseMaxMm": 10.339130568332191,
+    "samples": 527
    }
   },
   {
@@ -38042,23 +38042,23 @@
    "fr": "Système nerveux",
    "category": "organ",
    "triangles": {
-    "high": 26364,
-    "medium": 26344,
-    "low": 26334
+    "high": 30676,
+    "medium": 26364,
+    "low": 26344
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 2.279936014716759,
+    "meanMm": 0.03542476054854283,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 517
+    "fineToCoarseMaxMm": 2.279936014716759,
+    "samples": 516
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 2.279936014716759,
+    "meanMm": 0.034298916618032534,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 517
+    "fineToCoarseMaxMm": 2.279936014716759,
+    "samples": 515
    }
   },
   {
@@ -40130,23 +40130,23 @@
    "fr": "Plèvre",
    "category": "organ",
    "triangles": {
-    "high": 11999,
-    "medium": 1499,
-    "low": 1010
+    "high": 112288,
+    "medium": 1500,
+    "low": 1013
    },
    "medium": {
-    "maxMm": 3.294238472206703,
-    "meanMm": 0.4186113067421313,
+    "maxMm": 3.1777916572263987,
+    "meanMm": 0.4198778975293659,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.294238472206703,
-    "samples": 645
+    "fineToCoarseMaxMm": 3.1777916572263987,
+    "samples": 640
    },
    "low": {
-    "maxMm": 5.264892705204511,
-    "meanMm": 0.6110344849195597,
+    "maxMm": 4.71979042440482,
+    "meanMm": 0.5888104463320538,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.264892705204511,
-    "samples": 523
+    "fineToCoarseMaxMm": 4.71979042440482,
+    "samples": 519
    }
   },
   {
@@ -40706,23 +40706,23 @@
    "fr": "Faisceau postérieur propre",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 12928,
     "medium": 1499,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.19846370051103954,
-    "meanMm": 0.016489935361259003,
+    "maxMm": 0.14807743113783356,
+    "meanMm": 0.01665585054411233,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.19846370051103954,
-    "samples": 536
+    "fineToCoarseMaxMm": 0.14807743113783356,
+    "samples": 534
    },
    "low": {
-    "maxMm": 1.0724079508780855,
-    "meanMm": 0.09060125580049744,
+    "maxMm": 1.7418402621334628,
+    "meanMm": 0.09195012215259937,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.0724079508780855,
-    "samples": 479
+    "fineToCoarseMaxMm": 1.7418402621334628,
+    "samples": 477
    }
   },
   {
@@ -40730,22 +40730,22 @@
    "fr": "Corne postérieure de la moëlle épinière",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 1496,
+    "high": 12928,
+    "medium": 1493,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.32371482759089976,
-    "meanMm": 0.014605868425928429,
+    "maxMm": 0.1607541960406599,
+    "meanMm": 0.012327615518917055,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.32371482759089976,
-    "samples": 536
+    "fineToCoarseMaxMm": 0.1607541960406599,
+    "samples": 534
    },
    "low": {
-    "maxMm": 0.6207503880431545,
-    "meanMm": 0.07782852768947407,
+    "maxMm": 0.6970875745075258,
+    "meanMm": 0.0896688058276631,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6207503880431545,
+    "fineToCoarseMaxMm": 0.6970875745075258,
     "samples": 480
    }
   },
@@ -42818,23 +42818,23 @@
    "fr": "Atrium droit",
    "category": "organ",
    "triangles": {
-    "high": 11999,
+    "high": 22681,
     "medium": 1499,
     "low": 417
    },
    "medium": {
-    "maxMm": 0.5289902382717172,
-    "meanMm": 0.0667745449709725,
+    "maxMm": 0.6566817226971896,
+    "meanMm": 0.06740238706519373,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5289902382717172,
-    "samples": 555
+    "fineToCoarseMaxMm": 0.6566817226971896,
+    "samples": 550
    },
    "low": {
-    "maxMm": 2.2528021636424667,
-    "meanMm": 0.33724712903270826,
+    "maxMm": 2.4537001429851415,
+    "meanMm": 0.3637290948361618,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.2528021636424667,
-    "samples": 592
+    "fineToCoarseMaxMm": 2.4537001429851415,
+    "samples": 587
    }
   },
   {
@@ -43346,23 +43346,23 @@
    "fr": "Artère pulmonaire droite",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 12694,
     "medium": 11364,
-    "low": 11358
+    "low": 11356
    },
    "medium": {
-    "maxMm": 5.319906759440616,
-    "meanMm": 0.05133506325278838,
+    "maxMm": 5.49275108657579,
+    "meanMm": 0.11490488851235456,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.319906759440616,
-    "samples": 522
+    "fineToCoarseMaxMm": 5.49275108657579,
+    "samples": 518
    },
    "low": {
-    "maxMm": 11.426429595434744,
-    "meanMm": 0.07561585523657618,
+    "maxMm": 13.002944878128524,
+    "meanMm": 0.15353560756389922,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 11.426429595434744,
-    "samples": 522
+    "fineToCoarseMaxMm": 13.002944878128524,
+    "samples": 517
    }
   },
   {
@@ -43442,23 +43442,23 @@
    "fr": "Artère subclavière droite",
    "category": "organ",
    "triangles": {
-    "high": 13921,
-    "medium": 13907,
-    "low": 13905
+    "high": 33054,
+    "medium": 13924,
+    "low": 13910
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 125.24687928906336,
+    "meanMm": 4.854988068012616,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 516
+    "fineToCoarseMaxMm": 125.24687928906336,
+    "samples": 517
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 125.24687928906336,
+    "meanMm": 4.882795522925256,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 516
+    "fineToCoarseMaxMm": 125.24687928906336,
+    "samples": 517
    }
   },
   {
@@ -43658,23 +43658,23 @@
    "fr": "Ventricule droit",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 22322,
     "medium": 1500,
-    "low": 498
+    "low": 512
    },
    "medium": {
-    "maxMm": 0.5322442015930972,
-    "meanMm": 0.06319734461929495,
+    "maxMm": 0.43752636276062024,
+    "meanMm": 0.0671132281460021,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5322442015930972,
-    "samples": 563
+    "fineToCoarseMaxMm": 0.43752636276062024,
+    "samples": 564
    },
    "low": {
-    "maxMm": 2.6591198222101524,
-    "meanMm": 0.41512588083004565,
+    "maxMm": 2.767180534837884,
+    "meanMm": 0.3914228413689754,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.6591198222101524,
-    "samples": 673
+    "fineToCoarseMaxMm": 2.767180534837884,
+    "samples": 681
    }
   },
   {
@@ -44066,23 +44066,23 @@
    "fr": "Intestin grêle",
    "category": "organ",
    "triangles": {
-    "high": 16380,
-    "medium": 16370,
+    "high": 18190,
+    "medium": 16380,
     "low": 16370
    },
    "medium": {
-    "maxMm": 3.503100918941683,
-    "meanMm": 0.006685307097216952,
+    "maxMm": 6.620407344814931,
+    "meanMm": 0.14129599825145855,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.503100918941683,
-    "samples": 523
+    "fineToCoarseMaxMm": 6.620407344814931,
+    "samples": 520
    },
    "low": {
-    "maxMm": 3.503100918941683,
-    "meanMm": 0.006685307097216952,
+    "maxMm": 8.456002672817373,
+    "meanMm": 0.17179277624004938,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.503100918941683,
-    "samples": 523
+    "fineToCoarseMaxMm": 8.456002672817373,
+    "samples": 519
    }
   },
   {
@@ -44186,23 +44186,23 @@
    "fr": "Dure-mère spinale",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 7422,
-    "low": 7422
+    "high": 24902,
+    "medium": 7424,
+    "low": 7420
    },
    "medium": {
-    "maxMm": 2.138504277498042,
-    "meanMm": 0.04617727780906284,
+    "maxMm": 1.672742737727783,
+    "meanMm": 0.04826529083188915,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.138504277498042,
-    "samples": 516
+    "fineToCoarseMaxMm": 1.672742737727783,
+    "samples": 518
    },
    "low": {
-    "maxMm": 2.138504277498042,
-    "meanMm": 0.04617727780906284,
+    "maxMm": 1.672742737727783,
+    "meanMm": 0.04826529083188915,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.138504277498042,
-    "samples": 516
+    "fineToCoarseMaxMm": 1.672742737727783,
+    "samples": 518
    }
   },
   {
@@ -47042,23 +47042,23 @@
    "fr": "Télencéphale",
    "category": "organ",
    "triangles": {
-    "high": 12385,
-    "medium": 12250,
-    "low": 12246
+    "high": 54920,
+    "medium": 12402,
+    "low": 12233
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 4.564324552034019,
+    "meanMm": 0.28402723876355246,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 524
+    "fineToCoarseMaxMm": 4.564324552034019,
+    "samples": 521
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 5.7419734364045345,
+    "meanMm": 0.3315520493087837,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 524
+    "fineToCoarseMaxMm": 5.7419734364045345,
+    "samples": 518
    }
   },
   {
@@ -47066,23 +47066,23 @@
    "fr": "Télencéphale",
    "category": "organ",
    "triangles": {
-    "high": 12582,
-    "medium": 12426,
-    "low": 12418
+    "high": 55452,
+    "medium": 12564,
+    "low": 12414
    },
    "medium": {
-    "maxMm": 1.4620961804373322,
-    "meanMm": 0.007782681964894301,
+    "maxMm": 3.0727746545347157,
+    "meanMm": 0.26399995474266746,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.4620961804373322,
-    "samples": 522
+    "fineToCoarseMaxMm": 3.0727746545347157,
+    "samples": 520
    },
    "low": {
-    "maxMm": 1.4620961804373322,
-    "meanMm": 0.007782681964894301,
+    "maxMm": 3.8959695857861916,
+    "meanMm": 0.2878268385873128,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.4620961804373322,
-    "samples": 522
+    "fineToCoarseMaxMm": 3.8959695857861916,
+    "samples": 518
    }
   },
   {
@@ -47714,23 +47714,23 @@
    "fr": "Arbre bronchique",
    "category": "organ",
    "triangles": {
-    "high": 12548,
-    "medium": 12544,
-    "low": 12544
+    "high": 14356,
+    "medium": 12548,
+    "low": 12540
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 3.0791975135019922,
+    "meanMm": 0.04482003834163053,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 520
+    "fineToCoarseMaxMm": 3.0791975135019922,
+    "samples": 518
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 3.0791975135019922,
+    "meanMm": 0.04570655304618012,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 520
+    "fineToCoarseMaxMm": 3.0791975135019922,
+    "samples": 518
    }
   },
   {
@@ -47786,23 +47786,23 @@
    "fr": "Côlon transverse",
    "category": "organ",
    "triangles": {
-    "high": 12000,
+    "high": 16616,
     "medium": 1500,
     "low": 300
    },
    "medium": {
-    "maxMm": 1.0351134246283646,
-    "meanMm": 0.19450885565887138,
+    "maxMm": 0.9499032962094381,
+    "meanMm": 0.18463305687695722,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.0351134246283646,
-    "samples": 636
+    "fineToCoarseMaxMm": 0.9499032962094381,
+    "samples": 635
    },
    "low": {
-    "maxMm": 3.3940696882082673,
-    "meanMm": 0.49407943657197295,
+    "maxMm": 3.71169587533049,
+    "meanMm": 0.4717112726630086,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.3940696882082673,
-    "samples": 411
+    "fineToCoarseMaxMm": 3.71169587533049,
+    "samples": 410
    }
   },
   {
@@ -48650,22 +48650,22 @@
    "fr": "Péritoine viscéral",
    "category": "organ",
    "triangles": {
-    "high": 25000,
-    "medium": 24976,
+    "high": 26672,
+    "medium": 25000,
     "low": 24976
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 1.1608342525501432,
+    "meanMm": 0.005010928244020799,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 515
+    "fineToCoarseMaxMm": 1.1608342525501432,
+    "samples": 514
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 1.1608342525501432,
+    "meanMm": 0.005010928244020799,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
+    "fineToCoarseMaxMm": 1.1608342525501432,
     "samples": 515
    }
   },
@@ -48674,23 +48674,23 @@
    "fr": "Viscérocrâne",
    "category": "organ",
    "triangles": {
-    "high": 11998,
-    "medium": 5618,
-    "low": 5568
+    "high": 18855,
+    "medium": 5623,
+    "low": 5561
    },
    "medium": {
-    "maxMm": 3.0103509752876954,
-    "meanMm": 0.14347014380562306,
+    "maxMm": 3.385760291902426,
+    "meanMm": 0.20644386054995081,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.0103509752876954,
-    "samples": 527
+    "fineToCoarseMaxMm": 3.385760291902426,
+    "samples": 523
    },
    "low": {
-    "maxMm": 4.465021004752628,
-    "meanMm": 0.16022127317503557,
+    "maxMm": 6.5068310081862535,
+    "meanMm": 0.2603656196985858,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.465021004752628,
-    "samples": 525
+    "fineToCoarseMaxMm": 6.5068310081862535,
+    "samples": 521
    }
   },
   {
@@ -48698,23 +48698,23 @@
    "fr": "Viscérocrâne",
    "category": "organ",
    "triangles": {
-    "high": 12268,
-    "medium": 12202,
-    "low": 12202
+    "high": 37464,
+    "medium": 12276,
+    "low": 12200
    },
    "medium": {
-    "maxMm": 10.263522871674713,
-    "meanMm": 0.019770692516522196,
+    "maxMm": 2.77780067619783,
+    "meanMm": 0.1372903662991542,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 10.263522871674713,
-    "samples": 521
+    "fineToCoarseMaxMm": 2.77780067619783,
+    "samples": 519
    },
    "low": {
-    "maxMm": 10.263522871674713,
-    "meanMm": 0.019770692516522196,
+    "maxMm": 2.782585064161568,
+    "meanMm": 0.14637910128875134,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 10.263522871674713,
-    "samples": 521
+    "fineToCoarseMaxMm": 2.782585064161568,
+    "samples": 517
    }
   },
   {
@@ -48722,22 +48722,22 @@
    "fr": "Viscérocrâne",
    "category": "organ",
    "triangles": {
-    "high": 20449,
-    "medium": 20411,
-    "low": 20411
+    "high": 43122,
+    "medium": 20444,
+    "low": 20402
    },
    "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 2.693484858096924,
+    "meanMm": 0.10966659993990839,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
+    "fineToCoarseMaxMm": 2.693484858096924,
     "samples": 518
    },
    "low": {
-    "maxMm": 0,
-    "meanMm": 0,
+    "maxMm": 4.201000864279327,
+    "meanMm": 0.11620144394799024,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
+    "fineToCoarseMaxMm": 4.201000864279327,
     "samples": 518
    }
   },
@@ -48794,23 +48794,23 @@
    "fr": "Substance blanche de la moëlle épinière",
    "category": "organ",
    "triangles": {
-    "high": 11995,
-    "medium": 1499,
+    "high": 15554,
+    "medium": 1498,
     "low": 299
    },
    "medium": {
-    "maxMm": 0.24190583569675644,
-    "meanMm": 0.036974175480830374,
+    "maxMm": 0.28902461052425726,
+    "meanMm": 0.0387769340326455,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.24190583569675644,
-    "samples": 553
+    "fineToCoarseMaxMm": 0.28902461052425726,
+    "samples": 550
    },
    "low": {
-    "maxMm": 7.0058605452827445,
-    "meanMm": 0.7280273896117452,
+    "maxMm": 5.132679750844118,
+    "meanMm": 0.7270023126799849,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 7.0058605452827445,
-    "samples": 538
+    "fineToCoarseMaxMm": 5.132679750844118,
+    "samples": 535
    }
   },
   {
@@ -48818,23 +48818,23 @@
    "fr": "Substance blanche du télencéphale",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 1496,
-    "low": 819
+    "high": 135288,
+    "medium": 1494,
+    "low": 844
    },
    "medium": {
-    "maxMm": 4.19950242810547,
-    "meanMm": 0.4590667863656296,
+    "maxMm": 4.1970130439405455,
+    "meanMm": 0.4074935666146772,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.19950242810547,
-    "samples": 637
+    "fineToCoarseMaxMm": 4.1970130439405455,
+    "samples": 633
    },
    "low": {
-    "maxMm": 7.299242840907141,
-    "meanMm": 0.6943046835721589,
+    "maxMm": 5.302026931101704,
+    "meanMm": 0.6745761710396144,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 7.299242840907141,
-    "samples": 675
+    "fineToCoarseMaxMm": 5.302026931101704,
+    "samples": 684
    }
   },
   {
@@ -48842,23 +48842,23 @@
    "fr": "Substance blanche du télencéphale",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 1497,
-    "low": 859
+    "high": 135288,
+    "medium": 1496,
+    "low": 863
    },
    "medium": {
-    "maxMm": 3.3848439635122762,
-    "meanMm": 0.411646872191101,
+    "maxMm": 3.883036655236827,
+    "meanMm": 0.41948582563838094,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.3848439635122762,
-    "samples": 637
+    "fineToCoarseMaxMm": 3.883036655236827,
+    "samples": 633
    },
    "low": {
-    "maxMm": 6.094695493787185,
-    "meanMm": 0.6620964970493942,
+    "maxMm": 5.859830440825878,
+    "meanMm": 0.674856831556832,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 6.094695493787185,
-    "samples": 695
+    "fineToCoarseMaxMm": 5.859830440825878,
+    "samples": 693
    }
   },
   {
@@ -48938,23 +48938,23 @@
    "fr": "Fibres zonulaires",
    "category": "organ",
    "triangles": {
-    "high": 12000,
-    "medium": 1495,
-    "low": 210
+    "high": 68288,
+    "medium": 1499,
+    "low": 225
    },
    "medium": {
-    "maxMm": 0.13512629959018294,
-    "meanMm": 0.02690427363524098,
+    "maxMm": 0.18219724961910574,
+    "meanMm": 0.026188128345009578,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.13512629959018294,
-    "samples": 574
+    "fineToCoarseMaxMm": 0.18219724961910574,
+    "samples": 572
    },
    "low": {
-    "maxMm": 0.624119616359084,
-    "meanMm": 0.09017589021186166,
+    "maxMm": 0.4891546024384911,
+    "meanMm": 0.07924791020560729,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.624119616359084,
-    "samples": 585
+    "fineToCoarseMaxMm": 0.4891546024384911,
+    "samples": 589
    }
   }
  ]

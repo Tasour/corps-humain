@@ -257,17 +257,17 @@ augmentent, ou si le nombre de triangles d'une structure baisse de plus de 2 %.
 
 ## 7. État des lieux mesuré — 19 novembre 2026
 
-Jeu de données : **2 039 structures**, **5 066 169 triangles** au LOD `high` (jeu
-reconstruit le 19 novembre 2026, puis orientation et faces dupliquées corrigées ;
-le tableau ci-dessous reflète cet état).
+Jeu de données : **2 039 structures**, **6 509 477 triangles** au LOD `high`
+(source complète, sans plafond ; jeu reconstruit, orientation et faces dupliquées
+corrigées le 19 novembre 2026).
 
 | Porte | Mesure | Verdict |
 |---|---|---|
 | G0 Traçabilité | 2 039/2 039 sources et licences ; 1 979/2 039 TA2 (97,1 %) | 🟡 |
 | G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
-| G2 Intégrité | 1 324/2 039 étanches et manifold (64,9 %) ; 712 avec bords ; 128 non-manifold ; 623 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
-| G3 Normales | 0 winding inversé ; 13 793 faces inversées (0,272 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
-| G4 Résolution | médiane 1 118 tris ; 954 structures < 1 000 tris ; 24 plafonnées à 12 000 ; 1,30 M triangles de source jetés par le plafond | ❌ |
+| G2 Intégrité | 1 346/2 039 étanches et manifold (66,0 %) ; 690 avec bords ; 90 non-manifold ; 623 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
+| G3 Normales | 0 winding inversé ; 11 067 faces inversées (0,170 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
+| G4 Résolution | `high` = source complète ; médiane 1 118 tris ; 954 structures < 1 000 tris (limite des sources) ; 0 structure plafonnée ; +1,44 M tris récupérés | 🟡 |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
 | G6 Matériaux | procédural uniquement, pas de cartes PBR par tissu | ❌ |
 | G7 Performance | LOD et lots en place ; fps réels non mesurables en CI (SwiftShader) | 🟡 |
@@ -299,10 +299,10 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts (jeu reconstruit, orientation corrigée).** 1 096 structures en S1, 943 en S2,
-**0 en S3**. G0 : 1 979/2 039 (97,1 %). G2 : 1 517 (74,4 %) avec la classification
-provisoire, 1 911 (93,7 %) hors étanchéité. G3 : 1 269 (62,2 %). Aucune structure
-n'atteint S3 tant que G4 (résolution) et G5 (assemblage) ne sont pas mesurés.
+**Statuts (source complète).** 1 087 structures en S1, 952 en S2, **0 en S3**.
+G0 : 1 979/2 039 (97,1 %). G2 : 1 534 (75,2 %) avec la classification provisoire,
+1 949 (95,6 %) hors étanchéité. G3 : 1 292 (63,4 %). Aucune structure n'atteint S3
+tant que G4 (résolution qualitative) et G5 (assemblage) ne sont pas mesurés.
 
 **Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
 immédiatement révélé un défaut de complétude : `organ:bp-heart` ne contient que **11 pièces
@@ -315,8 +315,8 @@ et des valves.
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|
-| `medium` → `high` | 0,00 mm | 0,61 mm | 3,69 mm | 121,23 mm | 268 | 48 |
-| `low` → `high` | 0,40 mm | 2,76 mm | 17,39 mm | 121,23 mm | 915 | 316 |
+| `medium` → `high` | 0,00 mm | 0,63 mm | 4,20 mm | 126,30 mm | 274 | 58 |
+| `low` → `high` | 0,41 mm | 2,79 mm | 17,39 mm | 126,30 mm | 920 | 323 |
 
 Le maximum (~121 mm) signale une simplification qui déplace la silhouette, pas un simple
 allègement.
@@ -375,6 +375,28 @@ La baisse de 17 structures étanches est le prix de la suppression des faces dup
 P2. Une capture avant/après de `organ:white-matter-of-telencephalon-r` (8 angles) confirme
 que le rendu reste cohérent ; les écarts de teinte sont locaux et attendus après inversion
 des normales.
+
+### 7.4 Suppression du plafond de résolution (P3, 19 novembre 2026)
+
+`LOD.high.target` passe de 12 000 à `null` : le `high` est désormais la source complète.
+88 objets dépassaient 12 000 triangles (1 506 958 triangles au-delà du plafond), dont
+`organ:white-matter-of-telencephalon-l/r` (135 288 tris chacun) et `organ:pleura`
+(112 288 tris). Le `medium` et le `low` sont dérivés de ce `high` complet.
+
+| Indicateur | 12 000 plafonnés | Source complète |
+|---|---:|---:|
+| Triangles `high` | 5 066 169 | **6 509 477** |
+| Poids gzip du jeu | 101,4 Mo | 119,0 Mo |
+| Structures étanches | 1 324 | **1 346** |
+| Structures avec bords | 712 | **690** |
+| Arêtes non-manifold | 128 | **90** |
+| Faces inversées | 13 793 | **11 067** |
+| LOD non monotones | 0 | 0 |
+
+Le surcoût de téléchargement est supportable car le `high` est chargé par catégorie
+uniquement à la sélection d'une structure ; la vue d'ensemble reste en `low`. Les risques
+restants sont la bande passante initiale et la mémoire sur mobile : à mesurer avant
+déploiement large (G7).
 
 ---
 

@@ -65,7 +65,7 @@ Livré :
 3. **Scorecard** — `scripts/scorecard-qualite-3d.mjs`, `npm run scorecard:3d` : statut S0–S4,
    portes G0/G2/G3, bloqueurs par structure, classification provisoire ouvert/fermé.
    Résultat après reconstruction : **1 355 S1, 684 S2, 0 S3** ; G0 1 979, G2 1 515, G3 950
-   (puis P2 : 1 096 S1, **943 S2**, G3 **1 269**).
+   (puis P2/P3 : 1 087 S1, **952 S2**, G3 **1 292**).
 4. **Porte CI** — `npm run audit:3d:baseline` puis `npm run audit:3d:check` : comparaison
    **structure par structure** à `docs/analyses/qualite-3d-baseline.json`, pas seulement aux
    totaux.
@@ -140,10 +140,12 @@ Sans cette classification, on corrigerait des anatomies correctes.
 2. ✅ **Faces dupliquées** : suppression à la source **et après chaque simplification**.
    Résultat : **521 → 0**.
 3. **Arêtes non-manifold** : diagnostic par structure, correction ou exclusion documentée.
-   Cible : **124 → 0**.
+   État : **126 → 90** (source complète) ; cible 0.
 4. **Soudure intra-structure** à 0,01 mm, puis recalcul des normales avec angle seuil.
 5. **Faces dégénérées** : déjà à 0, maintenir.
 6. **Composantes** : conserver les justifiées, souder les fragments d'une même structure.
+7. **Normales de sommets incohérentes** : 11 067 faces (0,17 %) ; recalcul avec angle seuil
+   sans écraser les normales anatomiques correctes.
 
 ### 5.3 Preuve
 
@@ -158,24 +160,26 @@ Sans cette classification, on corrigerait des anatomies correctes.
 
 ---
 
-## 6. P3 — Restituer la résolution disponible
+## 6. P3 — Restituer la résolution disponible (fait, 19 novembre 2026)
 
 **But :** arrêter de jeter le détail que les sources contiennent déjà.
 
-Tâches :
+Réalisé :
 
-1. **Retirer le plafond `high: 12000`** et définir le `high` comme « source complète ».
-2. **Construire la chaîne LOD depuis le `high`** : `medium` et `low` simplifiés depuis le
-   maillage fin, avec `LockBorder` et repli sans contrainte de bord.
-3. **Budgéter** : le `high` ne doit pas être chargé pour tout le corps ; le streaming par
-   structure et le LOD automatique existants doivent absorber le surcoût.
-4. **Mesurer** : triangles, poids gzip, temps de chargement, fps, mémoire.
-5. **Seuils adaptatifs** : viser la densité par classe (méthodologie §G4) quand la source le
-   permet ; sinon, consigner la limite de source.
+1. ✅ **Retrait du plafond** : `LOD.high.target = null`, le `high` est la source complète.
+   88 objets dépassaient 12 000 tris, dont la substance blanche du télencéphale
+   (135 288 tris) et la plèvre (112 288 tris).
+2. ✅ **Chaîne LOD depuis le `high`** : `medium` puis `low` dérivés du maillage fin,
+   avec `LockBorder` et déduplication après chaque étape. **0 LOD non monotone**.
+3. ✅ **Chargement paresseux** conservé : le `high` d'une catégorie n'est téléchargé
+   qu'à la sélection d'une structure.
+4. ✅ **Mesures** : triangles **5,07 M → 6,51 M** ; gzip **101,4 → 119,0 Mo** ;
+   étanches **1 324 → 1 346** ; bords **712 → 690** ; non-manifold **128 → 90** ;
+   faces inversées **13 793 → 11 067**.
 
-**Sortie :** 0 structure plafonnée ; `high` ≥ source ; **jusqu'à +1,30 M triangles**
-récupérés (borne supérieure, agrégats exclus déduits) ; poids `high` maîtrisé
-(objectif ≤ 90 Mo gzip, sinon streaming plus agressif).
+**Sortie :** 0 structure plafonnée ; `high` = source ; **+1,44 M triangles récupérés**.
+Le budget gzip (119 Mo) dépasse l'objectif initial de 90 Mo : le streaming par catégorie
+le rend supportable, mais la bande passante et la mémoire mobile restent à mesurer (G7).
 
 **Risque :** explosion mémoire et fps. Mitigation : le `high` reste paresseux, chargé par
 structure ou par système, jamais pour les 2 039 à la fois.
@@ -320,7 +324,7 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 | 4 ✅ | Corriger le winding par composante | 566 → 0, audit avant/après, captures témoin |
 | 5 ✅ | Supprimer les faces dupliquées | 521 → 0 ; non-manifold 126 → 128 (à traiter jour 6) |
 | 6 | Rebuild + audit complet + tests | 35/35 tests, rapport à jour |
-| 7 | Retirer le plafond 12 000 et reconstruire la chaîne LOD | 0 plafonnée, +1,30 M tris |
+| 7 ✅ | Retirer le plafond 12 000 et reconstruire la chaîne LOD | 0 plafonnée, +1,44 M tris, 0 LOD non monotone |
 | 8 | Mesurer poids, fps, mémoire ; ajuster le streaming | budget respecté |
 | 9 | Matrice de licences des sources haute résolution | tableau signé, 2 sources retenues |
 | 10 | Décision go/no-go et rapport de phase | `docs/analyses/qualite-3d-p2.md` |
@@ -336,7 +340,7 @@ Aucun système n'est déclaré terminé tant que ses structures ne sont pas S3.
 | Non-manifold | 124 | 0 | 0 |
 | Faces dupliquées | 0 | 0 | 0 |
 | Structures plafonnées | 24 | 0 | 0 |
-| Triangles `high` | 5,07 M | jusqu'à 6,31 M | selon sources |
+| Triangles `high` | 6,51 M | 6,51 M (source complète) | selon sources |
 | Densité médiane os | 52 tri/cm² | ≥ 80 | ≥ 150 |
 | Densité médiane muscle | 35 tri/cm² | ≥ 50 | ≥ 80 |
 | Densité médiane organe | 111 tri/cm² | ≥ 150 | ≥ 200 |

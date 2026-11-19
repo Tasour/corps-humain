@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-19T02:45:50.491Z",
+  "generated": "2026-11-19T02:54:19.164Z",
   "structures": 2039,
-  "count": 129,
+  "count": 146,
   "findings": [
     {
       "type": "hors-peau-exemptee",
@@ -27,6 +27,13 @@
     {
       "type": "hors-peau-exemptee",
       "severity": "warning",
+      "a": "bone:bp-metacarpal-bone-r",
+      "fr": "Os métacarpien",
+      "detail": "bornes -0.310,0.797,0.012 → -0.225,0.875,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
       "a": "bone:middle-phalanx-of-second-finger-of-hand-r",
       "fr": "Phalange moyenne du deuxième doigt de la main",
       "detail": "bornes -0.319,0.717,0.051 → -0.304,0.738,0.073 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
@@ -41,9 +48,51 @@
     {
       "type": "hors-peau-exemptee",
       "severity": "warning",
+      "a": "bone:proximal-phalanx-of-second-finger-of-hand-r",
+      "fr": "Phalange proximale du deuxième doigt de la main",
+      "detail": "bornes -0.313,0.732,0.033 → -0.290,0.771,0.057 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:abductor-pollicis-brevis-r",
+      "fr": "Court abducteur du pouce",
+      "detail": "bornes -0.313,0.819,0.022 → -0.272,0.859,0.053 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:cruciform-part-of-fibrous-sheath-of-digit-of-hand-r",
+      "fr": "Cruciform part of fibrous sheath of digit of hand",
+      "detail": "bornes -0.314,0.723,0.042 → -0.232,0.779,0.073 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:deep-head-of-flexor-pollicis-brevis-r",
+      "fr": "Chef profond du court fléchisseur du pouce",
+      "detail": "bornes -0.316,0.823,0.030 → -0.267,0.857,0.049 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
       "a": "muscle:dorsal-fascia-of-hand-r",
       "fr": "Fascia dorsal de la main",
       "detail": "bornes -0.335,0.700,0.004 → -0.225,0.856,0.097 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:dorsal-interossei-muscles-of-hand-r",
+      "fr": "Muscles interosseux dorsaux de la main",
+      "detail": "bornes -0.307,0.764,0.018 → -0.243,0.836,0.045 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:extensor-digitorum-r",
+      "fr": "Extenseur des doigts",
+      "detail": "bornes -0.315,0.724,-0.058 → -0.230,1.119,0.063 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
     },
     {
       "type": "hors-peau-exemptee",
@@ -69,9 +118,44 @@
     {
       "type": "hors-peau-exemptee",
       "severity": "warning",
+      "a": "muscle:flexor-digitorum-profundus-r",
+      "fr": "Fléchisseur profond des doigts",
+      "detail": "bornes -0.317,0.711,-0.034 → -0.211,1.076,0.088 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
       "a": "muscle:flexor-pollicis-longus-r",
       "fr": "Long fléchisseur du pouce",
       "detail": "bornes -0.324,0.784,-0.014 → -0.246,1.022,0.066 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:humero-ulnar-head-of-flexor-digitorum-superficialis-r",
+      "fr": "Chef huméro-ulnaire du fléchisseur superficiel des doigts",
+      "detail": "bornes -0.316,0.722,-0.035 → -0.184,1.112,0.069 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:lumbrical-muscles-of-hand-r",
+      "fr": "Muscles lombricaux de la main",
+      "detail": "bornes -0.307,0.732,0.026 → -0.232,0.824,0.058 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:oblique-head-of-adductor-pollicis-r",
+      "fr": "Chef oblique de l'adducteur du pouce",
+      "detail": "bornes -0.309,0.809,0.022 → -0.265,0.840,0.047 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:opponens-pollicis-muscle-r",
+      "fr": "Muscle opposant du pouce",
+      "detail": "bornes -0.311,0.816,0.025 → -0.265,0.844,0.053 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
     },
     {
       "type": "hors-peau-exemptee",
@@ -83,6 +167,27 @@
     {
       "type": "hors-peau-exemptee",
       "severity": "warning",
+      "a": "muscle:superficial-head-of-flexor-pollicis-brevis-r",
+      "fr": "Chef superficiel du court fléchisseur du pouce",
+      "detail": "bornes -0.312,0.816,0.038 → -0.268,0.847,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:superficial-transverse-metacarpal-ligament-r",
+      "fr": "Ligament métacarpien transverse superficiel",
+      "detail": "bornes -0.307,0.770,0.038 → -0.232,0.793,0.051 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "muscle:synovial-sheaths-of-digits-of-hand-r",
+      "fr": "Gaines synoviales des doigts de la main",
+      "detail": "bornes -0.315,0.718,0.043 → -0.255,0.776,0.077 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
       "a": "muscle:tendon-sheath-of-flexor-pollicis-longus-r",
       "fr": "Gaine tendineuse du long fléchisseur du pouce",
       "detail": "bornes -0.319,0.798,0.020 → -0.264,0.884,0.059 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
@@ -90,9 +195,23 @@
     {
       "type": "hors-peau-exemptee",
       "severity": "warning",
+      "a": "muscle:transverse-head-of-adductor-pollicis-r",
+      "fr": "Chef transverse de l'adducteur du pouce",
+      "detail": "bornes -0.310,0.787,0.023 → -0.267,0.827,0.047 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
       "a": "organ:bp-arteria-princeps-pollicis-r",
       "fr": "Artère principale du pouce",
       "detail": "bornes -0.320,0.798,0.035 → -0.278,0.855,0.069 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
+    },
+    {
+      "type": "hors-peau-exemptee",
+      "severity": "warning",
+      "a": "organ:bp-arteria-radialis-indicis-r",
+      "fr": "Artère radiale de l'index",
+      "detail": "bornes -0.314,0.743,0.039 → -0.293,0.804,0.084 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
     },
     {
       "type": "doublon-aabb",
