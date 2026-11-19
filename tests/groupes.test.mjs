@@ -79,4 +79,4 @@ check("groupReport ne signale rien", () => {
 const passed = results.filter((r) => r.ok).length;
 for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.name}${r.ok ? "" : ` — ${r.error}`}`);
 console.log(`\n${passed}/${results.length} contrôles de groupes réussis · ${GROUPS.length} groupes`);
-process.exit(passed === results.length ? 0 : 1);
+process.exitCode = passed === results.length ? 0 : 1;

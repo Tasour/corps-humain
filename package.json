@@ -18,7 +18,8 @@
     "test:groupes": "node tests/groupes.test.mjs",
     "test:groupes3d": "node tests/groupes-3d.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",
-    "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core"
+    "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core",
+    "test:waypoints": "node tests/waypoints.test.mjs"
   },
   "dependencies": {
     "three": "^0.187.0"

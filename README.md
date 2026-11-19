@@ -122,7 +122,7 @@ physiologique (flexion du coude, abduction de l'épaule, ouverture de la mâchoi
 
 Un **contrôle qualité automatisé** (`scripts/analyze-v2.mjs`, `npm run analyze:v2`)
 vérifie chaque structure (triangles dégénérés, normales, indices, bornes, doublons
-AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 30 tests 3D**
+AABB) et produit `docs/analyses/rapport-v2.md`. Une **batterie de 31 tests 3D**
 (`npm run test:v2`) couvre le focus sous toutes les orientations, l'isolement, la
 peau, les groupes, les animations, les waypoints, le tour du monde, le LOD et le mobile.
 **19 contrôles d'accessibilité** (`npm run test:a11y`) mesurent les contrastes réels,
@@ -130,15 +130,21 @@ les noms accessibles, le focus visible, la navigation clavier du canvas et la
 feuille de détails mobile. Les **43 groupes** sont couverts par
 `npm run test:groupes` (8 contrôles de données) et `npm run test:groupes3d`
 (52 mesures 3D : isolement exact, éclaté, mouvement, réinitialisation).
+Les **waypoints** sont vérifiés par `npm run test:waypoints` (7 contrôles :
+identifiants curés existants, 2 à 6 anecdotes par structure, positions dans
+la boîte englobante).
 
 **Au clavier** : `Tab` atteint le canvas, les flèches tournent autour du corps,
 `+`/`-` zooment, `Entrée` sélectionne la structure au centre, `Échap` désélectionne
 (ou ferme le tiroir mobile), `/` place le focus dans la recherche, `Début` recadre.
 
-Chaque structure possède des **waypoints** (3 par défaut, anecdotes et explications
-pour les structures majeures),masqués tant que le bouton « Waypoints » n'est pas
-activé, plus une visite guidée et plusieurs animations de scène : tour du monde,
-battement cardiaque, respiration, clignement et flux sanguin.
+Chaque structure possède des **waypoints** (3 par défaut ; **22 structures majeures**
+ont 2 à 6 anecdotes curées — cœur, poumons, estomac, pancréas, rate, vésicule,
+intestins, trachée, vessie, cervelet, diaphragme, mandibule, humérus, tibia, reins,
+cerveau, œil…), masqués tant que le bouton « Waypoints » n'est pas activé, plus une
+visite guidée et plusieurs animations de scène : tour du monde, battement cardiaque,
+respiration, clignement et flux sanguin. Les marqueurs sont des sprites de taille
+constante à l'écran : ils restent visibles et cliquables à toute distance.
 
 L'interface v2 a été entièrement repensée : thème clair inspiré des atlas
 médicaux, mise en page trois colonnes (explorateur / vue 3D / fiche), logo

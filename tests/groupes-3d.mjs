@@ -164,8 +164,6 @@ for (const id of UI_SAMPLE) {
 /* Aucune erreur console pendant la traversée. */
 results.push({ id: "console", ok: errors.length === 0, error: errors.join(" | ") });
 
-await browser.close();
-
 const passed = results.filter((r) => r.ok).length;
 const failures = results.filter((r) => !r.ok).map((r) => `${r.id} : ${r.error}`);
 fs.writeFileSync(OUT, JSON.stringify({
@@ -179,4 +177,7 @@ fs.writeFileSync(OUT, JSON.stringify({
 
 for (const f of failures) console.log(`FAIL  ${f}`);
 console.log(`\n${passed}/${results.length} contrôles 3D de groupes réussis · ${GROUPS.length} groupes`);
-process.exit(passed === results.length ? 0 : 1);
+process.exitCode = passed === results.length ? 0 : 1;
+
+/* Fermeture après impression : le résumé ne dépend plus du succès de close(). */
+await browser.close().catch(() => {});

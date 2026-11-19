@@ -9,7 +9,7 @@
 | 2 | **Textures PBR photorealistes** | Remplacer les albedos procéduraux par des PBR scans (albedo/normal/roughness/AO) par tissu | ⬜ | Procedural en place ; chercher sources CC0/CC BY et pipeline KTX2 (crédit IA épuisé) |
 | 3 | **Audit qualité & tests visuels** | Un test par structure : normales, dégénérés, collisions, TA2 ; regression screenshots | ✅ | `npm run analyze:v2` + 30 tests ; **manque de données identifié** : aucun œsophage dans le manifeste (trou entre pharynx et estomac) |
 | 4 | **Groupes & cinématique complète** | Pivots réels, articulations, mouvements physiologiques pour tous les groupes | ✅ | 43 groupes (8/8 données, 52/52 3D) ; pivots et axes par articulation, captures 4 orientations |
-| 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 039 structures, fiches multilingues | ⬜ | 3 waypoints génériques + 6 curés ; rédiger la suite |
+| 5 | **Waypoints & contenu pédagogique pour tous** | Anecdotes curées pour les 2 039 structures, fiches multilingues | 🟡 | **22 structures curées** (2–6 anecdotes) + 3 génériques ; `npm run test:waypoints` → 7/7 ; poursuivre la rédaction |
 | 6 | **Performance & sobriété énergétique** | LOD streaming, WebGPU optionnel, budget thermique, occlusion culling | ✅ | LOD auto + BatchedMesh (3 appels) + WASM ; mesurer sur vrais mobiles |
 | 7 | **Fusion v1 + v2** | Remplacer les 47 entités de l'accueil par l'atlas complet sans perdre pathologies/jeux/coupe | ⬜ | Deux pages coexistent ; unifier le state par ID TA2 |
 | 8 | **Accessibilité & responsive** | Clavier, lecteur d'écran, contraste AA clair/sombre, gestes mobiles | ✅ | 19 contrôles mesurés (`npm run test:a11y`) ; voir `docs/analyses/accessibilite-2026-11-19.md` |
@@ -111,6 +111,30 @@ Détail et limites : [`docs/analyses/groupes-2026-11-19.md`](analyses/groupes-20
 - **Correction de l'outil de capture** : le cadrage ignorait le champ de vision réel
   (38°) et la profondeur de l'objet — la mâchoire sortait du cadre. La distance est
   maintenant calculée par `rayon / tan(fov/2) + demi-profondeur`, avec 15 % de marge.
+
+## Passe waypoints (19 novembre 2026)
+
+- **22 structures curées** (contre 6, dont une morte) : cœur, reins, fémurs, cerveau,
+  œil, estomac, pancréas, rate, vésicule biliaire, intestin grêle, gros intestin,
+  trachée, vessie, cervelet, diaphragme, mandibule, humérus, tibia, lobes pulmonaires.
+  Chaque structure porte 2 à 6 anecdotes vérifiables (pH gastrique, anneaux
+  trachéaux, îlots de Langerhans, nerf phrénique C3-C5…).
+- **Identifiant mort corrigé** : `organ:bp-left-lung` n'existe pas dans le manifeste ;
+  son contenu est désormais porté par les lobes réels (`organ:superior-lobe-of-left-lung`,
+  `organ:inferior-lobe-of-left-lung`). Aucun waypoint ne peut plus disparaître en
+  silence : `npm run test:waypoints` vérifie que **chaque identifiant curé existe**.
+- **Marqueurs visibles** : les sphères de 2 mm devenaient invisibles dès qu'on
+  reculait. Ce sont maintenant des `Sprite` en `sizeAttenuation: false` (taille
+  constante à l'écran, 26 px), donc cliquables à toute distance.
+- **Superposition** : la fiche d'anecdote et la barre d'animations se recouvraient en
+  bas de scène ; la fiche est empilée au-dessus de la barre, hauteur mesurée au
+  chargement et au redimensionnement.
+- **Preuves** : `npm run test:waypoints` → 7/7 ; `npm run test:v2` → 31/31 (dont un
+  contrôle dédié aux anecdotes de l'estomac) ; captures `docs/analyses/waypoints/`
+  (estomac, pancréas, tibia, mobile).
+- **Limite** : les 2 017 autres structures gardent 3 waypoints génériques
+  (« pôle supérieur / partie centrale / pôle inférieur »), honnêtes mais peu
+  instructifs ; le chantier reste ouvert.
 
 ## Ordre d'exécution recommandé (restant)
 

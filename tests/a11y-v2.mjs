@@ -370,11 +370,12 @@ await check("prefers-reduced-motion : transitions neutralisées", async () => {
   assert.ok(seconds(d.duration) < 0.02, `transition ${d.duration}`);
   assert.ok(seconds(d.anim) < 0.02, `animation ${d.anim}`);
 });
-await calm.close();
-await browser.close();
-
 const passed = results.filter((r) => r.ok).length;
 fs.writeFileSync(OUT, JSON.stringify({ generated: new Date().toISOString(), passed, total: results.length, results }, null, 2));
 for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.name}${r.ok ? "" : ` — ${r.error}`}`);
 console.log(`\n${passed}/${results.length} contrôles d'accessibilité réussis`);
-process.exit(passed === results.length ? 0 : 1);
+process.exitCode = passed === results.length ? 0 : 1;
+
+/* Fermeture après impression : le résumé ne dépend plus du succès de close(). */
+await calm.close().catch(() => {});
+await browser.close().catch(() => {});

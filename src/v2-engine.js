@@ -592,19 +592,36 @@ export class AnatomyV2Engine {
   showWaypoints(waypoints) {
     this.clearWaypoints();
     this.waypoints = waypoints || [];
-    let spread = 0;
-    for (let i = 0; i < this.waypoints.length; i++) {
-      for (let j = i + 1; j < this.waypoints.length; j++) {
-        const a = this.waypoints[i].position, b = this.waypoints[j].position;
-        spread = Math.max(spread, Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2]));
-      }
+    /* Marqueurs de taille constante à l'écran : une sphère de 2 mm disparaît
+     * dès qu'on recule, et un waypoint doit rester cliquable à toute distance.
+     * `sizeAttenuation: false` donne une taille en unités d'écran. */
+    if (!this.waypointTexture) {
+      const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = 64;
+      const ctx = canvas.getContext("2d");
+      const g = ctx.createRadialGradient(32, 32, 4, 32, 32, 30);
+      g.addColorStop(0, "rgba(255,255,255,1)");
+      g.addColorStop(0.35, "rgba(126,249,255,1)");
+      g.addColorStop(0.7, "rgba(30,127,140,0.85)");
+      g.addColorStop(1, "rgba(30,127,140,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(32, 32, 30, 0, Math.PI * 2);
+      ctx.fill();
+      this.waypointTexture = new THREE.CanvasTexture(canvas);
+      this.waypointTexture.colorSpace = THREE.SRGBColorSpace;
     }
-    const radius = Math.min(0.004, Math.max(0.0006, spread * 0.018));
-    const geometry = new THREE.SphereGeometry(radius, 10, 8);
     for (const wp of this.waypoints) {
-      const material = new THREE.MeshBasicMaterial({ color: 0x7ef9ff, depthTest: false, transparent: true, opacity: 0.95 });
-      const marker = new THREE.Mesh(geometry, material);
+      const material = new THREE.SpriteMaterial({
+        map: this.waypointTexture,
+        depthTest: false,
+        transparent: true,
+        opacity: 0.95,
+        sizeAttenuation: false,
+      });
+      const marker = new THREE.Sprite(material);
       marker.position.set(...wp.position);
+      marker.scale.set(0.026, 0.026, 1);
       marker.renderOrder = 20;
       marker.userData.waypoint = wp;
       this.waypointGroup.add(marker);

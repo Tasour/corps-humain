@@ -146,7 +146,7 @@
     }
     #waypoint-info {
       position: absolute; z-index: 5; left: 50%; bottom: 80px; transform: translateX(-50%);
-      display: none; max-width: 480px; padding: 14px 18px; text-align: center; pointer-events: none;
+      display: none; max-width: min(480px, 92vw); padding: 14px 18px; text-align: center; pointer-events: none;
       background: rgba(255,253,249,.96); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
     }
     #wp-title { font: 600 15px Georgia, serif; color: var(--accent); }
@@ -830,7 +830,13 @@
       controls.target.set(0, 0.88, 0);
       cameraTween = null;
       tourActive = false;
+      /* Sans cette pause, un reliquat d'amortissement du dernier glisser
+       * déplace la caméra juste après le recadrage : le double-clic ne
+       * revenait pas exactement à la vue de départ. */
+      const damping = controls.enableDamping;
+      controls.enableDamping = false;
       controls.update();
+      controls.enableDamping = damping;
       forceCulling = true;
       needsRender = true;
     }
@@ -887,6 +893,18 @@
     });
     addEventListener('resize', syncDetailsSheet);
     syncDetailsSheet();
+
+    /* La fiche d'anecdote et la barre d'animations occupent le même bord bas :
+     * sans empilement calculé, l'une recouvrait les boutons de l'autre. */
+    const animBarEl = document.getElementById('animations');
+    const waypointInfoEl = document.getElementById('waypoint-info');
+    function syncOverlayStack() {
+      const base = innerWidth <= 820 ? 10 : 20;
+      waypointInfoEl.style.bottom = `${Math.round(base + animBarEl.offsetHeight + 12)}px`;
+    }
+    addEventListener('resize', syncOverlayStack);
+    syncOverlayStack();
+    addEventListener('load', syncOverlayStack);
     document.getElementById('explode').addEventListener('click', () => {
       engine.clearAnimation();
       if (activeGroup) groupAnim = { group: activeGroup, mode: 'explode', t: 0, dir: 1 };

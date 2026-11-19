@@ -226,6 +226,20 @@ await check("waypoints créés à la sélection", async () => {
   const n = await page.evaluate(() => window.__v2.waypointGroup.children.length);
   assert.ok(n >= 3, `waypoints=${n}`);
 });
+await check("waypoints curés : l'estomac affiche ses anecdotes", async () => {
+  await page.evaluate(() => window.__v2.isolate(null));
+  await page.fill("#search", "estomac");
+  await page.waitForTimeout(200);
+  await page.locator('#list .item[data-id="organ:stomach"]').click();
+  await page.waitForTimeout(400);
+  const d = await page.evaluate(() => ({
+    labels: window.__v2.waypoints.map((w) => w.label),
+    count: window.__v2.waypointGroup.children.length,
+  }));
+  assert.ok(d.labels.includes("Fundus"), `libellés : ${d.labels.join(", ")}`);
+  assert.ok(d.labels.includes("Pylore"), `libellés : ${d.labels.join(", ")}`);
+  assert.equal(d.count, d.labels.length, "marqueurs ≠ waypoints");
+});
 await check("visite guidée des waypoints affiche une anecdote", async () => {
   await page.locator("#animations button", { hasText: "Waypoints" }).click();
   await page.waitForTimeout(2600);
@@ -381,11 +395,14 @@ await check("mobile : sidebar repliable et focus", async () => {
 /* On arrête la boucle rAF et les timers avant de fermer : aucun callback ne
  * doit rester en volée après la fermeture du navigateur. */
 await page.evaluate(() => window.__v2Stop?.()).catch(() => {});
-if (mobileContext) await mobileContext.close().catch(() => {});
-await browser.close();
 
+/* Le résumé est calculé et imprimé AVANT la fermeture du navigateur : si la
+ * fermeture traîne ou échoue, la sortie utile est déjà écrite. */
 const failed = results.filter((r) => !r.ok);
 console.log(`\n${results.length - failed.length}/${results.length} tests réussis`);
 for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.name}${r.error ? " — " + r.error : ""}`);
 if (errors.length) console.log("ERREURS", errors);
-process.exit(failed.length ? 1 : 0);
+process.exitCode = failed.length ? 1 : 0;
+
+if (mobileContext) await mobileContext.close().catch(() => {});
+await browser.close().catch(() => {});
