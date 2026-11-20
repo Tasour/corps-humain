@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-005",
+  "objectif": "Curseur d'éclaté global dans v2, réversible et compatible avec les 43 groupes",
+  "avant": {
+    "commit": "dd87382",
+    "comportement": "v1 avait un curseur complet ; v2 n'exposait que animateGroup() pour un seul groupe à la fois, sans interface globale"
+  },
+  "apres": {
+    "moteur": "setExplodeAmount() calcule une direction propre par structure (centre du corps, mis en cache), sans conflit entre groupes partagés",
+    "rendu": "bascule temporaire en mode lots pendant l'éclaté (les matrices n'ont pas d'effet sur les meshes fusionnés), restauration du mode initial au retour à zéro",
+    "ui": "bouton aria-pressed + curseur 0-100 + output, incompatibilité avec la coupe, réinitialisation par « Recadrer »",
+    "observabilite": "engine.explodeAmount et état ajouté à la signature du dirty flag"
+  },
+  "captures": {
+    "avant": ["docs/analyses/explode-avant-desktop.png", "docs/analyses/explode-avant-mobile.png"],
+    "apres": ["docs/analyses/explode-apres-desktop.png", "docs/analyses/explode-apres-mobile.png"],
+    "diffs": ["docs/analyses/explode-diff-desktop.png", "docs/analyses/explode-diff-mobile.png"]
+  },
+  "mesures": {
+    "desktop_1658x1150": { "changedPct": 20.04, "seuilPct": 2, "verdict": "change" },
+    "mobile_390x844": { "changedPct": 52.1, "seuilPct": 2, "verdict": "change" }
+  },
+  "tests": { "explode": "6/6", "groupes3d": "52/52", "coupes": "7/7", "a11y": "22/22", "v2": "30/30" },
+  "verdict": "OK"
+}

@@ -230,6 +230,20 @@
        background: var(--teal); color: #041b22; border-color: var(--teal);
      }
      #coupe-range { width: 100%; accent-color: var(--teal); cursor: pointer; }
+     #explode-hud {
+       position: absolute; z-index: 6; left: 14px; bottom: 14px;
+       display: flex; align-items: center; gap: 8px; max-width: 320px;
+       padding: 7px 10px; background: rgba(255,253,249,.96); border: 1px solid var(--line);
+       border-radius: 10px; box-shadow: var(--shadow); font-size: 11px; color: var(--ink);
+     }
+     body.dark #explode-hud { background: rgba(20,31,43,.96); }
+     #explode-toggle {
+       min-width: 72px; min-height: 36px; padding: 4px 9px; border: 1px solid var(--teal);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
+     }
+     #explode-toggle[aria-pressed="true"] { background: var(--teal); color: #041b22; }
+     #explode-range { width: 130px; accent-color: var(--teal); cursor: pointer; }
+     #explode-value { font-family: var(--mono); min-width: 38px; color: var(--muted); }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
@@ -399,6 +413,11 @@
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
       <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div><button type="button" id="wp-copy" title="Copier le lien de cette vue" aria-label="Copier le lien de cette vue">Copier le lien de cette vue</button></div>
+      <div id="explode-hud" role="group" aria-label="Vue éclatée globale">
+        <button type="button" id="explode-toggle" aria-pressed="false">Éclater</button>
+        <input id="explode-range" type="range" min="0" max="100" step="1" value="0" aria-label="Amplitude de l'éclaté" />
+        <output id="explode-value">0 %</output>
+      </div>
       <div id="coupe-hud" role="group" aria-label="Coupes anatomiques">
         <button type="button" id="coupe-toggle" aria-pressed="false" aria-label="Activer la coupe">Coupe</button>
         <div class="coupe-axes" role="radiogroup" aria-label="Axe de coupe">
@@ -1225,6 +1244,7 @@
       controls.update();
       controls.enableDamping = damping;
       forceCulling = true;
+      reglerExplode(0);
       needsRender = true;
     }
     document.getElementById('reset').addEventListener('click', () => {
@@ -1619,6 +1639,7 @@
         groupAnim ? groupAnim.t.toFixed(3) : '',
         engine.animation ? engine.animation.t.toFixed(3) : '',
         coupe.active ? `${coupe.axe}:${coupe.position.toFixed(2)}` : '',
+        engine.explodeAmount.toFixed(2),
       ].join('|');
       /* Cadence adaptative : en vue corps entier on vise 30 fps (33 ms) au
        * lieu d'un palier fixe à 1 rendu/s. Le seuil s'ajuste au coût réel
@@ -1711,6 +1732,53 @@
     }
     window.__v2Stop = stop;
     window.addEventListener('pagehide', stop);
+    /* BENCH-005 — éclaté global réversible, en incompatibilité avec la coupe
+     * et les animations de groupe (une seule transformation par structure). */
+    let modeAvantExplode = null;
+    function reglerExplode(valeur) {
+      const amount = Math.max(0, Math.min(1, Number.isFinite(valeur) ? valeur : 0));
+      const debut = amount > 0 && engine.explodeAmount <= 0.02;
+      if (amount > 0 && coupe.active) {
+        coupe.active = false;
+        appliquerCoupe();
+      }
+      if (debut) {
+        /* Le corps entier est rendu en meshes fusionnés : les matrices
+         * d'instances n'y ont aucun effet. On repasse en lots, comme pour
+         * l'isolement, et on mémorise le mode pour le restaurer ensuite. */
+        modeAvantExplode = engine.mergedMode;
+        groupAnim = null;
+        engine.clearAnimation();
+        engine.isolate(null);
+        for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, true);
+        document.querySelectorAll('[data-cat]').forEach((btn) => {
+          if (btn.dataset.cat === 'skin') return;
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+        });
+        engine.setMergedMode(false);
+        engine.resetGroupTransforms();
+      }
+      if (amount === 0 && modeAvantExplode !== null) {
+        engine.setMergedMode(modeAvantExplode);
+        modeAvantExplode = null;
+      }
+      engine.setExplodeAmount(amount);
+      document.getElementById('explode-toggle').setAttribute('aria-pressed', String(amount > 0.02));
+      document.getElementById('explode-range').value = String(Math.round(amount * 100));
+      document.getElementById('explode-value').textContent = `${Math.round(amount * 100)} %`;
+      needsRender = true;
+    }
+
+    document.getElementById('explode-toggle').addEventListener('click', () => {
+      const on = engine.explodeAmount <= 0.02;
+      reglerExplode(on ? 1 : 0);
+      announce(on ? 'Vue éclatée activée.' : 'Vue anatomique restaurée.');
+    });
+    document.getElementById('explode-range').addEventListener('input', (e) => {
+      reglerExplode(Number(e.currentTarget.value) / 100);
+    });
+
     /* BENCH-004 — application des plans de coupe à tous les lots rendus. */
     function appliquerCoupe() {
       const plans = coupe.active
@@ -1753,6 +1821,7 @@
 
     document.getElementById('coupe-toggle').addEventListener('click', () => {
       coupe.active = !coupe.active;
+      if (coupe.active && engine.explodeAmount > 0) reglerExplode(0);
       appliquerCoupe();
       announce(coupe.active ? `Coupe ${coupe.axe} activée.` : 'Coupe désactivée.');
     });

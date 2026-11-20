@@ -309,6 +309,8 @@ export class AnatomyV2Engine {
     this.byId = new Map();
     this.batches = new Map();
     this.mergedMeshes = new Map();
+    this.explodeAmount = 0;
+    this._explodeData = null;
     /* Par catégorie : Uint32Array[vertexIndex] = _index de la structure.
      * Permet de remonter d'un hit sur un mesh fusionné (sans instanceId)
      * jusqu'à la structure correspondante. */
@@ -1041,6 +1043,47 @@ export class AnatomyV2Engine {
       }
       batch.setMatrixAt(ref.instanceId, matrix);
     });
+    /* setMatrixAt marque déjà la texture de matrices comme à mettre à jour. */
+  }
+
+  /* Éclaté global BENCH-005 : chaque structure s'éloigne du centre du corps
+   * selon un vecteur propre, calculé une seule fois. Contrairement à
+   * animateGroup(), deux groupes partageant une structure ne peuvent pas
+   * écraser leurs matrices. */
+  setExplodeAmount(value) {
+    const amount = Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0));
+    this.explodeAmount = amount;
+    if (!this._explodeData) {
+      let sx = 0, sy = 0, sz = 0, n = 0;
+      const centres = new Map();
+      for (const structure of this.structures) {
+        const b = structure.bounds;
+        const c = new THREE.Vector3(
+          (b.min[0] + b.max[0]) / 2,
+          (b.min[1] + b.max[1]) / 2,
+          (b.min[2] + b.max[2]) / 2,
+        );
+        centres.set(structure._index, c);
+        sx += c.x; sy += c.y; sz += c.z; n++;
+      }
+      const centre = new THREE.Vector3(sx / Math.max(1, n), sy / Math.max(1, n), sz / Math.max(1, n));
+      this._explodeData = new Map();
+      for (const [index, c] of centres) {
+        const dir = c.clone().sub(centre);
+        this._explodeData.set(index, dir.lengthSq() > 1e-12 ? dir.normalize() : new THREE.Vector3(0, 1, 0));
+      }
+    }
+    const identite = new THREE.Matrix4();
+    for (const [index, dir] of this._explodeData) {
+      const ref = this.structureToInstance.get(index);
+      const batch = ref && this.batches.get(ref.category);
+      if (!batch) continue;
+      const v = dir.clone().multiplyScalar(0.35 * amount);
+      const matrice = amount === 0
+        ? identite
+        : new THREE.Matrix4().makeTranslation(v.x, v.y, v.z);
+      batch.setMatrixAt(ref.instanceId, matrice);
+    }
     /* setMatrixAt marque déjà la texture de matrices comme à mettre à jour. */
   }
 

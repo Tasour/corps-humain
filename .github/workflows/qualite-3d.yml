@@ -52,5 +52,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:tour
       - name: Coupes 3 axes
         run: TEST_BASE=http://localhost:5199 npm run test:coupes
+      - name: Éclaté global
+        run: TEST_BASE=http://localhost:5199 npm run test:explode
       - name: Build
         run: npm run build

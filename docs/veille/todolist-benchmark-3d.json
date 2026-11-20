@@ -110,8 +110,10 @@
    "dependances": [],
    "verification": "npm run test:groupes3d",
    "preuveAttendue": "52/52 contrôles de groupes",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-005"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-005",
+   "verdict": "OK — éclaté global v2 réversible et monotone, mode lots restauré; 6/6; captures 20,04 % desktop / 52,1 % mobile",
+   "preuve": "docs/analyses/explode-2026-11-20.json"
   },
   {
    "id": "BENCH-006",
