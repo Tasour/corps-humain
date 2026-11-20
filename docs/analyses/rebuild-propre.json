@@ -1,47 +1,54 @@
 {
-  "date": "2026-11-21",
-  "item": "Rebuild propre depuis sources épinglées (arbitrage multi-sources)",
-  "worktree": "/home/tasour/.cache/corps-rebuild-propre",
-  "sources": {
-    "zanatomy": "zanatomy-export (symlinké depuis le dépôt principal, empreintes vérifiées)",
-    "bodyparts3d": "/home/tasour/.cache/corps-sources/human-atlas/public/models",
-    "commitBP3D": "1c38bf35c254a891200d3cedecfd57abebe83d8d",
-    "verification": "sources:check OK — 21 fichiers, 0 modifié"
-  },
-  "commandes": [
-    "ANATOMY_SOURCE=<cache BP3D> npm run models:v2",
-    "npm run models:source-ids",
-    "npm run models:fiches",
-    "npm run models:licences",
-    "npm run pages:generate",
-    "npm run check:modele"
-  ],
-  "resultats": {
-    "structures": 2009,
-    "manquantes": 0,
-    "checkModele": "OK — 2009 structures, 9 chunks, 0 anomalie",
-    "applications": {
-      "avecCorrectifsAuBuild": {
-        "chunksidentiques": 11,
-        "chunksdifferents": ["muscle.low.bin.gz", "muscle.medium.bin.gz", "muscle.high.bin.gz"],
-        "champsManifesteDivergents": 645
-      },
-      "sansCorrectifsPuisPostTraitement": {
-        "chunksidentiques": 11,
-        "chunksdifferents": ["organ.low.bin.gz"],
-        "champsManifesteDivergents": 82
-      }
-    }
-  },
-  "diagnostic": "Les 9 corrections de composantes du fichier fixes-composantes.json sont appliquées à deux endroits : dans build-anatomy-v2.mjs (COMPONENT_FIXES, avant simplification LOD) et dans post-process-components.mjs (après generation des chunks). Selon l'ordre, ce sont les chunks muscle ou organe qui different. Le manifeste livré n'est donc pas encore reproductible octet pour octet.",
-  "correctionsLivrees": [
-    "scripts/sources-checksums.mjs accepte SOURCES_ROOT pour verifier les empreintes depuis un worktree ou un build hors arbre."
-  ],
-  "actionsRequises": [
-    "choisir un seul chemin d'application des correctifs de composantes (recommandation : au build uniquement, puis retirer revue:composantes de la sequence de rebuild)",
-    "regenerer le manifeste et les chunks de reference avec la sequence canonique",
-    "verifier l'egalite octet pour octet des 12 chunks et du manifeste",
-    "capturer 8 angles avant/apres et faire valider la porte CI avant de remplacer les donnees de production"
-  ],
-  "verdict": "REBUILD FAISABLE MAIS NON ENCORE BYTE-IDENTIQUE — defaut de reproductibilité identifié et documenté, pas resolu"
+ "date": "2026-11-21",
+ "item": "Rebuild propre depuis sources épinglées (arbitrage multi-sources)",
+ "worktree": "/home/tasour/.cache/corps-rebuild-propre",
+ "sources": {
+  "zanatomy": "zanatomy-export (symlinké depuis le dépôt principal, empreintes vérifiées)",
+  "bodyparts3d": "/home/tasour/.cache/corps-sources/human-atlas/public/models",
+  "commitBP3D": "1c38bf35c254a891200d3cedecfd57abebe83d8d",
+  "verification": "sources:check OK — 21 fichiers, 0 modifié"
+ },
+ "commandes": [
+  "ANATOMY_SOURCE=<cache BP3D> npm run models:v2",
+  "npm run models:source-ids",
+  "npm run models:fiches",
+  "npm run models:licences",
+  "npm run pages:generate",
+  "npm run check:modele"
+ ],
+ "resultats": {
+  "structures": 2009,
+  "manquantes": 0,
+  "checkModele": "OK — 2009 structures, 9 chunks, 0 anomalie",
+  "applications": {
+   "avecCorrectifsAuBuild": {
+    "chunksidentiques": 11,
+    "chunksdifferents": [
+     "muscle.low.bin.gz",
+     "muscle.medium.bin.gz",
+     "muscle.high.bin.gz"
+    ],
+    "champsManifesteDivergents": 645
+   },
+   "sansCorrectifsPuisPostTraitement": {
+    "chunksidentiques": 11,
+    "chunksdifferents": [
+     "organ.low.bin.gz"
+    ],
+    "champsManifesteDivergents": 82
+   }
+  }
+ },
+ "diagnostic": "Les 9 corrections de composantes du fichier fixes-composantes.json sont appliquées à deux endroits : dans build-anatomy-v2.mjs (COMPONENT_FIXES, avant simplification LOD) et dans post-process-components.mjs (après generation des chunks). Selon l'ordre, ce sont les chunks muscle ou organe qui different. Le manifeste livré n'est donc pas encore reproductible octet pour octet.",
+ "correctionsLivrees": [
+  "scripts/sources-checksums.mjs accepte SOURCES_ROOT pour verifier les empreintes depuis un worktree ou un build hors arbre."
+ ],
+ "actionsRequises": [
+  "documenter la séquence canonique dans docs/jeu-de-donnees-v2.md",
+  "ne plus appliquer revue:composantes après un rebuild",
+  "avant de remplacer les données de production, capturer 8 angles et refaire les gates"
+ ],
+ "verdict": "REBUILD REPRODUCTIBLE — séquence canonique prouvée byte-identique",
+ "sequenceCanonique": "build-anatomy-v2.mjs avec fixes-composantes.json appliqués au build, puis models:source-ids / models:fiches / models:licences / pages:generate. AUCUN post-traitement de composantes.",
+ "preuve": "npm run rebuild:verify : 14 fichiers identiques sur deux builds (docs/analyses/rebuild-verification.json)"
 }

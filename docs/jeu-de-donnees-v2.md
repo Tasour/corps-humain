@@ -130,3 +130,27 @@ reste valable même si le libellé d'une structure change.
 
 Le post-traitement est idempotent et atomique : `npm run models:source-ids`.
 Vérification : `npm run test:source-id` et `docs/analyses/source-id-2026-11-20.json`.
+
+## Séquence de rebuild canonique (21 novembre 2026)
+
+Le rebuild reproductible suit **exactement** cet ordre :
+
+```bash
+npm run sources:check
+ANATOMY_SOURCE=/home/tasour/.cache/corps-sources/human-atlas/public/models npm run models:v2
+npm run models:source-ids
+npm run models:fiches
+npm run models:licences
+npm run pages:generate
+npm run check:modele
+```
+
+Les corrections de composantes (`docs/analyses/revue-visuelle/fixes-composantes.json`) sont
+appliquées **une seule fois**, par `build-anatomy-v2.mjs`, avant la simplification LOD.
+`npm run revue:composantes` est un outil historique de patch : **ne pas l'appliquer après un
+rebuild canonique**, sinon les chunks muscle ou organe divergent.
+
+Vérification de reproductibilité : `npm run rebuild:verify` (deux builds dans des dossiers
+temporaires, comparaison SHA-256 de 14 fichiers, date de manifeste normalisée). Résultat
+consigné dans `docs/analyses/rebuild-verification.json`. Depuis un worktree, renseigner
+`SOURCES_ROOT=/home/tasour/corps-humain` pour que `sources:check` retrouve les empreintes BP3D.

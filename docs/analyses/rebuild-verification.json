@@ -1,0 +1,12 @@
+{
+ "generated": "2026-11-20T16:32:50.523Z",
+ "sources": "zanatomy-export + cache BP3D épinglé (voir sources-checksums.json)",
+ "sequence": "build-anatomy-v2.mjs avec fixes-composantes.json appliqués au build ; AUCUN post-traitement de composantes",
+ "fichiersComparés": 14,
+ "divergences": [],
+ "journaux": [
+  "Structures: 2009 (manquantes: 0) Total brut: 154.5 Mo, gzip: 115.2 Mo",
+  "Structures: 2009 (manquantes: 0) Total brut: 154.5 Mo, gzip: 115.2 Mo"
+ ],
+ "verdict": "OK"
+}
