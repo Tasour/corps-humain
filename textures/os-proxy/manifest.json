@@ -1,0 +1,16 @@
+{
+ "tissue": "os-proxy",
+ "generated": "2026-11-20T04:30:24.783642+00:00",
+ "source": "Poly Haven / clay_plaster",
+ "license": "CC0",
+ "url": "https://polyhaven.com/a/clay_plaster",
+ "seed": 2039,
+ "size": 1024,
+ "maps": {
+  "albedo": "c5d05020c4018c3dce98c3c6a398a756dd279125cd2bbdbd85c2414a563bcc8c",
+  "roughness": "53108806d0306b9516befe9b70d3ec7e043885adaa5ec25b7c0ce5c003cc8d66",
+  "normal": "4ecefebca04269a186052cc2b2a9abc066af3ea2a8bbda5d4456a55add3d7ff3",
+  "ao": "b49fd6feae7f8da25c0c2de2a7e99c1f267eb576c177ed2a3650e295b6d0c06d"
+ },
+ "rule": "aucun detail anatomique inventé ; bruit procede multi-echelle reproductible"
+}
