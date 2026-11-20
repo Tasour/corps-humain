@@ -215,8 +215,10 @@
    ],
    "verification": "npm run sources:check",
    "preuveAttendue": "21 empreintes + provenance visible",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-010"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-010",
+   "verdict": "OK — registre MIT + 2 sources CC prouvées + 21 empreintes, dialogue accessible hors ligne; 5/5; captures 83 % / 40 %",
+   "preuve": "docs/analyses/licenses-2026-11-20.json"
   },
   {
    "id": "BENCH-011",

@@ -60,5 +60,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:source-id
       - name: Fiches de vérité
         run: TEST_BASE=http://localhost:5199 npm run test:fiches
+      - name: Registre des licences
+        run: TEST_BASE=http://localhost:5199 npm run test:licences
       - name: Build
         run: npm run build

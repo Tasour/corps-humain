@@ -266,6 +266,20 @@
      .verite dt { color: var(--muted); white-space: nowrap; }
      .verite dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
      .verite-avertissement { margin: 10px 0 0; font-size: 10.5px; color: var(--muted); }
+     #sources-dialog {
+       max-width: min(720px, 94vw); max-height: 86vh; overflow: auto;
+       padding: 20px 24px; border: 1px solid var(--line); border-radius: 14px;
+       background: var(--paper); color: var(--ink); box-shadow: var(--shadow);
+     }
+     body.dark #sources-dialog { background: #0e1620; }
+     .sources-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+     .sources-head h2 { margin: 0; font: 600 21px Georgia, serif; }
+     .sources-head button { min-width: 36px; min-height: 36px; cursor: pointer; }
+     #sources-contenu { margin-top: 14px; font-size: 12.5px; line-height: 1.55; }
+     #sources-contenu h3 { margin: 18px 0 6px; font: 600 14px Georgia, serif; color: var(--teal); }
+     #sources-contenu ul { margin: 6px 0; padding-left: 18px; }
+     #sources-contenu a { color: var(--teal); }
+     #sources-contenu .source-attribution { margin: 4px 0 10px; color: var(--muted); }
     .legacy-link { margin-top: 16px; font-size: 11px; color: var(--muted); }
     .legacy-link a { color: var(--teal); }
     #sel-name { font: 600 30px/1.1 Georgia, serif; }
@@ -369,6 +383,7 @@
       <span class="badge" id="count">— structures</span>
       <span class="badge">Version 2.0</span>
       <div class="top-actions">
+        <button id="btn-sources" type="button" aria-haspopup="dialog">Sources & licences</button>
         <button id="theme-toggle" type="button" aria-pressed="false">Thème : clair</button>
         <button id="mobile-toggle" type="button" aria-expanded="false" aria-controls="sidebar">Explorer</button>
         <button id="reset" type="button">Recadrer</button>
@@ -475,6 +490,14 @@
     </aside>
   </div>
 
+  <dialog id="sources-dialog" aria-labelledby="sources-titre">
+    <div class="sources-head">
+      <h2 id="sources-titre">Sources & licences</h2>
+      <button type="button" id="sources-close" aria-label="Fermer les sources">✕</button>
+    </div>
+    <div id="sources-contenu"></div>
+  </dialog>
+
   <div id="scrim" hidden></div>
 
   <div id="loading" role="status" aria-live="polite" aria-busy="true"><div class="card"><img src="./logo.svg" alt="" /><h2>CORPS</h2><p id="load-text">Chargement de l'atlas…</p></div></div>
@@ -571,6 +594,13 @@
         for (const fiche of donnees.structures || []) fichesVerite.set(fiche.id, fiche);
       }
     } catch { /* sans fichier, la section reste masquée */ }
+
+    /* BENCH-010 — registre de licences, lui aussi pré-caché pour l'offline. */
+    let registreLicences = null;
+    try {
+      const reponseLicences = await fetch('./data/licenses.json');
+      if (reponseLicences.ok) registreLicences = await reponseLicences.json();
+    } catch { /* le dialogue affiche alors un message explicite */ }
 
     /* BENCH-004 — coupes locales pilotables dans v2. Les trois normales sont
      * fixes ; seule la constante du plan (position) change. */
@@ -831,6 +861,63 @@
       }
       panneau.hidden = false;
     }
+
+    /* BENCH-010 — attribution lisible dans l'application, générée depuis le
+     * registre. Les liens de citation s'ouvrent dans un nouvel onglet. */
+    function rendreSources() {
+      const conteneur = document.getElementById('sources-contenu');
+      conteneur.replaceChildren();
+      const paragraphe = (texte, classe = '') => {
+        const p = document.createElement('p');
+        p.textContent = texte;
+        if (classe) p.className = classe;
+        conteneur.append(p);
+        return p;
+      };
+      const titre = (texte) => {
+        const h = document.createElement('h3');
+        h.textContent = texte;
+        conteneur.append(h);
+      };
+      const lien = (p, url) => {
+        const a = document.createElement('a');
+        a.href = url;
+        a.textContent = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        p.append(' ', a);
+      };
+      if (!registreLicences) {
+        paragraphe('Registre de licences indisponible : rechargez la page une fois connecté.');
+        return;
+      }
+      titre(`Code — ${registreLicences.code.licence}`);
+      const pCode = paragraphe(`© ${registreLicences.code.annee} ${registreLicences.code.auteurs}. Licence ${registreLicences.code.licence} (fichier ${registreLicences.code.licenceFichier}).`);
+      lien(pCode, registreLicences.code.url);
+      for (const src of registreLicences.donnees) {
+        titre(`${src.nom} — ${src.licence}`);
+        paragraphe(src.attribution, 'source-attribution');
+        const pUrl = paragraphe('Source :');
+        lien(pUrl, src.url);
+      }
+      titre('Jeu de données combiné');
+      paragraphe(`${registreLicences.attributionCombinedee} Répartition : ${Object.entries(registreLicences.parLicence).map(([licence, n]) => `${n} structures en ${licence}`).join(', ')}.`);
+      titre('Reproductibilité');
+      paragraphe(`${registreLicences.empreintes.length} fichiers sources vérifiés par empreinte SHA-256 (commande npm run sources:check). Registre généré le ${registreLicences.generated}.`);
+      paragraphe(registreLicences.avertissement, 'source-attribution');
+    }
+
+    document.getElementById('btn-sources').addEventListener('click', () => {
+      rendreSources();
+      const dialog = document.getElementById('sources-dialog');
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      else dialog.setAttribute('open', '');
+    });
+    document.getElementById('sources-close').addEventListener('click', () => {
+      const dialog = document.getElementById('sources-dialog');
+      if (typeof dialog.close === 'function') dialog.close();
+      else dialog.removeAttribute('open');
+    });
 
     /* BENCH-011 — un tour est une séquence d'étapes vérifiables, pas une
      * animation inventée : chaque étape pointe un waypoint du manifeste. */

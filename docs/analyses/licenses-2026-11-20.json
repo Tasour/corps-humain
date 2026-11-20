@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-010",
+  "objectif": "Registre de licences machine-readable et attribution visible dans l'application",
+  "avant": {
+    "commit": "3896e78",
+    "comportement": "provenance documentée dans SOURCES-3D.md et fiches de vérité, mais aucune attribution lisible depuis l'atlas lui-même"
+  },
+  "apres": {
+    "registre": "public/data/licenses.json : code MIT, 2 sources de données avec licence prouvée, licence combinée CC BY-SA 4.0, 21 empreintes SHA-256, répartition par licence",
+    "interface": "bouton « Sources & licences » ouvrant un dialogue natif, contenu généré depuis le registre, liens target=_blank rel=noopener noreferrer, fermeture bouton et Échap",
+    "offline": "registre pré-caché par le service worker (corps-v43)"
+  },
+  "captures": {
+    "avant": ["docs/analyses/licenses-avant-desktop.png", "docs/analyses/licenses-avant-mobile.png"],
+    "apres": ["docs/analyses/licenses-apres-desktop.png", "docs/analyses/licenses-apres-mobile.png"],
+    "diffs": ["docs/analyses/licenses-diff-desktop.png", "docs/analyses/licenses-diff-mobile.png"]
+  },
+  "mesures": { "desktop_1658x1150": 83.14, "mobile_390x844": 40.28 },
+  "tests": { "licences": "5/5", "reseau": "0 externe", "fiches": "5/5" },
+  "verdict": "OK"
+}
