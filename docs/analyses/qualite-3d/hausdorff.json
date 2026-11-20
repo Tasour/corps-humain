@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated": "2026-11-20T05:34:58.883Z",
+  "generated": "2026-11-20T06:32:52.616Z",
   "structures": 2009,
   "samplesPerDirection": 256,
   "medium": {
@@ -10658,23 +10658,23 @@
    "fr": "Fléchisseur profond des doigts",
    "category": "muscle",
    "triangles": {
-    "high": 7110,
+    "high": 7058,
     "medium": 1494,
     "low": 292
    },
    "medium": {
-    "maxMm": 4.447995150232328,
-    "meanMm": 0.07705861082504953,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.447995150232328,
-    "samples": 650
+    "maxMm": 5.149001086404343,
+    "meanMm": 0.07007940082957322,
+    "coarseToFineMaxMm": 5.149001086404343,
+    "fineToCoarseMaxMm": 0.752903994917068,
+    "samples": 648
    },
    "low": {
-    "maxMm": 4.447995150232328,
-    "meanMm": 0.2776389840645569,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.447995150232328,
-    "samples": 431
+    "maxMm": 5.846296421989648,
+    "meanMm": 0.3394283961278428,
+    "coarseToFineMaxMm": 5.846296421989648,
+    "fineToCoarseMaxMm": 4.1542623128888865,
+    "samples": 429
    }
   },
   {
@@ -11186,22 +11186,22 @@
    "fr": "Muscle petit fessier",
    "category": "muscle",
    "triangles": {
-    "high": 6250,
+    "high": 6244,
     "medium": 1493,
     "low": 298
    },
    "medium": {
-    "maxMm": 0.4619170997368154,
-    "meanMm": 0.05833645558171162,
+    "maxMm": 0.4441220676878295,
+    "meanMm": 0.05152161278898113,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.4619170997368154,
+    "fineToCoarseMaxMm": 0.4441220676878295,
     "samples": 636
    },
    "low": {
-    "maxMm": 1.3455557404160714,
-    "meanMm": 0.15494558520561555,
+    "maxMm": 1.7921349941174531,
+    "meanMm": 0.14696797627003524,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.3455557404160714,
+    "fineToCoarseMaxMm": 1.7921349941174531,
     "samples": 414
    }
   },
@@ -11210,22 +11210,22 @@
    "fr": "Muscle petit fessier",
    "category": "muscle",
    "triangles": {
-    "high": 6250,
+    "high": 6244,
     "medium": 1494,
     "low": 300
    },
    "medium": {
-    "maxMm": 0.45871778408471475,
-    "meanMm": 0.05690524402015439,
+    "maxMm": 0.4441374581504163,
+    "meanMm": 0.04975291865425114,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.45871778408471475,
+    "fineToCoarseMaxMm": 0.4441374581504163,
     "samples": 636
    },
    "low": {
-    "maxMm": 1.5342770155547112,
-    "meanMm": 0.1439423935484623,
+    "maxMm": 1.792131681056239,
+    "meanMm": 0.1500195845818702,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.5342770155547112,
+    "fineToCoarseMaxMm": 1.792131681056239,
     "samples": 414
    }
   },

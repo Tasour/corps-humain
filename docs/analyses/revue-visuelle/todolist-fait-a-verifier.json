@@ -32,8 +32,8 @@
    "entreesAjoutees": 25
   },
   "vague3": {
-   "fixes": 4,
-   "entreesAjoutees": 14
+   "fixes": 3,
+   "entreesAjoutees": 6
   }
  },
  "entries": [
@@ -144468,6 +144468,300 @@
    },
    "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
    "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02285",
+   "status": "fait_a_verifier",
+   "subject": "muscle:flexor-digitorum-profundus-l",
+   "fr": "Fléchisseur profond des doigts",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "moyenne",
+   "description": "Lambeau pale du ventre paraissant detache.",
+   "angles": [
+    "dessous"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:flexor-digitorum-profundus-l/dessous.jpg"
+   ],
+   "lots": [
+    50
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "3 artefacts de 0,674/0,051/0,032 cm2 face a 204,825 cm2 (0,33 % max) valides en vague assemblage 2.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 2,
+    "triangles": 7058
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T06:35:33.086Z"
+  },
+  {
+   "id": "VIS-07925",
+   "status": "fait_a_verifier",
+   "subject": "muscle:flexor-digitorum-profundus-l",
+   "fr": "Fléchisseur profond des doigts",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "faible",
+   "description": "Leger croisement des brins distaux.",
+   "angles": [
+    "droite"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:flexor-digitorum-profundus-l/droite.jpg"
+   ],
+   "lots": [
+    50
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "3 artefacts de 0,674/0,051/0,032 cm2 face a 204,825 cm2 (0,33 % max) valides en vague assemblage 2.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:flexor-digitorum-profundus-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:flexor-digitorum-profundus-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 2,
+    "triangles": 7058
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T06:35:33.086Z"
+  },
+  {
+   "id": "VIS-02302",
+   "status": "fait_a_verifier",
+   "subject": "muscle:gluteus-minimus-muscle-l",
+   "fr": "Muscle petit fessier",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Sillon diagonal marquant un raccord dans le haut.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:gluteus-minimus-muscle-l/face.jpg"
+   ],
+   "lots": [
+    54
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Eclat de 6 triangles (0,004 cm2) face a 178,589 cm2 : artefact negligeable valide en vague assemblage 2.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 6244
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T06:35:33.087Z"
+  },
+  {
+   "id": "VIS-08104",
+   "status": "fait_a_verifier",
+   "subject": "muscle:gluteus-minimus-muscle-l",
+   "fr": "Muscle petit fessier",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Ligne de raccord sur le cote gauche.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:gluteus-minimus-muscle-l/gauche.jpg"
+   ],
+   "lots": [
+    54
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Eclat de 6 triangles (0,004 cm2) face a 178,589 cm2 : artefact negligeable valide en vague assemblage 2.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 6244
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T06:35:33.087Z"
+  },
+  {
+   "id": "VIS-02304",
+   "status": "fait_a_verifier",
+   "subject": "muscle:gluteus-minimus-muscle-r",
+   "fr": "Muscle petit fessier",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Sillon diagonal de raccord dans le haut.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:gluteus-minimus-muscle-r/face.jpg"
+   ],
+   "lots": [
+    54
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 6244
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T06:35:33.087Z"
+  },
+  {
+   "id": "VIS-08110",
+   "status": "fait_a_verifier",
+   "subject": "muscle:gluteus-minimus-muscle-r",
+   "fr": "Muscle petit fessier",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Sillon et depression au milieu.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:gluteus-minimus-muscle-r/gauche.jpg"
+   ],
+   "lots": [
+    54
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:gluteus-minimus-muscle-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage2/muscle:gluteus-minimus-muscle-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 6244
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T06:35:33.087Z"
   }
  ]
 }

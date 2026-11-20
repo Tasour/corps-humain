@@ -14,16 +14,19 @@ const AUDIT = JSON.parse(fs.readFileSync(path.join(ROOT, "docs/analyses/qualite-
 
 const todo = JSON.parse(fs.readFileSync(TODO, "utf8"));
 const verif = JSON.parse(fs.readFileSync(VERIF, "utf8"));
-const targets = [
-  "muscle:calcaneal-tendon-l", "muscle:calcaneal-tendon-r",
-  "muscle:crural-fascia-l", "muscle:crural-fascia-r",
-];
+const targets = process.env.REVUE_FIX_IDS
+  ? process.env.REVUE_FIX_IDS.split(",").map((s) => s.trim()).filter(Boolean)
+  : [
+    "muscle:calcaneal-tendon-l", "muscle:calcaneal-tendon-r",
+    "muscle:crural-fascia-l", "muscle:crural-fascia-r",
+  ];
+const afterDirName = process.env.REVUE_AFTER_DIR || "apres-assemblage";
 const added = [];
 for (const id of targets) {
   const fix = FIXES.fixes.find((f) => f.id === id);
   if (!fix) continue;
   const beforeDir = path.join(CACHE, "qualite-3d-apres", id);
-  const afterDir = path.join(CACHE, "apres-assemblage", id);
+  const afterDir = path.join(CACHE, afterDirName, id);
   const beforeImages = fs.existsSync(beforeDir) ? fs.readdirSync(beforeDir).filter((f) => f.endsWith(".jpg")).sort().map((f) => path.join(beforeDir, f)) : [];
   const afterImages = fs.existsSync(afterDir) ? fs.readdirSync(afterDir).filter((f) => f.endsWith(".jpg")).sort().map((f) => path.join(afterDir, f)) : [];
   const m = AUDIT.structures.find((s) => s.id === id);

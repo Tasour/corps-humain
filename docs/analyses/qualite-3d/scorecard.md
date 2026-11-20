@@ -21,7 +21,7 @@ Généré le 2026-11-20 par `npm run scorecard:3d`.
 | Porte | Structures qui passent | Part |
 |---|---:|---:|
 | G0 traçabilité (source, chemin, TA2) | 1 948 | 97.0 % |
-| G2 topologie + étanchéité (classification provisoire) | 1 585 | 78.9 % |
+| G2 topologie + étanchéité (classification provisoire) | 1 587 | 79.0 % |
 | G2 topologie seule (hors étanchéité) | 2 009 | 100.0 % |
 | G3 orientation et normales | 1 268 | 63.1 % |
 

@@ -109,6 +109,10 @@ for (const [category, structures] of byCategory) {
       const indexBytes = rec0.indexCount * (rec0.indexType === "u16" ? 2 : 4);
       const original = Buffer.from(raw.buffer, raw.byteOffset + rec0.positions, rec0.indices + indexBytes - rec0.positions);
       const fix = FIXES.fixes.find((f) => f.id === s.id);
+      if (fix?.lods && !fix.lods.includes(lod)) {
+        total = pushAligned(parts, total, original);
+        continue;
+      }
       if (!fix) {
         while (total % 4) { parts.push(Buffer.from([0])); total++; }
         const start = total;

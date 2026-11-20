@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated": "2026-11-20T05:34:39.636Z",
+  "generated": "2026-11-20T06:32:32.724Z",
   "structures": 2009,
   "counts": {
    "S0": 0,
@@ -11,7 +11,7 @@
   },
   "gatePass": {
    "G0": 1948,
-   "G2": 1585,
+   "G2": 1587,
    "G3": 1268,
    "G2closed": 2009,
    "G3strict": 1268
@@ -3439,21 +3439,21 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 7110,
+    "triangles": 7058,
     "boundaryEdges": 0,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 4,
+    "components": 2,
     "degenerate": 0,
     "flippedFaces": 13,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 34.58,
-    "edgeP99Mm": 18.469
+    "densityPerCm2": 34.35,
+    "edgeP99Mm": 18.492
    },
    "captures": null,
    "blockers": [
-    "4 composantes",
+    "2 composantes",
     "13 faces inversées",
     "captures absentes"
    ]
@@ -3488,72 +3488,6 @@
    "blockers": [
     "4 composantes",
     "13 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:gluteus-minimus-muscle-l",
-   "fr": "Muscle petit fessier",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2600",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 6250,
-    "boundaryEdges": 0,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 2,
-    "degenerate": 0,
-    "flippedFaces": 5,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 35,
-    "edgeP99Mm": 13.404
-   },
-   "captures": null,
-   "blockers": [
-    "2 composantes",
-    "5 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "muscle:gluteus-minimus-muscle-r",
-   "fr": "Muscle petit fessier",
-   "category": "muscle",
-   "source": "Z-Anatomy",
-   "ta2": "2600",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 6250,
-    "boundaryEdges": 0,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 2,
-    "degenerate": 0,
-    "flippedFaces": 5,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 35,
-    "edgeP99Mm": 13.404
-   },
-   "captures": null,
-   "blockers": [
-    "2 composantes",
-    "5 faces inversées",
     "captures absentes"
    ]
   },
@@ -13916,6 +13850,70 @@
    "captures": null,
    "blockers": [
     "13 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:gluteus-minimus-muscle-l",
+   "fr": "Muscle petit fessier",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2600",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 6244,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 4,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 34.96,
+    "edgeP99Mm": 13.404
+   },
+   "captures": null,
+   "blockers": [
+    "4 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "muscle:gluteus-minimus-muscle-r",
+   "fr": "Muscle petit fessier",
+   "category": "muscle",
+   "source": "Z-Anatomy",
+   "ta2": "2600",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": true,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 6244,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 4,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 34.96,
+    "edgeP99Mm": 13.404
+   },
+   "captures": null,
+   "blockers": [
+    "4 faces inversées",
     "captures absentes"
    ]
   },

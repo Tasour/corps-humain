@@ -30,6 +30,24 @@
    "id": "muscle:crural-fascia-r",
    "minAreaCm2": 0.239,
    "reason": "Memes artefacts que cote gauche."
+  },
+  {
+   "id": "muscle:flexor-digitorum-profundus-l",
+   "minAreaCm2": 0.6,
+   "reason": "3 artefacts de 0,674/0,051/0,032 cm2 face a 204,825 cm2 (0,33 % max) valides en vague assemblage 2.",
+   "lods": [
+    "high"
+   ]
+  },
+  {
+   "id": "muscle:gluteus-minimus-muscle-l",
+   "minAreaCm2": 0.005,
+   "reason": "Eclat de 6 triangles (0,004 cm2) face a 178,589 cm2 : artefact negligeable valide en vague assemblage 2."
+  },
+  {
+   "id": "muscle:gluteus-minimus-muscle-r",
+   "minAreaCm2": 0.005,
+   "reason": "Memes artefacts que cote gauche."
   }
  ]
 }

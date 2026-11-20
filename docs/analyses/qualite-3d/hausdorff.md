@@ -29,9 +29,9 @@ Référence : LOD `high`. 2009 structures, 256 sommets échantillonnés par dire
 | `organ:bp-basilar-artery-r` | organ | 6 190 | 3 732 | 5,79 | 0,09 |
 | `organ:bp-right-pulmonary-artery-r` | organ | 12 694 | 11 364 | 5,49 | 0,11 |
 | `muscle:external-abdominal-oblique-muscle-r` | muscle | 29 622 | 1 499 | 5,46 | 0,21 |
+| `muscle:flexor-digitorum-profundus-l` | muscle | 7 058 | 1 494 | 5,15 | 0,07 |
 | `bone:bp-sternum` | bone | 5 566 | 1 540 | 4,82 | 0,26 |
 | `organ:bp-telencephalon-l` | organ | 54 920 | 12 402 | 4,56 | 0,28 |
-| `muscle:flexor-digitorum-profundus-l` | muscle | 7 110 | 1 494 | 4,45 | 0,08 |
 | `muscle:flexor-digitorum-profundus-r` | muscle | 7 110 | 1 494 | 4,45 | 0,08 |
 | `organ:bp-left-pulmonary-artery-l` | organ | 8 070 | 6 906 | 4,37 | 0,14 |
 
