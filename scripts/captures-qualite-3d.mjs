@@ -153,6 +153,12 @@ const original = await page.evaluate(({ bg, size }) => {
   r.shadowMap.enabled = false;
   r.setPixelRatio(1);
   r.setSize(size, size, false);
+  /* La distance minimale de l'application (0,12 m) est levée pour la capture
+   *deterministe : sinon les petites structures sont cadrees a 12 cm. */
+  if (window.__controls) {
+    window.__controls.minDistance = 1e-6;
+    window.__controls.maxDistance = 60;
+  }
   window.__v2.camera.aspect = 1;
   window.__v2.camera.updateProjectionMatrix();
   const hidden = [];

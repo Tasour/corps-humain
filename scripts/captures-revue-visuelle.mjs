@@ -131,6 +131,14 @@ async function worker(index, list) {
     r.shadowMap.enabled = false;
     r.setPixelRatio(1);
     r.setSize(size, size, false);
+    /* Le harnais ne doit jamais imposer la distance minimale de l'application
+     * (0,12 m dans v2.html) : sur un os de 3 mm, la caméra reste à 12 cm et
+     * l'objet occupe 0,06 % du cadre. On désactive la contrainte uniquement
+     * pendant la capture, pas dans l'application. */
+    if (window.__controls) {
+      window.__controls.minDistance = 1e-6;
+      window.__controls.maxDistance = 60;
+    }
     window.__v2.camera.aspect = 1;
     window.__v2.camera.updateProjectionMatrix();
     s.traverse((o) => { if (o.material?.type === "ShadowMaterial") o.visible = false; });

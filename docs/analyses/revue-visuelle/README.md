@@ -15,7 +15,9 @@
 
 ## Fichiers
 
-- `todolist.md` — liste lisible, triée par sévérité puis par structure.
+- `todolist.md` — liste lisible, triée par sévérité puis par structure (état initial).
+- `todolist-fait-a-verifier.{md,json}` — corrections proposées, paires avant/après et verdicts.
+- `vagues/00.md` — bilan de la vague 0 (artefact de cadrage du harnais).
 - `todolist.json` — machine-readable : `summary` (couverture, compteurs, limites) et
   `entries` (id `VIS-xxxxx`, statut `a_faire`, structure, catégorie, porte G0–G8, sévérité,
   confiance, description, angles, preuves avec chemin absolu).
