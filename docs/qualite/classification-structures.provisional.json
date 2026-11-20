@@ -1,6 +1,6 @@
 {
  "version": "provisoire-1",
- "generated": "2026-11-20T01:29:43.036Z",
+ "generated": "2026-11-20T03:08:28.564Z",
  "method": "heuristique nom + catégorie ; à valider par revue anatomique en P2",
  "structures": {
   "bone:anterior-cells-of-ethmoid-bone-l": {

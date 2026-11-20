@@ -680,6 +680,43 @@ function removeDuplicateFaces(geometry) {
   return compact(Uint32Array.from(kept), geometry.positions, geometry.normals);
 }
 
+/* Corrections visuelles intégrées au pipeline : suppression de composantes
+ * connexes négligeables (vague 2). Appliquée à la source AVANT la chaîne LOD,
+ * pour que medium/low dérivent du maillage corrigé. */
+const COMPONENT_FIXES = (() => {
+  const file = path.resolve(import.meta.dirname, "../docs/analyses/revue-visuelle/fixes-composantes.json");
+  if (!fs.existsSync(file)) return new Map();
+  return new Map(JSON.parse(fs.readFileSync(file, "utf8")).fixes.map((f) => [f.id, f.minAreaCm2]));
+})();
+
+function dropTinyComponents(geometry, minAreaCm2) {
+  if (!Number.isFinite(minAreaCm2)) return geometry;
+  const { positions, normals, indices } = geometry;
+  const vertexCount = positions.length / 3, triCount = indices.length / 3;
+  if (!triCount) return geometry;
+  const parent = new Int32Array(vertexCount);
+  for (let i = 0; i < vertexCount; i++) parent[i] = i;
+  const find = (x) => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+  const union = (a, b) => { const ra = find(a), rb = find(b); if (ra !== rb) parent[rb] = ra; };
+  for (let t = 0; t < triCount; t++) {
+    union(indices[t * 3], indices[t * 3 + 1]);
+    union(indices[t * 3 + 1], indices[t * 3 + 2]);
+  }
+  const area = new Map();
+  for (let t = 0; t < triCount; t++) {
+    const r = find(indices[t * 3]);
+    const a = indices[t * 3] * 3, b = indices[t * 3 + 1] * 3, c = indices[t * 3 + 2] * 3;
+    const ux = positions[b] - positions[a], uy = positions[b + 1] - positions[a + 1], uz = positions[b + 2] - positions[a + 2];
+    const vx = positions[c] - positions[a], vy = positions[c + 1] - positions[a + 1], vz = positions[c + 2] - positions[a + 2];
+    area.set(r, (area.get(r) || 0) + 0.5 * Math.hypot(uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx));
+  }
+  const keep = new Set([...area.entries()].filter(([, a]) => a * 1e4 >= minAreaCm2).map(([r]) => r));
+  if (keep.size === area.size) return geometry;
+  const kept = [];
+  for (let t = 0; t < triCount; t++) if (keep.has(find(indices[t * 3]))) kept.push(indices[t * 3], indices[t * 3 + 1], indices[t * 3 + 2]);
+  return compact(Uint32Array.from(kept), geometry.positions, geometry.normals);
+}
+
 function makeLod(geometry, targetTriangles) {
   const triangles = geometry.indexCount / 3;
   if (targetTriangles == null || triangles <= targetTriangles) return geometry;
@@ -770,14 +807,18 @@ for (const s of structures) {
    * (`low` > `medium`) quand la simplification s'arrêtait avant la cible :
    * dériver chaque niveau du précédent garantit `low ≤ medium ≤ high`. */
   const cleaned = removeDegenerate(geometry);
-  const oriented = repairOrientation(cleaned);
+  const minArea = COMPONENT_FIXES.get(s.id);
+  const componentFixed = minArea ? dropTinyComponents(cleaned, minArea) : cleaned;
+  const oriented = repairOrientation(componentFixed);
   const deduped = removeDuplicateFaces(oriented);
   const normalsFixed = splitNonManifoldSheets(repairVertexNormals(deduped));
   /* La simplification peut réintroduire des faces dupliquées : on déduplique
    * chaque niveau après simplification, pas seulement la source. */
-  const highGeometry = removeDuplicateFaces(makeLod(normalsFixed, LOD.high.target));
-  const mediumGeometry = removeDuplicateFaces(makeLod(highGeometry, LOD.medium.target));
-  const lowGeometry = removeDuplicateFaces(makeLod(mediumGeometry, LOD.low.target));
+  /* La simplification peut réintroduire de petites composantes : le filtre est
+   * appliqué à chaque niveau, comme la déduplication. */
+  const highGeometry = dropTinyComponents(removeDuplicateFaces(makeLod(normalsFixed, LOD.high.target)), minArea ?? Infinity);
+  const mediumGeometry = dropTinyComponents(removeDuplicateFaces(makeLod(highGeometry, LOD.medium.target)), minArea ?? Infinity);
+  const lowGeometry = dropTinyComponents(removeDuplicateFaces(makeLod(mediumGeometry, LOD.low.target)), minArea ?? Infinity);
   entry.lod.low = writeGeometry(chunks[s.category].low, lowGeometry);
   entry.lod.medium = writeGeometry(chunks[s.category].medium, mediumGeometry);
   entry.lod.high = writeGeometry(chunks[s.category].high, highGeometry);

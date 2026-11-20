@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated": "2026-11-20T01:13:54.357Z",
+  "generated": "2026-11-20T03:08:46.027Z",
   "structures": 2009,
   "samplesPerDirection": 256,
   "medium": {
@@ -46394,8 +46394,8 @@
    "fr": "Pôle temporal",
    "category": "organ",
    "triangles": {
-    "high": 523,
-    "medium": 523,
+    "high": 521,
+    "medium": 521,
     "low": 299
    },
    "medium": {
@@ -46407,10 +46407,10 @@
    },
    "low": {
     "maxMm": 1.0381173064077738,
-    "meanMm": 0.07477933256975342,
+    "meanMm": 0.0744267946671595,
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 1.0381173064077738,
-    "samples": 448
+    "samples": 437
    }
   },
   {
@@ -46418,8 +46418,8 @@
    "fr": "Pôle temporal",
    "category": "organ",
    "triangles": {
-    "high": 523,
-    "medium": 523,
+    "high": 521,
+    "medium": 521,
     "low": 299
    },
    "medium": {
@@ -46431,10 +46431,10 @@
    },
    "low": {
     "maxMm": 1.0381173064077738,
-    "meanMm": 0.07477933256975342,
+    "meanMm": 0.0744267946671595,
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 1.0381173064077738,
-    "samples": 448
+    "samples": 437
    }
   },
   {
