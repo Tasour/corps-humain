@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-21",
+  "item": "Audit des organes manquants du socle Z-Anatomy unique",
+  "methode": "comparaison des manifestes assemblage (2009) et spike mono-source (1438), recherche par identifiant, nom français/anglais/latin et code TA2, puis contrôle manuel des familles critiques",
+  "constats": {
+    "structuresZA": 1438,
+    "organesZA": 544,
+    "organesAssemblage": 1028,
+    "perteOrganes": 484,
+    "perteOrganesPct": 47.1,
+    "couvertureParFamille": {
+      "arteres": { "ZA": 9, "assemblage": 227 },
+      "veines": { "ZA": 2, "assemblage": 103 },
+      "coeur": { "ZA": 0, "assemblage": 12, "note": "ZA ne contient que des ganglions péricardiques et des feuillets coronaires, pas le muscle cardiaque" },
+      "aorte": { "ZA": 0, "assemblage": 8, "note": "ZA ne contient que des ganglions aortiques et des feuillets coronaires" },
+      "pancreas": { "ZA": 0, "assemblage": 8, "note": "ZA ne contient que des ganglions pancréatiques" },
+      "intestin": { "ZA": 4, "assemblage": 19, "note": "duodénum et côlon présents ; jéjunum, iléum et rectum absents" },
+      "reins": { "ZA": 6, "assemblage": 19, "note": "les 6 structures ZA (rein, bassinet, surrénale) sont issues du composant rein CC BY-NC 4.0 et doivent être exclues ; il ne reste alors aucun rein" }
+    }
+  },
+  "gapsCritiques": [
+    "muscle cardiaque (cœur entier)",
+    "aorte",
+    "pancréas",
+    "jéjunum, iléum, rectum",
+    "reins et bassinets (après exclusion NC)",
+    "218 artères et 101 veines de détail"
+  ],
+  "verdict": "BLOQUANT pour l'objectif « tous les os, muscles, organes » avec une seule base : aucun des 12 projets analysés ne fournit une base unique couvrant les trois familles avec ce niveau de détail",
+  "options": [
+    { "id": "A", "description": "Accepter les gaps et documenter explicitement les organes absents", "cout": "objectif « tous les organes » non atteint" },
+    { "id": "B", "description": "Garder l'assemblage multi-sources actuel", "cout": "contrainte « une seule base » non respectée" },
+    { "id": "C", "description": "Choisir BodyParts3D 4.0 seul (CC BY 4.0)", "cout": "environ 566 structures seulement, dont 25 os et 62 muscles : objectif « tous les muscles » non atteint" }
+  ]
+}
