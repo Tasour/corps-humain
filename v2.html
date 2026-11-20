@@ -186,6 +186,19 @@
        border: 1px solid var(--teal); border-radius: 6px; cursor: pointer;
      }
      #wp-copy:hover { background: var(--teal); color: #041b22; }
+     #vues-catalogue .catalogue-group {
+       margin: 10px 0 4px; color: var(--muted); font-size: 11px;
+       letter-spacing: .04em; text-transform: uppercase;
+     }
+     #vues-catalogue .catalogue-item {
+       display: flex; justify-content: space-between; align-items: center; gap: 8px;
+       width: 100%; min-height: 36px; padding: 6px 9px; margin-bottom: 3px;
+       border: 1px solid var(--line); border-radius: 7px; background: transparent;
+       color: var(--ink); font-size: 12px; text-align: left; cursor: pointer;
+     }
+     #vues-catalogue .catalogue-item:hover,
+     #vues-catalogue .catalogue-item:focus-visible { background: var(--teal-soft); }
+     #vues-catalogue .catalogue-item small { color: var(--muted); white-space: nowrap; }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
@@ -331,6 +344,10 @@
         <div class="tree" id="tree" role="group" aria-label="Niveaux anatomiques"></div>
       </div>
       <div class="section"><h2 class="section-title">Accès rapide</h2><div class="chips" id="shortcuts"></div></div>
+      <details class="groups-details" id="vues-details" open>
+        <summary class="section-title">Vues remarquables <span id="vues-count" class="section-count"></span></summary>
+        <div id="vues-catalogue" role="group" aria-label="Catalogue des vues remarquables"></div>
+      </details>
       <div class="section">
         <details id="groups-details" class="groups-details">
           <summary class="section-title">Groupes anatomiques <span id="groups-count" class="section-count"></span></summary>
@@ -1563,6 +1580,48 @@
     }
     window.__v2Stop = stop;
     window.addEventListener('pagehide', stop);
+    /* BENCH-009 — catalogue des vues remarquables, généré depuis les
+     * identifiants curés et le manifeste livré (jamais écrit à la main). */
+    function renderCatalogue() {
+      const groupes = new Map();
+      for (const id of CURATED_IDS) {
+        const s = engine.byId.get(id);
+        if (!s) continue;
+        const systeme = labels[s.category] || s.category;
+        if (!groupes.has(systeme)) groupes.set(systeme, []);
+        groupes.get(systeme).push(s);
+      }
+      let html = '';
+      for (const [systeme, structures] of groupes) {
+        html += `<div class="catalogue-group">${systeme}</div>`;
+        for (const s of structures) {
+          html += `<button type="button" class="catalogue-item" data-vue="${s.id}">${s.fr || s.en}<small>${getWaypoints(s).length} vues</small></button>`;
+        }
+      }
+      document.getElementById('vues-catalogue').innerHTML = html;
+      document.getElementById('vues-count').textContent =
+        `(${[...groupes.values()].reduce((n, a) => n + a.length, 0)})`;
+    }
+
+    document.getElementById('vues-catalogue').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-vue]');
+      if (!btn) return;
+      const structure = engine.byId.get(btn.dataset.vue);
+      if (!structure) return;
+      const url = new URL(location.href);
+      url.searchParams.set('vue', structure.id);
+      url.searchParams.delete('wp');
+      history.replaceState(null, '', url);
+      const waypoints = getWaypoints(structure);
+      selectStructure(structure, true).then(() => {
+        engine.setWaypointsVisible(true);
+        waypointTour = null;
+        showWaypoint(waypoints[0]);
+        needsRender = true;
+        announce(`Vue ${structure.fr || structure.en} — ${waypoints[0].label}`);
+      });
+    });
+
     /* BENCH-001 — deep link ?vue=<identifiant>&wp=<index>. La résolution se
      * fait sur l'identifiant immuable, jamais sur un libellé d'affichage.
      * L'index est borné à la liste réelle du manifeste. */
@@ -1602,6 +1661,7 @@
       }
     });
 
+    renderCatalogue();
     applyDeepLink();
     loop();
     window.__v2 = engine;

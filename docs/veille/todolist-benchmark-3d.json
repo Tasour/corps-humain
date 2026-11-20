@@ -184,8 +184,10 @@
    "dependances": [],
    "verification": "npm run test:waypoints",
    "preuveAttendue": "22 waypoints curés + catalogue",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-009"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-009",
+   "verdict": "OK — 22 vues générées depuis CURATED_IDS, clic -> deep link; 4/4; sidebar desktop +5,61 %",
+   "preuve": "docs/analyses/waypoints/catalogue-2026-11-20.json"
   },
   {
    "id": "BENCH-010",

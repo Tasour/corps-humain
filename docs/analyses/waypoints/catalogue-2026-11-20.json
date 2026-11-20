@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-009",
+  "objectif": "Catalogue « Vues remarquables » généré depuis les identifiants curés, cliquable vers un deep link",
+  "avant": { "commit": "ca2954e", "comportement": " aucun catalogue : les 22 structures curées n'étaient accessibles que par recherche ou par la liste" },
+  "apres": {
+    "generation": "CURATED_IDS ∩ manifeste, regroupé par système, légendes = nombre réel de waypoints",
+    "clic": "met à jour ?vue, retire ?wp, sélectionne la structure et affiche son premier waypoint",
+    "accessibilite": "details ouvert par défaut, boutons 36 px minimum, aria-label sur le groupe"
+  },
+  "captures": {
+    "avant": ["docs/analyses/waypoints/avant-catalogue-sidebar-desktop.png", "docs/analyses/waypoints/avant-catalogue-sidebar-mobile.png"],
+    "apres": ["docs/analyses/waypoints/apres-catalogue-sidebar-desktop.png", "docs/analyses/waypoints/apres-catalogue-sidebar-mobile.png"],
+    "diffs": ["docs/analyses/waypoints/diff-catalogue-sidebar-desktop.png", "docs/analyses/waypoints/diff-catalogue-sidebar-mobile.png"]
+  },
+  "mesures": {
+    "sidebar_desktop_300x1076": { "changedPct": 5.61, "seuilPct": 2, "verdict": "change" },
+    "sidebar_mobile_290x780": { "changedPct": 0.99, "verdict": "localisé sous la ligne de flottaison ; preuve fonctionnelle 4/4" },
+    "page_entiere_desktop_1658x1150": { "changedPct": 0.95 }
+  },
+  "tests": { "catalogue": "4/4 · 22 vues", "deeplink": "5/5", "a11y": "22/22" },
+  "verdict": "OK"
+}
