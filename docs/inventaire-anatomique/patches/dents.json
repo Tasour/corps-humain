@@ -1,0 +1,86 @@
+{
+  "family": "dents",
+  "exclusions": [
+    {
+      "id": "bone:bp-canine-tooth-l",
+      "reason": "Agrégat BodyParts3D : 2 canines (supérieure et inférieure gauches) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-canine-l", "bone:lower-canine-l"]
+    },
+    {
+      "id": "bone:bp-canine-tooth-r",
+      "reason": "Agrégat BodyParts3D : 2 canines (supérieure et inférieure droites) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-canine-r", "bone:lower-canine-r"]
+    },
+    {
+      "id": "bone:bp-incisor-tooth-l",
+      "reason": "Agrégat BodyParts3D : 4 incisives gauches (médiale/latérale, supérieure/inférieure) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-medial-incisor-l", "bone:upper-lateral-incisor-l", "bone:lower-medial-incisor-l", "bone:lower-lateral-incisor-l"]
+    },
+    {
+      "id": "bone:bp-incisor-tooth-r",
+      "reason": "Agrégat BodyParts3D : 4 incisives droites (médiale/latérale, supérieure/inférieure) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-medial-incisor-r", "bone:upper-lateral-incisor-r", "bone:lower-medial-incisor-r", "bone:lower-lateral-incisor-r"]
+    },
+    {
+      "id": "bone:bp-molar-tooth-l",
+      "reason": "Agrégat BodyParts3D : 4 molaires gauches (1re/2e, supérieure/inférieure) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-first-molar-tooth-l", "bone:upper-second-molar-tooth-l", "bone:lower-first-molar-tooth-l", "bone:lower-second-molar-tooth-l"]
+    },
+    {
+      "id": "bone:bp-molar-tooth-r",
+      "reason": "Agrégat BodyParts3D : 4 molaires droites (1re/2e, supérieure/inférieure) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-first-molar-tooth-r", "bone:upper-second-molar-tooth-r", "bone:lower-first-molar-tooth-r", "bone:lower-second-molar-tooth-r"]
+    },
+    {
+      "id": "bone:bp-premolar-tooth-l",
+      "reason": "Agrégat BodyParts3D : 4 prémolaires gauches (1re/2e, supérieure/inférieure) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-first-premolar-l", "bone:upper-second-premolar-l", "bone:lower-first-premolar-l", "bone:lower-second-premolar-l"]
+    },
+    {
+      "id": "bone:bp-premolar-tooth-r",
+      "reason": "Agrégat BodyParts3D : 4 prémolaires droites (1re/2e, supérieure/inférieure) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": ["bone:upper-first-premolar-r", "bone:upper-second-premolar-r", "bone:lower-first-premolar-r", "bone:lower-second-premolar-r"]
+    },
+    {
+      "id": "bone:bp-tooth-l",
+      "reason": "Agrégat BodyParts3D : les 14 dents gauches (incisives, canines, prémolaires et molaires) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": [
+        "bone:upper-medial-incisor-l",
+        "bone:upper-lateral-incisor-l",
+        "bone:upper-canine-l",
+        "bone:upper-first-premolar-l",
+        "bone:upper-second-premolar-l",
+        "bone:upper-first-molar-tooth-l",
+        "bone:upper-second-molar-tooth-l",
+        "bone:lower-medial-incisor-l",
+        "bone:lower-lateral-incisor-l",
+        "bone:lower-canine-l",
+        "bone:lower-first-premolar-l",
+        "bone:lower-second-premolar-l",
+        "bone:lower-first-molar-tooth-l",
+        "bone:lower-second-molar-tooth-l"
+      ]
+    },
+    {
+      "id": "bone:bp-tooth-r",
+      "reason": "Agrégat BodyParts3D : les 14 dents droites (incisives, canines, prémolaires et molaires) fusionnées en un seul maillage. Remplaçants individuels Z-Anatomy présents dans manifest.json et structures.json.",
+      "replacements": [
+        "bone:upper-medial-incisor-r",
+        "bone:upper-lateral-incisor-r",
+        "bone:upper-canine-r",
+        "bone:upper-first-premolar-r",
+        "bone:upper-second-premolar-r",
+        "bone:upper-first-molar-tooth-r",
+        "bone:upper-second-molar-tooth-r",
+        "bone:lower-medial-incisor-r",
+        "bone:lower-lateral-incisor-r",
+        "bone:lower-canine-r",
+        "bone:lower-first-premolar-r",
+        "bone:lower-second-premolar-r",
+        "bone:lower-first-molar-tooth-r",
+        "bone:lower-second-molar-tooth-r"
+      ]
+    }
+  ],
+  "keep": []
+}
