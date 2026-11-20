@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated": "2026-11-20T01:13:37.574Z",
+  "generated": "2026-11-20T01:29:43.047Z",
   "structures": 2009,
   "counts": {
    "S0": 0,
@@ -2398,74 +2398,6 @@
     "148 arêtes libres",
     "23 composantes",
     "17 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:temporal-pole-l",
-   "fr": "Pôle temporal",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "5420",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 523,
-    "boundaryEdges": 31,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 3,
-    "degenerate": 0,
-    "flippedFaces": 6,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 16.94,
-    "edgeP99Mm": 9.178
-   },
-   "captures": null,
-   "blockers": [
-    "31 arêtes libres",
-    "3 composantes",
-    "6 faces inversées",
-    "captures absentes"
-   ]
-  },
-  {
-   "id": "organ:temporal-pole-r",
-   "fr": "Pôle temporal",
-   "category": "organ",
-   "source": "Z-Anatomy",
-   "ta2": "5420",
-   "status": "S1",
-   "closed": true,
-   "gates": {
-    "G0": true,
-    "G2": false,
-    "G3": false
-   },
-   "metrics": {
-    "triangles": 523,
-    "boundaryEdges": 31,
-    "nonManifoldEdges": 0,
-    "duplicateFaces": 0,
-    "components": 3,
-    "degenerate": 0,
-    "flippedFaces": 6,
-    "invertedWinding": false,
-    "zeroNormals": 0,
-    "densityPerCm2": 16.94,
-    "edgeP99Mm": 9.178
-   },
-   "captures": null,
-   "blockers": [
-    "31 arêtes libres",
-    "3 composantes",
-    "6 faces inversées",
     "captures absentes"
    ]
   },
@@ -9326,6 +9258,72 @@
    "blockers": [
     "32 arêtes libres",
     "2 composantes",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "5420",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 521,
+    "boundaryEdges": 25,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 5,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 16.93,
+    "edgeP99Mm": 9.178
+   },
+   "captures": null,
+   "blockers": [
+    "25 arêtes libres",
+    "5 faces inversées",
+    "captures absentes"
+   ]
+  },
+  {
+   "id": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "organ",
+   "source": "Z-Anatomy",
+   "ta2": "5420",
+   "status": "S1",
+   "closed": true,
+   "gates": {
+    "G0": true,
+    "G2": false,
+    "G3": false
+   },
+   "metrics": {
+    "triangles": 521,
+    "boundaryEdges": 25,
+    "nonManifoldEdges": 0,
+    "duplicateFaces": 0,
+    "components": 1,
+    "degenerate": 0,
+    "flippedFaces": 5,
+    "invertedWinding": false,
+    "zeroNormals": 0,
+    "densityPerCm2": 16.93,
+    "edgeP99Mm": 9.178
+   },
+   "captures": null,
+   "blockers": [
+    "25 arêtes libres",
+    "5 faces inversées",
     "captures absentes"
    ]
   },

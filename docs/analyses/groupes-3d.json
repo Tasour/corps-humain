@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-20T01:19:04.783Z",
+  "generated": "2026-11-20T01:31:44.097Z",
   "groups": 43,
   "passed": 52,
   "total": 52,
@@ -597,12 +597,12 @@
     {
       "id": "ui:trapezius",
       "ok": true,
-      "maxExplode": 0.01078041922301054
+      "maxExplode": 0.012936502695083618
     },
     {
       "id": "ui:heart",
       "ok": true,
-      "maxExplode": 0.00859667919576168
+      "maxExplode": 0.010745848529040813
     },
     {
       "id": "console",

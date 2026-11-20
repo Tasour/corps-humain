@@ -26,6 +26,10 @@
    "exclusions": 31,
    "entreesAjoutees": 452,
    "remplacementsVerifies": 31
+  },
+  "vague2": {
+   "fixes": 2,
+   "entreesAjoutees": 25
   }
  },
  "entries": [
@@ -142541,6 +142545,1233 @@
    ],
    "testVisuel": "absence confirmee dans le manifeste ; structures de remplacement presentes",
    "verifiedAt": "2026-11-20T01:14:25.657Z"
+  },
+  {
+   "id": "VIS-01053",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "bloquant",
+   "confidence": "elevee",
+   "description": "Petit morceau flottant au-dessus du corps principal, relie par un fil fin.",
+   "angles": [
+    "dessus"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dessus.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-04203",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "moyenne",
+   "description": "Fine extension en ruban a droite, semble relyee par un fil.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-04205",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Trou visible en bas au centre, le fond sombre apparait entre deux masses.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/face.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-04206",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Trou au centre laissant voir le fond.",
+   "angles": [
+    "dos"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dos.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16964",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Fente/couture visible au milieu de la masse.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16965",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Fine extension en ruban a gauche avec pli au raccord.",
+   "angles": [
+    "droite",
+    "trois-quarts-arriere-droit"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16966",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Coutures visibles sur la face superieure.",
+   "angles": [
+    "dessus"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dessus.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16967",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Fente separant un lambeau sur le cote droit.",
+   "angles": [
+    "trois-quarts-avant-gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16968",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Bords dechires et facettes anguleuses sur toute la surface.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/face.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16969",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Pointe fine et allongee pendant vers le bas.",
+   "angles": [
+    "dos"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dos.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16970",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Facettes apparentes.",
+   "angles": [
+    "droite"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/droite.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16971",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Lambeau fin pendant sous la masse.",
+   "angles": [
+    "dessous"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dessous.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16972",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-l",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Facettes visibles.",
+   "angles": [
+    "trois-quarts-avant-gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-01054",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "bloquant",
+   "confidence": "elevee",
+   "description": "Petit morceau flottant au-dessus du corps principal, relie par un fil fin.",
+   "angles": [
+    "dessus"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dessus.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-04207",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Fente verticale nette en bas au centre, le fond est visible.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/face.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-04208",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "moyenne",
+   "description": "Fine extension en ruban a droite, raccordee par un fil.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-04210",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Trou au centre laissant voir le fond sombre.",
+   "angles": [
+    "dos"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dos.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16973",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Fine extension en ruban a gauche avec pli.",
+   "angles": [
+    "droite"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/droite.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16974",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Coutures visibles sur la face superieure.",
+   "angles": [
+    "dessus"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dessus.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16975",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Lambeau fin et fente sur le cote gauche.",
+   "angles": [
+    "trois-quarts-avant-gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16976",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Fine extension en ruban avec fente au raccord.",
+   "angles": [
+    "trois-quarts-arriere-droit"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16977",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Facettes anguleuses.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/face.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16978",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Pointe fine pendant vers le bas.",
+   "angles": [
+    "dos"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dos.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16979",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Facettes visibles.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/gauche.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-16980",
+   "status": "fait_a_verifier",
+   "subject": "organ:temporal-pole-r",
+   "fr": "Pôle temporal",
+   "category": "geometrie",
+   "gate": "G2",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Lambeau fin pendant sous la masse.",
+   "angles": [
+    "dessous"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dessous.jpg"
+   ],
+   "lots": [
+    203
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantesAvant": 3,
+    "composantesApres": 1
+   },
+   "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
+   "verifiedAt": "2026-11-20T01:29:32.126Z"
   }
  ]
 }

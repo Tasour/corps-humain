@@ -1,0 +1,15 @@
+{
+  "description": "Corrections par suppression de composantes connexes negligeables, validees en revue visuelle (vague 2). Aucune geometrie n'est inventione.",
+  "fixes": [
+    {
+      "id": "organ:temporal-pole-l",
+      "minAreaCm2": 0.5,
+      "reason": "Deux composantes de 0,1 et 0,0 cm2 flottent au-dessus du corps principal (30,8 cm2), reliees par un fil fin : artefacts de segmentation."
+    },
+    {
+      "id": "organ:temporal-pole-r",
+      "minAreaCm2": 0.5,
+      "reason": "Memes artefacts que cote gauche."
+    }
+  ]
+}

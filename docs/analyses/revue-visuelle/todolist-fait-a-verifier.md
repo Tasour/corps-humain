@@ -2226,3 +2226,10 @@ Généré le 2026-11-20. Cause : controls.minDistance = 0,12 m dans le harnais d
 | VIS-01167 | `bone:bp-first-thoracic-vertebra` | 1 | verifie |
 | VIS-01199 | `bone:bp-lumbar-vertebra` | 5 | verifie |
 | VIS-01381 | `bone:bp-thoracic-vertebra` | 12 | verifie |
+
+## Vague 2 — composantes flottantes retirées
+
+2 structures corrigées, 25 entrées ajoutées.
+
+- `organ:temporal-pole-l` — verifie — 8 avant, 8 après
+- `organ:temporal-pole-r` — verifie — 8 avant, 8 après

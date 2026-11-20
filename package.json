@@ -19,6 +19,8 @@
     "revue:verifie": "node scripts/verifier-revue-visuelle.mjs",
     "revue:exclusions": "node scripts/appliquer-exclusions-revue.mjs",
     "revue:verifie-exclusions": "node scripts/verifier-exclusions.mjs",
+    "revue:composantes": "node scripts/post-process-components.mjs",
+    "revue:verifie-composantes": "node scripts/verifier-composantes.mjs",
     "scorecard:3d": "node scripts/scorecard-qualite-3d.mjs",
     "hausdorff:3d": "node scripts/hausdorff-v2.mjs",
     "test:v2": "node tests/v2-tests.mjs",
