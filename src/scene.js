@@ -132,6 +132,11 @@ export class AnatomyScene {
     this.resize();
     this._setVitals(NORMAL_VITALS);
 
+    /* Observabilité du rendu (BENCH-016) : le moniteur et les animations
+     * physiologiques imposent une boucle continue en v1, mais aucun rendu ne
+     * doit être produit quand l'onglet est masqué. */
+    this.renders = 0;
+    this.hiddenFrames = 0;
     this._animate = this._animate.bind(this);
     this.renderer.setAnimationLoop(this._animate);
   }
@@ -1551,6 +1556,12 @@ export class AnatomyScene {
 
   _animate() {
     const dt = Math.min(this.clock.getDelta(), 0.05);
+    if (document.hidden) {
+      /* On consomme le delta pour éviter un saut temporel au retour, sans
+       * avancer la scène ni produire de rendu. */
+      this.hiddenFrames++;
+      return;
+    }
     const t = this.clock.elapsedTime;
 
     if (this.tween) {
@@ -1660,6 +1671,7 @@ export class AnatomyScene {
       }
     }
 
+    this.renders++;
     this.composer.render();
     this.labelRenderer.render(this.scene, this.camera);
 

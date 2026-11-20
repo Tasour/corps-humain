@@ -42,5 +42,7 @@ jobs:
           npm run test:groupes3d
       - name: Zéro requête réseau externe
         run: TEST_BASE=http://localhost:5199 npm run test:reseau
+      - name: Rendu à la demande
+        run: TEST_BASE=http://localhost:5199 npm run test:dirty
       - name: Build
         run: npm run build

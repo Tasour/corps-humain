@@ -275,3 +275,21 @@ Le « 120 fps » est **le taux de rafraîchissement de l'écran** : `frames++` (
 compte les callbacks rAF à 120 Hz tandis que `renderer.render()` (867) est bridé à
 1 image/s en mode lourd (865) — il faut compter les rendus (868–869) et afficher
 `rendus/temps` + `ms/rendu`, puis viser 30 fps plancher sur mobile et 60 sur desktop.
+
+---
+
+## Amendement du 20 novembre 2026 — rendu à la demande (BENCH-016)
+
+Les numéros de lignes ci-dessus sont antérieurs à la réécriture de la boucle.
+
+| Version | Politique | Mesure |
+|---|---|---|
+| v2 (`v2.html`, `needsRender` + signature d'état) | Rendu uniquement quand l'état 3D change ; `document.hidden` → `return` | **0 rendu en 2 s au repos**, **23 rendus après une interaction** |
+| v1 (`src/scene.js`) | Boucle continue assumée : `main.js:84` (`onFrame`) alimente le moniteur LIVE, battement et respiration sont permanents | **10 rendus/s** ; aucun rendu quand `document.hidden` (early-return + `hiddenFrames`) |
+
+L'exemption v1 est documentée : appliquer un dirty flag strict supprimerait le moniteur LIVE,
+ce qui changerait le comportement produit. L'invariant « une seule boucle rAF + pause sur
+onglet caché » est, lui, respecté et mesuré des deux côtés.
+
+Preuve reproductible : `npm run test:dirty` → `docs/analyses/dirty-flag-2026-11-20.json`,
+intégrée à la CI (`qualite-3d.yml`).

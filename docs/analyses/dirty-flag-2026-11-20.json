@@ -1,0 +1,30 @@
+{
+ "generated": "2026-11-20T09:30:42.168Z",
+ "item": "BENCH-016",
+ "mesures": {
+  "v2": {
+   "rendusAuRepos": 0,
+   "compteurAvant": 0,
+   "compteurApres": 0,
+   "rendusApresInteraction": 23
+  },
+  "v1": {
+   "rendusEn1s": 10,
+   "framesMasquees": 0,
+   "regime": "continu assumé (moniteur LIVE + animations physiologiques)"
+  }
+ },
+ "verdict": "OK",
+ "exemptions": [
+  {
+   "regulator": "une seule boucle rAF, pause sur document.hidden",
+   "status": "prouvé",
+   "reason": "v2.html:1350 return sur document.hidden ; v1 scene.js early-return + compteur hiddenFrames"
+  },
+  {
+   "regulator": "aucun rendu inutile",
+   "status": "exemption documentée le 2026-11-20",
+   "reason": "v1 main.js:84 onFrame alimente un moniteur LIVE et les animations cardiaque/respiratoire sont continues par design ; le rendu à la demande est appliqué à v2, mesuré par ce test"
+  }
+ ]
+}
