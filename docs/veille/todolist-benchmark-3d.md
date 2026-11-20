@@ -3,6 +3,7 @@
 Généré le 2026-11-20 à partir du [benchmark](2026-11-20-corps-benchmark.md).
 
 20 idées : **8 P0**, 9 P1, 3 P2. Aucune correction appliquée.
+Plan détaillé de chaque entrée : [plans-benchmark-3d.md](plans-benchmark-3d.md).
 
 | ID | Idée | Source | Cat. | Impact | Effort | Priorité | Niveau | Dépendances | Vérification | Statut |
 |---|---|---|---|---:|---:|---:|---|---|---|---|

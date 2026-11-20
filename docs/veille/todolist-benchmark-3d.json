@@ -26,7 +26,8 @@
    ],
    "verification": "npm run test:v2 + capture avec query",
    "preuveAttendue": "URL partageable ouvrant le bon waypoint",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-001"
   },
   {
    "id": "BENCH-002",
@@ -44,7 +45,8 @@
    "dependances": [],
    "verification": "grep fonts.googleapis analytics dans dist/",
    "preuveAttendue": "Aucune requête externe au chargement",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-002"
   },
   {
    "id": "BENCH-003",
@@ -62,7 +64,8 @@
    "dependances": [],
    "verification": "npm run test:a11y",
    "preuveAttendue": "19/19 contrôles d'accessibilité",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-003"
   },
   {
    "id": "BENCH-004",
@@ -80,7 +83,8 @@
    "dependances": [],
    "verification": "capture 8 angles + npm run test:visuel",
    "preuveAttendue": "Plans de coupe visibles et cadrage stable",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-004"
   },
   {
    "id": "BENCH-005",
@@ -98,7 +102,8 @@
    "dependances": [],
    "verification": "npm run test:groupes3d",
    "preuveAttendue": "52/52 contrôles de groupes",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-005"
   },
   {
    "id": "BENCH-006",
@@ -116,7 +121,8 @@
    "dependances": [],
    "verification": "npm run scorecard:3d + docs/SOURCES-3D.md",
    "preuveAttendue": "2 009 fiches traçables",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-006"
   },
   {
    "id": "BENCH-007",
@@ -134,7 +140,8 @@
    "dependances": [],
    "verification": "npm run lint:claims",
    "preuveAttendue": "Aucune affirmation diagnostique",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-007"
   },
   {
    "id": "BENCH-008",
@@ -152,7 +159,8 @@
    "dependances": [],
    "verification": "npm run audit:3d:check",
    "preuveAttendue": "0 perte d'identité après rebuild",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-008"
   },
   {
    "id": "BENCH-009",
@@ -170,7 +178,8 @@
    "dependances": [],
    "verification": "npm run test:waypoints",
    "preuveAttendue": "22 waypoints curés + catalogue",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-009"
   },
   {
    "id": "BENCH-010",
@@ -190,7 +199,8 @@
    ],
    "verification": "npm run sources:check",
    "preuveAttendue": "21 empreintes + provenance visible",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-010"
   },
   {
    "id": "BENCH-011",
@@ -210,7 +220,8 @@
    ],
    "verification": "npm run test:v2",
    "preuveAttendue": "Visite guidée complète",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-011"
   },
   {
    "id": "BENCH-012",
@@ -230,7 +241,8 @@
    ],
    "verification": "node scripts/check-modele.mjs",
    "preuveAttendue": "0 identité ou licence manquante",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-012"
   },
   {
    "id": "BENCH-013",
@@ -248,7 +260,8 @@
    "dependances": [],
    "verification": "npm run test:chasse",
    "preuveAttendue": "6 modes de reconnaissance",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-013"
   },
   {
    "id": "BENCH-014",
@@ -269,7 +282,8 @@
    ],
    "verification": "npm run build + sitemap",
    "preuveAttendue": "2 009 pages indexables",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-014"
   },
   {
    "id": "BENCH-015",
@@ -287,7 +301,8 @@
    "dependances": [],
    "verification": "capture 8 angles",
    "preuveAttendue": "Étiquettes lisibles sous tous les angles",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-015"
   },
   {
    "id": "BENCH-016",
@@ -305,7 +320,8 @@
    "dependances": [],
    "verification": "profil rAF avant/après",
    "preuveAttendue": "Une seule boucle,帧 inactives à 0",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-016"
   },
   {
    "id": "BENCH-017",
@@ -323,7 +339,8 @@
    "dependances": [],
    "verification": "grep setPixelRatio + capture mobile",
    "preuveAttendue": "DPR <= 2 partout",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-017"
   },
   {
    "id": "BENCH-018",
@@ -343,7 +360,8 @@
    ],
    "verification": "npm run test:groupes3d + profil",
    "preuveAttendue": "Picking exact sans surcoût de draw calls",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-018"
   },
   {
    "id": "BENCH-019",
@@ -361,7 +379,8 @@
    "dependances": [],
    "verification": "capture comparaison",
    "preuveAttendue": "Deux corps alignés",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-019"
   },
   {
    "id": "BENCH-020",
@@ -381,7 +400,8 @@
    ],
    "verification": "acquisition source + validation",
    "preuveAttendue": "Couche thématique sourcée",
-   "statut": "a_faire"
+   "statut": "a_faire",
+   "plan": "plans-benchmark-3d.md#bench-020"
   }
  ]
 }
