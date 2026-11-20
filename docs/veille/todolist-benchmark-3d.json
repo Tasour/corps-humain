@@ -394,8 +394,10 @@
    ],
    "verification": "npm run test:groupes3d + profil",
    "preuveAttendue": "Picking exact sans surcoût de draw calls",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-018"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-018",
+   "verdict": "OK — déjà implémenté et prouvé: carte 787836 vertices, 4 appels de rendu, picking fusionné valide; 4/4",
+   "preuve": "docs/analyses/identity-gpu-2026-11-20.json"
   },
   {
    "id": "BENCH-019",

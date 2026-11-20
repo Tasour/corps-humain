@@ -68,6 +68,8 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:quiz-modes
       - name: Étiquettes ancrées
         run: TEST_BASE=http://localhost:5199 npm run test:labels
+      - name: Identité GPU
+        run: TEST_BASE=http://localhost:5199 npm run test:identity-gpu
       - name: Pages statiques et sitemap
         run: npm run test:pages
       - name: Build

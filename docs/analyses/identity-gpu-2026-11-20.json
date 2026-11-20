@@ -1,0 +1,42 @@
+{
+ "generated": "2026-11-20T14:31:16.061Z",
+ "item": "BENCH-018",
+ "etat": "déjà implémenté dans v2-engine.js ; vérifié et verrouillé par ce test",
+ "mesures": {
+  "structures": 2009,
+  "mergedMode": true,
+  "lots": 6,
+  "vertices": 787836,
+  "couverts": 787836,
+  "invalides": 0,
+  "plages": 2009,
+  "appels": 4,
+  "visibles": 2009
+ },
+ "tests": [
+  {
+   "nom": "carte d'identité par vertex complète",
+   "ok": true
+  },
+  {
+   "nom": "un seul appel de rendu par lot",
+   "ok": true
+  },
+  {
+   "nom": "picking fusionné résout une structure réelle",
+   "ok": true
+  },
+  {
+   "nom": "aucune erreur console",
+   "ok": true
+  }
+ ],
+ "verdict": "OK",
+ "captures": {
+  "avant": "docs/analyses/identity-gpu-avant.png",
+  "apres": "docs/analyses/identity-gpu-apres.png",
+  "diff": "docs/analyses/identity-gpu-diff.png",
+  "changedPct": 0.73,
+  "note": "aucun delta fonctionnel attendu : le mécanisme existait déjà, seul le test de non-régression a été ajouté"
+ }
+}
