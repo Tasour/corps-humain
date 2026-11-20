@@ -54,5 +54,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:coupes
       - name: Éclaté global
         run: TEST_BASE=http://localhost:5199 npm run test:explode
+      - name: Identifiants source stables
+        run: TEST_BASE=http://localhost:5199 npm run test:source-id
       - name: Build
         run: npm run build

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 import { MeshoptSimplifier } from "meshoptimizer";
+import { sourceIdFor } from "./source-id.mjs";
 
 /* Fabrique le jeu de données v2 : 2 202 structures × 3 niveaux de détail.
  * Sources : Z-Anatomy (export complet) + BodyParts3D (human-atlas).
@@ -788,6 +789,7 @@ for (const s of structures) {
   if (!geometry) { missing++; continue; }
   const entry = {
     id: s.id,
+    source_id: sourceIdFor(s),
     fr: s.french,
     en: s.english,
     la: s.latin,

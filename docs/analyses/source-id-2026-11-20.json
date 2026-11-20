@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-008",
+  "objectif": "Identifiant source immuable, distinct du nom exporté, résistante à un rebuild",
+  "avant": {
+    "commit": "e56c46d",
+    "comportement": "les identifiants du manifeste dérivaient du nom canonical ; un deep link avec une clé source était ignoré"
+  },
+  "apres": {
+    "derivation": "za:<objet Z-Anatomy> | bp:<FMA BodyParts3D> | ta2:<code> | canonical:<nom>, suffixé :l/:r pour les côtés",
+    "couverture": "2009/2009 identifiants uniques, générés depuis l'inventaire par scripts/source-id.mjs",
+    "build": "le rebuild (scripts/build-anatomy-v2.mjs) et le post-traitement (scripts/add-source-ids.mjs) partagent la même fonction : aucune dérive possible",
+    "ecriture": "atomique (temporaire + rename), idempotente, contrôle d'unicité avant écriture",
+    "resolution": "engine.resolveId() accepte ID d'affichage ou source_id ; deep links, catalogue et tours l'utilisent"
+  },
+  "preuves": {
+    "sources_check": "21 fichiers vérifiés avant toute modification du manifeste",
+    "idempotence": "2 passages : 2009 ajoutés puis 0 ajouté / 2009 existants",
+    "tests": "5/5 (dont deep link par source_id et résolution double)",
+    "captures": {
+      "avant": ["docs/analyses/source-id-avant-desktop.png", "docs/analyses/source-id-avant-mobile.png"],
+      "apres": ["docs/analyses/source-id-apres-desktop.png", "docs/analyses/source-id-apres-mobile.png"],
+      "diffs": ["docs/analyses/source-id-diff-desktop.png", "docs/analyses/source-id-diff-mobile.png"]
+    },
+    "mesures": { "desktop_1658x1150": 9.94, "mobile_390x844": 47.24 }
+  },
+  "verdict": "OK"
+}

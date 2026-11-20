@@ -624,7 +624,7 @@
       const list = document.getElementById('list');
       list.innerHTML = html;
       list.querySelectorAll('.item').forEach((b) => b.addEventListener('click', () => {
-        const s = engine.byId.get(b.dataset.id);
+        const s = engine.resolveId(b.dataset.id);
         if (s) selectStructure(s, true);
       }));
     }
@@ -721,7 +721,7 @@
       if (node !== tree.root) {
         const level = innerWidth < 820 ? 'medium' : 'high';
         node.ids.slice(0, 20).forEach((id) => {
-          const s = engine.byId.get(id);
+          const s = engine.resolveId(id);
           if (s) engine.setStructureLod(s, level).catch(() => {});
         });
       }
@@ -792,7 +792,7 @@
     function etapeTour(tour, index) {
       if (!tour?.steps?.length) return;
       const step = tour.steps[index];
-      const structure = engine.byId.get(step.id);
+      const structure = engine.resolveId(step.id);
       if (!structure) return;
       const waypoints = getWaypoints(structure);
       const wp = waypoints[Math.min(step.wp, waypoints.length - 1)];
@@ -957,7 +957,7 @@
       const b = document.createElement('button');
       b.textContent = item.label;
       b.addEventListener('click', () => {
-        const s = engine.byId.get(item.select || item.ids[0]);
+        const s = engine.resolveId(item.select || item.ids[0]);
         if (s) selectStructure(s, true);
       });
       shortcutsEl.appendChild(b);
@@ -985,7 +985,7 @@
         document.getElementById('group-actions').style.display = 'flex';
         const level = innerWidth < 820 ? 'medium' : 'high';
         try { await engine.setGroupLod(group, level); } catch { /* garde le LOD courant */ }
-        const members = group.members.map((id) => engine.byId.get(id)).filter(Boolean);
+        const members = group.members.map((id) => engine.resolveId(id)).filter(Boolean);
         const c = members.reduce((acc, s) => {
           const b = s.bounds;
           acc.x += (b.min[0] + b.max[0]) / 2; acc.y += (b.min[1] + b.max[1]) / 2; acc.z += (b.min[2] + b.max[2]) / 2;
@@ -1059,7 +1059,7 @@
     const huntBarFill = document.getElementById('hunt-bar-fill');
 
     const huntPool = HUNT_TARGETS
-      .map((t) => ({ ...t, structure: engine.byId.get(t.id) }))
+      .map((t) => ({ ...t, structure: engine.resolveId(t.id) }))
       .filter((t) => t.structure);
 
     const hunt = {
@@ -1879,7 +1879,7 @@
     function renderCatalogue() {
       const groupes = new Map();
       for (const id of CURATED_IDS) {
-        const s = engine.byId.get(id);
+        const s = engine.resolveId(id);
         if (!s) continue;
         const systeme = labels[s.category] || s.category;
         if (!groupes.has(systeme)) groupes.set(systeme, []);
@@ -1900,7 +1900,7 @@
     document.getElementById('vues-catalogue').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-vue]');
       if (!btn) return;
-      const structure = engine.byId.get(btn.dataset.vue);
+      const structure = engine.resolveId(btn.dataset.vue);
       if (!structure) return;
       arreterTour();
       const url = new URL(location.href);
@@ -1925,7 +1925,7 @@
       const id = params.get('vue');
       arreterTour();
       if (!id) return;
-      const structure = engine.byId.get(id);
+      const structure = engine.resolveId(id);
       if (!structure) {
         announce('Vue inconnue : ouverture de l’atlas complet.');
         return;

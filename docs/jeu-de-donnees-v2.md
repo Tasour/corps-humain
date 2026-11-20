@@ -106,3 +106,27 @@ versionnés car nécessaires à l'application.
 
 BodyParts3D CC BY 4.0 + Z-Anatomy CC BY-SA 4.0 → jeu combiné **CC BY-SA 4.0**.
 Voir `public/models/v2/README.md`.
+
+## Identifiants source (BENCH-008, 20 novembre 2026)
+
+Chaque entrée du manifeste porte désormais un `source_id` immuable, dérivé d'une clé
+de la source d'origine et non du nom d'affichage :
+
+| Priorité | Clé | Forme |
+|---|---|---|
+| 1 | Objet Z-Anatomy | `za:<nom d'objet>` |
+| 2 | Concept BodyParts3D | `bp:<FMA>` |
+| 3 | Code TA2 | `ta2:<code>` |
+| 4 | Nom canonique | `canonical:<nom>` (dernier recours) |
+
+Le côté est suffixé `:l` ou `:r` quand il est explicite. Les 2 009 identifiants
+sont uniques. La dérivation vit dans `scripts/source-id.mjs` et est partagée par
+le rebuild (`build-anatomy-v2.mjs`) et le post-traitement (`add-source-ids.mjs`) :
+un rebuild ne peut donc pas faire dériver ces identifiants.
+
+`engine.resolveId()` accepte l'ID d'affichage **ou** le `source_id`. Les deep links
+`?vue=…`, le catalogue des vues et les tours guidés l'utilisent : un lien partagé
+reste valable même si le libellé d'une structure change.
+
+Le post-traitement est idempotent et atomique : `npm run models:source-ids`.
+Vérification : `npm run test:source-id` et `docs/analyses/source-id-2026-11-20.json`.

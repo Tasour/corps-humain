@@ -169,8 +169,10 @@
    "dependances": [],
    "verification": "npm run audit:3d:check",
    "preuveAttendue": "0 perte d'identité après rebuild",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-008"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-008",
+   "verdict": "OK — 2009 source_id uniques et dérivés de l’inventaire, resolveId double, deep link stable; 5/5; captures 9,94 % / 47,24 %",
+   "preuve": "docs/analyses/source-id-2026-11-20.json"
   },
   {
    "id": "BENCH-009",

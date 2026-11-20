@@ -307,6 +307,7 @@ export class AnatomyV2Engine {
     this.manifest = null;
     this.structures = [];
     this.byId = new Map();
+    this.bySourceId = new Map();
     this.batches = new Map();
     this.mergedMeshes = new Map();
     this.explodeAmount = 0;
@@ -351,6 +352,14 @@ export class AnatomyV2Engine {
     this.projScreen = new THREE.Matrix4();
     this.ready = false;
     this.stats = { structures: 0, triangles: 0, drawCalls: 0 };
+  }
+
+  /* Résout indifféremment l'ID d'affichage ou l'identifiant source immuable
+   * (BENCH-008). Le premier conserve la priorité pour ne pas casser les liens
+   * déjà partagés. */
+  resolveId(id) {
+    if (id === null || id === undefined) return null;
+    return this.byId.get(id) || this.bySourceId.get(id) || null;
   }
 
   async load(onProgress = () => {}) {
@@ -410,6 +419,7 @@ export class AnatomyV2Engine {
         min[0], min[1], min[2], max[0], max[1], max[2],
       );
       this.byId.set(structure.id, structure);
+      if (structure.source_id) this.bySourceId.set(structure.source_id, structure);
       idx++;
     }
     this.index.build(8);

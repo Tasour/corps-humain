@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-20T11:31:14.299Z",
+  "generated": "2026-11-20T11:59:41.536Z",
   "groups": 43,
   "passed": 52,
   "total": 52,
@@ -577,7 +577,7 @@
     {
       "id": "ui:jaw",
       "ok": true,
-      "maxExplode": 0.012413903139531612
+      "maxExplode": 0.008275935426354408
     },
     {
       "id": "ui:spine",
@@ -587,7 +587,7 @@
     {
       "id": "ui:biceps-l",
       "ok": true,
-      "maxExplode": 0.011953983455896378
+      "maxExplode": 0.013946314342319965
     },
     {
       "id": "ui:quadriceps-l",
