@@ -20,6 +20,7 @@
 - `vagues/00.md` — bilan de la vague 0 (artefact de cadrage du harnais).
 - `vagues/01.md` — bilan de la vague 1 (31 agrégats exclus, 2 009 structures).
 - `vagues/02.md` — bilan de la vague 2 (composantes flottantes retirées sur 2 structures).
+- `vagues/03-05.md` — état des 16 427 entrées restantes et raisons de non-correction.
 - `todolist.json` — machine-readable : `summary` (couverture, compteurs, limites) et
   `entries` (id `VIS-xxxxx`, statut `a_faire`, structure, catégorie, porte G0–G8, sévérité,
   confiance, description, angles, preuves avec chemin absolu).
