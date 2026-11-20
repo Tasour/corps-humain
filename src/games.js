@@ -132,7 +132,7 @@ export class DiagnosticGame {
     container.innerHTML = `
       <div class="quiz-head">
         <div>
-          <span class="tag teal">MODE DIAGNOSTIC</span>
+          <span class="tag teal">PATHOLOGIES SIMULÉES</span>
           <h2>Cas clinique</h2>
         </div>
         <button class="icon-btn" data-quiz-exit aria-label="Quitter">✕</button>
@@ -158,7 +158,7 @@ export class DiagnosticGame {
         </div>
       </div>
 
-      <p class="quiz-question">Quel diagnostic retenez-vous ?</p>
+      <p class="quiz-question">Quelle affection est décrite ?</p>
       <div class="options">${optionHtml}</div>
 
       ${

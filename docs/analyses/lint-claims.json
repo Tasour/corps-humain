@@ -1,0 +1,21 @@
+{
+ "generated": "2026-11-20T13:36:59.159Z",
+ "root": "/home/tasour/corps-humain",
+ "cibles": 9,
+ "exemptions": [
+  {
+   "fichier": "src/data/diseases.js",
+   "raison": "contenu de pathologies simulées, explicitement intitulé comme tel dans l'interface"
+  }
+ ],
+ "regles": [
+  "verbe-diagnostique",
+  "outil-diagnostique",
+  "affirmation-patient",
+  "fiabilite",
+  "remplacement-medical",
+  "traitement"
+ ],
+ "constats": [],
+ "verdict": "OK"
+}

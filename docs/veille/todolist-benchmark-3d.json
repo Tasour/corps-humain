@@ -152,8 +152,10 @@
    "dependances": [],
    "verification": "npm run lint:claims",
    "preuveAttendue": "Aucune affirmation diagnostique",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-007"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-007",
+   "verdict": "OK — lint 6 règles sur 9 fichiers, négation acceptée, détection négative prouvée; bouton renommé",
+   "preuve": "docs/analyses/lint-claims-2026-11-20.json"
   },
   {
    "id": "BENCH-008",

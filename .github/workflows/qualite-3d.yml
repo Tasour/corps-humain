@@ -35,6 +35,8 @@ jobs:
         run: |
           npm run scorecard:3d
           npm run hausdorff:3d
+      - name: Affirmations médicales
+        run: npm run lint:claims
       - name: Tests données
         run: npm test
       - name: Tests 3D, a11y et groupes

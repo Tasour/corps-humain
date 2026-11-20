@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-007",
+  "objectif": "Garde-fou CI contre les affirmations diagnostiques ou promotionnelles",
+  "avant": {
+    "commit": "1cd4cab",
+    "comportement": "posture pédagogique dans les textes mais aucun contrôle automatique ; bouton v1 intitulé « Mode diagnostic »"
+  },
+  "apres": {
+    "regles": ["verbe-diagnostique", "outil-diagnostique", "affirmation-patient", "fiabilite", "remplacement-medical", "traitement"],
+    "portee": "9 fichiers sources user-facing ; négation (« sans », « ne pas », « ni ») acceptée ; src/data/diseases.js exempté et documenté comme contenu simulé",
+    "controles_positifs": "index.html et v2.html doivent conserver un avertissement pédagogique",
+    "renommages": "« Mode diagnostic » → « Pathologies simulées » (bouton v1 et tag du quiz), « Quel diagnostic retenez-vous ? » → « Quelle affection est décrite ? »",
+    "integration": "npm run lint:claims en CI avant les tests données"
+  },
+  "preuves": {
+    "lint": "OK — 9 fichiers, 0 constat",
+    "negatif": "affirmation injectée dans une copie → exit 1, verdict ECHEC ; formulation niée acceptée",
+    "captures": {
+      "avant": ["docs/analyses/claims-avant-desktop.png", "docs/analyses/claims-avant-mobile.png"],
+      "apres": ["docs/analyses/claims-apres-desktop.png", "docs/analyses/claims-apres-mobile.png"],
+      "diffs": ["docs/analyses/claims-diff-desktop.png", "docs/analyses/claims-diff-mobile.png"]
+    },
+    "mesures": { "desktop_top_actions": 17.44, "mobile_page_entiere": 0.16 }
+  },
+  "verdict": "OK"
+}
