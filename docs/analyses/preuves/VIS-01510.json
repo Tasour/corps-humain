@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01510",
+ "subject": "bone:distal-phalanx-of-fourth-finger-of-hand-l",
+ "claim": "Silhouette en coins, sans touffe apicale distincte.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "Wikipedia — Phalanx bone (distal phalanx)",
+   "url": "https://en.wikipedia.org/wiki/Distal_phalange",
+   "id": "",
+   "license": "CC BY-SA",
+   "accessed": "2026-11-20",
+   "excerpt": "In the hand the flat wide expansions at the tips are apical tufts supporting fingertip pads and nails."
+  },
+  {
+   "name": "AO Surgery Reference — Distal phalanx anatomy",
+   "url": "https://surgeryreference.aofoundation.org/orthopedic-trauma/adult-trauma/thumb/distal-phalanx-distal-and-shaft-multifragmentary/definition",
+   "id": "",
+   "license": "AO Foundation (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "The distal phalanx is divided into base, diaphysis (waist) and ungual tuberosity (tuft)."
+  }
+ ],
+ "reasoning": "La phalange distale de la main se termine par une touffe apicale (apical tuft / ungual tuberosity) soutenant l'onglet et la pulpe.",
+ "recommendation": "Documenter comme limite de résolution.",
+ "recordedAt": "2026-11-20T05:13:31.442Z"
+}

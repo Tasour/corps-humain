@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01076",
+ "subject": "bone:axis-c2",
+ "claim": "Aucune épineuse bifide visible sur cette face.",
+ "verdict": "a_valider",
+ "confidence": "moyenne",
+ "sources": [
+  {
+   "name": "Kenhub — Axis (C2)",
+   "url": "https://www.kenhub.com/en/library/anatomy/axis",
+   "id": "FMA12520",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "Posteriorly the axis contains two thick laminae and a large, often bifid, spinous process."
+  },
+  {
+   "name": "Radiopaedia via pacs.de — Axis (C2)",
+   "url": "https://pacs.de/term/axis-c2",
+   "id": "FMA12520",
+   "license": "CC BY-NC-SA 3.0",
+   "accessed": "2026-11-20",
+   "excerpt": "A large spinous process, which is commonly bifid; variant anatomy includes bifid spinous process (common) and non-bifid forms."
+  }
+ ],
+ "reasoning": "L'épineuse de C2 est généralement large et bifide, mais des formes non bifides existent ; une seule face ne permet pas de conclure.",
+ "recommendation": "Conserver a_valider ; vérifier les 8 angles.",
+ "recordedAt": "2026-11-20T05:13:31.441Z"
+}

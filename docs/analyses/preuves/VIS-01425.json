@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01425",
+ "subject": "bone:costal-cartilage-of-seventh-rib-r",
+ "claim": "Éperon et encoche visibles, silhouette bifide à confirmer.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "Wikipedia — Costal cartilage",
+   "url": "https://en.wikipedia.org/wiki/Costal_cartilage",
+   "id": "",
+   "license": "CC BY-SA",
+   "accessed": "2026-11-20",
+   "excerpt": "The inferior borders of the 6th, 7th, 8th and 9th cartilages present heel-like projections with facets articulating with the cartilages below."
+  },
+  {
+   "name": "IMAIOS e-Anatomy — Costal cartilage",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/costal-cartilage-1152724",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "The inferior borders of the sixth to ninth cartilages present projections with smooth oblong facets."
+  }
+ ],
+ "reasoning": "Les cartilages costaux 6 à 9 présentent des projections avec facettes pour les articulations interchondrales ; une silhouette bifide est anatomiquement attendue.",
+ "recommendation": "Accepter la morphologie ; pas de correction.",
+ "recordedAt": "2026-11-20T05:13:31.442Z"
+}

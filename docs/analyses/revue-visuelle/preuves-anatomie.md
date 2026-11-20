@@ -22,5 +22,18 @@ dans `docs/analyses/preuves/VIS-xxxxx.json` et indexees dans `preuves/index.md`.
 substituent pas une revue anatomique humaine. Les verdicts `confirme` signalent des ecarts
 reels, pas des corrections a appliquer aveuglement.
 
-Les 1 040 autres questions restent dans `todolist-active.md`. Le prochain lot peut etre lance
-avec `/source-anatomique` ou l'agent `anatomie-web`.
+## Vague 2 — 12 questions supplémentaires
+
+Un deuxième lot de 12 preuves a été écrit le même jour (index `preuves/index.md`) :
+
+- **1 infirmé** : `VIS-01377` — les « cupules ovales » du sternum sont des incisures costales normales.
+- **1 à valider** : `VIS-01076` — l'épineuse de C2 est généralement bifide mais des variantes non bifides existent ; une seule vue ne suffit pas.
+- **10 confirmés** : côtes flottantes non aplaties, cuboïdes sans rainure/surfaces articulaires, phalanges distales des pieds et mains sans tubérosité unguéale, cartilage costal 7 bifide attendu. Tous sont des **limites de résolution des sources**, pas des erreurs d'anatomie à corriger aveuglément.
+
+**Aucune géométrie modifiée.** Les 24 preuves écrites à ce jour couvrent 24 des 1 052 questions `anatomie_a_valider`. Les autres restent dans `todolist-active.md`.
+
+Le prochain lot peut être lancé avec `/source-anatomique` ou l'agent `anatomie-web`.
+
+---
+
+*Annexe ajoutée le 20 novembre 2026 (deuxième vague de preuves).*

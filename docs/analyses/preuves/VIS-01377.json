@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01377",
+ "subject": "bone:bp-sternum",
+ "claim": "Profil avec multiples cupules ovales.",
+ "verdict": "infirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "IMAIOS e-Anatomy — Costal notches",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/costal-notches-1152596",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "Costal notches are indentations on the lateral borders of the sternum for the costal cartilages."
+  },
+  {
+   "name": "Kenhub — Sternocostal joints",
+   "url": "https://www.kenhub.com/en/library/anatomy/sternocostal-joints",
+   "id": "",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "The costal notches appear as shallow concave depressions on the lateral border of the sternum."
+  }
+ ],
+ "reasoning": "Les dépressions du bord latéral sont des incisures costales normales, pas des cupules pathologiques.",
+ "recommendation": "Annoter la fiche ; aucune correction de géométrie.",
+ "recordedAt": "2026-11-20T05:13:31.442Z"
+}
