@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-20T16:42:14.841Z",
+ "generated": "2026-11-20T23:38:16.100Z",
  "item": "BENCH-018",
  "etat": "déjà implémenté dans v2-engine.js ; vérifié et verrouillé par ce test",
  "mesures": {
   "structures": 2009,
   "mergedMode": true,
   "lots": 6,
-  "vertices": 787836,
-  "couverts": 787836,
+  "vertices": 787832,
+  "couverts": 787832,
   "invalides": 0,
   "plages": 2009,
   "appels": 4,

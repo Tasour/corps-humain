@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-20T12:57:59.666Z",
+  "generated": "2026-11-20T23:36:52.071Z",
   "groups": 43,
   "passed": 52,
   "total": 52,
@@ -577,7 +577,7 @@
     {
       "id": "ui:jaw",
       "ok": true,
-      "maxExplode": 0.008275935426354408
+      "maxExplode": 0.010344918817281723
     },
     {
       "id": "ui:spine",

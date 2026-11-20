@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-21",
+  "item": "Bascule vers les données du rebuild canonique",
+  "source": "worktree /home/tasour/.cache/corps-rebuild-propre, séquence prouvée byte-identique par rebuild:verify",
+  "fichiersBascule": [
+    "public/models/v2/manifest.json",
+    "12 chunks .bin.gz",
+    "public/data/fiches-verite.json",
+    "public/data/licenses.json",
+    "public/sitemap.xml",
+    "public/robots.txt",
+    "public/structures/ (2009 pages + index)"
+  ],
+  "verificationCopie": "0 fichier divergent entre le worktree canonique et public/ après copie",
+  "mesures": {
+    "avant": { "structures": 2009, "os": 286, "muscles": 695, "organes": 1028, "appelsRendu": 4, "trianglesRendus": 816805 },
+    "apres": { "structures": 2009, "os": 286, "muscles": 695, "organes": 1028, "appelsRendu": 4, "trianglesRendus": 816805 },
+    "captures8AnglesChangedPct": [0.02, 0, 0, 0, 0.08, 0, 0, 0]
+  },
+  "gates": {
+    "npm test": "vert",
+    "a11y": "22/22",
+    "v2": "30/30",
+    "groupes3d": "52/52",
+    "deeplink": "5/5",
+    "catalogue": "4/4",
+    "tour": "7/7",
+    "coupes": "7/7",
+    "explode": "6/6",
+    "source-id": "5/5",
+    "fiches": "5/5",
+    "licences": "5/5",
+    "labels": "5/5",
+    "quiz-modes": "8/8",
+    "identity-gpu": "4/4",
+    "reseau": "0 externe",
+    "dirty": "0 rendu au repos",
+    "check:modele": "0 anomalie",
+    "lint:claims": "0 constat",
+    "test:pages": "2009 pages",
+    "build": "OK"
+  },
+  "interpretation": "L'écart visuel quasi nul confirme que la bascule remplace la recette de production sans changer l'apparence : seules les métadonnées LOD des muscles issues de l'ancien pipeline disparaissent au profit de la séquence canonique reproductible.",
+  "verdict": "OK"
+}
