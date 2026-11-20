@@ -1,0 +1,50 @@
+{
+  "family": "mains-pieds",
+  "exclusions": [
+    {
+      "id": "bone:bp-metacarpal-bone-l",
+      "reason": "Agrégat BodyParts3D (FMA9612, 5 parties, onlyInBodyParts3D=true) fusionnant les cinq métacarpiens gauches en un seul maillage. Les cinq os individuels existent dans manifest.json (géométrie Z-Anatomy) et dans structures.json ; l'agrégat est donc redondant et ferait double comptage. Remplacé par les cinq individus.",
+      "replacements": [
+        "bone:first-metacarpal-bone-l",
+        "bone:second-metacarpal-bone-l",
+        "bone:third-metacarpal-bone-l",
+        "bone:fourth-metacarpal-bone-l",
+        "bone:fifth-metacarpal-bone-l"
+      ]
+    },
+    {
+      "id": "bone:bp-metacarpal-bone-r",
+      "reason": "Agrégat BodyParts3D (FMA9612, 5 parties, onlyInBodyParts3D=true) fusionnant les cinq métacarpiens droits en un seul maillage. Les cinq os individuels existent dans manifest.json (géométrie Z-Anatomy) et dans structures.json ; l'agrégat est donc redondant et ferait double comptage. Remplacé par les cinq individus.",
+      "replacements": [
+        "bone:first-metacarpal-bone-r",
+        "bone:second-metacarpal-bone-r",
+        "bone:third-metacarpal-bone-r",
+        "bone:fourth-metacarpal-bone-r",
+        "bone:fifth-metacarpal-bone-r"
+      ]
+    },
+    {
+      "id": "bone:bp-metatarsal-bone-l",
+      "reason": "Agrégat BodyParts3D (FMA24492, 5 parties, onlyInBodyParts3D=true) fusionnant les cinq métatarsiens gauches en un seul maillage. Les cinq os individuels existent dans manifest.json (géométrie Z-Anatomy) et dans structures.json ; l'agrégat est donc redondant et ferait double comptage. Remplacé par les cinq individus.",
+      "replacements": [
+        "bone:first-metatarsal-bone-l",
+        "bone:second-metatarsal-bone-l",
+        "bone:third-metatarsal-bone-l",
+        "bone:fourth-metatarsal-bone-l",
+        "bone:fifth-metatarsal-bone-l"
+      ]
+    },
+    {
+      "id": "bone:bp-metatarsal-bone-r",
+      "reason": "Agrégat BodyParts3D (FMA24492, 5 parties, onlyInBodyParts3D=true) fusionnant les cinq métatarsiens droits en un seul maillage. Les cinq os individuels existent dans manifest.json (géométrie Z-Anatomy) et dans structures.json ; l'agrégat est donc redondant et ferait double comptage. Remplacé par les cinq individus.",
+      "replacements": [
+        "bone:first-metatarsal-bone-r",
+        "bone:second-metatarsal-bone-r",
+        "bone:third-metatarsal-bone-r",
+        "bone:fourth-metatarsal-bone-r",
+        "bone:fifth-metatarsal-bone-r"
+      ]
+    }
+  ],
+  "keep": []
+}
