@@ -66,8 +66,10 @@
    "dependances": [],
    "verification": "npm run test:a11y",
    "preuveAttendue": "19/19 contrôles d'accessibilité",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-003"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-003",
+   "verdict": "OK — radiogroup sur filtre v1 et sélection v2; vraies bascules conservées; test:a11y 19/19 → 21/21",
+   "preuve": "docs/analyses/accessibilite-2026-11-19.md#8-amendement-du-20-novembre-2026--choix-exclusifs-bench-003"
   },
   {
    "id": "BENCH-004",

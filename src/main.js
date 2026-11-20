@@ -262,7 +262,10 @@ function renderLeft() {
   listCount.textContent = `${total} résultat${total > 1 ? "s" : ""}`;
 
   document.querySelectorAll("#kind-filter .seg").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.kind === state.kind);
+    const checked = btn.dataset.kind === state.kind;
+    btn.classList.toggle("active", checked);
+    btn.setAttribute("aria-checked", String(checked));
+    btn.tabIndex = checked ? 0 : -1;
   });
 }
 
@@ -663,11 +666,28 @@ systemFilter.addEventListener("click", (e) => {
   renderLeft();
 });
 
-document.querySelector("#kind-filter").addEventListener("click", (e) => {
+const kindFilter = document.querySelector("#kind-filter");
+kindFilter.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-kind]");
   if (!btn) return;
   state.kind = btn.dataset.kind;
   renderLeft();
+});
+/* Choix unique : navigation flèches/Home/End avec tabindex mobile (roving),
+ * conformément au motif radiogroup plutôt qu'à une succession de bascules. */
+kindFilter.addEventListener("keydown", (e) => {
+  const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+  if (!keys.includes(e.key)) return;
+  const buttons = [...kindFilter.querySelectorAll("[data-kind]")];
+  const current = buttons.indexOf(document.activeElement);
+  if (current < 0) return;
+  const next = e.key === "Home" ? 0
+    : e.key === "End" ? buttons.length - 1
+    : e.key === "ArrowLeft" || e.key === "ArrowUp" ? (current - 1 + buttons.length) % buttons.length
+    : (current + 1) % buttons.length;
+  e.preventDefault();
+  buttons[next].focus();
+  buttons[next].click();
 });
 
 organList.addEventListener("click", (e) => {

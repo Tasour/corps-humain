@@ -92,11 +92,11 @@
           <span>Explorer</span>
           <span id="list-count" class="count"></span>
         </div>
-        <div class="segmented" id="kind-filter">
-          <button class="seg active" data-kind="organ">Organes</button>
-          <button class="seg" data-kind="bone">Os</button>
-          <button class="seg" data-kind="muscle">Muscles</button>
-          <button class="seg" data-kind="all">Tout</button>
+        <div class="segmented" id="kind-filter" role="radiogroup" aria-label="Filtrer par type de structure">
+          <button class="seg active" role="radio" aria-checked="true" tabindex="0" data-kind="organ">Organes</button>
+          <button class="seg" role="radio" aria-checked="false" tabindex="-1" data-kind="bone">Os</button>
+          <button class="seg" role="radio" aria-checked="false" tabindex="-1" data-kind="muscle">Muscles</button>
+          <button class="seg" role="radio" aria-checked="false" tabindex="-1" data-kind="all">Tout</button>
         </div>
         <div id="organ-list" class="organ-list"></div>
         <div class="panel-foot">

@@ -1,6 +1,7 @@
 # Accessibilité et responsive — atlas CORPS v2
 
-Date : 19 novembre 2026 · Page : `/v2.html` · Preuve : `npm run test:a11y` → **19/19**,
+Date : 19 novembre 2026 · Mis à jour le 20 novembre 2026 (BENCH-003) ·
+Page : `/v2.html` · Preuve : `npm run test:a11y` → **21/21**,
 `npm run test:v2` → **30/30**. Captures : `docs/analyses/a11y/`.
 
 Ce document ne décrit pas des intentions mais des mesures : les contrastes sont calculés
@@ -36,7 +37,7 @@ Le thème sombre était déjà conforme (6,24 à 13,25:1) : aucune modification.
 | Contrôle | Attribut | Vérification |
 |---|---|---|
 | Couches Peau/Os/Muscles/Organes | `aria-pressed` | suit la classe `active` avant et après clic |
-| Item de la liste | `aria-pressed` | un seul item actif, remis à `false` à `Échap` |
+| Item de la liste | `role="radio"` + `aria-checked` | un seul item coché, `tabindex` mobile, flèches, remis à `false` à `Échap` |
 | Tour du monde | `aria-pressed` | reflète l'état de rotation |
 | Tiroir mobile | `aria-expanded` + `aria-controls` | `false` → `true` → `false` |
 | Nœuds de l'arbre | `aria-expanded` | présent sur les nœuds qui descendent d'un niveau |
@@ -93,3 +94,24 @@ l'utilisateur, pas automatiques.
 - Le HUD de performance est masqué aux lecteurs d'écran (`aria-hidden`) mais reste visible.
 - Les waypoints 3D ne sont pas atteignables au clavier individuellement : `Entrée` donne
   accès à la structure, pas à chaque point d'intérêt.
+
+## 8. Amendement du 20 novembre 2026 — choix exclusifs (BENCH-003)
+
+Le benchmark concurrentiel signalait l'anti-pattern `aria-pressed` sur des modes mutuellement
+exclusifs (observé chez LearnAnatomy3D). L'audit du code CORPS nuance le constat : les boutons
+`[data-cat]` de v2 sont de **vraies bascules indépendantes** (plusieurs calques peuvent être
+visibles en même temps), donc `aria-pressed` y est correct et a été conservé, de même que le
+thème, l'explode, la coupe, l'isolement, la comparaison, la chasse et le tour.
+
+Deux choix réellement exclusifs ont été corrigés :
+
+| Contrôle | Avant | Après |
+|---|---|---|
+| Filtre de type v1 (`#kind-filter`) | `.seg.active` seule, aucun attribut ARIA | `role="radiogroup"`, `role="radio"`, `aria-checked`, `tabindex` mobile, flèches `← → ↑ ↓`, `Début`, `Fin` |
+| Sélection de structure v2 (`#list`) | `aria-pressed` sur chaque item | `role="radiogroup"` sur le conteneur, `role="radio"` + `aria-checked` sur les items, `tabindex` mobile, flèches `↑ ↓`, `Début`, `Fin` |
+
+Preuve : `npm run test:a11y` passe de **19/19 à 21/21** (deux nouveaux cas : un seul coché par
+groupe et navigation par flèches, sur v1 et v2). Suite complète verte : `npm test`,
+`npm run test:v2` (30/30), `npm run test:groupes3d` (52/52), `npm run test:a11y` (21/21),
+`npm run test:reseau` (0 requête externe). Aucune capture visuelle n'était nécessaire : le
+changement est purement sémantique et n'altère pas le rendu.

@@ -331,7 +331,7 @@
           <div class="chips" id="groups" role="group" aria-label="Groupes anatomiques animés"></div>
         </details>
       </div>
-      <div class="section"><h2 class="section-title">Explorer <span id="list-total"></span></h2><div id="list" role="group" aria-label="Structures anatomiques"></div></div>
+      <div class="section"><h2 class="section-title">Explorer <span id="list-total"></span></h2><div id="list" role="radiogroup" aria-label="Structures anatomiques"></div></div>
     </aside>
 
     <main class="viewport" id="viewport" tabindex="-1" aria-label="Vue 3D du corps humain">
@@ -514,7 +514,7 @@
         for (const s of items) {
           const side = s.side === 'left' ? ' · G' : s.side === 'right' ? ' · D' : '';
           const pressed = selected === s;
-          html += `<button type="button" class="item${pressed ? ' active' : ''}" data-id="${s.id}" aria-pressed="${pressed}">${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
+          html += `<button type="button" role="radio" class="item${pressed ? ' active' : ''}" data-id="${s.id}" aria-checked="${pressed}" tabindex="${pressed ? 0 : -1}">${s.fr || s.en}${side}<small>${s.ta2 || ''}</small></button>`;
         }
       }
       if (!matches.length) html = '<div class="group">Aucun résultat</div>';
@@ -772,12 +772,29 @@
       document.querySelectorAll('#list .item').forEach((el) => {
         const on = el.dataset.id === structure.id;
         el.classList.toggle('active', on);
-        el.setAttribute('aria-pressed', String(on));
+        el.setAttribute('aria-checked', String(on));
+        el.tabIndex = on ? 0 : -1;
       });
     }
 
     document.getElementById('search').addEventListener('input', renderList);
     renderList();
+    /* La liste est un radiogroup : une seule structure cochée, avec
+     * navigation flèches/Début/Fin et tabindex mobile (roving). */
+    document.getElementById('list').addEventListener('keydown', (e) => {
+      const keys = ['ArrowDown', 'ArrowUp', 'Home', 'End'];
+      if (!keys.includes(e.key)) return;
+      const items = [...document.querySelectorAll('#list .item')];
+      const current = items.indexOf(document.activeElement);
+      if (current < 0 || !items.length) return;
+      const next = e.key === 'Home' ? 0
+        : e.key === 'End' ? items.length - 1
+        : e.key === 'ArrowUp' ? (current - 1 + items.length) % items.length
+        : (current + 1) % items.length;
+      e.preventDefault();
+      items[next].focus();
+      items[next].click();
+    });
     /* Raccourcis et groupes. */
     const shortcutsEl = document.getElementById('shortcuts');
     for (const item of QUICK_ACCESS) {
@@ -1284,9 +1301,10 @@
           document.getElementById('sel-name').textContent = 'Cliquez sur une structure';
           document.getElementById('sel-meta').textContent = 'ou choisissez-la dans la liste';
           document.getElementById('detail-meta').innerHTML = '';
-          document.querySelectorAll('#list .item').forEach((el) => {
+          document.querySelectorAll('#list .item').forEach((el, i) => {
             el.classList.remove('active');
-            el.setAttribute('aria-pressed', 'false');
+            el.setAttribute('aria-checked', 'false');
+            el.tabIndex = i === 0 ? 0 : -1;
           });
           announce('Sélection effacée.');
           e.preventDefault();
