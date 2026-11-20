@@ -80,7 +80,8 @@ logs filtres sur `corps.research`.
   `npm run test:v2`, `npm run test:a11y`, `npm run test:groupes3d`, `npm run test:visuel`.
 - CI : **restaurée**. Le workflow `.github/workflows/qualite-3d.yml` (porte qualité : baseline
   topologique, scorecard/écart LOD, tests données, tests 3D/a11y/groupes, build ; navigateur
-  Playwright installé via `npx playwright install --with-deps chromium`) a été poussé
+  Playwright installé via `npx playwright install --with-deps chromium`, serveur Vite de test
+  démarré sur le port 5199) a été poussé
   via un **push SSH explicite** (`git push git@github.com:Tasour/corps-humain.git main`), car le
   token OAuth local n'a pas le `workflow` scope requis par GitHub pour pousser
   `.github/workflows/*` via le remote HTTPS `origin`. Le token reste dans le keyring, aucun
