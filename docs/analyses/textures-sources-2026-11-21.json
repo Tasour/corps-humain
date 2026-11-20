@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-21",
+  "item": "Sources CC0 pour textures tissulaires réalistes",
+  "methode": "recherche ciblée + API Poly Haven/ambientCG + lecture des pages 3dtextures.me et de leur licence CC0",
+  "sourcesVerifiees": [
+    {
+      "nom": "Bone 001",
+      "url": "https://3dtextures.me/2016/05/21/bone-001/",
+      "licence": "CC0 (page F.A.Q. du site, consultée le 2026-11-21)",
+      "maps": ["Diffuse", "Normal", "Displacement", "Specularity", "AO"],
+      "resolution": "2048",
+      "telechargement": " lien Google Drive présent sur la page",
+      "statut": "licence prouvée, fichier non récupéré (Google Drive renvoie une page HTML de confirmation)"
+    },
+    {
+      "nom": "Meat Raw 001",
+      "url": "https://3dtextures.me/2019/03/20/meat-raw-001/",
+      "licence": "CC0",
+      "maps": ["Diffuse", "Normal", "Roughness", "AO"],
+      "resolution": "1024",
+      "statut": "licence prouvée, fichier non récupéré (Google Drive)"
+    },
+    {
+      "nom": "Skin Human 002",
+      "url": "https://3dtextures.me/2019/01/24/skin-human-002/",
+      "licence": "CC0",
+      "statut": "licence prouvée, fichier non récupéré (Google Drive)"
+    },
+    {
+      "nom": "Veins 001",
+      "url": "https://3dtextures.me/2020/10/26/veins-001/",
+      "licence": "CC0",
+      "statut": "licence prouvée, téléchargement non tenté (dossier Drive)"
+    },
+    {
+      "nom": "Organic Matter 001",
+      "url": "https://3dtextures.me/2017/12/11/organic-matter-001/",
+      "licence": "CC0",
+      "statut": "licence prouvée, téléchargement non tenté (dossier Drive)"
+    }
+  ],
+  "bibliothequesSansResultat": {
+    "PolyHaven": "871 textures interrogées via API : aucun os/ muscle/ organe / chair ; clay_plaster reste le substitut neutre déjà intégré",
+    "ambientCG": "recherches bone/meat/flesh/organ/tissue/muscle : 0 pertinent (résultats 'organic' = sable/écorce)"
+  },
+  "etatActuel": "rendu procédural par tissu (os, muscle, organe) + proxy CC0 clay_plaster derrière ?tex=os-proxy, désactivé par défaut et explicitement non anatomique",
+  "verdict": "BLOQUÉ POUR L'INSTANT — sources CC0 identifiées et licences prouvées, mais récupération bloquée par l'hébergeur Google Drive ; aucune texture anatomique inventée",
+  "options": [
+    "récupérer manuellement les fichiers CC0 depuis les liens vérifiés et alimenter public/textures/<tissu>/ avec manifeste",
+    "conserver le rendu procédural documenté",
+    "activer le proxy clay_plaster uniquement comme démonstration technique, jamais comme texture anatomique"
+  ]
+}
