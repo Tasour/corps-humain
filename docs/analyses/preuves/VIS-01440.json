@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01440",
+ "subject": "bone:costal-cartilage-of-third-rib-l",
+ "claim": "Forme de coin aplati et court, peu evocatrice d'un cartilage costal de 3e cote.",
+ "verdict": "a_valider",
+ "confidence": "moyenne",
+ "sources": [
+  {
+   "name": "Wikipedia — Costal cartilage",
+   "url": "https://en.wikipedia.org/wiki/Costal_cartilage",
+   "id": "",
+   "license": "CC BY-SA",
+   "accessed": "2026-11-20",
+   "excerpt": "Costal cartilages vary in length, breadth and direction; they increase in length from the first to the seventh, then decrease."
+  },
+  {
+   "name": "IMAIOS e-Anatomy — Costal cartilage",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/costal-cartilage-1152724",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "The first seven pairs connect with the sternum; the next three articulate with the cartilage above; the last two have pointed free extremities."
+  }
+ ],
+ "reasoning": "Le 3e cartilage monte legerement vers le sternum et s'elargit ; la vue de bout peut le faire paraitre court.",
+ "recommendation": "Verifier sous les 8 angles avant de conclure.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

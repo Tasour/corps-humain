@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01424",
+ "subject": "bone:costal-cartilage-of-seventh-rib-r",
+ "claim": "Eperon pointu avec une encoche profonde pres de l'extremite superieure.",
+ "verdict": "a_valider",
+ "confidence": "moyenne",
+ "sources": [
+  {
+   "name": "Wikipedia — Costal cartilage",
+   "url": "https://en.wikipedia.org/wiki/Costal_cartilage",
+   "id": "",
+   "license": "CC BY-SA",
+   "accessed": "2026-11-20",
+   "excerpt": "Costal cartilages vary in length, breadth and direction; they increase in length from the first to the seventh, then decrease."
+  },
+  {
+   "name": "IMAIOS e-Anatomy — Costal cartilage",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/costal-cartilage-1152724",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "The first seven pairs connect with the sternum; the next three articulate with the cartilage above; the last two have pointed free extremities."
+  }
+ ],
+ "reasoning": "Les cartilages costaux varient en largeur et direction ; les 6e-8e presentent des projections heurteuses a leurs bords inferieurs.",
+ "recommendation": "Ne pas corriger sans revue anatomique.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

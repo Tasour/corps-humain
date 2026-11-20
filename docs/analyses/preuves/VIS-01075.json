@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01075",
+ "subject": "bone:axis-c2",
+ "claim": "Corps vertebral et arc postérieur non discernables sur le maillage C2.",
+ "verdict": "a_valider",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "NCBI Bookshelf StatPearls — Anatomy, Back, Cervical Vertebrae",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK459200",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "C2, the axis, has a vertebral body, an odontoid process (dens) projecting superiorly, and a posterior neural arch."
+  },
+  {
+   "name": "FMA via Wikipedia — Axis (anatomy)",
+   "url": "https://en.wikipedia.org/wiki/Axis_(anatomy)",
+   "id": "FMA12520",
+   "license": "CC BY-SA",
+   "accessed": "2026-11-20",
+   "excerpt": "The defining feature of the axis is its strong bony protrusion known as the dens."
+  }
+ ],
+ "reasoning": "Les sources decrivent un corps, un dens et un arc posterior (pedicules + lames). Le maillage grossier peut les fusionner visuellement ; ce n'est pas une erreur anatomique prouvee.",
+ "recommendation": "Ne pas fabriquer de relief ; documenter comme limite de resolution.",
+ "recordedAt": "2026-11-20T04:23:58.964Z"
+}

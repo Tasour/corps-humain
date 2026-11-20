@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01086",
+ "subject": "bone:bp-bony-pelvis",
+ "claim": "Pas de cavite cotyloide ni de branches pubiennes visibles, l'ensemble ressemble a un sacrum.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "NCBI Bookshelf StatPearls — Pelvis Bones",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK545204",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "The pelvis consists of right and left hip bones, each formed by the pubis, ischium and ilium, with the sacrum and coccyx; the acetabulum is a hemispherical concavity."
+  },
+  {
+   "name": "Kenhub — The Pelvis",
+   "url": "https://www.kenhub.com/en/library/anatomy/the-pelvis",
+   "id": "",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "The lateral surface of the hip bone houses the acetabulum; the ischium and pubis form the obturator foramen and pubic rami."
+  }
+ ],
+ "reasoning": "Un pelvis osseux complet comprend les os coxaux avec acetabulum et rami pubiens, plus sacrum et coccyx. Le maillage observe ne presente pas ces elements.",
+ "recommendation": "A valider avant exclusion ou renommage ; ne pas reconstruire de geometrie.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

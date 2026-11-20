@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01389",
+ "subject": "bone:calcaneus-r",
+ "claim": "Masse globuleuse, tuberosite calcanenne et sustentaculum peu differencies.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "NCBI Bookshelf StatPearls — Calcaneus",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK519544",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "The calcaneus has a posterior calcaneal tuberosity and a medial sustentaculum tali with a groove for the flexor hallucis longus tendon."
+  },
+  {
+   "name": "FMA via Wikipedia — Calcaneus",
+   "url": "https://en.wikipedia.org/wiki/Calcaneus",
+   "id": "FMA24496",
+   "license": "CC BY-SA",
+   "accessed": "2026-11-20",
+   "excerpt": "The calcaneus has a large calcaneal tuberosity posteriorly and a sustentaculum tali on the medial surface."
+  }
+ ],
+ "reasoning": "Memme constat que a gauche, avec des references anatomiques identiques.",
+ "recommendation": "Documenter comme limite de resolution.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

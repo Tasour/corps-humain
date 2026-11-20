@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01376",
+ "subject": "bone:bp-sternum",
+ "claim": "De profil, l'os parait etroit avec une serie d'empreintes ovales, peu typique d'un sternum.",
+ "verdict": "a_valider",
+ "confidence": "moyenne",
+ "sources": [
+  {
+   "name": "IMAIOS e-Anatomy — Costal notches",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/costal-notches-1152596",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "Costal notches are indentations on the lateral borders of the sternum for the costal cartilages."
+  },
+  {
+   "name": "Kenhub — Sternocostal joints",
+   "url": "https://www.kenhub.com/en/library/anatomy/sternocostal-joints",
+   "id": "",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "The sternal costal notches appear as shallow, concave depressions on the lateral border of the sternum."
+  }
+ ],
+ "reasoning": "Les incisures costales sont des depessions concaves du bord lateral ; leur aspect de profil peut varier.",
+ "recommendation": "Pas de correction automatique.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

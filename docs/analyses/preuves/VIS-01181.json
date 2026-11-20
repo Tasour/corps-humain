@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01181",
+ "subject": "bone:bp-floating-rib-r",
+ "claim": "Cotes lisses et allongees sans tete, col ni rainure costale differencies.",
+ "verdict": "a_valider",
+ "confidence": "moyenne",
+ "sources": [
+  {
+   "name": "NCBI Bookshelf StatPearls — Anatomy, Thorax, Ribs",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK538328",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "Floating ribs (11th and 12th) lack sternal articulation; ribs have a head, neck, shaft and costal groove; the 11th and 12th have a single articular facet and lack a neck."
+  },
+  {
+   "name": "Kenhub — Floating ribs",
+   "url": "https://www.kenhub.com/en/library/anatomy/floating-ribs",
+   "id": "",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "Floating ribs have a head, neck and body, with rudimentary costal cartilage caps and no anterior attachment."
+  }
+ ],
+ "reasoning": "Memme constat que a gauche : tete et gouttiere devraient exister, col variable selon les sources.",
+ "recommendation": "Conserver le statut a_valider.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

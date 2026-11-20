@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01438",
+ "subject": "bone:costal-cartilage-of-tenth-rib-r",
+ "claim": "Silhouette en lame courte et large, a confronter a un cartilage costal.",
+ "verdict": "a_valider",
+ "confidence": "moyenne",
+ "sources": [
+  {
+   "name": "IMAIOS e-Anatomy — Costal cartilage",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/costal-cartilage-1152724",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "The first seven pairs connect with the sternum; the next three articulate with the cartilage above; the last two have pointed free extremities."
+  },
+  {
+   "name": "NCBI Bookshelf StatPearls — Anatomy, Thorax, Ribs",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK538328",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "Floating ribs (11th and 12th) lack sternal articulation; ribs have a head, neck, shaft and costal groove; the 11th and 12th have a single articular facet and lack a neck."
+  }
+ ],
+ "reasoning": "Le 10e cartilage costal s'unit au 9e ; sa morphologie est variable et souvent plus court.",
+ "recommendation": "Pas de correction automatique.",
+ "recordedAt": "2026-11-20T04:23:58.965Z"
+}

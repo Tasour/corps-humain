@@ -68,7 +68,8 @@ if (cmd === "build") {
   const where = [], params = [];
   for (const key of ["statut", "severite", "category", "verdict", "source"]) {
     const value = arg(key);
-    if (value) { where.push(`${key === "statut" ? "status" : key} = ?`); params.push(value); }
+    const column = { statut: "status", severite: "severity" }[key] || key;
+    if (value) { where.push(`${column} = ?`); params.push(value); }
   }
   const subject = arg("subject");
   if (subject) { where.push("subject LIKE ?"); params.push(`%${subject}%`); }
