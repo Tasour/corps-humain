@@ -1,0 +1,387 @@
+{
+ "summary": {
+  "generated": "2026-11-20T08:56:40.201Z",
+  "source": "2026-11-20-corps-benchmark.md",
+  "total": 20,
+  "P0": 8,
+  "P1": 9,
+  "P2": 3
+ },
+ "entries": [
+  {
+   "id": "BENCH-001",
+   "titre": "Deep links vers waypoints et vues",
+   "source": {
+    "candidat": "Cogni Anatomy",
+    "url": "https://cogni.cards/anatomy"
+   },
+   "categorie": "UX",
+   "impact": 5,
+   "effort": 1,
+   "priorite": 25,
+   "niveau": "P0",
+   "licence": "🟡 données / 🟢 inspiration",
+   "dependances": [
+    "BENCH-009"
+   ],
+   "verification": "npm run test:v2 + capture avec query",
+   "preuveAttendue": "URL partageable ouvrant le bon waypoint",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-002",
+   "titre": "Polices inline, zéro CDN ni analytics",
+   "source": {
+    "candidat": "SirwanAfifi/anatomy-atlas",
+    "url": "https://github.com/SirwanAfifi/anatomy-atlas"
+   },
+   "categorie": "Distribution",
+   "impact": 5,
+   "effort": 1,
+   "priorite": 25,
+   "niveau": "P0",
+   "licence": "🔴 code / 🟡 modèle",
+   "dependances": [],
+   "verification": "grep fonts.googleapis analytics dans dist/",
+   "preuveAttendue": "Aucune requête externe au chargement",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-003",
+   "titre": "radiogroup au lieu d'aria-pressed sur modes exclusifs",
+   "source": {
+    "candidat": "LearnAnatomy3D",
+    "url": "https://learnanatomy3d.com/"
+   },
+   "categorie": "Accessibilité",
+   "impact": 5,
+   "effort": 1,
+   "priorite": 25,
+   "niveau": "P0",
+   "licence": "🟡 données / 🟢 inspiration",
+   "dependances": [],
+   "verification": "npm run test:a11y",
+   "preuveAttendue": "19/19 contrôles d'accessibilité",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-004",
+   "titre": "Coupes frontale, sagittale, transversale",
+   "source": {
+    "candidat": "Cogni Anatomy",
+    "url": "https://cogni.cards/anatomy"
+   },
+   "categorie": "UX",
+   "impact": 5,
+   "effort": 2,
+   "priorite": 20,
+   "niveau": "P0",
+   "licence": "🟡 données / 🟢 inspiration",
+   "dependances": [],
+   "verification": "capture 8 angles + npm run test:visuel",
+   "preuveAttendue": "Plans de coupe visibles et cadrage stable",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-005",
+   "titre": "Curseur explode réutilisant les 43 groupes",
+   "source": {
+    "candidat": "ImliStack/Body-Atlas-3D",
+    "url": "https://github.com/ImliStack/Body-Atlas-3D"
+   },
+   "categorie": "UX",
+   "impact": 5,
+   "effort": 2,
+   "priorite": 20,
+   "niveau": "P0",
+   "licence": "🔴 code / 🟡 organes",
+   "dependances": [],
+   "verification": "npm run test:groupes3d",
+   "preuveAttendue": "52/52 contrôles de groupes",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-006",
+   "titre": "Fiche de vérité par structure (source, licence, limite)",
+   "source": {
+    "candidat": "ashemag/human-atlas",
+    "url": "https://github.com/ashemag/human-atlas"
+   },
+   "categorie": "Qualité",
+   "impact": 5,
+   "effort": 2,
+   "priorite": 20,
+   "niveau": "P0",
+   "licence": "🟢 MIT + CC BY 4.0",
+   "dependances": [],
+   "verification": "npm run scorecard:3d + docs/SOURCES-3D.md",
+   "preuveAttendue": "2 009 fiches traçables",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-007",
+   "titre": "Lint CI des affirmations médicales lint:claims",
+   "source": {
+    "candidat": "Opening-Science/open-twin-xr",
+    "url": "https://github.com/Opening-Science/open-twin-xr"
+   },
+   "categorie": "Qualité",
+   "impact": 5,
+   "effort": 2,
+   "priorite": 20,
+   "niveau": "P0",
+   "licence": "🟡 MIT code / assets NC",
+   "dependances": [],
+   "verification": "npm run lint:claims",
+   "preuveAttendue": "Aucune affirmation diagnostique",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-008",
+   "titre": "Identifiant stable indépendant du nom exporté",
+   "source": {
+    "candidat": "nqwrc/3d-anatomy",
+    "url": "https://github.com/nqwrc/3d-anatomy"
+   },
+   "categorie": "Architecture",
+   "impact": 5,
+   "effort": 2,
+   "priorite": 20,
+   "niveau": "P0",
+   "licence": "🔴 CC BY-NC-SA",
+   "dependances": [],
+   "verification": "npm run audit:3d:check",
+   "preuveAttendue": "0 perte d'identité après rebuild",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-009",
+   "titre": "Catalogue de vues prêtes branché sur les waypoints",
+   "source": {
+    "candidat": "Cogni Anatomy",
+    "url": "https://cogni.cards/anatomy"
+   },
+   "categorie": "Pédagogie",
+   "impact": 4,
+   "effort": 2,
+   "priorite": 16,
+   "niveau": "P1",
+   "licence": "🟡 données / 🟢 inspiration",
+   "dependances": [],
+   "verification": "npm run test:waypoints",
+   "preuveAttendue": "22 waypoints curés + catalogue",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-010",
+   "titre": "Registre licences machine-readable et attribution in-app",
+   "source": {
+    "candidat": "Opening-Science/open-twin-xr",
+    "url": "https://github.com/Opening-Science/open-twin-xr"
+   },
+   "categorie": "Architecture",
+   "impact": 4,
+   "effort": 2,
+   "priorite": 16,
+   "niveau": "P1",
+   "licence": "🟡 MIT code / assets NC",
+   "dependances": [
+    "BENCH-006"
+   ],
+   "verification": "npm run sources:check",
+   "preuveAttendue": "21 empreintes + provenance visible",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-011",
+   "titre": "Tours guidés enchaînant les waypoints",
+   "source": {
+    "candidat": "LearnAnatomy3D",
+    "url": "https://learnanatomy3d.com/"
+   },
+   "categorie": "Pédagogie",
+   "impact": 5,
+   "effort": 3,
+   "priorite": 15,
+   "niveau": "P1",
+   "licence": "🟡 données / 🟢 inspiration",
+   "dependances": [
+    "BENCH-009"
+   ],
+   "verification": "npm run test:v2",
+   "preuveAttendue": "Visite guidée complète",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-012",
+   "titre": "check du modèle livré : identités, côtés, licences",
+   "source": {
+    "candidat": "SirwanAfifi/anatomy-atlas",
+    "url": "https://github.com/SirwanAfifi/anatomy-atlas"
+   },
+   "categorie": "Qualité",
+   "impact": 5,
+   "effort": 3,
+   "priorite": 15,
+   "niveau": "P1",
+   "licence": "🔴 code / 🟡 modèle",
+   "dependances": [
+    "BENCH-008"
+   ],
+   "verification": "node scripts/check-modele.mjs",
+   "preuveAttendue": "0 identité ou licence manquante",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-013",
+   "titre": "Quiz multi-modes sur la chasse aux organes",
+   "source": {
+    "candidat": "JINTAI 3D",
+    "url": "https://jintai3d.com/en"
+   },
+   "categorie": "Pédagogie",
+   "impact": 4,
+   "effort": 3,
+   "priorite": 12,
+   "niveau": "P1",
+   "licence": "🟡 données / 🔴 code",
+   "dependances": [],
+   "verification": "npm run test:chasse",
+   "preuveAttendue": "6 modes de reconnaissance",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-014",
+   "titre": "Pages statiques par structure + sitemap",
+   "source": {
+    "candidat": "Layered Body Atlas",
+    "url": "https://bodyatlas.github.io/"
+   },
+   "categorie": "Distribution",
+   "impact": 4,
+   "effort": 3,
+   "priorite": 12,
+   "niveau": "P1",
+   "licence": "🔴 licence inconnue",
+   "dependances": [
+    "BENCH-006",
+    "BENCH-008"
+   ],
+   "verification": "npm run build + sitemap",
+   "preuveAttendue": "2 009 pages indexables",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-015",
+   "titre": "Étiquettes ancrées sur la surface + leader lines",
+   "source": {
+    "candidat": "JINTAI 3D",
+    "url": "https://jintai3d.com/en"
+   },
+   "categorie": "UX",
+   "impact": 4,
+   "effort": 3,
+   "priorite": 12,
+   "niveau": "P1",
+   "licence": "🟡 données / 🔴 code",
+   "dependances": [],
+   "verification": "capture 8 angles",
+   "preuveAttendue": "Étiquettes lisibles sous tous les angles",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-016",
+   "titre": "Rendu sale (dirty flag) hors animations",
+   "source": {
+    "candidat": "ashemag/human-atlas",
+    "url": "https://github.com/ashemag/human-atlas"
+   },
+   "categorie": "Performance",
+   "impact": 4,
+   "effort": 3,
+   "priorite": 12,
+   "niveau": "P1",
+   "licence": "🟢 MIT + CC BY 4.0",
+   "dependances": [],
+   "verification": "profil rAF avant/après",
+   "preuveAttendue": "Une seule boucle,帧 inactives à 0",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-017",
+   "titre": "DPR plafonné à 2 et rendu adaptatif restauré",
+   "source": {
+    "candidat": "SirwanAfifi/anatomy-atlas",
+    "url": "https://github.com/SirwanAfifi/anatomy-atlas"
+   },
+   "categorie": "Performance",
+   "impact": 4,
+   "effort": 3,
+   "priorite": 12,
+   "niveau": "P1",
+   "licence": "🔴 code / 🟡 modèle",
+   "dependances": [],
+   "verification": "grep setPixelRatio + capture mobile",
+   "preuveAttendue": "DPR <= 2 partout",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-018",
+   "titre": "Identité par vertex en un seul draw call",
+   "source": {
+    "candidat": "Opening-Science/open-twin-xr",
+    "url": "https://github.com/Opening-Science/open-twin-xr"
+   },
+   "categorie": "Performance",
+   "impact": 4,
+   "effort": 4,
+   "priorite": 8,
+   "niveau": "P2",
+   "licence": "🟡 MIT code / assets NC",
+   "dependances": [
+    "BENCH-008"
+   ],
+   "verification": "npm run test:groupes3d + profil",
+   "preuveAttendue": "Picking exact sans surcoût de draw calls",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-019",
+   "titre": "Comparaison homme/femme côte à côte",
+   "source": {
+    "candidat": "ImliStack/Body-Atlas-3D",
+    "url": "https://github.com/ImliStack/Body-Atlas-3D"
+   },
+   "categorie": "Pédagogie",
+   "impact": 3,
+   "effort": 5,
+   "priorite": 3,
+   "niveau": "P2",
+   "licence": "🔴 code / 🟡 organes",
+   "dependances": [],
+   "verification": "capture comparaison",
+   "preuveAttendue": "Deux corps alignés",
+   "statut": "a_faire"
+  },
+  {
+   "id": "BENCH-020",
+   "titre": "Dermatomes 3D et coupes gyri",
+   "source": {
+    "candidat": "JINTAI 3D",
+    "url": "https://jintai3d.com/en"
+   },
+   "categorie": "Contenu",
+   "impact": 3,
+   "effort": 5,
+   "priorite": 3,
+   "niveau": "P2",
+   "licence": "🟡 données / 🔴 code",
+   "dependances": [
+    "BENCH-004"
+   ],
+   "verification": "acquisition source + validation",
+   "preuveAttendue": "Couche thématique sourcée",
+   "statut": "a_faire"
+  }
+ ]
+}
