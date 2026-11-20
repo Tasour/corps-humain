@@ -57,9 +57,11 @@ filtrés sur `corps.quality` / `corps.worktrees`.
 
 - Locale : `npm run sources:check`, `npm run audit:3d:check`, `npm test`,
   `npm run test:v2`, `npm run test:a11y`, `npm run test:groupes3d`, `npm run test:visuel`.
-- CI : `.github/workflows/qualite-3d.yml` exécute build, audit, scorecard, Hausdorff et les
-  suites de tests. Les caches hors dépôt ne sont pas disponibles en CI : le test visuel et
-  `sources:check` restent locaux.
+- CI : un workflow avait été préparé mais **retiré** — le token OAuth local n'a pas le
+  `workflow` scope requis par GitHub pour pousser `.github/workflows/*`. Les portes sont donc
+  exécutées localement (`sources:check`, `audit:3d:check`, suites de tests, `test:visuel`).
+  Pour réactiver la CI il faut soit un PAT avec scope `workflow`, soit pousser le fichier
+  via un compte/token autorisé.
 
 ## Limites
 
