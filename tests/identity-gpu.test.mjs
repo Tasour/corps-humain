@@ -117,7 +117,9 @@ const rapport = {
   verdict: resultats.every((r) => r.ok) ? "OK" : "ECHEC",
 };
 fs.mkdirSync(path.join(root, "docs/analyses"), { recursive: true });
-fs.writeFileSync(path.join(root, "docs/analyses/identity-gpu-2026-11-20.json"), `${JSON.stringify(rapport, null, 1)}\n`);
+/* Le rapport curaté (captures, verdict) vit dans identity-gpu-2026-11-20.json :
+ * ce test écrit uniquement son résultat brut dans un fichier séparé. */
+fs.writeFileSync(path.join(root, "docs/analyses/identity-gpu-test.json"), `${JSON.stringify(rapport, null, 1)}\n`);
 
 const reussis = resultats.filter((r) => r.ok).length;
 for (const r of resultats) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.nom}${r.ok ? "" : ` — ${r.erreur}`}`);
