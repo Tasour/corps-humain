@@ -38,6 +38,7 @@
     "test:reseau": "node tests/reseau-local.mjs",
     "test:dpr": "node tests/dpr.test.mjs",
     "test:dirty": "node tests/dirty-flag.test.mjs",
+    "test:deeplink": "node tests/deeplink.test.mjs",
     "test:groupes": "node tests/groupes.test.mjs",
     "test:groupes3d": "node tests/groupes-3d.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",

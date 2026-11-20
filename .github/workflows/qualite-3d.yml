@@ -44,5 +44,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:reseau
       - name: Rendu à la demande
         run: TEST_BASE=http://localhost:5199 npm run test:dirty
+      - name: Deep links des waypoints
+        run: TEST_BASE=http://localhost:5199 npm run test:deeplink
       - name: Build
         run: npm run build

@@ -180,6 +180,12 @@
     }
     #wp-title { font: 600 15px Georgia, serif; color: var(--accent); }
     #wp-text { margin-top: 6px; font-size: 12.5px; color: #4d5d66; }
+     #wp-copy {
+       pointer-events: auto; margin-top: 10px; min-height: 36px; padding: 6px 12px;
+       font: 600 11.5px inherit; color: #0b3340; background: var(--teal-soft);
+       border: 1px solid var(--teal); border-radius: 6px; cursor: pointer;
+     }
+     #wp-copy:hover { background: var(--teal); color: #041b22; }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
@@ -344,7 +350,7 @@
       </div>
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
-      <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div></div>
+      <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div><button type="button" id="wp-copy" title="Copier le lien de cette vue" aria-label="Copier le lien de cette vue">Copier le lien de cette vue</button></div>
       <div class="hunt-hud" id="hunt-hud" role="status" aria-live="polite" hidden>
         <div class="hunt-head">
           <div id="hunt-target">—</div>
@@ -381,7 +387,7 @@
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
-    import { getWaypoints } from './src/data/waypoints.js';
+    import { getWaypoints, CURATED_IDS } from './src/data/waypoints.js';
     import { HUNT_TARGETS } from './src/data/hunt.js';
     import { AnatomyTree } from './src/data/hierarchy.js';
     import { basePixelRatio, dprSuivant } from './src/qualite-rendu.js';
@@ -487,6 +493,7 @@
     const labels = { bone: 'Os', muscle: 'Muscle', organ: 'Organe', skin: 'Peau' };
     let selected = null, detailStructure = null, activeGroup = null;
     let groupAnim = null, waypointTour = null, tourActive = false, tourAngle = 0;
+    let currentWaypoint = null;
     let cameraTween = null, forceCulling = false;
     let lodBias = 1, pixelRatio = BASE_PIXEL_RATIO, bonnesFenetresDpr = 0;
     let lastClick = 0;
@@ -609,6 +616,7 @@
       engine.clearWaypoints();
       engine.setWaypointsVisible(false);
       waypointTour = null;
+      currentWaypoint = null;
       wpInfo.style.display = 'none';
       renderBreadcrumb();
       renderTree();
@@ -670,6 +678,7 @@
     });
 
     function showWaypoint(wp) {
+      currentWaypoint = wp;
       document.getElementById('wp-title').textContent = wp.title;
       document.getElementById('wp-text').textContent = wp.text;
       wpInfo.style.display = 'block';
@@ -709,6 +718,7 @@
       engine.showWaypoints(getWaypoints(structure));
       engine.setWaypointsVisible(false);
       waypointTour = null;
+      currentWaypoint = null;
       wpInfo.style.display = 'none';
 
       const side = structure.side === 'left' ? ' · G' : structure.side === 'right' ? ' · D' : '';
@@ -1006,6 +1016,7 @@
       engine.isolate(null);
       engine.setWaypointsVisible(false);
       waypointTour = null;
+      currentWaypoint = null;
       wpInfo.style.display = 'none';
       document.getElementById('group-actions').style.display = 'none';
       document.body.classList.remove('has-selection');
@@ -1552,6 +1563,46 @@
     }
     window.__v2Stop = stop;
     window.addEventListener('pagehide', stop);
+    /* BENCH-001 — deep link ?vue=<identifiant>&wp=<index>. La résolution se
+     * fait sur l'identifiant immuable, jamais sur un libellé d'affichage.
+     * L'index est borné à la liste réelle du manifeste. */
+    function applyDeepLink() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('vue');
+      if (!id) return;
+      const structure = engine.byId.get(id);
+      if (!structure) {
+        announce('Vue inconnue : ouverture de l’atlas complet.');
+        return;
+      }
+      const waypoints = getWaypoints(structure);
+      const brut = Number.parseInt(params.get('wp') ?? '0', 10);
+      const index = Number.isFinite(brut)
+        ? Math.max(0, Math.min(brut, waypoints.length - 1))
+        : 0;
+      selectStructure(structure, true).then(() => {
+        engine.setWaypointsVisible(true);
+        waypointTour = null;
+        showWaypoint(waypoints[index]);
+        needsRender = true;
+        announce(`${structure.fr || structure.en} — ${waypoints[index].label}`);
+      });
+    }
+
+    document.getElementById('wp-copy').addEventListener('click', async () => {
+      if (!selected || !currentWaypoint) return;
+      const url = new URL(location.href);
+      url.searchParams.set('vue', selected.id);
+      url.searchParams.set('wp', String(currentWaypoint.index));
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        announce('Lien de la vue copié.');
+      } catch {
+        announce(`Lien de la vue : ${url.toString()}`);
+      }
+    });
+
+    applyDeepLink();
     loop();
     window.__v2 = engine;
     /* Observabilité de la résolution (BENCH-017) : valeur courante, valeur de

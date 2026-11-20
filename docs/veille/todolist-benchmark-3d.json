@@ -26,8 +26,10 @@
    ],
    "verification": "npm run test:v2 + capture avec query",
    "preuveAttendue": "URL partageable ouvrant le bon waypoint",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-001"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-001",
+   "verdict": "OK — deep link ID stable + wp borné + copie conserving tex; 5/5; captures 9,98 % desktop / 47,04 % mobile",
+   "preuve": "docs/analyses/waypoints/deeplink-2026-11-20.json"
   },
   {
    "id": "BENCH-002",

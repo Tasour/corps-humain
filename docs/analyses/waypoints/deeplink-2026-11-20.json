@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-001",
+  "objectif": "Ouvrir une vue partageable ?vue=<id>&wp=<index> et copier son lien",
+  "avant": {
+    "commit": "d82921d",
+    "comportement": " seul le paramètre ?tex était lu ; ?vue et ?wp étaient ignorés, aucun repère ni copie de lien"
+  },
+  "apres": {
+    "resolution": "identifiant immuable via engine.byId, jamais un libellé d'affichage",
+    "borne": "wp ramené dans [0, longueur-1], entier non valide -> 0",
+    "inconnu": "annonce role=status, aucune sélection, aucun crash",
+    "copie": "bouton 36 px minimum dans le HUD, conserve vue, wp et les autres paramètres (dont ?tex)"
+  },
+  "captures": {
+    "avant": [
+      "docs/analyses/waypoints/avant-deeplink-desktop.png",
+      "docs/analyses/waypoints/avant-deeplink-mobile.png"
+    ],
+    "apres": [
+      "docs/analyses/waypoints/apres-deeplink-desktop.png",
+      "docs/analyses/waypoints/apres-deeplink-mobile.png"
+    ],
+    "diffs": [
+      "docs/analyses/waypoints/diff-deeplink-desktop.png",
+      "docs/analyses/waypoints/diff-deeplink-mobile.png"
+    ]
+  },
+  "mesures": {
+    "desktop_1658x1150": { "changedPct": 9.98, "seuilPct": 2, "verdict": "change" },
+    "mobile_390x844": { "changedPct": 47.04, "seuilPct": 2, "verdict": "change" }
+  },
+  "tests": {
+    "deeplink": "5/5",
+    "a11y": "22/22 attendu",
+    "v2": "30/30 attendu"
+  },
+  "verdict": "OK"
+}
