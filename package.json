@@ -22,6 +22,7 @@
     "revue:composantes": "node scripts/post-process-components.mjs",
     "revue:verifie-composantes": "node scripts/verifier-composantes.mjs",
     "revue:db": "node scripts/revue-db.mjs",
+    "revue:active": "node scripts/active-todo.mjs",
     "sources:check": "node scripts/sources-checksums.mjs --check",
     "sources:refresh": "node scripts/sources-checksums.mjs --refresh",
     "test:visuel": "node tests/visuel-regression.mjs",

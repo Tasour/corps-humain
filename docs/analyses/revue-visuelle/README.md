@@ -17,6 +17,8 @@
 
 - `todolist.md` — liste lisible, triée par sévérité puis par structure (état initial).
 - `todolist-fait-a-verifier.{md,json}` — corrections proposées, paires avant/après et verdicts.
+- `todolist-active.{md,json}` — vue de pilotage : 15 454 entrées actives après retrait des
+  778 vérifiées et des 991 faux positifs (`npm run revue:active`).
 - `vagues/00.md` — bilan de la vague 0 (artefact de cadrage du harnais).
 - `vagues/01.md` — bilan de la vague 1 (31 agrégats exclus, 2 009 structures).
 - `vagues/02.md` — bilan de la vague 2 (composantes flottantes retirées sur 2 structures).
