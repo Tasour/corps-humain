@@ -115,7 +115,9 @@ for (const list of groups.values()) {
     const angles = [...new Set(g.angles)];
     const filesForAngle = angles.map((a) => {
       const rel = path.join(IMAGES, g.subjectId, `${a}.jpg`);
-      return fs.existsSync(rel) ? path.relative(ROOT, rel) : rel;
+      /* Les images sont hors dépôt : un chemin absolu est la seule référence
+       * exploitable depuis le rapport versionné. */
+      return rel;
     });
     entries.push({
       id: "",
