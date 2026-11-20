@@ -415,8 +415,10 @@
    "dependances": [],
    "verification": "capture comparaison",
    "preuveAttendue": "Deux corps alignés",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-019"
+   "statut": "bloque",
+   "plan": "plans-benchmark-3d.md#bench-019",
+   "verdict": "BLOQUÉ — source CC BY 4.0 prouvée mais GLB de 211 Mo et couverture partielle ; pipeline de dérivation à décider",
+   "preuve": "docs/analyses/sources-bloquees-2026-11-20.json"
   },
   {
    "id": "BENCH-020",
@@ -436,8 +438,10 @@
    ],
    "verification": "acquisition source + validation",
    "preuveAttendue": "Couche thématique sourcée",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-020"
+   "statut": "bloque",
+   "plan": "plans-benchmark-3d.md#bench-020",
+   "verdict": "BLOQUÉ — aucun maillage 3D de dermatomes à licence prouvée ; seulement des planches 2D",
+   "preuve": "docs/analyses/sources-bloquees-2026-11-20.json"
   }
  ]
 }

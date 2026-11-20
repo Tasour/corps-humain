@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-20",
+  "methode": "benchmark-concurrentiel mode express : 2 requêtes web + 1 lecture de source canonique ; aucun fichier applicatif modifié",
+  "items": [
+    {
+      "id": "BENCH-019",
+      "titre": "Comparaison homme/femme côte à côte",
+      "verdict licence": "🟢 source prouvée",
+      "source": {
+        "nom": "Human Reference Atlas / HuBMAP — 3D Reference Organ Set for Female v1.5",
+        "auteurs": "Kristen Browne, Heidi Schlehlein",
+        "licence": "CC BY 4.0",
+        "doi": "https://doi.org/10.48539/HBM352.BTSQ.586",
+        "page": "https://lod.humanatlas.io/ref-organ/united-female/v1.5",
+        "glb": "https://cdn.humanatlas.io/digital-objects/ref-organ/united-female/v1.5/assets/3d-vh-f-united.glb",
+        "preuve": "ATTRIBUTION.md du dépôt ashemag/human-atlas (lu le 2026-11-20)"
+      },
+      "blocage": {
+        "taille": "211 624 968 octets (HTTP Content-Length relevé le 2026-11-20)",
+        "couverture": "surface corporelle complète et organes sélectionnés ; squelette et muscles partiels, 888 maillages / 1 073 concepts",
+        "raison": "non livrable tel quel dans un atlas web déjà à 118 Mo de modèles ; nécessite un pipeline de dérivation (simplification, découpage, recalage) et une décision produit sur la pertinence d'une comparaison asymétrique",
+        "decision": "ne pas intégrer maintenant ; aucune géométrie féminine fabriquée ni approximée"
+      },
+      "statut": "bloque"
+    },
+    {
+      "id": "BENCH-020",
+      "titre": "Dermatomes 3D et coupes gyri",
+      "verdict licence": "⚪ source 3D non prouvée",
+      "sources_trouvees": [
+        {
+          "type": "image 2D",
+          "nom": "Dermatomes (female).png — Wikimedia Commons",
+          "licence": "CC BY 3.0 Unported",
+          "url": "https://commons.wikimedia.org/wiki/File:Dermatomes_(female).png"
+        },
+        {
+          "type": "planches SVG 2D",
+          "nom": "Category:SVG dermatomes (anatomy) — Wikimedia Commons",
+          "url": "https://commons.wikimedia.org/wiki/Category:SVG_dermatomes_(anatomy)"
+        },
+        {
+          "type": "modèle 3D",
+          "nom": "Dermatomes — Sketchfab (John A Burns School of Medicine)",
+          "verdict": "licence de téléchargement/réutilisation non prouvée depuis la surface publique → inspiration seule"
+        }
+      ],
+      "blocage": {
+        "raison": "aucun maillage 3D de dermatomes avec licence de réutilisation prouvée ; les planches libres sont 2D et ne peuvent pas être présentées comme une couche 3D sans fabriquer de géométrie",
+        "decision": "ne pas intégrer ; une planche 2D sourcée pourrait être envisagée comme document séparé, pas comme couche anatomique 3D"
+      },
+      "statut": "bloque"
+    }
+  ],
+  "regle": "Un invariant non prouvé est documenté avec sa raison et sa date ; aucune géométrie ni anatomie n'est inventée pour combler un manque de source.",
+  "verdict": "OK — blocages qualifiés et sourcés"
+}
