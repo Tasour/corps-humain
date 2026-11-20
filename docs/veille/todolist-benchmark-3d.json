@@ -45,8 +45,10 @@
    "dependances": [],
    "verification": "grep fonts.googleapis analytics dans dist/",
    "preuveAttendue": "Aucune requête externe au chargement",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-002"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-002",
+   "verdict": "OK — 22 fichiers scannés, 0 motif interdit, 0 requête externe sur / et /v2.html (29 et 23 requêtes)",
+   "preuve": "docs/analyses/reseau-local.json"
   },
   {
    "id": "BENCH-003",

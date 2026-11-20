@@ -35,6 +35,7 @@
     "test:collisions": "node tests/collisions.test.mjs",
     "test:visual": "node tests/visual-collisions.mjs",
     "test:a11y": "node tests/a11y-v2.mjs",
+    "test:reseau": "node tests/reseau-local.mjs",
     "test:groupes": "node tests/groupes.test.mjs",
     "test:groupes3d": "node tests/groupes-3d.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",
