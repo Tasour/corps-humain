@@ -53,6 +53,25 @@ redémarrage du service ; les outils `corps_*` apparaissent dans le catalogue Co
 démarrage d'une nouvelle session. Vérification : logs `~/.local/share/opencode/log/opencode.log`
 filtrés sur `corps.quality` / `corps.worktrees`.
 
+## Recherche web et preuves
+
+- Agent `.opencode/agents/anatomie-web.md` (`anatomie-web`) : expert anatomie/sourcing,
+  `mode: subagent`, lecture + web uniquement, aucun fichier modifie, sortie JSON de preuve.
+- Skills : `.opencode/skills/anatomie-web/` (protocole et `references/sources.md`) et
+  `.opencode/skills/textures-web/` (assemblage CC0, `references/licences.md`,
+  `scripts/assemble-texture.py` teste).
+- Plugin `.opencode/plugins/corps-research/index.ts` (`corps.research`) : outils
+  `corps_web_search`, `corps_web_source`, `corps_license_check`, `corps_evidence_add`,
+  `corps_texture_fetch` ; commandes `/source-anatomique`, `/texture-web`, `/prouver`.
+- Preuves ecrites dans `docs/analyses/preuves/<VIS-id>.json` et indexees dans `index.md`.
+- Sources autorisees : Poly Haven et ambientCG (CC0, API sans compte). Exclues : ShareTextures
+  (redistribution interdite), FreePBR (commercial payant), images sans licence verifiee.
+- FMA utilise par identifiant (CC BY 4.0) : l'ontologie n'est pas redistribuee.
+
+Les nouveaux outils et skills apparaissent au chargement d'une **nouvelle session** (le catalogue
+de la session courante est fige) ; verification : `opencode debug agents`, `opencode debug config`,
+logs filtres sur `corps.research`.
+
 ## Portes
 
 - Locale : `npm run sources:check`, `npm run audit:3d:check`, `npm test`,

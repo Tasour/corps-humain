@@ -3,8 +3,12 @@
   "worktree": {
     "directory": "/home/tasour"
   },
+  "skills": [
+    ".opencode/skills"
+  ],
   "plugins": [
     "./plugins/corps-quality",
-    "./plugins/corps-worktrees"
+    "./plugins/corps-worktrees",
+    "./plugins/corps-research"
   ]
 }
