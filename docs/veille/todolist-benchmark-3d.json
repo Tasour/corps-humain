@@ -228,8 +228,10 @@
    ],
    "verification": "npm run test:v2",
    "preuveAttendue": "Visite guidée complète",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-011"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-011",
+   "verdict": "OK — 3 tours × 3 étapes validées, contrôles + Esc + reduced-motion; 7/7; captures 11,64 % desktop / 51 % mobile",
+   "preuve": "docs/analyses/waypoints/tours-2026-11-20.json"
   },
   {
    "id": "BENCH-012",

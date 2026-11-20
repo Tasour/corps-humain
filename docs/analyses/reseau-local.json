@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-20T09:06:23.129Z",
+ "generated": "2026-11-20T10:45:14.894Z",
  "base": "http://127.0.0.1:5199",
  "static": {
-  "scanned": 22,
+  "scanned": 23,
   "forbidden": []
  },
  "pages": [
@@ -14,7 +14,7 @@
   },
   {
    "route": "/v2.html",
-   "totalRequests": 23,
+   "totalRequests": 24,
    "external": [],
    "tronque": false
   }

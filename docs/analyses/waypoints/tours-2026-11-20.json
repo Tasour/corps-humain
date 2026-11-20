@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-011",
+  "objectif": "Tours guidés enchaînant plusieurs waypoints réels, avec contrôles et sortie clavier",
+  "avant": { "commit": "6b1b00e", "comportement": " waypointTour mono-structure, timer 2,1 s, aucun contrôle ni séquence" },
+  "apres": {
+    "donnees": "3 tours (Cœur et circulation, Rein et filtration, Hanche et genou) × 3 étapes, définis dans src/data/waypoints.js et validés contre le manifeste",
+    "controles": "précédent / pause (aria-pressed) / suivant / quitter, HUD annoncé, étape i/n en aria-live",
+    "clavier": "Échap quitte le tour en priorité ; mouvement réduit = mode manuel sans enchaînement",
+    "deep_link": "chaque étape met à jour ?vue et ?wp dans l'URL"
+  },
+  "captures": {
+    "avant": ["docs/analyses/waypoints/avant-tour-desktop.png", "docs/analyses/waypoints/avant-tour-mobile.png"],
+    "apres": ["docs/analyses/waypoints/apres-tour-desktop.png", "docs/analyses/waypoints/apres-tour-mobile.png"],
+    "diffs": ["docs/analyses/waypoints/diff-tour-desktop.png", "docs/analyses/waypoints/diff-tour-mobile.png"]
+  },
+  "mesures": {
+    "desktop_1658x1150": { "changedPct": 11.64, "seuilPct": 2, "verdict": "change" },
+    "mobile_390x844": { "changedPct": 51.0, "seuilPct": 2, "verdict": "change" }
+  },
+  "tests": {
+    "tour": "7/7 · 3 tours",
+    "catalogue": "4/4",
+    "deeplink": "5/5",
+    "a11y": "22/22",
+    "v2": "30/30",
+    "groupes3d": "52/52",
+    "reseau": "0 externe",
+    "dirty": "0 rendu au repos"
+  },
+  "verdict": "OK"
+}

@@ -48,5 +48,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:deeplink
       - name: Catalogue des vues remarquables
         run: TEST_BASE=http://localhost:5199 npm run test:catalogue
+      - name: Tours guidés
+        run: TEST_BASE=http://localhost:5199 npm run test:tour
       - name: Build
         run: npm run build

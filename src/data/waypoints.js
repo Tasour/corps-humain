@@ -210,3 +210,36 @@ export function getWaypoints(structure) {
 }
 
 export const CURATED_IDS = Object.keys(CURATED);
+
+/* Tours guidés BENCH-011 : séquences de waypoints déjà curés. Aucune étape
+ * n'invente d'anatomie : elle référence une structure du manifeste et un
+ * index vérifiable par getWaypoints(). */
+export const TOURS = [
+  {
+    id: 'circulation',
+    label: 'Cœur et circulation',
+    steps: [
+      { id: 'organ:bp-heart', wp: 0 },
+      { id: 'organ:bp-heart', wp: 1 },
+      { id: 'organ:bp-heart', wp: 3 },
+    ],
+  },
+  {
+    id: 'filtration',
+    label: 'Rein et filtration',
+    steps: [
+      { id: 'organ:kidney-l', wp: 0 },
+      { id: 'organ:kidney-l', wp: 1 },
+      { id: 'organ:kidney-l', wp: 2 },
+    ],
+  },
+  {
+    id: 'appui',
+    label: 'Hanche et genou',
+    steps: [
+      { id: 'bone:femur-l', wp: 0 },
+      { id: 'bone:femur-l', wp: 2 },
+      { id: 'bone:femur-l', wp: 3 },
+    ],
+  },
+];

@@ -199,6 +199,20 @@
      #vues-catalogue .catalogue-item:hover,
      #vues-catalogue .catalogue-item:focus-visible { background: var(--teal-soft); }
      #vues-catalogue .catalogue-item small { color: var(--muted); white-space: nowrap; }
+     #tour-hud {
+       position: absolute; z-index: 6; left: 50%; top: 12px; transform: translateX(-50%);
+       display: flex; align-items: center; gap: 6px; max-width: 96vw; padding: 7px 10px;
+       background: rgba(255,253,249,.96); border: 1px solid var(--line);
+       border-radius: 10px; box-shadow: var(--shadow); font-size: 11.5px; color: var(--ink);
+     }
+     body.dark #tour-hud { background: rgba(20,31,43,.96); }
+     #tour-hud strong { font: 600 12px Georgia, serif; white-space: nowrap; }
+     #tour-hud button {
+       min-width: 36px; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
+     }
+     #tour-hud button:hover { background: var(--teal); color: #041b22; }
+     #tour-step { white-space: nowrap; color: var(--muted); }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
@@ -368,6 +382,14 @@
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
       <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div><button type="button" id="wp-copy" title="Copier le lien de cette vue" aria-label="Copier le lien de cette vue">Copier le lien de cette vue</button></div>
+      <div id="tour-hud" role="group" aria-label="Contrôles du tour guidé" hidden>
+        <strong id="tour-label"></strong>
+        <button type="button" id="tour-prev" aria-label="Étape précédente">←</button>
+        <button type="button" id="tour-pause" aria-label="Mettre en pause" aria-pressed="false">Pause</button>
+        <button type="button" id="tour-next" aria-label="Étape suivante">→</button>
+        <button type="button" id="tour-quit" aria-label="Quitter le tour">Quitter</button>
+        <span id="tour-step" role="status" aria-live="polite"></span>
+      </div>
       <div class="hunt-hud" id="hunt-hud" role="status" aria-live="polite" hidden>
         <div class="hunt-head">
           <div id="hunt-target">—</div>
@@ -404,7 +426,7 @@
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
-    import { getWaypoints, CURATED_IDS } from './src/data/waypoints.js';
+    import { getWaypoints, CURATED_IDS, TOURS } from './src/data/waypoints.js';
     import { HUNT_TARGETS } from './src/data/hunt.js';
     import { AnatomyTree } from './src/data/hierarchy.js';
     import { basePixelRatio, dprSuivant } from './src/qualite-rendu.js';
@@ -511,6 +533,7 @@
     let selected = null, detailStructure = null, activeGroup = null;
     let groupAnim = null, waypointTour = null, tourActive = false, tourAngle = 0;
     let currentWaypoint = null;
+    let tourActif = false;
     let cameraTween = null, forceCulling = false;
     let lodBias = 1, pixelRatio = BASE_PIXEL_RATIO, bonnesFenetresDpr = 0;
     let lastClick = 0;
@@ -632,7 +655,7 @@
       detailFact.textContent = `Bloc ${node.depth} : ${count} structures. Cliquez sur un sous-bloc ci-dessus pour descendre d'un niveau, ou sur une structure de la liste pour l'isoler.`;
       engine.clearWaypoints();
       engine.setWaypointsVisible(false);
-      waypointTour = null;
+      arreterTour();
       currentWaypoint = null;
       wpInfo.style.display = 'none';
       renderBreadcrumb();
@@ -702,6 +725,55 @@
       detailFact.textContent = wp.text;
     }
 
+    /* BENCH-011 — un tour est une séquence d'étapes vérifiables, pas une
+     * animation inventée : chaque étape pointe un waypoint du manifeste. */
+    function arreterTour() {
+      waypointTour = null;
+      tourActif = false;
+      document.getElementById('tour-hud').hidden = true;
+      document.getElementById('tour-pause').setAttribute('aria-pressed', 'false');
+      document.getElementById('tour-pause').textContent = 'Pause';
+    }
+
+    function etapeTour(tour, index) {
+      if (!tour?.steps?.length) return;
+      const step = tour.steps[index];
+      const structure = engine.byId.get(step.id);
+      if (!structure) return;
+      const waypoints = getWaypoints(structure);
+      const wp = waypoints[Math.min(step.wp, waypoints.length - 1)];
+      const url = new URL(location.href);
+      url.searchParams.set('vue', structure.id);
+      url.searchParams.set('wp', String(wp.index));
+      history.replaceState(null, '', url);
+      /* selectStructure() remet waypointTour à zéro : on le restaure après
+       * l'initialisation de la structure pour que la séquence continue. */
+      selectStructure(structure, true).then(() => {
+        waypointTour = tour;
+        tour.index = index;
+        engine.setWaypointsVisible(true);
+        showWaypoint(wp);
+        document.getElementById('tour-step').textContent =
+          `étape ${index + 1}/${tour.steps.length}`;
+        needsRender = true;
+        announce(`Tour ${tour.label}, étape ${index + 1} sur ${tour.steps.length} : ${wp.label}`);
+      });
+    }
+
+    function demarrerTour(tour) {
+      if (!tour?.steps?.length) return;
+      tourActif = true;
+      tour.index = 0;
+      tour.timer = 0;
+      tour.playing = !reduceMotion;
+      document.getElementById('tour-hud').hidden = false;
+      document.getElementById('tour-label').textContent = tour.label;
+      document.getElementById('tour-pause').setAttribute('aria-pressed', String(!tour.playing));
+      document.getElementById('tour-pause').textContent = tour.playing ? 'Pause' : 'Reprendre';
+      etapeTour(tour, 0);
+      if (reduceMotion) announce('Tour en mode manuel : réduction des mouvements activée.');
+    }
+
     async function selectStructure(structure, focus) {
       if (!structure) return;
       const generation = ++selectGeneration;
@@ -734,6 +806,7 @@
       engine.highlight(structure, '#ffffff');
       engine.showWaypoints(getWaypoints(structure));
       engine.setWaypointsVisible(false);
+      if (!tourActif) document.getElementById('tour-hud').hidden = true;
       waypointTour = null;
       currentWaypoint = null;
       wpInfo.style.display = 'none';
@@ -898,6 +971,10 @@
         engine.setWaypointsVisible(true);
         waypointTour = { waypoints: getWaypoints(selected), index: 0, timer: 2.1 };
       } },
+      ...TOURS.map((tour) => ({
+        label: `Tour : ${tour.label}`,
+        action: () => demarrerTour(tour),
+      })),
       { label: 'Battement cardiaque', action: () => startSceneAnim('heartbeat', QUICK_ACCESS[4].ids) },
       { label: 'Respiration', action: () => startSceneAnim('breathing', QUICK_ACCESS[2].ids) },
       { label: 'Clignement', action: () => startSceneAnim('blink', ['organ:bp-fibrous-layer-of-eyeball-l', 'organ:bp-fibrous-layer-of-eyeball-r']) },
@@ -1032,7 +1109,7 @@
       engine.resetGroupTransforms();
       engine.isolate(null);
       engine.setWaypointsVisible(false);
-      waypointTour = null;
+      arreterTour();
       currentWaypoint = null;
       wpInfo.style.display = 'none';
       document.getElementById('group-actions').style.display = 'none';
@@ -1311,6 +1388,12 @@
           e.preventDefault();
           return;
         }
+        if (waypointTour?.steps) {
+          arreterTour();
+          announce('Tour guidé quitté.');
+          e.preventDefault();
+          return;
+        }
         if (document.activeElement === searchInput) {
           if (searchInput.value) {
             searchInput.value = '';
@@ -1383,7 +1466,7 @@
         groupAnim = null;
         cameraTween = null;
         tourActive = false;
-        waypointTour = null;
+        arreterTour();
         engine.clearAnimation();
         needsRender = true;
       }
@@ -1406,7 +1489,19 @@
         camera.position.y = controls.target.y + 0.12 + Math.sin(tourAngle * 2) * 0.06;
         camera.lookAt(controls.target);
       }
-      if (waypointTour) {
+      if (waypointTour?.steps) {
+        /* Tour guidé multi-structures : l'enchaînement automatique est
+         * désactivé sous prefers-reduced-motion (mode manuel). */
+        if (waypointTour.playing && !reduceMotion) {
+          waypointTour.timer += dt;
+          if (waypointTour.timer > 2.2) {
+            waypointTour.timer = 0;
+            const n = waypointTour.steps.length;
+            etapeTour(waypointTour, (waypointTour.index + 1) % n);
+          }
+        }
+      } else if (waypointTour) {
+        /* Ancien tour mono-structure conservé pour le bouton « Waypoints ». */
         waypointTour.timer += dt;
         if (waypointTour.timer > 2.2) {
           waypointTour.timer = 0;
@@ -1573,13 +1668,36 @@
       if (detailTimer) clearTimeout(detailTimer);
       detailTimer = null;
       tourActive = false;
-      waypointTour = null;
+      arreterTour();
       groupAnim = null;
       engine.clearHover();
       engine.clearAnimation();
     }
     window.__v2Stop = stop;
     window.addEventListener('pagehide', stop);
+    /* Commandes du tour guidé (BENCH-011). */
+    document.getElementById('tour-prev').addEventListener('click', () => {
+      if (!waypointTour?.steps) return;
+      const n = waypointTour.steps.length;
+      etapeTour(waypointTour, (waypointTour.index - 1 + n) % n);
+    });
+    document.getElementById('tour-next').addEventListener('click', () => {
+      if (!waypointTour?.steps) return;
+      const n = waypointTour.steps.length;
+      etapeTour(waypointTour, (waypointTour.index + 1) % n);
+    });
+    document.getElementById('tour-pause').addEventListener('click', (e) => {
+      if (!waypointTour?.steps) return;
+      waypointTour.playing = !waypointTour.playing;
+      e.currentTarget.setAttribute('aria-pressed', String(!waypointTour.playing));
+      e.currentTarget.textContent = waypointTour.playing ? 'Pause' : 'Reprendre';
+      announce(waypointTour.playing ? 'Tour repris.' : 'Tour en pause.');
+    });
+    document.getElementById('tour-quit').addEventListener('click', () => {
+      arreterTour();
+      announce('Tour guidé quitté.');
+    });
+
     /* BENCH-009 — catalogue des vues remarquables, généré depuis les
      * identifiants curés et le manifeste livré (jamais écrit à la main). */
     function renderCatalogue() {
@@ -1608,6 +1726,7 @@
       if (!btn) return;
       const structure = engine.byId.get(btn.dataset.vue);
       if (!structure) return;
+      arreterTour();
       const url = new URL(location.href);
       url.searchParams.set('vue', structure.id);
       url.searchParams.delete('wp');
@@ -1628,6 +1747,7 @@
     function applyDeepLink() {
       const params = new URLSearchParams(location.search);
       const id = params.get('vue');
+      arreterTour();
       if (!id) return;
       const structure = engine.byId.get(id);
       if (!structure) {
