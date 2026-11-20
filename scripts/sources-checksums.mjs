@@ -9,6 +9,9 @@ import { execFileSync } from "node:child_process";
  */
 
 const ROOT = path.resolve(import.meta.dirname, "..");
+/* Les empreintes BP3D sont enregistrées relativement au dépôt principal.
+ * SOURCES_ROOT permet de les vérifier depuis un worktree ou un build hors arbre. */
+const ANCRAGE = process.env.SOURCES_ROOT || ROOT;
 const BP = process.env.ANATOMY_SOURCE || "/home/tasour/.cache/corps-sources/human-atlas/public/models";
 const FILE = path.join(ROOT, "docs/analyses/sources-checksums.json");
 const REFRESH = process.argv.includes("--refresh");
@@ -52,7 +55,7 @@ if (REFRESH) {
   const data = JSON.parse(fs.readFileSync(FILE, "utf8"));
   const missing = [], changed = [];
   for (const [rel, expected] of Object.entries(data.files)) {
-    const file = path.isAbsolute(rel) ? rel : path.join(ROOT, rel);
+    const file = path.isAbsolute(rel) ? rel : path.join(ANCRAGE, rel);
     if (!fs.existsSync(file)) { missing.push(rel); continue; }
     if (sha256(file) !== expected) changed.push(rel);
   }
