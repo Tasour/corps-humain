@@ -1,0 +1,24 @@
+{
+ "avant": {
+  "structures": 2009,
+  "parCategorie": {
+   "bone": 286,
+   "muscle": 695,
+   "organ": 1028
+  },
+  "appels": 4,
+  "triangles": 816805,
+  "visibles": 2009
+ },
+ "apres": {
+  "structures": 1438,
+  "parCategorie": {
+   "bone": 261,
+   "muscle": 633,
+   "organ": 544
+  },
+  "appels": 4,
+  "triangles": 174779,
+  "visibles": 1438
+ }
+}
