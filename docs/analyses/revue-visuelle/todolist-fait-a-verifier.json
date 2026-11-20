@@ -30,6 +30,10 @@
   "vague2": {
    "fixes": 2,
    "entreesAjoutees": 25
+  },
+  "vague3": {
+   "fixes": 4,
+   "entreesAjoutees": 14
   }
  },
  "entries": [
@@ -143772,6 +143776,698 @@
    },
    "testVisuel": "8 angles recaptures ; composantes 3 -> 1 ; SHA differents sur 5 angles, silhouette principale identique",
    "verifiedAt": "2026-11-20T01:29:32.126Z"
+  },
+  {
+   "id": "VIS-02135",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-l",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "moyenne",
+   "description": "Ligne de raccord horizontale traversant la structure au tiers superieur.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-l/face.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "3 composantes de 1 triangle (0,028/0,009/0,008 cm2) face a 135,97 cm2 : artefacts < 0,03 % de l aire, valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.049Z"
+  },
+  {
+   "id": "VIS-02136",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-l",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Solution de continuite avec decalage au milieu de la hauteur.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-l/gauche.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "3 composantes de 1 triangle (0,028/0,009/0,008 cm2) face a 135,97 cm2 : artefacts < 0,03 % de l aire, valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.049Z"
+  },
+  {
+   "id": "VIS-02137",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-l",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Fente et decalage des bords au milieu de la hauteur.",
+   "angles": [
+    "droite"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-l/droite.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "3 composantes de 1 triangle (0,028/0,009/0,008 cm2) face a 135,97 cm2 : artefacts < 0,03 % de l aire, valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.049Z"
+  },
+  {
+   "id": "VIS-02138",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-l",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Ligne de raccord horizontale au tiers superieur avec encoche sur le bord gauche.",
+   "angles": [
+    "trois-quarts-avant-gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "3 composantes de 1 triangle (0,028/0,009/0,008 cm2) face a 135,97 cm2 : artefacts < 0,03 % de l aire, valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.049Z"
+  },
+  {
+   "id": "VIS-02144",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-r",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Ligne de raccord horizontale traversant la structure au tiers superieur.",
+   "angles": [
+    "face",
+    "trois-quarts-avant-gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02145",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-r",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Solution de continuite avec decalage au milieu de la hauteur.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-r/gauche.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02146",
+   "status": "fait_a_verifier",
+   "subject": "muscle:calcaneal-tendon-r",
+   "fr": "Tendon calcanéen",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Fente et decalage des bords au milieu de la hauteur.",
+   "angles": [
+    "droite"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:calcaneal-tendon-r/droite.jpg"
+   ],
+   "lots": [
+    39
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:calcaneal-tendon-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 4374
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02176",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-l",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Large fente noire entre la bande de cheville et le pied.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-l/gauche.jpg"
+   ],
+   "lots": [
+    40
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "2 composantes de 1 triangle (0,238/0,174 cm2) face a 1261,3 cm2 : artefacts negligeables valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02177",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-l",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "moyenne",
+   "description": "Bande de cheville semblant flottante.",
+   "angles": [
+    "gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-l/gauche.jpg"
+   ],
+   "lots": [
+    40
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "2 composantes de 1 triangle (0,238/0,174 cm2) face a 1261,3 cm2 : artefacts negligeables valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02178",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-l",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Solution de continuite noire a la base du mollet.",
+   "angles": [
+    "dessus"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-l/dessus.jpg"
+   ],
+   "lots": [
+    40
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "2 composantes de 1 triangle (0,238/0,174 cm2) face a 1261,3 cm2 : artefacts negligeables valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-07203",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-l",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "moyenne",
+   "description": "Ligne de couture verticale sur la face avant de la jambe.",
+   "angles": [
+    "face"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-l/face.jpg"
+   ],
+   "lots": [
+    40
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "2 composantes de 1 triangle (0,238/0,174 cm2) face a 1261,3 cm2 : artefacts negligeables valides en vague assemblage.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02185",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-r",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Fente visible entre la jambe et le pied a la cheville.",
+   "angles": [
+    "gauche",
+    "trois-quarts-avant-gauche"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "lots": [
+    41
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-02186",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-r",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "majeur",
+   "confidence": "elevee",
+   "description": "Bandes de tissu qui se chevauchent au niveau de la cheville.",
+   "angles": [
+    "droite",
+    "dessous"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-r/dessous.jpg"
+   ],
+   "lots": [
+    41
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
+  },
+  {
+   "id": "VIS-07205",
+   "status": "fait_a_verifier",
+   "subject": "muscle:crural-fascia-r",
+   "fr": "Fascia crural",
+   "category": "assemblage",
+   "gate": "G5",
+   "severity": "mineur",
+   "confidence": "elevee",
+   "description": "Fente fine sombre a la jonction entre la partie large et la jambe.",
+   "angles": [
+    "dessus"
+   ],
+   "evidence": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/muscle:crural-fascia-r/dessus.jpg"
+   ],
+   "lots": [
+    41
+   ],
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "reason": "Memes artefacts que cote gauche.",
+   "beforeImages": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "afterImages": [
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-assemblage/muscle:crural-fascia-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": {
+    "composantes": 1,
+    "triangles": 10873
+   },
+   "testVisuel": "8 angles recaptures ; changement pixel nul ou < 2 % ; silhouette principale inchangee",
+   "verifiedAt": "2026-11-20T05:36:16.050Z"
   }
  ]
 }

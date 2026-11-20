@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated": "2026-11-20T03:08:28.573Z",
+  "generated": "2026-11-20T05:34:39.636Z",
   "structures": 2009,
   "counts": {
    "S0": 0,
@@ -11679,16 +11679,16 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 4377,
-    "boundaryEdges": 13,
+    "triangles": 4374,
+    "boundaryEdges": 4,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 4,
+    "components": 1,
     "degenerate": 0,
     "flippedFaces": 14,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 32.18,
+    "densityPerCm2": 32.17,
     "edgeP99Mm": 19.112
    },
    "captures": null,
@@ -11711,16 +11711,16 @@
     "G3": false
    },
    "metrics": {
-    "triangles": 4377,
-    "boundaryEdges": 13,
+    "triangles": 4374,
+    "boundaryEdges": 4,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 4,
+    "components": 1,
     "degenerate": 0,
     "flippedFaces": 14,
     "invertedWinding": false,
     "zeroNormals": 0,
-    "densityPerCm2": 32.18,
+    "densityPerCm2": 32.17,
     "edgeP99Mm": 19.112
    },
    "captures": null,
@@ -40506,17 +40506,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 10875,
-    "boundaryEdges": 355,
+    "triangles": 10873,
+    "boundaryEdges": 349,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 3,
+    "components": 1,
     "degenerate": 0,
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 8.62,
-    "edgeP99Mm": 10.011
+    "edgeP99Mm": 10.001
    },
    "captures": null,
    "blockers": [
@@ -40537,17 +40537,17 @@
     "G3": true
    },
    "metrics": {
-    "triangles": 10875,
-    "boundaryEdges": 355,
+    "triangles": 10873,
+    "boundaryEdges": 349,
     "nonManifoldEdges": 0,
     "duplicateFaces": 0,
-    "components": 3,
+    "components": 1,
     "degenerate": 0,
     "flippedFaces": 0,
     "invertedWinding": false,
     "zeroNormals": 0,
     "densityPerCm2": 8.62,
-    "edgeP99Mm": 10.011
+    "edgeP99Mm": 10.001
    },
    "captures": null,
    "blockers": [

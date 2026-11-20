@@ -26,6 +26,7 @@
 - `preuves-anatomie.md` — 12 premières questions prouvées par sources croisées.
 - `textures/os-proxy.md` — pilote de texture CC0 (asset produit).
 - `textures/os-proxy-branchement.md` — branchement expérimental `?tex=os-proxy` et preuve avant/après.
+- `vagues/03-assemblage.md` — 4 structures à fragments négligeables corrigées, 26 classées non corrigeables.
 - `todolist.json` — machine-readable : `summary` (couverture, compteurs, limites) et
   `entries` (id `VIS-xxxxx`, statut `a_faire`, structure, catégorie, porte G0–G8, sévérité,
   confiance, description, angles, preuves avec chemin absolu).

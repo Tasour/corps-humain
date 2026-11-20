@@ -2233,3 +2233,7 @@ Généré le 2026-11-20. Cause : controls.minDistance = 0,12 m dans le harnais d
 
 - `organ:temporal-pole-l` — verifie — 8 avant, 8 après
 - `organ:temporal-pole-r` — verifie — 8 avant, 8 après
+
+## Vague 3 — assemblage
+
+4 structures corrigees, 14 entrees ajoutees. Composantes 4→1 et 3→1 ; triangles -8 ; changement pixel nul ou < 2 %.

@@ -41,7 +41,17 @@ function truncate(geometry, minArea) {
     area.set(r, (area.get(r) || 0) + 0.5 * Math.hypot(uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx));
   }
   const keep = new Set([...area.entries()].filter(([, a]) => a * 1e4 >= minArea).map(([r]) => r));
-  if (keep.size === area.size) return { geometry, removed: 0 };
+  if (keep.size === area.size) {
+    return {
+      geometry: {
+        /* Copies exactes : les vues originales pointent dans tout le chunk,
+         * Buffer.from(view.buffer) écraserait le fichier entier. */
+        positions: pos.slice(), normals: geometry.norm.slice(), indices: idx.slice(),
+        vertexCount: V, indexCount: idx.length, bounds: geometry.bounds,
+      },
+      removed: 0,
+    };
+  }
   const keptTris = [];
   for (let t = 0; t < T; t++) if (keep.has(find(idx[t * 3]))) keptTris.push(idx[t * 3], idx[t * 3 + 1], idx[t * 3 + 2]);
   /* compactage */

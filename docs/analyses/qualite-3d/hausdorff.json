@@ -1,6 +1,6 @@
 {
  "summary": {
-  "generated": "2026-11-20T03:08:46.027Z",
+  "generated": "2026-11-20T05:34:58.883Z",
   "structures": 2009,
   "samplesPerDirection": 256,
   "medium": {
@@ -8090,23 +8090,23 @@
    "fr": "Tendon calcanéen",
    "category": "muscle",
    "triangles": {
-    "high": 4377,
-    "medium": 1492,
-    "low": 298
+    "high": 4374,
+    "medium": 1489,
+    "low": 295
    },
    "medium": {
     "maxMm": 0.37360501728566914,
-    "meanMm": 0.0378479593446502,
+    "meanMm": 0.03798609058313432,
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.37360501728566914,
-    "samples": 655
+    "samples": 649
    },
    "low": {
     "maxMm": 1.9105457164110176,
-    "meanMm": 0.13423591262792064,
+    "meanMm": 0.1347258247178036,
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 1.9105457164110176,
-    "samples": 438
+    "samples": 428
    }
   },
   {
@@ -8114,23 +8114,23 @@
    "fr": "Tendon calcanéen",
    "category": "muscle",
    "triangles": {
-    "high": 4377,
-    "medium": 1492,
-    "low": 299
+    "high": 4374,
+    "medium": 1489,
+    "low": 296
    },
    "medium": {
     "maxMm": 0.37360414616614995,
-    "meanMm": 0.0375403763827906,
+    "meanMm": 0.0376773850557205,
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.37360414616614995,
-    "samples": 655
+    "samples": 649
    },
    "low": {
     "maxMm": 1.7477600912023414,
-    "meanMm": 0.14328505562609756,
+    "meanMm": 0.1438079937853169,
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 1.7477600912023414,
-    "samples": 438
+    "samples": 428
    }
   },
   {
@@ -8666,23 +8666,23 @@
    "fr": "Fascia crural",
    "category": "muscle",
    "triangles": {
-    "high": 10875,
-    "medium": 1499,
-    "low": 411
+    "high": 10873,
+    "medium": 1497,
+    "low": 409
    },
    "medium": {
-    "maxMm": 0.9920412093384937,
-    "meanMm": 0.10883538666085037,
+    "maxMm": 0.8812387775379948,
+    "meanMm": 0.09884903239528431,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.9920412093384937,
-    "samples": 577
+    "fineToCoarseMaxMm": 0.8812387775379948,
+    "samples": 574
    },
    "low": {
-    "maxMm": 11.999690133293182,
-    "meanMm": 1.120965400772784,
+    "maxMm": 14.654424853174469,
+    "meanMm": 1.1510656926756688,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 11.999690133293182,
-    "samples": 649
+    "fineToCoarseMaxMm": 14.654424853174469,
+    "samples": 642
    }
   },
   {
@@ -8690,23 +8690,23 @@
    "fr": "Fascia crural",
    "category": "muscle",
    "triangles": {
-    "high": 10875,
-    "medium": 1499,
-    "low": 411
+    "high": 10873,
+    "medium": 1497,
+    "low": 409
    },
    "medium": {
-    "maxMm": 0.7479362268546409,
-    "meanMm": 0.10393233788520928,
+    "maxMm": 1.0409257763558084,
+    "meanMm": 0.10237926529043645,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7479362268546409,
-    "samples": 577
+    "fineToCoarseMaxMm": 1.0409257763558084,
+    "samples": 574
    },
    "low": {
-    "maxMm": 10.57055371844205,
-    "meanMm": 1.1992278763573643,
+    "maxMm": 11.150059879298773,
+    "meanMm": 1.2299303671737603,
     "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 10.57055371844205,
-    "samples": 649
+    "fineToCoarseMaxMm": 11.150059879298773,
+    "samples": 642
    }
   },
   {
