@@ -159,6 +159,22 @@ export default Plugin.define({
         },
       });
       editor.add({
+        name: "ci-scope",
+        description: "Vérifie le scope GitHub workflow et rappelle la procédure sans stocker de secret.",
+        execute: async ({ sessionID }) => {
+          let status = "";
+          try { status = execFileSync("gh", ["auth", "status"], { encoding: "utf8" }); } catch { /* gh absent */ }
+          const line = status.split("\n").find((l) => l.includes("Token scopes")) || "scopes inconnus";
+          const ok = line.includes("workflow");
+          await ctx.session.synthetic({
+            sessionID,
+            text: ok
+              ? `CI : scope workflow present. ${line}`
+              : `CI : scope workflow absente (${line}). Lancer "gh auth refresh -h github.com -s workflow", puis valider le code affiche sur https://github.com/login/device. Voir la skill github-ci-scope. Ne jamais memoriser le token ni le code.`,
+          });
+        },
+      });
+      editor.add({
         name: "revue-vague",
         description: "Orchestre une vague de correction en worktrees isolées, puis consolidation et vérification.",
         execute: async ({ sessionID, prompt }) => {

@@ -60,6 +60,8 @@ filtrés sur `corps.quality` / `corps.worktrees`.
 - Skills : `.opencode/skills/anatomie-web/` (protocole et `references/sources.md`) et
   `.opencode/skills/textures-web/` (assemblage CC0, `references/licences.md`,
   `scripts/assemble-texture.py` teste).
+- Skill `.opencode/skills/github-ci-scope/SKILL.md` : procédure du scope `workflow` GitHub,
+  sans mémoriser de token ni de code device ; commande `/ci-scope` dans `corps-quality`.
 - Plugin `.opencode/plugins/corps-research/index.ts` (`corps.research`) : outils
   `corps_web_search`, `corps_web_source`, `corps_license_check`, `corps_evidence_add`,
   `corps_texture_fetch` ; commandes `/source-anatomique`, `/texture-web`, `/prouver`.

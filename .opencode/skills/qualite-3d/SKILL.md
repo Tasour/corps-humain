@@ -49,6 +49,7 @@ node scripts/worktree-wave.mjs create <noms>
 - Micro-composante : 0,1 % suffit (suppression de quelques milliers de pixels).
 - Audit : aucune régression de la baseline structure par structure.
 - Tests : `npm test`, 35/35 3D, 19/19 a11y, 52/52 groupes.
+- CI GitHub : voir la skill `github-ci-scope` (scope `workflow`, commande `/ci-scope`).
 
 ## Références
 
