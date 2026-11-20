@@ -441,6 +441,12 @@
     ground.receiveShadow = true;
     scene.add(ground);
 
+    /* Flag de rendu : ?tex=os-proxy charge une texture CC0 Experimentale pour
+     * le tissu osseux. Sans ce parametre, le rendu procedural reste identique. */
+    const proxyTexture = new URLSearchParams(location.search).get('tex');
+    if (proxyTexture && /^[a-z0-9-]{1,40}$/.test(proxyTexture)) {
+      window.__V2_TEXTURE_PROXY = proxyTexture;
+    }
     const engine = new AnatomyV2Engine({ lod: 'low' });
     engine.camera = camera;
     await engine.load((p, label) => {

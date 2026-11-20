@@ -240,6 +240,32 @@ async function loadTissueTextures() {
     tex.repeat.set(5, 5);
     out[key] = { map: tex, ...derivePbrMaps(canvas) };
   }
+
+  /* Flag experimental : ?tex=os-proxy (ou window.__V2_TEXTURE_PROXY) remplace
+   * la carte os procedurelle par une texture CC0 assemblée et versionnee.
+   * Aucun autre tissu n'est touché et le fallback reste le rendu d'origine. */
+  const proxy = typeof window !== "undefined" ? window.__V2_TEXTURE_PROXY : null;
+  if (proxy && /^[a-z0-9-]{1,40}$/.test(proxy)) {
+    try {
+      const loader = new THREE.TextureLoader();
+      const base = `${import.meta.env?.BASE_URL || "./"}textures/${proxy}/`;
+      const load = async (file, srgb = false) => {
+        const texture = await loader.loadAsync(`${base}${file}`);
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(5, 5);
+        if (srgb) texture.colorSpace = THREE.SRGBColorSpace;
+        return texture;
+      };
+      const [map, normal, roughness] = await Promise.all([
+        load("albedo.jpg", true),
+        load("normal.jpg"),
+        load("roughness.jpg"),
+      ]);
+      out.bone = { map, normal, roughness };
+    } catch (error) {
+      console.warn(`[textures] proxy ${proxy} indisponible, fallback procedural`, error);
+    }
+  }
   return out;
 }
 

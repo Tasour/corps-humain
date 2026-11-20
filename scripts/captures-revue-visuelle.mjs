@@ -120,7 +120,8 @@ async function worker(index, list) {
   page.setDefaultTimeout(300000);
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
-  await page.goto(`${BASE}/v2.html`);
+  const query = process.env.REVUE_QUERY || "";
+  await page.goto(`${BASE}/v2.html${query}`);
   await page.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 300000 });
   await page.waitForTimeout(500);
 

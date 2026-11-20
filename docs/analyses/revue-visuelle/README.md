@@ -24,7 +24,8 @@
 - `vagues/02.md` — bilan de la vague 2 (composantes flottantes retirées sur 2 structures).
 - `vagues/03-05.md` — état des 16 427 entrées restantes et raisons de non-correction.
 - `preuves-anatomie.md` — 12 premières questions prouvées par sources croisées.
-- `textures/os-proxy.md` — pilote de texture CC0 (asset produit, non branché).
+- `textures/os-proxy.md` — pilote de texture CC0 (asset produit).
+- `textures/os-proxy-branchement.md` — branchement expérimental `?tex=os-proxy` et preuve avant/après.
 - `todolist.json` — machine-readable : `summary` (couverture, compteurs, limites) et
   `entries` (id `VIS-xxxxx`, statut `a_faire`, structure, catégorie, porte G0–G8, sévérité,
   confiance, description, angles, preuves avec chemin absolu).
