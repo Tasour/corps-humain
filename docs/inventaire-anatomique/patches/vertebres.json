@@ -1,0 +1,53 @@
+{
+  "family": "vertebres",
+  "exclusions": [
+    {
+      "id": "bone:bp-cervical-vertebra",
+      "reason": "Agrégat BodyParts3D FMA9915 (7 pièces : C3-C7, atlas, axis) présenté sous un identifiant singulier. Des vertèbres cervicales individuelles Z-Anatomy existent (bone:vertebra-c3..c7), ainsi que bone:atlas-c1 et bone:axis-c2 pour C1/C2.",
+      "replacements": [
+        "bone:vertebra-c3",
+        "bone:vertebra-c4",
+        "bone:vertebra-c5",
+        "bone:vertebra-c6",
+        "bone:vertebra-c7"
+      ]
+    },
+    {
+      "id": "bone:bp-first-thoracic-vertebra",
+      "reason": "Modèle BodyParts3D FMA9165 d'une seule vertèbre T1, mais anatomiquement incorrect (revue visuelle : processus transverses de type cervical, absence de facettes costales, processus épineux excessivement long). La vertèbre T1 individuelle Z-Anatomy bone:vertebra-t1 est disponible et correcte.",
+      "replacements": [
+        "bone:vertebra-t1"
+      ]
+    },
+    {
+      "id": "bone:bp-lumbar-vertebra",
+      "reason": "Agrégat BodyParts3D FMA9921 (5 pièces : L1-L5) présenté sous un identifiant singulier. Les cinq vertèbres lombaires individuelles Z-Anatomy existent (bone:vertebra-l1..l5).",
+      "replacements": [
+        "bone:vertebra-l1",
+        "bone:vertebra-l2",
+        "bone:vertebra-l3",
+        "bone:vertebra-l4",
+        "bone:vertebra-l5"
+      ]
+    },
+    {
+      "id": "bone:bp-thoracic-vertebra",
+      "reason": "Agrégat BodyParts3D FMA9139 (12 pièces : T1-T12) présenté sous un identifiant singulier. Les douze vertèbres thoraciques individuelles Z-Anatomy existent (bone:vertebra-t1..t12).",
+      "replacements": [
+        "bone:vertebra-t1",
+        "bone:vertebra-t2",
+        "bone:vertebra-t3",
+        "bone:vertebra-t4",
+        "bone:vertebra-t5",
+        "bone:vertebra-t6",
+        "bone:vertebra-t7",
+        "bone:vertebra-t8",
+        "bone:vertebra-t9",
+        "bone:vertebra-t10",
+        "bone:vertebra-t11",
+        "bone:vertebra-t12"
+      ]
+    }
+  ],
+  "keep": []
+}
