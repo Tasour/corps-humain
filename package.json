@@ -15,6 +15,7 @@
     "audit:3d": "node scripts/audit-qualite-3d.mjs",
     "audit:3d:baseline": "node scripts/audit-qualite-3d.mjs --baseline",
     "audit:3d:check": "node scripts/audit-qualite-3d.mjs --check",
+    "check:modele": "node scripts/check-modele.mjs",
     "captures:3d": "node scripts/captures-qualite-3d.mjs",
     "captures:revue": "node scripts/captures-revue-visuelle.mjs",
     "revue:consolide": "node scripts/consolider-revue-visuelle.mjs",
@@ -47,13 +48,14 @@
     "test:explode": "node tests/explode.test.mjs",
     "test:source-id": "node tests/source-id.test.mjs",
     "test:fiches": "node tests/fiches.test.mjs",
+    "test:check-modele": "node tests/check-modele.test.mjs",
     "test:groupes": "node tests/groupes.test.mjs",
     "test:groupes3d": "node tests/groupes-3d.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core",
     "test:waypoints": "node tests/waypoints.test.mjs",
     "test:chasse": "node tests/chasse.test.mjs",
-    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions && npm run test:dpr"
+    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions && npm run test:dpr && npm run test:check-modele"
   },
   "dependencies": {
     "three": "^0.187.0"

@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-012",
+  "objectif": "Vérifier le modèle distribué (manifeste, chunks, fiches, références) avant publication",
+  "avant": {
+    "commit": "dd96a06",
+    "comportement": "audit:3d:check contrôlait la topologie et sources:check les fichiers sources, mais rien ne validait le manifeste livré ni ses références"
+  },
+  "apres": {
+    "controles": ["identite", "lod", "chunks", "licences", "references", "fiches"],
+    "portee": "2009 structures, 9 chunks gzip, 2009 fiches, références waypoints/groupes/chasse/tours",
+    "integration": "npm run check:modele en CI après la baseline topologique",
+    "negative": "un ID dupliqué injecté dans une copie du manifeste fait échouer le check (exit 1, verdict ECHEC)"
+  },
+  "preuves": {
+    "sortie": "docs/analyses/check-modele-output.txt",
+    "rapport": "docs/analyses/check-modele.json",
+    "mesures": { "structures": 2009, "chunks": 9, "anomalies": 0 }
+  },
+  "tests": { "check-modele": "OK + détection négative", "npm test": "vert" },
+  "verdict": "OK"
+}

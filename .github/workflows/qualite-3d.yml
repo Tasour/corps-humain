@@ -29,6 +29,8 @@ jobs:
 
       - name: Baseline topologique
         run: npm run audit:3d:check
+      - name: Modèle livré
+        run: npm run check:modele
       - name: Scorecard et écart LOD
         run: |
           npm run scorecard:3d

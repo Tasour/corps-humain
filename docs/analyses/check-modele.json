@@ -1,0 +1,16 @@
+{
+ "generated": "2026-11-20T12:43:40.812Z",
+ "manifest": "public/models/v2/manifest.json",
+ "structures": 2009,
+ "chunks": 9,
+ "controles": [
+  "identite",
+  "lod",
+  "chunks",
+  "licences",
+  "references",
+  "fiches"
+ ],
+ "anomalies": [],
+ "verdict": "OK"
+}

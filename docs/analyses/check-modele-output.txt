@@ -1,0 +1,10 @@
+
+> corps-humain@1.0.0 check:modele
+> node scripts/check-modele.mjs
+
+[check-modele] OK — 2009 structures, 9 chunks, 0 anomalie(s)
+
+> corps-humain@1.0.0 test:check-modele
+> node tests/check-modele.test.mjs
+
+PASS  check du modèle livré : 2009 structures OK, détection négative d'un ID dupliqué

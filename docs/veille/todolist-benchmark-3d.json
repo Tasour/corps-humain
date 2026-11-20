@@ -259,8 +259,10 @@
    ],
    "verification": "node scripts/check-modele.mjs",
    "preuveAttendue": "0 identité ou licence manquante",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-012"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-012",
+   "verdict": "OK — check du modèle livré (6 contrôles, 2009 structures, 9 chunks), détection négative prouvée",
+   "preuve": "docs/analyses/check-modele-2026-11-20.json"
   },
   {
    "id": "BENCH-013",
