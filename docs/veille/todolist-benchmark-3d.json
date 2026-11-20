@@ -131,8 +131,10 @@
    "dependances": [],
    "verification": "npm run scorecard:3d + docs/SOURCES-3D.md",
    "preuveAttendue": "2 009 fiches traçables",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-006"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-006",
+   "verdict": "OK — 2009 fiches générées (source/licence/limite), affichées hors ligne; 5/5; panneau +3,06 % desktop",
+   "preuve": "docs/analyses/fiches-verite-2026-11-20.json"
   },
   {
    "id": "BENCH-007",

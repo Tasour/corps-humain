@@ -257,6 +257,15 @@
     .details .meta span:first-child { flex: 0 0 auto; }
     .details .meta span:last-child { color: var(--ink); font-weight: 600; text-align: right; overflow-wrap: anywhere; min-width: 0; }
     .fact { margin-top: 18px; padding: 14px; background: #fbf3e8; border-left: 3px solid var(--accent); border-radius: 6px; font-size: 12.5px; color: #5a4a3c; }
+     .verite {
+       margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line);
+       border-radius: 8px; background: rgba(103,232,249,.04);
+     }
+     .verite h3 { margin: 0 0 8px; font: 600 13px Georgia, serif; color: var(--teal); }
+     .verite dl { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 5px 12px; margin: 0; font-size: 11.5px; }
+     .verite dt { color: var(--muted); white-space: nowrap; }
+     .verite dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+     .verite-avertissement { margin: 10px 0 0; font-size: 10.5px; color: var(--muted); }
     .legacy-link { margin-top: 16px; font-size: 11px; color: var(--muted); }
     .legacy-link a { color: var(--teal); }
     #sel-name { font: 600 30px/1.1 Georgia, serif; }
@@ -457,6 +466,11 @@
       </div>
       <div class="meta" id="detail-meta"></div>
       <div class="fact" id="detail-fact">Explorez les 2 039 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+      <section class="verite" id="detail-verite" aria-label="Fiche de vérité de la structure" hidden>
+        <h3>Fiche de vérité</h3>
+        <dl id="detail-verite-champs"></dl>
+        <p class="verite-avertissement">Modèle pédagogique — aucune valeur diagnostique.</p>
+      </section>
       <p class="legacy-link"><a href="./index.html">Version classique</a> — pathologies simulées, jeux et coupe anatomique.</p>
     </aside>
   </div>
@@ -546,6 +560,17 @@
     });
     engine.addTo(scene);
     scene.add(engine.hoverScene);
+
+    /* BENCH-006 — fiches de vérité générées, chargées une seule fois. Le
+     * service worker les pré-cache pour le fonctionnement hors ligne. */
+    const fichesVerite = new Map();
+    try {
+      const reponseFiches = await fetch('./data/fiches-verite.json');
+      if (reponseFiches.ok) {
+        const donnees = await reponseFiches.json();
+        for (const fiche of donnees.structures || []) fichesVerite.set(fiche.id, fiche);
+      }
+    } catch { /* sans fichier, la section reste masquée */ }
 
     /* BENCH-004 — coupes locales pilotables dans v2. Les trois normales sont
      * fixes ; seule la constante du plan (position) change. */
@@ -706,6 +731,7 @@
       }
       document.getElementById('sel-name').textContent = node.label;
       document.getElementById('sel-meta').textContent = `${count} structures · niveau ${node.depth}`;
+      document.getElementById('detail-verite').hidden = true;
       detailFact.textContent = `Bloc ${node.depth} : ${count} structures. Cliquez sur un sous-bloc ci-dessus pour descendre d'un niveau, ou sur une structure de la liste pour l'isoler.`;
       engine.clearWaypoints();
       engine.setWaypointsVisible(false);
@@ -777,6 +803,33 @@
       document.getElementById('wp-text').textContent = wp.text;
       wpInfo.style.display = 'block';
       detailFact.textContent = wp.text;
+    }
+
+    /* BENCH-006 — rendu de la fiche de vérité. Les valeurs passent toutes par
+     * textContent : aucune donnée générée n'est interprétée comme du HTML. */
+    function afficherVerite(structure) {
+      const panneau = document.getElementById('detail-verite');
+      const champs = document.getElementById('detail-verite-champs');
+      const fiche = fichesVerite.get(structure.id) || fichesVerite.get(structure.source_id);
+      champs.replaceChildren();
+      if (!fiche) { panneau.hidden = true; return; }
+      const lignes = [
+        ['Source', fiche.source],
+        ['Licence', fiche.licence],
+        ['FMA', fiche.fma || '—'],
+        ['TA2', fiche.ta2 || '—'],
+        ['Identifiant source', fiche.source_id],
+        ['Limite', fiche.limite],
+        ['Vérifié le', fiche.date],
+      ];
+      for (const [cle, valeur] of lignes) {
+        const dt = document.createElement('dt');
+        dt.textContent = cle;
+        const dd = document.createElement('dd');
+        dd.textContent = String(valeur);
+        champs.append(dt, dd);
+      }
+      panneau.hidden = false;
     }
 
     /* BENCH-011 — un tour est une séquence d'étapes vérifiables, pas une
@@ -881,6 +934,7 @@
         `<div><span>Système</span><span>${labels[structure.category] || structure.category}</span></div>` +
         `<div><span>Code TA2</span><span>${structure.ta2 || '—'}</span></div>` +
         `<div><span>Source</span><span>${structure.source || '—'}</span></div>`;
+      afficherVerite(structure);
       detailFact.textContent = `Cette structure fait partie du système ${structure.category}. Activez les points d'intérêt pour découvrir ses parties et leurs anecdotes.`;
 
       const level = innerWidth < 820 ? 'medium' : 'high';
@@ -1172,6 +1226,7 @@
       document.getElementById('sel-name').textContent = 'Chasse aux organes';
       document.getElementById('sel-meta').textContent = 'Cliquez la structure demandée dans le corps';
       document.getElementById('detail-meta').innerHTML = '';
+      document.getElementById('detail-verite').hidden = true;
       huntHud.hidden = false;
       document.body.classList.add('hunting');
       huntButton.setAttribute('aria-pressed', 'true');
@@ -1204,6 +1259,7 @@
       document.getElementById('sel-name').textContent = 'Cliquez sur une structure';
       document.getElementById('sel-meta').textContent = 'ou choisissez-la dans la liste';
       document.getElementById('detail-meta').innerHTML = '';
+      document.getElementById('detail-verite').hidden = true;
       announce('Chasse aux organes fermée.');
     }
 
@@ -1469,6 +1525,7 @@
           document.getElementById('sel-name').textContent = 'Cliquez sur une structure';
           document.getElementById('sel-meta').textContent = 'ou choisissez-la dans la liste';
           document.getElementById('detail-meta').innerHTML = '';
+      document.getElementById('detail-verite').hidden = true;
           document.querySelectorAll('#list .item').forEach((el, i) => {
             el.classList.remove('active');
             el.setAttribute('aria-checked', 'false');

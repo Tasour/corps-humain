@@ -56,5 +56,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:explode
       - name: Identifiants source stables
         run: TEST_BASE=http://localhost:5199 npm run test:source-id
+      - name: Fiches de vérité
+        run: TEST_BASE=http://localhost:5199 npm run test:fiches
       - name: Build
         run: npm run build

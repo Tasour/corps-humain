@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-006",
+  "objectif": "Fiche de vérité par structure : source, licence, identifiant et limite vérifiable",
+  "avant": {
+    "commit": "7e3914a",
+    "comportement": "le panneau détails affichait nom latin, système, TA2 et source globale, sans licence ni limite par structure"
+  },
+  "apres": {
+    "generation": "scripts/generate-fiches-verite.mjs dérive 2009 fiches du manifeste, de l'inventaire et du registre d'empreintes ; aucune affirmation clinique inventée",
+    "champs": "id, source_id, source, licence (CC BY 4.0 / CC BY-SA 4.0), fma, ta2, limite, date",
+    "affichage": "section « Fiche de vérité » dans le panneau détails, valeurs insérées en textContent, avertissement « modèle pédagogique »",
+    "hors_ligne": "fichier ajouté au pré-cache du service worker, version corps-v42"
+  },
+  "mesures": {
+    "fiches": 2009,
+    "parLicence": { "CC BY-SA 4.0": 1443, "CC BY 4.0": 566 },
+    "poids": "618 Ko",
+    "captures_panneau_desktop": 3.06,
+    "captures_panneau_mobile": 1.4
+  },
+  "tests": { "fiches": "5/5", "source-id": "5/5", "a11y": "22/22", "reseau": "0 externe" },
+  "verdict": "OK"
+}

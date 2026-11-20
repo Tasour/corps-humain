@@ -39,3 +39,15 @@ npm run sources:refresh        # recalcule le fichier d'empreintes après une mi
 Aucun rebuild du jeu de données (`npm run models:v2`) ne doit être lancé si
 `npm run sources:check` échoue. Les corrections de la revue visuelle (vagues 0–2) ont été
 appliquées sans rebuild ; le prochain rebuild devra repartir de ces sources vérifiées.
+
+## Fiches de vérité par structure (20 novembre 2026)
+
+`npm run models:fiches` génère `public/data/fiches-verite.json` : une fiche pour chacune
+des 2 009 structures, avec source, licence, FMA/TA2, identifiant source immuable et
+limite factuelle. Les limites décrivent uniquement des faits de provenance vérifiables
+(nombre de pièces assemblées, absence de code TA2, simplification du maillage) et
+rappellent que le modèle est pédagogique, pas diagnostique.
+
+Le fichier est pré-caché par le service worker (`corps-v42`) et affiché dans le panneau
+détails de `v2.html`. Vérification : `npm run test:fiches` et
+`docs/analyses/fiches-verite-2026-11-20.json`.

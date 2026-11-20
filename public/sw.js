@@ -2,7 +2,7 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v41";
+const CACHE_VERSION = "corps-v42";
 const SHELL = [
   "./",
   "./index.html",
@@ -22,6 +22,7 @@ const MODELS = [
   "./models/anatomy.json",
   "./models/anatomy.bin.gz",
   "./models/v2/manifest.json",
+  "./data/fiches-verite.json",
   "./models/v2/bone.low.bin.gz",
   "./models/v2/muscle.low.bin.gz",
   "./models/v2/organ.low.bin.gz",
