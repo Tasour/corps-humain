@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-014",
+  "objectif": "Pages statiques adressables par structure, index et sitemap, sans dérive",
+  "avant": {
+    "commit": "9a7cd36",
+    "comportement": "aucune page indexable : seul le viewer v2 existait, sans URL par structure"
+  },
+  "apres": {
+    "generation": "scripts/generate-pages-structures.mjs, exécuté en prebuild : 2009 pages + index + sitemap.xml + robots.txt dans dist/",
+    "contenu": "h1 et og:title cohérents avec title, meta description 150–250 caractères calculée, provenance/licence/limite, points d'intérêt canoniques, lien deep link vers v2.html",
+    "determinisme": "empreintes SHA-256 identiques entre deux générations indépendantes ; contrôle de dérive du build",
+    "taille": "génération en 0,3 s, pages non versionnées (gitignore), absentes du dépôt mais présentes dans dist/"
+  },
+  "captures": {
+    "avant": ["docs/analyses/pages-avant-desktop.png", "docs/analyses/pages-avant-mobile.png"],
+    "apres": ["docs/analyses/pages-apres-desktop.png", "docs/analyses/pages-apres-mobile.png"],
+    "diffs": ["docs/analyses/pages-diff-desktop.png", "docs/analyses/pages-diff-mobile.png"]
+  },
+  "mesures": { "pages": 2009, "fichiers": 2012, "desktop": 99.93, "mobile": 99.8, "build": "OK, dist/structures = 2010 entrées" },
+  "tests": { "pages": "2009 pages validées", "check-pages": "OK", "build": "OK" },
+  "verdict": "OK"
+}

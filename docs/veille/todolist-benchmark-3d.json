@@ -304,8 +304,10 @@
    ],
    "verification": "npm run build + sitemap",
    "preuveAttendue": "2 009 pages indexables",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-014"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-014",
+   "verdict": "OK — 2009 pages générées au build + index + sitemap, déterminisme vérifié; captures ~100 %",
+   "preuve": "docs/analyses/pages-structures-2026-11-20.json"
   },
   {
    "id": "BENCH-015",

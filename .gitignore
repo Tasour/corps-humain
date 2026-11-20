@@ -5,3 +5,6 @@ zanatomy-objects.json
 wasm/*/target/
 .DS_Store
 *.log
+/public/structures/
+/public/sitemap.xml
+/public/robots.txt
