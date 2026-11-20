@@ -384,11 +384,13 @@
     import { getWaypoints } from './src/data/waypoints.js';
     import { HUNT_TARGETS } from './src/data/hunt.js';
     import { AnatomyTree } from './src/data/hierarchy.js';
+    import { basePixelRatio, dprSuivant } from './src/qualite-rendu.js';
     import './src/data/hierarchy.css';
 
     const viewport = document.getElementById('viewport');
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    const BASE_PIXEL_RATIO = basePixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(BASE_PIXEL_RATIO);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.BasicShadowMap;
     renderer.shadowMap.autoUpdate = false;
@@ -486,7 +488,7 @@
     let selected = null, detailStructure = null, activeGroup = null;
     let groupAnim = null, waypointTour = null, tourActive = false, tourAngle = 0;
     let cameraTween = null, forceCulling = false;
-    let lodBias = 1, pixelRatio = Math.min(devicePixelRatio, 1.5);
+    let lodBias = 1, pixelRatio = BASE_PIXEL_RATIO, bonnesFenetresDpr = 0;
     let lastClick = 0;
     let selectGeneration = 0;
     let detailTimer = null;
@@ -1506,8 +1508,15 @@
         /* Coût CPU MOYEN DES RENDUS RÉELS : divisé par frameCount (les appels
          * à renderer.render()), jamais par le nombre de frames rAF. */
         const avg = frameCount ? frameSum / frameCount : avgRenderMs;
-        if (avg > 8 && pixelRatio > 1) {
-          pixelRatio = Math.max(1, pixelRatio - 0.25);
+        /* Politique bornée et réversible (BENCH-017) : dégradation au-delà de
+         * 8 ms, restauration après 3 fenêtres sous 4 ms, jamais au-dessus de
+         * la résolution de départ ni du plafond matériel de 2. */
+        const resolution = dprSuivant({
+          pixelRatio, base: BASE_PIXEL_RATIO, avgMs: avg, bonnesFenetres: bonnesFenetresDpr,
+        });
+        bonnesFenetresDpr = resolution.bonnesFenetres;
+        if (resolution.pixelRatio !== pixelRatio) {
+          pixelRatio = resolution.pixelRatio;
           renderer.setPixelRatio(pixelRatio);
           /* Le biais LOD reste à 1 : le seuil WASM garantit déjà que toutes
            * les structures restent visibles en vue corps entier. */
@@ -1545,6 +1554,13 @@
     window.addEventListener('pagehide', stop);
     loop();
     window.__v2 = engine;
+    /* Observabilité de la résolution (BENCH-017) : valeur courante, valeur de
+     * départ et coût moyen, exposés en lecture seule aux harnais de test. */
+    window.__v2Qualite = {
+      get pixelRatio() { return pixelRatio; },
+      get base() { return BASE_PIXEL_RATIO; },
+      get avgMs() { return avgRenderMs; },
+    };
     /* Three.js exposé pour les harnais de captures (plans de coupe locaux,
      * cadrage) : le module n'est pas accessible depuis la page de test. */
     window.__THREE = THREE;

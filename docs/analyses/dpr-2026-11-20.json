@@ -1,0 +1,23 @@
+{
+ "date": "2026-11-20",
+ "item": "BENCH-017",
+ "avant": {
+  "v1": "Math.min(devicePixelRatio, 2) — conforme",
+  "v2": "Math.min(devicePixelRatio, 1.5) — conforme au plafond mais dégradation sans restauration (v2.html:1509-1511)"
+ },
+ "apres": {
+  "v1": "inchangé",
+  "v2": {
+   "pixelRatio": 1,
+   "base": 1,
+   "avgMs": 65.30000001192093,
+   "dpr": 1
+  },
+  "restauration": "dprSuivant(): degrade >8 ms, restaure <4 ms après 3 fenêtres, bornes [1, min(base,2)]"
+ },
+ "preuves": [
+  "tests/dpr.test.mjs : 14 cas + grillage bornes",
+  "npm run test:a11y : 22/22 (dont 1 cas DPR)"
+ ],
+ "verdict": "OK"
+}

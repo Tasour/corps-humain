@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-20T09:10:18.960Z",
-  "passed": 21,
-  "total": 21,
+  "generated": "2026-11-20T09:21:31.411Z",
+  "passed": 22,
+  "total": 22,
   "results": [
     {
       "name": "langue et titre du document",
@@ -45,6 +45,10 @@
     },
     {
       "name": "radiogroup v2 : une seule structure cochée et navigation par flèches",
+      "ok": true
+    },
+    {
+      "name": "résolution de rendu bornée et réversible (BENCH-017)",
       "ok": true
     },
     {

@@ -1,7 +1,7 @@
 # Accessibilité et responsive — atlas CORPS v2
 
 Date : 19 novembre 2026 · Mis à jour le 20 novembre 2026 (BENCH-003) ·
-Page : `/v2.html` · Preuve : `npm run test:a11y` → **21/21**,
+Page : `/v2.html` · Preuve : `npm run test:a11y` → **22/22**,
 `npm run test:v2` → **30/30**. Captures : `docs/analyses/a11y/`.
 
 Ce document ne décrit pas des intentions mais des mesures : les contrastes sont calculés

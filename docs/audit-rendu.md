@@ -426,3 +426,25 @@ ce serait réintroduire la passe d'ombre sur 2 104 instances à chaque mouvement
   1 000 ms (`v2.html:865`) plafonne le rendu réel à 1 image/s.** Tant qu'il est en place,
   aucune optimisation du moteur ne se verra à l'écran — et le HUD continuera d'afficher
   120 fps tant que `frames++` (`:874`) comptera les callbacks rAF au lieu des rendus.
+
+---
+
+## Amendement du 20 novembre 2026 — résolution de rendu (BENCH-017)
+
+Les lignes citées dans l'audit initial sont antérieures aux réécritures de la boucle de rendu ;
+les références ci-dessous prévalent pour ce point précis.
+
+| Élément | Avant | Après |
+|---|---|---|
+| Plafond v1 | `Math.min(devicePixelRatio, 2)` (`src/scene.js:146`) | inchangé |
+| Plafond v2 | `Math.min(devicePixelRatio, 1.5)` (`v2.html:391`) | `basePixelRatio(window.devicePixelRatio)` → `min(dpr, 1,5)`, **borné matériellement à 2** |
+| Dégradation | `pixelRatio = max(1, pixelRatio − 0,25)` si coût > 8 ms | identique, mais isolée dans `src/qualite-rendu.js` |
+| Restauration | **aucune** : le ratio restait dégradé jusqu'au rechargement | après 3 fenêtres consécutives sous 4 ms, retour par pas de 0,25 jusqu'à la résolution de départ |
+| Observabilité | aucune | `window.__v2Qualite` (courante, de départ, coût moyen), lecture seule |
+
+La logique est un cœur pur (`src/qualite-rendu.js`) testé par un oracle indépendant
+(`tests/dpr.test.mjs`) : 14 cas nommés dont les seuils, l'hystérésis, le plancher, le plafond
+matériel et les entrées invalides, plus un grillage complet des bornes. Mesure runtime dans
+Chromium headless : `devicePixelRatio = 1`, `base = 1`, `pixelRatio = 1`, aucun dépassement.
+`npm run test:a11y` passe de 21/21 à **22/22** avec le cas de bornage. Rapport détaillé :
+`docs/analyses/dpr-2026-11-20.json`.

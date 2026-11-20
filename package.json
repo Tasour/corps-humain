@@ -36,13 +36,14 @@
     "test:visual": "node tests/visual-collisions.mjs",
     "test:a11y": "node tests/a11y-v2.mjs",
     "test:reseau": "node tests/reseau-local.mjs",
+    "test:dpr": "node tests/dpr.test.mjs",
     "test:groupes": "node tests/groupes.test.mjs",
     "test:groupes3d": "node tests/groupes-3d.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core",
     "test:waypoints": "node tests/waypoints.test.mjs",
     "test:chasse": "node tests/chasse.test.mjs",
-    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions"
+    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions && npm run test:dpr"
   },
   "dependencies": {
     "three": "^0.187.0"

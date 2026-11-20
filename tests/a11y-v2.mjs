@@ -240,6 +240,19 @@ await check("radiogroup v2 : une seule structure cochée et navigation par flèc
   assert.equal(after.checked, 1, "la flèche bas laisse plusieurs structures cochées");
 });
 
+await check("résolution de rendu bornée et réversible (BENCH-017)", async () => {
+  const q = await page.evaluate(() => ({
+    pixelRatio: window.__v2Qualite?.pixelRatio,
+    base: window.__v2Qualite?.base,
+    avgMs: window.__v2Qualite?.avgMs,
+  }));
+  assert.ok(Number.isFinite(q.pixelRatio), "résolution courante absente");
+  assert.ok(Number.isFinite(q.base), "résolution de départ absente");
+  assert.ok(q.base >= 1 && q.base <= 2, `base hors bornes : ${q.base}`);
+  assert.ok(q.pixelRatio >= 1 && q.pixelRatio <= q.base + 1e-9,
+    `courante hors bornes : ${q.pixelRatio} > base ${q.base}`);
+});
+
 /* ---------- v1 : filtre de type (radiogroup) ------------------------------ */
 const v1page = await desktop.newPage();
 v1page.setDefaultTimeout(90000);

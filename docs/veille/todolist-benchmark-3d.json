@@ -343,8 +343,10 @@
    "dependances": [],
    "verification": "grep setPixelRatio + capture mobile",
    "preuveAttendue": "DPR <= 2 partout",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-017"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-017",
+   "verdict": "OK — plafond 2 prouvé, dégradation bornée et restaurée après 3 fenêtres calmes; a11y 21/21 → 22/22; test:dpr 14 cas",
+   "preuve": "docs/analyses/dpr-2026-11-20.json"
   },
   {
    "id": "BENCH-018",
