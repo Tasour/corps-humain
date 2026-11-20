@@ -1,18 +1,18 @@
 # Audit qualité 3D — mesures topologiques
 
-Généré le 2026-11-19 par `npm run audit:3d`.
-LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles.
+Généré le 2026-11-20 par `npm run audit:3d`.
+LOD analysé(s) : **high** · 2 009 enregistrements · 6 298 928 triangles.
 
 ## Synthèse
 
 | Indicateur | Valeur |
 |---|---:|
-| Structures étanches et manifold | **1 346 / 2 040** (66 %) |
-| Structures avec arêtes libres (bords) | 694 |
+| Structures étanches et manifold | **1 344 / 2 009** (66.9 %) |
+| Structures avec arêtes libres (bords) | 665 |
 | Structures avec arêtes non-manifold | 0 |
-| Structures en plusieurs composantes connexes | 693 |
+| Structures en plusieurs composantes connexes | 662 |
 | Triangles dégénérés | 0 (0 %) |
-| Faces inversées (normale de face ≠ sommets) | 10 937 (0.168 %) |
+| Faces inversées (normale de face ≠ sommets) | 10 867 (0.173 %) |
 | Faces dupliquées | 0 |
 | Structures à volume signé négatif (winding inversé) | 0 |
 | Normales nulles | 0 |
@@ -22,7 +22,7 @@ LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles
 
 | Catégorie | LOD | Structures | Triangles | Médiane | P10 | P90 | Densité méd. (tri/cm²) | Étanches | Non-manifold | Pluri-composantes |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| bone | high | 317 | 935 323 | 1 460 | 314 | 7 523 | 53.6 | 257 | 0 | 62 |
+| bone | high | 286 | 724 478 | 1 324 | 292 | 6 980 | 53.8 | 255 | 0 | 31 |
 | muscle | high | 695 | 2 372 709 | 1 472 | 330 | 6 760 | 35.8 | 591 | 0 | 97 |
 | organ | high | 1 028 | 3 201 741 | 818 | 274 | 6 606 | 111.9 | 498 | 0 | 534 |
 
@@ -31,7 +31,7 @@ LOD analysé(s) : **high** · 2 040 enregistrements · 6 509 773 triangles
 | Source | Structures | Triangles | Étanches | Winding inversé | Pluri-composantes |
 |---|---:|---:|---:|---:|---:|
 | Z-Anatomy | 1 443 | 4 767 278 | 1 200 | 0 | 342 |
-| BodyParts3D 4.0 | 597 | 1 742 495 | 146 | 0 | 351 |
+| BodyParts3D 4.0 | 566 | 1 531 650 | 144 | 0 | 320 |
 
 ## 15 structures les plus ouvertes (ratio arêtes libres / triangles)
 

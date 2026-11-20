@@ -1,11 +1,10 @@
 # Rapport de collisions — jeu de données v2
 
-146 anomalie(s) sur 2040 structures.
+145 anomalie(s) sur 2009 structures.
 
 - **[hors-peau-exemptee]** Phalange distale du premier doigt de la main (bone:distal-phalanx-of-first-finger-of-hand-r) : bornes -0.335,0.767,0.057 → -0.321,0.791,0.074 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[hors-peau-exemptee]** Phalange distale du deuxième doigt de la main (bone:distal-phalanx-of-second-finger-of-hand-r) : bornes -0.322,0.708,0.070 → -0.311,0.722,0.088 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[hors-peau-exemptee]** Premier métacrapien (bone:first-metacarpal-bone-r) : bornes -0.320,0.809,0.023 → -0.281,0.848,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
-- **[hors-peau-exemptee]** Os métacarpien (bone:bp-metacarpal-bone-r) : bornes -0.310,0.797,0.012 → -0.225,0.875,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[hors-peau-exemptee]** Phalange moyenne du deuxième doigt de la main (bone:middle-phalanx-of-second-finger-of-hand-r) : bornes -0.319,0.717,0.051 → -0.304,0.738,0.073 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[hors-peau-exemptee]** Phalange proximale du premier doigt de la main (bone:proximal-phalanx-of-first-finger-of-hand-r) : bornes -0.329,0.784,0.042 → -0.308,0.816,0.065 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5
 - **[hors-peau-exemptee]** Phalange proximale du deuxième doigt de la main (bone:proximal-phalanx-of-second-finger-of-hand-r) : bornes -0.313,0.732,0.033 → -0.290,0.771,0.057 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5

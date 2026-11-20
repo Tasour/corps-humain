@@ -1,6 +1,6 @@
 # Scorecard qualité 3D — statuts par structure
 
-Généré le 2026-11-19 par `npm run scorecard:3d`.
+Généré le 2026-11-20 par `npm run scorecard:3d`.
 
 > **Lecture :** S1 = mesurée, S2 = topologie et orientation saines, S3 = production.
 > Aucune structure n'est S3 aujourd'hui : G4 (résolution) et G5 (assemblage) ne sont pas
@@ -11,8 +11,8 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Statut | Structures | Part |
 |---|---:|---:|
 | S0 | 0 | 0.0 % |
-| S1 | 1 073 | 52.6 % |
-| S2 | 967 | 47.4 % |
+| S1 | 1 042 | 51.9 % |
+| S2 | 967 | 48.1 % |
 | S3 | 0 | 0.0 % |
 | S4 | 0 | 0.0 % |
 
@@ -20,10 +20,10 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 
 | Porte | Structures qui passent | Part |
 |---|---:|---:|
-| G0 traçabilité (source, chemin, TA2) | 1 979 | 97.0 % |
-| G2 topologie + étanchéité (classification provisoire) | 1 585 | 77.7 % |
-| G2 topologie seule (hors étanchéité) | 2 040 | 100.0 % |
-| G3 orientation et normales | 1 296 | 63.5 % |
+| G0 traçabilité (source, chemin, TA2) | 1 948 | 97.0 % |
+| G2 topologie + étanchéité (classification provisoire) | 1 585 | 78.9 % |
+| G2 topologie seule (hors étanchéité) | 2 009 | 100.0 % |
+| G3 orientation et normales | 1 268 | 63.1 % |
 
 ## Pilotes — 5 structures prioritaires
 
@@ -31,7 +31,7 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 |---|---:|---:|---:|---:|---|
 | Cœur | 6 | 4 | 8/8 | 0 | 15 faces inversées ; 7 faces inversées |
 | Encéphale | 1 | 0 | 8/8 | 0 | 7258 arêtes libres ; 652 composantes ; 26 faces inversées |
-| Main droite | 40 | 32 | 8/8 | 0 | 532 arêtes libres ; 6 composantes ; 11 faces inversées ; G0 TA2 absent |
+| Main droite | 39 | 32 | 8/8 | 0 | 11 faces inversées ; G0 TA2 absent ; 4 composantes ; 5 faces inversées |
 | Face | 1 | 0 | 8/8 | 0 | 5135 arêtes libres ; 294 composantes ; 12 faces inversées |
 | Genou droit | 3 | 3 | 8/8 | 0 | — |
 
@@ -40,9 +40,6 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | Structure | Cat. | Statut | Bloqueurs |
 |---|---|---|---|
 | `bone:bp-bony-pelvis` | bone | S1 | 658 arêtes libres ; 16 composantes ; 3 faces inversées ; captures absentes |
-| `bone:bp-neurocranium` | bone | S1 | 4947 arêtes libres ; 304 composantes ; 25 faces inversées ; captures absentes |
-| `bone:bp-neurocranium-l` | bone | S1 | 3246 arêtes libres ; 121 composantes ; 16 faces inversées ; captures absentes |
-| `bone:bp-neurocranium-r` | bone | S1 | 3072 arêtes libres ; 122 composantes ; 16 faces inversées ; captures absentes |
 | `bone:cricoid-cartilage` | bone | S1 | 17 arêtes libres ; 4 composantes ; 1 faces inversées ; captures absentes |
 | `bone:ethmoid-bone` | bone | S1 | 172 arêtes libres ; 33 composantes ; 27 faces inversées ; captures absentes |
 | `bone:lateral-process-of-nasal-septal-cartilage-l` | bone | S1 | 9 arêtes libres ; 3 composantes ; 1 faces inversées ; captures absentes |
@@ -59,6 +56,9 @@ Généré le 2026-11-19 par `npm run scorecard:3d`.
 | `muscle:bp-levator-ani-l` | muscle | S1 | 8008 arêtes libres ; 1146 composantes ; 12 faces inversées ; captures absentes |
 | `muscle:bp-levator-ani-r` | muscle | S1 | 6227 arêtes libres ; 1203 composantes ; 6 faces inversées ; captures absentes |
 | `muscle:bp-levator-veli-palatini-r` | muscle | S1 | 1070 arêtes libres ; 2 composantes ; 8 faces inversées ; captures absentes |
+| `muscle:bp-mouth-l` | muscle | S1 | 1802 arêtes libres ; 9 composantes ; 10 faces inversées ; captures absentes |
+| `muscle:bp-mouth-r` | muscle | S1 | 1772 arêtes libres ; 11 composantes ; 9 faces inversées ; captures absentes |
+| `muscle:bp-tensor-veli-palatini-l` | muscle | S1 | 820 arêtes libres ; 7 composantes ; 3 faces inversées ; captures absentes |
 
 ## Trous de complétude constatés
 

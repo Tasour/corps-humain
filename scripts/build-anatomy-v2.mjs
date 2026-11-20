@@ -199,9 +199,23 @@ function isAggregateConcept(s) {
  * l'iléon et le jéjunum séparés superposerait trois fois la même géométrie. */
 const SUBSET_DUPLICATES = new Set(["organ:bp-ileum", "organ:bp-jejunum"]);
 
+/* Exclusions validées par la revue visuelle (vague 1) : agrégats présentés
+ * sous un identifiant singulier, ou pièces rompues, avec des structures
+ * individuelles de remplacement vérifiées par les agents. Les patchs sont des
+ * données versionnées, pas du code : voir docs/inventaire-anatomique/patches/. */
+const PATCH_DIR = path.resolve(import.meta.dirname, "../docs/inventaire-anatomique/patches");
+const REVIEW_EXCLUSIONS = new Set();
+if (fs.existsSync(PATCH_DIR)) {
+  for (const file of fs.readdirSync(PATCH_DIR).filter((f) => f.endsWith(".json")).sort()) {
+    const patch = JSON.parse(fs.readFileSync(path.join(PATCH_DIR, file), "utf8"));
+    for (const e of patch.exclusions || []) REVIEW_EXCLUSIONS.add(e.id);
+  }
+}
+
 const keptConcepts = allStructures.filter(
   (s) => !EXCLUDED_CONCEPTS.has(s.id)
     && !SUBSET_DUPLICATES.has(s.id)
+    && !REVIEW_EXCLUSIONS.has(s.id)
     && !isAggregateConcept(s),
 );
 /* L'inventaire contient parfois DEUX concepts FMA pour la même structure

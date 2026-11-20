@@ -257,15 +257,14 @@ augmentent, ou si le nombre de triangles d'une structure baisse de plus de 2 %.
 
 ## 7. État des lieux mesuré — 19 novembre 2026
 
-Jeu de données : **2 040 structures**, **6 509 773 triangles** au LOD `high`
-(source complète, sans plafond ; jeu reconstruit, orientation et faces dupliquées
-corrigées le 19 novembre 2026).
+Jeu de données : **2 009 structures**, **6 298 928 triangles** au LOD `high`
+(source complète, sans plafond ; 31 agrégats exclus par la revue visuelle du 20 novembre).
 
 | Porte | Mesure | Verdict |
 |---|---|---|
-| G0 Traçabilité | 2 040/2 040 sources et licences ; 1 979/2 040 TA2 (96,9 %) | 🟡 |
+| G0 Traçabilité | 2 009/2 009 sources et licences ; 1 948/2 009 TA2 (97,0 %) | 🟡 |
 | G1 Complétude | œsophage absent ; poumons entiers absents ; hémisphères absents ; myocarde absent de `organ:bp-heart` | ❌ |
-| G2 Intégrité | 1 346/2 040 étanches et manifold (66,0 %) ; 694 avec bords ; **0 non-manifold** ; 693 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
+| G2 Intégrité | 1 344/2 009 étanches et manifold (66,9 %) ; 665 avec bords ; **0 non-manifold** ; 662 pluri-composantes ; 0 face dupliquée ; 0 dégénéré | ❌ |
 | G3 Normales | 0 winding inversé ; 10 937 faces inversées (0,168 %) ; 0 normale nulle ; 0 indice hors bornes | 🟡 |
 | G4 Résolution | `high` = source complète ; médiane 1 118 tris ; 954 structures < 1 000 tris (limite des sources) ; 0 structure plafonnée ; +1,44 M tris récupérés | 🟡 |
 | G5 Assemblage | non mesuré ; défauts connus par captures (épaules, hanches, ligne médiane) | ❌ |
@@ -299,9 +298,9 @@ simplification, orientations incohérentes, absence de revue par structure.
 
 ### 7.2 Résultats de l'instrumentation P0 (19 novembre 2026)
 
-**Statuts (source complète, œsophage ajouté, maillages manifold).** 1 073 structures en S1,
-967 en S2, **0 en S3**. G0 : 1 979/2 040 (96,9 %). G2 : 1 585 (77,7 %) avec la classification
-provisoire, 1 949 (95,5 %) hors étanchéité. G3 : 1 296 (63,5 %). Aucune structure n'atteint S3
+**Statuts (source complète, œsophage ajouté, maillages manifold, agrégats exclus).** 1 042 structures en S1,
+967 en S2, **0 en S3**. G0 : 1 948/2 009 (97,0 %). G2 : 1 585 (78,9 %) avec la classification
+provisoire, 1 949 (97,0 %) hors étanchéité. G3 : 1 268 (63,1 %). Aucune structure n'atteint S3
 tant que G4 (résolution qualitative) et G5 (assemblage) ne sont pas mesurés.
 
 **Captures.** 5 sujets pilotes × 8 angles = **40 images**, **0 débordement**. Le protocole a
@@ -311,7 +310,7 @@ BodyParts3D** (valves, sinus coronaire, veines cardiaques) — **pas de myocarde
 (`organ:left-ventricle`, `organ:right-ventricle`, `organ:left-atrium`, `organ:right-atrium`)
 et des valves.
 
-**Écart de silhouette.** Référence `high`, 2 040 structures, 256 sommets par direction :
+**Écart de silhouette.** Référence `high`, 2 009 structures, 256 sommets par direction :
 
 | Comparaison | Médiane | P90 | P99 | Max | > 0,5 mm | > 2 mm |
 |---|---:|---:|---:|---:|---:|---:|

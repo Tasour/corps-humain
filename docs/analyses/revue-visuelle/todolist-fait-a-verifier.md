@@ -2189,3 +2189,40 @@ Généré le 2026-11-20. Cause : controls.minDistance = 0,12 m dans le harnais d
 > Un verdict `verifie` signifie : couverture ≥ 10 % sur les 8 angles et au moins
 > deux fois la couverture initiale. Les autres verdicts restent en attente d'une
 > correction spécifique et ne doivent pas être comptés comme résolus.
+## Vague 1 — agrégats exclus du manifeste
+
+31 structures exclues, 452 entrées de la todolist concernées.
+
+| ID | Structure | Remplacements présents | Verdict |
+|---|---|---:|---|
+| VIS-00024 | `bone:bp-rib-l` | 12 | verifie |
+| VIS-00031 | `bone:bp-rib-r` | 12 | verifie |
+| VIS-01142 | `bone:bp-false-rib-l` | 5 | verifie |
+| VIS-01149 | `bone:bp-false-rib-r` | 5 | verifie |
+| VIS-00017 | `bone:bp-neurocranium` | 8 | verifie |
+| VIS-01308 | `bone:bp-neurocranium-l` | 2 | verifie |
+| VIS-01320 | `bone:bp-neurocranium-r` | 2 | verifie |
+| VIS-01329 | `bone:bp-nose-l` | 3 | verifie |
+| VIS-01342 | `bone:bp-nose-r` | 3 | verifie |
+| VIS-01118 | `bone:bp-external-nose-l` | 2 | verifie |
+| VIS-01140 | `bone:bp-external-nose-r` | 2 | verifie |
+| VIS-00038 | `bone:bp-root-of-nose-l` | 1 | verifie |
+| VIS-00039 | `bone:bp-root-of-nose-r` | 1 | verifie |
+| VIS-00001 | `bone:bp-canine-tooth-l` | 2 | verifie |
+| VIS-00008 | `bone:bp-canine-tooth-r` | 2 | verifie |
+| VIS-01183 | `bone:bp-incisor-tooth-l` | 4 | verifie |
+| VIS-01191 | `bone:bp-incisor-tooth-r` | 4 | verifie |
+| VIS-01274 | `bone:bp-molar-tooth-l` | 4 | verifie |
+| VIS-01286 | `bone:bp-molar-tooth-r` | 4 | verifie |
+| VIS-01345 | `bone:bp-premolar-tooth-l` | 4 | verifie |
+| VIS-01353 | `bone:bp-premolar-tooth-r` | 4 | verifie |
+| VIS-01383 | `bone:bp-tooth-l` | 14 | verifie |
+| VIS-01385 | `bone:bp-tooth-r` | 14 | verifie |
+| VIS-01218 | `bone:bp-metacarpal-bone-l` | 5 | verifie |
+| VIS-01227 | `bone:bp-metacarpal-bone-r` | 5 | verifie |
+| VIS-01236 | `bone:bp-metatarsal-bone-l` | 5 | verifie |
+| VIS-01255 | `bone:bp-metatarsal-bone-r` | 5 | verifie |
+| VIS-01107 | `bone:bp-cervical-vertebra` | 5 | verifie |
+| VIS-01167 | `bone:bp-first-thoracic-vertebra` | 1 | verifie |
+| VIS-01199 | `bone:bp-lumbar-vertebra` | 5 | verifie |
+| VIS-01381 | `bone:bp-thoracic-vertebra` | 12 | verifie |

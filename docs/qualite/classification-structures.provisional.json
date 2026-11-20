@@ -1,6 +1,6 @@
 {
  "version": "provisoire-1",
- "generated": "2026-11-19T04:01:29.539Z",
+ "generated": "2026-11-20T01:13:37.564Z",
  "method": "heuristique nom + catégorie ; à valider par revue anatomique en P2",
  "structures": {
   "bone:anterior-cells-of-ethmoid-bone-l": {
@@ -68,27 +68,12 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-canine-tooth-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-canine-tooth-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:capitate-bone-l": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
   "bone:capitate-bone-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-cervical-vertebra": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
@@ -363,26 +348,6 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-external-nose-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-external-nose-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-false-rib-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-false-rib-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:femur-l": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
@@ -463,11 +428,6 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-first-thoracic-vertebra": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:bp-floating-rib-l": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
@@ -544,16 +504,6 @@
    "provisional": true
   },
   "bone:hyoid-bone": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-incisor-tooth-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-incisor-tooth-r": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
@@ -693,11 +643,6 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-lumbar-vertebra": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:lunate-bone-l": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
@@ -754,26 +699,6 @@
    "provisional": true
   },
   "bone:medial-cuneiform-bone-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-metacarpal-bone-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-metacarpal-bone-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-metatarsal-bone-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-metatarsal-bone-r": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
@@ -868,16 +793,6 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-molar-tooth-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-molar-tooth-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:nasal-bone-l": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
@@ -903,37 +818,12 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-neurocranium": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-neurocranium-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-neurocranium-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:ninth-rib-l": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
   "bone:ninth-rib-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-nose-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-nose-r": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
@@ -989,16 +879,6 @@
    "provisional": true
   },
   "bone:posterior-cells-of-ethmoid-bone-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-premolar-tooth-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-premolar-tooth-r": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
@@ -1109,26 +989,6 @@
    "provisional": true
   },
   "bone:radius-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-rib-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-rib-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-root-of-nose-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-root-of-nose-r": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
@@ -1308,11 +1168,6 @@
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true
   },
-  "bone:bp-thoracic-vertebra": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
   "bone:thyroid-cartilage": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
@@ -1324,16 +1179,6 @@
    "provisional": true
   },
   "bone:tibia-r": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-tooth-l": {
-   "closed": true,
-   "reason": "os, organe plein ou ventre musculaire",
-   "provisional": true
-  },
-  "bone:bp-tooth-r": {
    "closed": true,
    "reason": "os, organe plein ou ventre musculaire",
    "provisional": true

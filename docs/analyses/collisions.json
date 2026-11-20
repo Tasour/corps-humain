@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-19T04:02:19.566Z",
-  "structures": 2040,
-  "count": 146,
+  "generated": "2026-11-20T01:18:40.445Z",
+  "structures": 2009,
+  "count": 145,
   "findings": [
     {
       "type": "hors-peau-exemptee",
@@ -23,13 +23,6 @@
       "a": "bone:first-metacarpal-bone-r",
       "fr": "Premier métacrapien",
       "detail": "bornes -0.320,0.809,0.023 → -0.281,0.848,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
-    },
-    {
-      "type": "hors-peau-exemptee",
-      "severity": "warning",
-      "a": "bone:bp-metacarpal-bone-r",
-      "fr": "Os métacarpien",
-      "detail": "bornes -0.310,0.797,0.012 → -0.225,0.875,0.054 en dehors de l'enveloppe cutanée — peau non autoritaire sur la main, à traiter en P5"
     },
     {
       "type": "hors-peau-exemptee",

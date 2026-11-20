@@ -17,6 +17,8 @@
     "captures:revue": "node scripts/captures-revue-visuelle.mjs",
     "revue:consolide": "node scripts/consolider-revue-visuelle.mjs",
     "revue:verifie": "node scripts/verifier-revue-visuelle.mjs",
+    "revue:exclusions": "node scripts/appliquer-exclusions-revue.mjs",
+    "revue:verifie-exclusions": "node scripts/verifier-exclusions.mjs",
     "scorecard:3d": "node scripts/scorecard-qualite-3d.mjs",
     "hausdorff:3d": "node scripts/hausdorff-v2.mjs",
     "test:v2": "node tests/v2-tests.mjs",

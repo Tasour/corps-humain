@@ -62,10 +62,13 @@ const MASTICATION = ["bone:mandible", "muscle:superficial-part-of-masseter-l",
   "muscle:deep-part-of-masseter-l", "muscle:temporalis-muscle-l",
   "muscle:superficial-part-of-masseter-r", "muscle:deep-part-of-masseter-r",
   "muscle:temporalis-muscle-r"];
-const SPINE = ["bone:bp-lumbar-vertebra", "bone:bp-thoracic-vertebra",
+/* Les agrégats BP3D (bp-lumbar-vertebra, bp-thoracic-vertebra, etc.) ont été
+ * exclus en vague 1 : ils contenaient toute une colonne sous un identifiant
+ * singulier. Les groupes utilisent désormais des vertèbres individuelles. */
+const SPINE = ["bone:vertebra-t8", "bone:vertebra-l3",
   "muscle:multifidus-lumborum-muscle-l", "muscle:multifidus-thoracis-muscle-l",
   "muscle:multifidus-lumborum-muscle-r", "muscle:multifidus-thoracis-muscle-r"];
-const NECK = ["bone:bp-cervical-vertebra", "bone:bp-first-thoracic-vertebra",
+const NECK = ["bone:vertebra-c3", "bone:vertebra-c4",
   "muscle:sternocleidomastoid-muscle-l", "muscle:sternocleidomastoid-muscle-r",
   "muscle:multifidus-colli-muscle-l", "muscle:multifidus-colli-muscle-r"];
 const SHOULDER_GIRDLE_L = ["bone:clavicle-l", "bone:scapula-l", "muscle:levator-scapulae-l",

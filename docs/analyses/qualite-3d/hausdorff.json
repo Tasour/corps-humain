@@ -1,23 +1,23 @@
 {
  "summary": {
-  "generated": "2026-11-19T04:01:48.383Z",
-  "structures": 2040,
+  "generated": "2026-11-20T01:13:54.357Z",
+  "structures": 2009,
   "samplesPerDirection": 256,
   "medium": {
    "medianMm": 0,
-   "p90Mm": 0.643,
-   "p99Mm": 4.367,
+   "p90Mm": 0.622,
+   "p99Mm": 4.096,
    "maxMm": 126.995,
-   "over05": 276,
-   "over2": 59
+   "over05": 262,
+   "over2": 53
   },
   "low": {
-   "medianMm": 0.406,
-   "p90Mm": 2.799,
-   "p99Mm": 17.385,
+   "medianMm": 0.394,
+   "p90Mm": 2.742,
+   "p99Mm": 14.991,
    "maxMm": 126.995,
-   "over05": 921,
-   "over2": 324
+   "over05": 894,
+   "over2": 311
   }
  },
  "structures": [
@@ -334,54 +334,6 @@
    }
   },
   {
-   "id": "bone:bp-canine-tooth-l",
-   "fr": "Dent canine",
-   "category": "bone",
-   "triangles": {
-    "high": 1490,
-    "medium": 1490,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 0.34570634963710384,
-    "meanMm": 0.04885342878796365,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.34570634963710384,
-    "samples": 529
-   }
-  },
-  {
-   "id": "bone:bp-canine-tooth-r",
-   "fr": "Dent canine",
-   "category": "bone",
-   "triangles": {
-    "high": 1482,
-    "medium": 1482,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 0.32101741076234863,
-    "meanMm": 0.04789245237319568,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.32101741076234863,
-    "samples": 527
-   }
-  },
-  {
    "id": "bone:capitate-bone-l",
    "fr": "Grand os",
    "category": "bone",
@@ -427,30 +379,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.2054772726976569,
     "samples": 390
-   }
-  },
-  {
-   "id": "bone:bp-cervical-vertebra",
-   "fr": "Vertèbre cervicale",
-   "category": "bone",
-   "triangles": {
-    "high": 12752,
-    "medium": 4760,
-    "low": 4736
-   },
-   "medium": {
-    "maxMm": 1.7413651387112457,
-    "meanMm": 0.11043142894238941,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.7413651387112457,
-    "samples": 530
-   },
-   "low": {
-    "maxMm": 3.096429998099403,
-    "meanMm": 0.12146172295651965,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.096429998099403,
-    "samples": 529
    }
   },
   {
@@ -1750,102 +1678,6 @@
    }
   },
   {
-   "id": "bone:bp-external-nose-l",
-   "fr": "Nez externe",
-   "category": "bone",
-   "triangles": {
-    "high": 1156,
-    "medium": 1156,
-    "low": 350
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 1.5454893114070398,
-    "meanMm": 0.09673640293785352,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.5454893114070398,
-    "samples": 571
-   }
-  },
-  {
-   "id": "bone:bp-external-nose-r",
-   "fr": "Nez externe",
-   "category": "bone",
-   "triangles": {
-    "high": 1150,
-    "medium": 1150,
-    "low": 394
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 1.584365222415922,
-    "meanMm": 0.08584299954666631,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.584365222415922,
-    "samples": 609
-   }
-  },
-  {
-   "id": "bone:bp-false-rib-l",
-   "fr": "Fausses côtes",
-   "category": "bone",
-   "triangles": {
-    "high": 6798,
-    "medium": 1500,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0.7767083091783683,
-    "meanMm": 0.09607838513220247,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7767083091783683,
-    "samples": 526
-   },
-   "low": {
-    "maxMm": 3.5016658350678145,
-    "meanMm": 0.5585774506210733,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.5016658350678145,
-    "samples": 448
-   }
-  },
-  {
-   "id": "bone:bp-false-rib-r",
-   "fr": "Fausses côtes",
-   "category": "bone",
-   "triangles": {
-    "high": 6808,
-    "medium": 1500,
-    "low": 299
-   },
-   "medium": {
-    "maxMm": 1.0209278379401003,
-    "meanMm": 0.11088533084237989,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.0209278379401003,
-    "samples": 525
-   },
-   "low": {
-    "maxMm": 3.818177004262383,
-    "meanMm": 0.5468246761345786,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.818177004262383,
-    "samples": 444
-   }
-  },
-  {
    "id": "bone:femur-l",
    "fr": "Fémur",
    "category": "bone",
@@ -2230,30 +2062,6 @@
    }
   },
   {
-   "id": "bone:bp-first-thoracic-vertebra",
-   "fr": "Première vertèbre thoracique",
-   "category": "bone",
-   "triangles": {
-    "high": 1398,
-    "medium": 1398,
-    "low": 540
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 1.823775208249775,
-    "meanMm": 0.10276331084734927,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.823775208249775,
-    "samples": 752
-   }
-  },
-  {
    "id": "bone:bp-floating-rib-l",
    "fr": "Côtes flottantes",
    "category": "bone",
@@ -2635,54 +2443,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.4471779034286156,
     "samples": 484
-   }
-  },
-  {
-   "id": "bone:bp-incisor-tooth-l",
-   "fr": "Dent incisive",
-   "category": "bone",
-   "triangles": {
-    "high": 2802,
-    "medium": 1500,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0.14730307125856865,
-    "meanMm": 0.01638162380621017,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.14730307125856865,
-    "samples": 662
-   },
-   "low": {
-    "maxMm": 0.5489627950327867,
-    "meanMm": 0.09344631971472855,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5489627950327867,
-    "samples": 441
-   }
-  },
-  {
-   "id": "bone:bp-incisor-tooth-r",
-   "fr": "Dent incisive",
-   "category": "bone",
-   "triangles": {
-    "high": 2760,
-    "medium": 1500,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0.14002903509379883,
-    "meanMm": 0.0152425241755858,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.14002903509379883,
-    "samples": 660
-   },
-   "low": {
-    "maxMm": 0.5312929441951163,
-    "meanMm": 0.08973794462296499,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.5312929441951163,
-    "samples": 441
    }
   },
   {
@@ -3334,30 +3094,6 @@
    }
   },
   {
-   "id": "bone:bp-lumbar-vertebra",
-   "fr": "Vertèbre lombaire",
-   "category": "bone",
-   "triangles": {
-    "high": 12620,
-    "medium": 2542,
-    "low": 2504
-   },
-   "medium": {
-    "maxMm": 3.2913172024553035,
-    "meanMm": 0.30643437300955984,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.2913172024553035,
-    "samples": 543
-   },
-   "low": {
-    "maxMm": 5.372195080841839,
-    "meanMm": 0.33536452994431115,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 5.372195080841839,
-    "samples": 540
-   }
-  },
-  {
    "id": "bone:lunate-bone-l",
    "fr": "Os semilunaire",
    "category": "bone",
@@ -3643,102 +3379,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.4891537213248628,
     "samples": 650
-   }
-  },
-  {
-   "id": "bone:bp-metacarpal-bone-l",
-   "fr": "Os métacarpien",
-   "category": "bone",
-   "triangles": {
-    "high": 2634,
-    "medium": 1500,
-    "low": 498
-   },
-   "medium": {
-    "maxMm": 0.4540463381336897,
-    "meanMm": 0.038230883956056096,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.4540463381336897,
-    "samples": 596
-   },
-   "low": {
-    "maxMm": 1.8467285075776214,
-    "meanMm": 0.21142820782510519,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.8467285075776214,
-    "samples": 665
-   }
-  },
-  {
-   "id": "bone:bp-metacarpal-bone-r",
-   "fr": "Os métacarpien",
-   "category": "bone",
-   "triangles": {
-    "high": 2572,
-    "medium": 1500,
-    "low": 620
-   },
-   "medium": {
-    "maxMm": 0.49087852373603286,
-    "meanMm": 0.029805594335908327,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.49087852373603286,
-    "samples": 611
-   },
-   "low": {
-    "maxMm": 2.27679739410556,
-    "meanMm": 0.22007108366255193,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.27679739410556,
-    "samples": 763
-   }
-  },
-  {
-   "id": "bone:bp-metatarsal-bone-l",
-   "fr": "Os métatarsien",
-   "category": "bone",
-   "triangles": {
-    "high": 3502,
-    "medium": 1498,
-    "low": 584
-   },
-   "medium": {
-    "maxMm": 0.60649310426075,
-    "meanMm": 0.06019287467147481,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.60649310426075,
-    "samples": 601
-   },
-   "low": {
-    "maxMm": 2.8045710580786927,
-    "meanMm": 0.3116457006945095,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.8045710580786927,
-    "samples": 754
-   }
-  },
-  {
-   "id": "bone:bp-metatarsal-bone-r",
-   "fr": "Os métatarsien",
-   "category": "bone",
-   "triangles": {
-    "high": 3364,
-    "medium": 1500,
-    "low": 784
-   },
-   "medium": {
-    "maxMm": 0.6362679181262749,
-    "meanMm": 0.0658114475020483,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.6362679181262749,
-    "samples": 547
-   },
-   "low": {
-    "maxMm": 2.7827771751080626,
-    "meanMm": 0.2528735075490321,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.7827771751080626,
-    "samples": 607
    }
   },
   {
@@ -4174,54 +3814,6 @@
    }
   },
   {
-   "id": "bone:bp-molar-tooth-l",
-   "fr": "Dent molaire",
-   "category": "bone",
-   "triangles": {
-    "high": 6508,
-    "medium": 1500,
-    "low": 368
-   },
-   "medium": {
-    "maxMm": 0.2776958897301623,
-    "meanMm": 0.039292635134757066,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.2776958897301623,
-    "samples": 540
-   },
-   "low": {
-    "maxMm": 1.188258469797798,
-    "meanMm": 0.1688275699087487,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.188258469797798,
-    "samples": 501
-   }
-  },
-  {
-   "id": "bone:bp-molar-tooth-r",
-   "fr": "Dent molaire",
-   "category": "bone",
-   "triangles": {
-    "high": 6466,
-    "medium": 1500,
-    "low": 384
-   },
-   "medium": {
-    "maxMm": 0.2744390426169084,
-    "meanMm": 0.04089661141207766,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.2744390426169084,
-    "samples": 545
-   },
-   "low": {
-    "maxMm": 1.1481847894654262,
-    "meanMm": 0.18017868039268467,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.1481847894654262,
-    "samples": 523
-   }
-  },
-  {
    "id": "bone:nasal-bone-l",
    "fr": "Os nasal",
    "category": "bone",
@@ -4342,78 +3934,6 @@
    }
   },
   {
-   "id": "bone:bp-neurocranium",
-   "fr": "Neurocrâne",
-   "category": "bone",
-   "triangles": {
-    "high": 18635,
-    "medium": 4569,
-    "low": 4511
-   },
-   "medium": {
-    "maxMm": 3.9988297913477475,
-    "meanMm": 0.2851725450995854,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.9988297913477475,
-    "samples": 526
-   },
-   "low": {
-    "maxMm": 4.190898024013731,
-    "meanMm": 0.32277162998771525,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.190898024013731,
-    "samples": 524
-   }
-  },
-  {
-   "id": "bone:bp-neurocranium-l",
-   "fr": "Neurocrâne",
-   "category": "bone",
-   "triangles": {
-    "high": 6560,
-    "medium": 2864,
-    "low": 2830
-   },
-   "medium": {
-    "maxMm": 4.581559985595305,
-    "meanMm": 0.16882453376200973,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.581559985595305,
-    "samples": 542
-   },
-   "low": {
-    "maxMm": 4.581559985595305,
-    "meanMm": 0.1686459174463765,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 4.581559985595305,
-    "samples": 540
-   }
-  },
-  {
-   "id": "bone:bp-neurocranium-r",
-   "fr": "Neurocrâne",
-   "category": "bone",
-   "triangles": {
-    "high": 6600,
-    "medium": 2826,
-    "low": 2796
-   },
-   "medium": {
-    "maxMm": 3.9659696091515535,
-    "meanMm": 0.14990192615512876,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.9659696091515535,
-    "samples": 531
-   },
-   "low": {
-    "maxMm": 3.9659696091515535,
-    "meanMm": 0.16856882004511692,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 3.9659696091515535,
-    "samples": 529
-   }
-  },
-  {
    "id": "bone:ninth-rib-l",
    "fr": "Neuvième côte",
    "category": "bone",
@@ -4459,54 +3979,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.9120214673855614,
     "samples": 412
-   }
-  },
-  {
-   "id": "bone:bp-nose-l",
-   "fr": "Nez",
-   "category": "bone",
-   "triangles": {
-    "high": 1818,
-    "medium": 1500,
-    "low": 556
-   },
-   "medium": {
-    "maxMm": 0.12129787059882778,
-    "meanMm": 0.005399926206388228,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.12129787059882778,
-    "samples": 559
-   },
-   "low": {
-    "maxMm": 1.6017328670459143,
-    "meanMm": 0.10713115424789123,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.6017328670459143,
-    "samples": 798
-   }
-  },
-  {
-   "id": "bone:bp-nose-r",
-   "fr": "Nez",
-   "category": "bone",
-   "triangles": {
-    "high": 1786,
-    "medium": 1500,
-    "low": 670
-   },
-   "medium": {
-    "maxMm": 0.14923687996435822,
-    "meanMm": 0.00460892834318204,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.14923687996435822,
-    "samples": 549
-   },
-   "low": {
-    "maxMm": 1.4403431230922814,
-    "meanMm": 0.0774232988736334,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.4403431230922814,
-    "samples": 602
    }
   },
   {
@@ -4771,54 +4243,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.2937513842153659,
     "samples": 463
-   }
-  },
-  {
-   "id": "bone:bp-premolar-tooth-l",
-   "fr": "Dent prémolaire",
-   "category": "bone",
-   "triangles": {
-    "high": 4002,
-    "medium": 1500,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0.1550890833162657,
-    "meanMm": 0.02477797158327552,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.1550890833162657,
-    "samples": 552
-   },
-   "low": {
-    "maxMm": 0.809517034561396,
-    "meanMm": 0.1426806829489742,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.809517034561396,
-    "samples": 470
-   }
-  },
-  {
-   "id": "bone:bp-premolar-tooth-r",
-   "fr": "Dent prémolaire",
-   "category": "bone",
-   "triangles": {
-    "high": 4046,
-    "medium": 1500,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0.15789878385106657,
-    "meanMm": 0.025011250721441926,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.15789878385106657,
-    "samples": 515
-   },
-   "low": {
-    "maxMm": 0.8747350834226293,
-    "meanMm": 0.13388307903328558,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.8747350834226293,
-    "samples": 428
    }
   },
   {
@@ -5347,102 +4771,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 0.8218027901964335,
     "samples": 546
-   }
-  },
-  {
-   "id": "bone:bp-rib-l",
-   "fr": "Côte",
-   "category": "bone",
-   "triangles": {
-    "high": 19178,
-    "medium": 1499,
-    "low": 352
-   },
-   "medium": {
-    "maxMm": 2.5120814885632106,
-    "meanMm": 0.29019206889421695,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 2.5120814885632106,
-    "samples": 546
-   },
-   "low": {
-    "maxMm": 26.21077279779296,
-    "meanMm": 2.5762590356625106,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 26.21077279779296,
-    "samples": 571
-   }
-  },
-  {
-   "id": "bone:bp-rib-r",
-   "fr": "Côte",
-   "category": "bone",
-   "triangles": {
-    "high": 19202,
-    "medium": 1499,
-    "low": 381
-   },
-   "medium": {
-    "maxMm": 1.9545440415398336,
-    "meanMm": 0.29091624072218897,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.9545440415398336,
-    "samples": 548
-   },
-   "low": {
-    "maxMm": 50.5760035833427,
-    "meanMm": 3.2328009123016077,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 50.5760035833427,
-    "samples": 584
-   }
-  },
-  {
-   "id": "bone:bp-root-of-nose-l",
-   "fr": "Racine du nez",
-   "category": "bone",
-   "triangles": {
-    "high": 388,
-    "medium": 388,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 0.16009794158260074,
-    "meanMm": 0.00801701113170131,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.16009794158260074,
-    "samples": 426
-   }
-  },
-  {
-   "id": "bone:bp-root-of-nose-r",
-   "fr": "Racine du nez",
-   "category": "bone",
-   "triangles": {
-    "high": 392,
-    "medium": 392,
-    "low": 300
-   },
-   "medium": {
-    "maxMm": 0,
-    "meanMm": 0,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0,
-    "samples": 0
-   },
-   "low": {
-    "maxMm": 0.16638714476831676,
-    "meanMm": 0.008836151352869939,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.16638714476831676,
-    "samples": 456
    }
   },
   {
@@ -6286,30 +5614,6 @@
    }
   },
   {
-   "id": "bone:bp-thoracic-vertebra",
-   "fr": "Vertèbre thoracique",
-   "category": "bone",
-   "triangles": {
-    "high": 22420,
-    "medium": 5106,
-    "low": 5082
-   },
-   "medium": {
-    "maxMm": 9.140616840676774,
-    "meanMm": 0.4004637123276075,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 9.140616840676774,
-    "samples": 520
-   },
-   "low": {
-    "maxMm": 12.229317028749477,
-    "meanMm": 0.45784062848767215,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 12.229317028749477,
-    "samples": 519
-   }
-  },
-  {
    "id": "bone:thyroid-cartilage",
    "fr": "Cartilage thyroïde",
    "category": "bone",
@@ -6379,54 +5683,6 @@
     "coarseToFineMaxMm": 0,
     "fineToCoarseMaxMm": 1.9962473072596905,
     "samples": 431
-   }
-  },
-  {
-   "id": "bone:bp-tooth-l",
-   "fr": "Dent",
-   "category": "bone",
-   "triangles": {
-    "high": 14802,
-    "medium": 1500,
-    "low": 582
-   },
-   "medium": {
-    "maxMm": 0.7154472668017654,
-    "meanMm": 0.10178251289957051,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7154472668017654,
-    "samples": 537
-   },
-   "low": {
-    "maxMm": 1.7023009927794854,
-    "meanMm": 0.2580335702159258,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.7023009927794854,
-    "samples": 633
-   }
-  },
-  {
-   "id": "bone:bp-tooth-r",
-   "fr": "Dent",
-   "category": "bone",
-   "triangles": {
-    "high": 14754,
-    "medium": 1500,
-    "low": 620
-   },
-   "medium": {
-    "maxMm": 0.7875373614284431,
-    "meanMm": 0.0967959804631462,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 0.7875373614284431,
-    "samples": 541
-   },
-   "low": {
-    "maxMm": 1.5081173019242087,
-    "meanMm": 0.24156574306319892,
-    "coarseToFineMaxMm": 0,
-    "fineToCoarseMaxMm": 1.5081173019242087,
-    "samples": 663
    }
   },
   {

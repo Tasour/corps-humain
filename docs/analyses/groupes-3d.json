@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T04:04:26.466Z",
+  "generated": "2026-11-20T01:19:04.783Z",
   "groups": 43,
   "passed": 52,
   "total": 52,
@@ -246,7 +246,7 @@
       "currentVisible": 6,
       "visibleInstances": 6,
       "missing": [],
-      "maxExplode": 0.07734425365924835,
+      "maxExplode": 0.08218763023614883,
       "maxMovement": 0.6303324699401855,
       "maxReset": 0,
       "identical": false,
@@ -272,7 +272,7 @@
       "currentVisible": 14,
       "visibleInstances": 14,
       "missing": [],
-      "maxExplode": 0.08657150715589523,
+      "maxExplode": 0.0843057855963707,
       "maxMovement": 0.34289780259132385,
       "maxReset": 0,
       "identical": false,
@@ -577,12 +577,12 @@
     {
       "id": "ui:jaw",
       "ok": true,
-      "maxExplode": 0.012413903139531612
+      "maxExplode": 0.010344918817281723
     },
     {
       "id": "ui:spine",
       "ok": true,
-      "maxExplode": 0.006233148742467165
+      "maxExplode": 0.006070016883313656
     },
     {
       "id": "ui:biceps-l",
@@ -592,7 +592,7 @@
     {
       "id": "ui:quadriceps-l",
       "ok": true,
-      "maxExplode": 0.010738031938672066
+      "maxExplode": 0.012885638512670994
     },
     {
       "id": "ui:trapezius",
@@ -602,7 +602,7 @@
     {
       "id": "ui:heart",
       "ok": true,
-      "maxExplode": 0.010745848529040813
+      "maxExplode": 0.00859667919576168
     },
     {
       "id": "console",
