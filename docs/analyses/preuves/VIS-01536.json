@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01536",
+ "subject": "bone:distal-phalanx-of-second-finger-of-foot-r",
+ "claim": "Forme simplifiée en coin, tubérosité distale non individualisée.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "Kenhub — Phalanges of the foot",
+   "url": "https://www.kenhub.com/en/library/anatomy/phalanges-of-the-foot",
+   "id": "",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "Each phalanx has a proximal base, a shaft and a distal head; distal phalanges have a broad base and a rough crescent-shaped plantar tuberosity."
+  },
+  {
+   "name": "IMAIOS e-Anatomy — Distal phalanx of foot",
+   "url": "https://www.imaios.com/en/e-anatomy/anatomical-structures/distal-phalanx-of-foot-1154948",
+   "id": "",
+   "license": "Gray's Anatomy public domain",
+   "accessed": "2026-11-20",
+   "excerpt": "A broad base for articulation and an expanded distal extremity for the nail and end of the toe; underlying structure: tuberosity of distal phalanx."
+  }
+ ],
+ "reasoning": "Mêmes repères anatomiques que côté gauche.",
+ "recommendation": "Documenter comme limite de résolution.",
+ "recordedAt": "2026-11-20T06:11:16.242Z"
+}

@@ -28,3 +28,7 @@
 - VIS-01518 bone:distal-phalanx-of-fourth-finger-of-hand-r : confirme (undefined)
 - VIS-01526 bone:distal-phalanx-of-second-finger-of-foot-l : confirme (undefined)
 - VIS-01534 bone:distal-phalanx-of-second-finger-of-foot-r : confirme (undefined)
+
+## Vague preuves 3 — 2026-11-20
+
+12 entrées reliées aux preuves déjà établies (mêmes sources, angles différents).

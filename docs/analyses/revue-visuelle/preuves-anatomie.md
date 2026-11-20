@@ -36,4 +36,13 @@ Le prochain lot peut être lancé avec `/source-anatomique` ou l'agent `anatomie
 
 ---
 
-*Annexe ajoutée le 20 novembre 2026 (deuxième vague de preuves).*
+## Vague 3 — 12 entrées reliées
+
+Un troisième lot de 12 entrées `VIS-xxxxx` a été relié aux preuves déjà établies : mêmes
+structures, angles différents, mêmes sources croisées. Tous les verdicts sont `confirme`
+(écart réel de geometry : dens absent, côtes croisées, sternum columnaire, reliefs absents).
+Aucune géométrie n'a été modifiée.
+
+**Total : 36 preuves écrites.** Les 1 016 questions restantes demeurent dans `todolist-active.md`.
+
+*Annexes ajoutées le 20 novembre 2026.*

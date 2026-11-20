@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01446",
+ "subject": "bone:cuboid-bone-l",
+ "claim": "Relief global informe, à confronter à la morphologie cuboïde.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "Kenhub — Cuboid bone",
+   "url": "https://www.kenhub.com/en/library/anatomy/cuboid",
+   "id": "",
+   "license": "Kenhub (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "The plantar surface presents a deep peroneal sulcus; the cuboid articulates with calcaneus, lateral cuneiform, 4th and 5th metatarsals."
+  },
+  {
+   "name": "NCBI Bookshelf StatPearls — Foot Cuboid Bone",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK549912",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "The cuboid has five articular surfaces and a groove for the peroneus longus tendon."
+  }
+ ],
+ "reasoning": "Le cuboïde possède cinq surfaces articulaires et un sillon péronier plantaire profond ; leur absence est un écart réel.",
+ "recommendation": "Documenter comme limite de résolution ; ne pas modeler de faux relief.",
+ "recordedAt": "2026-11-20T06:11:16.241Z"
+}

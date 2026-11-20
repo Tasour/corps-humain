@@ -1,0 +1,28 @@
+{
+ "id": "VIS-01175",
+ "subject": "bone:bp-floating-rib-l",
+ "claim": "Les deux côtes se croisent en X alors qu elles sont normalement parallèles.",
+ "verdict": "confirme",
+ "confidence": "elevee",
+ "sources": [
+  {
+   "name": "TeachMeAnatomy — The Ribs",
+   "url": "https://teachmeanatomy.info/thorax/bones/ribcage",
+   "id": "",
+   "license": "TeachMeSeries (consultation)",
+   "accessed": "2026-11-20",
+   "excerpt": "Ribs are a set of twelve paired curved, flat bones which form the protective cage of the thorax."
+  },
+  {
+   "name": "NCBI Bookshelf StatPearls — Anatomy, Thorax, Ribs",
+   "url": "https://www.ncbi.nlm.nih.gov/books/NBK538328",
+   "id": "",
+   "license": "StatPearls CC BY 4.0",
+   "accessed": "2026-11-20",
+   "excerpt": "The 11th and 12th ribs have a single articular facet and lack a neck; floating ribs lack sternal articulation."
+  }
+ ],
+ "reasoning": "Les côtes sont des os plats et courbes ; les côtes flottantes sont plus courtes avec une seule facette et pas de col, mais restent aplaties.",
+ "recommendation": "Documenter comme écart de source ; ne pas fabriquer de rainure costale.",
+ "recordedAt": "2026-11-20T06:11:16.241Z"
+}
