@@ -1,0 +1,84 @@
+{
+  "family": "crane-nez",
+  "exclusions": [
+    {
+      "id": "bone:bp-neurocranium",
+      "reason": "Concept BodyParts3D « neurocranium » (FMA53672) : assembly en 3 feuillets disjoints (ethmoïde, frontal, occipital), donc agrégat et non un os individuel. Remplacé par les os crâniens individuels présents dans le manifeste.",
+      "replacements": [
+        "bone:frontal-bone",
+        "bone:parietal-bone-l",
+        "bone:parietal-bone-r",
+        "bone:occipital-bone",
+        "bone:temporal-bone-l",
+        "bone:temporal-bone-r",
+        "bone:sphenoid-bone",
+        "bone:ethmoid-bone"
+      ]
+    },
+    {
+      "id": "bone:bp-neurocranium-l",
+      "reason": "Concept BodyParts3D « neurocranium » côté gauche (FMA53672) : assembly en 2 feuillets disjoints (pariétal gauche, temporal gauche). Remplacé par les deux os individuels correspondants.",
+      "replacements": [
+        "bone:parietal-bone-l",
+        "bone:temporal-bone-l"
+      ]
+    },
+    {
+      "id": "bone:bp-neurocranium-r",
+      "reason": "Concept BodyParts3D « neurocranium » côté droit (FMA53672) : assembly en 2 feuillets disjoints (pariétal droit, temporal droit). Remplacé par les deux os individuels correspondants.",
+      "replacements": [
+        "bone:parietal-bone-r",
+        "bone:temporal-bone-r"
+      ]
+    },
+    {
+      "id": "bone:bp-nose-l",
+      "reason": "Concept BodyParts3D « nose » côté gauche (FMA46472) : assembly en 4 feuillets disjoints (cartilage alaire majeur, cartilage nasal latéral, cornet nasal inférieur, os nasal). Remplacé par les éléments osseux/cartilagineux individuels disponibles dans le manifeste.",
+      "replacements": [
+        "bone:nasal-bone-l",
+        "bone:inferior-nasal-concha-bone-l",
+        "bone:major-alar-cartilage-l"
+      ]
+    },
+    {
+      "id": "bone:bp-nose-r",
+      "reason": "Concept BodyParts3D « nose » côté droit (FMA46472) : assembly en 4 feuillets disjoints (cartilage alaire majeur, cartilage nasal latéral, cornet nasal inférieur, os nasal). Remplacé par les éléments osseux/cartilagineux individuels disponibles dans le manifeste.",
+      "replacements": [
+        "bone:nasal-bone-r",
+        "bone:inferior-nasal-concha-bone-r",
+        "bone:major-alar-cartilage-r"
+      ]
+    },
+    {
+      "id": "bone:bp-external-nose-l",
+      "reason": "Concept BodyParts3D « external nose » côté gauche (FMA59515) : assembly en 3 feuillets disjoints (cartilage alaire majeur, cartilage nasal latéral, os nasal). Remplacé par les éléments individuels disponibles dans le manifeste.",
+      "replacements": [
+        "bone:nasal-bone-l",
+        "bone:major-alar-cartilage-l"
+      ]
+    },
+    {
+      "id": "bone:bp-external-nose-r",
+      "reason": "Concept BodyParts3D « external nose » côté droit (FMA59515) : assembly en 3 feuillets disjoints (cartilage alaire majeur, cartilage nasal latéral, os nasal). Remplacé par les éléments individuels disponibles dans le manifeste.",
+      "replacements": [
+        "bone:nasal-bone-r",
+        "bone:major-alar-cartilage-r"
+      ]
+    },
+    {
+      "id": "bone:bp-root-of-nose-l",
+      "reason": "Concept BodyParts3D « root of nose » côté gauche (FMA59516) : 1 seul feuillet qui est l'os nasal gauche lui-même. Doublet de l'os nasal individuel, remplacé par celui-ci.",
+      "replacements": [
+        "bone:nasal-bone-l"
+      ]
+    },
+    {
+      "id": "bone:bp-root-of-nose-r",
+      "reason": "Concept BodyParts3D « root of nose » côté droit (FMA59516) : 1 seul feuillet qui est l'os nasal droit lui-même. Doublet de l'os nasal individuel, remplacé par celui-ci.",
+      "replacements": [
+        "bone:nasal-bone-r"
+      ]
+    }
+  ],
+  "keep": []
+}
