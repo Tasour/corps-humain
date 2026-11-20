@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 
 const BASE = process.env.TEST_BASE || "http://localhost:5199";
 /* Le nombre de structures vient du manifeste : il change dès qu'une règle de
@@ -41,7 +41,7 @@ async function selectFirstItem(page) {
   }
 }
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 const context = await browser.newContext({ viewport: { width: 1360, height: 880 } });
 const page = await context.newPage();
 page.setDefaultTimeout(90000);

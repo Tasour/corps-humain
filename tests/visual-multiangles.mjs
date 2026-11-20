@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 
 /* Vérification visuelle systémique par screenshots multi-angles.
  *
@@ -32,7 +32,7 @@ const ANGLES = [
   { name: "zoom-thorax",    pos: [0, 1.35, 0.9],  target: TARGET },
 ];
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
 page.setDefaultTimeout(120000);
 const errors = [];

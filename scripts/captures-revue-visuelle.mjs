@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 
 /* Revue visuelle — captures déterministes de TOUTES les structures.
  *
@@ -115,7 +115,7 @@ async function analyze(page, dataUrl) {
 }
 
 async function worker(index, list) {
-  const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+  const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
   const page = await browser.newPage({ viewport: { width: 1280, height: 1280 } });
   page.setDefaultTimeout(300000);
   const errors = [];

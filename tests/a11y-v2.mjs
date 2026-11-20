@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 
 /* Contrôle d'accessibilité et de responsive de l'atlas v2.
  *
@@ -23,7 +23,7 @@ function check(name, fn) {
     .catch((e) => results.push({ name, ok: false, error: e.message }));
 }
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 
 /* ---------- bureau ------------------------------------------------------- */
 const desktop = await browser.newContext({ viewport: { width: 1360, height: 880 } });

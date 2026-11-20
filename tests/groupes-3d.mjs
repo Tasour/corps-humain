@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 import { GROUPS } from "../src/data/groups.js";
 
 /* Contrôle 3D des 43 groupes d'animation.
@@ -22,7 +22,7 @@ const OUT = path.resolve(import.meta.dirname, "../docs/analyses/groupes-3d.json"
 const UI_SAMPLE = ["elbow-l", "knee-l", "jaw", "spine", "biceps-l", "quadriceps-l", "trapezius", "heart"];
 const results = [];
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 const context = await browser.newContext({ viewport: { width: 1360, height: 880 } });
 const page = await context.newPage();
 page.setDefaultTimeout(90000);

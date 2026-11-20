@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 
 /* Vérification visuelle avant/après d'une vague de corrections.
  *
@@ -64,7 +64,7 @@ async function visualDiff(page, fileA, fileB) {
 const cadrage = todo.entries.filter((e) => e.category === "cadrage");
 const subjects = [...new Set(cadrage.map((e) => e.subject))].sort();
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 const page = await browser.newPage({ viewport: { width: 1100, height: 800 } });
 
 /* Relecture humaine/sous-agent des paires, si disponible. */

@@ -49,6 +49,7 @@
   "devDependencies": {
     "@opencode/plugin": "^2.3.2",
     "meshoptimizer": "^0.20.0",
+    "playwright": "^1.65.1",
     "vite": "^7.0.0"
   }
 }

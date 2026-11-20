@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 
 /* Détection SYSTÉMIQUE des collisions de contour hover par analyse de pixels.
  * Pour chaque structure : capture A) isolée, B) avec contour. On compare pixel
@@ -14,7 +14,7 @@ const LIMIT = Number(process.env.VISUAL_LIMIT || 60);
 const THRESHOLD = Number(process.env.VISUAL_THRESHOLD || 0.05);
 fs.mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 const page = await browser.newPage({ viewport: { width: 700, height: 700 } });
 page.setDefaultTimeout(120000);
 const errors = [];

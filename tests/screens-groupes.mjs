@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "/home/tasour/.local/share/mise/installs/playwright/latest/node_modules/playwright/index.mjs";
+import { chromium } from "playwright";
 import { GROUPS } from "../src/data/groups.js";
 import { AnatomyTree } from "../src/data/hierarchy.js";
 
@@ -74,7 +74,7 @@ const ANGLES = [
 
 fs.mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium" });
+const browser = await chromium.launch({ executablePath: process.env.CI ? undefined : "/usr/bin/chromium" });
 const page = await browser.newPage({ viewport: { width: 900, height: 900 } });
 page.setDefaultTimeout(180000);
 const errors = [];
