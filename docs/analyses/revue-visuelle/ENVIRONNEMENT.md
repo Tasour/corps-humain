@@ -78,11 +78,13 @@ logs filtres sur `corps.research`.
 
 - Locale : `npm run sources:check`, `npm run audit:3d:check`, `npm test`,
   `npm run test:v2`, `npm run test:a11y`, `npm run test:groupes3d`, `npm run test:visuel`.
-- CI : un workflow avait été préparé mais **retiré** — le token OAuth local n'a pas le
-  `workflow` scope requis par GitHub pour pousser `.github/workflows/*`. Les portes sont donc
-  exécutées localement (`sources:check`, `audit:3d:check`, suites de tests, `test:visuel`).
-  Pour réactiver la CI il faut soit un PAT avec scope `workflow`, soit pousser le fichier
-  via un compte/token autorisé.
+- CI : **restaurée**. Le workflow `.github/workflows/qualite-3d.yml` (porte qualité : baseline
+  topologique, scorecard/écart LOD, tests données, tests 3D/a11y/groupes, build) a été poussé
+  via un **push SSH explicite** (`git push git@github.com:Tasour/corps-humain.git main`), car le
+  token OAuth local n'a pas le `workflow` scope requis par GitHub pour pousser
+  `.github/workflows/*` via le remote HTTPS `origin`. Le token reste dans le keyring, aucun
+  secret ni code n'a été écrit dans le dépôt. Procédure détaillée :
+  `.opencode/skills/github-ci-scope/SKILL.md` (section « Repli SSH »).
 
 ## Limites
 

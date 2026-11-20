@@ -1,0 +1,32 @@
+name: Qualité 3D
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  porte-qualite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Baseline topologique
+        run: npm run audit:3d:check
+      - name: Scorecard et écart LOD
+        run: |
+          npm run scorecard:3d
+          npm run hausdorff:3d
+      - name: Tests données
+        run: npm test
+      - name: Tests 3D, a11y et groupes
+        run: |
+          npm run test:v2
+          npm run test:a11y
+          npm run test:groupes3d
+      - name: Build
+        run: npm run build
