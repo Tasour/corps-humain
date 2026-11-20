@@ -1,0 +1,634 @@
+{
+ "generated": "2026-11-20T02:02:20.271Z",
+ "tool": "screenshot-regression/scripts/screenshot_diff.py",
+ "thresholdPct": 2,
+ "thresholdsByCorrection": {
+  "cadrage": 2,
+  "suppression_composantes_negigeables": 0.1
+ },
+ "pairs": 20,
+ "passed": 20,
+ "failed": [],
+ "results": [
+  {
+   "id": "VIS-01087",
+   "subject": "bone:bp-bony-pelvis",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0.93,
+   "pass": true
+  },
+  {
+   "id": "VIS-01088",
+   "subject": "bone:bp-bony-pelvis-l",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-bony-pelvis-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-bony-pelvis-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0,
+   "pass": true
+  },
+  {
+   "id": "VIS-00007",
+   "subject": "bone:bp-canine-tooth-l",
+   "verdict": "partiel",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 4,
+   "maxChangedPct": 9.76,
+   "pass": true
+  },
+  {
+   "id": "VIS-00014",
+   "subject": "bone:bp-canine-tooth-r",
+   "verdict": "partiel",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-canine-tooth-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-canine-tooth-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 4,
+   "maxChangedPct": 9.64,
+   "pass": true
+  },
+  {
+   "id": "VIS-00015",
+   "subject": "bone:bp-cuneiform-cartilage-l",
+   "verdict": "verifie",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 8,
+   "maxChangedPct": 26.86,
+   "pass": true
+  },
+  {
+   "id": "VIS-00016",
+   "subject": "bone:bp-cuneiform-cartilage-r",
+   "verdict": "verifie",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-cuneiform-cartilage-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-cuneiform-cartilage-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 8,
+   "maxChangedPct": 24.42,
+   "pass": true
+  },
+  {
+   "id": "VIS-01132",
+   "subject": "bone:bp-external-nose-l",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 4,
+   "maxChangedPct": 8,
+   "pass": true
+  },
+  {
+   "id": "VIS-01141",
+   "subject": "bone:bp-external-nose-r",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-external-nose-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-external-nose-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 4,
+   "maxChangedPct": 8.65,
+   "pass": true
+  },
+  {
+   "id": "VIS-01148",
+   "subject": "bone:bp-false-rib-l",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0,
+   "pass": true
+  },
+  {
+   "id": "VIS-01160",
+   "subject": "bone:bp-false-rib-r",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-false-rib-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-false-rib-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0,
+   "pass": true
+  },
+  {
+   "id": "VIS-01172",
+   "subject": "bone:bp-first-thoracic-vertebra",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-first-thoracic-vertebra/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-first-thoracic-vertebra/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0,
+   "pass": true
+  },
+  {
+   "id": "VIS-01180",
+   "subject": "bone:bp-floating-rib-l",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0,
+   "pass": true
+  },
+  {
+   "id": "VIS-01182",
+   "subject": "bone:bp-floating-rib-r",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-floating-rib-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-floating-rib-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 0,
+   "maxChangedPct": 0,
+   "pass": true
+  },
+  {
+   "id": "VIS-01190",
+   "subject": "bone:bp-incisor-tooth-l",
+   "verdict": "partiel",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 6,
+   "maxChangedPct": 11.22,
+   "pass": true
+  },
+  {
+   "id": "VIS-01197",
+   "subject": "bone:bp-incisor-tooth-r",
+   "verdict": "partiel",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-incisor-tooth-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-incisor-tooth-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 6,
+   "maxChangedPct": 11.35,
+   "pass": true
+  },
+  {
+   "id": "VIS-01198",
+   "subject": "bone:bp-intervertebral-symphysis",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/bone:bp-intervertebral-symphysis/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/bone:bp-intervertebral-symphysis/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 6,
+   "maxChangedPct": 29.62,
+   "pass": true
+  },
+  {
+   "id": "VIS-04204",
+   "subject": "organ:temporal-pole-l",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 7,
+   "maxChangedPct": 20.64,
+   "pass": true
+  },
+  {
+   "id": "VIS-04209",
+   "subject": "organ:temporal-pole-r",
+   "verdict": "faux_positif",
+   "correction": "cadrage",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg"
+   ],
+   "expectedChange": false,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 7,
+   "maxChangedPct": 21.06,
+   "pass": true
+  },
+  {
+   "id": "VIS-01053",
+   "subject": "organ:temporal-pole-l",
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-l/trois-quarts-avant-gauche.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 1,
+   "maxChangedPct": 0.34,
+   "pass": true
+  },
+  {
+   "id": "VIS-01054",
+   "subject": "organ:temporal-pole-r",
+   "verdict": "verifie",
+   "correction": "suppression_composantes_negigeables",
+   "before": [
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/qualite-3d-apres/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "after": [
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessous.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dessus.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/dos.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/droite.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/face.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/gauche.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-arriere-droit.jpg",
+    "/home/tasour/.cache/revue-visuelle/apres-vague2/organ:temporal-pole-r/trois-quarts-avant-gauche.jpg"
+   ],
+   "expectedChange": true,
+   "anglesCompared": 8,
+   "anglesChangedOver2pct": 2,
+   "maxChangedPct": 0.36,
+   "pass": true
+  }
+ ]
+}

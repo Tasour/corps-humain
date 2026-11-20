@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "worktree": {
+    "directory": "/home/tasour"
+  },
+  "plugins": [
+    "./plugins/corps-quality",
+    "./plugins/corps-worktrees"
+  ]
+}
