@@ -103,7 +103,12 @@ await verifier(resultats, "pause : bascule aria-pressed et libellé", async () =
 await verifier(resultats, "Échap quitte le tour en priorité", async () => {
   await page.keyboard.press("Escape");
   await page.waitForTimeout(200);
-  assert.equal(await page.evaluate(() => document.getElementById("tour-hud").hidden), true);
+  const d = await page.evaluate(() => ({
+    hidden: document.getElementById("tour-hud").hidden,
+    affiche: getComputedStyle(document.getElementById("tour-hud")).display !== "none",
+  }));
+  assert.equal(d.hidden, true);
+  assert.equal(d.affiche, false, "le HUD reste affiché malgré l'attribut hidden");
 });
 
 /* Mouvement réduit : pas d'enchaînement automatique, mode manuel. */

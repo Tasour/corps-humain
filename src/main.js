@@ -54,6 +54,8 @@ const state = {
   explode: false,
   explodeAmount: 0,
   crossSection: false,
+  clipAxis: "frontal",
+  clipPosition: 0.12,
   isolatedId: null,
   compareOn: false,
   severityBefore: 0.65,
@@ -198,6 +200,18 @@ function syncLayerUI() {
   if (sectionBtn) {
     sectionBtn.classList.toggle("active", state.crossSection);
     sectionBtn.setAttribute("aria-pressed", state.crossSection ? "true" : "false");
+  }
+  const dockCoupe = $("#dock-coupe");
+  if (dockCoupe) dockCoupe.hidden = !state.crossSection;
+  document.querySelectorAll("[data-clip-axis]").forEach((btn) => {
+    const checked = btn.dataset.clipAxis === state.clipAxis;
+    btn.setAttribute("aria-checked", String(checked));
+    btn.tabIndex = checked ? 0 : -1;
+  });
+  const clipRange = $("#clip-range");
+  if (clipRange) {
+    clipRange.value = String(Math.round(state.clipPosition * 100));
+    clipRange.setAttribute("aria-valuetext", `${Math.round(state.clipPosition * 100)} %`);
   }
 }
 
@@ -380,6 +394,8 @@ function resetScene() {
   state.explode = false;
   state.explodeAmount = 0;
   state.crossSection = false;
+  state.clipAxis = "frontal";
+  state.clipPosition = 0.12;
   state.isolatedId = null;
   search.value = "";
   quiz.active = false;
@@ -390,6 +406,8 @@ function resetScene() {
   scene.clearDisease();
   scene.isolateEntry(null);
   scene.setExplodeAmount(0);
+  scene.setClipAxis("frontal");
+  scene.setClipPosition(0.12);
   scene.setCrossSection(false);
   scene.setSystemFilter("all");
   scene.setSelected(null);
@@ -823,6 +841,41 @@ if (explodeRange) {
 }
 
 $("#btn-section")?.addEventListener("click", () => setCrossSection(!state.crossSection));
+
+/* Choix de l'axe de coupe : radiogroup avec navigation flèches (BENCH-004). */
+const axesCoupe = $("#dock-coupe");
+axesCoupe?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-clip-axis]");
+  if (!btn) return;
+  state.clipAxis = btn.dataset.clipAxis;
+  scene.setClipAxis(state.clipAxis);
+  syncLayerUI();
+  toast(`Coupe : axe ${btn.textContent.trim()}`, "info");
+});
+axesCoupe?.addEventListener("keydown", (e) => {
+  const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+  if (!keys.includes(e.key)) return;
+  const buttons = [...axesCoupe.querySelectorAll("[data-clip-axis]")];
+  const current = buttons.indexOf(document.activeElement);
+  if (current < 0) return;
+  const next = e.key === "Home" ? 0
+    : e.key === "End" ? buttons.length - 1
+    : e.key === "ArrowLeft" || e.key === "ArrowUp" ? (current - 1 + buttons.length) % buttons.length
+    : (current + 1) % buttons.length;
+  e.preventDefault();
+  buttons[next].focus();
+  buttons[next].click();
+});
+const clipRange = $("#clip-range");
+clipRange?.addEventListener("input", () => {
+  state.clipPosition = Number(clipRange.value) / 100;
+  scene.setClipPosition(state.clipPosition);
+  syncLayerUI();
+});
+clipRange?.addEventListener("change", () => {
+  toast(`Coupe : position ${Math.round(state.clipPosition * 100)} %`, "info");
+});
+
 $("#btn-reset-scene")?.addEventListener("click", resetScene);
 $("#hunt-quit").addEventListener("click", () => exitHunt(true));
 $("#ap-clear").addEventListener("click", () => {

@@ -89,8 +89,10 @@
    "dependances": [],
    "verification": "capture 8 angles + npm run test:visuel",
    "preuveAttendue": "Plans de coupe visibles et cadrage stable",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-004"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-004",
+   "verdict": "OK — 3 axes dans v1 et v2, side restauré, dirty flag étendu; 7/7; bug hidden du HUD tour corrigé au passage",
+   "preuve": "docs/analyses/coupes-2026-11-20.json"
   },
   {
    "id": "BENCH-005",

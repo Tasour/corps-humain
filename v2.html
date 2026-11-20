@@ -205,6 +205,7 @@
        background: rgba(255,253,249,.96); border: 1px solid var(--line);
        border-radius: 10px; box-shadow: var(--shadow); font-size: 11.5px; color: var(--ink);
      }
+     #tour-hud[hidden] { display: none; }
      body.dark #tour-hud { background: rgba(20,31,43,.96); }
      #tour-hud strong { font: 600 12px Georgia, serif; white-space: nowrap; }
      #tour-hud button {
@@ -213,6 +214,22 @@
      }
      #tour-hud button:hover { background: var(--teal); color: #041b22; }
      #tour-step { white-space: nowrap; color: var(--muted); }
+     #coupe-hud {
+       position: absolute; z-index: 6; left: 14px; top: 12px;
+       display: flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: 300px;
+       padding: 7px 9px; background: rgba(255,253,249,.96); border: 1px solid var(--line);
+       border-radius: 10px; box-shadow: var(--shadow); font-size: 11px; color: var(--ink);
+     }
+     body.dark #coupe-hud { background: rgba(20,31,43,.96); }
+     #coupe-hud > button, .coupe-axes button {
+       min-width: 36px; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
+     }
+     .coupe-axes { display: flex; gap: 4px; }
+     .coupe-axes button[aria-checked="true"] {
+       background: var(--teal); color: #041b22; border-color: var(--teal);
+     }
+     #coupe-range { width: 100%; accent-color: var(--teal); cursor: pointer; }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
@@ -382,6 +399,15 @@
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
       <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div><button type="button" id="wp-copy" title="Copier le lien de cette vue" aria-label="Copier le lien de cette vue">Copier le lien de cette vue</button></div>
+      <div id="coupe-hud" role="group" aria-label="Coupes anatomiques">
+        <button type="button" id="coupe-toggle" aria-pressed="false" aria-label="Activer la coupe">Coupe</button>
+        <div class="coupe-axes" role="radiogroup" aria-label="Axe de coupe">
+          <button type="button" role="radio" aria-checked="true" tabindex="0" data-clip-axe="frontal">Face</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip-axe="sagittal">Profil</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip-axe="transversal">Dessus</button>
+        </div>
+        <input id="coupe-range" type="range" min="-100" max="100" step="1" value="12" aria-label="Position de la coupe" />
+      </div>
       <div id="tour-hud" role="group" aria-label="Contrôles du tour guidé" hidden>
         <strong id="tour-label"></strong>
         <button type="button" id="tour-prev" aria-label="Étape précédente">←</button>
@@ -501,6 +527,15 @@
     });
     engine.addTo(scene);
     scene.add(engine.hoverScene);
+
+    /* BENCH-004 — coupes locales pilotables dans v2. Les trois normales sont
+     * fixes ; seule la constante du plan (position) change. */
+    const coupe = { active: false, axe: "frontal", position: 0.12 };
+    const COUPE_NORMALITES = {
+      frontal: new THREE.Vector3(0, 0, -1),
+      sagittal: new THREE.Vector3(-1, 0, 0),
+      transversal: new THREE.Vector3(0, -1, 0),
+    };
     for (const cat of ['bone', 'muscle', 'organ']) engine.setCategoryVisible(cat, cat === 'organ');
     engine.setSkinVisible(false);
     document.getElementById('count').textContent = `${engine.stats.structures} structures`;
@@ -1583,6 +1618,7 @@
         scene.background?.getHexString?.() || '',
         groupAnim ? groupAnim.t.toFixed(3) : '',
         engine.animation ? engine.animation.t.toFixed(3) : '',
+        coupe.active ? `${coupe.axe}:${coupe.position.toFixed(2)}` : '',
       ].join('|');
       /* Cadence adaptative : en vue corps entier on vise 30 fps (33 ms) au
        * lieu d'un palier fixe à 1 rendu/s. Le seuil s'ajuste au coût réel
@@ -1675,6 +1711,77 @@
     }
     window.__v2Stop = stop;
     window.addEventListener('pagehide', stop);
+    /* BENCH-004 — application des plans de coupe à tous les lots rendus. */
+    function appliquerCoupe() {
+      const plans = coupe.active
+        ? [new THREE.Plane(COUPE_NORMALITES[coupe.axe], coupe.position)]
+        : [];
+      renderer.localClippingEnabled = coupe.active;
+      const cibles = [
+        ...engine.batches.values(),
+        ...engine.mergedMeshes.values(),
+      ];
+      if (engine.skinBatch) cibles.push(engine.skinBatch);
+      for (const lot of cibles) {
+        const materiaux = Array.isArray(lot.material) ? lot.material : [lot.material];
+        for (const mat of materiaux) {
+          if (!mat || mat.isShaderMaterial) continue;
+          if (coupe.active && mat.userData._clipSide === undefined) {
+            mat.userData._clipSide = mat.side;
+          }
+          mat.clippingPlanes = coupe.active ? plans : null;
+          mat.clipShadows = coupe.active;
+          if (coupe.active) mat.side = THREE.DoubleSide;
+          else if (mat.userData._clipSide !== undefined) {
+            mat.side = mat.userData._clipSide;
+            delete mat.userData._clipSide;
+          }
+          mat.needsUpdate = true;
+        }
+      }
+      document.getElementById('coupe-toggle').setAttribute('aria-pressed', String(coupe.active));
+      document.querySelectorAll('[data-clip-axe]').forEach((btn) => {
+        const checked = btn.dataset.clipAxe === coupe.axe;
+        btn.setAttribute('aria-checked', String(checked));
+        btn.tabIndex = checked ? 0 : -1;
+      });
+      const slider = document.getElementById('coupe-range');
+      slider.value = String(Math.round(coupe.position * 100));
+      slider.setAttribute('aria-valuetext', `${Math.round(coupe.position * 100)} %`);
+      needsRender = true;
+    }
+
+    document.getElementById('coupe-toggle').addEventListener('click', () => {
+      coupe.active = !coupe.active;
+      appliquerCoupe();
+      announce(coupe.active ? `Coupe ${coupe.axe} activée.` : 'Coupe désactivée.');
+    });
+    document.querySelector('.coupe-axes').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-clip-axe]');
+      if (!btn) return;
+      coupe.axe = btn.dataset.clipAxe;
+      appliquerCoupe();
+      announce(`Coupe : axe ${btn.textContent.trim()}.`);
+    });
+    document.querySelector('.coupe-axes').addEventListener('keydown', (e) => {
+      const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+      if (!keys.includes(e.key)) return;
+      const buttons = [...document.querySelectorAll('[data-clip-axe]')];
+      const current = buttons.indexOf(document.activeElement);
+      if (current < 0) return;
+      const next = e.key === 'Home' ? 0
+        : e.key === 'End' ? buttons.length - 1
+        : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? (current - 1 + buttons.length) % buttons.length
+        : (current + 1) % buttons.length;
+      e.preventDefault();
+      buttons[next].focus();
+      buttons[next].click();
+    });
+    document.getElementById('coupe-range').addEventListener('input', (e) => {
+      coupe.position = Number(e.currentTarget.value) / 100;
+      appliquerCoupe();
+    });
+
     /* Commandes du tour guidé (BENCH-011). */
     document.getElementById('tour-prev').addEventListener('click', () => {
       if (!waypointTour?.steps) return;

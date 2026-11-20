@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-004",
+  "objectif": "Coupes frontale, sagittale et transversale pilotables dans les deux moteurs",
+  "avant": {
+    "commit": "61ab181",
+    "v1": "un seul plan fixe (normal Z, constante 0,12) et un bouton on/off",
+    "v2": "aucune coupe dans l'UI ; le harnais de capture appliquait deux plans en direct"
+  },
+  "apres": {
+    "v1": "trois plans (Z, X, Y), radiogroup à 3 axes, curseur de position -100..100, restauration de material.side",
+    "v2": "HUD Coupe avec bascule aria-pressed, radiogroup 3 axes, curseur, plans appliqués à batches + mergedMeshes + peau, état ajouté à la signature du dirty flag",
+    "regression_corrigee": "#tour-hud avait display:flex malgré l'attribut hidden (BENCH-011) : règle [hidden] ajoutée et contrôle visuel au test"
+  },
+  "captures": {
+    "paires": [
+      "docs/analyses/coupes-avant-v1-desktop.png / coupes-apres-v1-desktop.png",
+      "docs/analyses/coupes-avant-v1-mobile.png / coupes-apres-v1-mobile.png",
+      "docs/analyses/coupes-avant-v2-desktop.png / coupes-apres-v2-desktop.png",
+      "docs/analyses/coupes-avant-v2-mobile.png / coupes-apres-v2-mobile.png"
+    ]
+  },
+  "mesures": {
+    "v1_desktop_1658x1150": 0.87,
+    "v1_mobile_390x844": 2.45,
+    "v2_desktop_1658x1150": 4.91,
+    "v2_mobile_390x844": 15.99
+  },
+  "tests": { "coupes": "7/7", "tour": "7/7", "a11y": "22/22" },
+  "verdict": "OK"
+}

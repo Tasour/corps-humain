@@ -986,6 +986,32 @@ button {
   background: rgba(103, 232, 249, 0.09);
 }
 
+.dock-coupe {
+  margin-top: 2px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line-strong);
+}
+.dock-coupe-axes { display: flex; gap: 4px; }
+.dock-coupe-axes button {
+  flex: 1;
+  min-height: 36px;
+  padding: 4px 2px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.022);
+  color: var(--muted);
+  font-size: 8.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dock-coupe-axes button:hover { color: #f2fbff; border-color: rgba(103, 232, 249, 0.35); }
+.dock-coupe-axes button[aria-checked="true"] {
+  color: var(--cyan);
+  border-color: rgba(103, 232, 249, 0.38);
+  background: rgba(103, 232, 249, 0.09);
+}
+.dock-coupe .dock-range { margin: 9px 0 4px; }
+
 .hint {
   position: absolute;
   left: 50%;

@@ -41,6 +41,7 @@
     "test:deeplink": "node tests/deeplink.test.mjs",
     "test:catalogue": "node tests/catalogue.test.mjs",
     "test:tour": "node tests/tour.test.mjs",
+    "test:coupes": "node tests/coupes.test.mjs",
     "test:groupes": "node tests/groupes.test.mjs",
     "test:groupes3d": "node tests/groupes-3d.mjs",
     "test:multi": "node tests/visual-multiangles.mjs",

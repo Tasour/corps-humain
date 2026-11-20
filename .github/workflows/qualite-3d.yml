@@ -50,5 +50,7 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:catalogue
       - name: Tours guidés
         run: TEST_BASE=http://localhost:5199 npm run test:tour
+      - name: Coupes 3 axes
+        run: TEST_BASE=http://localhost:5199 npm run test:coupes
       - name: Build
         run: npm run build

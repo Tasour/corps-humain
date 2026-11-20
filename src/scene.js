@@ -113,7 +113,14 @@ export class AnatomyScene {
     this.explodeData = [];
     this.isolatedId = null;
     this.crossSection = false;
-    this.clipPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0.12);
+    this.clipAxis = "frontal";
+    this.clipPosition = 0.12;
+    this.clipPlanes = {
+      frontal: new THREE.Plane(new THREE.Vector3(0, 0, -1), 0.12),
+      sagittal: new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0.12),
+      transversal: new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.12),
+    };
+    this.clipPlane = this.clipPlanes[this.clipAxis];
     this.tremor = 0;
     this.tremorPhase = 0;
     this.clock = new THREE.Clock();
@@ -673,6 +680,20 @@ export class AnatomyScene {
     this.crossSection = !!on;
     this._applyClipping(this.crossSection);
     this._applyLayers();
+  }
+
+  setClipAxis(axis) {
+    if (!this.clipPlanes[axis]) return;
+    this.clipAxis = axis;
+    this.clipPlane = this.clipPlanes[axis];
+    if (this.crossSection) this._applyClipping(true);
+  }
+
+  setClipPosition(value) {
+    const position = clamp(value, -1, 1);
+    this.clipPosition = position;
+    for (const plane of Object.values(this.clipPlanes)) plane.constant = position;
+    if (this.crossSection) this._applyClipping(true);
   }
 
   _applyClipping(on) {

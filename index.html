@@ -138,6 +138,14 @@
             <output id="explode-value">0 %</output>
           </div>
           <input id="explode-range" class="dock-range" type="range" min="0" max="100" step="1" value="0" aria-label="Vue éclatée" />
+          <div class="dock-coupe" id="dock-coupe" role="group" aria-label="Réglages de la coupe" hidden>
+            <div class="dock-coupe-axes" role="radiogroup" aria-label="Axe de coupe">
+              <button type="button" role="radio" aria-checked="true" tabindex="0" data-clip-axis="frontal">Face</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip-axis="sagittal">Profil</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip-axis="transversal">Dessus</button>
+            </div>
+            <input id="clip-range" class="dock-range" type="range" min="-100" max="100" step="1" value="12" aria-label="Position de la coupe" />
+          </div>
           <div class="dock-actions">
             <button id="btn-section" class="dock-toggle" aria-pressed="false" title="Coupe anatomique">
               <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".35"/><path d="M20 5a9 9 0 0 0-13 0l6.5 6.5L20 5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
