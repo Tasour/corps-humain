@@ -1,0 +1,64 @@
+{
+  "family": "cotes",
+  "exclusions": [
+    {
+      "id": "bone:bp-rib-l",
+      "reason": "Agrégat BodyParts3D FMA7574 : les 12 côtes gauches (1re à 12e) fusionnées en un seul maillage (parts=12 dans structures.json). Les douze côtes individuelles Z-Anatomy bone:first-rib-l .. bone:twelfth-rib-l existent avec une géométrie propre dans manifest.json et structures.json et remplacent l'agrégat sans inventer de géométrie.",
+      "replacements": [
+        "bone:first-rib-l",
+        "bone:second-rib-l",
+        "bone:third-rib-l",
+        "bone:fourth-rib-l",
+        "bone:fifth-rib-l",
+        "bone:sixth-rib-l",
+        "bone:seventh-rib-l",
+        "bone:eighth-rib-l",
+        "bone:ninth-rib-l",
+        "bone:tenth-rib-l",
+        "bone:eleventh-rib-l",
+        "bone:twelfth-rib-l"
+      ]
+    },
+    {
+      "id": "bone:bp-rib-r",
+      "reason": "Agrégat BodyParts3D FMA7574 : les 12 côtes droites (1re à 12e) fusionnées en un seul maillage (parts=12 dans structures.json). Les douze côtes individuelles Z-Anatomy bone:first-rib-r .. bone:twelfth-rib-r existent avec une géométrie propre dans manifest.json et structures.json et remplacent l'agrégat sans inventer de géométrie.",
+      "replacements": [
+        "bone:first-rib-r",
+        "bone:second-rib-r",
+        "bone:third-rib-r",
+        "bone:fourth-rib-r",
+        "bone:fifth-rib-r",
+        "bone:sixth-rib-r",
+        "bone:seventh-rib-r",
+        "bone:eighth-rib-r",
+        "bone:ninth-rib-r",
+        "bone:tenth-rib-r",
+        "bone:eleventh-rib-r",
+        "bone:twelfth-rib-r"
+      ]
+    },
+    {
+      "id": "bone:bp-false-rib-l",
+      "reason": "Agrégat BodyParts3D FMA7594 : les 5 fausses côtes gauches (8e à 12e) fusionnées en un seul maillage (parts=5 dans structures.json). Les cinq côtes individuelles Z-Anatomy bone:eighth-rib-l, bone:ninth-rib-l, bone:tenth-rib-l, bone:eleventh-rib-l et bone:twelfth-rib-l existent avec une géométrie propre dans manifest.json et structures.json et remplacent l'agrégat sans inventer de géométrie.",
+      "replacements": [
+        "bone:eighth-rib-l",
+        "bone:ninth-rib-l",
+        "bone:tenth-rib-l",
+        "bone:eleventh-rib-l",
+        "bone:twelfth-rib-l"
+      ]
+    },
+    {
+      "id": "bone:bp-false-rib-r",
+      "reason": "Agrégat BodyParts3D FMA7594 : les 5 fausses côtes droites (8e à 12e) fusionnées en un seul maillage (parts=5 dans structures.json). Les cinq côtes individuelles Z-Anatomy bone:eighth-rib-r, bone:ninth-rib-r, bone:tenth-rib-r, bone:eleventh-rib-r et bone:twelfth-rib-r existent avec une géométrie propre dans manifest.json et structures.json et remplacent l'agrégat sans inventer de géométrie.",
+      "replacements": [
+        "bone:eighth-rib-r",
+        "bone:ninth-rib-r",
+        "bone:tenth-rib-r",
+        "bone:eleventh-rib-r",
+        "bone:twelfth-rib-r"
+      ]
+    }
+  ],
+  "keep": []
+}
