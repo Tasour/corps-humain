@@ -329,8 +329,10 @@
    "dependances": [],
    "verification": "capture 8 angles",
    "preuveAttendue": "Étiquettes lisibles sous tous les angles",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-015"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-015",
+   "verdict": "OK — ancre sur waypoint de surface + ligne SVG + anti-HUD; 5/5; ancre distincte du centre et suit la caméra",
+   "preuve": "docs/analyses/labels-2026-11-20.json"
   },
   {
    "id": "BENCH-016",

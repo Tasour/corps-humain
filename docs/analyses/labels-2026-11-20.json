@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-015",
+  "objectif": "Étiquette ancrée sur un point de surface, avec ligne de rappel et anti-chevauchement",
+  "avant": {
+    "commit": "e99c4b0",
+    "comportement": "étiquette posée au centre projeté de la boîte englobante, sans ligne de rappel ni évitement des HUD"
+  },
+  "apres": {
+    "ancrage": "premier waypoint de la structure (fraction de boîte → coordonnée monde), projeté à chaque frame",
+    "ligne": "SVG #label-lines / #label-line reliant l'ancre au bord gauche du cartouche",
+    "anti_chevauchement": "cartouche borné au viewport, repoussé sous la zone des HUD supérieurs et remonté près du bord bas",
+    "observabilite": "window.__label expose {id, ancre, cartouche} pour les harnais"
+  },
+  "captures": {
+    "avant": ["docs/analyses/labels-avant-desktop.png", "docs/analyses/labels-avant-mobile.png"],
+    "apres": ["docs/analyses/labels-apres-desktop.png", "docs/analyses/labels-apres-mobile.png"],
+    "diffs": ["docs/analyses/labels-diff-desktop.png", "docs/analyses/labels-diff-mobile.png"]
+  },
+  "mesures": {
+    "viewport_desktop": 0.24,
+    "viewport_mobile": 0.48,
+    "note": "changement visuel localisé (un cartouche et une ligne fine) : le test fonctionnel est la preuve principale"
+  },
+  "tests": { "labels": "5/5", "a11y": "22/22", "v2": "30/30" },
+  "verdict": "OK"
+}

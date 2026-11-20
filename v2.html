@@ -176,13 +176,18 @@
     body.dark #hunt-hint { color: #a9bcc6; }
     #label {
       position: absolute; z-index: 4; pointer-events: none; display: none;
-      transform: translate(-50%, -170%); padding: 4px 9px 4px 13px;
+      transform: translate(0, -50%); padding: 4px 9px 4px 13px;
       background: rgba(34,49,58,.92); color: #fff; border-radius: 5px; font-size: 11px; white-space: nowrap;
     }
     #label::before {
       content: ""; position: absolute; left: 5px; top: 50%; width: 4px; height: 4px;
       border-radius: 50%; background: #7ee7c7; transform: translateY(-50%);
     }
+    #label-lines {
+      position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%;
+      pointer-events: none; overflow: visible;
+    }
+    #label-lines line { stroke: #7ee7c7; stroke-width: 1; opacity: .85; }
     #waypoint-info {
       position: absolute; z-index: 5; left: 50%; bottom: 80px; transform: translateX(-50%);
       display: none; max-width: min(480px, 92vw); padding: 14px 18px; text-align: center; pointer-events: none;
@@ -446,6 +451,7 @@
       </div>
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
+      <svg id="label-lines" aria-hidden="true"><line id="label-line" x1="0" y1="0" x2="0" y2="0" /></svg>
       <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div><button type="button" id="wp-copy" title="Copier le lien de cette vue" aria-label="Copier le lien de cette vue">Copier le lien de cette vue</button></div>
       <div id="explode-hud" role="group" aria-label="Vue éclatée globale">
         <button type="button" id="explode-toggle" aria-pressed="false">Éclater</button>
@@ -664,6 +670,8 @@
     const detailMeta = document.getElementById('detail-meta');
     const detailFact = document.getElementById('detail-fact');
     const labelEl = document.getElementById('label');
+    const labelLine = document.getElementById('label-line');
+    const labelLines = document.getElementById('label-lines');
     const wpInfo = document.getElementById('waypoint-info');
 
     const searchInput = document.getElementById('search');
@@ -1857,18 +1865,41 @@
         engine.animateGroup(groupAnim.group, groupAnim.t, groupAnim.mode);
       }
       controls.update();
+      /* BENCH-015 — l'étiquette s'ancre sur un point de surface réel (le
+       * premier waypoint de la structure), pas sur le centre de sa boîte.
+       * Une ligne de rappel SVG rejoint le cartouche, maintenu hors des HUD. */
       if (selected && !engine.waypointsVisible) {
-        const target = engine.focusTarget(selected);
-        if (target) {
-          const p = target.center.clone().project(camera);
-          if (p.z < 1 && Math.abs(p.x) < 1.1 && Math.abs(p.y) < 1.1) {
-            labelEl.style.display = 'block';
-            labelEl.style.left = `${(p.x * 0.5 + 0.5) * viewport.clientWidth}px`;
-            labelEl.style.top = `${(-p.y * 0.5 + 0.5) * viewport.clientHeight}px`;
-            labelEl.textContent = selected.fr || selected.en;
-          } else labelEl.style.display = 'none';
+        const point = getWaypoints(selected)[0]?.position
+          || engine.focusTarget(selected)?.center.toArray()
+          || [0, 0, 0];
+        const ancre = new THREE.Vector3(...point);
+        const p = ancre.clone().project(camera);
+        if (p.z < 1 && Math.abs(p.x) < 1.1 && Math.abs(p.y) < 1.1) {
+          const ax = (p.x * 0.5 + 0.5) * viewport.clientWidth;
+          const ay = (-p.y * 0.5 + 0.5) * viewport.clientHeight;
+          let lx = Math.max(8, Math.min(ax + 18, viewport.clientWidth - 150));
+          let ly = Math.max(150, Math.min(ay - 26, viewport.clientHeight - 24));
+          if (ay > viewport.clientHeight - 150) ly = Math.max(24, ay - 40);
+          labelEl.style.display = 'block';
+          labelEl.style.left = `${lx.toFixed(1)}px`;
+          labelEl.style.top = `${ly.toFixed(1)}px`;
+          labelEl.textContent = selected.fr || selected.en;
+          labelLines.style.display = 'block';
+          labelLine.setAttribute('x1', ax.toFixed(1));
+          labelLine.setAttribute('y1', ay.toFixed(1));
+          labelLine.setAttribute('x2', lx.toFixed(1));
+          labelLine.setAttribute('y2', ly.toFixed(1));
+          window.__label = { id: selected.id, ancre: [ax, ay], cartouche: [lx, ly] };
+        } else {
+          labelEl.style.display = 'none';
+          labelLines.style.display = 'none';
+          window.__label = null;
         }
-      } else labelEl.style.display = 'none';
+      } else {
+        labelEl.style.display = 'none';
+        labelLines.style.display = 'none';
+        window.__label = null;
+      }
       /* Vue corps entier : le rendu logiciel ne suit pas à 60 fps. On réduit
        * alors la résolution, on désactive l'ombre portée et on limite la
        * fréquence de rendu, sans toucher à l'état logique de visibilité. */
