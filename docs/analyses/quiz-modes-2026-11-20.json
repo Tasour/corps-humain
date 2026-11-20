@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-20",
+  "item": "BENCH-013",
+  "objectif": "Cinq modes de quiz sur la chasse aux organes, dérivés du manifeste",
+  "avant": {
+    "commit": "83c06d3",
+    "comportement": "un seul mode « trouver la structure » avec picking 3D, score et chronomètre"
+  },
+  "apres": {
+    "modes": ["trouver", "nommer", "systeme", "cote", "ta2"],
+    "questions": "générées depuis les champs réels du manifeste (nom, catégorie, côté, code TA2) ; aucun contenu inventé",
+    "choix": "4 propositions déterministes (pas de tirage pour les réponses), cibles tactiles 36 px, radiogroup avec flèches",
+    "scoring": "huntReussite()/huntEchec() mutualisés entre picking et QCM ; mauvaise réponse = −2 s et série remise à zéro"
+  },
+  "captures": {
+    "avant": ["docs/analyses/quiz-avant-desktop.png", "docs/analyses/quiz-avant-mobile.png"],
+    "apres": ["docs/analyses/quiz-apres-desktop.png", "docs/analyses/quiz-apres-mobile.png"],
+    "diffs": ["docs/analyses/quiz-diff-desktop.png", "docs/analyses/quiz-diff-mobile.png"]
+  },
+  "mesures": { "desktop_hud": 39.36, "mobile_hud": 41.8, "tests": "8/8" },
+  "verdict": "OK"
+}

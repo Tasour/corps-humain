@@ -5,6 +5,16 @@
  * `label` s'insère dans une phrase (« Trouvez le cœur »), `hint` donne un
  * repère anatomique sans nommer la structure.
  */
+/* Modes de quiz BENCH-013 : tous dérivés de champs du manifeste
+ * (nom, catégorie, côté, code TA2). Aucune question n'invente d'anatomie. */
+export const HUNT_MODES = [
+  { id: "trouver", label: "Trouver", question: "Trouvez la structure dans le corps" },
+  { id: "nommer", label: "Nommer", question: "Quelle est cette structure ?" },
+  { id: "systeme", label: "Système", question: "À quel système appartient-elle ?" },
+  { id: "cote", label: "Côté", question: "De quel côté se trouve-t-elle ?" },
+  { id: "ta2", label: "Code TA2", question: "Quel est son code TA2 ?" },
+];
+
 export const HUNT_TARGETS = [
   /* Organes thoraciques et abdominaux */
   { id: "organ:bp-heart", label: "le cœur", hint: "Thorax, un peu à gauche, entre les poumons" },

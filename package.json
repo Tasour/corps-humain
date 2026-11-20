@@ -55,6 +55,7 @@
     "test:fiches": "node tests/fiches.test.mjs",
     "test:check-modele": "node tests/check-modele.test.mjs",
     "test:licences": "node tests/licenses.test.mjs",
+    "test:quiz-modes": "node tests/quiz-modes.test.mjs",
     "test:pages": "node scripts/check-pages-structures.mjs && node tests/pages.test.mjs",
     "test:claims": "node tests/lint-claims.test.mjs",
     "test:groupes": "node tests/groupes.test.mjs",

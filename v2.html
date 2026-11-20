@@ -151,6 +151,16 @@
       font-size: 13px; line-height: 1; cursor: pointer;
     }
     #hunt-hint { margin-top: 4px; font-size: 12px; color: #4d5d66; }
+     .hunt-modes { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+     .hunt-modes button, .hunt-choices button {
+       min-height: 36px; padding: 5px 9px; border: 1px solid var(--line);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink);
+       font-size: 11px; cursor: pointer;
+     }
+     .hunt-modes button[aria-checked="true"] { background: var(--teal); color: #041b22; }
+     .hunt-choices { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+     .hunt-choices:empty { display: none; }
+     .hunt-choices button { flex: 1 1 45%; text-align: left; }
     .hunt-stats {
       display: flex; justify-content: space-between; margin-top: 8px;
       font: 600 12px/1.2 "Segoe UI", sans-serif; color: var(--ink);
@@ -465,6 +475,8 @@
           <button id="hunt-close" type="button" aria-label="Quitter la chasse aux organes">✕</button>
         </div>
         <div id="hunt-hint"></div>
+        <div class="hunt-modes" id="hunt-modes" role="radiogroup" aria-label="Mode de quiz"></div>
+        <div class="hunt-choices" id="hunt-choices" role="group" aria-label="Réponses possibles"></div>
         <div class="hunt-stats"><span id="hunt-score">0 pt</span><span id="hunt-time">90 s</span></div>
         <div class="hunt-bar" id="hunt-bar"><i id="hunt-bar-fill"></i></div>
         <div id="hunt-feedback"></div>
@@ -509,7 +521,7 @@
     import { AnatomyV2Engine } from './src/v2-engine.js';
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
     import { getWaypoints, CURATED_IDS, TOURS } from './src/data/waypoints.js';
-    import { HUNT_TARGETS } from './src/data/hunt.js';
+    import { HUNT_TARGETS, HUNT_MODES } from './src/data/hunt.js';
     import { AnatomyTree } from './src/data/hierarchy.js';
     import { basePixelRatio, dprSuivant } from './src/qualite-rendu.js';
     import './src/data/hierarchy.css';
@@ -1205,8 +1217,95 @@
 
     const hunt = {
       active: false, target: null, last: null, score: 0, streak: 0, found: 0,
-      timeLeft: 0, duration: 90, lock: false,
+      timeLeft: 0, duration: 90, lock: false, mode: 'trouver',
     };
+    const huntModesEl = document.getElementById('hunt-modes');
+    const huntChoicesEl = document.getElementById('hunt-choices');
+
+    for (const mode of HUNT_MODES) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = mode.label;
+      b.dataset.mode = mode.id;
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', String(mode.id === hunt.mode));
+      b.tabIndex = mode.id === hunt.mode ? 0 : -1;
+      b.addEventListener('click', () => changerModeHunt(mode.id));
+      huntModesEl.appendChild(b);
+    }
+    huntModesEl.addEventListener('keydown', (e) => {
+      const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+      if (!keys.includes(e.key)) return;
+      const boutons = [...huntModesEl.querySelectorAll('[data-mode]')];
+      const courant = boutons.indexOf(document.activeElement);
+      if (courant < 0) return;
+      const suivant = e.key === 'Home' ? 0
+        : e.key === 'End' ? boutons.length - 1
+        : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? (courant - 1 + boutons.length) % boutons.length
+        : (courant + 1) % boutons.length;
+      e.preventDefault();
+      boutons[suivant].focus();
+      boutons[suivant].click();
+    });
+
+    function changerModeHunt(id) {
+      if (!HUNT_MODES.some((m) => m.id === id)) return;
+      hunt.mode = id;
+      hunt.lock = false;
+      huntModesEl.querySelectorAll('[data-mode]').forEach((b) => {
+        const actif = b.dataset.mode === id;
+        b.setAttribute('aria-checked', String(actif));
+        b.tabIndex = actif ? 0 : -1;
+      });
+      if (hunt.active) nextHuntTarget();
+    }
+
+    /* Choix déterministes : on parcourt le pool à pas fixes depuis la cible,
+     * sans tirage aléatoire, pour que la partie soit reproductible. */
+    function choixHunt(target) {
+      const structure = target.structure;
+      const index = huntPool.indexOf(target);
+      const autres = (n) => huntPool[(index + n + huntPool.length) % huntPool.length];
+      if (hunt.mode === 'nommer') {
+        return [0, 1, 2, 3].map((n) => {
+          const s = n === 0 ? structure : autres(n).structure;
+          return { label: s.fr || s.en, correct: n === 0 };
+        });
+      }
+      if (hunt.mode === 'systeme') {
+        const categories = [...new Set([structure.category, ...huntPool.map((t) => t.structure.category)])];
+        return categories.slice(0, 4).map((cat) => ({
+          label: { bone: 'Os', muscle: 'Muscles', organ: 'Organes', skin: 'Peau' }[cat] || cat,
+          correct: cat === structure.category,
+        }));
+      }
+      if (hunt.mode === 'cote') {
+        return [
+          { label: 'Gauche', correct: structure.side === 'left' },
+          { label: 'Droite', correct: structure.side === 'right' },
+          { label: 'Non latéralisé', correct: !structure.side },
+        ];
+      }
+      const codes = [...new Set([structure.ta2, ...huntPool.map((t) => t.structure.ta2)].filter(Boolean))].slice(0, 4);
+      if (!codes.includes(structure.ta2)) codes.unshift(structure.ta2);
+      return codes.map((code) => ({ label: code, correct: code === structure.ta2 }));
+    }
+
+    function rendreChoixHunt(target) {
+      huntChoicesEl.replaceChildren();
+      if (hunt.mode === 'trouver') return;
+      /* En QCM, on isole la structure : la question porte sur ses propriétés,
+       * pas sur sa recherche visuelle dans le corps entier. */
+      engine.isolate(target.structure);
+      for (const choix of choixHunt(target)) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = choix.label;
+        b.dataset.correct = String(choix.correct);
+        b.addEventListener('click', () => repondreQcm(choix.correct));
+        huntChoicesEl.appendChild(b);
+      }
+    }
 
     /* Une seule couche visible à la fois : le joueur cherche la structure,
      * pas un système noyé sous les autres. La peau reste toujours masquée. */
@@ -1239,52 +1338,75 @@
       }, 520);
     }
 
+    function huntReussite(structure) {
+      const target = hunt.target;
+      hunt.lock = true;
+      const points = 10 + hunt.streak * 3;
+      hunt.score += points;
+      hunt.streak += 1;
+      hunt.found += 1;
+      huntFeedbackEl.textContent = `Exact : +${points} points`;
+      huntFeedbackEl.className = 'ok';
+      flashStructure(structure, true);
+      updateHuntHud();
+      announce(`Exact, ${target.label} trouvé. Plus ${points} points.`);
+      setTimeout(() => {
+        hunt.lock = false;
+        if (hunt.active) nextHuntTarget();
+      }, 700);
+    }
+
+    function huntEchec(structure) {
+      hunt.streak = 0;
+      hunt.timeLeft = Math.max(0, hunt.timeLeft - 2);
+      const name = structure ? (structure.fr || structure.en) : null;
+      huntFeedbackEl.textContent = name
+        ? `Raté : ${name} n'est pas la cible (−2 s)`
+        : 'Raté (−2 s)';
+      huntFeedbackEl.className = 'err';
+      if (structure) flashStructure(structure, false);
+      updateHuntHud();
+      announce(name ? `${name} n'est pas la cible.` : 'Mauvaise réponse.');
+      if (hunt.timeLeft <= 0) finishHunt();
+    }
+
+    function repondreQcm(correct) {
+      if (!hunt.active || hunt.lock || hunt.mode === 'trouver') return;
+      if (correct) huntReussite(hunt.target.structure);
+      else huntEchec(null);
+    }
+
     function nextHuntTarget() {
       if (!hunt.active) return;
-      let candidates = huntPool.filter((t) => t !== hunt.last);
-      if (!candidates.length) candidates = huntPool;
-      const entry = candidates[Math.floor(Math.random() * candidates.length)];
+      let candidats = huntPool.filter((t) => t !== hunt.last);
+      if (hunt.mode === 'cote') candidats = candidats.filter((t) => t.structure.side);
+      if (hunt.mode === 'ta2') candidats = candidats.filter((t) => t.structure.ta2);
+      if (!candidats.length) candidats = huntPool.filter((t) => t !== hunt.last);
+      if (!candidats.length) candidats = huntPool;
+      const entry = candidats[Math.floor(Math.random() * candidats.length)];
       hunt.target = entry;
       hunt.last = entry;
       setHuntLayers(entry.structure.category);
-      huntTargetEl.textContent = `Trouvez ${entry.label}`;
-      huntHintEl.textContent = entry.hint;
+      const question = HUNT_MODES.find((m) => m.id === hunt.mode)?.question || 'Trouvez la structure';
+      huntTargetEl.textContent = hunt.mode === 'trouver' ? `Trouvez ${entry.label}` : question;
+      huntHintEl.textContent = hunt.mode === 'trouver' ? entry.hint : 'La structure est isolée dans la vue 3D.';
       huntFeedbackEl.textContent = '';
       huntFeedbackEl.className = '';
+      rendreChoixHunt(entry);
       updateHuntHud();
-      announce(`Trouvez ${entry.label}. ${entry.hint}.`);
+      announce(`${question} ${huntHintEl.textContent}`);
     }
 
     function huntPick(structure) {
-      if (!hunt.active || hunt.lock || !hunt.target) return false;
-      const target = hunt.target;
-      if (structure && structure.id === target.id) {
-        hunt.lock = true;
-        const points = 10 + hunt.streak * 3;
-        hunt.score += points;
-        hunt.streak += 1;
-        hunt.found += 1;
-        huntFeedbackEl.textContent = `Exact : +${points} points`;
-        huntFeedbackEl.className = 'ok';
-        flashStructure(structure, true);
-        updateHuntHud();
-        announce(`Exact, ${target.label} trouvé. Plus ${points} points.`);
-        setTimeout(() => {
-          hunt.lock = false;
-          if (hunt.active) nextHuntTarget();
-        }, 700);
+      if (!hunt.active || !hunt.target) return false;
+      /* En QCM, la réponse passe par les boutons : on absorbe le clic 3D pour
+       * ne pas casser l'isolement de la structure interrogée. */
+      if (hunt.mode !== 'trouver') return true;
+      if (hunt.lock) return false;
+      if (structure && structure.id === hunt.target.id) {
+        huntReussite(structure);
       } else {
-        hunt.streak = 0;
-        hunt.timeLeft = Math.max(0, hunt.timeLeft - 2);
-        const name = structure ? (structure.fr || structure.en) : null;
-        huntFeedbackEl.textContent = name
-          ? `Raté : ${name} n'est pas ${target.label} (−2 s)`
-          : 'Rien sous le clic (−2 s)';
-        huntFeedbackEl.className = 'err';
-        if (structure) flashStructure(structure, false);
-        updateHuntHud();
-        announce(name ? `${name} n'est pas la cible.` : 'Aucune structure sous le clic.');
-        if (hunt.timeLeft <= 0) finishHunt();
+        huntEchec(structure);
       }
       return true;
     }
@@ -1314,6 +1436,7 @@
       document.getElementById('sel-meta').textContent = 'Cliquez la structure demandée dans le corps';
       document.getElementById('detail-meta').innerHTML = '';
       document.getElementById('detail-verite').hidden = true;
+      huntChoicesEl.replaceChildren();
       huntHud.hidden = false;
       document.body.classList.add('hunting');
       huntButton.setAttribute('aria-pressed', 'true');
@@ -1325,6 +1448,7 @@
       if (!hunt.active) return;
       hunt.active = false;
       hunt.lock = false;
+      huntChoicesEl.replaceChildren();
       huntTargetEl.textContent = 'Temps écoulé';
       huntHintEl.textContent = `${hunt.found} structure${hunt.found > 1 ? 's' : ''} trouvée${hunt.found > 1 ? 's' : ''} · ${hunt.score} point${hunt.score > 1 ? 's' : ''}`;
       huntFeedbackEl.textContent = 'Relancez la chasse ou fermez cette fiche.';
@@ -1338,6 +1462,7 @@
     function stopHunt() {
       hunt.active = false;
       hunt.lock = false;
+      huntChoicesEl.replaceChildren();
       huntHud.hidden = true;
       document.body.classList.remove('hunting');
       huntButton.setAttribute('aria-pressed', 'false');
@@ -2130,15 +2255,19 @@
         hunt.target = entry;
         hunt.last = entry;
         setHuntLayers(entry.structure.category);
-        huntTargetEl.textContent = `Trouvez ${entry.label}`;
-        huntHintEl.textContent = entry.hint;
+        huntTargetEl.textContent = hunt.mode === 'trouver'
+          ? `Trouvez ${entry.label}`
+          : (HUNT_MODES.find((m) => m.id === hunt.mode)?.question || 'Question');
+        huntHintEl.textContent = hunt.mode === 'trouver' ? entry.hint : 'La structure est isolée dans la vue 3D.';
         huntFeedbackEl.textContent = '';
         huntFeedbackEl.className = '';
+        rendreChoixHunt(entry);
         updateHuntHud();
         return true;
       },
       state: () => ({
         active: hunt.active,
+        mode: hunt.mode,
         target: hunt.target?.id || null,
         score: hunt.score,
         streak: hunt.streak,

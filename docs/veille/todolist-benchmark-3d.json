@@ -284,8 +284,10 @@
    "dependances": [],
    "verification": "npm run test:chasse",
    "preuveAttendue": "6 modes de reconnaissance",
-   "statut": "a_faire",
-   "plan": "plans-benchmark-3d.md#bench-013"
+   "statut": "verifie",
+   "plan": "plans-benchmark-3d.md#bench-013",
+   "verdict": "OK — 5 modes dérivés du manifeste, scoring mutualisé, 8/8; captures 39 % / 42 %",
+   "preuve": "docs/analyses/quiz-modes-2026-11-20.json"
   },
   {
    "id": "BENCH-014",
