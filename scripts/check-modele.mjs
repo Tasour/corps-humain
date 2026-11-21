@@ -64,7 +64,7 @@ const extremites = new Map();
 for (const s of structures) {
   for (const lod of ["low", "medium", "high"]) {
     const r = s.lod[lod];
-    const cle = `${s.category}.${lod}`;
+    const cle = r?.chunk ? r.chunk.replace(/\.bin$/, "") : `${s.category}.${lod}`;
     const fin = Math.max(
       r.indices + r.indexCount * (r.indexType === "u16" ? 2 : 4),
       r.positions + r.vertexCount * 12,

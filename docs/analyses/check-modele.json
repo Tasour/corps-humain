@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-21T08:15:22.652Z",
+ "generated": "2026-11-21T10:24:50.293Z",
  "manifest": "public/models/v2/manifest.json",
  "structures": 1989,
- "chunks": 9,
+ "chunks": 18,
  "controles": [
   "identite",
   "lod",

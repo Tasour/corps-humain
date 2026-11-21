@@ -399,7 +399,6 @@ export class AnatomyV2Engine {
     const total = categories.length + 1;
     const buffers = {};
     for (const category of categories) {
-      /* La peau reste lisse même en vue d'ensemble : on prend son niveau medium. */
       /* La peau garde son plus haut LOD : les doigts se déforment dès 1,5 k tris. */
       const lodName = category === "skin" ? "high" : this.lod;
       const buffer = await loadBinary(`${this.base}${category}.${lodName}.bin.gz`);
@@ -407,6 +406,14 @@ export class AnatomyV2Engine {
       this.baseBuffers[category] = buffer;
       done++;
       onProgress(done / total, `géométrie ${category}`);
+      /* Apports BodyParts3D CC BY 4.0 : chunks séparés, référencés par
+       * `record.chunk`. Sans ce chargement, le moteur lirait leurs offsets
+       * dans le chunk Z-Anatomy et afficherait une géométrie aléatoire. */
+      try {
+        const apport = await loadBinary(`${this.base}bp.${category}.${lodName}.bin.gz`);
+        buffers[`bp.${category}`] = apport;
+        buffers[`bp.${category}.${lodName}`] = apport;
+      } catch { /* aucune apport pour cette catégorie */ }
     }
 
     this.index = new AnatomyIndex(this.structures.length + 1);
@@ -414,7 +421,8 @@ export class AnatomyV2Engine {
     for (const structure of this.structures) {
       const record = structure.lod?.[this.lod];
       if (!record) continue;
-      const buffer = buffers[structure.category];
+      const cle = record.chunk ? record.chunk.replace(/\.bin$/, "") : structure.category;
+      const buffer = this.baseBuffers[cle];
       if (!buffer) continue;
       const geometry = geometryFromRecord(buffer, record);
       structure._geometry = geometry;
@@ -531,7 +539,7 @@ export class AnatomyV2Engine {
       this.skinBatch = batch;
     }
 
-    this.buildMergedViews();
+    this.buildMergedViews(this.lod, buffers);
     this.stats.structures = idx;
     this.stats.triangles = this.structures.reduce(
       (sum, s) => sum + (s.lod?.[this.lod]?.indexCount || 0) / 3, 0,
@@ -544,7 +552,7 @@ export class AnatomyV2Engine {
    * Un BatchedMesh émet un draw range par instance (~2100 ranges) même avec
    * multi-draw ; la fusion n'en émet qu'un seul par catégorie. Les batches
    * restent utilisés dès qu'on isole/filtre (quelques dizaines d'instances). */
-  buildMergedViews(lod = this.lod) {
+  buildMergedViews(lod = this.lod, buffers = null) {
     this.mergedMeshes = new Map();
     this.mergedVertexMap = new Map();
     this.mergedRanges = new Map();
@@ -556,7 +564,7 @@ export class AnatomyV2Engine {
        * translucides, pour que la vue « Organes » reste lisible. */
       const solids = list.filter((s) => !isMembrane(s));
       const membranes = list.filter((s) => isMembrane(s));
-      this.buildMergedMesh(category, category, solids, batch.material, lod);
+      this.buildMergedMesh(category, category, solids, batch.material, lod, buffers || this.baseBuffers);
       if (membranes.length) {
         const material = batch.material.clone();
         material.transparent = true;
@@ -565,21 +573,22 @@ export class AnatomyV2Engine {
         material.opacity = 0.15;
         material.depthWrite = false;
         material.roughness = 0.9;
-        this.buildMergedMesh(`${category}:membrane`, category, membranes, material, lod, { membrane: true });
+        this.buildMergedMesh(`${category}:membrane`, category, membranes, material, lod, buffers || this.baseBuffers, { membrane: true });
       }
     }
   }
 
   /* Fusionne une liste de structures en un seul mesh, avec un attribut de
    * couleur par vertex et une carte vertex → structure pour le picking. */
-  buildMergedMesh(key, category, list, baseMaterial, lod, options = {}) {
+  buildMergedMesh(key, category, list, baseMaterial, lod, buffers = {}, options = {}) {
     const positions = [], normals = [], indices = [], colors = [], vertexMap = [];
     const ranges = new Map();
     let vertexBase = 0;
     const color = new THREE.Color();
     for (const s of list) {
       const rec = s.lod[lod];
-      const buffer = this.lodBuffers.get(`${category}:${lod}`) || this.baseBuffers?.[category];
+      const cle = rec.chunk ? rec.chunk.replace(/\.bin$/, "") : category;
+      const buffer = this.lodBuffers.get(`${cle}:${lod}`) || this.baseBuffers?.[cle];
       if (!buffer) continue;
       const p = new Float32Array(buffer, rec.positions, rec.vertexCount * 3);
       const n = new Int16Array(buffer, rec.normals, rec.vertexCount * 3);
@@ -934,10 +943,12 @@ export class AnatomyV2Engine {
   }
 
   /* Charge (une seule fois) le chunk d'un niveau de détail pour une catégorie. */
-  async ensureLod(category, lod) {
-    const key = `${category}:${lod}`;
+  async ensureLod(cleChunk, lod) {
+    const key = `${cleChunk}:${lod}`;
     if (this.lodBuffers.has(key)) return this.lodBuffers.get(key);
-    const buffer = await loadBinary(`${this.base}${category}.${lod}.bin.gz`);
+    const fichier = cleChunk.startsWith("bp.")
+      ? `bp.${cleChunk.slice(3).split(".")[0]}.${lod}` : cleChunk;
+    const buffer = await loadBinary(`${this.base}${fichier}.bin.gz`);
     this.lodBuffers.set(key, buffer);
     return buffer;
   }
@@ -950,9 +961,10 @@ export class AnatomyV2Engine {
     const ref = this.geometryIds.get(structure.id);
     if (!ref) return false;
     /* Le LOD bas est déjà en mémoire : inutile de re-télécharger le chunk. */
+    const cleChunk = record.chunk ? record.chunk.replace(/\.bin$/, "") : ref.category;
     const geometry = lod === "low"
       ? this.baseGeometries.get(structure.id)
-      : geometryFromRecord(await this.ensureLod(ref.category, lod), record);
+      : geometryFromRecord(await this.ensureLod(cleChunk, lod), record);
     if (!geometry) return false;
     const batch = this.batches.get(ref.category);
     if (!batch) return false;
@@ -1180,13 +1192,20 @@ export class AnatomyV2Engine {
   async setGlobalLod(lod) {
     if (!["low", "medium", "high"].includes(lod) || this.globalLod === lod) return false;
     for (const category of this.batches.keys()) {
-      if (lod !== "low") await this.ensureLod(category, lod);
+      const apport = this.batches.keys && `bp.${category}`;
+      if (lod !== "low") {
+        await this.ensureLod(category, lod);
+        if (this.manifest?.structures?.some((s) => s.apport && s.category === category)) {
+          await this.ensureLod(`bp.${category}`, lod);
+        }
+      }
       const batch = this.batches.get(category);
       for (const structure of this.structures) {
         if (structure.category !== category || !structure._geometryId) continue;
+        const cle = structure.lod?.[lod]?.chunk?.replace(/\.bin$/, "") || category;
         const geometry = lod === "low"
           ? this.baseGeometries.get(structure.id)
-          : geometryFromRecord(this.lodBuffers.get(`${category}:${lod}`), structure.lod[lod]);
+          : geometryFromRecord(this.lodBuffers.get(`${cle}:${lod}`), structure.lod[lod]);
         if (geometry) {
           batch.setGeometryAt(structure._geometryId, geometry);
           this.sourceGeometries.set(structure.id, geometry);
