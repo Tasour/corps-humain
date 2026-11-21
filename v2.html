@@ -161,6 +161,41 @@
      .hunt-choices { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
      .hunt-choices:empty { display: none; }
      .hunt-choices button { flex: 1 1 45%; text-align: left; }
+    .patho-hud {
+      position: absolute; z-index: 7; right: 14px; top: 60px; width: min(350px, 92vw);
+      max-height: calc(100% - 90px); overflow: auto; padding: 12px 14px;
+      border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+      background: rgba(255,253,249,.97); color: var(--ink); font-size: 12px;
+    }
+    body.dark .patho-hud { background: rgba(20,31,43,.97); }
+    .patho-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .patho-head strong { font: 600 15px Georgia, serif; }
+    .patho-head button { min-width:36px; min-height:36px; cursor:pointer; }
+    .patho-tagline { color: var(--muted); margin:6px 0 10px; }
+    .patho-slider { display:block; margin:8px 0; }
+    .patho-slider input { width:100%; accent-color: var(--teal); }
+    .patho-stage { padding:8px; border-left:3px solid var(--accent); background: var(--teal-soft); }
+    .patho-vitals { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:10px 0; }
+    .patho-vitals div { padding:6px; border:1px solid var(--line); border-radius:6px; text-align:center; }
+    .patho-vitals b { display:block; font:600 15px var(--mono); }
+    .patho-vitals span { color:var(--muted); font-size:10px; }
+    .patho-effects { margin:8px 0; }
+    .patho-effects div { padding:5px 0; border-bottom:1px dotted var(--line); }
+    .patho-actions { display:flex; gap:6px; margin-top:10px; }
+    .patho-actions button, .patho-quiz button {
+      min-height:36px; padding:5px 9px; border:1px solid var(--line); border-radius:6px;
+      background: var(--teal-soft); color:var(--ink); cursor:pointer;
+    }
+    .patho-quiz { margin-top:10px; }
+    .patho-quiz button { display:block; width:100%; text-align:left; margin-top:4px; }
+    .patho-note { color:var(--muted); font-size:10.5px; margin:10px 0 0; }
+    #patho-search { width:100%; margin-bottom:6px; }
+    #patho-list button {
+      display:block; width:100%; min-height:32px; text-align:left; padding:5px 7px;
+      border:1px solid var(--line); border-radius:6px; background:transparent;
+      color:var(--ink); cursor:pointer; font-size:11.5px;
+    }
+    #patho-list button:hover, #patho-list button:focus-visible { background: var(--teal-soft); }
     .hunt-stats {
       display: flex; justify-content: space-between; margin-top: 8px;
       font: 600 12px/1.2 "Segoe UI", sans-serif; color: var(--ink);
@@ -428,6 +463,11 @@
         <div class="tree" id="tree" role="group" aria-label="Niveaux anatomiques"></div>
       </div>
       <div class="section"><h2 class="section-title">Accès rapide</h2><div class="chips" id="shortcuts"></div></div>
+      <details class="groups-details" id="patho-details" open>
+        <summary class="section-title">Pathologies simulées <span id="patho-count" class="section-count"></span></summary>
+        <div class="section"><input id="patho-search" type="search" placeholder="Rechercher une pathologie…" aria-label="Rechercher une pathologie" /></div>
+        <div id="patho-list" role="group" aria-label="Liste des pathologies simulées"></div>
+      </details>
       <details class="groups-details" id="vues-details" open>
         <summary class="section-title">Vues remarquables <span id="vues-count" class="section-count"></span></summary>
         <div id="vues-catalogue" role="group" aria-label="Catalogue des vues remarquables"></div>
@@ -487,6 +527,25 @@
         <div class="hunt-bar" id="hunt-bar"><i id="hunt-bar-fill"></i></div>
         <div id="hunt-feedback"></div>
       </div>
+      <section class="patho-hud" id="patho-hud" aria-label="Pathologie simulée" hidden>
+        <div class="patho-head">
+          <strong id="patho-name">—</strong>
+          <button type="button" id="patho-quit" aria-label="Quitter les pathologies simulées">✕</button>
+        </div>
+        <p class="patho-tagline" id="patho-tagline"></p>
+        <label class="patho-slider">Sévérité <output id="patho-severity-value">65 %</output>
+          <input id="patho-severity" type="range" min="0" max="100" step="1" value="65" aria-label="Sévérité simulée" />
+        </label>
+        <p class="patho-stage" id="patho-stage"></p>
+        <div class="patho-vitals" id="patho-vitals" role="status" aria-live="polite"></div>
+        <div class="patho-effects" id="patho-effects"></div>
+        <div class="patho-actions">
+          <button type="button" id="patho-compare" aria-pressed="true">Comparer : actif</button>
+          <button type="button" id="patho-quiz">Quiz symptômes</button>
+        </div>
+        <div class="patho-quiz" id="patho-quiz-area" hidden></div>
+        <p class="patho-note">Simulation pédagogique. Aucune valeur diagnostique.</p>
+      </section>
       <div class="anim-bar" id="animations" role="group" aria-label="Animations"></div>
     </main>
 
@@ -528,6 +587,8 @@
     import { QUICK_ACCESS, GROUPS } from './src/data/groups.js';
     import { getWaypoints, CURATED_IDS, TOURS } from './src/data/waypoints.js';
     import { HUNT_TARGETS, HUNT_MODES } from './src/data/hunt.js';
+    import { DISEASES, DISEASE_MAP, NORMAL_VITALS, EFFECT_LABELS } from './src/data/diseases.js';
+    import { TARGET_TO_STRUCTURES, TARGET_GAPS, EFFECT_COLORS, structuresFor } from './src/data/disease-targets.js';
     import { AnatomyTree } from './src/data/hierarchy.js';
     import { basePixelRatio, dprSuivant } from './src/qualite-rendu.js';
     import './src/data/hierarchy.css';
@@ -883,6 +944,164 @@
       }
       panneau.hidden = false;
     }
+
+    /* Pathologies simulées (features v1 portées sur le moteur v2).
+     * Les données viennent de src/data/diseases.js ; aucune affirmation
+     * clinique n'est ajoutée ici et le libellé « simulées » est conservé. */
+    const patho = { active: false, disease: null, severity: 0.65, compare: true };
+    const pathoHud = document.getElementById('patho-hud');
+    const pathoList = document.getElementById('patho-list');
+    const pathoSearch = document.getElementById('patho-search');
+
+    function renderPathoList() {
+      const filtre = (pathoSearch.value || '').toLowerCase().trim();
+      const liste = DISEASES.filter((d) => !filtre
+        || `${d.name} ${d.system} ${(d.symptoms || []).join(' ')}`.toLowerCase().includes(filtre));
+      pathoList.replaceChildren();
+      for (const d of liste) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = `${d.name} · ${d.system}`;
+        b.addEventListener('click', () => activerPathologie(d.id));
+        pathoList.appendChild(b);
+      }
+      document.getElementById('patho-count').textContent = `(${liste.length}/${DISEASES.length})`;
+    }
+
+    function appliquerEffetsPatho() {
+      /* Restaure d'abord toutes les structures déjà colorées. */
+      const cibles = new Set();
+      for (const effet of patho.disease?.effects || []) {
+        for (const id of structuresFor(effet.target)) cibles.add(id);
+      }
+      for (const id of cibles) {
+        const s = engine.resolveId(id);
+        if (s) engine.highlight(s, null);
+      }
+      if (!patho.active || !patho.compare || !patho.disease) return;
+      for (const effet of patho.disease.effects || []) {
+        const couleur = EFFECT_COLORS[effet.type] || '#e0523f';
+        for (const id of structuresFor(effet.target)) {
+          const s = engine.resolveId(id);
+          if (s) engine.highlight(s, couleur);
+        }
+      }
+      needsRender = true;
+    }
+
+    function mettreAJourPatho() {
+      const d = patho.disease;
+      if (!d) return;
+      const sev = patho.severity;
+      document.getElementById('patho-name').textContent = d.name;
+      document.getElementById('patho-tagline').textContent = d.tagline || '';
+      document.getElementById('patho-severity-value').textContent = `${Math.round(sev * 100)} %`;
+      document.getElementById('patho-stage').textContent =
+        d.stages?.[Math.min(d.stages.length - 1, Math.floor(sev * 3))]?.text || '';
+      const v = (cle) => {
+        const base = NORMAL_VITALS[cle];
+        const cible = d.vitals?.[cle] ?? base;
+        return Math.round(base + (cible - base) * sev);
+      };
+      const ta = `${v('sbp')}/${v('dbp')}`;
+      const valeurs = [['FC', `${v('hr')}`], ['SpO₂', `${v('spo2')}`], ['FR', `${v('rr')}`],
+        ['TA', ta], ['T°', `${v('temp').toFixed(1)}`], ['Sévérité', `${Math.round(sev * 100)} %`]];
+      const host = document.getElementById('patho-vitals');
+      host.replaceChildren();
+      for (const [cle, valeur] of valeurs) {
+        const div = document.createElement('div');
+        const b = document.createElement('b');
+        b.textContent = valeur;
+        const span = document.createElement('span');
+        span.textContent = cle;
+        div.append(b, span);
+        host.appendChild(div);
+      }
+      const effets = document.getElementById('patho-effects');
+      effets.replaceChildren();
+      for (const e of d.effects || []) {
+        const div = document.createElement('div');
+        div.textContent = `${EFFECT_LABELS[e.type] || e.type} — ${e.label} (${Math.round((e.amount || 0) * 100)} %)`;
+        effets.appendChild(div);
+        for (const cible of structuresFor(e.target)) {
+          if (!engine.resolveId(cible)) {
+            const div2 = document.createElement('div');
+            div2.textContent = `${cible} : non présent dans ce jeu de données`;
+            effets.appendChild(div2);
+          }
+        }
+        if (!structuresFor(e.target).length && TARGET_GAPS[e.target]) {
+          const div3 = document.createElement('div');
+          div3.textContent = TARGET_GAPS[e.target];
+          effets.appendChild(div3);
+        }
+      }
+      appliquerEffetsPatho();
+      announce(`${d.name}, sévérité ${Math.round(sev * 100)} pour cent. Simulation pédagogique.`);
+    }
+
+    function activerPathologie(id) {
+      const d = DISEASE_MAP[id];
+      if (!d) return;
+      appliquerEffetsPatho();
+      patho.active = true;
+      patho.disease = d;
+      patho.severity = 0.65;
+      patho.compare = true;
+      document.getElementById('patho-severity').value = '65';
+      document.getElementById('patho-compare').setAttribute('aria-pressed', 'true');
+      document.getElementById('patho-compare').textContent = 'Comparer : actif';
+      pathoHud.hidden = false;
+      document.getElementById('patho-quiz-area').hidden = true;
+      mettreAJourPatho();
+    }
+
+    function quitterPathologie() {
+      /* Restaure les couleurs avant d'oublier la pathologie courante. */
+      appliquerEffetsPatho();
+      patho.active = false;
+      patho.disease = null;
+      pathoHud.hidden = true;
+      document.getElementById('patho-quiz-area').hidden = true;
+    }
+
+    pathoSearch.addEventListener('input', renderPathoList);
+    document.getElementById('patho-severity').addEventListener('input', (e) => {
+      patho.severity = Number(e.currentTarget.value) / 100;
+      mettreAJourPatho();
+    });
+    document.getElementById('patho-compare').addEventListener('click', (e) => {
+      patho.compare = !patho.compare;
+      e.currentTarget.setAttribute('aria-pressed', String(patho.compare));
+      e.currentTarget.textContent = patho.compare ? 'Comparer : actif' : 'Comparer : inactif';
+      appliquerEffetsPatho();
+    });
+    document.getElementById('patho-quit').addEventListener('click', quitterPathologie);
+    document.getElementById('patho-quiz').addEventListener('click', () => {
+      if (!patho.disease) return;
+      const zone = document.getElementById('patho-quiz-area');
+      zone.hidden = !zone.hidden;
+      if (zone.hidden) return;
+      const options = [patho.disease, ...DISEASES.filter((d) => d.id !== patho.disease.id).slice(0, 3)];
+      zone.replaceChildren();
+      const question = document.createElement('p');
+      question.textContent = `Quelle pathologie correspond à : « ${patho.disease.tagline} » ?`;
+      zone.appendChild(question);
+      for (const d of options) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = d.name;
+        b.addEventListener('click', () => {
+          const feedback = document.createElement('p');
+          feedback.textContent = d.id === patho.disease.id
+            ? 'Exact — simulation pédagogique.'
+            : `Réponse : ${patho.disease.name} — simulation pédagogique.`;
+          zone.appendChild(feedback);
+        });
+        zone.appendChild(b);
+      }
+    });
+    renderPathoList();
 
     /* BENCH-010 — attribution lisible dans l'application, générée depuis le
      * registre. Les liens de citation s'ouvrent dans un nouvel onglet. */

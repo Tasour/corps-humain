@@ -35,6 +35,8 @@ relecture anatomique humaine n'est pas signée.
 - **Fiches de vérité** par structure (source, licence, limite), registre des licences dans l'app,
   2 009 pages statiques indexables + sitemap.
 - **Quiz multi-modes** (trouver, nommer, système, côté, code TA2) et chasse aux organes.
+- **Pathologies simulées** : 30 pathologies, 27 cibles anatomiques, sévérité, constantes et
+  comparaison sain/malade — portées de la v1 vers le moteur v2, sans prétention diagnostique.
 - **Textures CC0 par tissu** derrière `?tex=cc0` (désactivé par défaut) ; station de revue humaine
   dans `docs/revues/` et gate `npm run test:review`.
 - Couches anatomiques : peau, muscles, squelette, organes, étiquettes.

@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-21",
+  "item": "Fusion fonctionnelle v1 + v2 et raccourci Omarchy unique",
+  "decision": "ADR-0001 : moteur v2 conservé, fonctionnalités pathologies de v1 portées dans v2",
+  "portage": {
+    "maladies": 30,
+    "typesEffets": 19,
+    "ciblesV1": 27,
+    "ciblesMappees": 27,
+    "idsManifest": 46,
+    "gap": "thyroide absente du manifeste v2, documentée dans TARGET_GAPS",
+    "ui": "liste + recherche, HUD sévérité/constantes/effets, comparaison sain-malade, quiz symptômes 4 choix"
+  },
+  "unification": {
+    "racine": "index.html sert l'application unifiée (postbuild-unify.mjs)",
+    "legacy": "ancienne v1 conservée sous classique.html",
+    "alias": "v2.html reste disponible"
+  },
+  "raccourci": {
+    "supprime": "brave-mfbmcknaieaicgnepmbjkpindngabaph-Default.desktop + icône",
+    "conserve": "corps-humain.desktop avec omarchy-launch-or-focus-webapp",
+    "menu": "atelier.corps utilise le même anti-doublon, avec description et alias",
+    "verification": "deux lancements successifs → une seule fenêtre (hyprctl clients)",
+    "sauvegardes": "desktop et menu .bak.1795232196"
+  },
+  "preuves": {
+    "test:pathologies": "6/6",
+    "captures": "13,56 % de pixels changés entre état sain et pathologie",
+    "suite": "npm test, a11y 22/22, v2 30/30, groupes 52/52, lint:claims, check:modele, build verts",
+    "architecture": "CURRENT-STATE, ARCHITECTURE, ROADMAP, RISKS, ADR-0001, scorecard (confiance low : adaptateurs absents)"
+  },
+  "verdict": "OK — une application, un raccourci, aucune géométrie inventée"
+}

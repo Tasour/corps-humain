@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-11-21T03:40:30.976Z",
+  "root": "/home/tasour/corps-humain",
+  "weights": {
+    "simplicite": 15,
+    "modularite": 15,
+    "donnees": 15,
+    "api": 10,
+    "performance": 15,
+    "securite": 10,
+    "testabilite": 10,
+    "dx": 5,
+    "cout": 5
+  },
+  "dimensions": {
+    "simplicite": {
+      "status": "unknown",
+      "score": null,
+      "weight": 15,
+      "evidence": [],
+      "note": ""
+    },
+    "modularite": {
+      "status": "unknown",
+      "score": null,
+      "weight": 15,
+      "evidence": [],
+      "note": ""
+    },
+    "donnees": {
+      "status": "unknown",
+      "score": null,
+      "weight": 15,
+      "evidence": [],
+      "note": ""
+    },
+    "api": {
+      "status": "unknown",
+      "score": null,
+      "weight": 10,
+      "evidence": [],
+      "note": ""
+    },
+    "performance": {
+      "status": "unknown",
+      "score": null,
+      "weight": 15,
+      "evidence": [],
+      "note": ""
+    },
+    "securite": {
+      "status": "unknown",
+      "score": null,
+      "weight": 10,
+      "evidence": [],
+      "note": ""
+    },
+    "testabilite": {
+      "status": "unknown",
+      "score": null,
+      "weight": 10,
+      "evidence": [],
+      "note": ""
+    },
+    "dx": {
+      "status": "unknown",
+      "score": null,
+      "weight": 5,
+      "evidence": [],
+      "note": ""
+    },
+    "cout": {
+      "status": "unknown",
+      "score": null,
+      "weight": 5,
+      "evidence": [],
+      "note": ""
+    }
+  },
+  "score": 0,
+  "coverage": 0,
+  "confidence": "low"
+}
