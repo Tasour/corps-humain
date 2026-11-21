@@ -22,10 +22,11 @@ const SAMPLES = Number(process.env.HAUSDORFF_SAMPLES || 256);
 const manifest = JSON.parse(fs.readFileSync(path.join(BASE, "manifest.json"), "utf8"));
 
 const chunkCache = new Map();
-function chunkFor(category, lod) {
-  const key = `${category}:${lod}`;
+function chunkFor(category, lod, record) {
+  const cle = record?.chunk ? record.chunk.replace(/\.bin$/, "") : `${category}.${lod}`;
+  const key = `${cle}:${lod}`;
   if (!chunkCache.has(key)) {
-    chunkCache.set(key, zlib.gunzipSync(fs.readFileSync(path.join(BASE, `${category}.${lod}.bin.gz`))));
+    chunkCache.set(key, zlib.gunzipSync(fs.readFileSync(path.join(BASE, `${cle}.bin.gz`))));
   }
   return chunkCache.get(key);
 }
@@ -207,8 +208,8 @@ const list = LIMIT ? manifest.structures.slice(0, LIMIT) : manifest.structures;
 for (const s of list) {
   const high = s.lod?.high, medium = s.lod?.medium, low = s.lod?.low;
   if (!high?.indexCount || !medium?.indexCount) continue;
-  const fine = views(chunkFor(s.category, "high"), high);
-  const med = views(chunkFor(s.category, "medium"), medium);
+  const fine = views(chunkFor(s.category, "high", high), high);
+  const med = views(chunkFor(s.category, "medium", medium), medium);
   const row = {
     id: s.id, fr: s.fr, category: s.category,
     triangles: { high: high.indexCount / 3, medium: medium.indexCount / 3, low: (low?.indexCount || 0) / 3 },
@@ -222,7 +223,7 @@ for (const s of list) {
     if (low.indexCount === high.indexCount) {
       row.low = { maxMm: 0, meanMm: 0, coarseToFineMaxMm: 0, fineToCoarseMaxMm: 0, samples: 0 };
     } else {
-      row.low = hausdorff(views(chunkFor(s.category, "low"), low), fine);
+      row.low = hausdorff(views(chunkFor(s.category, "low", low), low), fine);
     }
   }
   rows.push(row);
