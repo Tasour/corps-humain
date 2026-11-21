@@ -26,7 +26,8 @@ verifier("structures avec un source_id", () => {
 verifier("unicité et provenance Z-Anatomy", () => {
   const vus = new Set();
   for (const s of manifest.structures) {
-    assert.match(s.source_id, /^za:/, `${s.id} : source_id ${s.source_id}`);
+    /* Socle Z-Anatomy (za:) + apports BodyParts3D CC BY 4.0 (bp:). */
+    assert.match(s.source_id, /^(za|bp):/, `${s.id} : source_id ${s.source_id}`);
     assert.equal(vus.has(s.source_id), false, `doublon ${s.source_id}`);
     vus.add(s.source_id);
   }
