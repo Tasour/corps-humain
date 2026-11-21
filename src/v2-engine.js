@@ -419,6 +419,7 @@ export class AnatomyV2Engine {
         const apport = await loadBinary(`${this.base}bp.${category}.${lodName}.bin.gz`);
         buffers[`bp.${category}`] = apport;
         buffers[`bp.${category}.${lodName}`] = apport;
+        this.baseBuffers[`bp.${category}.${lodName}`] = apport;
       } catch { /* aucune apport pour cette catégorie */ }
     }
 

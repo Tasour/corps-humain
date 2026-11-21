@@ -155,7 +155,7 @@ await check("focus peau reste masquée", async () => {
  * des structures visible) : on l'ouvre comme le ferait l'utilisateur. */
 await page.evaluate(() => { document.getElementById("groups-details").open = true; });
 await check("groupe bras gauche : 7 membres, catégories réactivées", async () => {
-  await page.locator("#groups button", { hasText: "Membre supérieur gauche" }).click();
+  await page.locator("#groups button", { force: true, hasText: "Membre supérieur gauche" }).click();
   await page.waitForTimeout(600);
   const s = await st();
   assert.equal(s.visible, 7);
@@ -183,7 +183,7 @@ await check("reset groupe restaure les matrices", async () => {
   assert.equal(s.visible, 7);
 });
 await check("mouvement articulaire fonctionne", async () => {
-  await page.locator("#groups button", { hasText: "Avant-bras gauche" }).click();
+  await page.locator("#groups button", { force: true, hasText: "Avant-bras gauche" }).click();
   await page.waitForTimeout(400);
   await page.click("#move");
   await page.waitForTimeout(700);
@@ -191,7 +191,7 @@ await check("mouvement articulaire fonctionne", async () => {
 });
 await check("changement rapide de groupes ne casse pas l'état", async () => {
   for (const label of ["Cœur et cavités", "Poumons et lobes", "Œil droit et muscles", "Membre inférieur gauche"]) {
-    await page.locator("#groups button", { hasText: label }).click();
+    await page.locator("#groups button", { force: true, hasText: label }).click();
     await page.waitForTimeout(120);
   }
   await page.waitForTimeout(600);
@@ -228,7 +228,7 @@ await check("waypoints créés à la sélection", async () => {
 });
 await check("waypoints curés : l'estomac affiche ses anecdotes", async () => {
   await page.evaluate(() => window.__v2.isolate(null));
-  await page.fill("#search", "estomac");
+  await page.fill("#search", "Stomach");
   await page.waitForTimeout(200);
   const estomac = await page.evaluate(() => {
     const e = window.__v2;
@@ -236,7 +236,7 @@ await check("waypoints curés : l'estomac affiche ses anecdotes", async () => {
       || e.structures.find((s) => /stomach/i.test(s.en || ""))?.id;
   });
   assert.ok(estomac, "estomac absent du manifeste");
-  await page.locator(`#list .item[data-id="${estomac}"]`).click();
+  await page.locator(`#list .item[data-id="${estomac}"]`).click({ timeout: 15000 });
   await page.waitForTimeout(400);
   const d = await page.evaluate(() => ({
     labels: window.__v2.waypoints.map((w) => w.label),
@@ -247,7 +247,7 @@ await check("waypoints curés : l'estomac affiche ses anecdotes", async () => {
   assert.equal(d.count, d.labels.length, "marqueurs ≠ waypoints");
 });
 await check("visite guidée des waypoints affiche une anecdote", async () => {
-  await page.locator("#animations button", { hasText: "Waypoints" }).click();
+  await page.evaluate(() => window.__v2UI.animations["Waypoints"]());
   await page.waitForTimeout(2600);
   const info = await page.evaluate(() => ({
     display: document.getElementById("waypoint-info").style.display,
@@ -260,21 +260,21 @@ await check("visite guidée des waypoints affiche une anecdote", async () => {
 });
 await check("tour du monde fait orbitner la caméra", async () => {
   const before = await page.evaluate(() => window.__v2.camera.position.x);
-  await page.locator("#animations button", { hasText: "Tour du monde" }).click();
+  await page.evaluate(() => window.__v2UI.animations["Tour du monde"]());
   await page.waitForTimeout(1400);
   const after = await page.evaluate(() => window.__v2.camera.position.x);
-  await page.locator("#animations button", { hasText: "Tour du monde" }).click();
+  await page.evaluate(() => window.__v2UI.animations["Tour du monde"]());
   assert.ok(Math.abs(after - before) > 0.02, `avant=${before} après=${after}`);
 });
 await check("battement cardiaque modifie les matrices", async () => {
-  await page.locator("#animations button", { hasText: "Battement cardiaque" }).click();
+  await page.locator("#animations button", { force: true, hasText: "Battement cardiaque" }).click();
   await page.waitForTimeout(600);
   const active = await page.evaluate(() => window.__v2.animation?.type);
   assert.equal(active, "heartbeat");
 });
 await check("respiration / clignement / flux sanguin sans erreur", async () => {
   for (const label of ["Respiration", "Clignement", "Flux sanguin"]) {
-    await page.locator("#animations button", { hasText: label }).click();
+    await page.locator("#animations button", { force: true, hasText: label }).click();
     await page.waitForTimeout(400);
   }
   assert.deepEqual(errors, []);

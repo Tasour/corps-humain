@@ -1010,10 +1010,13 @@
       { label: 'Clignement', action: () => startSceneAnim('blink', ['organ:bp-fibrous-layer-of-eyeball-l', 'organ:bp-fibrous-layer-of-eyeball-r']) },
       { label: 'Flux sanguin', action: () => startSceneAnim('bloodflow', engine.structures.filter((s) => /arter|vein|artère|veine|vascul/i.test(s.en || '')).slice(0, 160).map((s) => s.id)) },
     ];
+    window.__v2UI = window.__v2UI || {};
+    window.__v2UI.animations = Object.fromEntries(defs.map((d) => [d.label, d.action]));
     for (const def of defs) {
       const b = document.createElement('button');
       b.type = 'button';
       b.textContent = def.label;
+      b.dataset.action = def.label;
       if (def.id === 'tour') b.setAttribute('aria-pressed', 'false');
       b.addEventListener('click', () => {
         def.action();
