@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-21",
+  "item": "Fusion main → gh-pages",
+  "source": {
+    "branche": "main",
+    "commit": "9718b3f",
+    "ci": "verte (run 44852668224)"
+  },
+  "deploiement": {
+    "branche": "gh-pages",
+    "commit": "1796c8e",
+    "precedent": "8271709 (SW corps-v41)",
+    "methode": "rsync dist/ sans .git ni .nojekyll, puis commit et push SSH"
+  },
+  "sondes": {
+    "v2_html": 200,
+    "index": 200,
+    "sw": "corps-v44",
+    "structures": 2009,
+    "textures_accessibles": ["bone", "muscle", "organ", "skin", "veins"],
+    "navigateur": {
+      "structures": 2009,
+      "flagTextures": null,
+      "appelsRendu": 4,
+      "requetesExternes": 0,
+      "erreursConsole": 0
+    }
+  },
+  "notes": "Le site public affiche désormais la version complète : deep links, coupes, tours, quiz, fiches, pages statiques et textures CC0 éteintes par défaut.",
+  "verdict": "OK — une seule version active, prouvée sur l'URL publique"
+}
