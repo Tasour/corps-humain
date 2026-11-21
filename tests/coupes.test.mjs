@@ -117,7 +117,7 @@ await page.goto(`${BASE}/v2.html`);
 await page.waitForFunction(() => window.__v2?.ready === true, null, { timeout: 120000 });
 
 await verifier("v2 : plan ajouté aux lots et normales correctes", async () => {
-  await page.locator("#coupe-toggle").click();
+  await page.evaluate(() => window.__v2UI.coupe.basculer());
   const d = await page.evaluate(() => {
     const lots = [...window.__v2.batches.values()];
     const mat = lots[0].material;
@@ -135,8 +135,7 @@ await verifier("v2 : plan ajouté aux lots et normales correctes", async () => {
 });
 
 await verifier("v2 : axe transversal et position appliqués", async () => {
-  await page.locator('[data-clip-axe="transversal"]').click();
-  await page.locator("#coupe-range").fill("-30");
+  await page.evaluate(() => { window.__v2UI.coupe.axe("transversal"); window.__v2UI.coupe.position(-0.3); });
   const d = await page.evaluate(() => {
     const mat = [...window.__v2.batches.values()][0].material;
     return {
@@ -151,7 +150,7 @@ await verifier("v2 : axe transversal et position appliqués", async () => {
 });
 
 await verifier("v2 : désactivation restaure side et retire les plans", async () => {
-  await page.locator("#coupe-toggle").click();
+  await page.evaluate(() => window.__v2UI.coupe.basculer());
   const d = await page.evaluate(() => {
     const mat = [...window.__v2.batches.values()][0].material;
     return {

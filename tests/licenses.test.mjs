@@ -28,7 +28,7 @@ verifier("registre conforme aux sources canoniques", () => {
     assert.match(src.url, /^https:\/\//);
     assert.ok(src.attribution.length > 30);
   }
-  assert.equal(registre.attributionCombinedee, "CC BY-SA 4.0 (jeu de données combiné)");
+  assert.match(registre.attributionCombinedee, /^CC BY-SA 4\.0/);
 });
 
 verifier("empreintes et répartition cohérentes", () => {

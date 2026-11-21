@@ -25,6 +25,9 @@ await verifier("30 pathologies et 27 cibles mappées", () => {
   assert.equal(cibles.size, 27);
   assert.deepEqual([...cibles].filter((c) => !TARGET_TO_STRUCTURES[c]), []);
   for (const [cible, liste] of Object.entries(TARGET_TO_STRUCTURES)) {
+    /* Les reins sont exclus du socle Z-Anatomy (composant CC BY-NC) :
+     * leur cible reste textuelle, documentée comme gap de licence. */
+    if (cible === "reins") continue;
     for (const id of liste) assert.ok(ids.has(id) || resoudre(id, new Map([...ids].map((x) => [x, x]))), `${cible} → ${id} absent du manifeste`);
   }
 });

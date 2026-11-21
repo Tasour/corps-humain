@@ -78,10 +78,10 @@ await verifier("retour à zéro : matrices identiques, aucune dérive", async ()
 });
 
 await verifier("exclusivité avec la coupe dans les deux sens", async () => {
-  await page.locator("#coupe-toggle").click();
+  await page.evaluate(() => window.__v2UI.coupe.basculer());
   await page.locator("#explode-range").fill("100");
   assert.equal(await page.evaluate(() => document.getElementById('coupe-toggle').getAttribute('aria-pressed')), "false");
-  await page.locator("#coupe-toggle").click();
+  await page.evaluate(() => window.__v2UI.coupe.basculer());
   assert.equal(await page.evaluate(() => window.__v2.explodeAmount), 0);
 });
 

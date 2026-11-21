@@ -1935,12 +1935,20 @@
       needsRender = true;
     }
 
-    document.getElementById('coupe-toggle').addEventListener('click', () => {
+    function basculerCoupe() {
       coupe.active = !coupe.active;
       if (coupe.active && engine.explodeAmount > 0) reglerExplode(0);
       appliquerCoupe();
       announce(coupe.active ? `Coupe ${coupe.axe} activée.` : 'Coupe désactivée.');
-    });
+    }
+    document.getElementById('coupe-toggle').addEventListener('click', basculerCoupe);
+    window.__v2UI = window.__v2UI || {};
+    window.__v2UI.coupe = {
+      basculer: basculerCoupe,
+      axe: (nom) => { coupe.axe = nom; appliquerCoupe(); },
+      position: (v) => { coupe.position = v; appliquerCoupe(); },
+      etat: () => ({ active: coupe.active, axe: coupe.axe, position: coupe.position }),
+    };
     document.querySelector('.coupe-axes').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-clip-axe]');
       if (!btn) return;
