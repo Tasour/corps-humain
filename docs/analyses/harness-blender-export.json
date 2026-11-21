@@ -1,0 +1,24 @@
+{
+ "generated": "2026-11-21T04:54:10.673Z",
+ "blender": "Blender 3.6.23",
+ "source": {
+  "url": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "commit": "0a849e8acf7080f8da3251a926fbc160d2bc3f7a",
+  "blendSha256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd"
+ },
+ "objets": 2881,
+ "exclusions": 29,
+ "ignores": 1659,
+ "empreintes": [
+  {
+   "bin": "52212da2a6ba2c0b3a20daa2dc3ea480fdd932f3fec00159a70e6533b6f1c95a",
+   "json": "85ff092b67560f60747468b5a2f5008ff92c240362c3b6e8921abda782ed95b9"
+  },
+  {
+   "bin": "52212da2a6ba2c0b3a20daa2dc3ea480fdd932f3fec00159a70e6533b6f1c95a",
+   "json": "85ff092b67560f60747468b5a2f5008ff92c240362c3b6e8921abda782ed95b9"
+  }
+ ],
+ "byteIdentique": true,
+ "verdict": "OK"
+}

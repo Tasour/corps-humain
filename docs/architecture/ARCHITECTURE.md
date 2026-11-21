@@ -1,38 +1,54 @@
-# Architecture cible — CORPS unifié
+# Architecture cible — socle Z-Anatomy stock
 
-Date : 2026-11-21. Décision : ADR-0001 (fusion v1/v2 sous le moteur v2).
+Date : 2026-11-21. ADR : ADR-0002.
 
-## Contexte
-Deux applications coexistaient : v1 (pathologies, moniteur, quiz) et v2 (2 009 structures, rendu batché, gates). L'utilisateur veut une seule application conservant les fonctionnalités des deux.
+## 1. Contexte
+Reprise à zéro du modèle 3D : remplacer l'assemblage BodyParts3D + Z-Anatomy par un socle unique Z-Anatomy stock, exporté avec Blender compatible, sans anatomie inventée. Voir `docs/veille/2026-11-21-socle-propre-benchmark.md`.
 
-## Drivers
-1. Conserver le moteur v2 et son budget (4 appels de rendu).
-2. Conserver la base de 30 pathologies / 27 cibles sans inventer d'anatomie.
-3. Une seule URL publique et un seul raccourci Omarchy.
+## 2. Drivers
+1. Source unique et provenance amont vérifiable (CC BY-SA 4.0).
+2. Export reproductible byte-identique.
+3. Aucune géométrie ni organe fabriqué.
+4. Compatibilité avec les fonctionnalités existantes (pathologies, waypoints, quiz, PWA).
 
-## Options écartées
-- Porter v2 dans v1 : perte des gates et des LOD, réversibilité faible (ADR-0001).
-- Garder deux apps : double cache, double raccourci, confusion utilisateur.
+## 3. État des lieux
+- Modèle actuel : 2 009 structures, 3 LOD, chunks gzip, rebuild canonique (`npm run rebuild:verify` : 14 fichiers identiques).
+- Artefacts visuels documentés dans `docs/analyses/collisions-anatomiques.md` : peau sans doigts, 926 arêtes ouvertes, vaisseaux visibles dans les mains.
+- Métriques : 10 863 faces retournées (0,172 %), 654 structures pluri-composantes (`docs/analyses/qualite-3d.json`).
+- `tools.arch.profile` : aucun adaptateur d'analyse disponible → scorecard 0/100, confiance low (mesure honnête).
 
-## Cible
-- `src/v2-engine.js` : moteur de rendu unique (BatchedMesh, identity GPU, 3 LOD).
-- `src/data/diseases.js` : base de pathologies importée telle quelle (30 entrées, 19 types d'effets).
-- `src/data/disease-targets.js` : table de correspondance 27 cibles → IDs du manifeste ; gap `thyroide` documenté.
-- `v2.html` : interface unique ; `postbuild-unify.mjs` la sert comme `index.html`, l'ancienne v1 devient `classique.html`.
-- garde-fous : `lint:claims`, `test:review`, `rebuild:verify`, `test:pathologies`.
+## 4. Options comparées
+| Option | Avantages | Inconvénients | Décision |
+|---|---|---|---|
+| Z-Anatomy stock | source unique, collections amont, CC BY-SA | licence code à revoir, Blender 3.6–4.4 requis | retenue |
+| Assemblage actuel | 2 009 structures, gates verts | artefacts main/torse, complexité | écartée |
+| BodyParts3D seul | CC BY 4.0 | couverture musculaire insuffisante | écartée |
 
-## Contrats
-- Aucune API réseau : tout est local (PWA, service worker `corps-v44`).
-- Formats : manifeste JSON 2 009 entrées, chunks gzip, fiches et licences JSON, pages statiques.
+## 5. Architecture cible
+- `scripts/export-zanatomy-stock.py` : export Blender headless de tous les objets stock.
+- `zanatomy-export-stock/` : binaire + manifeste brut (noms, collections, bornes, offsets).
+- `public/models/v2/manifest.json` : `source_id = za:<nom stock>`, TA2 depuis `TA2.csv`.
+- Table d'alias ancien ID → nouvel ID pour préserver deep links, groupes, waypoints, pathologies.
+- Exclusions NC documentées : oreille interne, rein, Brainder/White matter.
 
-## Budgets
-- Textures : ≤ 8 Mo par tissu, ~4,2 Mo au total ; drapeau `?tex=cc0` éteint par défaut.
-- Rendu : 4 appels mesurés ; 0 requête externe ; aucune signature de revue simulée.
+## 6. Contrats
+- Aucune API réseau : fichiers locaux, service worker `corps-v44`.
+- Formats : manifeste JSON, chunks gzip 3 LOD, fiches et licences JSON, pages statiques.
+- Chaque exclusion porte une raison, une date et une URL source.
 
-## Migration
-P0 (fait) : mapping, HUD pathologies, quiz, build unifié, raccourci unique.
-P1 : relecture humaine des 16 fiches via `corps_review_sign`.
-P2 : activation de `?tex=cc0` par défaut uniquement après signatures (5/5/5/1).
+## 7. Budgets
+- Export ≤ budget disque courant (~118 Mo de modèles).
+- Textures CC0 ~4,2 Mo, flag éteint par défaut.
+- Rendu : 4 appels, 0 requête externe.
 
-## Définition de terminée
-`npm test`, `test:pathologies`, `test:review`, `lint:claims`, `rebuild:verify`, `build`, captures 8 angles et verdict daté.
+## 8. Migration
+P0 source → P1 export → P2 application → P3 preuve et déploiement. Détail : `ROADMAP.md`.
+
+## 9. Risques
+Voir `RISKS.md` : licence du code (issue amont #6), compatibilité Blender, gaps de couverture.
+
+## 10. Définition de terminée
+`harness-blender-export` byte-identique, `check:modele` vert, captures 8 angles avant/après, tests dynamiques, CI verte, validation humaine de la licence du code.
+
+## 11. Décisions
+ADR-0001 (fusion v1/v2 sous moteur v2) et ADR-0002 (socle Z-Anatomy stock).
