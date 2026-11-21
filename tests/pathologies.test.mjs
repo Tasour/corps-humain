@@ -4,6 +4,7 @@ import path from "node:path";
 import { chromium } from "playwright";
 import { DISEASES } from "../src/data/diseases.js";
 import { TARGET_TO_STRUCTURES } from "../src/data/disease-targets.js";
+import { resoudre } from "./helpers-alias.mjs";
 
 /* Pathologies simulées portées de v1 vers v2 : couverture du mapping,
  * comportement réel du HUD et absence d'affirmation diagnostique. */
@@ -24,7 +25,7 @@ await verifier("30 pathologies et 27 cibles mappées", () => {
   assert.equal(cibles.size, 27);
   assert.deepEqual([...cibles].filter((c) => !TARGET_TO_STRUCTURES[c]), []);
   for (const [cible, liste] of Object.entries(TARGET_TO_STRUCTURES)) {
-    for (const id of liste) assert.ok(ids.has(id), `${cible} → ${id} absent du manifeste`);
+    for (const id of liste) assert.ok(ids.has(id) || resoudre(id, new Map([...ids].map((x) => [x, x]))), `${cible} → ${id} absent du manifeste`);
   }
 });
 

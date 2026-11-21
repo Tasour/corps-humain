@@ -1,15 +1,15 @@
 {
- "generated": "2026-11-21T03:31:06.540Z",
+ "generated": "2026-11-21T05:41:58.326Z",
  "item": "BENCH-016",
  "mesures": {
   "v2": {
    "rendusAuRepos": 0,
    "compteurAvant": 0,
    "compteurApres": 0,
-   "rendusApresInteraction": 21
+   "rendusApresInteraction": 17
   },
   "v1": {
-   "rendusEn1s": 6,
+   "rendusEn1s": 3,
    "framesMasquees": 0,
    "regime": "continu assumé (moniteur LIVE + animations physiologiques)"
   }

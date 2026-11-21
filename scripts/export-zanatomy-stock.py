@@ -14,7 +14,10 @@ import bpy
 import json
 import os
 import struct
-from mathutils import Vector
+from mathutils import Matrix, Vector
+
+# Z-up (Blender) -> Y-up (atlas), rotation propre qui preserve le winding.
+ROT = Matrix.Rotation(-1.5707963267948966, 4, "X")
 
 OUT = os.environ.get("STOCK_OUT", "zanatomy-export-stock")
 os.makedirs(OUT, exist_ok=True)
@@ -57,27 +60,45 @@ manifest = {
     "objects": {},
 }
 
+def pad4(out):
+    while out.tell() % 4:
+        out.write(b"\x00")
+
 with open(bin_path, "wb") as out:
     for obj in objects:
         mesh = obj.data
-        verts = [obj.matrix_world @ v.co for v in mesh.vertices]
+        world = ROT @ obj.matrix_world
+        verts = [world @ v.co for v in mesh.vertices]
+        pad4(out)
         p0 = out.tell()
         for v in verts:
             out.write(struct.pack("<3f", v.x, v.y, v.z))
-        n0 = out.tell()
-        for poly in mesh.polygons:
-            # triangulations eventuelles via loop_triangles
-            pass
         mesh.calc_loop_triangles()
-        for tri in mesh.loop_triangles:
-            n = tri.normal
+        triangles = [tuple(tri.vertices) for tri in mesh.loop_triangles]
+        # Normales de sommets pondérées par l'aire des faces (identique à
+        # export-zanatomy-all.py) : indispensable pour l'audit face/sommet.
+        normals = [Vector((0.0, 0.0, 0.0)) for _ in verts]
+        coords = [(v.x, v.y, v.z) for v in verts]
+        for a, b, c in triangles:
+            pa, pb, pc = Vector(coords[a]), Vector(coords[b]), Vector(coords[c])
+            face = (pb - pa).cross(pc - pa)
+            for vi in (a, b, c):
+                normals[vi] += face
+        for n in normals:
+            if n.length > 1e-12:
+                n.normalize()
+            else:
+                n[:] = (0.0, 1.0, 0.0)
+        pad4(out)
+        n0 = out.tell()
+        for n in normals:
             out.write(struct.pack("<3h", int(max(-1, min(1, n.x)) * 32767), int(max(-1, min(1, n.y)) * 32767), int(max(-1, min(1, n.z)) * 32767)))
+        pad4(out)
         i0 = out.tell()
         itype = "u32" if len(verts) > 65535 else "u16"
         fmt = "<3I" if itype == "u32" else "<3H"
-        for tri in mesh.loop_triangles:
-            out.write(struct.pack(fmt, *tri.vertices))
-        coords = [(v.x, v.y, v.z) for v in verts]
+        for a, b, c in triangles:
+            out.write(struct.pack(fmt, a, b, c))
         manifest["objects"][obj.name] = {
             "collection": obj.users_collection[0].name if obj.users_collection else "",
             "positions": p0,

@@ -1,3 +1,5 @@
+import { NOUVEAU_VERS_ANCIEN } from "./id-aliases.js";
+
 /* Waypoints d'exploration. Les positions sont des fractions (0..1) de la boîte
  * englobante de la structure, donc valables pour les deux côtés du corps. */
 
@@ -192,7 +194,7 @@ export function getWaypoints(structure) {
   const b = structure.bounds;
   const min = b?.min || [-0.1, 0, -0.1];
   const max = b?.max || [0.1, 0.1, 0.1];
-  const curated = CURATED[structure.id];
+  const curated = CURATED[structure.id] || CURATED[NOUVEAU_VERS_ANCIEN[structure.id]];
   const source = curated || GENERIC;
   return source.map((w, i) => ({
     position: [

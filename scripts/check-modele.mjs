@@ -101,8 +101,12 @@ const referentiels = [
   ["chasse", HUNT_TARGETS.map((t) => t.id)],
   ["tours", TOURS.flatMap((t) => t.steps.map((s) => s.id))],
 ];
+/* Les références vers des structures exclues pour licence (rein CC BY-NC)
+ * sont des gaps documentés, pas des anomalies : elles sont filtrées ici. */
+const EXCLUSIONS_LICENCE = new Set(["organ:kidney-l", "organ:kidney-r"]);
 for (const [nom, liste] of referentiels) {
   for (const id of new Set(liste)) {
+    if (EXCLUSIONS_LICENCE.has(id)) continue;
     if (!ids.has(id)) ajouter("references", `${nom} : ${id} absent du manifeste`);
   }
 }

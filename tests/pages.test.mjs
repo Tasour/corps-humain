@@ -19,7 +19,8 @@ assert.equal(resultat.status, 0, resultat.stderr || resultat.stdout);
 
 const dossier = path.join(tmp, "structures");
 const fichiers = fs.readdirSync(dossier).filter((f) => f.endsWith(".html") && f !== "index.html");
-assert.equal(fichiers.length, 2009);
+const ATTENDU = JSON.parse(fs.readFileSync(path.join(root, "public/models/v2/manifest.json"), "utf8")).structures.length;
+assert.equal(fichiers.length, ATTENDU);
 
 let verifiees = 0;
 for (const nom of fichiers) {
@@ -44,12 +45,12 @@ for (const nom of fichiers) {
 }
 
 const sitemap = fs.readFileSync(path.join(tmp, "sitemap.xml"), "utf8");
-assert.equal((sitemap.match(/<loc>/g) || []).length, 2009);
+assert.equal((sitemap.match(/<loc>/g) || []).length, ATTENDU);
 const robots = fs.readFileSync(path.join(tmp, "robots.txt"), "utf8");
 assert.match(robots, /Sitemap: https:\/\//);
 
 const index = fs.readFileSync(path.join(dossier, "index.html"), "utf8");
-assert.equal((index.match(/href="\.\/[a-z0-9-]+\.html"/g) || []).length, 2009);
+assert.equal((index.match(/href="\.\/[a-z0-9-]+\.html"/g) || []).length, ATTENDU);
 
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`PASS  ${verifiees} pages statiques : titres cohérents, descriptions 150–250, zéro ressource distante`);

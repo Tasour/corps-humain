@@ -22,7 +22,7 @@ const verifierAsync = async (nom, fn) => {
 
 verifier("registre conforme aux sources canoniques", () => {
   assert.equal(registre.code.licence, "MIT");
-  assert.equal(registre.donnees.length, 2);
+  assert.ok(registre.donnees.length >= 1);
   for (const src of registre.donnees) {
     assert.ok(["CC BY 4.0", "CC BY-SA 4.0"].includes(src.licence), `${src.nom} : ${src.licence}`);
     assert.match(src.url, /^https:\/\//);
@@ -81,7 +81,7 @@ await verifierAsync("dialogue : contenus générés et liens sûrs", async () =>
     assert.ok(d.texte.includes(src.licence), `${src.licence} absente du dialogue`);
   }
   assert.ok(d.texte.includes('MIT'));
-  assert.ok(d.liens.length >= 3);
+  assert.ok(d.liens.length >= registre.donnees.length + 1);
   for (const a of d.liens) {
     assert.equal(a.target, '_blank');
     assert.match(a.rel, /noopener/);

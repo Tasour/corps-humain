@@ -1,17 +1,17 @@
 {
- "generated": "2026-11-21T03:30:38.837Z",
+ "generated": "2026-11-21T05:41:15.419Z",
  "item": "BENCH-018",
  "etat": "déjà implémenté dans v2-engine.js ; vérifié et verrouillé par ce test",
  "mesures": {
-  "structures": 2009,
+  "structures": 1524,
   "mergedMode": true,
-  "lots": 6,
-  "vertices": 787832,
-  "couverts": 787832,
+  "lots": 5,
+  "vertices": 234835,
+  "couverts": 234835,
   "invalides": 0,
-  "plages": 2009,
+  "plages": 1524,
   "appels": 4,
-  "visibles": 2009
+  "visibles": 1524
  },
  "tests": [
   {

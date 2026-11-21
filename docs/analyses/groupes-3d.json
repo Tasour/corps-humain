@@ -1,9 +1,14 @@
 {
-  "generated": "2026-11-21T03:28:41.920Z",
+  "generated": "2026-11-21T05:37:07.220Z",
   "groups": 43,
-  "passed": 52,
+  "passed": 48,
   "total": 52,
-  "failures": [],
+  "failures": [
+    "eye-r : membres absents : organ:bp-fibrous-layer-of-eyeball-r\n+ actual - expected\n\n+ [\n+   'organ:bp-fibrous-layer-of-eyeball-r'\n+ ]\n- []\n",
+    "eye-l : membres absents : organ:bp-fibrous-layer-of-eyeball-l\n+ actual - expected\n\n+ [\n+   'organ:bp-fibrous-layer-of-eyeball-l'\n+ ]\n- []\n",
+    "heart : membres absents : organ:bp-heart\n+ actual - expected\n\n+ [\n+   'organ:bp-heart'\n+ ]\n- []\n",
+    "ui:heart : compte « 4 structures · Torsion cardiaque »"
+  ],
   "results": [
     {
       "id": "arm-l",
@@ -90,7 +95,7 @@
       "currentVisible": 5,
       "visibleInstances": 5,
       "missing": [],
-      "maxExplode": 0.08422228693962097,
+      "maxExplode": 0.08444297313690186,
       "maxMovement": 0.32162514328956604,
       "maxReset": 0,
       "identical": false,
@@ -98,42 +103,51 @@
     },
     {
       "id": "eye-r",
-      "expected": 5,
-      "shown": 5,
-      "currentVisible": 5,
-      "visibleInstances": 5,
-      "missing": [],
-      "maxExplode": 0.0843152180314064,
+      "expected": 4,
+      "shown": 4,
+      "currentVisible": 4,
+      "visibleInstances": 4,
+      "missing": [
+        "organ:bp-fibrous-layer-of-eyeball-r"
+      ],
+      "maxExplode": 0.08623625338077545,
       "maxMovement": 0.6442176699638367,
       "maxReset": 0,
       "identical": false,
-      "ok": true
+      "ok": false,
+      "error": "membres absents : organ:bp-fibrous-layer-of-eyeball-r\n+ actual - expected\n\n+ [\n+   'organ:bp-fibrous-layer-of-eyeball-r'\n+ ]\n- []\n"
     },
     {
       "id": "eye-l",
-      "expected": 5,
-      "shown": 5,
-      "currentVisible": 5,
-      "visibleInstances": 5,
-      "missing": [],
-      "maxExplode": 0.08680888265371323,
+      "expected": 4,
+      "shown": 4,
+      "currentVisible": 4,
+      "visibleInstances": 4,
+      "missing": [
+        "organ:bp-fibrous-layer-of-eyeball-l"
+      ],
+      "maxExplode": 0.08623624593019485,
       "maxMovement": 0.6442176699638367,
       "maxReset": 0,
       "identical": false,
-      "ok": true
+      "ok": false,
+      "error": "membres absents : organ:bp-fibrous-layer-of-eyeball-l\n+ actual - expected\n\n+ [\n+   'organ:bp-fibrous-layer-of-eyeball-l'\n+ ]\n- []\n"
     },
     {
       "id": "heart",
-      "expected": 5,
-      "shown": 5,
-      "currentVisible": 5,
-      "visibleInstances": 5,
-      "missing": [],
-      "maxExplode": 0.0895487368106842,
+      "expected": 4,
+      "shown": 4,
+      "currentVisible": 4,
+      "visibleInstances": 4,
+      "missing": [
+        "organ:bp-heart"
+      ],
+      "maxExplode": 0.08894966542720795,
       "maxMovement": 0.44697970151901245,
       "maxReset": 0,
       "identical": false,
-      "ok": true
+      "ok": false,
+      "error": "membres absents : organ:bp-heart\n+ actual - expected\n\n+ [\n+   'organ:bp-heart'\n+ ]\n- []\n"
     },
     {
       "id": "elbow-l",
@@ -567,7 +581,7 @@
     {
       "id": "ui:elbow-l",
       "ok": true,
-      "maxExplode": 0.010694922879338264
+      "maxExplode": 0.008555938489735126
     },
     {
       "id": "ui:knee-l",
@@ -577,7 +591,7 @@
     {
       "id": "ui:jaw",
       "ok": true,
-      "maxExplode": 0.010344918817281723
+      "maxExplode": 0.008275935426354408
     },
     {
       "id": "ui:spine",
@@ -601,8 +615,8 @@
     },
     {
       "id": "ui:heart",
-      "ok": true,
-      "maxExplode": 0.00859667919576168
+      "ok": false,
+      "error": "compte « 4 structures · Torsion cardiaque »"
     },
     {
       "id": "console",

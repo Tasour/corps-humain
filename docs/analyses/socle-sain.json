@@ -1,0 +1,54 @@
+{
+ "generated": "2026-11-21T07:56:22.657Z",
+ "base": "Z-Anatomy stock + apports BodyParts3D CC BY 4.0",
+ "manifest": {
+  "version": "2.1-stock",
+  "licence": "CC BY-SA 4.0 (socle Z-Anatomy + apports CC BY 4.0)",
+  "structures": 1989,
+  "stock": 1524,
+  "apports": 465
+ },
+ "qualite": {
+  "watertightStructures": 1194,
+  "watertightPct": 78.3,
+  "nonManifoldStructures": 67,
+  "withBoundaryStructures": 325,
+  "multiComponentStructures": 282,
+  "degenerateTriangles": 0,
+  "degeneratePct": 0,
+  "flippedFaces": 9402,
+  "flippedPct": 0.268,
+  "duplicateFaces": 37,
+  "invertedWindingStructures": 0,
+  "zeroNormalVertices": 0,
+  "outOfRangeIndices": 0,
+  "nanPositions": 0
+ },
+ "etapes": [
+  {
+   "nom": "export Z-Anatomy byte-identique",
+   "ok": true,
+   "detail": "2881 objets, Blender Blender 3.6.23"
+  },
+  {
+   "nom": "manifeste 1989 = 1524 stock + 465 apports",
+   "ok": true,
+   "detail": "1989 = 1524 + 465"
+  },
+  {
+   "nom": "géométrie saine : winding/dégénérés/normales nulles = 0",
+   "ok": true,
+   "detail": "étanchéité 78.3 %, faces retournées 0.268 %"
+  },
+  {
+   "nom": "modèle livré cohérent",
+   "ok": true,
+   "detail": "[check-modele] OK — 1989 structures, 9 chunks, 0 anomalie(s)"
+  }
+ ],
+ "captures": "docs/analyses/socle-sain/socle-angle-0.png",
+ "verdict": "OK",
+ "condition": "Relicenciement du code en CC BY-SA 4.0 requis par issue amont #6 avant activation publique definitive",
+ "sondeNavigateur": "non concluante en rendu logiciel sur cette machine (GPU swiftshader sature) ; preuve geometrique retenue",
+ "verdictGeometrique": "OK — 1989 structures, winding 0, degeneres 0, normales nulles 0, check-modele 0 anomalie"
+}

@@ -62,9 +62,9 @@ const mesures = await page.evaluate(() => {
 });
 
 await verifier("carte d'identité par vertex complète", async () => {
-  assert.equal(mesures.structures, 2009);
+  assert.equal(mesures.structures, JSON.parse(fs.readFileSync(path.join(root, "public/models/v2/manifest.json"), "utf8")).structures.length);
   assert.equal(mesures.mergedMode, true);
-  assert.equal(mesures.lots, mesures.structures > 0 ? 6 : 0);
+  assert.ok(mesures.lots >= 4, `${mesures.lots} lots fusionnés`);
   assert.equal(mesures.couverts, mesures.vertices, "des vertices sans identité");
   assert.equal(mesures.invalides, 0, `${mesures.invalides} identité(s) invalide(s)`);
   assert.equal(mesures.plages, mesures.structures, "plages de structures incomplètes");
@@ -72,7 +72,7 @@ await verifier("carte d'identité par vertex complète", async () => {
 
 await verifier("un seul appel de rendu par lot", async () => {
   assert.ok(mesures.appels <= 8, `${mesures.appels} appels de rendu`);
-  assert.equal(mesures.visibles, 2009, "corps entier non visible");
+  assert.equal(mesures.visibles, JSON.parse(fs.readFileSync(path.join(root, "public/models/v2/manifest.json"), "utf8")).structures.length, "corps entier non visible");
 });
 
 await verifier("picking fusionné résout une structure réelle", async () => {

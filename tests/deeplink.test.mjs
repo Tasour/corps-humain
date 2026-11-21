@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
 import { getWaypoints } from "../src/data/waypoints.js";
+import { ANCIEN_VERS_NOUVEAU } from "../src/data/id-aliases.js";
 
 /* BENCH-001 — deep links vers une structure et un waypoint.
  * L'oracle est la source canonique des waypoints + le manifeste livré :
@@ -17,7 +18,7 @@ const manifest = JSON.parse(
   fs.readFileSync(path.resolve(import.meta.dirname, "../public/models/v2/manifest.json"), "utf8"),
 );
 const byId = new Map(manifest.structures.map((s) => [s.id, s]));
-const ID = "organ:bp-heart";
+const ID = ANCIEN_VERS_NOUVEAU["organ:bp-heart"] || "organ:bp-heart";
 const structure = byId.get(ID);
 assert.ok(structure, `${ID} absent du manifeste`);
 const waypoints = getWaypoints(structure);

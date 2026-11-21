@@ -318,6 +318,7 @@ export class AnatomyV2Engine {
     this.structures = [];
     this.byId = new Map();
     this.bySourceId = new Map();
+    this.byAlias = new Map();
     this.batches = new Map();
     this.mergedMeshes = new Map();
     this.explodeAmount = 0;
@@ -369,7 +370,10 @@ export class AnatomyV2Engine {
    * déjà partagés. */
   resolveId(id) {
     if (id === null || id === undefined) return null;
-    return this.byId.get(id) || this.bySourceId.get(id) || null;
+    const direct = this.byId.get(id) || this.bySourceId.get(id);
+    if (direct) return direct;
+    const cible = this.byAlias.get(id);
+    return cible ? (this.byId.get(cible) || this.bySourceId.get(cible) || null) : null;
   }
 
   async load(onProgress = () => {}) {
@@ -378,6 +382,13 @@ export class AnatomyV2Engine {
     const response = await fetch(`${this.base}manifest.json`);
     if (!response.ok) throw new Error(`manifest -> ${response.status}`);
     this.manifest = await response.json();
+    try {
+      const reponseAlias = await fetch(`${this.base}../data/id-aliases.json`);
+      if (reponseAlias.ok) {
+        const donneesAlias = await reponseAlias.json();
+        for (const [ancien, nouveau] of Object.entries(donneesAlias.alias || {})) this.byAlias.set(ancien, nouveau);
+      }
+    } catch { /* sans alias, seuls les identifiants courants résolvent */ }
     this.structures = this.manifest.structures || [];
 
     const categories = CATEGORY_ORDER.filter((c) =>
@@ -709,7 +720,7 @@ export class AnatomyV2Engine {
   /* Met en évidence un ensemble de structures (un bloc de l'arborescence). */
   showCollection(ids) {
     const set = new Set(ids);
-    const members = ids.map((id) => this.byId.get(id)).filter(Boolean);
+    const members = ids.map((id) => this.resolveId(id)).filter(Boolean);
     for (const category of new Set(members.map((s) => s.category))) {
       this.setCategoryVisible(category, true);
     }
@@ -963,7 +974,7 @@ export class AnatomyV2Engine {
    * téléchargement : le corps entier n'a pas besoin du détail d'isolement. */
   resetLodsToLow() {
     for (const [id, geometry] of this.baseGeometries) {
-      const structure = this.byId.get(id);
+      const structure = this.resolveId(id);
       const ref = this.geometryIds.get(id);
       if (!structure || !ref || structure._activeLod === "low") continue;
       const batch = this.batches.get(ref.category);
@@ -1017,7 +1028,7 @@ export class AnatomyV2Engine {
   /* Affiche uniquement les membres d'un groupe, en réactivant leurs catégories. */
   showGroup(group) {
     if (!group) return 0;
-    const members = group.members.map((id) => this.byId.get(id)).filter(Boolean);
+    const members = group.members.map((id) => this.resolveId(id)).filter(Boolean);
     const ids = new Set(members.map((s) => s.id));
     const categories = new Set(members.map((s) => s.category));
     for (const category of categories) this.setCategoryVisible(category, true);
@@ -1036,7 +1047,7 @@ export class AnatomyV2Engine {
   /* Anime un groupe : éclaté (t : 0→1) ou mouvement articulaire. */
   animateGroup(group, t, mode = "explode") {
     if (!group) return;
-    const members = group.members.map((id) => this.byId.get(id)).filter(Boolean);
+    const members = group.members.map((id) => this.resolveId(id)).filter(Boolean);
     const centers = members.map((s) => {
       const b = s.bounds;
       return new THREE.Vector3((b.min[0]+b.max[0])/2, (b.min[1]+b.max[1])/2, (b.min[2]+b.max[2])/2);
@@ -1197,7 +1208,7 @@ export class AnatomyV2Engine {
     if (!group) return 0;
     let count = 0;
     for (const id of group.members) {
-      const structure = this.byId.get(id);
+      const structure = this.resolveId(id);
       if (structure && await this.setStructureLod(structure, lod)) count++;
     }
     return count;
@@ -1214,7 +1225,7 @@ export class AnatomyV2Engine {
     if (!this.animation) return;
     const identity = new THREE.Matrix4();
     for (const id of this.animation.ids) {
-      const structure = this.byId.get(id);
+      const structure = this.resolveId(id);
       const ref = structure && this.structureToInstance.get(structure._index);
       const batch = ref && this.batches.get(ref.category);
       if (!batch) continue;
@@ -1229,7 +1240,7 @@ export class AnatomyV2Engine {
     const { type, ids } = this.animation;
     this.animation.t += dt;
     for (const id of ids) {
-      const structure = this.byId.get(id);
+      const structure = this.resolveId(id);
       const ref = structure && this.structureToInstance.get(structure._index);
       const batch = ref && this.batches.get(ref.category);
       if (!batch) continue;

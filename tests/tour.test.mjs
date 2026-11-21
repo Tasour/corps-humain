@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
 import { TOURS, getWaypoints } from "../src/data/waypoints.js";
+import { resoudre } from "./helpers-alias.mjs";
 
 /* BENCH-011 — tours guidés multi-structures.
  * Oracle : TOURS + manifeste + getWaypoints(). Aucun texte attendu n'est recopié. */
@@ -27,7 +28,7 @@ verifier(donnees, "chaque étape référence une structure et un waypoint exista
   for (const tour of TOURS) {
     assert.ok(tour.steps.length >= 2, `${tour.id} : moins de deux étapes`);
     for (const step of tour.steps) {
-      const s = byId.get(step.id);
+      const s = resoudre(step.id, byId);
       assert.ok(s, `${tour.id} : ${step.id} absent du manifeste`);
       const w = getWaypoints(s);
       assert.ok(step.wp >= 0 && step.wp < w.length, `${tour.id} : wp ${step.wp} hors bornes (${w.length})`);

@@ -56,7 +56,8 @@ for (const [fichier, hash] of empreintesA) {
   if (empreintesB.get(fichier) !== hash) divergences.push(`${fichier} diffère entre deux générations`);
 }
 const pages = [...empreintesA.keys()].filter((f) => f.startsWith("structures/") && f.endsWith(".html") && !f.endsWith("index.html"));
-if (pages.length !== 2009) divergences.push(`${pages.length} pages au lieu de 2009`);
+const attendu = JSON.parse(fs.readFileSync(path.join(root, "public/models/v2/manifest.json"), "utf8")).structures.length;
+if (pages.length !== attendu) divergences.push(`${pages.length} pages au lieu de ${attendu}`);
 
 const publicStructures = path.join(root, "public/structures/index.html");
 let deriveBuild = "non généré";

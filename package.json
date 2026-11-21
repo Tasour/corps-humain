@@ -15,6 +15,7 @@
     "models:v2": "node scripts/build-anatomy-v2.mjs",
     "rebuild:verify": "node scripts/verify-rebuild.mjs",
     "harness:stock": "node scripts/harness-blender-export.mjs",
+    "socle:verify": "node scripts/socle-verify.mjs",
     "models:source-ids": "node scripts/add-source-ids.mjs",
     "models:fiches": "node scripts/generate-fiches-verite.mjs",
     "models:licences": "node scripts/generate-licenses.mjs",

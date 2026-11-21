@@ -63,7 +63,7 @@ const engineReport = await page.evaluate((ids) => {
   };
   return ids.map((id) => {
     const group = window.__v2Groups.find((g) => g.id === id);
-    const missing = group.members.filter((m) => !e.byId.has(m));
+    const missing = group.members.filter((m) => !e.resolveId(m));
     const expected = group.members.length - missing.length;
     const shown = e.showGroup(group);
     let visibleInstances = 0;
