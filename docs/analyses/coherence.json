@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-18T15:01:03.469Z",
+  "generatedAt": "2026-11-21T08:11:52.396Z",
   "manifest": "public/models/v2/manifest.json",
-  "manifestVersion": "2.0",
-  "manifestGenerated": "2026-11-18",
+  "manifestVersion": "2.1-stock",
+  "manifestGenerated": "2026-11-21",
   "method": {
     "envelope": {
       "x": [
@@ -26,8 +26,8 @@
     "note": "side=null est traité comme non latéralisé ; les termes français droit/gauche sont ambigus et exclus du contrôle 5."
   },
   "summary": {
-    "structures": 2039,
-    "pairsChecked": 833,
+    "structures": 1989,
+    "pairsChecked": 811,
     "anomalyCount": 0,
     "byCheck": {
       "source-pair": 0,

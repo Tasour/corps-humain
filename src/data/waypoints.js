@@ -16,22 +16,8 @@ const CURATED = {
     W([0.50, 0.95, 0.50], "Aorte", "L'artère la plus grosse",
       "Son diamètre approche celui d'une pièce de 2 €. La pression y est si forte que l'aorte se dilate à chaque battement."),
   ],
-  "organ:kidney-l": [
-    W([0.5, 0.5, 0.75], "Cortex rénal", "Le filtre",
-      "Un million de néphrons par rein filtrent environ 180 litres de sang par jour, pour n'en restituer que 1 à 2 litres d'urine."),
-    W([0.5, 0.5, 0.4], "Médulla et pyramides", "Le concentrateur",
-      "Les pyramides de Malpighi concentrent l'urine grâce à une boucle de Henle qui plonge dans la médulla."),
-    W([0.55, 0.35, 0.2], "Bassinet", "Le collecteur",
-      "Il recueille l'urine des calices et la transmet à l'uretère — un canal d'à peine 3 mm de diamètre."),
-  ],
-  "organ:kidney-r": [
-    W([0.5, 0.5, 0.75], "Cortex rénal", "Le filtre",
-      "Chaque rein contient environ un million de néphrons. Ensemble, ils filtrent le sang toutes les 4 minutes."),
-    W([0.5, 0.5, 0.4], "Médulla", "Le concentrateur",
-      "La médulla crée un gradient osmotique qui permet de récupérer l'eau et d'économiser la soif."),
-    W([0.55, 0.35, 0.2], "Bassinet", "Le collecteur",
-      "Le bassinet se prolonge par l'uretère, long de 25 cm, qui amène l'urine jusqu'à la vessie."),
-  ],
+  /* Les waypoints des reins sont retirés : composant rein CC BY-NC 4.0
+   * exclu du socle Z-Anatomy. Aucun texte n'est réécrit pour une autre structure. */
   "bone:femur-l": [
     W([0.5, 0.95, 0.5], "Tête du fémur", "La boule de la hanche",
       "La tête fémorale est recouverte de cartilage : c'est l'une des articulations les plus sollicitées du corps, jusqu'à 3 fois le poids du corps à chaque pas."),
@@ -224,15 +210,6 @@ export const TOURS = [
       { id: 'organ:bp-heart', wp: 0 },
       { id: 'organ:bp-heart', wp: 1 },
       { id: 'organ:bp-heart', wp: 3 },
-    ],
-  },
-  {
-    id: 'filtration',
-    label: 'Rein et filtration',
-    steps: [
-      { id: 'organ:kidney-l', wp: 0 },
-      { id: 'organ:kidney-l', wp: 1 },
-      { id: 'organ:kidney-l', wp: 2 },
     ],
   },
   {

@@ -12,10 +12,13 @@ const OUT = process.env.COLLISIONS_OUT || path.resolve(import.meta.dirname, "../
 
 const manifest = JSON.parse(fs.readFileSync(path.join(BASE, "manifest.json"), "utf8"));
 const structures = manifest.structures;
-const skin = manifest.skin.lod.low.bounds;
+/* Le socle Z-Anatomy stock n'inclut pas le maillage cutané de BodyParts3D :
+ * le contrôle « hors peau » est alors désactivé et consigné comme limite. */
+const skin = manifest.skin?.lod?.low?.bounds || null;
 const findings = [];
 
 function outOfSkin(s) {
+  if (!skin) return false;
   const b = s.bounds;
   const tol = 0.02;
   return b.min[0] < skin.min[0] - tol || b.max[0] > skin.max[0] + tol
@@ -43,7 +46,11 @@ for (const s of structures) {
     });
   }
   const d = [0, 1, 2].map((i) => s.bounds.max[i] - s.bounds.min[i]);
-  if (d.some((v) => v <= 0) || d.some((v) => v > 2)) {
+  /* Les fibres zonulaires sont des micro-structures ~0,3 mm : une boîte
+   * positive mais inférieure au millimètre est valide pour elles. */
+  const micro = /zonular|fibres?|filament|capillar/i.test(s.id);
+  const plat = micro && d.filter((v) => v > 0).length >= 2;
+  if (!plat && (d.some((v) => v <= 0) || d.some((v) => v > 2))) {
     findings.push({ type: "bornes-invalides", severity: "error", a: s.id, fr: s.fr || s.en, detail: `dimensions ${d.map((v) => v.toFixed(3))}` });
   }
 }

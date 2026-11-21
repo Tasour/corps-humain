@@ -69,6 +69,13 @@ with open(bin_path, "wb") as out:
         mesh = obj.data
         world = ROT @ obj.matrix_world
         verts = [world @ v.co for v in mesh.vertices]
+        if len(verts) < 4:
+            skipped.append({"name": name, "reason": "moins de 4 sommets (géométrie non explorable)"})
+            continue
+        span = max(max(v[i] for v in verts) - min(v[i] for v in verts) for i in range(3))
+        if span < 1e-8:
+            skipped.append({"name": name, "reason": "boîte englobante plate"})
+            continue
         pad4(out)
         p0 = out.tell()
         for v in verts:

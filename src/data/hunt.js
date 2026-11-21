@@ -33,8 +33,6 @@ export const HUNT_TARGETS = [
   { id: "organ:superior-lobe-of-right-lung", label: "le lobe supérieur du poumon droit", hint: "Partie haute du poumon droit" },
   { id: "organ:middle-lobe-of-right-lung", label: "le lobe moyen du poumon droit", hint: "Le poumon droit en a trois" },
   { id: "organ:inferior-lobe-of-right-lung", label: "le lobe inférieur du poumon droit", hint: "Partie basse du poumon droit" },
-  { id: "organ:kidney-l", label: "le rein gauche", hint: "Arrière de l'abdomen, à gauche" },
-  { id: "organ:kidney-r", label: "le rein droit", hint: "Arrière de l'abdomen, à droite" },
   { id: "organ:urinary-bladder", label: "la vessie", hint: "Dans le bassin, derrière le pubis" },
   /* Système nerveux */
   { id: "organ:bp-brain", label: "l'encéphale", hint: "Dans la boîte crânienne" },
