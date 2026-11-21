@@ -1,0 +1,16 @@
+{
+ "tissue": "skin",
+ "generated": "2026-11-21T00:47:15.608919+00:00",
+ "source": "3dtextures.me",
+ "license": "CC0",
+ "url": "https://3dtextures.me/2019/01/24/skin-human-002/",
+ "seed": 2042,
+ "size": 1024,
+ "maps": {
+  "albedo": "8119dd2f6a16faed61de9dd5824e0238db7536e04a637e2ddbb859d67b0fc008",
+  "roughness": "87a1464c7b0745717fa47aa010bffeff874d475df51716920221e8e651644da7",
+  "normal": "08b22535bd5042e96d98e83edc71de87a72b87a4c86065e73ed761e9cce324ad",
+  "ao": "1d8256247a81fb2c5692c98543f3d0a3adfdf6506286dc6da0e4b9aad9a4b87c"
+ },
+ "rule": "aucun detail anatomique inventé ; bruit procede multi-echelle reproductible"
+}

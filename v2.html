@@ -151,6 +151,16 @@
       font-size: 13px; line-height: 1; cursor: pointer;
     }
     #hunt-hint { margin-top: 4px; font-size: 12px; color: #4d5d66; }
+     .hunt-modes { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+     .hunt-modes button, .hunt-choices button {
+       min-height: 36px; padding: 5px 9px; border: 1px solid var(--line);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink);
+       font-size: 11px; cursor: pointer;
+     }
+     .hunt-modes button[aria-checked="true"] { background: var(--teal); color: #041b22; }
+     .hunt-choices { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+     .hunt-choices:empty { display: none; }
+     .hunt-choices button { flex: 1 1 45%; text-align: left; }
     .hunt-stats {
       display: flex; justify-content: space-between; margin-top: 8px;
       font: 600 12px/1.2 "Segoe UI", sans-serif; color: var(--ink);
@@ -166,13 +176,18 @@
     body.dark #hunt-hint { color: #a9bcc6; }
     #label {
       position: absolute; z-index: 4; pointer-events: none; display: none;
-      transform: translate(-50%, -170%); padding: 4px 9px 4px 13px;
+      transform: translate(0, -50%); padding: 4px 9px 4px 13px;
       background: rgba(34,49,58,.92); color: #fff; border-radius: 5px; font-size: 11px; white-space: nowrap;
     }
     #label::before {
       content: ""; position: absolute; left: 5px; top: 50%; width: 4px; height: 4px;
       border-radius: 50%; background: #7ee7c7; transform: translateY(-50%);
     }
+    #label-lines {
+      position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%;
+      pointer-events: none; overflow: visible;
+    }
+    #label-lines line { stroke: #7ee7c7; stroke-width: 1; opacity: .85; }
     #waypoint-info {
       position: absolute; z-index: 5; left: 50%; bottom: 80px; transform: translateX(-50%);
       display: none; max-width: min(480px, 92vw); padding: 14px 18px; text-align: center; pointer-events: none;
@@ -180,6 +195,70 @@
     }
     #wp-title { font: 600 15px Georgia, serif; color: var(--accent); }
     #wp-text { margin-top: 6px; font-size: 12.5px; color: #4d5d66; }
+     #wp-copy {
+       pointer-events: auto; margin-top: 10px; min-height: 36px; padding: 6px 12px;
+       font: 600 11.5px inherit; color: #0b3340; background: var(--teal-soft);
+       border: 1px solid var(--teal); border-radius: 6px; cursor: pointer;
+     }
+     #wp-copy:hover { background: var(--teal); color: #041b22; }
+     #vues-catalogue .catalogue-group {
+       margin: 10px 0 4px; color: var(--muted); font-size: 11px;
+       letter-spacing: .04em; text-transform: uppercase;
+     }
+     #vues-catalogue .catalogue-item {
+       display: flex; justify-content: space-between; align-items: center; gap: 8px;
+       width: 100%; min-height: 36px; padding: 6px 9px; margin-bottom: 3px;
+       border: 1px solid var(--line); border-radius: 7px; background: transparent;
+       color: var(--ink); font-size: 12px; text-align: left; cursor: pointer;
+     }
+     #vues-catalogue .catalogue-item:hover,
+     #vues-catalogue .catalogue-item:focus-visible { background: var(--teal-soft); }
+     #vues-catalogue .catalogue-item small { color: var(--muted); white-space: nowrap; }
+     #tour-hud {
+       position: absolute; z-index: 6; left: 50%; top: 12px; transform: translateX(-50%);
+       display: flex; align-items: center; gap: 6px; max-width: 96vw; padding: 7px 10px;
+       background: rgba(255,253,249,.96); border: 1px solid var(--line);
+       border-radius: 10px; box-shadow: var(--shadow); font-size: 11.5px; color: var(--ink);
+     }
+     #tour-hud[hidden] { display: none; }
+     body.dark #tour-hud { background: rgba(20,31,43,.96); }
+     #tour-hud strong { font: 600 12px Georgia, serif; white-space: nowrap; }
+     #tour-hud button {
+       min-width: 36px; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
+     }
+     #tour-hud button:hover { background: var(--teal); color: #041b22; }
+     #tour-step { white-space: nowrap; color: var(--muted); }
+     #coupe-hud {
+       position: absolute; z-index: 6; left: 14px; top: 12px;
+       display: flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: 300px;
+       padding: 7px 9px; background: rgba(255,253,249,.96); border: 1px solid var(--line);
+       border-radius: 10px; box-shadow: var(--shadow); font-size: 11px; color: var(--ink);
+     }
+     body.dark #coupe-hud { background: rgba(20,31,43,.96); }
+     #coupe-hud > button, .coupe-axes button {
+       min-width: 36px; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
+     }
+     .coupe-axes { display: flex; gap: 4px; }
+     .coupe-axes button[aria-checked="true"] {
+       background: var(--teal); color: #041b22; border-color: var(--teal);
+     }
+     #coupe-range { width: 100%; accent-color: var(--teal); cursor: pointer; }
+     #explode-hud {
+       position: absolute; z-index: 6; left: 14px; bottom: 14px;
+       display: flex; align-items: center; gap: 8px; max-width: 320px;
+       padding: 7px 10px; background: rgba(255,253,249,.96); border: 1px solid var(--line);
+       border-radius: 10px; box-shadow: var(--shadow); font-size: 11px; color: var(--ink);
+     }
+     body.dark #explode-hud { background: rgba(20,31,43,.96); }
+     #explode-toggle {
+       min-width: 72px; min-height: 36px; padding: 4px 9px; border: 1px solid var(--teal);
+       border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
+     }
+     #explode-toggle[aria-pressed="true"] { background: var(--teal); color: #041b22; }
+     #explode-range { width: 130px; accent-color: var(--teal); cursor: pointer; }
+     #explode-value { font-family: var(--mono); min-width: 38px; color: var(--muted); }
     .perf { position: absolute; right: 16px; top: 18px; font-size: 10.5px; color: var(--muted); text-align: right; }
     .perf b { color: var(--teal); font-size: 15px; }
     /* Pendant la chasse, le HUD occupe le haut de la vue : le compteur de
@@ -193,6 +272,29 @@
     .details .meta span:first-child { flex: 0 0 auto; }
     .details .meta span:last-child { color: var(--ink); font-weight: 600; text-align: right; overflow-wrap: anywhere; min-width: 0; }
     .fact { margin-top: 18px; padding: 14px; background: #fbf3e8; border-left: 3px solid var(--accent); border-radius: 6px; font-size: 12.5px; color: #5a4a3c; }
+     .verite {
+       margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line);
+       border-radius: 8px; background: rgba(103,232,249,.04);
+     }
+     .verite h3 { margin: 0 0 8px; font: 600 13px Georgia, serif; color: var(--teal); }
+     .verite dl { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 5px 12px; margin: 0; font-size: 11.5px; }
+     .verite dt { color: var(--muted); white-space: nowrap; }
+     .verite dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+     .verite-avertissement { margin: 10px 0 0; font-size: 10.5px; color: var(--muted); }
+     #sources-dialog {
+       max-width: min(720px, 94vw); max-height: 86vh; overflow: auto;
+       padding: 20px 24px; border: 1px solid var(--line); border-radius: 14px;
+       background: var(--paper); color: var(--ink); box-shadow: var(--shadow);
+     }
+     body.dark #sources-dialog { background: #0e1620; }
+     .sources-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+     .sources-head h2 { margin: 0; font: 600 21px Georgia, serif; }
+     .sources-head button { min-width: 36px; min-height: 36px; cursor: pointer; }
+     #sources-contenu { margin-top: 14px; font-size: 12.5px; line-height: 1.55; }
+     #sources-contenu h3 { margin: 18px 0 6px; font: 600 14px Georgia, serif; color: var(--teal); }
+     #sources-contenu ul { margin: 6px 0; padding-left: 18px; }
+     #sources-contenu a { color: var(--teal); }
+     #sources-contenu .source-attribution { margin: 4px 0 10px; color: var(--muted); }
     .legacy-link { margin-top: 16px; font-size: 11px; color: var(--muted); }
     .legacy-link a { color: var(--teal); }
     #sel-name { font: 600 30px/1.1 Georgia, serif; }
@@ -283,7 +385,7 @@
       }
     }
   </style>
-  <script type="module" crossorigin src="./assets/v2-P2KnYZf1.js"></script>
+  <script type="module" crossorigin src="./assets/v2-2O3p2Vzi.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/OrbitControls-CbQ2lAS7.js">
   <link rel="stylesheet" crossorigin href="./assets/v2-D_jL7VqJ.css">
 </head>
@@ -299,6 +401,7 @@
       <span class="badge" id="count">— structures</span>
       <span class="badge">Version 2.0</span>
       <div class="top-actions">
+        <button id="btn-sources" type="button" aria-haspopup="dialog">Sources & licences</button>
         <button id="theme-toggle" type="button" aria-pressed="false">Thème : clair</button>
         <button id="mobile-toggle" type="button" aria-expanded="false" aria-controls="sidebar">Explorer</button>
         <button id="reset" type="button">Recadrer</button>
@@ -328,13 +431,17 @@
         <div class="tree" id="tree" role="group" aria-label="Niveaux anatomiques"></div>
       </div>
       <div class="section"><h2 class="section-title">Accès rapide</h2><div class="chips" id="shortcuts"></div></div>
+      <details class="groups-details" id="vues-details" open>
+        <summary class="section-title">Vues remarquables <span id="vues-count" class="section-count"></span></summary>
+        <div id="vues-catalogue" role="group" aria-label="Catalogue des vues remarquables"></div>
+      </details>
       <div class="section">
         <details id="groups-details" class="groups-details">
           <summary class="section-title">Groupes anatomiques <span id="groups-count" class="section-count"></span></summary>
           <div class="chips" id="groups" role="group" aria-label="Groupes anatomiques animés"></div>
         </details>
       </div>
-      <div class="section"><h2 class="section-title">Explorer <span id="list-total"></span></h2><div id="list" role="group" aria-label="Structures anatomiques"></div></div>
+      <div class="section"><h2 class="section-title">Explorer <span id="list-total"></span></h2><div id="list" role="radiogroup" aria-label="Structures anatomiques"></div></div>
     </aside>
 
     <main class="viewport" id="viewport" tabindex="-1" aria-label="Vue 3D du corps humain">
@@ -347,13 +454,38 @@
       </div>
       <div class="perf" aria-hidden="true"><b id="fps">—</b><div id="draw">—</div><div id="quality">—</div></div>
       <div id="label" aria-hidden="true"></div>
-      <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div></div>
+      <svg id="label-lines" aria-hidden="true"><line id="label-line" x1="0" y1="0" x2="0" y2="0" /></svg>
+      <div id="waypoint-info" role="status" aria-live="polite"><div id="wp-title">—</div><div id="wp-text">—</div><button type="button" id="wp-copy" title="Copier le lien de cette vue" aria-label="Copier le lien de cette vue">Copier le lien de cette vue</button></div>
+      <div id="explode-hud" role="group" aria-label="Vue éclatée globale">
+        <button type="button" id="explode-toggle" aria-pressed="false">Éclater</button>
+        <input id="explode-range" type="range" min="0" max="100" step="1" value="0" aria-label="Amplitude de l'éclaté" />
+        <output id="explode-value">0 %</output>
+      </div>
+      <div id="coupe-hud" role="group" aria-label="Coupes anatomiques">
+        <button type="button" id="coupe-toggle" aria-pressed="false" aria-label="Activer la coupe">Coupe</button>
+        <div class="coupe-axes" role="radiogroup" aria-label="Axe de coupe">
+          <button type="button" role="radio" aria-checked="true" tabindex="0" data-clip-axe="frontal">Face</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip-axe="sagittal">Profil</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip-axe="transversal">Dessus</button>
+        </div>
+        <input id="coupe-range" type="range" min="-100" max="100" step="1" value="12" aria-label="Position de la coupe" />
+      </div>
+      <div id="tour-hud" role="group" aria-label="Contrôles du tour guidé" hidden>
+        <strong id="tour-label"></strong>
+        <button type="button" id="tour-prev" aria-label="Étape précédente">←</button>
+        <button type="button" id="tour-pause" aria-label="Mettre en pause" aria-pressed="false">Pause</button>
+        <button type="button" id="tour-next" aria-label="Étape suivante">→</button>
+        <button type="button" id="tour-quit" aria-label="Quitter le tour">Quitter</button>
+        <span id="tour-step" role="status" aria-live="polite"></span>
+      </div>
       <div class="hunt-hud" id="hunt-hud" role="status" aria-live="polite" hidden>
         <div class="hunt-head">
           <div id="hunt-target">—</div>
           <button id="hunt-close" type="button" aria-label="Quitter la chasse aux organes">✕</button>
         </div>
         <div id="hunt-hint"></div>
+        <div class="hunt-modes" id="hunt-modes" role="radiogroup" aria-label="Mode de quiz"></div>
+        <div class="hunt-choices" id="hunt-choices" role="group" aria-label="Réponses possibles"></div>
         <div class="hunt-stats"><span id="hunt-score">0 pt</span><span id="hunt-time">90 s</span></div>
         <div class="hunt-bar" id="hunt-bar"><i id="hunt-bar-fill"></i></div>
         <div id="hunt-feedback"></div>
@@ -370,9 +502,22 @@
       </div>
       <div class="meta" id="detail-meta"></div>
       <div class="fact" id="detail-fact">Explorez les 2 039 structures anatomiques de l'atlas. Les points d'intérêt révèlent des anecdotes sur chaque partie.</div>
+      <section class="verite" id="detail-verite" aria-label="Fiche de vérité de la structure" hidden>
+        <h3>Fiche de vérité</h3>
+        <dl id="detail-verite-champs"></dl>
+        <p class="verite-avertissement">Modèle pédagogique — aucune valeur diagnostique.</p>
+      </section>
       <p class="legacy-link"><a href="./index.html">Version classique</a> — pathologies simulées, jeux et coupe anatomique.</p>
     </aside>
   </div>
+
+  <dialog id="sources-dialog" aria-labelledby="sources-titre">
+    <div class="sources-head">
+      <h2 id="sources-titre">Sources & licences</h2>
+      <button type="button" id="sources-close" aria-label="Fermer les sources">✕</button>
+    </div>
+    <div id="sources-contenu"></div>
+  </dialog>
 
   <div id="scrim" hidden></div>
 

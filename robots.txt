@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tasour.github.io/corps-humain/sitemap.xml

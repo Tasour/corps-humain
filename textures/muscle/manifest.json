@@ -1,0 +1,16 @@
+{
+ "tissue": "muscle",
+ "generated": "2026-11-21T00:47:14.364620+00:00",
+ "source": "3dtextures.me",
+ "license": "CC0",
+ "url": "https://3dtextures.me/2019/03/20/meat-raw-001/",
+ "seed": 2040,
+ "size": 1024,
+ "maps": {
+  "albedo": "bae3d7d372d368dd2c6e7cda58a713a5e7999dd8f3c47cf26dad50a028da150b",
+  "roughness": "e0abfd433f8b647210e391e88d26b87747004e251e2a6b004970b9f5645ff24a",
+  "normal": "6eb6ac5fd950b9506cae9b82205d8048b4c2a0569e6cb65ed50fcfdb99d8d9b4",
+  "ao": "863da5ffcceb8c52aa6e0093a9f04846ed3f33213692cb1c7a70e2ca8627e7b1"
+ },
+ "rule": "aucun detail anatomique inventé ; bruit procede multi-echelle reproductible"
+}
