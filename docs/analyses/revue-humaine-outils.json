@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-21",
+  "item": "Outils de revue anatomique humaine",
+  "perimetre": "revue humaine complète (choix utilisateur)",
+  "artefacts": [
+    ".opencode/plugins/corps-review/index.ts — namespace corps : review_sheet, texture_compare, review_sign, review_status, license_verify",
+    ".opencode/skills/validation-anatomique/SKILL.md — protocole 5 fiches/tissu (1 peau), 2 sources min, signature humaine obligatoire",
+    ".opencode/agents/anatomie-pre-validateur.md — agent lecture seule, pré-verdict, ne signe jamais",
+    "scripts/review-sheet.mjs — 16 PNG réels par fiche + HTML signable + sheet.json",
+    "scripts/check-review-signoffs.mjs — gate : flag éteint = contrôle d'intégrité ; flag allumé = 5/5/5/1 signatures exigées",
+    "tests/review-gate.test.mjs — échec attendu lors d'une activation sans signatures"
+  ],
+  "fichesGenerees": {
+    "total": 16,
+    "bone": 5,
+    "muscle": 5,
+    "organ": 5,
+    "skin": 1,
+    "poids": "49 Mo de captures",
+    "exemple": "docs/revues/2026-11-21/organ-organ-bp-heart/fiche.html"
+  },
+  "etat": {
+    "signatures": 0,
+    "textureDefault": false,
+    "gate": "OK avec le drapeau éteint ; ECHEC lors d'une activation simulée sans signatures",
+    "suite": "npm test, test:review, build verts"
+  },
+  "regle": "Aucun agent ne signe à la place de l'anatomiste. L'activation publique de ?tex=cc0 reste conditionnée aux signatures nominales.",
+  "verdict": "OK — station de relecture humaine opérationnelle, aucune validation simulée"
+}

@@ -1,0 +1,19 @@
+{
+ "generated": "2026-11-21T01:10:33.398Z",
+ "textureDefault": false,
+ "signoffTotal": 0,
+ "parTissu": {
+  "bone": 0,
+  "muscle": 0,
+  "organ": 0,
+  "skin": 0
+ },
+ "seuil": {
+  "bone": 5,
+  "muscle": 5,
+  "organ": 5,
+  "skin": 1
+ },
+ "erreurs": [],
+ "verdict": "OK"
+}

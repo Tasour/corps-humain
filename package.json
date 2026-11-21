@@ -60,6 +60,8 @@
     "test:labels": "node tests/labels.test.mjs",
     "test:identity-gpu": "node tests/identity-gpu.test.mjs",
     "test:textures": "node tests/textures-cc0.test.mjs",
+    "review:sheet": "node scripts/review-sheet.mjs",
+    "test:review": "node scripts/check-review-signoffs.mjs && node tests/review-gate.test.mjs",
     "test:pages": "node scripts/check-pages-structures.mjs && node tests/pages.test.mjs",
     "test:claims": "node tests/lint-claims.test.mjs",
     "test:groupes": "node tests/groupes.test.mjs",

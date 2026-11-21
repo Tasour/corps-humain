@@ -72,6 +72,8 @@ jobs:
         run: TEST_BASE=http://localhost:5199 npm run test:identity-gpu
       - name: Textures CC0
         run: TEST_BASE=http://localhost:5199 npm run test:textures
+      - name: Signatures de revue humaine
+        run: npm run test:review
       - name: Pages statiques et sitemap
         run: npm run test:pages
       - name: Build

@@ -1,0 +1,92 @@
+{
+ "structure": "muscle:long-head-of-biceps-brachii-l",
+ "tissu": "muscle",
+ "source_id": "za:Long head of biceps brachii.l:l",
+ "source": "Z-Anatomy",
+ "licence": "CC BY-SA 4.0",
+ "limite": "Maillage dérivé de Z-Anatomy, simplifié pour le rendu web. Modèle pédagogique : ne pas utiliser pour un diagnostic.",
+ "angles": [
+  {
+   "etat": "avant",
+   "index": 0,
+   "fichier": "avant-angle-0.png"
+  },
+  {
+   "etat": "avant",
+   "index": 1,
+   "fichier": "avant-angle-1.png"
+  },
+  {
+   "etat": "avant",
+   "index": 2,
+   "fichier": "avant-angle-2.png"
+  },
+  {
+   "etat": "avant",
+   "index": 3,
+   "fichier": "avant-angle-3.png"
+  },
+  {
+   "etat": "avant",
+   "index": 4,
+   "fichier": "avant-angle-4.png"
+  },
+  {
+   "etat": "avant",
+   "index": 5,
+   "fichier": "avant-angle-5.png"
+  },
+  {
+   "etat": "avant",
+   "index": 6,
+   "fichier": "avant-angle-6.png"
+  },
+  {
+   "etat": "avant",
+   "index": 7,
+   "fichier": "avant-angle-7.png"
+  },
+  {
+   "etat": "apres",
+   "index": 0,
+   "fichier": "apres-angle-0.png"
+  },
+  {
+   "etat": "apres",
+   "index": 1,
+   "fichier": "apres-angle-1.png"
+  },
+  {
+   "etat": "apres",
+   "index": 2,
+   "fichier": "apres-angle-2.png"
+  },
+  {
+   "etat": "apres",
+   "index": 3,
+   "fichier": "apres-angle-3.png"
+  },
+  {
+   "etat": "apres",
+   "index": 4,
+   "fichier": "apres-angle-4.png"
+  },
+  {
+   "etat": "apres",
+   "index": 5,
+   "fichier": "apres-angle-5.png"
+  },
+  {
+   "etat": "apres",
+   "index": 6,
+   "fichier": "apres-angle-6.png"
+  },
+  {
+   "etat": "apres",
+   "index": 7,
+   "fichier": "apres-angle-7.png"
+  }
+ ],
+ "signee": false,
+ "generated": "2026-11-21T01:06:08.141Z"
+}
