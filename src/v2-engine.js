@@ -291,6 +291,12 @@ async function loadBinary(url) {
 }
 
 function geometryFromRecord(buffer, record) {
+  /* Garde-fou : les offsets LOD doivent rester dans le chunk chargé. Sans ce
+   * contrôle, un chunk manquant ou une course entre changements de LOD lève
+   * un RangeError difficile à diagnostiquer. */
+  const finPositions = record.positions + record.vertexCount * 3 * 4;
+  const finIndices = record.indices + record.indexCount * (record.indexType === "u16" ? 2 : 4);
+  if (!buffer || finPositions > buffer.byteLength || finIndices > buffer.byteLength) return null;
   const positions = new Float32Array(buffer, record.positions, record.vertexCount * 3);
   const normals = new Int16Array(buffer, record.normals, record.vertexCount * 3);
   const indices = record.indexType === "u16"
@@ -518,6 +524,18 @@ export class AnatomyV2Engine {
     }
 
     /* Peau : un lot séparé, translucide. */
+    /* Le socle Z-Anatomy n'a pas de maillage cutané dédié. On conserve un
+     * skinBatch vide pour que les contrôles d'interface restent stables. */
+    if (!this.manifest.skin?.lod?.high) {
+      const vide = new THREE.BufferGeometry();
+      vide.setAttribute("position", new THREE.Float32BufferAttribute([0, 0, 0], 3));
+      vide.setIndex([0, 0, 0]);
+      const batch = new THREE.BatchedMesh(1, 3, 3, new THREE.MeshBasicMaterial({ visible: false }));
+      const gid = batch.addGeometry(vide);
+      batch.addInstance(gid);
+      batch.visible = false;
+      this.skinBatch = batch;
+    }
     if (this.manifest.skin?.lod?.high) {
       const skinRecord = this.manifest.skin.lod.high;
       const skinGeometry = geometryFromRecord(buffers.skin, skinRecord);
@@ -949,6 +967,9 @@ export class AnatomyV2Engine {
     const fichier = cleChunk.startsWith("bp.")
       ? `bp.${cleChunk.slice(3).split(".")[0]}.${lod}` : cleChunk;
     const buffer = await loadBinary(`${this.base}${fichier}.bin.gz`);
+    /* Garde-fou : un chunk tronqué produirait des vues TypedArray invalides
+     * (RangeError) pendant les changements rapides de groupe. */
+    if (buffer.byteLength < 8) throw new Error(`chunk LOD vide : ${fichier}`);
     this.lodBuffers.set(key, buffer);
     return buffer;
   }

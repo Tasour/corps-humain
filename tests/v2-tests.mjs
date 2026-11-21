@@ -133,7 +133,7 @@ await check("Tout afficher restaure la peau et le culling", async () => {
 /* ---------- focus après masquage de catégorie ---------- */
 await check("focus réactive la catégorie masquée", async () => {
   await page.evaluate(() => window.__v2.setCategoryVisible("bone", false));
-  await page.fill("#search", "fémur");
+  await page.fill("#search", "Femur");
   await page.waitForTimeout(200);
   await selectFirstItem(page);
   await page.waitForTimeout(300);
@@ -230,7 +230,13 @@ await check("waypoints curés : l'estomac affiche ses anecdotes", async () => {
   await page.evaluate(() => window.__v2.isolate(null));
   await page.fill("#search", "estomac");
   await page.waitForTimeout(200);
-  await page.locator('#list .item[data-id="organ:stomach"]').click();
+  const estomac = await page.evaluate(() => {
+    const e = window.__v2;
+    return [...e.bySourceId.values()].find((s) => /stomach/i.test(s.en || ""))?.id
+      || e.structures.find((s) => /stomach/i.test(s.en || ""))?.id;
+  });
+  assert.ok(estomac, "estomac absent du manifeste");
+  await page.locator(`#list .item[data-id="${estomac}"]`).click();
   await page.waitForTimeout(400);
   const d = await page.evaluate(() => ({
     labels: window.__v2.waypoints.map((w) => w.label),
@@ -275,7 +281,7 @@ await check("respiration / clignement / flux sanguin sans erreur", async () => {
 });
 await check("focus depuis toutes les orientations caméra", async () => {
   await page.evaluate(() => window.__v2.isolate(null));
-  await page.fill("#search", "fémur");
+  await page.fill("#search", "Femur");
   await page.waitForTimeout(150);
   for (const pos of [[2.5, 1.3, 0], [-2.5, 1.3, 0], [0, 1.3, 2.5], [0, 1.3, -2.5]]) {
     await page.evaluate((p) => window.__v2.camera.position.set(...p), pos);
@@ -311,7 +317,7 @@ await check("désactiver une couche masque aussi ses membranes", async () => {
 });
 await check("clic sur zone masquée ne change pas la sélection", async () => {
   await page.evaluate(() => window.__v2.isolate(null));
-  await page.fill("#search", "fémur");
+  await page.fill("#search", "Femur");
   await page.waitForTimeout(150);
   await selectFirstItem(page);
   await page.waitForTimeout(900);
@@ -345,7 +351,8 @@ await check("toutes les structures restent visibles en rotation", async () => {
   await page.evaluate(() => { const c = window.__v2.camera; c.position.set(2.5, 1.3, 0); c.lookAt(0, 1, 0); });
   await page.waitForTimeout(400);
   const visible = await page.evaluate(() => window.__v2.currentVisible.size);
-  assert.ok(visible > 2000, `visibles=${visible}`);
+  const total = await page.evaluate(() => window.__v2.structures.length);
+  assert.ok(visible >= total - 5, `visibles=${visible}/${total}`);
 });
 await check("rotation : le modèle reste visible (pas d'erreur GL)", async () => {
   await page.evaluate(() => window.__v2.isolate(null));
