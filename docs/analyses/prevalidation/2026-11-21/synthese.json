@@ -1,0 +1,530 @@
+{
+ "generated": "2026-11-21T01:31:45.038Z",
+ "method": "repli local audit-resilient : OLS4/FMA + Wikipedia, aucune inspection visuelle",
+ "total": 16,
+ "parVerdict": {
+  "partiel": 16
+ },
+ "parTissu": {
+  "bone": 5,
+  "muscle": 5,
+  "organ": 5,
+  "skin": 1
+ },
+ "signatures": 0,
+ "verdict": "PRE-VALIDATION TEXTUELLE — signature humaine obligatoire",
+ "resultats": [
+  {
+   "structure": "bone:atlas-c1",
+   "tissu": "bone",
+   "source_id": "za:Atlas (C1)",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Atlas&ontology=fma&rows=3",
+     "id": "label proche",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Atlas"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Atlas_(anatomy)",
+     "id": "Q655357",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "In anatomy, the atlas (C1) is the most superior (first) cervical vertebra of the spine and is located in the neck."
+    }
+   ],
+   "observations": [
+    "Fiche bone-bone-atlas-c1 : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "bone:axis-c2",
+   "tissu": "bone",
+   "source_id": "za:Axis (C2)",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Axis&ontology=fma&rows=3",
+     "id": "label proche",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Axis"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Axis_(anatomy)",
+     "id": "Q792567",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "In anatomy, the axis is the second cervical vertebra (C2) of the spine, immediately inferior to the atlas, upon which the head rests. The spinal cord passes through the axis."
+    }
+   ],
+   "observations": [
+    "Fiche bone-bone-axis-c2 : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "bone:clavicle-l",
+   "tissu": "bone",
+   "source_id": "za:Clavicle.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Clavicle&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Clavicle"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Clavicle",
+     "id": "Q16343",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The clavicle, collarbone, or keybone is a slender, S-shaped long bone approximately 15 centimetres (6 in) long that serves as a strut between the shoulder blade and the sternum (breastbone). There are two clavicles, one "
+    }
+   ],
+   "observations": [
+    "Fiche bone-bone-clavicle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "bone:femur-l",
+   "tissu": "bone",
+   "source_id": "za:Femur.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Femur&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Femur"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Femur",
+     "id": "Q176503",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The femur, or thigh bone is the only bone in the thigh — the region of the lower limb between the hip and the knee. In many four-legged animals, the femur is the upper bone of the hindleg."
+    }
+   ],
+   "observations": [
+    "Fiche bone-bone-femur-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "bone:hip-bone-l",
+   "tissu": "bone",
+   "source_id": "za:Hip bone.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Hip%20bone&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Hip bone"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Hip_bone",
+     "id": "Q3356933",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The hip bone is a large flat bone, constricted in the center and expanded above and below. In some vertebrates it is composed of three parts: the ilium, ischium, and the pubis."
+    }
+   ],
+   "observations": [
+    "Fiche bone-bone-hip-bone-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "muscle:acromial-part-of-deltoid-muscle-l",
+   "tissu": "muscle",
+   "source_id": "za:Acromial part of deltoid muscle.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Deltoid&ontology=fma&rows=3",
+     "id": "label proche",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Deltoid"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Deltoid_muscle",
+     "id": "Q130243",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The deltoid muscle is the muscle forming the rounded contour of the human shoulder. It is also known as the 'common shoulder muscle', particularly in other animals such as the domestic cat. Anatomically, the deltoid musc"
+    }
+   ],
+   "observations": [
+    "Fiche muscle-muscle-acromial-part-of-deltoid-muscle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "muscle:ascending-part-of-trapezius-muscle-l",
+   "tissu": "muscle",
+   "source_id": "za:Ascending part of trapezius muscle.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Trapezius&ontology=fma&rows=3",
+     "id": "label proche",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Trapezius"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Trapezius",
+     "id": "Q204113",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The trapezius, historically known as cucullaris, is a large paired trapezium-shaped surface muscle that extends longitudinally from the occipital bone to the lower thoracic vertebrae of the spine and laterally to the spi"
+    }
+   ],
+   "observations": [
+    "Fiche muscle-muscle-ascending-part-of-trapezius-muscle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "muscle:gluteus-maximus-muscle-l",
+   "tissu": "muscle",
+   "source_id": "za:Gluteus maximus muscle.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Gluteus%20maximus%20muscle&ontology=fma&rows=3",
+     "id": "label proche",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Skeletal muscle tissue of gluteus maximus"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Gluteus_maximus_muscle",
+     "id": "Q637545",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The gluteus maximus is the main extensor muscle of the hip in humans. It is the largest and outermost of the three gluteal muscles and makes up a large part of the shape and appearance of each side of the hips. It is the"
+    }
+   ],
+   "observations": [
+    "Fiche muscle-muscle-gluteus-maximus-muscle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "muscle:long-head-of-biceps-brachii-l",
+   "tissu": "muscle",
+   "source_id": "za:Long head of biceps brachii.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Long%20head%20of%20biceps%20brachii&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Long head of biceps brachii"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Long_head_of_biceps_brachii",
+     "id": "Q201363",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The biceps or biceps brachii is a large muscle that lies on the front of the upper arm between the shoulder and the elbow. Both heads of the muscle arise on the scapula and join to form a single muscle belly which is att"
+    }
+   ],
+   "observations": [
+    "Fiche muscle-muscle-long-head-of-biceps-brachii-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "muscle:rectus-abdominis-muscle-l",
+   "tissu": "muscle",
+   "source_id": "za:Rectus abdominis muscle.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Rectus%20abdominis%20muscle&ontology=fma&rows=3",
+     "id": "label proche",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Muscle fasciculus of rectus abdominis"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Rectus_abdominis_muscle",
+     "id": "Q275150",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The rectus abdominis, also known as the \"abdominal muscle\" or simply better known as the \"abs\", and sometimes informally referred to as the \"six-pack\", is a pair of segmented skeletal muscle on the ventral aspect of a pe"
+    }
+   ],
+   "observations": [
+    "Fiche muscle-muscle-rectus-abdominis-muscle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "organ:bp-brain",
+   "tissu": "organ",
+   "source_id": "bp:FMA50801",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Brain&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Brain"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Brain",
+     "id": "Q1073",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The brain is an organ that serves as the center of the nervous system in all vertebrate and most invertebrate animals. It consists of nervous tissue and is typically located in the head (cephalization), usually near orga"
+    }
+   ],
+   "observations": [
+    "Fiche organ-organ-bp-brain : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "organ:bp-heart",
+   "tissu": "organ",
+   "source_id": "bp:FMA7088",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Heart&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Heart"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Heart",
+     "id": "Q1072",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The heart is a muscular organ found in humans and other animals. This organ pumps blood through the blood vessels. The heart and blood vessels together make up the circulatory system. The pumped blood carries oxygen and "
+    }
+   ],
+   "observations": [
+    "Fiche organ-organ-bp-heart : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "organ:kidney-l",
+   "tissu": "organ",
+   "source_id": "za:Kidney.l:l",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Kidney&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Kidney"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Kidney",
+     "id": "Q112107043",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The human kidneys are two reddish-brown bean-shaped blood-filtering organs that are a multilobar, multipapillary form of mammalian kidneys, usually without signs of external lobulation. They are located on the left and r"
+    }
+   ],
+   "observations": [
+    "Fiche organ-organ-kidney-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "organ:spleen",
+   "tissu": "organ",
+   "source_id": "za:Spleen",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Spleen&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Spleen"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Spleen",
+     "id": "Q9371",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The spleen, or milt, is an organ found in almost all vertebrates and near the liver. Similar in structure to a large lymph node, it acts primarily as a blood filter."
+    }
+   ],
+   "observations": [
+    "Fiche organ-organ-spleen : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "organ:stomach",
+   "tissu": "organ",
+   "source_id": "za:Stomach",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Stomach&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Stomach"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Stomach",
+     "id": "Q1029907",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "The stomach is a muscular, hollow organ in the upper gastrointestinal tract of humans and many other animals, including several invertebrates. The Ancient Greek name for the stomach is gaster which is used as gastric in "
+    }
+   ],
+   "observations": [
+    "Fiche organ-organ-stomach : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  },
+  {
+   "structure": "skin:body",
+   "tissu": "skin",
+   "source_id": "skin:body",
+   "verdict": "partiel",
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "name": "FMA via OLS4",
+     "url": "https://www.ebi.ac.uk/ols4/api/search?q=Skin&ontology=fma&rows=3",
+     "id": "label exact",
+     "license": "CC BY 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "FMA : Skin"
+    },
+    {
+     "name": "Wikipedia (REST summary)",
+     "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Skin",
+     "id": "Q1074",
+     "license": "CC BY-SA 4.0",
+     "accessed": "2026-11-21",
+     "excerpt": "Skin is the layer of usually soft, flexible outer tissue covering the body of a vertebrate animal, with three main functions: protection, regulation, and sensation."
+    }
+   ],
+   "observations": [
+    "Fiche skin-skin-body : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+    "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+    "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+   ],
+   "signature_humaine_requise": true,
+   "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+  }
+ ]
+}

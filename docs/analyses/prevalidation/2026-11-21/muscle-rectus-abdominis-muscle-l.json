@@ -1,0 +1,32 @@
+{
+ "structure": "muscle:rectus-abdominis-muscle-l",
+ "tissu": "muscle",
+ "source_id": "za:Rectus abdominis muscle.l:l",
+ "verdict": "partiel",
+ "confiance": "moyenne",
+ "sources": [
+  {
+   "name": "FMA via OLS4",
+   "url": "https://www.ebi.ac.uk/ols4/api/search?q=Rectus%20abdominis%20muscle&ontology=fma&rows=3",
+   "id": "label proche",
+   "license": "CC BY 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "FMA : Muscle fasciculus of rectus abdominis"
+  },
+  {
+   "name": "Wikipedia (REST summary)",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Rectus_abdominis_muscle",
+   "id": "Q275150",
+   "license": "CC BY-SA 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "The rectus abdominis, also known as the \"abdominal muscle\" or simply better known as the \"abs\", and sometimes informally referred to as the \"six-pack\", is a pair of segmented skeletal muscle on the ventral aspect of a pe"
+  }
+ ],
+ "observations": [
+  "Fiche muscle-muscle-rectus-abdominis-muscle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+  "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+  "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+ ],
+ "signature_humaine_requise": true,
+ "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+}

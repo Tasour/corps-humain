@@ -1,0 +1,32 @@
+{
+ "structure": "skin:body",
+ "tissu": "skin",
+ "source_id": "skin:body",
+ "verdict": "partiel",
+ "confiance": "moyenne",
+ "sources": [
+  {
+   "name": "FMA via OLS4",
+   "url": "https://www.ebi.ac.uk/ols4/api/search?q=Skin&ontology=fma&rows=3",
+   "id": "label exact",
+   "license": "CC BY 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "FMA : Skin"
+  },
+  {
+   "name": "Wikipedia (REST summary)",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Skin",
+   "id": "Q1074",
+   "license": "CC BY-SA 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "Skin is the layer of usually soft, flexible outer tissue covering the body of a vertebrate animal, with three main functions: protection, regulation, and sensation."
+  }
+ ],
+ "observations": [
+  "Fiche skin-skin-body : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+  "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+  "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+ ],
+ "signature_humaine_requise": true,
+ "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+}

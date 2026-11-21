@@ -1,0 +1,32 @@
+{
+ "structure": "organ:bp-heart",
+ "tissu": "organ",
+ "source_id": "bp:FMA7088",
+ "verdict": "partiel",
+ "confiance": "moyenne",
+ "sources": [
+  {
+   "name": "FMA via OLS4",
+   "url": "https://www.ebi.ac.uk/ols4/api/search?q=Heart&ontology=fma&rows=3",
+   "id": "label exact",
+   "license": "CC BY 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "FMA : Heart"
+  },
+  {
+   "name": "Wikipedia (REST summary)",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Heart",
+   "id": "Q1072",
+   "license": "CC BY-SA 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "The heart is a muscular organ found in humans and other animals. This organ pumps blood through the blood vessels. The heart and blood vessels together make up the circulatory system. The pumped blood carries oxygen and "
+  }
+ ],
+ "observations": [
+  "Fiche organ-organ-bp-heart : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+  "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+  "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+ ],
+ "signature_humaine_requise": true,
+ "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+}

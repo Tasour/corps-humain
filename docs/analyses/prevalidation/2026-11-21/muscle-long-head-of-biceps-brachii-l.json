@@ -1,0 +1,32 @@
+{
+ "structure": "muscle:long-head-of-biceps-brachii-l",
+ "tissu": "muscle",
+ "source_id": "za:Long head of biceps brachii.l:l",
+ "verdict": "partiel",
+ "confiance": "moyenne",
+ "sources": [
+  {
+   "name": "FMA via OLS4",
+   "url": "https://www.ebi.ac.uk/ols4/api/search?q=Long%20head%20of%20biceps%20brachii&ontology=fma&rows=3",
+   "id": "label exact",
+   "license": "CC BY 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "FMA : Long head of biceps brachii"
+  },
+  {
+   "name": "Wikipedia (REST summary)",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Long_head_of_biceps_brachii",
+   "id": "Q201363",
+   "license": "CC BY-SA 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "The biceps or biceps brachii is a large muscle that lies on the front of the upper arm between the shoulder and the elbow. Both heads of the muscle arise on the scapula and join to form a single muscle belly which is att"
+  }
+ ],
+ "observations": [
+  "Fiche muscle-muscle-long-head-of-biceps-brachii-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+  "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+  "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+ ],
+ "signature_humaine_requise": true,
+ "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+}

@@ -1,0 +1,32 @@
+{
+ "structure": "bone:clavicle-l",
+ "tissu": "bone",
+ "source_id": "za:Clavicle.l:l",
+ "verdict": "partiel",
+ "confiance": "moyenne",
+ "sources": [
+  {
+   "name": "FMA via OLS4",
+   "url": "https://www.ebi.ac.uk/ols4/api/search?q=Clavicle&ontology=fma&rows=3",
+   "id": "label exact",
+   "license": "CC BY 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "FMA : Clavicle"
+  },
+  {
+   "name": "Wikipedia (REST summary)",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Clavicle",
+   "id": "Q16343",
+   "license": "CC BY-SA 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "The clavicle, collarbone, or keybone is a slender, S-shaped long bone approximately 15 centimetres (6 in) long that serves as a strut between the shoulder blade and the sternum (breastbone). There are two clavicles, one "
+  }
+ ],
+ "observations": [
+  "Fiche bone-bone-clavicle-l : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+  "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+  "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+ ],
+ "signature_humaine_requise": true,
+ "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+}

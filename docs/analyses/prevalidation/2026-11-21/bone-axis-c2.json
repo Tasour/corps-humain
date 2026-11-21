@@ -1,0 +1,32 @@
+{
+ "structure": "bone:axis-c2",
+ "tissu": "bone",
+ "source_id": "za:Axis (C2)",
+ "verdict": "partiel",
+ "confiance": "moyenne",
+ "sources": [
+  {
+   "name": "FMA via OLS4",
+   "url": "https://www.ebi.ac.uk/ols4/api/search?q=Axis&ontology=fma&rows=3",
+   "id": "label proche",
+   "license": "CC BY 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "FMA : Axis"
+  },
+  {
+   "name": "Wikipedia (REST summary)",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Axis_(anatomy)",
+   "id": "Q792567",
+   "license": "CC BY-SA 4.0",
+   "accessed": "2026-11-21",
+   "excerpt": "In anatomy, the axis is the second cervical vertebra (C2) of the spine, immediately inferior to the atlas, upon which the head rests. The spinal cord passes through the axis."
+  }
+ ],
+ "observations": [
+  "Fiche bone-bone-axis-c2 : 16 captures présentes (8 procédural, 8 ?tex=cc0).",
+  "Pré-validation textuelle uniquement : aucune inspection visuelle humaine ou agentique n'a pu être réalisée (ECONNREFUSED sur les agents).",
+  "Les textures CC0 sont présentées comme illustratives, jamais comme scans anatomiques."
+ ],
+ "signature_humaine_requise": true,
+ "verdict_texte": "Deux sources textuelles concordent ; relecture visuelle et signature humaine nécessaires."
+}

@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-21",
+  "item": "Pré-validation des 16 fiches de revue",
+  "methode": "skill audit-resilient : 3 tentatives d'agents puis bascule locale",
+  "tentatives": [
+    "agent anatomie-pre-validateur : non chargé dans la session (Unknown agent)",
+    "4 agents general de repli : ECONNREFUSED sur l'accès réseau",
+    "bascale locale : scripts/prevalidate-local.mjs interroge OLS4/FMA et Wikipedia depuis la session principale"
+  ],
+  "sources": ["FMA via OLS4 (CC BY 4.0)", "Wikipedia REST summary (CC BY-SA 4.0)"],
+  "resultats": {
+    "fiches": 16,
+    "partiel": 16,
+    "a_valider": 0,
+    "confiance": "moyenne pour les 16",
+    "signatures": 0
+  },
+  "limite": "Pré-validation textuelle uniquement : aucune inspection visuelle n'a pu être faite par les agents (réseau bloqué). Les 16 captures par fiche restent à relire par un humain.",
+  "regle": "Aucun verdict 'confirme' sans relecture visuelle ; signature humaine obligatoire ; ?tex=cc0 reste éteint.",
+  "artefacts": [
+    "docs/analyses/prevalidation/2026-11-21/synthese.json",
+    "docs/analyses/prevalidation/2026-11-21/<structure>.json (16 fichiers)",
+    "scripts/prevalidate-local.mjs (commande npm run prevalidate:local)"
+  ],
+  "gates": "npm test, lint:claims, test:review verts",
+  "verdict": "OK — pré-validation textuelle traçable, aucune signature simulée"
+}
