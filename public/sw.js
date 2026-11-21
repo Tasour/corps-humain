@@ -2,7 +2,7 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v43";
+const CACHE_VERSION = "corps-v44";
 const SHELL = [
   "./",
   "./index.html",
@@ -24,6 +24,13 @@ const MODELS = [
   "./models/v2/manifest.json",
   "./data/fiches-verite.json",
   "./data/licenses.json",
+  /* Textures CC0 par tissu : chargées seulement avec ?tex=cc0, mais
+   * pré-cachées pour que le flag fonctionne aussi hors ligne. */
+  "./textures/bone/albedo.jpg", "./textures/bone/normal.jpg", "./textures/bone/roughness.jpg", "./textures/bone/ao.jpg", "./textures/bone/manifest.json",
+  "./textures/muscle/albedo.jpg", "./textures/muscle/normal.jpg", "./textures/muscle/roughness.jpg", "./textures/muscle/ao.jpg", "./textures/muscle/manifest.json",
+  "./textures/organ/albedo.jpg", "./textures/organ/normal.jpg", "./textures/organ/roughness.jpg", "./textures/organ/ao.jpg", "./textures/organ/manifest.json",
+  "./textures/skin/albedo.jpg", "./textures/skin/normal.jpg", "./textures/skin/roughness.jpg", "./textures/skin/ao.jpg", "./textures/skin/manifest.json",
+  "./textures/veins/albedo.jpg", "./textures/veins/normal.jpg", "./textures/veins/roughness.jpg", "./textures/veins/ao.jpg", "./textures/veins/manifest.json",
   "./models/v2/bone.low.bin.gz",
   "./models/v2/muscle.low.bin.gz",
   "./models/v2/organ.low.bin.gz",

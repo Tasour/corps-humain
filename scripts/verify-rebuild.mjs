@@ -11,6 +11,9 @@ import { spawnSync } from "node:child_process";
 
 const root = path.resolve(import.meta.dirname, "..");
 const build = path.join(root, "scripts/build-anatomy-v2.mjs");
+/* Le cache tmpfs des premières phases a disparu : la source persistante est
+ * la seule valide pour une vérification reproductible. */
+const BP = process.env.ANATOMY_SOURCE || "/home/tasour/.cache/corps-sources/human-atlas/public/models";
 const rapportPath = path.join(root, "docs/analyses/rebuild-verification.json");
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "corps-rebuild-"));
 
@@ -18,7 +21,7 @@ function construire(dossier) {
   const resultat = spawnSync(process.execPath, [build], {
     cwd: root,
     encoding: "utf8",
-    env: { ...process.env, V2_OUT: dossier },
+    env: { ...process.env, V2_OUT: dossier, ANATOMY_SOURCE: BP },
   });
   if (resultat.status !== 0) throw new Error(resultat.stderr || resultat.stdout);
   return resultat.stdout.trim().split("\n").slice(-2).join(" ");

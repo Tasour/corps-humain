@@ -1,0 +1,16 @@
+{
+ "tissue": "organ",
+ "generated": "2026-11-21T00:47:14.661357+00:00",
+ "source": "3dtextures.me",
+ "license": "CC0",
+ "url": "https://3dtextures.me/2019/03/20/meat-raw-001/ (substitut organique generique, graine distincte)",
+ "seed": 2041,
+ "size": 1024,
+ "maps": {
+  "albedo": "3bb10de3c5a08d8a5e05ae9601b6b1e937d3c424fefcffb21cd413b17342a89d",
+  "roughness": "e0abfd433f8b647210e391e88d26b87747004e251e2a6b004970b9f5645ff24a",
+  "normal": "6eb6ac5fd950b9506cae9b82205d8048b4c2a0569e6cb65ed50fcfdb99d8d9b4",
+  "ao": "863da5ffcceb8c52aa6e0093a9f04846ed3f33213692cb1c7a70e2ca8627e7b1"
+ },
+ "rule": "aucun detail anatomique inventé ; bruit procede multi-echelle reproductible"
+}

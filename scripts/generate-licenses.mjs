@@ -34,6 +34,20 @@ const registre = {
       ? "Z-Anatomy — Gauthier Kervyn et contributeurs, CC BY-SA 4.0. Toute redistribution des maillages dérivés doit conserver la licence CC BY-SA 4.0."
       : "BodyParts3D 4.0 — Database Center for Life Science, CC BY 4.0.",
   })),
+  textures: fs.readdirSync(path.join(root, "public/textures"))
+    .filter((nom) => fs.existsSync(path.join(root, "public/textures", nom, "manifest.json")))
+    .map((nom) => {
+      const m = JSON.parse(fs.readFileSync(path.join(root, "public/textures", nom, "manifest.json"), "utf8"));
+      return {
+        tissu: m.tissue,
+        source: m.source,
+        licence: m.license,
+        url: m.url,
+        graine: m.seed,
+        taille: m.size,
+        empreintes: m.maps,
+      };
+    }),
   attributionCombinedee: manifest.license,
   parLicence: fiches.structures.reduce((acc, f) => {
     acc[f.licence] = (acc[f.licence] || 0) + 1;

@@ -594,6 +594,8 @@
     if (proxyTexture && /^[a-z0-9-]{1,40}$/.test(proxyTexture)) {
       window.__V2_TEXTURE_PROXY = proxyTexture;
     }
+    /* Exposé en lecture seule pour les harnais de preuve. */
+    window.__v2Textures = proxyTexture || null;
     const engine = new AnatomyV2Engine({ lod: 'low' });
     engine.camera = camera;
     await engine.load((p, label) => {

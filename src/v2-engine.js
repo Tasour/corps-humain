@@ -241,14 +241,15 @@ async function loadTissueTextures() {
     out[key] = { map: tex, ...derivePbrMaps(canvas) };
   }
 
-  /* Flag experimental : ?tex=os-proxy (ou window.__V2_TEXTURE_PROXY) remplace
-   * la carte os procedurelle par une texture CC0 assemblée et versionnee.
-   * Aucun autre tissu n'est touché et le fallback reste le rendu d'origine. */
+  /* ?tex=os-proxy : ancien proxy os uniquement (démonstration technique).
+   * ?tex=cc0 : jeux CC0 assemblés pour os, muscle, organe, peau et veines.
+   * Le flag reste désactivé par défaut ; chaque tissu manquant conserve son
+   * rendu procédural, sans jamais bloquer le chargement de l'atlas. */
   const proxy = typeof window !== "undefined" ? window.__V2_TEXTURE_PROXY : null;
   if (proxy && /^[a-z0-9-]{1,40}$/.test(proxy)) {
-    try {
-      const loader = new THREE.TextureLoader();
-      const base = `${import.meta.env?.BASE_URL || "./"}textures/${proxy}/`;
+    const loader = new THREE.TextureLoader();
+    const charger = async (cle, dossier) => {
+      const base = `${import.meta.env?.BASE_URL || "./"}textures/${dossier}/`;
       const load = async (file, srgb = false) => {
         const texture = await loader.loadAsync(`${base}${file}`);
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -261,9 +262,18 @@ async function loadTissueTextures() {
         load("normal.jpg"),
         load("roughness.jpg"),
       ]);
-      out.bone = { map, normal, roughness };
-    } catch (error) {
-      console.warn(`[textures] proxy ${proxy} indisponible, fallback procedural`, error);
+      let ao = null;
+      try { ao = await load("ao.jpg"); } catch { /* carte optionnelle */ }
+      out[cle] = { map, normal, roughness, ao };
+    };
+    const tissus = proxy === "cc0"
+      ? [["bone", "bone"], ["muscle", "muscle"], ["organ", "organ"], ["skin", "skin"], ["veins", "veins"]]
+      : [["bone", proxy]];
+    const resultats = await Promise.allSettled(tissus.map(([cle, dossier]) => charger(cle, dossier)));
+    for (const resultat of resultats) {
+      if (resultat.status === "rejected") {
+        console.warn("[textures] jeu indisponible, fallback procedural", resultat.reason);
+      }
     }
   }
   return out;
@@ -492,7 +502,7 @@ export class AnatomyV2Engine {
     if (this.manifest.skin?.lod?.high) {
       const skinRecord = this.manifest.skin.lod.high;
       const skinGeometry = geometryFromRecord(buffers.skin, skinRecord);
-      const skinMaps = this.textures.organ;
+      const skinMaps = this.textures.skin || this.textures.organ;
       const material = new THREE.MeshPhysicalMaterial({
         color: CATEGORY_COLORS.skin,
         map: skinMaps?.map || null,

@@ -1,0 +1,16 @@
+{
+ "tissue": "bone",
+ "generated": "2026-11-21T00:47:14.063098+00:00",
+ "source": "3dtextures.me",
+ "license": "CC0",
+ "url": "https://3dtextures.me/2016/05/21/bone-001/",
+ "seed": 2039,
+ "size": 1024,
+ "maps": {
+  "albedo": "ec2dd5a21ca1e9da27e21615e015a7c5a094bd39f882d60ef1a0ecf53099f8c6",
+  "roughness": "508685865568a7cf2a272c4af536efb38a637e6bce657acd7bcd41369c4004c0",
+  "normal": "b94a8cf45d8728cb4a5650e5a2850d774f24667d78e03f4b704a328b465efaa8",
+  "ao": "3e24050fc508b7131a30e5cf803e91c190750f20ca33f246df9004526d31f376"
+ },
+ "rule": "aucun detail anatomique inventé ; bruit procede multi-echelle reproductible"
+}

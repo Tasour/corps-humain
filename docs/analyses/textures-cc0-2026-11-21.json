@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-21",
+  "item": "Textures CC0 par tissu",
+  "source": "fichiers fournis par l'utilisateur depuis /home/tasour/Downloads/texture, issus de 3dtextures.me (licence CC0 vérifiée le 21/11/2026)",
+  "assets": [
+    { "tissu": "bone", "page": "https://3dtextures.me/2016/05/21/bone-001/", "graine": 2039, "particularite": "rugosité dérivée de SPEC inversée" },
+    { "tissu": "muscle", "page": "https://3dtextures.me/2019/03/20/meat-raw-001/", "graine": 2040 },
+    { "tissu": "organ", "page": "https://3dtextures.me/2019/03/20/meat-raw-001/", "graine": 2041, "particularite": "même asset CC0 que muscle avec graine distincte : substitut organique générique, PAS une texture d'organe anatomique" },
+    { "tissu": "skin", "page": "https://3dtextures.me/2019/01/24/skin-human-002/", "graine": 2042, "particularite": "rugosité dérivée de SPEC inversée" },
+    { "tissu": "veins", "page": "https://3dtextures.me/2020/10/26/veins-001/", "graine": 2043, "particularite": "chargée et pré-cachée, category de vaisseau pas encore rendue séparément" }
+  ],
+  "budget": {
+    "total": "~4,2 Mo",
+    "parTissu": "≤ 1 Mo, limite 8 Mo",
+    "resolution": "1024 px JPEG",
+    "precacheSW": "corps-v44"
+  },
+  "branchement": {
+    "flag": "?tex=cc0 (désactivé par défaut — choix utilisateur « fait au mieux » tranché vers la prudence)",
+    "repli": "chaque tissu manquant conserve son rendu procédural via Promise.allSettled",
+    "peau": "utilise désormais son propre lot de textures au lieu de celui des organes",
+    "observabilite": "window.__v2Textures expose le flag actif"
+  },
+  "preuves": {
+    "test": "4/4 (manifestes CC0, empreintes SHA-256, budget, chargement par tissu, zéro requête externe)",
+    "captures": "8 angles procédural vs ?tex=cc0",
+    "changedPct": [4.22, 3.88, 2.72, 3.57, 3.88, 3.44, 2.63, 3.74],
+    "suite": "tous les gates verts, y compris rebuild:verify (14 fichiers byte-identiques)"
+  },
+  "limite": "Aucune validation anatomiste : ces textures sont illustratives et ne doivent pas être activées publiquement par défaut avant relecture.",
+  "verdict": "OK — chaîne CC0 → assemblage → moteur → preuve visuelle validée, flag Off"
+}
