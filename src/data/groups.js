@@ -17,7 +17,8 @@ export const QUICK_ACCESS = [
   { label: "Œil droit", ids: ["organ:bp-fibrous-layer-of-eyeball-r", "organ:anterior-segment-of-eyeball-r", "organ:posterior-segment-of-eyeball-r", "muscle:lateral-rectus-muscle-r", "muscle:medial-rectus-muscle-r"] },
   { label: "Cœur", ids: ["organ:bp-heart"], select: "organ:bp-heart" },
   { label: "Jambe gauche", ids: ["bone:hip-bone-l", "bone:femur-l", "bone:patella-l", "bone:tibia-l", "bone:fibula-l"] },
-  { label: "Reins", ids: ["organ:kidney-l", "organ:kidney-r"] },
+  /* Les reins sont exclus du socle Z-Anatomy (composant rein CC BY-NC 4.0).
+   * Ce raccourci est retiré pour ne pas référencer une structure absente. */
   { label: "Encéphale", ids: ["organ:bp-brain", "organ:bp-brainstem", "organ:bp-cerebellum"] },
 ];
 
