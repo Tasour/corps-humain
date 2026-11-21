@@ -30,10 +30,11 @@ if (!["low", "medium", "high"].includes(LODS[0])) {
 const manifest = JSON.parse(fs.readFileSync(path.join(BASE, "manifest.json"), "utf8"));
 
 const chunkCache = new Map();
-function chunkFor(category, lod) {
-  const key = `${category}:${lod}`;
+function chunkFor(category, lod, record) {
+  const cle = record?.chunk ? record.chunk.replace(/\.bin$/, "") : `${category}.${lod}`;
+  const key = `${cle}:${lod}`;
   if (!chunkCache.has(key)) {
-    const file = path.join(BASE, `${category}.${lod}.bin.gz`);
+    const file = path.join(BASE, `${cle}.bin.gz`);
     chunkCache.set(key, zlib.gunzipSync(fs.readFileSync(file)));
   }
   return chunkCache.get(key);
@@ -182,7 +183,7 @@ for (const s of manifest.structures) {
   for (const lod of LODS) {
     const rec = s.lod?.[lod];
     if (!rec || !rec.indexCount) continue;
-    const { pos, nrm, idx } = views(chunkFor(s.category, lod), rec);
+    const { pos, nrm, idx } = views(chunkFor(s.category, lod, rec), rec);
     const m = analyzeStructure(pos, nrm, idx, rec.vertexCount);
     rows.push({
       id: s.id,
