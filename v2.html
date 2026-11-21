@@ -270,7 +270,8 @@
        padding: 7px 9px; background: rgba(255,253,249,.96); border: 1px solid var(--line);
        border-radius: 10px; box-shadow: var(--shadow); font-size: 11px; color: var(--ink);
      }
-     body.dark #coupe-hud { background: rgba(20,31,43,.96); }
+     #coupe-hud[hidden] { display: none; }
+    body.dark #coupe-hud { background: rgba(20,31,43,.96); }
      #coupe-hud > button, .coupe-axes button {
        min-width: 36px; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line);
        border-radius: 6px; background: var(--teal-soft); color: var(--ink); cursor: pointer;
