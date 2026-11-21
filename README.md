@@ -1,9 +1,10 @@
 # CORPS — Atlas vivant du corps humain
 
-Atlas 3D interactif en français pour explorer l'anatomie et visualiser l'effet des pathologies.
-Construit avec **Three.js** et **Vite**, il s'appuie sur les maillages libres **BodyParts3D 4.0**
-et **Z-Anatomy** pour la peau, les organes, les os et les muscles, avec une anatomie procédurale
-de secours.
+Atlas 3D interactif en français pour explorer l'anatomie. Construit avec **Three.js** et **Vite**,
+il assemble **BodyParts3D 4.0** (CC BY 4.0) et **Z-Anatomy** (CC BY-SA 4.0) en **2 009 structures**
+(os, muscles, organes) avec 3 niveaux de détail. Le jeu de données est reconstruit de façon
+reproductible depuis les sources épinglées (`npm run rebuild:verify` : 14 fichiers byte-identiques).
+L'atlas est pédagogique et n'a aucune prétention diagnostique.
 
 La feuille de route des **24 chantiers prioritaires** est dans
 [`docs/chantiers-prioritaires.md`](docs/chantiers-prioritaires.md).
@@ -12,15 +13,30 @@ Le contrôle des collisions est assuré par `npm run check:collisions` et
 
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
+### Version déployée
+
+Le site public est la branche `gh-pages`, copie statique de `dist/`. Service worker `corps-v44`.
+La version active est celle de `main` au moment du déploiement consigné dans
+`docs/analyses/deploiement-2026-11-21.json`. Pour vérifier localement :
+`npm test && npm run test:review && npm run test:textures && npm run lint:claims && npm run build`.
+Les textures CC0 ne sont actives qu'avec `?tex=cc0` et restent éteintes par défaut tant que la
+relecture anatomique humaine n'est pas signée.
+
 ![Aperçu de l'atlas 3D](docs/apercu.jpg)
 
 ![Simulation d'une pathologie](docs/pathologie.jpg)
 
 ## Fonctionnalités
 
-- **Maillages anatomiques réels BodyParts3D + Z-Anatomy** pour 47 structures (organes, os,
-  muscles) et la peau, chargés progressivement avec repli procédural automatique.
-- **22 organes**, **13 os**, **12 muscles** et **30 pathologies** répartis en 9 systèmes.
+- **2 009 structures réelles** (286 os, 695 muscles, 1 028 organes) et peau, en 3 LOD.
+- **Explorateur hiérarchique**, recherche FR/latin, 22 waypoints curés, deep links `?vue=<id>&wp=<n>`.
+- **Catalogue de vues remarquables**, tours guidés, coupes frontale/sagittale/transversale,
+  éclaté global, étiquettes ancrées avec ligne de rappel.
+- **Fiches de vérité** par structure (source, licence, limite), registre des licences dans l'app,
+  2 009 pages statiques indexables + sitemap.
+- **Quiz multi-modes** (trouver, nommer, système, côté, code TA2) et chasse aux organes.
+- **Textures CC0 par tissu** derrière `?tex=cc0` (désactivé par défaut) ; station de revue humaine
+  dans `docs/revues/` et gate `npm run test:review`.
 - Couches anatomiques : peau, muscles, squelette, organes, étiquettes.
 - **Vue éclatée** : chaque organe se détache pour être observé séparément (slider %).
 - **Coupe anatomique** : retire la partie avant du corps pour visualiser l'intérieur (squelette, organes).
@@ -30,7 +46,7 @@ Le contrôle des collisions est assuré par `npm run check:collisions` et
 - Simulation de gravité en temps réel : morphologie, couleurs, halos, secousses, monitorage
   (FC, SpO₂, FR, TA, température) et ECG.
 - Recherche, filtres par système, fiches détaillées (fonction, causes, symptômes, prévention).
-- Deux jeux pédagogiques : **mode diagnostic** et **chasse aux organes**.
+- Jeux pédagogiques : **pathologies simulées** et **chasse aux organes** (5 modes).
 - **Installable sur mobile (PWA)** : icône dédiée, plein écran et accès hors ligne.
 - Interface responsive desktop / mobile, sans dépendance à un backend.
 
