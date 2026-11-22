@@ -2,11 +2,10 @@
  * Cache l'app shell et les assets pour un démarrage hors ligne.
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
-const CACHE_VERSION = "corps-v45";
+const CACHE_VERSION = "corps-v46";
 const SHELL = [
   "./",
   "./index.html",
-  "./v2.html",
   "./manifest.webmanifest",
   "./favicon.svg",
   "./logo.svg",
@@ -46,7 +45,7 @@ self.addEventListener("install", (event) => {
       /* Pré-cache les assets hachés référencés par index.html. */
       try {
         const assets = new Set();
-        for (const page of ["./index.html", "./v2.html"]) {
+        for (const page of ["./index.html"]) {
           const response = await fetch(page, { cache: "reload" });
           const html = await response.text();
           for (const match of html.matchAll(/(?:src|href)="(\.\/assets\/[^"]+)"/g)) {

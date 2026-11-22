@@ -389,7 +389,7 @@ export class AnatomyV2Engine {
     if (!response.ok) throw new Error(`manifest -> ${response.status}`);
     this.manifest = await response.json();
     try {
-      const reponseAlias = await fetch(`${this.base}../data/id-aliases.json`);
+      const reponseAlias = await fetch(`${this.base}../../data/id-aliases.json`);
       if (reponseAlias.ok) {
         const donneesAlias = await reponseAlias.json();
         for (const [ancien, nouveau] of Object.entries(donneesAlias.alias || {})) this.byAlias.set(ancien, nouveau);

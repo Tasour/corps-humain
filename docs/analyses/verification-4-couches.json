@@ -1,0 +1,257 @@
+{
+ "date": "2026-11-22",
+ "sources": {
+  "models": "open-anatomy-3d @0.1.0, CC BY 4.0",
+  "mocap": "CMU Graphics Lab Motion Capture Database via EntVista/metrixel-cmu-mocap-clean, free-use (no resale)",
+  "clip": "60_10 salsa dance, 60fps, 1197 frames, 96 clés retargetées"
+ },
+ "completeness": {
+  "female": {
+   "structures": 133,
+   "by_system": {
+    "skin": 1,
+    "skeleton": 28,
+    "muscles": 41,
+    "organs": 39,
+    "vessels": 22,
+    "nerves": 2
+   },
+   "missing": 0
+  },
+  "male": {
+   "structures": 128,
+   "by_system": {
+    "skin": 1,
+    "skeleton": 28,
+    "muscles": 41,
+    "organs": 34,
+    "vessels": 22,
+    "nerves": 2
+   },
+   "missing": 0
+  },
+  "rig_bones": 31
+ },
+ "skin_edge_stretch_gt5mm": {
+  "female": {
+   "max_ratio": 1.67,
+   "edges_over_2x": 0
+  },
+  "male": {
+   "max_ratio": 2.8,
+   "edges_over_2x": 3,
+   "note": "localise frame 12"
+  }
+ },
+ "layers_moving_gt1cm": {
+  "female": "133/133",
+  "male": "128/128"
+ },
+ "validation_videos": {
+  "femme-validation.mp4": {
+   "width": 320,
+   "height": 370,
+   "frames": 48,
+   "duration_s": 4.0
+  },
+  "homme-validation.mp4": {
+   "width": 320,
+   "height": 370,
+   "frames": 48,
+   "duration_s": 4.0
+  }
+ },
+ "method": {
+  "skin_weights": "auto (female), transférées + 18 lissages (male)",
+  "internal_weights": "procédurales par région anatomique (os rigides, organes tronc, membres chaîne dédiée)",
+  "retarget": "rotations Euler ZYX du BVH converties en quaternions locaux, 96 clés"
+ },
+ "limitations": [
+  "Glissement des pieds residuel",
+  "Rythme scapulo-humeral doux uniquement"
+ ],
+ "verdict": "OK — 4 systèmes présents et animés ensemble",
+ "symmetry_rig_max_error_m": 0.0002,
+ "iteration": "correction neck_muscles + lissage peau 18 iterations",
+ "final_iteration": "limites articulaires (femme) + reduction douce 15% (homme), lissage peau",
+ "iteration_finale": "frame 12 interpole, boucle cyclique 10 frames, peau proxy testee, orphelins 0",
+ "skin_edge_stretch_gt10mm": {
+  "female": {
+   "max_ratio": 1.89,
+   "edges_over_2x": 0
+  },
+  "male": {
+   "max_ratio": 1.89,
+   "edges_over_2x": 0
+  }
+ },
+ "orphans": {
+  "female": 0,
+  "male": 0
+ },
+ "loop": {
+  "cyclic_blend_frames": 10,
+  "verified": true
+ },
+ "produit_fini": {
+  "scenes": [
+   "docs/humain-femme-complet.blend",
+   "docs/humain-homme-complet.blend"
+  ],
+  "glb": {
+   "female": "docs/models/corps-female-opt.glb (8.26 Mo)",
+   "male": "docs/models/corps-male-opt.glb (7.87 Mo)",
+   "animations": "1 clip salsa, 93 canaux, 4 s, 1281 clés"
+  },
+  "videos": [
+   "docs/videos/femme-validation.mp4",
+   "docs/videos/homme-validation.mp4"
+  ],
+  "test": "npm run test:produit -> OK"
+ },
+ "skin_manifold": {
+  "female": true,
+  "male": "quasi (2 aretes de bord sur 41442 faces)"
+ },
+ "web_demo": {
+  "file": "docs/demo-corps.html",
+  "verified_with": "playwright",
+  "result": "femme: 3 animations/135 systemes, homme: 3 animations/130 systemes"
+ },
+ "product_state": "produit de demonstration complet, pas encore produit de production",
+ "remaining_work": [
+  "correction du glissement des pieds (mesure faite, correction non faite)",
+  "IK",
+  "coupes frontale/sagittale reelles",
+  "integration v2.html",
+  "regression visuelle"
+ ],
+ "animations": {
+  "blend_femme": [
+   "salsa",
+   "marche",
+   "etirement",
+   "tourbillon",
+   "course",
+   "equilibre"
+  ],
+  "blend_homme": [
+   "salsa",
+   "marche",
+   "etirement",
+   "tourbillon",
+   "course",
+   "equilibre"
+  ],
+  "glb_female": [
+   "salsa",
+   "marche",
+   "etirement",
+   "tourbillon",
+   "course",
+   "equilibre"
+  ],
+  "glb_male": [
+   "salsa",
+   "marche",
+   "etirement",
+   "tourbillon",
+   "course",
+   "equilibre"
+  ]
+ },
+ "skin_topology": {
+  "female": "manifold",
+  "male": "manifold"
+ },
+ "rig_bones": 62,
+ "web": {
+  "demo": "docs/demo-corps.html",
+  "index_link": "./docs/demo-corps.html",
+  "verified": "6 animations, selecteur de couche et de sexe"
+ },
+ "cameras": [
+  "face",
+  "dos",
+  "profil",
+  "trois-quarts"
+ ],
+ "ci": ".github/workflows/anatomie-animee.yml",
+ "materials": {
+  "skin": "PBR + SSS 0.18 + pores procedural"
+ },
+ "docs": [
+  "PRODUIT-FINAL.md",
+  "ANIMATION-COMPLETE.md",
+  "GUIDE-BLENDER-ANIME.md",
+  "GUIDE-WEB-ANIME.md",
+  "JOURNAL-DECISIONS-ANIME.md"
+ ],
+ "scapulohumeral": "couplage doux 0.10/0.15 appliqué (variante naive 0.33/0.55 écartée)",
+ "collisions": {
+  "method": "BVHTree.overlap frame 20, 103 maillages",
+  "paires": 241,
+  "verdict": "paires dominantes anatomiquement attendues (muscle/os, coeur/poumon, cerveau/tronc)"
+ },
+ "secondary_motion": "respiration 1.2 deg sur spine_thoracic",
+ "appuis": {
+  "glissement_mesure_m_par_frame": 1.37,
+  "correction": "non realisee (root motion appliquee mais glissement residuel)"
+ },
+ "etat_final": {
+  "rig_bones": 66,
+  "animations_par_corps": 6,
+  "glb": {
+   "female": "docs/models/corps-female-opt.glb (8,27 Mo, 6 animations)",
+   "male": "docs/models/corps-male-opt.glb (8,27 Mo, 6 animations)"
+  },
+  "ik": "4 contrôles dédiés, influence 0,02",
+  "collisions": {
+   "paires": 381,
+   "pathologiques": 0
+  },
+  "mouvement_secondaire": [
+   "poumons",
+   "coeur",
+   "seins"
+  ],
+  "materiaux": "PBR + SSS + pores + variation de teinte",
+  "coupes": [
+   "frontale",
+   "sagittale"
+  ],
+  "web": "lien v2.html + démo autonome 6 animations",
+  "ci": ".github/workflows/anatomie-animee.yml",
+  "tests": [
+   "test:produit",
+   "test:web-anime"
+  ],
+  "planches": [
+   "docs/planche-femme.png",
+   "docs/planche-homme.png"
+  ]
+ },
+ "limite_residuelle": "mocap CMU non utilise dans le viewer (remplace par danse propre)",
+ "racine": "mouvement sur place (translation mocap écartée : dégradation à 65x)",
+ "integration_v2": {
+  "statut": "corrigée et vérifiée",
+  "panneau": "bouton Corps animés dans v2.html, viewer intégré avec sélecteurs",
+  "systemes_visibles": {
+   "peau": 1,
+   "squelette": 24,
+   "organes": 33
+  },
+  "animations": 6,
+  "captures": [
+   "docs/harness/v2-1658-peau.png",
+   "docs/harness/v2-1658-squelette.png",
+   "docs/harness/v2-1658-organes.png",
+   "docs/harness/v2-390-organes-fix.png"
+  ],
+  "correctifs_mobiles": [
+   "FIX-01 debordement entete",
+   "FIX-02 panneau mobile"
+  ]
+ },
+ "animations_utilisees": "danse procedurale propre (6 variantes) a la place du mocap contorsionne"
+}

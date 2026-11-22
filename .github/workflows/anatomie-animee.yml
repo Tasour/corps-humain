@@ -1,0 +1,34 @@
+name: Anatomie animée
+
+on:
+  push:
+    paths:
+      - 'docs/analyses/**'
+      - 'docs/models/**'
+      - 'docs/videos/**'
+      - 'scripts/*humain*'
+      - 'scripts/retarget-mocap.py'
+      - 'scripts/scapulohumeral.py'
+      - 'tests/final-product.test.mjs'
+      - 'package.json'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Vérifier le produit final
+        run: npm run test:produit
+      - name: Vérifier la complétude
+        run: npm run verif:completude
+      - name: Vérifier le rapport
+        run: npm run verif:anatomie
+      - name: Test de régression visuelle web
+        run: |
+          python3 -m http.server 8899 --directory docs &
+          sleep 2
+          npm run test:web-anime

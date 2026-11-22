@@ -8,3 +8,5 @@ wasm/*/target/
 /public/structures/
 /public/sitemap.xml
 /public/robots.txt
+*.blend
+*.blend1

@@ -75,7 +75,11 @@
     "wasm": "cd wasm/corps-core && wasm-pack build --target web --release --out-dir ../../src/wasm/corps-core",
     "test:waypoints": "node tests/waypoints.test.mjs",
     "test:chasse": "node tests/chasse.test.mjs",
-    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions && npm run test:dpr && npm run test:check-modele"
+    "test": "npm run test:groupes && npm run test:waypoints && npm run test:chasse && npm run test:collisions && npm run test:dpr && npm run test:check-modele",
+    "verif:anatomie": "node -e \"const d=require('./docs/analyses/verification-4-couches.json'); console.log(JSON.stringify(d,null,2))\"",
+    "verif:completude": "node -e \"const d=require('./docs/analyses/completude-couches.json'); console.log(d.counts)\"",
+    "test:produit": "node tests/final-product.test.mjs",
+    "test:web-anime": "node tests/web-anime.test.mjs"
   },
   "dependencies": {
     "three": "^0.187.0"

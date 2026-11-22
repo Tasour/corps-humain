@@ -1,0 +1,44 @@
+name: Publication GitHub Pages
+
+# Une seule application en ligne : la dernière version de main est publiée
+# automatiquement sur la branche gh-pages à chaque push.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Installation
+        run: npm ci
+      - name: Build de l'application unique
+        run: npm run build
+      - name: Verification de l'entree unique
+        run: |
+          test -f dist/index.html
+          test ! -f dist/v2.html
+          test ! -f dist/classique.html
+          test -f dist/docs/models/corps-female-opt.glb
+      - name: Publication sur gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com

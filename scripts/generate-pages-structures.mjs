@@ -83,7 +83,7 @@ for (const structure of manifest.structures) {
 <style>${CSS}</style>
 </head>
 <body>
-<header><a href="../v2.html">← Atlas 3D</a> · <a href="./index.html">Toutes les structures</a></header>
+<header><a href="../index.html">← Atlas 3D</a> · <a href="./index.html">Toutes les structures</a></header>
 <main>
 <h1>${echapper(titre)}</h1>
 <p class="latin">${echapper(structure.la || "")}</p>
@@ -98,10 +98,10 @@ for (const structure of manifest.structures) {
 </dl></section>
 <section><h2>Limites du modèle</h2><p>${echapper(fiche.limite)}</p></section>
 <section><h2>Points d'intérêt</h2><ol>${points.map((p) => `<li><strong>${echapper(p.title)}</strong> — ${echapper(p.text)}</li>`).join("")}</ol></section>
-<section><h2>Explorer en 3D</h2><p><a href="../v2.html?vue=${encodeURIComponent(structure.id)}&amp;wp=0">Ouvrir cette structure dans l'atlas 3D</a></p></section>
+<section><h2>Explorer en 3D</h2><p><a href="../index.html?vue=${encodeURIComponent(structure.id)}&amp;wp=0">Ouvrir cette structure dans l'atlas 3D</a></p></section>
 <p class="avertissement">Modèle pédagogique. Aucune donnée affichée n'a valeur diagnostique.</p>
 </main>
-<footer><a href="../v2.html">CORPS — atlas anatomique</a></footer>
+<footer><a href="../index.html">CORPS — atlas anatomique</a></footer>
 </body>
 </html>
 `;
@@ -127,7 +127,7 @@ const index = `<!doctype html>
 <title>Structures anatomiques — CORPS</title><meta property="og:title" content="Structures anatomiques — CORPS">
 <meta name="description" content="Index des ${manifest.structures.length} structures anatomiques de l'atlas CORPS, avec provenance, licence et points d'intérêt pour chacune.">
 <link rel="canonical" href="${echapper(base)}structures/index.html"><style>${CSS}</style></head>
-<body><header><a href="../v2.html">← Atlas 3D</a></header><main>
+<body><header><a href="../index.html">← Atlas 3D</a></header><main>
 <h1>Structures anatomiques</h1><p>${manifest.structures.length} structures, chaque page indique sa source, sa licence et ses limites.</p>
 ${lignesIndex.join("\n")}
 </main></body></html>

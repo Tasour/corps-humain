@@ -1,0 +1,98 @@
+{
+ "frame": 20,
+ "attendues": 381,
+ "pathologiques": 0,
+ "exemples_attendus": [
+  {
+   "a": "abdominal_muscles",
+   "b": "chest_muscles_l",
+   "systemes": [
+    "muscles",
+    "muscles"
+   ],
+   "triangles": 456
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "chest_muscles_r",
+   "systemes": [
+    "muscles",
+    "muscles"
+   ],
+   "triangles": 429
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "colon",
+   "systemes": [
+    "muscles",
+    "organs"
+   ],
+   "triangles": 135
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "diaphragm",
+   "systemes": [
+    "muscles",
+    "muscles"
+   ],
+   "triangles": 160
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "intercostals_l",
+   "systemes": [
+    "muscles",
+    "muscles"
+   ],
+   "triangles": 1121
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "intercostals_r",
+   "systemes": [
+    "muscles",
+    "muscles"
+   ],
+   "triangles": 1178
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "larynx",
+   "systemes": [
+    "muscles",
+    "organs"
+   ],
+   "triangles": 26
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "liver",
+   "systemes": [
+    "muscles",
+    "organs"
+   ],
+   "triangles": 204
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "lung_r",
+   "systemes": [
+    "muscles",
+    "organs"
+   ],
+   "triangles": 49
+  },
+  {
+   "a": "abdominal_muscles",
+   "b": "pelvis",
+   "systemes": [
+    "muscles",
+    "skeleton"
+   ],
+   "triangles": 365
+  }
+ ],
+ "pathologiques_liste": []
+}

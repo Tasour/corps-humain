@@ -1,0 +1,59 @@
+{
+ "generated": "2026-11-22",
+ "sources": {
+  "female": {
+   "glb": "anatomy-female.glb",
+   "sha256": "2eee011f8cb7a189af0757f5e287754e84276dd084faeb2daca45572942f4ce2"
+  },
+  "male": {
+   "glb": "anatomy-male.glb",
+   "sha256": "25248bef02f0ca43eedbd25231f8b6f9681865a57016f9d5e352d407407336c7"
+  }
+ },
+ "counts": {
+  "female": {
+   "expected": 133,
+   "by_system": {
+    "muscles": 41,
+    "nerves": 2,
+    "organs": 39,
+    "skeleton": 28,
+    "skin": 1,
+    "vessels": 22
+   },
+   "present_in_glb": 133
+  },
+  "male": {
+   "expected": 128,
+   "by_system": {
+    "muscles": 41,
+    "nerves": 2,
+    "organs": 34,
+    "skeleton": 28,
+    "skin": 1,
+    "vessels": 22
+   },
+   "present_in_glb": 128
+  }
+ },
+ "missing": {
+  "female": [],
+  "male": []
+ },
+ "grouped_objects": [
+  "back_muscles_l",
+  "back_muscles_r",
+  "chest_muscles_l",
+  "chest_muscles_r",
+  "intercostals_l",
+  "intercostals_r",
+  "arteries_arm_l",
+  "arteries_leg_l",
+  "arteries_arm_r",
+  "arteries_leg_r",
+  "veins_arm_l",
+  "veins_leg_l",
+  "veins_arm_r",
+  "veins_leg_r"
+ ]
+}
