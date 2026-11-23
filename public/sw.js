@@ -3,6 +3,7 @@
  * Incrémenter CACHE_VERSION à chaque déploiement majeur.
  */
 const CACHE_VERSION = "corps-v46";
+const BUILD = "__BUILD__";
 const SHELL = [
   "./",
   "./index.html",
@@ -15,26 +16,14 @@ const SHELL = [
   "./icons/apple-touch-icon.png",
 ];
 
-/* Modèles anatomiques BodyParts3D + Z-Anatomy : volumineux, mis en cache
- * séparément pour qu'un échec ne bloque pas l'installation du shell. */
-const MODELS = [
-  "./models/anatomy.json",
-  "./models/anatomy.bin.gz",
-  "./models/v2/manifest.json",
-  "./data/fiches-verite.json",
-  "./data/licenses.json",
-  /* Textures CC0 par tissu : chargées seulement avec ?tex=cc0, mais
-   * pré-cachées pour que le flag fonctionne aussi hors ligne. */
-  "./textures/bone/albedo.jpg", "./textures/bone/normal.jpg", "./textures/bone/roughness.jpg", "./textures/bone/ao.jpg", "./textures/bone/manifest.json",
-  "./textures/muscle/albedo.jpg", "./textures/muscle/normal.jpg", "./textures/muscle/roughness.jpg", "./textures/muscle/ao.jpg", "./textures/muscle/manifest.json",
-  "./textures/organ/albedo.jpg", "./textures/organ/normal.jpg", "./textures/organ/roughness.jpg", "./textures/organ/ao.jpg", "./textures/organ/manifest.json",
-  "./textures/skin/albedo.jpg", "./textures/skin/normal.jpg", "./textures/skin/roughness.jpg", "./textures/skin/ao.jpg", "./textures/skin/manifest.json",
-  "./textures/veins/albedo.jpg", "./textures/veins/normal.jpg", "./textures/veins/roughness.jpg", "./textures/veins/ao.jpg", "./textures/veins/manifest.json",
-  "./models/v2/bone.low.bin.gz",
-  "./models/v2/muscle.low.bin.gz",
-  "./models/v2/organ.low.bin.gz",
-  "./models/v2/skin.high.bin.gz",
-  "./models/v2/skin.medium.bin.gz",
+/* Petites données uniquement. Les buffers de l'ancien atlas (models/v2/*)
+ * et les GLB ne sont plus pré-cachés : ils sont chargés à la demande et leurs
+ * URL sont versionnées par le BUILD_ID, donc jamais périmées dans le cache. */
+const DATA = [
+  "./docs/models/catalog.json",
+  /* Le modèle par défaut est pré-caché : sans lui, un rechargement hors ligne
+   * afficherait une erreur. L'autre sexe est mis en cache à la demande. */
+  `./docs/models/corps-female-opt.glb?v=${BUILD}`,
 ];
 
 self.addEventListener("install", (event) => {
@@ -67,7 +56,7 @@ self.addEventListener("install", (event) => {
       } catch {
         /* le shell reste utilisable, les assets seront mis en cache à la volée */
       }
-      await Promise.all(MODELS.map((model) => cache.add(model).catch(() => {})));
+      await Promise.all(DATA.map((item) => cache.add(item).catch(() => {})));
       await self.skipWaiting();
     })(),
   );
@@ -106,7 +95,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* Assets : cache d'abord, puis réseau et mise en cache. */
+  /* Petits fichiers de données : réseau d'abord pour ne jamais servir un
+   * catalogue périmé, cache en secours hors ligne. */
+  if (url.pathname.endsWith(".json") || url.pathname.endsWith(".webmanifest")) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok && response.type === "basic") {
+            const copy = response.clone();
+            caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request)),
+    );
+    return;
+  }
+
+  /* GLB versionnés (?v=BUILD_ID) et assets hachés : cache d'abord. */
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;

@@ -1,0 +1,163 @@
+/* Viewer principal : corps humain animé issu des exports Blender.
+ * Remplace l'ancien atlas comme vue par défaut. Aucun autre modèle n'est
+ * chargé ici : les buffers Z-Anatomy/BodyParts3D ne sont pas référencés. */
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+export function initCorpsViewer() {
+  const host = document.getElementById('cp-view');
+  if (!host) return;
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x161a20);
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 20);
+  camera.position.set(0, 0.85, 4);
+  camera.lookAt(0, 0.85, 0);
+
+  const tactile = window.matchMedia('(pointer: coarse)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, tactile ? 1.25 : 1.5));
+  host.appendChild(renderer.domElement);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x444455, 1.9));
+  for (const [x, z, intensity] of [[2, 3, 2.0], [-2, -1, 0.8]]) {
+    const light = new THREE.DirectionalLight(0xffffff, intensity);
+    light.position.set(x, -2, z);
+    scene.add(light);
+  }
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 0.85, 0);
+  controls.enableDamping = false;
+  controls.enablePan = false;
+  controls.minZoom = 0.6;
+  controls.maxZoom = 3;
+  controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  const modelCache = new Map();
+  const systemOf = new Map();
+  let model = null, mixer = null, clips = [];
+  let playing = !reduceMotion, needsRender = true, offscreen = false;
+
+  controls.addEventListener('change', () => { needsRender = true; });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(
+      (entries) => { offscreen = !entries[0].isIntersecting; needsRender = true; },
+      { threshold: 0.01 },
+    ).observe(host);
+  }
+
+  const build = document.documentElement.dataset.build || '';
+  const suffix = build ? `?v=${encodeURIComponent(build)}` : '';
+  fetch('./docs/models/catalog.json')
+    .then((r) => r.json())
+    .then((catalog) => { for (const e of catalog) systemOf.set(e.key.toLowerCase(), e.system); })
+    .catch(() => {});
+
+  function resize() {
+    const w = host.clientWidth, h = host.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h);
+    const a = w / h, s = a < 0.85 ? 1.3 : 1.05;
+    camera.left = -s * a; camera.right = s * a;
+    camera.top = s; camera.bottom = -s;
+    camera.updateProjectionMatrix();
+  }
+
+  function applyLayer() {
+    if (!model) return;
+    const layer = document.getElementById('cp-couche').value;
+    if (layer !== 'skin') {
+      if (mixer) { mixer.stopAllAction(); mixer.setTime(0); }
+      playing = false;
+    } else {
+      playing = !reduceMotion;
+      playClip();
+    }
+    let visible = 0;
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      const key = o.name.toLowerCase().replace(/[.\s]/g, '')
+        .replace(/(\D)\d+$/, '$1').replace(/_+$/, '');
+      o.visible = layer === 'all' || systemOf.get(key) === layer;
+      if (o.visible) visible++;
+    });
+    document.getElementById('corps-info').textContent =
+      `${clips.length} animation(s), ${visible} maillage(s) visible(s)`;
+    const interne = layer === 'organs' || layer === 'vessels' || layer === 'nerves';
+    camera.zoom = interne ? 1.7 : 1;
+    controls.target.set(0, interne ? 1.05 : 0.85, 0);
+    camera.lookAt(controls.target);
+    camera.updateProjectionMatrix();
+    controls.update();
+    needsRender = true;
+  }
+
+  function playClip() {
+    if (!mixer) return;
+    mixer.stopAllAction();
+    const name = document.getElementById('cp-anim').value;
+    const clip = clips.find((c) => c.name.toLowerCase().includes(name));
+    if (clip) mixer.clipAction(clip).play();
+    else if (clips.length) mixer.clipAction(clips[0]).play();
+    needsRender = true;
+  }
+
+  async function load() {
+    const sexe = document.getElementById('cp-sexe').value;
+    if (model) scene.remove(model);
+    let asset = modelCache.get(sexe);
+    if (!asset) {
+      asset = await loader.loadAsync(`./docs/models/corps-${sexe}-opt.glb${suffix}`);
+      modelCache.set(sexe, asset);
+    }
+    model = asset.scene;
+    scene.add(model);
+    window.__corps = { model, systemOf };
+    mixer = new THREE.AnimationMixer(model);
+    clips = asset.animations;
+    playClip(); applyLayer(); resize();
+    needsRender = true;
+  }
+
+  const pauseBtn = document.getElementById('cp-pause');
+  const syncPause = () => {
+    pauseBtn.textContent = playing ? 'Pause' : 'Reprendre';
+    pauseBtn.setAttribute('aria-pressed', String(!playing));
+  };
+  syncPause();
+  pauseBtn.addEventListener('click', () => {
+    playing = !playing; syncPause(); needsRender = true;
+  });
+  for (const id of ['cp-sexe', 'cp-couche']) {
+    document.getElementById(id).addEventListener('change', load);
+  }
+  document.getElementById('cp-anim').addEventListener('change', playClip);
+  window.addEventListener('resize', () => { resize(); needsRender = true; });
+
+  let lastTime = performance.now(), lastRender = 0;
+  const FRAME_MS = 1000 / 24;
+  function frame() {
+    requestAnimationFrame(frame);
+    const now = performance.now();
+    const visible = !document.hidden && !offscreen;
+    const renderState = visible && needsRender;
+    const renderAnim = visible && playing && now - lastRender >= FRAME_MS;
+    if (!renderState && !renderAnim) return;
+    const dt = Math.min((now - lastTime) / 1000, 0.1);
+    lastTime = now;
+    if (mixer && playing) mixer.update(dt);
+    controls.update();
+    resize();
+    renderer.render(scene, camera);
+    needsRender = false;
+    lastRender = now;
+  }
+
+  resize();
+  frame();
+  return load();
+}
