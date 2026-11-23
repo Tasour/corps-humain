@@ -65,12 +65,13 @@ faussait (jambes repliées, torse écrasé sur les frames 0–120).
 
 ## Couches nerveuse et vasculaire enrichies (CC0)
 
-- Nerfs : `spinal-cord-with-nerve-roots.glb` (Innerscene, CC0) — 259 maillages,
-  moelle et racines nerveuses, mis à l'échelle sur le canal rachidien, couleur
-  jaune, préfixe `nerve_`.
-- Vaisseaux : `circulatory-system-figure.glb` (Innerscene, CC0) — 86 maillages,
-  artères rouges / veines bleues, enveloppe « MakeHuman CC0 systems orientation
-  envelope » exclue car ce n'est pas un vaisseau.
+- Nerfs : `full-body-peripheral-nervous-system-figure.glb` (Innerscene, CC0) —
+  382 maillages assemblés en un seul arbre nerveux (`nerves_peripheral`),
+  système nerveux périphérique complet du corps. L'enveloppe d'orientation
+  MakeHuman a été exclue.
+- Vaisseaux : le modèle CC0 Innerscene a été écarté à la demande de
+  l'utilisateur. Le jeu conservé est celui d'origine open-anatomy (22 maillages,
+  couleurs par structure), seul affiché dans la couche Vaisseaux.
 
 Aucune attribution requise (CC0), source documentée pour traçabilité.
 

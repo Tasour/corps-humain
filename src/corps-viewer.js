@@ -179,19 +179,22 @@ export function initCorpsViewer() {
   pauseBtn.addEventListener('click', () => {
     playing = !playing; syncPause(); needsRender = true;
   });
-  for (const id of ['cp-sexe', 'cp-couche']) {
-    document.getElementById(id).addEventListener('change', load);
-  }
+  /* Changer de couche ne recharge pas le modèle : on évite la course entre
+   * load() et applyLayer() qui désynchronisait le select et la visibilité. */
+  document.getElementById('cp-sexe').addEventListener('change', load);
+  document.getElementById('cp-couche').addEventListener('change', applyLayer);
   document.getElementById('cp-anim').addEventListener('change', () => {
     const layer = document.getElementById('cp-couche');
-    /* Choisir une animation ramène à la peau : les couches internes sont
-     * des vues anatomiques figées, sinon le changement semblait tout stopper. */
     if (layer.value !== 'skin') {
       layer.value = 'skin';
       applyLayer();
-    } else {
-      playClip();
     }
+    /* Une animation choisie explicitement reprend toujours la lecture,
+     * même si une couche interne avait mis le viewer en pause. */
+    playing = !reduceMotion;
+    syncPause();
+    playClip();
+    needsRender = true;
   });
   window.addEventListener('resize', () => { resize(); needsRender = true; });
 

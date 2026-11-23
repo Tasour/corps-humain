@@ -131,10 +131,14 @@ def build(sex):
     # Nerfs périphériques : modèle CC0 Innerscene (moelle + racines nerveuses).
     # Importé, mis à l'échelle sur le canal rachidien du rig, puis attaché
     # rigidement aux os du rachis. Le viewer reconnaît le préfixe `nerve_`.
-    nerve_source = '/tmp/opencode/spinal-cord.glb'
+    nerve_source = '/tmp/opencode/peripheral-nerves.glb'
     if os.path.exists(nerve_source):
         before = {o.name for o in bpy.data.objects}
         bpy.ops.import_scene.gltf(filepath=nerve_source)
+        for ob in [o for o in bpy.data.objects
+                   if o.name not in before and o.type == 'MESH'
+                   and 'envelope' in o.name.lower()]:
+            bpy.data.objects.remove(ob, do_unlink=True)
         nerves = [o for o in bpy.data.objects
                   if o.name not in before and o.type == 'MESH']
         for ob in nerves:
@@ -158,22 +162,32 @@ def build(sex):
         bsdf = next(n for n in nerve_mat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
         bsdf.inputs['Base Color'].default_value = (0.95, 0.78, 0.20, 1)
         bsdf.inputs['Roughness'].default_value = 0.7
-        for i, ob in enumerate(nerves, 1):
+        for ob in nerves:
             for v in ob.data.vertices:
                 v.co = ((v.co - center) * scale) + target
-            ob.name = f'nerve_{i:03d}'
-            ob.data.materials.clear()
-            ob.data.materials.append(nerve_mat)
-            bones = [b for b in rig.data.bones if 'spine' in b.name.lower() or b.name == 'head']
-            nearest = min(bones, key=lambda b: (rig.matrix_world @ b.head_local - ob.matrix_world.translation).length)
-            group = ob.vertex_groups.new(name=nearest.name)
-            group.add(list(range(len(ob.data.vertices))), 1.0, 'REPLACE')
-            mod = ob.modifiers.new('Armature', 'ARMATURE')
-            mod.object = rig
-        print('[v6]', sex, 'nerfs importés', len(nerves))
+        # Assemblage : les 259 racines forment un seul arbre nerveux continu
+        # au lieu de segments flottants attenants à des os aléatoires.
+        bpy.ops.object.select_all(action='DESELECT')
+        for ob in nerves:
+            ob.select_set(True)
+        bpy.context.view_layer.objects.active = nerves[0]
+        bpy.ops.object.join()
+        tree = bpy.context.object
+        tree.name = 'nerves_peripheral'
+        tree.data.materials.clear()
+        tree.data.materials.append(nerve_mat)
+        bones = [b for b in rig.data.bones if 'spine' in b.name.lower() or b.name == 'head']
+        nearest = min(bones, key=lambda b: (rig.matrix_world @ b.head_local - tree.matrix_world.translation).length)
+        group = tree.vertex_groups.new(name=nearest.name)
+        group.add(list(range(len(tree.data.vertices))), 1.0, 'REPLACE')
+        mod = tree.modifiers.new('Armature', 'ARMATURE')
+        mod.object = rig
+        print('[v6]', sex, 'nerfs assemblés', len(nerves), 'maillages -> 1')
 
     # Vaisseaux supplémentaires : modèle CC0 Innerscene (système circulatoire).
-    vessel_source = '/tmp/opencode/circulatory.glb'
+    # Le modèle CC0 Innerscene a été écarté : l'utilisateur conserve le jeu
+    # d'origine open-anatomy, déjà aligné et coloré par structure.
+    vessel_source = ''
     if os.path.exists(vessel_source):
         before = {o.name for o in bpy.data.objects}
         bpy.ops.import_scene.gltf(filepath=vessel_source)

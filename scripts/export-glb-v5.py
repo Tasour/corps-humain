@@ -121,6 +121,12 @@ _clamp = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_clamp)
 _clamp.clamp_actions(bpy)
 
+_spec2 = importlib.util.spec_from_file_location(
+    'enrich_dance_arms', '/home/tasour/corps-humain/scripts/enrich-dance-arms.py')
+_arms = importlib.util.module_from_spec(_spec2)
+_spec2.loader.exec_module(_arms)
+_arms.enrich(bpy)
+
 for ob in bpy.data.objects:
     if ob.type == 'MESH':
         ob.hide_render = False
