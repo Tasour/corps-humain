@@ -2237,7 +2237,7 @@
       if(panel.hidden)return;
       const w=host.clientWidth,h=host.clientHeight;
       renderer.setSize(w,h);
-      const a=w/h,s=a<0.85?0.98:1.05;
+      const a=w/h,s=a<0.85?1.12:1.05;
       camera.left=-s*a;camera.right=s*a;camera.top=s;camera.bottom=-s;camera.updateProjectionMatrix();
     }
     function applyLayer(){
