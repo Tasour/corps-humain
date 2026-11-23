@@ -1,0 +1,58 @@
+{
+ "version": 1,
+ "principle": "Une cible n'est utilisée que si sa définition de repères correspond à la géométrie mesurée. Deux références en désaccord donnent contested, jamais ok.",
+ "sources": {
+  "deleva": "docs/models/external-anatomy.json (Table 1 et Table 2, page 1225, consultée 2026-11-24)",
+  "ansur2": "docs/models/ansur2-targets.json (NATICK/TR-15/007)"
+ },
+ "segments": {
+  "upper_arm": {
+   "status": "comparable",
+   "primary": "ANSUR II acromionradialelength, position anatomique debout",
+   "deleva": "notComparable",
+   "reason": "De Leva Table 1 : 235,9* et 244,8* portent un astérisque — « Measured with the upper arm abducted by 90° ; in this position, the acromion is markedly closer to the radiale than in the standard anatomical position ». Vérifié sur l'image de la page 1225."
+  },
+  "forearm": {
+   "status": "comparable",
+   "primary": "ANSUR II radialestylionlength",
+   "deleva": "comparable",
+   "reason": "Radiale → stylion dans les deux références."
+  },
+  "hand": {
+   "status": "comparable",
+   "primary": "ANSUR II handlength",
+   "deleva": "comparable",
+   "reason": "Stylion → dactylion dans les deux références."
+  },
+  "thigh": {
+   "status": "contested",
+   "primary": "ANSUR II trochanterionheight − tibialheight",
+   "deleva": "contested",
+   "reason": "De Leva utilise iliospinale → tibiale (496,2 mm femme) contre trochanterion → tibiale ANSUR (407,6 mm femme) : écart de définition, pas de mesure. ANSUR sert de primaire, De Leva n'est pas utilisé comme seuil."
+  },
+  "shank": {
+   "status": "comparable",
+   "primary": "ANSUR II tibialheight − lateralmalleolusheight",
+   "deleva": "comparable",
+   "reason": "Tibiale → sphyrion des deux côtés ; écart de moyenne de l'ordre de 5 % considéré comme variation populationnelle."
+  },
+  "foot": {
+   "status": "contested",
+   "primary": "ANSUR II footlength",
+   "deleva": "contested",
+   "reason": "De Leva heel → toe tip (228,3 mm femme) contre footlength ANSUR (246,3 mm femme) : définitions de l'extrémité du pied différentes."
+  },
+  "head_neck": {
+   "status": "comparable",
+   "primary": "ANSUR II stature − cervicaleheight",
+   "deleva": "comparable",
+   "reason": "Vertex → cervicale dans les deux références."
+  },
+  "trunk": {
+   "status": "notComparable",
+   "primary": "aucune",
+   "deleva": "notComparable",
+   "reason": "De Leva Table 1 définit le tronc jusqu'au point HSP, explicitement « purely theoretical point, which does not coincide with any physical landmark ». Le proxy cervicale − iliocristale n'est pas la même grandeur."
+  }
+ }
+}

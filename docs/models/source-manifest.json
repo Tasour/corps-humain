@@ -1,0 +1,19 @@
+{
+ "version": 1,
+ "method": "hash des GLB source avant toute correction (commit 54b6ba2), repris depuis git",
+ "sources": {
+  "female": {
+   "git_commit": "54b6ba2",
+   "path": "docs/models/corps-female.glb",
+   "sha256": "1e4dd4f4cc9f162f01b74b8f8942a42eb13c2053a424197edc1b82700ccab5d3",
+   "mesh_count_current": 140
+  },
+  "male": {
+   "git_commit": "54b6ba2",
+   "path": "docs/models/corps-male.glb",
+   "sha256": "bb77fcbcb3c2952314a6a74aad433a5a30e07cd4506c4651b1f1493d0cc90b02",
+   "mesh_count_current": 135
+  }
+ },
+ "rule": "aucun maillage sources ne peut être supprimé ni renommé ; le nombre de maillages livrés doit être supérieur ou égal au nombre source"
+}

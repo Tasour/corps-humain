@@ -1,0 +1,9 @@
+{
+ "sex": "male",
+ "source_sha256": "bb77fcbcb3c2952314a6a74aad433a5a30e07cd4506c4651b1f1493d0cc90b02",
+ "source_commit": "54b6ba2",
+ "source_mesh_count": 135,
+ "delivered_mesh_count": 135,
+ "rule": "aucun maillage sources ne peut être supprimé ni renommé ; le nombre de maillages livrés doit être supérieur ou égal au nombre source",
+ "status": "ok"
+}

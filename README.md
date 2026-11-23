@@ -243,6 +243,24 @@ scripts/
   export-zanatomy.py         export Blender des structures Z-Anatomy
 ```
 
+## Validation anatomique externe
+
+Les proportions du modèle live sont comparées à deux références publiques indépendantes :
+
+- **ANSUR II** (Gordon et al., 2015, NATICK/TR-15/007) : 1 986 femmes et 4 082 hommes,
+  moyennes et écarts-types recalculés depuis les CSV publics ;
+- **De Leva 1996** : utilisé seulement pour les segments dont la définition concorde
+  (la mesure du bras à 90° d'abduction est classée `notComparable`).
+
+La méthode et ses garde-fous sont décrits dans `docs/models/truth-ledger.md`. Les
+références sont hachées dans `docs/models/reference-checksums.json` ; aucun script
+de mesure ne peut les modifier. Les rapports séparés sont publiés dans
+`docs/analyses/validation-{metrique,topologique,provenance}-{female,male}.json`.
+
+Le build publie l'empreinte `data-geometry` du modèle servi dans `dist/index.html`.
+Le gate `python3 scripts/publication_gate.py` doit être vert avant publication.
+Un invariant `npm test` vérifie que peau et rig restent cohérents à 1 mm près.
+
 ## Sources & crédits
 
 Les maillages 3D proviennent de deux sources libres :

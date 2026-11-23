@@ -1,0 +1,69 @@
+{
+ "sex": "male",
+ "rules": {
+  "R1": {
+   "label": "enveloppe peau/muscle (médiane)",
+   "measured": 0.28739,
+   "expected": 0.01,
+   "tolerance": 0.01,
+   "status": "hors tolerance",
+   "note": "distance au muscle le plus proche, échantillon déterministe"
+  },
+  "R6": {
+   "label": "symétrie des yeux axe X",
+   "measured": 0.016249,
+   "expected": 0.0,
+   "tolerance": 0.002,
+   "status": "hors tolerance",
+   "note": ""
+  },
+  "R8": {
+   "label": "centre main ↔ muscle de main",
+   "measured": 0.019978,
+   "expected": 0.0,
+   "tolerance": 0.02,
+   "status": "ok",
+   "note": ""
+  },
+  "R9": {
+   "label": "artère bras ↔ muscle bras",
+   "measured": 0.118299,
+   "expected": 0.0,
+   "tolerance": 0.03,
+   "status": "hors tolerance",
+   "note": ""
+  },
+  "R10": {
+   "label": "coeur dans enveloppe peau",
+   "measured": 0.0,
+   "expected": 0.0,
+   "tolerance": 0.0,
+   "status": "ok",
+   "note": ""
+  },
+  "R7": {
+   "label": "testicules ↔ scrotum",
+   "measured": null,
+   "expected": 0.0,
+   "tolerance": 0.002,
+   "status": "notMeasured",
+   "note": "pas de maillage scrotum séparé"
+  },
+  "R5": {
+   "label": "orbites osseuses ↔ yeux",
+   "measured": null,
+   "expected": 0.0,
+   "tolerance": 0.002,
+   "status": "notMeasured",
+   "note": "pas de maillage orbite séparé"
+  },
+  "R11": {
+   "label": "nerfs dans couloirs musculaires",
+   "measured": null,
+   "expected": 0.0,
+   "tolerance": 0.03,
+   "status": "notMeasured",
+   "note": "à mesurer après table de repères complète"
+  }
+ }
+}

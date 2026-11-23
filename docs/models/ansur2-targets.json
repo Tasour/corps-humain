@@ -1,0 +1,52 @@
+{
+ "source": {
+  "title": "2012 Anthropometric Survey of U.S. Army Personnel: Methods and Summary Statistics",
+  "authors": "Gordon, C.C., Blackwell, C.L., Bradtmiller, B., Parham, J.L., Barrientos, P., Paquette, S.P., Corner, B.D., Carson, J.M., Venezia, J.C., Rockwell, B.M., Mucher, M., Kristensen, S.",
+  "year": 2015,
+  "report": "NATICK/TR-15/007",
+  "report_url": "https://tools.openlab.psu.edu/publicData/ANSURII-TR15-007.pdf",
+  "handbook_url": "https://tools.openlab.psu.edu/publicData/ANSURII-TR11-017.pdf",
+  "csv_urls": {
+   "female": "https://tools.openlab.psu.edu/publicData/ANSUR_II_FEMALE_Public.csv",
+   "male": "https://tools.openlab.psu.edu/publicData/ANSUR_II_MALE_Public.csv"
+  },
+  "license": "Diffusion publique illimitée (US Army) — citation obligatoire",
+  "consulted": "2026-11-24",
+  "population": "Militaires américains 2010-2012, pas représentatifs de la population civile",
+  "method": "Moyennes et écarts-types calculés directement depuis les CSV publics ; les segments dérivés sont des différences de hauteurs mesurées, calculées sujet par sujet."
+ },
+ "sexes": {
+  "female": {
+   "n": 1986,
+   "csv_sha256": "ed7e800aa97a4d42f8286b988be2fe1883a2e789588169db959864b707d1757a",
+   "stature_mean_mm": 1628.473,
+   "stature_sd_mm": 64.2,
+   "segments": {
+    "upper_arm": {"mean_mm": 311.198, "sd_mm": 17.165, "definition": "acromionradialelength"},
+    "forearm": {"mean_mm": 241.33, "sd_mm": 15.243, "definition": "radialestylionlength"},
+    "hand": {"mean_mm": 181.083, "sd_mm": 10.056, "definition": "handlength"},
+    "thigh": {"mean_mm": 407.583, "sd_mm": 23.911, "definition": "trochanterionheight - tibialheight"},
+    "shank": {"mean_mm": 375.02, "sd_mm": 23.538, "definition": "tibialheight - lateralmalleolusheight"},
+    "foot": {"mean_mm": 246.293, "sd_mm": 12.436, "definition": "footlength"},
+    "head_neck": {"mean_mm": 232.806, "sd_mm": 11.929, "definition": "stature - cervicaleheight"},
+    "trunk_proxy": {"mean_mm": 399.942, "sd_mm": 22.326, "definition": "cervicaleheight - iliocristaleheight (proxy, pas le HSP de De Leva)"}
+   }
+  },
+  "male": {
+   "n": 4082,
+   "csv_sha256": "0547aea0170e5293de519389981135e75803f02e6d40c77ace740decc0caac64",
+   "stature_mean_mm": 1756.215,
+   "stature_sd_mm": 68.551,
+   "segments": {
+    "upper_arm": {"mean_mm": 335.244, "sd_mm": 17.483, "definition": "acromionradialelength"},
+    "forearm": {"mean_mm": 267.883, "sd_mm": 15.417, "definition": "radialestylionlength"},
+    "hand": {"mean_mm": 193.278, "sd_mm": 9.946, "definition": "handlength"},
+    "thigh": {"mean_mm": 432.724, "sd_mm": 27.624, "definition": "trochanterionheight - tibialheight"},
+    "shank": {"mean_mm": 395.303, "sd_mm": 24.455, "definition": "tibialheight - lateralmalleolusheight"},
+    "foot": {"mean_mm": 271.178, "sd_mm": 13.103, "definition": "footlength"},
+    "head_neck": {"mean_mm": 238.915, "sd_mm": 12.862, "definition": "stature - cervicaleheight"},
+    "trunk_proxy": {"mean_mm": 455.67, "sd_mm": 25.104, "definition": "cervicaleheight - iliocristaleheight (proxy, pas le HSP de De Leva)"}
+   }
+  }
+ }
+}

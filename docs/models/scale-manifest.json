@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "target_stature_m": 1.72,
+ "method": "facteur global appliqué aux sommets puis aux translations des 66 descendants de Corps Rig",
+ "provenance": {
+  "prescale_commit": "54b6ba2",
+  "script": "scripts/scale_global.py",
+  "verification": "scripts/glb_geom.py maxy skin"
+ },
+ "sexes": {
+  "female": {
+   "prescale_top_m": 1.62,
+   "factor": 1.0617283950617284
+  },
+  "male": {
+   "prescale_top_m": 1.719431,
+   "factor": 1.0003310414106108
+  }
+ },
+ "rig_up_expected_m": {
+  "female": 1.48196,
+  "male": 1.396262
+ },
+ "rig_nodes_scaled": 66
+}

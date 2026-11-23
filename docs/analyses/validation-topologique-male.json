@@ -1,0 +1,15 @@
+{
+ "sex": "male",
+ "source": {
+  "title": "Terminologia Anatomica / Foundational Model of Anatomy — référence de topologie vasculaire",
+  "url": "https://human.faims.edu.au/fma/",
+  "consulted": "2026-11-24",
+  "license": "référence anatomique consultée en ligne, aucun contenu copié",
+  "note": "Les identifiants FMA n'ont pas été transcrits : ils sont notMeasured. Le gate porte uniquement sur les noms de structures présents et sur les relations de branchement."
+ },
+ "nodes_expected": 22,
+ "nodes_present": 22,
+ "missing": [],
+ "fma_ids": "notMeasured",
+ "status": "ok"
+}

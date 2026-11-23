@@ -1,0 +1,157 @@
+{
+ "sex": "female",
+ "source": "ANSUR II NATICK/TR-15/007",
+ "model_stature_m": 1.72,
+ "reference_stature_m": 1.6285,
+ "stature_factor": 1.056204,
+ "proxies": {
+  "upper_arm": {
+   "bone": "humerus_l",
+   "offset_proximal_m": 0.05461,
+   "offset_distal_m": 0.03,
+   "status": "proxy"
+  },
+  "forearm": {
+   "bone": "forearm_l",
+   "offset_proximal_m": 0.00571,
+   "offset_distal_m": 0.05819,
+   "status": "proxy"
+  },
+  "hand": {
+   "bone": "hand_l",
+   "offset_proximal_m": 0.0339,
+   "offset_distal_m": 0.09382,
+   "status": "proxy"
+  },
+  "thigh": {
+   "bone": "femur_l",
+   "offset_proximal_m": 0.01209,
+   "offset_distal_m": 0.05325,
+   "status": "proxy"
+  },
+  "shank": {
+   "bone": "lower_leg_l",
+   "offset_proximal_m": 0.02329,
+   "offset_distal_m": 0.00629,
+   "status": "proxy"
+  },
+  "foot": {
+   "bone": "foot_l",
+   "offset_proximal_m": 0.04584,
+   "offset_distal_m": 0.00238,
+   "status": "proxy"
+  }
+ },
+ "segments": {
+  "upper_arm": {
+   "measured_m": 0.3083,
+   "expected_m": 0.32869,
+   "sd_reference_m": 0.01813,
+   "sd_total_m": 0.05754,
+   "z_score": -0.354,
+   "status": "proxy"
+  },
+  "forearm": {
+   "measured_m": 0.26723,
+   "expected_m": 0.25489,
+   "sd_reference_m": 0.0161,
+   "sd_total_m": 0.06038,
+   "z_score": 0.204,
+   "status": "proxy"
+  },
+  "hand": {
+   "measured_m": 0.18583,
+   "expected_m": 0.19126,
+   "sd_reference_m": 0.01062,
+   "sd_total_m": 0.09442,
+   "z_score": -0.058,
+   "status": "proxy"
+  },
+  "thigh": {
+   "measured_m": 0.47849,
+   "expected_m": 0.43049,
+   "sd_reference_m": 0.02525,
+   "sd_total_m": 0.05894,
+   "z_score": 0.815,
+   "status": "proxy"
+  },
+  "shank": {
+   "measured_m": 0.42377,
+   "expected_m": 0.3961,
+   "sd_reference_m": 0.02486,
+   "sd_total_m": 0.03407,
+   "z_score": 0.812,
+   "status": "proxy"
+  },
+  "foot": {
+   "measured_m": 0.27376,
+   "expected_m": 0.26014,
+   "sd_reference_m": 0.01313,
+   "sd_total_m": 0.04768,
+   "z_score": 0.286,
+   "status": "proxy"
+  }
+ },
+ "landmarks": {
+  "upper_arm_a": [
+   0.16216,
+   0.03493,
+   1.434
+  ],
+  "upper_arm_b": [
+   0.46845,
+   0.05764,
+   1.46081
+  ],
+  "forearm_a": [
+   0.45706,
+   0.07622,
+   1.4605
+  ],
+  "forearm_b": [
+   0.71497,
+   0.01443,
+   1.42763
+  ],
+  "hand_a": [
+   0.71343,
+   0.01149,
+   1.42572
+  ],
+  "hand_b": [
+   0.87994,
+   -0.05133,
+   1.37226
+  ],
+  "thigh_a": [
+   0.05317,
+   0.02203,
+   0.47265
+  ],
+  "thigh_b": [
+   0.14236,
+   0.02121,
+   0.94276
+  ],
+  "shank_a": [
+   0.05535,
+   0.00577,
+   0.46882
+  ],
+  "shank_b": [
+   0.11062,
+   0.10659,
+   0.06095
+  ],
+  "foot_a": [
+   0.11907,
+   0.1324,
+   0.04028
+  ],
+  "foot_b": [
+   0.13906,
+   -0.13927,
+   0.01305
+  ]
+ }
+}

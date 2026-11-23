@@ -1,0 +1,27 @@
+{
+ "source": {
+  "title": "Adjustments to Zatsiorsky-Seluyanov's segment inertia parameters",
+  "author": "De Leva, P.",
+  "year": 1996,
+  "journal": "Journal of Biomechanics, 29(9), 1223-1230",
+  "url": "https://ebm.ufabc.edu.br/wp-content/uploads/2013/12/Leva-1996.pdf",
+  "table": "Table 1 — Estimated mean segment lengths",
+  "consulted": "2026-11-24",
+  "license": "article scientifique — usage avec citation, pas de reproduction de figures",
+  "statures_m": {"female": 1.735, "male": 1.741}
+ },
+ "segments_mm": {
+  "female": {
+   "head": 243.7, "trunk": 690.1, "upper_arm": 235.9,
+   "forearm": 247.1, "hand": 172.0, "thigh": 496.2,
+   "shank": 393.8, "foot": 228.3
+  },
+  "male": {
+   "head": 242.9, "trunk": 709.3, "upper_arm": 244.8,
+   "forearm": 251.3, "hand": 189.9, "thigh": 520.2,
+   "shank": 393.4, "foot": 258.1
+  }
+ },
+ "tolerance_ratio": 0.10,
+ "note": "Tolérance large car les définitions de segments diffèrent entre le rig et les repères anthropométriques."
+}

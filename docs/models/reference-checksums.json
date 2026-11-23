@@ -1,0 +1,9 @@
+{
+ "version": 1,
+ "algorithm": "sha256",
+ "files": {
+  "external-anatomy.json": "2eeed39949f88c14412be5cbf198dbb9fe22fa8cad9a1c9b2e3d66455f86bd63",
+  "ansur2-targets.json": "dc08d0d1f3f256aa7d68d7a98a2ead45997fe8143042bfb992f045235cf5f8cc"
+ },
+ "note": "Références externes scellées. Tout script de validation refuse de tourner si le hash diffère."
+}

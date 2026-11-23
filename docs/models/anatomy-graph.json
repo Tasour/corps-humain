@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "source": {
+  "title": "Terminologia Anatomica / Foundational Model of Anatomy — référence de topologie vasculaire",
+  "url": "https://human.faims.edu.au/fma/",
+  "consulted": "2026-11-24",
+  "license": "référence anatomique consultée en ligne, aucun contenu copié",
+  "note": "Les identifiants FMA n'ont pas été transcrits : ils sont notMeasured. Le gate porte uniquement sur les noms de structures présents et sur les relations de branchement."
+ },
+ "nodes": [
+  "aorta", "vena_cava_inferior", "vena_cava_superior", "coronary_arteries",
+  "pulmonary_vessels", "carotid_l", "carotid_r", "arteries_head",
+  "arteries_thorax", "veins_thorax", "arteries_abdomen", "veins_abdomen",
+  "arteries_pelvis", "veins_pelvis", "arteries_arm_l", "arteries_arm_r",
+  "veins_arm_l", "veins_arm_r", "arteries_leg_l", "arteries_leg_r",
+  "veins_leg_l", "veins_leg_r"
+ ],
+ "edges_expected": [
+  ["aorta", "coronary_arteries"],
+  ["aorta", "arteries_thorax"],
+  ["aorta", "arteries_abdomen"],
+  ["aorta", "arteries_pelvis"],
+  ["arteries_thorax", "carotid_l"],
+  ["arteries_thorax", "carotid_r"],
+  ["arteries_thorax", "arteries_arm_l"],
+  ["arteries_thorax", "arteries_arm_r"],
+  ["arteries_pelvis", "arteries_leg_l"],
+  ["arteries_pelvis", "arteries_leg_r"],
+  ["veins_arm_l", "vena_cava_superior"],
+  ["veins_arm_r", "vena_cava_superior"],
+  ["veins_thorax", "vena_cava_superior"],
+  ["veins_abdomen", "vena_cava_inferior"],
+  ["veins_leg_l", "vena_cava_inferior"],
+  ["veins_leg_r", "vena_cava_inferior"]
+ ],
+ "gate": "tous les nœuds doivent exister dans le GLB ; les arêtes sont des relations de parenté anatomique, pas des connexions de maillages"
+}

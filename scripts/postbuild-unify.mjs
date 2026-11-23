@@ -3,6 +3,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 
 const root = path.resolve(import.meta.dirname, "..");
@@ -27,8 +28,22 @@ try {
 } catch { /* hors dépôt */ }
 const build = `${sha}-${new Date().toISOString().slice(0, 10)}`;
 
+/* Empreinte de la géométrie publiée : le build prouve ses octets. */
+const geometry = {};
+for (const sex of ["female", "male"]) {
+  const p = path.join(root, "docs", "models", `corps-${sex}-opt.glb`);
+  geometry[sex] = fs.existsSync(p)
+    ? createHash("sha256").update(fs.readFileSync(p)).digest("hex")
+    : "absent";
+}
+const geometryHash = createHash("sha256")
+  .update(JSON.stringify(geometry)).digest("hex").slice(0, 16);
+fs.writeFileSync(path.join(root, "docs", "analyses", "build-geometry.json"),
+  JSON.stringify({ build, geometry, combined: geometryHash }, null, 1) + "\n");
+
 let html = fs.readFileSync(index, "utf8");
 html = html.replace(/data-build="[^"]*"/, `data-build="${build}"`);
+html = html.replace(/<html\b/, `<html data-geometry="${geometryHash}"`);
 fs.writeFileSync(index, html);
 
 const swPath = path.join(dist, "sw.js");
