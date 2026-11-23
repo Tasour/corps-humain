@@ -106,7 +106,10 @@ export function initCorpsViewer() {
       if (!o.isMesh) return;
       const key = o.name.toLowerCase().replace(/[.\s]/g, '')
         .replace(/(\D)\d+$/, '$1').replace(/_+$/, '');
-      o.visible = layer === 'all' || systemOf.get(key) === layer;
+      const system = systemOf.get(key)
+        || (key.startsWith('nerve') ? 'nerves' : null)
+        || (key.replace(/_/g, '').startsWith('vesselext') ? 'vessels' : null);
+      o.visible = layer === 'all' || system === layer;
       if (o.visible) visible++;
     });
     /* Enveloppe translucide pour la couche muscles : elle donne le volume du
@@ -125,7 +128,7 @@ export function initCorpsViewer() {
     const interne = layer === 'organs' || layer === 'vessels' || layer === 'nerves';
     const aspect = host.clientWidth / Math.max(host.clientHeight, 1);
     camera.zoom = interne ? (aspect < 0.85 ? 1.9 : 1.6)
-      : (layer === 'vessels' || layer === 'nerves' || layer === 'all') ? 0.9 : 1;
+      : (layer === 'vessels' || layer === 'nerves' || layer === 'all') ? 0.8 : 1;
     controls.target.set(0, interne ? 1.05 : 0.85, 0);
     camera.lookAt(controls.target);
     camera.updateProjectionMatrix();

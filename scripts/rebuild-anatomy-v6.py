@@ -9,6 +9,7 @@ import json
 import os
 import re
 from mathutils.kdtree import KDTree
+from mathutils import Vector
 
 ROOT = '/home/tasour/corps-humain'
 CAT = json.load(open('/home/tasour/.cache/corps-sources/open-anatomy-3d/'
@@ -126,6 +127,99 @@ def build(sex):
         group.add(list(range(len(ob.data.vertices))), 1.0, 'REPLACE')
         mod = ob.modifiers.new('Armature', 'ARMATURE')
         mod.object = rig
+
+    # Nerfs périphériques : modèle CC0 Innerscene (moelle + racines nerveuses).
+    # Importé, mis à l'échelle sur le canal rachidien du rig, puis attaché
+    # rigidement aux os du rachis. Le viewer reconnaît le préfixe `nerve_`.
+    nerve_source = '/tmp/opencode/spinal-cord.glb'
+    if os.path.exists(nerve_source):
+        before = {o.name for o in bpy.data.objects}
+        bpy.ops.import_scene.gltf(filepath=nerve_source)
+        nerves = [o for o in bpy.data.objects
+                  if o.name not in before and o.type == 'MESH']
+        for ob in nerves:
+            world = ob.matrix_world.copy()
+            ob.parent = None
+            ob.matrix_world = world
+            bpy.ops.object.select_all(action='DESELECT')
+            ob.select_set(True)
+            bpy.context.view_layer.objects.active = ob
+            bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+        points = [v.co for ob in nerves for v in ob.data.vertices]
+        lo = [min(p[i] for p in points) for i in range(3)]
+        hi = [max(p[i] for p in points) for i in range(3)]
+        height = max(hi[2] - lo[2], 1e-6)
+        scale = 0.58 / height
+        center = [(lo[i] + hi[i]) / 2 for i in range(3)]
+        target = Vector((0, 0, 1.24))
+        center = Vector(center)
+        nerve_mat = bpy.data.materials.get('V6 Nerf périphérique') or bpy.data.materials.new('V6 Nerf périphérique')
+        nerve_mat.use_nodes = True
+        bsdf = next(n for n in nerve_mat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+        bsdf.inputs['Base Color'].default_value = (0.95, 0.78, 0.20, 1)
+        bsdf.inputs['Roughness'].default_value = 0.7
+        for i, ob in enumerate(nerves, 1):
+            for v in ob.data.vertices:
+                v.co = ((v.co - center) * scale) + target
+            ob.name = f'nerve_{i:03d}'
+            ob.data.materials.clear()
+            ob.data.materials.append(nerve_mat)
+            bones = [b for b in rig.data.bones if 'spine' in b.name.lower() or b.name == 'head']
+            nearest = min(bones, key=lambda b: (rig.matrix_world @ b.head_local - ob.matrix_world.translation).length)
+            group = ob.vertex_groups.new(name=nearest.name)
+            group.add(list(range(len(ob.data.vertices))), 1.0, 'REPLACE')
+            mod = ob.modifiers.new('Armature', 'ARMATURE')
+            mod.object = rig
+        print('[v6]', sex, 'nerfs importés', len(nerves))
+
+    # Vaisseaux supplémentaires : modèle CC0 Innerscene (système circulatoire).
+    vessel_source = '/tmp/opencode/circulatory.glb'
+    if os.path.exists(vessel_source):
+        before = {o.name for o in bpy.data.objects}
+        bpy.ops.import_scene.gltf(filepath=vessel_source)
+        for ob in [o for o in bpy.data.objects
+                   if o.name not in before and o.type == 'MESH'
+                   and 'envelope' in o.name.lower()]:
+            bpy.data.objects.remove(ob, do_unlink=True)
+        vessels = [o for o in bpy.data.objects
+                   if o.name not in before and o.type == 'MESH']
+        for ob in vessels:
+            world = ob.matrix_world.copy()
+            ob.parent = None
+            ob.matrix_world = world
+            bpy.ops.object.select_all(action='DESELECT')
+            ob.select_set(True)
+            bpy.context.view_layer.objects.active = ob
+            bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+        points = [v.co for ob in vessels for v in ob.data.vertices]
+        lo = [min(p[i] for p in points) for i in range(3)]
+        hi = [max(p[i] for p in points) for i in range(3)]
+        scale = 1.72 / max(hi[2] - lo[2], 1e-6)
+        center = Vector([(lo[i] + hi[i]) / 2 for i in range(3)])
+        target = Vector((0, 0, 0.86))
+        mats = {}
+        for name, color in [('artere', (0.85, 0.16, 0.18, 1)),
+                            ('veine', (0.18, 0.38, 0.85, 1))]:
+            m = bpy.data.materials.get('V6 ' + name) or bpy.data.materials.new('V6 ' + name)
+            m.use_nodes = True
+            bsdf = next(n for n in m.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+            bsdf.inputs['Base Color'].default_value = color
+            mats[name] = m
+        for i, ob in enumerate(vessels, 1):
+            for v in ob.data.vertices:
+                v.co = ((v.co - center) * scale) + target
+            low = ob.name.lower()
+            veine = 'ven' in low or 'atri' in low or 'auricular' in low
+            ob.name = 'vessel_ext_%03d' % i
+            ob.data.materials.clear()
+            ob.data.materials.append(mats['veine' if veine else 'artere'])
+            bones = [b for b in rig.data.bones if 'spine' in b.name.lower() or b.name == 'head']
+            nearest = min(bones, key=lambda b: (rig.matrix_world @ b.head_local - ob.matrix_world.translation).length)
+            group = ob.vertex_groups.new(name=nearest.name)
+            group.add(list(range(len(ob.data.vertices))), 1.0, 'REPLACE')
+            mod = ob.modifiers.new('Armature', 'ARMATURE')
+            mod.object = rig
+        print('[v6]', sex, 'vaisseaux importés', len(vessels))
 
     bpy.ops.wm.save_as_mainfile(filepath=OUT[sex])
     print('[v6]', sex, 'squelette conservé', len(kept_skeleton),

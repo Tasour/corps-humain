@@ -63,6 +63,17 @@ runtime a été désactivé dans `src/corps-viewer.js` : les rotations des os so
 relatives à leur pose de repos, pas à l'identité ; un clamp runtime les
 faussait (jambes repliées, torse écrasé sur les frames 0–120).
 
+## Couches nerveuse et vasculaire enrichies (CC0)
+
+- Nerfs : `spinal-cord-with-nerve-roots.glb` (Innerscene, CC0) — 259 maillages,
+  moelle et racines nerveuses, mis à l'échelle sur le canal rachidien, couleur
+  jaune, préfixe `nerve_`.
+- Vaisseaux : `circulatory-system-figure.glb` (Innerscene, CC0) — 86 maillages,
+  artères rouges / veines bleues, enveloppe « MakeHuman CC0 systems orientation
+  envelope » exclue car ce n'est pas un vaisseau.
+
+Aucune attribution requise (CC0), source documentée pour traçabilité.
+
 ## Limite connue
 
 Les `.blend` ne contiennent **aucune image/texture** : les six matériaux sont
