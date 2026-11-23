@@ -1,0 +1,888 @@
+{
+ "version": 1,
+ "frame": "glTF Y-up, mètres, origine au sol",
+ "method": "centroïdes des maillages, déterministe",
+ "count": 80,
+ "landmarks": [
+  {
+   "id": "hand_l",
+   "mesh": "hand_l",
+   "position": [
+    0.739989,
+    -0.043901,
+    1.363863
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "hand_r",
+   "mesh": "hand_r",
+   "position": [
+    -0.744159,
+    -0.044785,
+    1.363022
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "forearm_l",
+   "mesh": "forearm_l",
+   "position": [
+    0.545165,
+    0.03253,
+    1.374786
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "forearm_r",
+   "mesh": "forearm_r",
+   "position": [
+    -0.55533,
+    0.022894,
+    1.373021
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "humerus_l",
+   "mesh": "humerus_l",
+   "position": [
+    0.267055,
+    0.037419,
+    1.385339
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "humerus_r",
+   "mesh": "humerus_r",
+   "position": [
+    -0.23375,
+    0.025596,
+    1.384442
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "clavicle_l",
+   "mesh": "clavicle_l",
+   "position": [
+    0.078071,
+    -0.000323,
+    1.414417
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "clavicle_r",
+   "mesh": "clavicle_r",
+   "position": [
+    -0.07745,
+    -0.000757,
+    1.414094
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "scapula_l",
+   "mesh": "scapula_l",
+   "position": [
+    0.117961,
+    0.056651,
+    1.37992
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "scapula_r",
+   "mesh": "scapula_r",
+   "position": [
+    -0.116931,
+    0.056383,
+    1.37944
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "pelvis",
+   "mesh": "pelvis",
+   "position": [
+    -0.000657,
+    0.048851,
+    0.931624
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "ribs_l",
+   "mesh": "ribs_l",
+   "position": [
+    0.071377,
+    0.031045,
+    1.282326
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "ribs_r",
+   "mesh": "ribs_r",
+   "position": [
+    -0.071312,
+    0.031047,
+    1.282905
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "sternum",
+   "mesh": "sternum",
+   "position": [
+    0.002087,
+    -0.089286,
+    1.307645
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "skull",
+   "mesh": "skull",
+   "position": [
+    -0.000429,
+    -0.002055,
+    1.611116
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "mandible",
+   "mesh": "mandible",
+   "position": [
+    -4.1e-05,
+    -0.014022,
+    1.512414
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "teeth",
+   "mesh": "teeth",
+   "position": [
+    1.7e-05,
+    -0.054046,
+    1.53837
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "spine_cervical",
+   "mesh": "spine_cervical",
+   "position": [
+    -1.6e-05,
+    0.027603,
+    1.492496
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "spine_thoracic",
+   "mesh": "spine_thoracic",
+   "position": [
+    -0.000415,
+    0.041375,
+    1.275807
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "spine_lumbar",
+   "mesh": "spine_lumbar",
+   "position": [
+    -0.000189,
+    0.011793,
+    1.079169
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "femur_l",
+   "mesh": "femur_l",
+   "position": [
+    0.090069,
+    0.022763,
+    0.683681
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "femur_r",
+   "mesh": "femur_r",
+   "position": [
+    -0.086327,
+    0.022301,
+    0.687025
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "patella_l",
+   "mesh": "patella_l",
+   "position": [
+    0.078962,
+    -0.012348,
+    0.460583
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "patella_r",
+   "mesh": "patella_r",
+   "position": [
+    -0.071644,
+    -0.01471,
+    0.459434
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "lower_leg_l",
+   "mesh": "lower_leg_l",
+   "position": [
+    0.080889,
+    0.027592,
+    0.275945
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "lower_leg_r",
+   "mesh": "lower_leg_r",
+   "position": [
+    -0.076145,
+    0.02665,
+    0.284242
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "foot_l",
+   "mesh": "foot_l",
+   "position": [
+    0.112003,
+    -0.038387,
+    0.033395
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "foot_r",
+   "mesh": "foot_r",
+   "position": [
+    -0.112447,
+    -0.037379,
+    0.034037
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "brain",
+   "mesh": "brain",
+   "position": [
+    0.000502,
+    0.011703,
+    1.626586
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "brainstem",
+   "mesh": "brainstem",
+   "position": [
+    -0.000623,
+    0.007466,
+    1.645692
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "cerebellum",
+   "mesh": "cerebellum",
+   "position": [
+    0.000409,
+    0.008251,
+    1.628002
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "eye_l",
+   "mesh": "eye_l",
+   "position": [
+    0.002506,
+    0.007415,
+    1.633118
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "eye_r",
+   "mesh": "eye_r",
+   "position": [
+    -0.020944,
+    0.011191,
+    1.633906
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "heart",
+   "mesh": "heart",
+   "position": [
+    0.064674,
+    -0.03362,
+    1.19689
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "lung_l",
+   "mesh": "lung_l",
+   "position": [
+    0.120865,
+    0.003077,
+    1.194442
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "lung_r",
+   "mesh": "lung_r",
+   "position": [
+    -0.005367,
+    0.000119,
+    1.210618
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "liver",
+   "mesh": "liver",
+   "position": [
+    0.008328,
+    -0.045059,
+    1.127996
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "stomach",
+   "mesh": "stomach",
+   "position": [
+    0.064664,
+    -0.0458,
+    1.107922
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "spleen",
+   "mesh": "spleen",
+   "position": [
+    0.105129,
+    -0.007349,
+    1.095728
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "kidney_l",
+   "mesh": "kidney_l",
+   "position": [
+    0.080131,
+    -0.001398,
+    1.063607
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "kidney_r",
+   "mesh": "kidney_r",
+   "position": [
+    -0.000928,
+    -0.004172,
+    1.055303
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "bladder",
+   "mesh": "bladder",
+   "position": [
+    0.022788,
+    -0.011446,
+    0.864745
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "uterus",
+   "mesh": "uterus",
+   "position": [
+    0.021534,
+    0.005519,
+    0.863374
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "ovary_l",
+   "mesh": "ovary_l",
+   "position": [
+    0.062465,
+    -0.00454,
+    0.881793
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "ovary_r",
+   "mesh": "ovary_r",
+   "position": [
+    -0.020499,
+    -0.004612,
+    0.884506
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "aorta",
+   "mesh": "aorta",
+   "position": [
+    0.047924,
+    -0.003997,
+    1.203723
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "vena_cava_inferior",
+   "mesh": "vena_cava_inferior",
+   "position": [
+    0.028821,
+    -0.021793,
+    1.084561
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "vena_cava_superior",
+   "mesh": "vena_cava_superior",
+   "position": [
+    0.032493,
+    -0.026845,
+    1.256529
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_thorax",
+   "mesh": "arteries_thorax",
+   "position": [
+    0.046821,
+    -0.006133,
+    1.213441
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_thorax",
+   "mesh": "veins_thorax",
+   "position": [
+    0.051371,
+    -0.017463,
+    1.191609
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_abdomen",
+   "mesh": "arteries_abdomen",
+   "position": [
+    0.038072,
+    -0.018603,
+    1.081956
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_abdomen",
+   "mesh": "veins_abdomen",
+   "position": [
+    0.030638,
+    -0.018941,
+    1.086104
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_arm_l",
+   "mesh": "arteries_arm_l",
+   "position": [
+    0.69906,
+    0.005566,
+    1.25838
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_arm_r",
+   "mesh": "arteries_arm_r",
+   "position": [
+    -0.669635,
+    0.004787,
+    1.208969
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_arm_l",
+   "mesh": "veins_arm_l",
+   "position": [
+    0.653069,
+    0.001281,
+    1.274358
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_arm_r",
+   "mesh": "veins_arm_r",
+   "position": [
+    -0.61526,
+    0.000695,
+    1.221997
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_leg_l",
+   "mesh": "arteries_leg_l",
+   "position": [
+    0.099157,
+    -0.01414,
+    0.409375
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_leg_r",
+   "mesh": "arteries_leg_r",
+   "position": [
+    -0.087324,
+    -0.018318,
+    0.377202
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_leg_l",
+   "mesh": "veins_leg_l",
+   "position": [
+    0.103569,
+    -0.016865,
+    0.297342
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_leg_r",
+   "mesh": "veins_leg_r",
+   "position": [
+    -0.083293,
+    -0.019984,
+    0.354631
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_head",
+   "mesh": "arteries_head",
+   "position": [
+    0.058595,
+    -0.0075,
+    1.532636
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "arteries_pelvis",
+   "mesh": "arteries_pelvis",
+   "position": [
+    0.02901,
+    -0.014773,
+    0.932309
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "veins_pelvis",
+   "mesh": "veins_pelvis",
+   "position": [
+    0.028446,
+    -0.002985,
+    0.92685
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "hand_muscles_l",
+   "mesh": "hand_muscles_l",
+   "position": [
+    0.807046,
+    0.012453,
+    1.264829
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "hand_muscles_r",
+   "mesh": "hand_muscles_r",
+   "position": [
+    -0.806945,
+    0.012259,
+    1.265237
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "foot_muscles_l",
+   "mesh": "foot_muscles_l",
+   "position": [
+    0.11192,
+    -0.036597,
+    0.023236
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "foot_muscles_r",
+   "mesh": "foot_muscles_r",
+   "position": [
+    -0.111097,
+    -0.037348,
+    0.023245
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "forearm_muscles_l",
+   "mesh": "forearm_muscles_l",
+   "position": [
+    0.691737,
+    0.021779,
+    1.295993
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "forearm_muscles_r",
+   "mesh": "forearm_muscles_r",
+   "position": [
+    -0.692942,
+    0.021853,
+    1.294939
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "upper_arm_muscles_l",
+   "mesh": "upper_arm_muscles_l",
+   "position": [
+    0.460351,
+    0.033154,
+    1.336389
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "upper_arm_muscles_r",
+   "mesh": "upper_arm_muscles_r",
+   "position": [
+    -0.463029,
+    0.033604,
+    1.334038
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "chest_muscles_l",
+   "mesh": "chest_muscles_l",
+   "position": [
+    0.077236,
+    -0.028694,
+    1.206259
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "chest_muscles_r",
+   "mesh": "chest_muscles_r",
+   "position": [
+    -0.086066,
+    -0.031353,
+    1.208263
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "quadriceps_l",
+   "mesh": "quadriceps_l",
+   "position": [
+    0.100744,
+    -0.005165,
+    0.660447
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "quadriceps_r",
+   "mesh": "quadriceps_r",
+   "position": [
+    -0.100555,
+    -0.004333,
+    0.65866
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "abdominal_muscles",
+   "mesh": "abdominal_muscles",
+   "position": [
+    -0.006215,
+    -0.047928,
+    1.043636
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "trapezius_l",
+   "mesh": "trapezius_l",
+   "position": [
+    0.06142,
+    0.062175,
+    1.304121
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "trapezius_r",
+   "mesh": "trapezius_r",
+   "position": [
+    -0.052885,
+    0.066285,
+    1.298123
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "cranial_nerves",
+   "mesh": "cranial_nerves",
+   "position": [
+    0.052764,
+    -0.073816,
+    1.524939
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  },
+  {
+   "id": "spinal_cord",
+   "mesh": "spinal_cord",
+   "position": [
+    0.055384,
+    0.000586,
+    1.47021
+   ],
+   "tolerance_m": 0.002,
+   "system": "reference"
+  }
+ ]
+}
