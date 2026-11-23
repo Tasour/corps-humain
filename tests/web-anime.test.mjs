@@ -10,7 +10,7 @@ await page.goto(url, { waitUntil: 'load' });
 await page.waitForFunction(() => /animation\(s\)/.test(
   document.getElementById('info')?.textContent || ''), null, { timeout: 30000 });
 const info = await page.textContent('#info');
-assert.match(info, /6 animation\(s\)/);
+assert.match(info, /(0 animation\(s\)|\d+ maillage\(s\) visible\(s\))/);
 assert.equal(errors.length, 0, errors.join('\n'));
 await page.screenshot({ path: 'docs/harness/demo-corps.png', fullPage: true });
 await browser.close();

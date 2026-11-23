@@ -44,7 +44,7 @@ try {
     console.log(`[opt]   animations: ${after.animations}`);
     if (after.meshes !== before.meshes) throw new Error(`${sex}: maillages perdus`);
     if (after.materials.length < 6) throw new Error(`${sex}: moins de 6 matériaux`);
-    if (after.animations !== 6) throw new Error(`${sex}: 6 animations attendues`);
+    if (after.animations !== 0) throw new Error(`${sex}: aucune animation attendue`);
     if (after.size > 20e6) throw new Error(`${sex}: budget 20 Mo dépassé`);
   }
 } finally {

@@ -85,6 +85,17 @@ Aucune attribution requise (CC0), source documentée pour traçabilité.
   masculine sont transférés par plus proche sommet sur la nouvelle peau
   (moyenne des poids 0,999, 0 sommet à zéro).
 
+## Vue vitruvienne statique
+
+Les GLB livrés sont désormais des géométries **sans animation**, cuites dans
+Blender en position croix (frame 1 de `clip_salsa` pour les épaules, jambes
+resserrées). La web app affiche toutes les couches simultanément, avec la peau
+translucide pour laisser voir les structures internes. Aucun `AnimationMixer`
+n'est instancié.
+
+Tous les organes du catalogue sont conservés, y compris `breast_l/r` et
+`larynx` qui avaient été temporairement retirés.
+
 ## Limite connue
 
 Les `.blend` ne contiennent **aucune image/texture** : les six matériaux sont

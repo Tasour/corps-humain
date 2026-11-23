@@ -89,8 +89,7 @@ def build(sex):
 
     for ob in imported:
         key = base(ob.name)
-        if (key in kept_skeleton or key not in BY_KEY
-                or key in ('breast_l', 'breast_r', 'larynx')):
+        if key in kept_skeleton or key not in BY_KEY:
             bpy.data.objects.remove(ob, do_unlink=True)
             continue
 
@@ -129,9 +128,21 @@ def build(sex):
         else:
             # Attache rigide à l'os le plus proche : les couches internes sont
             # des vues anatomiques figées dans le viewer.
-            bones = list(rig.data.bones)
-            head = min(bones, key=lambda b: (rig.matrix_world @ b.head_local - ob.matrix_world.translation).length)
-            group = ob.vertex_groups.new(name=head.name)
+            osuffix = '.L' if key.endswith('_l') else '.R' if key.endswith('_r') else ''
+            base_key = key[:-2] if osuffix else key
+            candidate = base_key + osuffix
+            bone = rig.data.bones.get(candidate) or rig.data.bones.get(base_key)
+            if bone is None:
+                center = ob.matrix_world.translation
+                bones = list(rig.data.bones)
+                if abs(center.x) > 0.10 and center.z > 1.20:
+                    side = 'L' if center.x < 0 else 'R'
+                    arm = ('hand' if center.z > 1.48 else
+                           'forearm' if center.z > 1.36 else 'upperarm')
+                    bone = rig.data.bones.get(f'{arm}.{side}')
+                if bone is None:
+                    bone = min(bones, key=lambda b: (rig.matrix_world @ b.head_local - center).length)
+            group = ob.vertex_groups.new(name=bone.name)
             group.add(list(range(len(ob.data.vertices))), 1.0, 'REPLACE')
             mod = ob.modifiers.new('Armature', 'ARMATURE')
             mod.object = rig
@@ -265,6 +276,53 @@ def build(sex):
             mod = ob.modifiers.new('Armature', 'ARMATURE')
             mod.object = rig
         print('[v6]', sex, 'vaisseaux importés', len(vessels))
+
+    # Pose CROIX statique : bras horizontaux (pose de repos), jambes resserrées.
+    # On cuisine la pose dans les maillages et on supprime rig/animations :
+    # la web app n'aura plus qu'à afficher des géométries statiques.
+    for pb in rig.pose.bones:
+        pb.rotation_mode = 'QUATERNION'
+        pb.rotation_quaternion = (1, 0, 0, 0)
+        pb.location = (0, 0, 0)
+        pb.scale = (1, 1, 1)
+
+    # La frame 0 de salsa porte les bras horizontalement : on reprend sa
+    # rotation d'épaule pour obtenir la pose croix vitruvienne.
+    import re as _re
+    pose_frame = 1  # première clé de salsa : bras horizontaux, pas au-dessus de la tête
+    action = bpy.data.actions.get('clip_salsa')
+    if action:
+        for family in ('upperarm', 'clavicle'):
+            for side in ('L', 'R'):
+                bone = f'{family}.{side}'
+                curves = {c.array_index: c for c in action.fcurves
+                          if c.data_path == f'pose.bones["{bone}"].rotation_quaternion'}
+                if len(curves) != 4:
+                    continue
+                q = tuple(next((k.co.y for k in curves[i].keyframe_points
+                                if abs(k.co.x - pose_frame) < 0.1),
+                               1.0 if i == 3 else 0.0) for i in range(4))
+                rig.pose.bones[bone].rotation_quaternion = q
+
+    bpy.context.view_layer.update()
+    for ob in bpy.data.objects:
+        if ob.type != 'MESH':
+            continue
+        for mod in list(ob.modifiers):
+            if mod.type == 'ARMATURE':
+                bpy.ops.object.select_all(action='DESELECT')
+                ob.select_set(True)
+                bpy.context.view_layer.objects.active = ob
+                bpy.ops.object.modifier_apply(modifier=mod.name)
+        for v in ob.data.vertices:
+            if v.co.z < 0.9:
+                v.co.x *= 0.85
+        ob.vertex_groups.clear()
+    if rig.animation_data:
+        rig.animation_data_clear()
+    for action in list(bpy.data.actions):
+        bpy.data.actions.remove(action)
+    print('[v6]', sex, 'pose croix cuite, animations supprimées')
 
     bpy.ops.wm.save_as_mainfile(filepath=OUT[sex])
     print('[v6]', sex, 'squelette conservé', len(kept_skeleton),

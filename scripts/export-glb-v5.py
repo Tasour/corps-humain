@@ -119,14 +119,16 @@ _spec = importlib.util.spec_from_file_location(
     'clamp_animations', '/home/tasour/corps-humain/scripts/clamp-animations.py')
 _clamp = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_clamp)
-_clamp.clamp_actions(bpy)
+if [a for a in bpy.data.actions if a.name.startswith('clip_')]:
+    _clamp.clamp_actions(bpy)
 
 _spec2 = importlib.util.spec_from_file_location(
     'rebuild_arm_animations',
     '/home/tasour/corps-humain/scripts/rebuild-arm-animations.py')
 _arms = importlib.util.module_from_spec(_spec2)
 _spec2.loader.exec_module(_arms)
-_arms.rebuild(bpy)
+if [a for a in bpy.data.actions if a.name.startswith('clip_')]:
+    _arms.rebuild(bpy)
 
 for ob in bpy.data.objects:
     if ob.type == 'MESH':
@@ -138,7 +140,7 @@ bpy.context.view_layer.objects.active = arm
 bpy.ops.export_scene.gltf(
     filepath=OUT, export_format='GLB', use_selection=False,
     export_cameras=False, export_lights=False, export_materials='EXPORT',
-    export_animations=True, export_animation_mode='ACTIONS', export_apply=False)
+    export_animations=False, export_apply=False)
 
 print('[v5] export', OUT, os.path.getsize(OUT), 'bytes')
 print('[v5] matériaux assignés :', assigned)

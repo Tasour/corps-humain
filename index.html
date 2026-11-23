@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#10151b" />
-    <title>CORPS — Corps humain animé</title>
-    <meta name="description" content="Corps humain 3D animé issu des modèles Blender : peau, muscles, squelette, organes, vaisseaux et nerfs, en six animations." />
+    <title>CORPS — Anatomie en position croix</title>
+    <meta name="description" content="Corps humain 3D statique en position croix : peau, muscles, squelette, organes, vaisseaux et nerfs affichés ensemble." />
     <link rel="icon" type="image/svg+xml" href="./logo.svg" />
     <style>
       :root { color-scheme: dark; --paper:#10151b; --ink:#e8ecef; --muted:#9aa8b3; --line:#2b3540; --accent:#7fd4d0; }
@@ -63,19 +63,14 @@
     </header>
     <main>
       <aside id="controles">
-        <h2>Corps humains animés</h2>
+        <h2>Corps humain — position croix</h2>
         <label>Sexe<select id="cp-sexe" aria-label="Sexe"><option value="female">Femme</option><option value="male">Homme</option></select></label>
         <label>Couche<select id="cp-couche" aria-label="Couche anatomique">
+          <option value="all" selected>Toutes les couches</option>
           <option value="skin">Peau</option><option value="muscles">Muscles</option>
           <option value="skeleton">Squelette</option><option value="organs">Organes</option>
           <option value="vessels">Vaisseaux</option><option value="nerves">Nerfs</option>
         </select></label>
-        <label>Animation<select id="cp-anim" aria-label="Animation">
-          <option value="salsa">Salsa</option><option value="marche">Marche</option>
-          <option value="etirement">Étirement</option><option value="tourbillon">Tourbillon</option>
-          <option value="course">Course</option><option value="equilibre">Équilibre</option>
-        </select></label>
-        <button id="cp-pause" type="button" aria-pressed="false" aria-label="Pause ou reprise de l'animation">Pause</button>
         <div id="corps-info">Chargement…</div>
       </aside>
       <div id="cp-view" tabindex="-1"></div>
