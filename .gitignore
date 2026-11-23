@@ -10,3 +10,5 @@ wasm/*/target/
 /public/robots.txt
 *.blend
 *.blend1
+
+__pycache__/

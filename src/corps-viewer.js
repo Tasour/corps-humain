@@ -39,7 +39,7 @@ export function initCorpsViewer() {
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   const modelCache = new Map();
   const systemOf = new Map();
-  let model = null, mixer = null, clips = [];
+  let model = null, mixer = null, clips = [], skinMesh = null;
   let playing = !reduceMotion, needsRender = true, offscreen = false;
 
   controls.addEventListener('change', () => { needsRender = true; });
@@ -49,6 +49,12 @@ export function initCorpsViewer() {
       { threshold: 0.01 },
     ).observe(host);
   }
+
+  let jointLimits = null;
+  fetch('./docs/models/joint-limits.json')
+    .then((r) => r.json())
+    .then((spec) => { jointLimits = spec.joints || null; })
+    .catch(() => {});
 
   const build = document.documentElement.dataset.build || '';
   const suffix = build ? `?v=${encodeURIComponent(build)}` : '';
@@ -77,6 +83,7 @@ export function initCorpsViewer() {
       playing = !reduceMotion;
       playClip();
     }
+    syncPause();
     let visible = 0;
     model.traverse((o) => {
       if (!o.isMesh) return;
@@ -85,10 +92,23 @@ export function initCorpsViewer() {
       o.visible = layer === 'all' || systemOf.get(key) === layer;
       if (o.visible) visible++;
     });
+    /* Enveloppe translucide pour la couche muscles : elle donne le volume du
+     * corps et évite que les muscles fins (cou, mains, pieds) paraissent flotter. */
+    if (skinMesh) {
+      const envelope = layer === 'muscles';
+      skinMesh.visible = envelope || layer === 'skin' || layer === 'all';
+      const mat = skinMesh.material;
+      mat.transparent = envelope;
+      mat.opacity = envelope ? 0.28 : 1;
+      mat.depthWrite = !envelope;
+      if (envelope) visible++;
+    }
     document.getElementById('corps-info').textContent =
       `${clips.length} animation(s), ${visible} maillage(s) visible(s)`;
     const interne = layer === 'organs' || layer === 'vessels' || layer === 'nerves';
-    camera.zoom = interne ? 1.7 : 1;
+    const aspect = host.clientWidth / Math.max(host.clientHeight, 1);
+    camera.zoom = interne ? (aspect < 0.85 ? 1.7 : 1.25)
+      : (layer === 'vessels' || layer === 'nerves' || layer === 'all') ? 0.9 : 1;
     controls.target.set(0, interne ? 1.05 : 0.85, 0);
     camera.lookAt(controls.target);
     camera.updateProjectionMatrix();
@@ -116,6 +136,10 @@ export function initCorpsViewer() {
     }
     model = asset.scene;
     scene.add(model);
+    skinMesh = null;
+    model.traverse((o) => {
+      if (!skinMesh && o.isMesh && o.name.toLowerCase().startsWith('skin')) skinMesh = o;
+    });
     window.__corps = { model, systemOf };
     mixer = new THREE.AnimationMixer(model);
     clips = asset.animations;
@@ -135,8 +159,44 @@ export function initCorpsViewer() {
   for (const id of ['cp-sexe', 'cp-couche']) {
     document.getElementById(id).addEventListener('change', load);
   }
-  document.getElementById('cp-anim').addEventListener('change', playClip);
+  document.getElementById('cp-anim').addEventListener('change', () => {
+    const layer = document.getElementById('cp-couche');
+    /* Choisir une animation ramène à la peau : les couches internes sont
+     * des vues anatomiques figées, sinon le changement semblait tout stopper. */
+    if (layer.value !== 'skin') {
+      layer.value = 'skin';
+      applyLayer();
+    } else {
+      playClip();
+    }
+  });
   window.addEventListener('resize', () => { resize(); needsRender = true; });
+
+  /* Limites mécaniques : après chaque mise à jour du mixer, on borne la
+   * rotation locale des articulations aux amplitudes anatomiques standards. */
+  const clampEuler = new THREE.Euler();
+  function clampJoints() {
+    if (!jointLimits || !model) return;
+    model.traverse((o) => {
+      if (!o.isBone) return;
+      const base = o.name.toLowerCase().replace(/[._]?[lr]$/, '');
+      const limit = jointLimits[base];
+      if (!limit || !limit.axes) return;
+      clampEuler.setFromQuaternion(o.quaternion, 'XYZ');
+      let changed = false;
+      for (const axis of ['x', 'y', 'z']) {
+        const range = limit.axes[axis];
+        if (!range) continue;
+        const deg = THREE.MathUtils.radToDeg(clampEuler[axis]);
+        const bounded = THREE.MathUtils.clamp(deg, range[0], range[1]);
+        if (bounded !== deg) {
+          clampEuler[axis] = THREE.MathUtils.degToRad(bounded);
+          changed = true;
+        }
+      }
+      if (changed) o.quaternion.setFromEuler(clampEuler);
+    });
+  }
 
   let lastTime = performance.now(), lastRender = 0;
   const FRAME_MS = 1000 / 24;
@@ -150,6 +210,7 @@ export function initCorpsViewer() {
     const dt = Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
     if (mixer && playing) mixer.update(dt);
+    clampJoints();
     controls.update();
     resize();
     renderer.render(scene, camera);

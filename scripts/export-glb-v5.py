@@ -15,6 +15,8 @@ import os
 
 SEX = os.environ.get('HUMAIN_SEX', 'female')
 name = 'female' if SEX == 'female' else 'male'
+DEFAULT_BLEND = f'/home/tasour/corps-humain/docs/humain-{"femme" if SEX=="female" else "homme"}-complet.blend'
+BLEND = os.environ.get('HUMAIN_BLEND', DEFAULT_BLEND)
 OUT = f'/home/tasour/corps-humain/docs/models/corps-{name}.glb'
 CAT = json.load(open('/home/tasour/.cache/corps-sources/open-anatomy-3d/'
                      'node_modules/open-anatomy-3d/catalog.json'))
@@ -107,6 +109,14 @@ dances = {'clip_salsa', 'clip_marche', 'clip_etirement',
 for action in list(bpy.data.actions):
     if action.name not in dances:
         bpy.data.actions.remove(action)
+
+# Amplitudes anatomiques : la même table est appliquée au runtime three.js.
+import importlib.util
+_spec = importlib.util.spec_from_file_location(
+    'clamp_animations', '/home/tasour/corps-humain/scripts/clamp-animations.py')
+_clamp = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_clamp)
+_clamp.clamp_actions(bpy)
 
 for ob in bpy.data.objects:
     if ob.type == 'MESH':

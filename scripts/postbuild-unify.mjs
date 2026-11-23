@@ -54,7 +54,7 @@ const dstModels = path.join(dist, "docs", "models");
 if (fs.existsSync(srcModels)) {
   fs.mkdirSync(dstModels, { recursive: true });
   for (const f of fs.readdirSync(srcModels)) {
-    if (f.endsWith("-opt.glb") || f === "catalog.json") {
+    if (f.endsWith("-opt.glb") || f === "catalog.json" || f === "joint-limits.json") {
       fs.copyFileSync(path.join(srcModels, f), path.join(dstModels, f));
     }
   }

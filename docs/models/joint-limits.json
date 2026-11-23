@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "reference": "Amplitudes anatomiques standard (adulte sain), angles locaux en degrés",
+  "note": "Limites appliquées aux articulations principales dans le repère local des os du rig Corps Rig.",
+  "joints": {
+    "thigh": { "label": "Hanche", "axes": { "x": [-30, 30], "y": [-45, 45], "z": [-10, 120] } },
+    "shin": { "label": "Genou", "axes": { "x": [0, 135], "y": [-5, 5], "z": [-5, 5] } },
+    "foot": { "label": "Cheville", "axes": { "x": [-20, 50], "y": [-15, 15], "z": [-15, 15] } },
+    "upperarm": { "label": "Épaule", "axes": { "x": [-180, 180], "y": [-180, 180], "z": [-45, 180] } },
+    "forearm": { "label": "Coude", "axes": { "x": [0, 145], "y": [-5, 5], "z": [-5, 5] } },
+    "spine_lumbar": { "label": "Rachis lombaire", "axes": { "x": [-30, 30], "y": [-30, 40], "z": [-30, 30] } },
+    "spine_thoracic": { "label": "Rachis thoracique", "axes": { "x": [-25, 25], "y": [-25, 35], "z": [-25, 25] } },
+    "head": { "label": "Cou", "axes": { "x": [-45, 45], "y": [-45, 45], "z": [-60, 60] } }
+  }
+}

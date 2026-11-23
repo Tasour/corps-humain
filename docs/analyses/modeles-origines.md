@@ -33,6 +33,23 @@ Deux modèles très différents coexistaient dans l'application. Ce tableau
 Les GLB bruts de 53 Mo restent dans `docs/models/` comme source d'export, mais
 ne sont plus copiés dans `dist/`.
 
+## Modèle féminin externe (CC BY 4.0)
+
+Le corps féminin provient de `open-anatomy-3d/anatomy-female.glb` (cache local
+`/home/tasour/.cache/corps-sources/open-anatomy-3d/`), licence **CC BY 4.0**
+(preuve : `node_modules/open-anatomy-3d/LICENSE-MODELS.md`). Il apporte la peau
+féminine, `uterus`, `vagina`, `ovary_l/r`, `breast_l/r`, et ne contient pas de
+prostate. Il a été importé dans `docs/humain-femme-anatomie.blend`, mis à
+l'échelle sur `Corps Rig`, puis attaché avec des poids automatiques
+(`scripts/import-female-anatomy.py`). Attribution : projet open-anatomy-3d,
+licence CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.
+
+## Limites articulaires
+
+`docs/models/joint-limits.json` définit les amplitudes anatomiques standard.
+Elles sont appliquées à l'export (`scripts/clamp-animations.py`) **et** au
+runtime three.js (`src/corps-viewer.js`, fonction `clampJoints`).
+
 ## Limite connue
 
 Les `.blend` ne contiennent **aucune image/texture** : les six matériaux sont
