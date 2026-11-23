@@ -10,6 +10,8 @@
   de MPFB n'est copié dans ce projet.** Les fichiers de ce dépôt restent sous
   leurs licences propres.
 - Consulté le : 2026-11-24.
+- Statut : installé et activé dans Blender 4.5.16 sous le module
+  `bl_ext.user_default.mpfb` (151 opérateurs MPFB).
 
 ## open-anatomy-3d
 
