@@ -11,7 +11,9 @@ import { execFileSync } from "node:child_process";
 
 const root = path.resolve(import.meta.dirname, "..");
 const dir = path.join(root, "docs", "models");
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "corps-opt-"));
+const tmpRoot = path.join(root, ".cache", "opt");
+fs.mkdirSync(tmpRoot, { recursive: true });
+const tmp = fs.mkdtempSync(path.join(tmpRoot, "corps-opt-"));
 const CLI = ["--yes", "@gltf-transform/cli@4.5.1"];
 
 function metadata(file) {

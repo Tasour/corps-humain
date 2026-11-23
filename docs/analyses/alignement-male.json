@@ -1,0 +1,80 @@
+{
+  "sex": "male",
+  "reference": "skin",
+  "tolerance_m": 0.01,
+  "layers": {
+    "skeleton": {
+      "status": "ok",
+      "landmarks": [
+        "hand_l",
+        "hand_r",
+        "femur_l",
+        "femur_r",
+        "foot_l",
+        "foot_r",
+        "pelvis",
+        "ribs_l",
+        "ribs_r",
+        "skull"
+      ],
+      "rmse_before_m": 0.0,
+      "rmse_after_m": 0.0,
+      "max_residual_m": 0.0,
+      "det_R": 1.0
+    },
+    "muscles": {
+      "status": "hors tolerance",
+      "landmarks": [
+        "hand_l",
+        "hand_r",
+        "femur_l",
+        "femur_r",
+        "foot_l",
+        "foot_r",
+        "pelvis",
+        "ribs_l",
+        "ribs_r",
+        "skull"
+      ],
+      "rmse_before_m": 0.070531,
+      "rmse_after_m": 0.061338,
+      "max_residual_m": 0.100916,
+      "det_R": 1.0
+    },
+    "vessels": {
+      "status": "hors tolerance",
+      "landmarks": [
+        "hand_l",
+        "hand_r",
+        "foot_l",
+        "foot_r",
+        "pelvis",
+        "ribs_l",
+        "ribs_r",
+        "skull"
+      ],
+      "rmse_before_m": 0.202051,
+      "rmse_after_m": 0.183349,
+      "max_residual_m": 0.300185,
+      "det_R": 1.0
+    },
+    "nerves": {
+      "status": "notMeasured",
+      "reason": "moins de 3 repères"
+    },
+    "organs": {
+      "status": "hors tolerance",
+      "landmarks": [
+        "femur_l",
+        "pelvis",
+        "ribs_l",
+        "ribs_r",
+        "skull"
+      ],
+      "rmse_before_m": 0.257745,
+      "rmse_after_m": 0.212609,
+      "max_residual_m": 0.407916,
+      "det_R": 1.0
+    }
+  }
+}
