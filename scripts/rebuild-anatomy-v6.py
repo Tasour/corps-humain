@@ -87,7 +87,7 @@ def build(sex):
         ob.data.materials.clear()
         ob.data.materials.append(material(key))
 
-        if BY_KEY[key]['system'] == 'skin':
+        if BY_KEY[key]['system'] in ('skin', 'muscles'):
             bpy.ops.object.select_all(action='DESELECT')
             ob.select_set(True)
             rig.select_set(True)

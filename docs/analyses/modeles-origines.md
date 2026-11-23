@@ -33,6 +33,17 @@ Deux modèles très différents coexistaient dans l'application. Ce tableau
 Les GLB bruts de 53 Mo restent dans `docs/models/` comme source d'export, mais
 ne sont plus copiés dans `dist/`.
 
+## Reconstruction v6 (dernière version)
+
+`scripts/rebuild-anatomy-v6.py` reconstruit toutes les couches sauf le
+squelette à partir de `anatomy-female.glb` / `anatomy-male.glb` (CC BY 4.0) :
+peau, muscles, organes, vaisseaux et nerfs, avec une couleur par structure
+d'après `catalog.json` (107 matériaux femme, 103 homme). Six muscles faciaux
+nommés ont été ajoutés. Les muscle sont attachés avec des poids automatiques
+au lieu d'un parentage rigide (capture `v7-muscles-full.png`). L'optimiseur
+`optimize-glb-v5.mjs` utilise `copy` + `meshopt` : `optimize` supprimait 39
+maillages musculaires (139 → 100), désormais tous conservés.
+
 ## Modèle féminin externe (CC BY 4.0)
 
 Le corps féminin provient de `open-anatomy-3d/anatomy-female.glb` (cache local
@@ -47,8 +58,10 @@ licence CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.
 ## Limites articulaires
 
 `docs/models/joint-limits.json` définit les amplitudes anatomiques standard.
-Elles sont appliquées à l'export (`scripts/clamp-animations.py`) **et** au
-runtime three.js (`src/corps-viewer.js`, fonction `clampJoints`).
+Elles sont appliquées **à l'export** (`scripts/clamp-animations.py`). Le clamp
+runtime a été désactivé dans `src/corps-viewer.js` : les rotations des os sont
+relatives à leur pose de repos, pas à l'identité ; un clamp runtime les
+faussait (jambes repliées, torse écrasé sur les frames 0–120).
 
 ## Limite connue
 

@@ -9,7 +9,7 @@ male = next(o for o in bpy.data.objects if o.type == 'MESH' and o.name.startswit
 arm = bpy.data.objects['Corps Rig']
 print('female', female.name, len(female.data.vertices), 'male', male.name, len(male.data.vertices))
 
-# poids自动 de la peau féminine
+# poids automatiques de la peau féminine
 for m in list(female.modifiers):
     female.modifiers.remove(m)
 for g in list(female.vertex_groups):

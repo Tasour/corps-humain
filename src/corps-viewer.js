@@ -124,7 +124,7 @@ export function initCorpsViewer() {
       `${clips.length} animation(s), ${visible} maillage(s) visible(s)`;
     const interne = layer === 'organs' || layer === 'vessels' || layer === 'nerves';
     const aspect = host.clientWidth / Math.max(host.clientHeight, 1);
-    camera.zoom = interne ? (aspect < 0.85 ? 1.7 : 1.25)
+    camera.zoom = interne ? (aspect < 0.85 ? 1.9 : 1.6)
       : (layer === 'vessels' || layer === 'nerves' || layer === 'all') ? 0.9 : 1;
     controls.target.set(0, interne ? 1.05 : 0.85, 0);
     camera.lookAt(controls.target);

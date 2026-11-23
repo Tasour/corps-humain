@@ -349,7 +349,7 @@
    "licence": "🟢 MIT + CC BY 4.0",
    "dependances": [],
    "verification": "profil rAF avant/après",
-   "preuveAttendue": "Une seule boucle,帧 inactives à 0",
+   "preuveAttendue": "Une seule boucle, frames inactives à 0",
    "statut": "verifie",
    "plan": "plans-benchmark-3d.md#bench-016",
    "verdict": "OK — v2: 0 rendu au repos / 23 après interaction; v1: pause document.hidden + compteurs, boucle continue exemptée et documentée",
