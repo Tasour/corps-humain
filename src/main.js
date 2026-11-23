@@ -69,7 +69,7 @@ const scene = new AnatomyScene({
   stage,
   labels: labelsHost,
   onSelect: (id) => handlePick(id),
-  onHover: (entry, x, y) => handleHover(entry, x, y),
+  onHover: (entry, x, y, ephemeral) => handleHover(entry, x, y, ephemeral),
 });
 
 const entries = scene.entries;
@@ -638,7 +638,9 @@ function handlePick(id) {
   selectEntity(id, { focus: false });
 }
 
-function handleHover(entry, x, y) {
+let tooltipTimer = 0;
+function handleHover(entry, x, y, ephemeral = false) {
+  if (tooltipTimer) { clearTimeout(tooltipTimer); tooltipTimer = 0; }
   if (!entry || state.mode === "hunt") {
     tooltip.hidden = true;
     return;
@@ -646,8 +648,11 @@ function handleHover(entry, x, y) {
   const rect = viewport.getBoundingClientRect();
   tooltip.hidden = false;
   tooltip.innerHTML = `<i style="--c:${entry.color}"></i><strong>${entry.name}</strong><span>${systemName(entry.system)}</span>`;
-  tooltip.style.left = `${x - rect.left + 16}px`;
+  const tw = tooltip.offsetWidth || 180;
+  tooltip.style.left = `${Math.min(x - rect.left + 16, rect.width - tw - 8)}px`;
   tooltip.style.top = `${y - rect.top + 14}px`;
+  /* Sur tactile l'étiquette apparaît à l'appui et se retire d'elle-même. */
+  if (ephemeral) tooltipTimer = setTimeout(() => { tooltip.hidden = true; }, 2200);
 }
 
 /* ───────────────────────────── events ───────────────────────────── */

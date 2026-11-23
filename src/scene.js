@@ -493,6 +493,10 @@ export class AnatomyScene {
       if (Math.hypot(dx, dy) > 6) return;
       const id = this._pick(e.clientX, e.clientY);
       this.onSelect(id, e);
+      /* Sur tactile, il n'y a pas de survol : l'appui affiche l'étiquette. */
+      if (e.pointerType !== "mouse") {
+        this.onHover(id ? this.entries[id] : null, e.clientX, e.clientY, true);
+      }
     });
 
     el.addEventListener("pointermove", (e) => {

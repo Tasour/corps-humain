@@ -19,11 +19,11 @@
       <span class="badge" id="count">— structures</span>
       <span class="badge">Version 2.0</span>
       <div class="top-actions">
-        <button id="btn-sources" type="button" aria-haspopup="dialog">Sources & licences</button>
-        <button id="theme-toggle" type="button" aria-pressed="false">Thème : clair</button>
-        <button id="mobile-toggle" type="button" aria-expanded="false" aria-controls="sidebar">Explorer</button>
-        <button id="reset" type="button">Recadrer</button>
-        <button id="btn-corps-animes" type="button" aria-expanded="false" aria-controls="corps-panel">Corps animés</button>
+        <button id="btn-sources" type="button" aria-haspopup="dialog" data-short="Sources">Sources & licences</button>
+        <button id="theme-toggle" type="button" aria-pressed="false" data-short="Thème">Thème : clair</button>
+        <button id="mobile-toggle" type="button" aria-expanded="false" aria-controls="sidebar" data-short="Explorer">Explorer</button>
+        <button id="reset" type="button" data-short="Recadrer">Recadrer</button>
+        <button id="btn-corps-animes" type="button" aria-expanded="false" aria-controls="corps-panel" data-short="Corps">Corps animés</button>
       </div>
     </div>
   </header>
@@ -2145,14 +2145,40 @@
     #corps-panel .cp-view{position:relative;min-width:0}
     #corps-panel h2{font-size:16px;margin:0 0 12px}
     #corps-panel label{display:block;margin:10px 0}
-    #corps-panel select,#corps-panel button{width:100%;padding:6px;background:#2b313b;color:#eee;border:1px solid #444;border-radius:4px}
-    #corps-panel .cp-close{position:absolute;top:6px;right:6px;width:auto;z-index:2}
-    #corps-info{font-size:12px;color:#aaa;margin-top:14px;line-height:1.5}
+    #corps-panel select,#corps-panel button{width:100%;min-height:44px;padding:8px 10px;background:#2b313b;color:#eee;border:1px solid #555;border-radius:6px;font-size:14px}
+    #corps-panel button:active,#corps-panel select:active{transform:scale(.98);filter:brightness(1.15)}
+    #corps-panel .cp-close{position:absolute;top:8px;right:8px;width:44px;height:44px;min-width:44px;padding:0;z-index:2;font-size:0}
+    #corps-panel .cp-close::after{content:'✕';font-size:18px}
+    #corps-panel select:focus-visible,#corps-panel button:focus-visible,
+    header .top-actions button:focus-visible,header .top-actions a:focus-visible{
+      outline:2px solid #7fd4d0;outline-offset:2px}
+    #cp-view canvas{touch-action:none;display:block}
+    @media (pointer:coarse){
+      #cp-view::after{content:'Glissez pour tourner · pincez pour zoomer';position:absolute;left:8px;bottom:8px;
+        background:rgba(0,0,0,.55);color:#e6e6e6;font-size:11px;padding:5px 9px;border-radius:6px;pointer-events:none}
+    }
+    #corps-info{font-size:12px;color:#bbb;margin-top:14px;line-height:1.5}
     @media (max-width:560px){
-      header .top-actions{gap:2px;flex-wrap:wrap}
-      header .top-actions button,header .top-actions a{font-size:10px;padding:4px 5px}
-      #corps-panel{inset:2% 2% 2% 2%;grid-template-columns:1fr;grid-template-rows:auto 1fr}
-      #corps-panel .cp-view{min-height:55vh}
+      header{height:calc(58px + env(safe-area-inset-top));gap:4px;
+        padding:env(safe-area-inset-top) max(8px,env(safe-area-inset-right)) 0 max(8px,env(safe-area-inset-left))}
+      header .brand{flex:0 0 auto}
+      header .brand img{width:28px;height:28px}
+      header .brand h1{font-size:15px;letter-spacing:.08em}
+      header .top-meta{flex:1 1 auto;min-width:0}
+      header .top-actions{gap:2px;flex-wrap:nowrap}
+      header .top-actions button,header .top-actions a{
+        flex:1 1 0;min-width:44px;width:auto;min-height:44px;padding:0 2px;
+        font-size:0;line-height:1;white-space:nowrap;overflow:hidden;
+      }
+      header .top-actions button::after,header .top-actions a::after{
+        content:attr(data-short);font-size:10px;letter-spacing:0;
+      }
+      #corps-panel{inset:calc(env(safe-area-inset-top) + 2%) 2% calc(env(safe-area-inset-bottom) + 2%) 2%;
+        grid-template-columns:1fr;grid-template-rows:auto 1fr;border-radius:12px}
+      #corps-panel .cp-ui{padding:12px 14px}
+      #corps-panel .cp-view{min-height:0}
+      #corps-panel h2{font-size:15px}
+      #corps-panel label{margin:8px 0}
     }
   </style>
   <div id="corps-panel" hidden>
@@ -2179,18 +2205,31 @@
     import * as THREE from 'three';
     import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
     import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+    import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
     const panel=document.getElementById('corps-panel');
     const host=document.getElementById('cp-view');
     const scene=new THREE.Scene(); scene.background=new THREE.Color(0x20242b);
     const camera=new THREE.OrthographicCamera(-1,1,1,-1,0.01,20);
     camera.position.set(0,0.85,4); camera.lookAt(0,0.85,0);
     const renderer=new THREE.WebGLRenderer({antialias:true});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
+    const tactile=window.matchMedia('(pointer: coarse)').matches;
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,tactile?1.25:1.5));
     host.appendChild(renderer.domElement);
     scene.add(new THREE.HemisphereLight(0xffffff,0x444455,1.6));
     const key=new THREE.DirectionalLight(0xffffff,2.0); key.position.set(2,-3,3); scene.add(key);
     const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    let model=null,mixer=null,clips=[],systemOf=new Map(),playing=true,needsRender=true;
+    let model=null,mixer=null,clips=[],systemOf=new Map(),playing=!reduceMotion,needsRender=true,offscreen=false;
+    const controls=new OrbitControls(camera,renderer.domElement);
+    controls.target.set(0,0.85,0);
+    controls.enableDamping=false;
+    controls.enablePan=false;
+    controls.minZoom=0.6; controls.maxZoom=3;
+    controls.touches={ONE:THREE.TOUCH.ROTATE,TWO:THREE.TOUCH.DOLLY_PAN};
+    controls.addEventListener('change',()=>{needsRender=true});
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(es=>{offscreen=!es[0].isIntersecting;needsRender=true},{threshold:0.01}).observe(host);
+    }
     fetch('./docs/models/catalog.json').then(r=>r.json()).then(c=>{
       for(const e of c)systemOf.set(e.key.toLowerCase(),e.system);
     }).catch(()=>{});
@@ -2198,7 +2237,7 @@
       if(panel.hidden)return;
       const w=host.clientWidth,h=host.clientHeight;
       renderer.setSize(w,h);
-      const s=1.05,a=w/h;
+      const a=w/h,s=a<0.85?0.98:1.05;
       camera.left=-s*a;camera.right=s*a;camera.top=s;camera.bottom=-s;camera.updateProjectionMatrix();
     }
     function applyLayer(){
@@ -2207,7 +2246,7 @@
       if(layer!=='skin'){
         if(mixer){mixer.stopAllAction();mixer.setTime(0);}
         playing=false;
-      } else {playing=true;playClip();}
+      } else {playing=!reduceMotion;playClip();}
       let n=0;
       model.traverse(o=>{
         if(!o.isMesh)return;
@@ -2216,6 +2255,14 @@
         if(o.visible)n++;
       });
       document.getElementById('corps-info').textContent=`${clips.length} animation(s), ${n} maillage(s) visible(s)`;
+      /* Les couches internes n'ont pas de membres : on les rapproche pour
+       * qu'elles occupent le viewer, surtout sur petit écran. */
+      const interne=layer==='organs'||layer==='vessels'||layer==='nerves';
+      camera.zoom=interne?1.5:1;
+      controls.target.set(0,interne?1.05:0.85,0);
+      camera.lookAt(controls.target);
+      camera.updateProjectionMatrix();
+      controls.update();
       needsRender=true;
     }
     function playClip(){
@@ -2227,10 +2274,14 @@
       else if(clips.length)mixer.clipAction(clips[0]).play();
       needsRender=true;
     }
+    const modelCache=new Map();
     async function load(){
       const sexe=document.getElementById('cp-sexe').value;
       if(model)scene.remove(model);
-      const g=await loader.loadAsync(`./docs/models/corps-${sexe}-opt.glb`);
+      /* Un seul modèle chargé à la fois, puis gardé en mémoire : revenir
+       * à l'autre sexe ne télécharge pas à nouveau 8 Mo sur mobile. */
+      let g=modelCache.get(sexe);
+      if(!g){g=await loader.loadAsync(`./docs/models/corps-${sexe}-opt.glb`);modelCache.set(sexe,g);}
       model=g.scene;scene.add(model);
       window.__corps={model,systemOf};
       mixer=new THREE.AnimationMixer(model);clips=g.animations;
@@ -2240,11 +2291,12 @@
     btn.addEventListener('click',async()=>{
       panel.hidden=!panel.hidden;
       btn.setAttribute('aria-expanded',String(!panel.hidden));
-      if(!panel.hidden&&!model)await load();
+      if(!panel.hidden){offscreen=false;needsRender=true;if(!model)await load();}
       resize();
     });
     document.getElementById('cp-close').onclick=()=>{panel.hidden=true;btn.setAttribute('aria-expanded','false');needsRender=true};
     const pauseBtn=document.getElementById('cp-pause');
+    if(reduceMotion){pauseBtn.textContent='Reprendre';pauseBtn.setAttribute('aria-pressed','true');}
     pauseBtn.addEventListener('click',()=>{
       playing=!playing;
       pauseBtn.textContent=playing?'Pause':'Reprendre';
@@ -2259,13 +2311,14 @@
     function frame(){
       requestAnimationFrame(frame);
       const now=performance.now();
-      const visible=!panel.hidden&&!document.hidden;
+      const visible=!panel.hidden&&!document.hidden&&!offscreen;
       const renderState=visible&&needsRender;
       const renderAnim=visible&&playing&&(now-lastRender)>=FRAME_MS;
       if(!renderState&&!renderAnim)return;
       const dt=Math.min((now-lastTime)/1000,0.1);
       lastTime=now;
       if(mixer&&playing)mixer.update(dt);
+      controls.update();
       resize();renderer.render(scene,camera);
       needsRender=false;
       lastRender=now;

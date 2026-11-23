@@ -465,8 +465,33 @@
       .brand img { width: 32px; height: 32px; }
       .top-meta { gap: 6px; }
       .top-actions { gap: 4px; }
+      /* Ces deux commandes restent sous la barre d'outils du widget :
+       * elles doivent être tactiles même si le navigateur annonce un pointeur fin. */
+      #explode-toggle { min-height: 44px; min-width: 44px; }
+      #explode-range { height: 44px; }
+      .anim-bar button { min-height: 44px; }
       .details #sel-name { font-size: 24px; }
     }
+    /* ---------- tactile : cibles, retours et zones sûres ---------- */
+    @media (pointer: coarse) {
+      button, select, a.btn, input[type="range"] { min-height: 44px; }
+      button, a.btn { min-width: 44px; }
+      input[type="range"] { height: 44px; padding: 0; }
+      .top-actions button { min-width: 44px; padding: 0 6px; }
+      /* Retour visuel immédiat au doigt (pas de :hover sur écran tactile). */
+      button:active, a.btn:active, .anim-bar button:active,
+      #tour-hud button:active, #wp-copy:active {
+        transform: scale(.96); filter: brightness(1.18);
+      }
+      #list .item:active { background: var(--teal-soft); }
+      #wp-copy:active, #vues-catalogue .catalogue-item:active,
+      #tour-hud button:active { background: var(--teal); color: #041b22; }
+    }
+    /* Les hover qui n'avaient pas d'équivalent clavier deviennent visibles
+     * au focus, y compris avec un clavier Bluetooth sur mobile. */
+    .anim-bar button:focus-visible, #wp-copy:focus-visible,
+    #vues-catalogue .catalogue-item:focus-visible,
+    #tour-hud button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
     /* Les animations décoratives (transitions, rotation continue) sont
      * supprimées quand le système demande moins de mouvement. */
     @media (prefers-reduced-motion: reduce) {
