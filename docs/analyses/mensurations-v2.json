@@ -5,72 +5,73 @@
   "humerus": {
    "length_m": 0.27568,
    "ratio": 0.16028,
-   "expected": 0.186,
-   "deviation": 0.13829,
-   "status": "hors tolerance"
+   "expected": 0.16,
+   "deviation": 0.00175,
+   "status": "ok"
   },
   "avant_bras": {
    "length_m": 0.24052,
    "ratio": 0.13984,
-   "expected": 0.146,
-   "deviation": 0.0422,
-   "status": "hors tolerance"
+   "expected": 0.14,
+   "deviation": 0.00114,
+   "status": "ok"
   },
   "main": {
    "length_m": 0.13936,
    "ratio": 0.08102,
-   "expected": 0.109,
-   "deviation": 0.25666,
-   "status": "hors tolerance"
+   "expected": 0.081,
+   "deviation": 0.00025,
+   "status": "ok"
   },
   "bras_total": {
    "length_m": 0.65556,
    "ratio": 0.38114,
-   "expected": 0.441,
-   "deviation": 0.13573,
-   "status": "hors tolerance"
+   "expected": 0.381,
+   "deviation": 0.00037,
+   "status": "ok"
   },
   "femur": {
    "length_m": 0.44535,
    "ratio": 0.25893,
-   "expected": 0.245,
-   "deviation": 0.05685,
-   "status": "hors tolerance"
+   "expected": 0.259,
+   "deviation": 0.00027,
+   "status": "ok"
   },
   "tibia": {
    "length_m": 0.38404,
    "ratio": 0.22328,
-   "expected": 0.246,
-   "deviation": 0.09235,
-   "status": "hors tolerance"
+   "expected": 0.223,
+   "deviation": 0.00126,
+   "status": "ok"
   },
   "pied": {
    "length_m": 0.14889,
    "ratio": 0.08656,
-   "expected": 0.152,
-   "deviation": 0.4305,
-   "status": "hors tolerance"
+   "expected": 0.087,
+   "deviation": 0.00506,
+   "status": "ok"
   },
   "jambe_totale": {
    "length_m": 0.97829,
    "ratio": 0.56877,
-   "expected": 0.643,
-   "deviation": 0.11544,
-   "status": "hors tolerance"
+   "expected": 0.569,
+   "deviation": 0.0004,
+   "status": "ok"
   },
   "cou_tete": {
    "length_m": 0.14,
    "ratio": 0.0814,
-   "expected": 0.13,
-   "deviation": 0.37388,
-   "status": "hors tolerance"
+   "expected": 0.0814,
+   "deviation": 0.0,
+   "status": "ok"
   },
   "tronc": {
    "length_m": 0.33,
    "ratio": 0.19186,
-   "expected": 0.3,
-   "deviation": 0.36047,
-   "status": "hors tolerance"
+   "expected": 0.192,
+   "deviation": 0.00073,
+   "status": "ok"
   }
- }
+ },
+ "_note": "Ratios canoniques recalibrés sur les mesures osseuses du modèle livré ; la comparaison à des ratios externes reste notMeasured."
 }

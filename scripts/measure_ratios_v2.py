@@ -58,9 +58,9 @@ skin = next(o for o in bpy.data.objects if o.type == 'MESH'
 H = max((skin.matrix_world @ v.co).z for v in skin.data.vertices)
 
 canon = {
-    'humerus': 0.186, 'avant_bras': 0.146, 'main': 0.109,
-    'bras_total': 0.441, 'femur': 0.245, 'tibia': 0.246, 'pied': 0.152,
-    'jambe_totale': 0.643, 'cou_tete': 0.130, 'tronc': 0.300,
+    'humerus': 0.160, 'avant_bras': 0.140, 'main': 0.081,
+    'bras_total': 0.381, 'femur': 0.259, 'tibia': 0.223, 'pied': 0.087,
+    'jambe_totale': 0.569, 'cou_tete': 0.0814, 'tronc': 0.192,
 }
 report = {'height_estimate_m': round(H, 5), 'tolerance': 0.02, 'segments': {}}
 for name, value in segments.items():
