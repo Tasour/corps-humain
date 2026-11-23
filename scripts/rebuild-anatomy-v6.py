@@ -48,7 +48,8 @@ def material(key):
     for link in list(mat.node_tree.links):
         if link.to_node == bsdf and link.to_socket.name == 'Base Color':
             mat.node_tree.links.remove(link)
-    bsdf.inputs['Base Color'].default_value = hex_color(entry.get('color'))
+    color = (0.55, 0.78, 0.92, 1) if key in ('lung_l', 'lung_r') else hex_color(entry.get('color'))
+    bsdf.inputs['Base Color'].default_value = color
     bsdf.inputs['Roughness'].default_value = 0.75
     return mat
 
@@ -56,6 +57,21 @@ def material(key):
 def build(sex):
     bpy.ops.wm.open_mainfile(filepath=BLEND[sex])
     rig = bpy.data.objects['Corps Rig']
+    # L'auto-poids échoue sur la peau masculine (tous les poids à 0) : on
+    # garde les poids de l'ancienne peau pour les transférer par plus proche
+    # sommet sur la nouvelle peau, de même sexe et même repère.
+    old_skin_weights = None
+    if sex == 'male':
+        old = next((o for o in bpy.data.objects
+                    if o.type == 'MESH' and o.name.lower().startswith('skin')), None)
+        if old:
+            names = [g.name for g in old.vertex_groups]
+            old_skin_weights = (
+                [old.matrix_world @ v.co for v in old.data.vertices],
+                names,
+                [[(names[g.group], g.weight) for g in v.groups]
+                 for v in old.data.vertices],
+            )
     kept_skeleton = {}
     for ob in list(bpy.data.objects):
         if ob.type != 'MESH':
@@ -73,7 +89,8 @@ def build(sex):
 
     for ob in imported:
         key = base(ob.name)
-        if key in kept_skeleton or key not in BY_KEY:
+        if (key in kept_skeleton or key not in BY_KEY
+                or key in ('breast_l', 'breast_r', 'larynx')):
             bpy.data.objects.remove(ob, do_unlink=True)
             continue
 
@@ -88,7 +105,21 @@ def build(sex):
         ob.data.materials.clear()
         ob.data.materials.append(material(key))
 
-        if BY_KEY[key]['system'] in ('skin', 'muscles'):
+        is_skin = BY_KEY[key]['system'] == 'skin'
+        if sex == 'male' and is_skin and old_skin_weights:
+            old_points, old_names, old_weights = old_skin_weights
+            tree = KDTree(len(old_points))
+            for i, point in enumerate(old_points):
+                tree.insert(point, i)
+            tree.balance()
+            groups = {name: ob.vertex_groups.new(name=name) for name in old_names}
+            for v in ob.data.vertices:
+                _, nearest, _ = tree.find(v.co)
+                for name, weight in old_weights[nearest]:
+                    groups[name].add([v.index], weight, 'REPLACE')
+            mod = ob.modifiers.new('Armature', 'ARMATURE')
+            mod.object = rig
+        elif BY_KEY[key]['system'] in ('skin', 'muscles'):
             bpy.ops.object.select_all(action='DESELECT')
             ob.select_set(True)
             rig.select_set(True)

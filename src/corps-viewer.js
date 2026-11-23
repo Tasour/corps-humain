@@ -112,16 +112,13 @@ export function initCorpsViewer() {
       o.visible = layer === 'all' || system === layer;
       if (o.visible) visible++;
     });
-    /* Enveloppe translucide pour la couche muscles : elle donne le volume du
-     * corps et évite que les muscles fins (cou, mains, pieds) paraissent flotter. */
+    /* Couche muscles : uniquement les muscles, sans enveloppe de peau. */
     if (skinMesh) {
-      const envelope = layer === 'muscles';
-      skinMesh.visible = envelope || layer === 'skin' || layer === 'all';
+      skinMesh.visible = layer === 'skin' || layer === 'all';
       const mat = skinMesh.material;
-      mat.transparent = envelope;
-      mat.opacity = envelope ? 0.28 : 1;
-      mat.depthWrite = !envelope;
-      if (envelope) visible++;
+      mat.transparent = false;
+      mat.opacity = 1;
+      mat.depthWrite = true;
     }
     document.getElementById('corps-info').textContent =
       `${clips.length} animation(s), ${visible} maillage(s) visible(s)`;

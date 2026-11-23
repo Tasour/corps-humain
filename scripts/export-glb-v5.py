@@ -122,10 +122,11 @@ _spec.loader.exec_module(_clamp)
 _clamp.clamp_actions(bpy)
 
 _spec2 = importlib.util.spec_from_file_location(
-    'enrich_dance_arms', '/home/tasour/corps-humain/scripts/enrich-dance-arms.py')
+    'rebuild_arm_animations',
+    '/home/tasour/corps-humain/scripts/rebuild-arm-animations.py')
 _arms = importlib.util.module_from_spec(_spec2)
 _spec2.loader.exec_module(_arms)
-_arms.enrich(bpy)
+_arms.rebuild(bpy)
 
 for ob in bpy.data.objects:
     if ob.type == 'MESH':

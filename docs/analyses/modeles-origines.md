@@ -75,6 +75,16 @@ faussait (jambes repliées, torse écrasé sur les frames 0–120).
 
 Aucune attribution requise (CC0), source documentée pour traçabilité.
 
+## Mécanique des bras et poids
+
+- `scripts/rebuild-arm-animations.py` reconstruit pour les 6 danses la chaîne
+  clavicule → scapula → upperarm → forearm → main, avec des paramètres
+  distincts par danse (amplitudes coude/épaule/main et alternance gauche/droite).
+- L'auto-poids échouait sur la peau masculine (tous les poids à 0, donc aucun
+  mouvement visible malgré des os animés). Les poids de l'ancienne peau
+  masculine sont transférés par plus proche sommet sur la nouvelle peau
+  (moyenne des poids 0,999, 0 sommet à zéro).
+
 ## Limite connue
 
 Les `.blend` ne contiennent **aucune image/texture** : les six matériaux sont
