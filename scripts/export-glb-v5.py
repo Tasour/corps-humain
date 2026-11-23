@@ -43,7 +43,9 @@ if peau and peau.use_nodes:
             peau.node_tree.links.remove(link)
     bsdf_peau.inputs['Base Color'].default_value = COLORS['skin']
 
-for sys_name, color in COLORS.items():
+PRESERVE = bool(os.environ.get('PRESERVE_MATERIALS'))
+if not PRESERVE:
+  for sys_name, color in COLORS.items():
     mat = bpy.data.materials.get('Mat ' + sys_name) or bpy.data.materials.new('Mat ' + sys_name)
     mat.use_nodes = True
     bsdf = next(n for n in mat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
@@ -52,7 +54,8 @@ for sys_name, color in COLORS.items():
     bsdf.inputs['Metallic'].default_value = 0.0
 
 assigned = {}
-for ob in bpy.data.objects:
+if not PRESERVE:
+  for ob in bpy.data.objects:
     if ob.type != 'MESH':
         continue
     system = SYSTEM.get(ob.name)

@@ -40,6 +40,23 @@ export function initCorpsViewer() {
   const modelCache = new Map();
   const systemOf = new Map();
   let model = null, mixer = null, clips = [], skinMesh = null;
+  /* Hook déterministe pour l'audit image par image : fige une frame précise
+   * sans dépendre du temps réel ni du nombre de images rendues. */
+  const api = {
+    systemOf,
+    seekFrame(frame) {
+      if (!mixer || !clips.length) return false;
+      const name = document.getElementById('cp-anim').value;
+      const clip = clips.find((c) => c.name.toLowerCase().includes(name)) || clips[0];
+      mixer.stopAllAction();
+      mixer.clipAction(clip).play();
+      mixer.setTime(Math.max(0, frame) / 30);
+      playing = false;
+      syncPause();
+      needsRender = true;
+      return frame;
+    },
+  };
   let playing = !reduceMotion, needsRender = true, offscreen = false;
 
   controls.addEventListener('change', () => { needsRender = true; });
@@ -140,7 +157,10 @@ export function initCorpsViewer() {
     model.traverse((o) => {
       if (!skinMesh && o.isMesh && o.name.toLowerCase().startsWith('skin')) skinMesh = o;
     });
-    window.__corps = { model, systemOf };
+    api.model = model;
+    api.mixer = mixer;
+    api.clips = clips;
+    window.__corps = api;
     mixer = new THREE.AnimationMixer(model);
     clips = asset.animations;
     playClip(); applyLayer(); resize();
@@ -174,27 +194,23 @@ export function initCorpsViewer() {
 
   /* Limites mécaniques : après chaque mise à jour du mixer, on borne la
    * rotation locale des articulations aux amplitudes anatomiques standards. */
-  const clampEuler = new THREE.Euler();
+  const identite = new THREE.Quaternion();
   function clampJoints() {
     if (!jointLimits || !model) return;
     model.traverse((o) => {
       if (!o.isBone) return;
       const base = o.name.toLowerCase().replace(/[._]?[lr]$/, '');
       const limit = jointLimits[base];
-      if (!limit || !limit.axes) return;
-      clampEuler.setFromQuaternion(o.quaternion, 'XYZ');
-      let changed = false;
-      for (const axis of ['x', 'y', 'z']) {
-        const range = limit.axes[axis];
-        if (!range) continue;
-        const deg = THREE.MathUtils.radToDeg(clampEuler[axis]);
-        const bounded = THREE.MathUtils.clamp(deg, range[0], range[1]);
-        if (bounded !== deg) {
-          clampEuler[axis] = THREE.MathUtils.degToRad(bounded);
-          changed = true;
-        }
+      if (!limit || !limit.maxAngle) return;
+      const q = o.quaternion;
+      /* Quaternion et -q représentent la même rotation : on choisit le
+       * demi-espace w>0 pour que le slerp suive le chemin court. */
+      if (q.w < 0) q.set(-q.x, -q.y, -q.z, -q.w);
+      const angle = 2 * Math.acos(Math.min(1, q.w));
+      const max = THREE.MathUtils.degToRad(limit.maxAngle);
+      if (angle > max) {
+        q.copy(identite.clone().slerp(q, max / angle));
       }
-      if (changed) o.quaternion.setFromEuler(clampEuler);
     });
   }
 
@@ -210,7 +226,9 @@ export function initCorpsViewer() {
     const dt = Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
     if (mixer && playing) mixer.update(dt);
-    clampJoints();
+    /* Le clamp runtime est désactivé : les rotations des os sont relatives à
+     * leur pose de repos, pas à l'identité. Le borner ici cassait la peau.
+     * Les amplitudes sont appliquées à l'export (scripts/clamp-animations.py). */
     controls.update();
     resize();
     renderer.render(scene, camera);

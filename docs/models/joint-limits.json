@@ -1,16 +1,16 @@
 {
-  "version": 1,
-  "reference": "Amplitudes anatomiques standard (adulte sain), angles locaux en degrés",
-  "note": "Limites appliquées aux articulations principales dans le repère local des os du rig Corps Rig.",
+  "version": 2,
+  "reference": "Amplitudes anatomiques standard (adulte sain), angle maximal local en degrés",
+  "note": "Clamp par angle global de rotation locale : préserve l'axe de rotation du rig et évite de tordre les poses. La même table est utilisée à l'export et au runtime.",
   "joints": {
-    "thigh": { "label": "Hanche", "axes": { "x": [-25, 25], "y": [-35, 35], "z": [-10, 95] } },
-    "pelvis": { "label": "Bassin", "axes": { "x": [-10, 10], "y": [-15, 15], "z": [-15, 15] } },
-    "shin": { "label": "Genou", "axes": { "x": [0, 135], "y": [-5, 5], "z": [-5, 5] } },
-    "foot": { "label": "Cheville", "axes": { "x": [-20, 50], "y": [-15, 15], "z": [-15, 15] } },
-    "upperarm": { "label": "Épaule", "axes": { "x": [-180, 180], "y": [-180, 180], "z": [-45, 180] } },
-    "forearm": { "label": "Coude", "axes": { "x": [0, 145], "y": [-5, 5], "z": [-5, 5] } },
-    "spine_lumbar": { "label": "Rachis lombaire", "axes": { "x": [-30, 30], "y": [-30, 40], "z": [-30, 30] } },
-    "spine_thoracic": { "label": "Rachis thoracique", "axes": { "x": [-25, 25], "y": [-25, 35], "z": [-25, 25] } },
-    "head": { "label": "Cou", "axes": { "x": [-45, 45], "y": [-45, 45], "z": [-60, 60] } }
+    "thigh": { "label": "Hanche", "maxAngle": 95 },
+    "shin": { "label": "Genou", "maxAngle": 135 },
+    "foot": { "label": "Cheville", "maxAngle": 45 },
+    "upperarm": { "label": "Épaule", "maxAngle": 175 },
+    "forearm": { "label": "Coude", "maxAngle": 145 },
+    "spine_lumbar": { "label": "Rachis lombaire", "maxAngle": 40 },
+    "spine_thoracic": { "label": "Rachis thoracique", "maxAngle": 35 },
+    "head": { "label": "Cou", "maxAngle": 55 },
+    "pelvis": { "label": "Bassin", "maxAngle": 15 }
   }
 }

@@ -1,12 +1,14 @@
 """Applique les amplitudes articulaires standard aux actions Blender.
 
-Utilisé par export-glb-v5.py avant l'export GLB. La même table
-(docs/models/joint-limits.json) sert au clamp runtime dans three.js.
+Clamp par angle global de rotation locale : on réduit l'angle si nécessaire en
+gardant l'axe d'origine. Un clamp par axe Euler tordait les poses (jambes
+relevées le long du torse) car les axes locaux du rig ne correspondent pas aux
+plans anatomiques.
 """
 import json
 import math
 import re
-from mathutils import Euler, Quaternion
+from mathutils import Quaternion
 
 SPEC = '/home/tasour/corps-humain/docs/models/joint-limits.json'
 
@@ -32,6 +34,7 @@ def clamp_actions(bpy):
             limit = spec.get(base_name(bone))
             if not limit or len(axes_curves) != 4:
                 continue
+            max_angle = math.radians(limit['maxAngle'])
             frames = set()
             for curve in axes_curves.values():
                 frames.update(int(kp.co.x) for kp in curve.keyframe_points)
@@ -44,20 +47,10 @@ def clamp_actions(bpy):
                 if q.magnitude == 0:
                     continue
                 q.normalize()
-                euler = q.to_euler('XYZ')
-                changed = False
-                for i, axis in enumerate('xyz'):
-                    bounds = limit['axes'].get(axis)
-                    if not bounds:
-                        continue
-                    deg = math.degrees(euler[i])
-                    limited = max(bounds[0], min(bounds[1], deg))
-                    if limited != deg:
-                        euler[i] = math.radians(limited)
-                        changed = True
-                if not changed:
+                angle = 2 * math.acos(min(1, abs(q.w)))
+                if angle <= max_angle:
                     continue
-                q = euler.to_quaternion()
+                q = Quaternion((1, 0, 0, 0)).slerp(q, max_angle / angle)
                 for index, curve in axes_curves.items():
                     kp = next(k for k in curve.keyframe_points if int(k.co.x) == frame)
                     kp.co.y = q[index]

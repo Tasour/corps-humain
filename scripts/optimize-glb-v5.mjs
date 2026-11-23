@@ -36,8 +36,8 @@ for (const sex of ["female", "male"]) {
   console.log(`[opt] ${sex}: ${(before.size / 1e6).toFixed(1)} Mo -> ${(after.size / 1e6).toFixed(1)} Mo`);
   console.log(`[opt]   materiaux: ${after.materials.join(", ")}`);
   console.log(`[opt]   animations: ${after.animations}, textures: ${after.textures}`);
-  if (after.materials.length !== 6) {
-    throw new Error(`6 matériaux attendus, ${after.materials.length} obtenus pour ${sex}`);
+  if (after.materials.length < 6) {
+    throw new Error(`au moins 6 matériaux attendus, ${after.materials.length} obtenus pour ${sex}`);
   }
   if (after.animations !== 6) {
     throw new Error(`6 animations attendues, ${after.animations} obtenues pour ${sex}`);
