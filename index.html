@@ -51,6 +51,11 @@
       #corps-info { margin-top:12px; color:var(--muted); font-size:12px; }
       #cp-view { position:absolute; inset:0; min-width:0; min-height:0; overflow:hidden; }
       #cp-view canvas { display:block; width:100%; height:100%; touch-action:none; }
+      #cp-view:focus-visible { outline:3px solid var(--accent); outline-offset:-3px; }
+      #nav-commands { position:absolute; right:12px; bottom:12px; z-index:12; display:grid;
+        grid-template-columns:repeat(2,44px); gap:8px; }
+      #nav-commands button { width:44px; height:44px; min-width:44px; min-height:44px; margin:0;
+        padding:0; border-radius:8px; font-size:11px; font-weight:600; }
       @media (pointer:coarse) {
         #cp-view::after { content:'Glissez pour tourner · pincez pour zoomer'; position:absolute; left:8px; bottom:8px;
           background:rgba(0,0,0,.55); color:#e6e6e6; font-size:11px; padding:4px 8px; border-radius:8px; pointer-events:none; }
@@ -74,7 +79,7 @@
     <a class="skip-link" href="#cp-view">Aller au corps 3D</a>
     <header>
       <div class="brand"><img src="./logo.svg" alt="" /><h1>CORPS</h1><span class="build" id="build-label"></span></div>
-      <span class="source-label">Body Atlas 3D</span>
+      <span class="source-label">Anatomie 3D</span>
     </header>
     <main>
       <nav id="toolbar" aria-label="Outils d'interface">
@@ -88,9 +93,6 @@
           <h2>Source anatomique</h2>
           <label for="cp-source">Jeu de données</label>
           <select id="cp-source" aria-label="Source anatomique">
-            <option value="bodyatlas">Body Atlas 3D</option>
-            <option value="slorksmo">Human Atlas — slorksmo</option>
-            <option value="enhanced">Human Atlas Enhanced</option>
             <option value="seema">3D Human Body Anatomy</option>
             <option value="nqwrc">3D Anatomy — nqwrc</option>
             <option value="wangzh">Human Atlas 3D — wangzh</option>
@@ -99,9 +101,8 @@
         <div class="panel" id="panel-sexe" hidden>
           <h2>Sexe</h2>
           <label for="cp-sexe">Corps affiché</label>
-          <select id="cp-sexe" aria-label="Sexe">
-            <option value="female">Femme</option>
-            <option value="male">Homme</option>
+          <select id="cp-sexe" aria-label="Sexe" disabled>
+            <option value="male">Homme — seule source disponible</option>
           </select>
         </div>
         <div class="panel" id="panel-couches" hidden>
@@ -124,7 +125,13 @@
           <div id="corps-info">Chargement…</div>
           <p class="avertissement">Usage pédagogique uniquement. Ne remplace ni un diagnostic ni un avis médical.</p>
         </div>
-        <div id="cp-view" tabindex="-1"></div>
+        <div id="cp-view" tabindex="0" role="application" aria-label="Vue 3D interactive du corps humain"></div>
+        <div id="nav-commands" aria-label="Commandes de navigation 3D">
+          <button type="button" id="nav-zoom-in" aria-label="Zoomer">+</button>
+          <button type="button" id="nav-zoom-out" aria-label="Dézoomer">−</button>
+          <button type="button" id="nav-fit" aria-label="Cadrer le modèle">CADRER</button>
+          <button type="button" id="nav-reset" aria-label="Réinitialiser la vue">RESET</button>
+        </div>
       </section>
     </main>
     <script type="module">

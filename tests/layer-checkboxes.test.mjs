@@ -20,8 +20,11 @@ for (const layer of LAYERS) {
 assert.ok(js.includes("active.has(o.userData.layer)"), "bascule par couche absente");
 assert.ok(!js.includes("getElementById('cp-couche')"), "ancien écouteur encore présent");
 assert.ok(html.includes('id="cp-source"'), "sélecteur de source absent");
-for (const source of ['bodyatlas', 'slorksmo', 'enhanced', 'seema', 'nqwrc', 'wangzh']) {
+for (const source of ['seema', 'nqwrc', 'wangzh']) {
   assert.ok(html.includes(`value="${source}"`), `source ${source} absente`);
+}
+for (const removed of ['bodyatlas', 'slorksmo', 'enhanced']) {
+  assert.ok(!html.includes(`value="${removed}"`), `source ${removed} doit être retirée`);
 }
 assert.ok(!html.includes('ancien-atlas'), "le lien vers l'ancien atlas doit être supprimé");
 assert.ok(html.includes('id="toolbar"'), "barre d'outils absente");

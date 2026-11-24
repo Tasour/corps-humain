@@ -1,17 +1,18 @@
 # Sources anatomiques disponibles
 
-Le sélecteur `SRC` propose six jeux de modèles, chargés uniquement depuis
+Le sélecteur `SRC` propose trois jeux de modèles, chargés uniquement depuis
 `docs/models/`. Aucun appel réseau externe au chargement.
 
-| Clé | Source | Sexes | Licence |
-|---|---|---|---|
-| `bodyatlas` | Body Atlas 3D + 305 nerfs CC0 | homme, femme | 🟢 CC BY 4.0 / CC0 |
-| `slorksmo` | Human Atlas — slorksmo | homme, femme | 🟢 MIT + CC BY 4.0 |
-| `enhanced` | Human Atlas Enhanced | homme, femme | 🟢 MIT + CC BY 4.0 |
-| `seema` | 3D Human Body Anatomy | homme | 🟡 CC BY-SA 4.0 |
-| `nqwrc` | 3D Anatomy | homme uniquement, pas de peau | 🔴 CC BY-NC-SA 4.0 |
-| `wangzh` | Human Atlas 3D — wangzh | homme, chargement parallèle | 🟢 MIT + CC BY 4.0 |
+| Clé | Source | Sexe réel | Licence | État |
+|---|---|---|---|---|
+| `seema` | 3D Human Body Anatomy | homme | 🟡 CC BY-SA 4.0 | en compétition |
+| `nqwrc` | 3D Anatomy | homme, sans peau | 🔴 CC BY-NC-SA 4.0 | comparaison locale |
+| `wangzh` | Human Atlas 3D — wangzh | homme | 🟢 MIT + CC BY 4.0 | en compétition |
 
-Les sources 🟡 et 🔴 sont présentes à des fins de comparaison locale ; leur
-licence impose des obligations ou interdit un usage commercial. Voir
-`docs/veille/2026-11-24-forks-body-atlas.md` et `LICENSES.md`.
+Sources éliminées du concours : `bodyatlas`, `slorksmo`, `enhanced`.
+Leurs fichiers restent présents dans le dépôt mais ne sont plus proposés dans le site.
+
+Un carré bleu représente l’homme et un carré rose la femme. Les sources
+étant masculines, le carré rose porte « Vide ».
+
+Voir `docs/veille/2026-11-24-forks-body-atlas.md` et `LICENSES.md`.
