@@ -33,3 +33,10 @@ Consulté le 2026-11-24.
 Cibles tactiles : 44×44 px, espacement 8 px. Curseur `grab`/`grabbing`.
 Focus clavier visible. Amortissement activé sauf `prefers-reduced-motion`.
 Rendu à la demande avec pause sur `document.hidden`. DPR plafonné à 2.
+
+## Pivot appliqué
+
+Le pivot d'orbite est le centre de la boîte englobante du modèle, jamais le
+centre du viewport. Le double-clic et le double-tap déplacent le pivot sur le
+point touché (ArcGIS Scene Viewer, Nira). Les carrés du sol ne participent pas
+au calcul du pivot mais restent dans le cadrage.

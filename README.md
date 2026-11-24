@@ -245,7 +245,7 @@ scripts/
 
 ## Sélecteur de couches
 
-Une barre d'outils à gauche ouvre des panneaux flottants : source anatomique (3D Human Body Anatomy, 3D Anatomy, Human Atlas 3D), couches et information. La navigation suit les règles universelles souris, tactile et clavier décrites dans `docs/design/navigation-3d.md`. Six couches sont activables individuellement par checkbox (47 muscles chez l'homme, organes faciaux inclus) :
+Une barre d'outils à gauche ouvre des panneaux flottants : source anatomique (3D Human Body Anatomy, 3D Anatomy, Human Atlas 3D), couches et information. Le sexe réel de chaque source est audité dans `docs/analyses/audit-sexes-sources.md` : `wangzh` est mixte ♂/♀, `nqwrc` est masculin et `seema` est générique. La navigation suit les règles universelles souris, tactile et clavier décrites dans `docs/design/navigation-3d.md`. Six couches sont activables individuellement par checkbox (47 muscles chez l'homme, organes faciaux inclus) :
 peau, muscles, squelette, organes, vaisseaux, nerfs. Toutes sont cochées par
 défaut. Une case maîtresse « Toutes les couches » les active ou les désactive
 d'un seul geste. L'état est reflété dans l'URL (`?layers=skin,muscles`), ce qui

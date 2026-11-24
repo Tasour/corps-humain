@@ -30,4 +30,7 @@ assert.ok(js.includes('#d16b9c'), "carré rose absent");
 assert.ok(js.includes("'Vide'"), "texte Vide absent");
 assert.ok(js.includes("fitView"), "recadrage absent");
 assert.ok(js.includes("resetView"), "reset absent");
+assert.ok(js.includes("focusPoint"), "pivot sur point cliqué absent");
+assert.ok(js.includes("SOURCE_SEX"), "audit des sexes absent");
+assert.ok(js.includes("setScalar(0.001)"), "mise à l'échelle wangzh absente");
 console.log("PASS navigation 3D et sources réduites");

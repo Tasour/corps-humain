@@ -35,6 +35,20 @@ const GLBSETS = {
   },
 };
 const WANGZH_DIR = './docs/models/forks/wangzh/data/';
+const SOURCE_SEX = {
+  seema: {
+    short: 'Anatomie générique',
+    note: 'Aucun organe génital explicite dans les maillages de cette source.',
+  },
+  nqwrc: {
+    short: 'Homme',
+    note: 'Organes génitaux masculins présents : pénis, testicules, prostate.',
+  },
+  wangzh: {
+    short: 'Mixte ♂/♀',
+    note: 'Cette source contient à la fois des organes génitaux masculins et féminins. Le libellé « homme » était donc faux.',
+  },
+};
 
 export function initCorpsViewer() {
   const host = document.getElementById('cp-view');
@@ -198,11 +212,13 @@ export function initCorpsViewer() {
     document.getElementById('corps-info').textContent = `${n} maillage(s) visible(s)`;
     need = true;
   };
+  const modelBox = () => new THREE.Box3().setFromObject(model);
+  const modelCenter = () => modelBox().getCenter(new THREE.Vector3());
   const fitView = () => {
     if (!model) return;
-    const box = new THREE.Box3().setFromObject(model);
-    box.union(new THREE.Box3().setFromObject(ground));
-    const c = box.getCenter(new THREE.Vector3());
+    const modelB = modelBox();
+    const c = modelB.getCenter(new THREE.Vector3());
+    const box = modelB.clone().union(new THREE.Box3().setFromObject(ground));
     const s = box.getSize(new THREE.Vector3());
     controls.target.copy(c);
     camera.position.set(c.x, c.y + 0.6, 4);
@@ -216,10 +232,18 @@ export function initCorpsViewer() {
     need = true;
   };
   const resetView = () => {
-    camera.position.set(0, 1.45, 4);
-    controls.target.set(0, 0.85, 0);
+    const c = model ? modelCenter() : new THREE.Vector3(0, 0.85, 0);
+    camera.position.set(c.x, c.y + 0.6, 4);
+    controls.target.copy(c);
     camera.zoom = 1;
     camera.updateProjectionMatrix();
+    controls.update();
+    need = true;
+  };
+  const focusPoint = (point) => {
+    const offset = camera.position.clone().sub(controls.target);
+    controls.target.copy(point);
+    camera.position.copy(point).add(offset);
     controls.update();
     need = true;
   };
@@ -332,6 +356,8 @@ export function initCorpsViewer() {
       const mesh = new THREE.Mesh(item.geo, mats.get(MAP[item.c.system] || 'organs'));
       mark(mesh, item.c.system); g.add(mesh);
     }
+    // Le jeu wangzh est en millimètres : 0,001 ramène aux mètres des autres sources.
+    g.scale.setScalar(0.001);
     return g;
   }
 
@@ -355,22 +381,43 @@ export function initCorpsViewer() {
     renderer.setPixelRatio(src === 'nqwrc' ? 1 : Math.min(window.devicePixelRatio || 1, 2));
     model = cache.get(key);
     model.position.x = sexe === 'female' ? 0.45 : -0.45;
+    const sexInfo = SOURCE_SEX[src];
+    document.querySelector('.source-label').textContent = sexInfo.short;
+    document.getElementById('source-sexe-note').textContent = sexInfo.note;
     scene.add(model);
     window.__corps = {
-      model, sexe, source: src, THREE, camera, renderer, controller: ctrl,
-      fitView, resetView, zoomBy, orbitBy, panBy, presetView,
+      model, sexe, source: src, THREE, camera, controls, renderer, controller: ctrl,
+      fitView, resetView, focusPoint, modelCenter, zoomBy, orbitBy, panBy, presetView,
     };
     apply(); resize(); fitView();
   }
 
   // Événements souris, clavier et tactile.
-  renderer.domElement.addEventListener('dblclick', (e) => { e.preventDefault(); fitView(); });
+  const pointFromClient = (x, y) => {
+    if (!model) return null;
+    const rect = renderer.domElement.getBoundingClientRect();
+    const ndc = new THREE.Vector2(
+      ((x - rect.left) / rect.width) * 2 - 1,
+      -((y - rect.top) / rect.height) * 2 + 1,
+    );
+    const ray = new THREE.Raycaster();
+    ray.setFromCamera(ndc, camera);
+    return ray.intersectObject(model, true)[0]?.point || null;
+  };
+  renderer.domElement.addEventListener('dblclick', (e) => {
+    e.preventDefault();
+    const p = pointFromClient(e.clientX, e.clientY);
+    if (p) focusPoint(p); else fitView();
+  });
   let lastTap = 0, lastX = 0, lastY = 0;
   renderer.domElement.addEventListener('touchend', (e) => {
     if (e.touches.length) return;
     const t = e.changedTouches[0];
     const now = Date.now();
-    if (now - lastTap < 320 && Math.hypot(t.clientX - lastX, t.clientY - lastY) < 30) fitView();
+    if (now - lastTap < 320 && Math.hypot(t.clientX - lastX, t.clientY - lastY) < 30) {
+      const p = pointFromClient(t.clientX, t.clientY);
+      if (p) focusPoint(p); else fitView();
+    }
     lastTap = now; lastX = t.clientX; lastY = t.clientY;
   }, { passive: true });
   window.addEventListener('keydown', (e) => {
