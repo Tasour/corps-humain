@@ -323,7 +323,7 @@ await check("clic sur zone masquée ne change pas la sélection", async () => {
   await page.waitForTimeout(900);
   const beforeName = await page.evaluate(() => document.getElementById("sel-name").textContent);
   // clic au centre de la vue, là où d'autres organes étaient visibles avant l'isolement
-  const box = await page.locator("canvas").boundingBox();
+  const box = await page.getByRole("application", { name: /Vue 3D interactive/ }).boundingBox();
   await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.25);
   await page.waitForTimeout(400);
   const afterName = await page.evaluate(() => document.getElementById("sel-name").textContent);
@@ -331,7 +331,7 @@ await check("clic sur zone masquée ne change pas la sélection", async () => {
 });
 await check("glisser la scène ne change pas la sélection", async () => {
   const name = await page.evaluate(() => document.getElementById("sel-name").textContent);
-  const box = await page.locator("canvas").boundingBox();
+  const box = await page.getByRole("application", { name: /Vue 3D interactive/ }).boundingBox();
   await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width * 0.62, box.y + box.height * 0.55, { steps: 10 });
@@ -340,7 +340,7 @@ await check("glisser la scène ne change pas la sélection", async () => {
   assert.equal(await page.evaluate(() => document.getElementById("sel-name").textContent), name);
 });
 await check("double-clic recadre la vue", async () => {
-  await page.locator("canvas").dblclick({ position: { x: 300, y: 300 } });
+  await page.getByRole("application", { name: /Vue 3D interactive/ }).dblclick({ position: { x: 300, y: 300 } });
   await page.waitForTimeout(900);
   const pos = await page.evaluate(() => window.__v2.camera.position.toArray());
   assert.ok(Math.hypot(pos[0] - 0.72, pos[2] - 2.85) < 0.35, `pos=${pos}`);
