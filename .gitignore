@@ -12,3 +12,5 @@ wasm/*/target/
 *.blend1
 
 __pycache__/
+
+.cache/

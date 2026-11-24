@@ -19,6 +19,11 @@ for (const layer of LAYERS) {
 
 assert.ok(js.includes("active.has(system)"), "bascule par couche absente");
 assert.ok(!js.includes("getElementById('cp-couche')"), "ancien écouteur encore présent");
+assert.ok(html.includes('id="cp-source"'), "sélecteur de source absent");
+for (const source of ['current', 'openanatomy', 'bodyatlas']) {
+  assert.ok(html.includes(`value="${source}"`), `source ${source} absente`);
+}
+assert.ok(html.includes('id="toolbar"'), "barre d'outils absente");
 assert.ok(js.includes("history.replaceState"), "état des cases non reflété dans l'URL");
 assert.ok(js.includes("syncMaster()"), "case maîtresse non synchronisée");
 

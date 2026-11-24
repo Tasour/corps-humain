@@ -245,7 +245,7 @@ scripts/
 
 ## Sélecteur de couches
 
-Le rail gauche liste six couches activables individuellement par checkbox (47 muscles chez l'homme, organes faciaux inclus) :
+Une barre d'outils à gauche ouvre des panneaux flottants : source du modèle (notre modèle validé, open-anatomy-3d ou Body Atlas 3D), sexe, couches et information. Six couches sont activables individuellement par checkbox (47 muscles chez l'homme, organes faciaux inclus) :
 peau, muscles, squelette, organes, vaisseaux, nerfs. Toutes sont cochées par
 défaut. Une case maîtresse « Toutes les couches » les active ou les désactive
 d'un seul geste. L'état est reflété dans l'URL (`?layers=skin,muscles`), ce qui

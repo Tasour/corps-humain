@@ -73,6 +73,11 @@ if (fs.existsSync(srcModels)) {
       fs.copyFileSync(path.join(srcModels, f), path.join(dstModels, f));
     }
   }
+  for (const dir of ["open-anatomy", "body-atlas"]) {
+    const srcDir = path.join(srcModels, dir);
+    const dstDir = path.join(dstModels, dir);
+    if (fs.existsSync(srcDir)) fs.cpSync(srcDir, dstDir, { recursive: true });
+  }
 }
 
 console.log(`[unify] index.html = corps animé (${build}) ; ancien atlas = ancien-atlas.html`);
