@@ -40,7 +40,7 @@ for (const nom of fichiers) {
   assert.ok(!/<script\b/i.test(html), `${nom} : script présent`);
   assert.ok(!/<img\b[^>]*src="https?:/i.test(html), `${nom} : image distante`);
   assert.ok(!/<link\b[^>]*rel="stylesheet"[^>]*href="https?:/i.test(html), `${nom} : CSS distante`);
-  assert.ok(html.includes("../v2.html?vue="), `${nom} : lien deep link absent`);
+  assert.ok(html.includes("../index.html?vue="), `${nom} : lien deep link absent`);
   verifiees++;
 }
 
