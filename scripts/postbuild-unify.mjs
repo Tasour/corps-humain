@@ -1,5 +1,5 @@
-/* Une seule application en ligne : index.html = vue corps animé (Blender).
- * L'ancien atlas reste disponible sur /ancien-atlas.html en chargement différé. */
+/* Une seule application en ligne : index.html = corps Body Atlas 3D.
+ * L'ancien atlas et les autres sources ne sont plus publiés. */
 
 import fs from "node:fs";
 import path from "node:path";
@@ -9,41 +9,40 @@ import { execFileSync } from "node:child_process";
 const root = path.resolve(import.meta.dirname, "..");
 const dist = path.join(root, "dist");
 const index = path.join(dist, "index.html");
-const v2 = path.join(dist, "v2.html");
-const legacy = path.join(dist, "ancien-atlas.html");
-const classique = path.join(dist, "classique.html");
-
-if (!fs.existsSync(v2)) throw new Error("dist/v2.html absent");
 if (!fs.existsSync(index)) throw new Error("dist/index.html absent");
 
-fs.copyFileSync(v2, legacy);
-for (const old of [v2, classique]) {
-  if (fs.existsSync(old)) fs.rmSync(old);
-}
-
-/* Identifiant de build : court sha + date. Sert à versionner les GLB et le SW. */
+/* Identifiant de build : court sha + date. */
 let sha = "local";
 try {
   sha = execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
 } catch { /* hors dépôt */ }
 const build = `${sha}-${new Date().toISOString().slice(0, 10)}`;
 
-/* Empreinte de la géométrie publiée : le build prouve ses octets. */
+/* Empreinte de la géométrie publiée : manifestes + chunks Body Atlas. */
+const modelsDir = path.join(root, "docs", "models");
+const atlasDir = path.join(modelsDir, "body-atlas");
 const geometry = {};
-for (const sex of ["female", "male"]) {
-  const p = path.join(root, "docs", "models", `corps-${sex}-opt.glb`);
-  geometry[sex] = fs.existsSync(p)
-    ? createHash("sha256").update(fs.readFileSync(p)).digest("hex")
-    : "absent";
+for (const f of fs.readdirSync(atlasDir).sort()) {
+  const fp = path.join(atlasDir, f);
+  if (!fs.statSync(fp).isFile()) continue;
+  geometry[f] = createHash("sha256")
+    .update(fs.readFileSync(path.join(atlasDir, f))).digest("hex");
 }
 const geometryHash = createHash("sha256")
   .update(JSON.stringify(geometry)).digest("hex").slice(0, 16);
+fs.mkdirSync(path.join(root, "docs", "analyses"), { recursive: true });
 fs.writeFileSync(path.join(root, "docs", "analyses", "build-geometry.json"),
   JSON.stringify({ build, geometry, combined: geometryHash }, null, 1) + "\n");
 
 let html = fs.readFileSync(index, "utf8");
 html = html.replace(/data-build="[^"]*"/, `data-build="${build}"`);
 html = html.replace(/<html\b/, `<html data-geometry="${geometryHash}"`);
+if (!html.includes("cp-view") || !html.includes("data-build")) {
+  throw new Error("index.html incomplet");
+}
+if (html.includes("ancien-atlas")) {
+  throw new Error("ancienne source encore présente dans index.html");
+}
 fs.writeFileSync(index, html);
 
 const swPath = path.join(dist, "sw.js");
@@ -54,30 +53,23 @@ if (fs.existsSync(swPath)) {
   fs.writeFileSync(swPath, sw);
 }
 
-const legacyHtml = fs.readFileSync(legacy, "utf8");
-for (const marqueur of ["id=\"patho-list\"", "id=\"hunt-modes\"", "id=\"btn-sources\"", "id=\"coupe-hud\""]) {
-  if (!legacyHtml.includes(marqueur)) throw new Error(`ancien-atlas.html incomplet : marqueur ${marqueur} absent`);
-}
-if (!html.includes("cp-view") || !html.includes("data-build")) {
-  throw new Error("index.html unifié incomplet");
-}
-
-/* Seuls les modèles optimisés sont publiés : les GLB bruts de 53 Mo restent
- * dans docs/models/ (source Blender), pas dans le site. */
-const srcModels = path.join(root, "docs", "models");
+/* Publier uniquement Body Atlas. */
 const dstModels = path.join(dist, "docs", "models");
-if (fs.existsSync(srcModels)) {
-  fs.mkdirSync(dstModels, { recursive: true });
-  for (const f of fs.readdirSync(srcModels)) {
-    if (f.endsWith("-opt.glb") || f === "catalog.json" || f === "joint-limits.json") {
-      fs.copyFileSync(path.join(srcModels, f), path.join(dstModels, f));
-    }
-  }
-  for (const dir of ["open-anatomy", "body-atlas"]) {
-    const srcDir = path.join(srcModels, dir);
-    const dstDir = path.join(dstModels, dir);
-    if (fs.existsSync(srcDir)) fs.cpSync(srcDir, dstDir, { recursive: true });
-  }
+fs.mkdirSync(dstModels, { recursive: true });
+for (const f of fs.readdirSync(dstModels)) {
+  const p = path.join(dstModels, f);
+  if (fs.statSync(p).isDirectory()) fs.rmSync(p, { recursive: true, force: true });
+  else fs.rmSync(p, { force: true });
+}
+fs.cpSync(atlasDir, path.join(dstModels, "body-atlas"), { recursive: true });
+const forksDir = path.join(modelsDir, "forks");
+if (fs.existsSync(forksDir)) fs.cpSync(forksDir, path.join(dstModels, "forks"), { recursive: true });
+for (const old of [
+  "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
+  "textures", "data", "icons", "screenshots", "v2-style.css",
+]) {
+  const p = path.join(dist, old);
+  if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
 }
 
-console.log(`[unify] index.html = corps animé (${build}) ; ancien atlas = ancien-atlas.html`);
+console.log(`[unify] index.html = Body Atlas 3D (${build})`);

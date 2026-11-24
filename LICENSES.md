@@ -42,3 +42,41 @@
 - URL : https://www.innerscene.com/tools/library/3d-parts/head-and-neck-muscles-96fb0ae7
 - Licence : **CC0 1.0** (🟢), 23 muscles faciaux intégrés au modèle validé.
 - Consulté le 2026-11-24.
+
+## Innerscene — Spinal cord / Arm nerves / Leg nerves
+
+- URLs : https://www.innerscene.com/tools/library/3d-parts/spinal-cord-with-nerve-roots-7c8957a4 ,
+  https://www.innerscene.com/tools/library/3d-parts/arm-nerves-bc1c5fa1 ,
+  https://www.innerscene.com/tools/library/3d-parts/leg-nerves-60edf433
+- Licence : **CC0 1.0** (🟢), 305 maillages nerveux ajoutés à la couche `Nerfs`.
+- Consulté le 2026-11-24.
+
+## Human Atlas Enhanced
+
+- URL : https://github.com/PrejudiceNeutrino/human-atlas-enhanced
+- Licence : **MIT** (code) + **CC BY 4.0** (données BodyParts3D) — 🟢.
+- Consulté le 2026-11-24.
+
+## Human Atlas — slorksmo
+
+- URL : https://github.com/slorksmo/Human-Atlas
+- Licence : **MIT** (code) + **CC BY 4.0** (données) — 🟢.
+- Consulté le 2026-11-24.
+
+## 3D Human Body Anatomy — SeemaBansal
+
+- URL : https://github.com/SeemaBansal1/3d-human-body-anatomy
+- Licence : données **CC BY-SA 4.0** via Z-Anatomy — 🟡.
+- Utilisé uniquement pour comparaison locale dans le sélecteur. Consulté le 2026-11-24.
+
+## 3D Anatomy — nqwrc
+
+- URL : https://github.com/nqwrc/3d-anatomy
+- Licence : **CC BY-NC-SA 4.0** — 🔴 pour toute utilisation commerciale.
+- Utilisé uniquement pour comparaison locale dans le sélecteur. Consulté le 2026-11-24.
+
+## Human Atlas 3D — wangzh
+
+- URL : https://github.com/wangzh12023/human-atlas-3d
+- Licence : **MIT** (code) + **CC BY 4.0** (données) — 🟢.
+- Consulté le 2026-11-24.
