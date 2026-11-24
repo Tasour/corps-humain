@@ -14,16 +14,11 @@ for (const layer of LAYERS) {
   assert.ok(html.includes(`for="${id}"`), `label ${layer} absent`);
   assert.ok(html.includes(`data-layer="${layer}" checked`), `${layer} doit être cochée par défaut`);
 }
-assert.ok(html.includes('id="cp-male"'), "sélecteur homme absent");
-assert.ok(html.includes('id="cp-female"'), "sélecteur femme absent");
-for (const male of ['seema', 'nqwrc', 'wangzh']) {
-  assert.ok(html.includes(`value="${male}"`), `candidat homme ${male} absent`);
-}
-for (const female of ['female-atlas', 'enhanced', 'slorksmo', 'bodyatlas', 'anatria', 'organui', 'none']) {
-  assert.ok(html.includes(`value="${female}"`), `candidate femme ${female} absente`);
-}
+assert.ok(!html.includes('data-panel="concours"'), "le bouton concours doit être supprimé");
+assert.ok(!html.includes('id="panel-concours"'), "le panneau concours doit être supprimé");
+assert.ok(js.includes("id: 'seema'"), "champion homme absent");
+assert.ok(js.includes("id: 'female-atlas'"), "championne femme absente");
 assert.ok(!html.includes('ancien-atlas'), "le lien vers l'ancien atlas doit être supprimé");
 assert.ok(html.includes('id="toolbar"'), "barre d'outils absente");
 assert.ok(js.includes("active.has(o.userData.layer)"), "bascule par couche absente");
-assert.ok(js.includes("history.replaceState"), "état non reflété dans l'URL");
-console.log("PASS couches et concours");
+console.log("PASS couches et champions");

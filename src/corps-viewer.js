@@ -1,8 +1,7 @@
-/* Corps humain — concours homme et femme, navigation universelle. */
+/* Corps humain — champions figés, sélection par raycast, popup et contour turquoise. */
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
-import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves'];
@@ -19,63 +18,18 @@ const MAP = {
   brain: 'organs', borrowed: 'organs', renal: 'organs',
 };
 const MALE = {
-  seema: {
-    label: '3D Human Body Anatomy', license: 'CC BY-SA 4.0',
-    note: '2 197 pièces, organes colorés, peau sans vêtement.',
-    kind: 'glbset', dir: './docs/models/forks/seema/models/',
-    files: { skin: ['skin.glb'], muscles: ['muscles.glb'], skeleton: ['skeleton.glb'],
-      organs: ['organs.glb'], vessels: ['arteries.glb', 'veins.glb'], nerves: ['nerves.glb'] },
-  },
-  nqwrc: {
-    label: '3D Anatomy — nqwrc', license: 'CC BY-NC-SA 4.0',
-    note: '3 499 pièces, homme, sans peau. Comparaison locale.',
-    kind: 'glbset', dir: './docs/models/forks/nqwrc/models/',
-    files: { skeleton: ['skeletal.glb', 'joints.glb'], muscles: ['muscular.glb'],
-      organs: ['visceral.glb', 'lymphatic.glb'], vessels: ['cardiovascular.glb'],
-      nerves: ['nervous.glb'] },
-  },
-  wangzh: {
-    label: 'Human Atlas 3D — wangzh', license: 'MIT + CC BY 4.0',
-    note: '14 lots système, source initialement en millimètres, convertie en mètres.',
-    kind: 'wangzh',
-  },
+  id: 'seema',
+  label: '3D Human Body Anatomy',
+  license: 'CC BY-SA 4.0',
+  kind: 'glbset', dir: './docs/models/forks/seema/models/',
+  files: { skin: ['skin.glb'], muscles: ['muscles.glb'], skeleton: ['skeleton.glb'],
+    organs: ['organs.glb'], vessels: ['arteries.glb', 'veins.glb'], nerves: ['nerves.glb'] },
 };
 const FEMALE = {
-  'female-atlas': {
-    label: 'Female Atlas', license: 'MIT + CC BY 4.0',
-    note: '3 004 pièces, corps féminin complet avec appareil reproducteur.',
-    kind: 'chunk', dir: './docs/models/contests/female-atlas/', manifest: 'atlas.json',
-  },
-  enhanced: {
-    label: 'Human Atlas Enhanced — femme', license: 'MIT + CC BY 4.0',
-    note: '888 pièces, femme dérivée expérimentale.',
-    kind: 'chunk', dir: './docs/models/forks/enhanced/', manifest: 'atlas-female.json',
-  },
-  slorksmo: {
-    label: 'Human Atlas — femme', license: 'MIT + CC BY 4.0',
-    note: '1 220 pièces, femme HRA v1.10 avec reproducteur.',
-    kind: 'chunk', dir: './docs/models/forks/slorksmo/', manifest: 'atlas-female.json',
-  },
-  bodyatlas: {
-    label: 'Body Atlas — femme', license: 'CC BY 4.0',
-    note: '2 534 pièces, femme HuBMAP avec organes génitaux.',
-    kind: 'chunk', dir: './docs/models/body-atlas/', manifest: 'atlas-female.json',
-  },
-  anatria: {
-    label: 'Anatria — femme', license: 'CC BY 4.0',
-    note: 'Tronc seulement : pas de tête, de membres ni de muscles squelettiques.',
-    kind: 'glbset', dir: './docs/models/contests/anatria-female/',
-    files: { skeleton: ['skeletal_female.glb'], skin: ['integumentary_female.glb'],
-      vessels: ['cardiovascular_female.glb'],
-      organs: ['digestive_female.glb', 'renal_female.glb', 'reproductive_female.glb',
-        'lymphatic_female.glb'] },
-  },
-  organui: {
-    label: 'OrganUI — organes reproducteurs', license: 'CC BY 4.0',
-    note: '27 organes reproducteurs seulement, pas de corps entier.',
-    kind: 'single', path: './docs/models/contests/organui-female/reproductive.glb',
-    layer: 'organs',
-  },
+  id: 'female-atlas',
+  label: 'Female Atlas',
+  license: 'CC BY 4.0',
+  kind: 'chunk', dir: './docs/models/contests/female-atlas/', manifest: 'atlas.json',
 };
 
 export function initCorpsViewer() {
@@ -113,9 +67,6 @@ export function initCorpsViewer() {
 
   const boxes = [...document.querySelectorAll('#cp-couches input[data-layer]')];
   const master = document.getElementById('cp-couche-all');
-  const maleSel = document.getElementById('cp-male');
-  const femaleSel = document.getElementById('cp-female');
-  const cache = new Map();
   const mats = new Map();
   const extraMats = new Map();
   const colors = { skin: '#bc9c7e', muscles: '#a9584c', skeleton: '#e4dcc0',
@@ -139,8 +90,19 @@ export function initCorpsViewer() {
     return '#bb8f68';
   };
   let need = true, token = 0, ctrl = null;
+  let descriptions = { seema: {}, 'female-atlas': {} };
+  let descAlias = { seema: {}, 'female-atlas': {} };
+  const alpha = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '').replace(/\d+$/, '');
+  const buildAlias = () => {
+    for (const source of Object.keys(descriptions)) {
+      descAlias[source] = {};
+      for (const [key, value] of Object.entries(descriptions[source])) {
+        descAlias[source][alpha(key)] = value;
+      }
+    }
+  };
 
-  // Sols : bleu homme, rose femme avec « Vide » si personne n'est choisie.
+  // Sols fixed.
   const ground = new THREE.Group();
   const groundSquare = (color, label) => {
     const canvas = document.createElement('canvas');
@@ -161,11 +123,62 @@ export function initCorpsViewer() {
     return mesh;
   };
   const maleSquare = groundSquare('#2f6fb3', ''); maleSquare.position.x = -0.45;
-  const femaleSquare = groundSquare('#d16b9c', 'Vide'); femaleSquare.position.x = 0.45;
+  const femaleSquare = groundSquare('#d16b9c', ''); femaleSquare.position.x = 0.45;
   ground.add(maleSquare, femaleSquare); scene.add(ground);
 
   const bodies = new THREE.Group(); scene.add(bodies);
   let maleModel = null, femaleModel = null;
+  const allBodies = () => [maleModel, femaleModel].filter(Boolean);
+
+  // Sélection et contour.
+  const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
+  const popup = document.getElementById('selection-popup');
+  const popupName = document.getElementById('selection-name');
+  const popupDesc = document.getElementById('selection-description');
+  const popupSource = document.getElementById('selection-source');
+  let selection = null;
+
+  function clearOutline() {
+    while (outlineGroup.children.length) {
+      const o = outlineGroup.children.pop();
+      o.geometry.dispose();
+      o.material.dispose();
+    }
+  }
+  function clearSelection() {
+    selection = null;
+    clearOutline();
+    popup.hidden = true;
+    if (window.__corps) window.__corps.selection = null;
+    need = true;
+  }
+  function select(mesh, clientX, clientY) {
+    clearOutline();
+    scene.updateMatrixWorld(true);
+    const edges = new THREE.EdgesGeometry(mesh.geometry, 25);
+    const material = new THREE.LineBasicMaterial({
+      color: 0x40f0e0, transparent: true, opacity: reduced ? 0.9 : 0.6,
+      blending: THREE.AdditiveBlending, depthTest: true,
+    });
+    const line = new THREE.LineSegments(edges, material);
+    line.matrixAutoUpdate = false;
+    line.matrix.copy(mesh.matrixWorld);
+    line.matrixWorldNeedsUpdate = true;
+    outlineGroup.add(line);
+    const entry = mesh.userData.selectionEntry || {};
+    popupName.textContent = entry.name || mesh.userData.selectionLabel || 'Structure';
+    popupDesc.textContent = entry.description || 'Structure anatomique référencée dans la source.';
+    popupSource.textContent = `${entry.source || ''}${entry.license ? ' — ' + entry.license : ''}`;
+    const section = host.parentElement.getBoundingClientRect();
+    const x = Math.min(clientX - section.left + 12, section.width - 300);
+    const y = Math.min(clientY - section.top + 12, section.height - 180);
+    popup.style.left = Math.max(12, x) + 'px';
+    popup.style.top = Math.max(12, y) + 'px';
+    popup.hidden = false;
+    selection = { mesh, id: mesh.userData.selectionId, source: mesh.userData.selectionSource };
+    if (window.__corps) window.__corps.selection = selection;
+    need = true;
+  }
 
   controls.addEventListener('change', () => { need = true; });
   new IntersectionObserver((e) => { if (e[0].isIntersecting) need = true; }, { threshold: 0.01 }).observe(host);
@@ -176,11 +189,7 @@ export function initCorpsViewer() {
     master.indeterminate = n > 0 && n < LAYERS.length;
   };
   const readUrl = () => {
-    const q = new URLSearchParams(location.search);
-    const m = q.get('m'), f = q.get('f');
-    if (m && MALE[m]) maleSel.value = m;
-    if (f && (FEMALE[f] || f === 'none')) femaleSel.value = f;
-    const l = q.get('layers');
+    const l = new URLSearchParams(location.search).get('layers');
     if (!l) return;
     const want = new Set(l === 'all' ? LAYERS : l.split(','));
     for (const b of boxes) b.checked = want.has(b.dataset.layer);
@@ -188,8 +197,6 @@ export function initCorpsViewer() {
   };
   const writeUrl = () => {
     const u = new URL(location.href);
-    u.searchParams.set('m', maleSel.value);
-    u.searchParams.set('f', femaleSel.value);
     const active = boxes.filter((b) => b.checked).map((b) => b.dataset.layer);
     if (active.length === LAYERS.length) u.searchParams.delete('layers');
     else u.searchParams.set('layers', active.join(','));
@@ -203,8 +210,16 @@ export function initCorpsViewer() {
     camera.left = -s * a; camera.right = s * a; camera.top = s; camera.bottom = -s;
     camera.updateProjectionMatrix();
   };
-  const mark = (o, sys) => { o.userData.layer = MAP[sys] || sys || 'organs'; return o; };
-  const allBodies = () => [maleModel, femaleModel].filter(Boolean);
+  const mark = (o, sys, source, id) => {
+    o.userData.layer = MAP[sys] || sys || 'organs';
+    o.userData.selectionSource = source;
+    o.userData.selectionId = id || o.name;
+    o.userData.selectionLabel = id || o.name;
+    const rawId = id || o.name;
+    const entry = descriptions[source]?.[rawId] || descAlias[source]?.[alpha(rawId)];
+    if (entry) o.userData.selectionEntry = entry;
+    return o;
+  };
   const bodyBox = () => {
     const b = new THREE.Box3();
     for (const m of allBodies()) b.union(new THREE.Box3().setFromObject(m));
@@ -273,9 +288,9 @@ export function initCorpsViewer() {
     controls.update(); need = true;
   };
 
-  async function chunkFetch(chunk, signal) {
+  async function chunkFetch(chunk) {
     const use = !!chunk.gzip && typeof DecompressionStream !== 'undefined';
-    const r = await fetch(use ? chunk.gzip : chunk.url, { signal });
+    const r = await fetch(use ? chunk.gzip : chunk.url);
     if (!r.ok) throw new Error('chunk absent');
     let buf = await r.arrayBuffer();
     const h = new Uint8Array(buf, 0, 2);
@@ -284,44 +299,18 @@ export function initCorpsViewer() {
     }
     return buf;
   }
-  async function buildChunk(cfg, signal) {
-    const r = await fetch(cfg.dir + cfg.manifest, { signal });
-    if (!r.ok) throw new Error('manifeste absent');
-    const at = await r.json();
-    const g = new THREE.Group();
-    const by = at.chunks.map(() => []);
-    for (const p of at.parts) by[p.chunk].push(p);
-    let next = 0;
-    const worker = async () => {
-      while (next < at.chunks.length) {
-        if (signal.aborted) return;
-        const ci = next++; const buf = await chunkFetch(at.chunks[ci], signal);
-        for (const p of by[ci]) {
-          const geo = new THREE.BufferGeometry();
-          geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(buf, p.positions, p.vertexCount * 3), 3));
-          geo.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(buf, p.normals, p.vertexCount * 3), 3, true));
-          geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, p.indices, p.indexCount), 1));
-          geo.computeBoundingSphere();
-          const m = new THREE.Mesh(geo, mats.get(MAP[p.system] || 'organs'));
-          m.name = p.name; mark(m, p.system); m.matrixAutoUpdate = false; g.add(m);
-        }
-      }
-    };
-    await Promise.all([worker(), worker(), worker()]);
-    return g;
-  }
-  async function buildGlbSet(cfg, signal) {
+  async function buildGlbSet(cfg) {
     draco.setDecoderPath('./draco/');
     const g = new THREE.Group();
     for (const [layer, files] of Object.entries(cfg.files)) {
       for (const f of files) {
-        if (signal.aborted) return g;
         const gltf = await loader.loadAsync(cfg.dir + f);
         const doomed = [];
         gltf.scene.traverse((o) => {
           if (!o.isMesh) return;
           if (/modesty[ _]?cover/i.test(o.name)) { doomed.push(o); return; }
-          o.material = mats.get(layer); mark(o, layer);
+          o.material = mats.get(layer);
+          mark(o, layer, cfg.id, o.name);
         });
         for (const o of doomed) o.parent.remove(o);
         g.add(gltf.scene);
@@ -329,116 +318,89 @@ export function initCorpsViewer() {
     }
     return g;
   }
-  async function buildSingle(cfg, signal) {
-    if (signal.aborted) return new THREE.Group();
-    const gltf = await loader.loadAsync(cfg.path);
+  async function buildChunk(cfg) {
+    const at = await (await fetch(cfg.dir + cfg.manifest)).json();
     const g = new THREE.Group();
-    gltf.scene.traverse((o) => {
-      if (!o.isMesh) return;
-      o.material = matFor(organColor(o.name)); mark(o, cfg.layer);
-    });
-    g.add(gltf.scene);
-    return g;
-  }
-  async function buildWangzh(signal) {
-    await MeshoptDecoder.ready;
-    const base = './docs/models/forks/wangzh/data/';
-    const m = await (await fetch(base + 'manifest.json', { signal })).json();
-    const g = new THREE.Group();
-    const built = await Promise.all(m.chunks.map(async (c) => {
-      if (signal.aborted) return null;
-      const buf = new Uint8Array(await (await fetch(base + c.name + '.bin', { signal })).arrayBuffer());
-      const dv = new DataView(buf.buffer);
-      const nV = dv.getUint32(0, true), nI = dv.getUint32(4, true);
-      const vL = dv.getUint32(8, true), iL = dv.getUint32(12, true);
-      const v = new Uint8Array(nV * 20);
-      MeshoptDecoder.decodeVertexBuffer(v, nV, 20, buf.subarray(16, 16 + vL));
-      const idx = new Uint32Array(nI);
-      MeshoptDecoder.decodeIndexBuffer(new Uint8Array(idx.buffer), nI, 4, buf.subarray(16 + vL, 16 + vL + iL));
-      const u = new Uint16Array(v.buffer), pos = new Float32Array(nV * 3);
-      for (let i = 0; i < nV; i++) {
-        pos[i * 3] = m.qmin[0] + u[i * 10] * m.qscale[0];
-        pos[i * 3 + 1] = m.qmin[1] + u[i * 10 + 1] * m.qscale[1];
-        pos[i * 3 + 2] = m.qmin[2] + u[i * 10 + 2] * m.qscale[2];
+    const by = at.chunks.map(() => []);
+    for (const p of at.parts) by[p.chunk].push(p);
+    let next = 0;
+    const worker = async () => {
+      while (next < at.chunks.length) {
+        const ci = next++; const buf = await chunkFetch(at.chunks[ci]);
+        for (const p of by[ci]) {
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(buf, p.positions, p.vertexCount * 3), 3));
+          geo.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(buf, p.normals, p.vertexCount * 3), 3, true));
+          geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, p.indices, p.indexCount), 1));
+          geo.computeBoundingSphere();
+          const m = new THREE.Mesh(geo, mats.get(MAP[p.system] || 'organs'));
+          m.name = p.name; mark(m, p.system, cfg.id, p.id);
+          m.userData.selectionLabel = p.name;
+          if (descriptions[cfg.id]?.[p.id]) m.userData.selectionEntry = descriptions[cfg.id][p.id];
+          m.matrixAutoUpdate = false;
+          g.add(m);
+        }
       }
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      geo.setIndex(new THREE.BufferAttribute(idx, 1)); geo.computeVertexNormals();
-      return { geo, c };
-    }));
-    for (const item of built) {
-      if (!item) continue;
-      const mesh = new THREE.Mesh(item.geo, mats.get(MAP[item.c.system] || 'organs'));
-      mark(mesh, item.c.system); g.add(mesh);
-    }
-    g.scale.setScalar(0.001);
+    };
+    await Promise.all([worker(), worker(), worker()]);
     return g;
-  }
-  const buildCandidate = (cfg, signal) => {
-    if (cfg.kind === 'chunk') return buildChunk(cfg, signal);
-    if (cfg.kind === 'glbset') return buildGlbSet(cfg, signal);
-    if (cfg.kind === 'single') return buildSingle(cfg, signal);
-    return buildWangzh(signal);
-  };
-
-  async function loadCandidate(id, cfg, signal) {
-    if (!cfg) return null;
-    if (!cache.has(id)) cache.set(id, await buildCandidate(cfg, signal));
-    return cache.get(id);
   }
 
   async function load() {
-    const mid = maleSel.value, fid = femaleSel.value;
     const myToken = ++token;
     if (ctrl) ctrl.abort();
     ctrl = new AbortController();
     bodies.clear();
     maleModel = null; femaleModel = null;
-    const male = await loadCandidate('m:' + mid, MALE[mid], ctrl.signal);
+    const male = await buildGlbSet(MALE);
     if (myToken !== token) return;
-    const female = await loadCandidate('f:' + fid, FEMALE[fid], ctrl.signal);
+    const female = await buildChunk(FEMALE);
     if (myToken !== token) return;
     maleModel = male; femaleModel = female;
-    if (maleModel) { maleModel.position.x = -0.45; bodies.add(maleModel); }
-    if (femaleModel) { femaleModel.position.x = 0.45; bodies.add(femaleModel); }
-    femaleSquare.material.map = groundSquare('#d16b9c', femaleModel ? '' : 'Vide').material.map;
-    femaleSquare.material.needsUpdate = true;
-    const mi = MALE[mid], fi = FEMALE[fid];
-    document.querySelector('.source-label').textContent = 'Concours ♂/♀';
-    document.getElementById('concours-note').textContent =
-      `${mi.label} (${mi.license}) — ${mi.note} | ` +
-      (fi ? `${fi.label} (${fi.license}) — ${fi.note}` : 'Aucune candidate femme : carré rose vide.');
+    maleModel.position.x = -0.45; femaleModel.position.x = 0.45;
+    bodies.add(maleModel, femaleModel);
+    document.querySelector('.source-label').textContent = 'Champions ♂/♀';
+    document.getElementById('source-sexe-note').textContent =
+      `Homme : ${MALE.label} (${MALE.license}) · Femme : ${FEMALE.label} (${FEMALE.license}). Cliquez une structure pour l'identifier.`;
     window.__corps = {
-      maleModel, femaleModel, source: mid, female: fid,
+      maleModel, femaleModel, source: MALE.id, female: FEMALE.id,
       THREE, camera, controls, renderer, controller: ctrl, fitView, resetView, focusPoint,
-      bodyBox, zoomBy, orbitBy, panBy, presetView,
+      bodyBox, zoomBy, orbitBy, panBy, presetView, select, clearSelection,
     };
+    clearSelection();
     apply(); resize(); fitView();
   }
 
-  const pointFromClient = (x, y) => {
+  function pick(clientX, clientY) {
     const rect = renderer.domElement.getBoundingClientRect();
-    const ndc = new THREE.Vector2(((x - rect.left) / rect.width) * 2 - 1,
-      -((y - rect.top) / rect.height) * 2 + 1);
+    const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1,
+      -((clientY - rect.top) / rect.height) * 2 + 1);
     const ray = new THREE.Raycaster(); ray.setFromCamera(ndc, camera);
-    return ray.intersectObjects(allBodies(), true)[0]?.point || null;
-  };
-  renderer.domElement.addEventListener('dblclick', (e) => {
-    e.preventDefault();
-    const p = pointFromClient(e.clientX, e.clientY);
-    if (p) focusPoint(p); else fitView();
+    const hits = ray.intersectObjects(allBodies(), true);
+    const visible = (o) => {
+      let cur = o;
+      while (cur) { if (!cur.visible) return false; cur = cur.parent; }
+      return true;
+    };
+    const hit = hits.find((h) => visible(h.object));
+    return hit ? hit.object : null;
+  }
+  let down = null;
+  renderer.domElement.addEventListener('pointerdown', (e) => {
+    down = { x: e.clientX, y: e.clientY };
   });
-  let lastTap = 0, lastX = 0, lastY = 0;
-  renderer.domElement.addEventListener('touchend', (e) => {
-    if (e.touches.length) return;
-    const t = e.changedTouches[0], now = Date.now();
-    if (now - lastTap < 320 && Math.hypot(t.clientX - lastX, t.clientY - lastY) < 30) {
-      const p = pointFromClient(t.clientX, t.clientY);
-      if (p) focusPoint(p); else fitView();
-    }
-    lastTap = now; lastX = t.clientX; lastY = t.clientY;
-  }, { passive: true });
+  renderer.domElement.addEventListener('pointerup', (e) => {
+    if (!down) return;
+    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+    down = null;
+    if (moved > 6) return;
+    const mesh = pick(e.clientX, e.clientY);
+    if (mesh) select(mesh, e.clientX, e.clientY);
+    else clearSelection();
+  });
+  document.getElementById('selection-close').addEventListener('click', clearSelection);
   window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { clearSelection(); return; }
     if (['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(document.activeElement?.tagName)) return;
     switch (e.key) {
       case 'f': case 'F': fitView(); break;
@@ -463,10 +425,6 @@ export function initCorpsViewer() {
   document.getElementById('nav-zoom-out').addEventListener('click', () => zoomBy(1 / 1.2));
   document.getElementById('nav-fit').addEventListener('click', fitView);
   document.getElementById('nav-reset').addEventListener('click', resetView);
-
-  readUrl();
-  maleSel.addEventListener('change', () => { writeUrl(); load(); });
-  femaleSel.addEventListener('change', () => { writeUrl(); load(); });
   for (const b of boxes) b.addEventListener('change', () => { sync(); writeUrl(); apply(); });
   master.addEventListener('change', () => {
     for (const b of boxes) b.checked = master.checked;
@@ -478,7 +436,16 @@ export function initCorpsViewer() {
     requestAnimationFrame(frame);
     if (document.hidden) return;
     const changed = controls.update();
-    if (changed || need) { resize(); renderer.render(scene, camera); need = false; }
+    if (selection && !reduced) {
+      const op = 0.5 + 0.5 * Math.sin(performance.now() / 1200 * Math.PI * 2);
+      for (const o of outlineGroup.children) o.material.opacity = op;
+    }
+    if (changed || need || selection) { resize(); renderer.render(scene, camera); need = false; }
   }
-  resize(); frame(); load();
+  resize(); frame();
+  fetch('./docs/models/selection-descriptions.json')
+    .then((r) => r.ok ? r.json() : null)
+    .then((d) => { if (d?.descriptions) { descriptions = d.descriptions; buildAlias(); } })
+    .catch(() => {})
+    .finally(load);
 }

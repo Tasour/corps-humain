@@ -1,5 +1,5 @@
-/* Une seule application en ligne : index.html = corps Body Atlas 3D.
- * L'ancien atlas et les autres sources ne sont plus publiés. */
+/* Une seule application en ligne : les deux champions figés, homme et femme.
+ * Les autres candidats restent dans le dépôt comme archive, hors dist. */
 
 import fs from "node:fs";
 import path from "node:path";
@@ -53,7 +53,7 @@ if (fs.existsSync(swPath)) {
   fs.writeFileSync(swPath, sw);
 }
 
-/* Publier uniquement Body Atlas. */
+/* Publier uniquement les deux champions. */
 const dstModels = path.join(dist, "docs", "models");
 fs.mkdirSync(dstModels, { recursive: true });
 for (const f of fs.readdirSync(dstModels)) {
@@ -61,11 +61,12 @@ for (const f of fs.readdirSync(dstModels)) {
   if (fs.statSync(p).isDirectory()) fs.rmSync(p, { recursive: true, force: true });
   else fs.rmSync(p, { force: true });
 }
-fs.cpSync(atlasDir, path.join(dstModels, "body-atlas"), { recursive: true });
-const forksDir = path.join(modelsDir, "forks");
-if (fs.existsSync(forksDir)) fs.cpSync(forksDir, path.join(dstModels, "forks"), { recursive: true });
-const contestsDir = path.join(modelsDir, "contests");
-if (fs.existsSync(contestsDir)) fs.cpSync(contestsDir, path.join(dstModels, "contests"), { recursive: true });
+fs.cpSync(path.join(modelsDir, "forks", "seema"),
+  path.join(dstModels, "forks", "seema"), { recursive: true });
+fs.cpSync(path.join(modelsDir, "contests", "female-atlas"),
+  path.join(dstModels, "contests", "female-atlas"), { recursive: true });
+fs.copyFileSync(path.join(modelsDir, "selection-descriptions.json"),
+  path.join(dstModels, "selection-descriptions.json"));
 for (const old of [
   "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
   "textures", "data", "icons", "screenshots", "v2-style.css",
@@ -74,4 +75,4 @@ for (const old of [
   if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
 }
 
-console.log(`[unify] index.html = concours homme/femme (${build})`);
+console.log(`[unify] index.html = champions seema + female-atlas (${build})`);

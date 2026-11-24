@@ -108,3 +108,15 @@
 - Licence : **MIT** (code) + **CC BY 4.0** (modèle HRA) — 🟢.
 - 27 organes reproducteurs féminins, sans corps entier.
 - Consulté le 2026-11-24.
+
+## Descriptions de sélection
+
+- Fichier : `docs/models/selection-descriptions.json`, généré par
+  `scripts/build_selection_descriptions.py`.
+- Homme : noms et résumés issus des fichiers `content/*.json` de
+  https://github.com/SeemaBansal1/3d-human-body-anatomy — **CC BY-SA 4.0**.
+- Femme : noms et identifiants FMA/UBERON du manifeste de
+  https://github.com/HiMahendraBeniwal/female-atlas — **CC BY 4.0**.
+- Aucune description médicale n'est inventée : à défaut de résumé amont, un texte factuel
+  de repli cite le fichier source.
+- Consulté le 2026-11-24.

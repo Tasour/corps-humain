@@ -57,6 +57,14 @@
         grid-template-columns:repeat(2,44px); gap:8px; }
       #nav-commands button { width:44px; height:44px; min-width:44px; min-height:44px; margin:0;
         padding:0; border-radius:8px; font-size:11px; font-weight:600; }
+      #selection-popup { position:absolute; z-index:14; width:min(280px,calc(100vw - 24px));
+        padding:16px 44px 16px 16px; border:1px solid var(--accent); border-radius:12px;
+        background:rgba(16,22,29,.97); box-shadow:0 10px 30px rgba(0,0,0,.5); }
+      #selection-popup[hidden] { display:none; }
+      #selection-popup h2 { margin:0 0 8px; font-size:15px; color:var(--accent); }
+      #selection-popup p { margin:8px 0 0; font-size:13px; line-height:1.45; }
+      #selection-close { position:absolute; right:8px; top:8px; width:44px; height:44px;
+        min-width:44px; min-height:44px; margin:0; padding:0; border-radius:8px; font-size:18px; }
       @media (pointer:coarse) {
         #cp-view::after { content:'Glissez pour tourner · pincez pour zoomer'; position:absolute; left:8px; bottom:8px;
           background:rgba(0,0,0,.55); color:#e6e6e6; font-size:11px; padding:4px 8px; border-radius:8px; pointer-events:none; }
@@ -66,6 +74,7 @@
         #toolbar { padding:8px 4px; }
         #toolbar button { width:44px; min-width:44px; }
         .panel { left:58px; top:8px; width:min(240px,calc(100vw - 68px)); }
+        #selection-popup { left:12px !important; right:12px; top:auto !important; bottom:12px; width:auto; }
         .build { display:none; }
       }
       .skip-link { position:absolute; left:8px; top:-48px; z-index:20; padding:8px 12px;
@@ -84,31 +93,10 @@
     </header>
     <main>
       <nav id="toolbar" aria-label="Outils d'interface">
-        <button type="button" data-panel="concours" aria-expanded="false" aria-controls="panel-concours" title="Concours anatomiques">CONC</button>
         <button type="button" data-panel="couches" aria-expanded="false" aria-controls="panel-couches" title="Couches anatomiques">COUCH</button>
         <button type="button" data-panel="info" aria-expanded="false" aria-controls="panel-info">INFO</button>
       </nav>
       <section id="viewport">
-        <div class="panel" id="panel-concours" hidden>
-          <h2>Concours anatomiques</h2>
-          <label for="cp-male">Homme — carré bleu</label>
-          <select id="cp-male" aria-label="Candidat homme">
-            <option value="seema">3D Human Body Anatomy</option>
-            <option value="nqwrc">3D Anatomy — nqwrc</option>
-            <option value="wangzh">Human Atlas 3D — wangzh</option>
-          </select>
-          <label for="cp-female">Femme — carré rose</label>
-          <select id="cp-female" aria-label="Candidat femme">
-            <option value="female-atlas">Female Atlas — corps complet</option>
-            <option value="enhanced">Human Atlas Enhanced — femme</option>
-            <option value="slorksmo">Human Atlas — femme</option>
-            <option value="bodyatlas">Body Atlas — femme</option>
-            <option value="anatria">Anatria — tronc seulement</option>
-            <option value="organui">OrganUI — organes seulement</option>
-            <option value="none">Aucune — laisser Vide</option>
-          </select>
-          <p id="concours-note" class="source-note">—</p>
-        </div>
         <div class="panel" id="panel-couches" hidden>
           <h2>Couches anatomiques</h2>
           <fieldset class="couches" id="cp-couches">
@@ -136,6 +124,12 @@
           <button type="button" id="nav-zoom-out" aria-label="Dézoomer">−</button>
           <button type="button" id="nav-fit" aria-label="Cadrer le modèle">CADRER</button>
           <button type="button" id="nav-reset" aria-label="Réinitialiser la vue">RESET</button>
+        </div>
+        <div id="selection-popup" hidden role="dialog" aria-modal="false" aria-live="polite" aria-label="Détails de la structure">
+          <button type="button" id="selection-close" aria-label="Fermer la sélection">×</button>
+          <h2 id="selection-name"></h2>
+          <p id="selection-description"></p>
+          <p id="selection-source" class="source-note"></p>
         </div>
       </section>
     </main>

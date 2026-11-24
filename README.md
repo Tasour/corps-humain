@@ -13,6 +13,18 @@ Le contrôle des collisions est assuré par `npm run check:collisions` et
 
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
+### Paire déployée et sélection
+
+Le site affiche deux champions figés, issus du concours du 2026-11-24 : **3D Human Body
+Anatomy** (`seema`, CC BY-SA 4.0) sur le carré bleu et **Female Atlas**
+(`female-atlas`, MIT + CC BY 4.0) sur le carré rose. Les géométries restent indépendantes.
+
+Un clic ou un tap sélectionne le premier maillage touché par le rayon issu de la caméra.
+Une popup affiche alors le nom de la structure, une courte description sourcée et sa licence,
+et un fin contour turquoise clignote autour de la pièce. Un clic dans le vide, `Échap` ou le
+bouton × effacent la sélection. Les candidats non retenus restent archivés dans
+`docs/models/` mais ne sont plus publiés. Détails : `docs/models/multi-sources.md`.
+
 ### Version déployée
 
 Le site public est la branche `gh-pages`, copie statique de `dist/`. Service worker `corps-v44`.
