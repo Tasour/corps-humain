@@ -21,6 +21,11 @@ Anatomy** (`seema`, CC BY-SA 4.0) sur le carré bleu et **Body Atlas 3D — femm
 `female-atlas` a été écarté : 72 % de géométrie dérivée d'une référence masculine
 et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleur-modele.md`.
 
+Le corps féminin est complété par des muscles faciaux, des muscles du tronc, des
+cheveux et un réseau nerveux périphérique issus de la référence masculine et
+recalés sur 13 repères anatomiques. La couche « Grossesse — référence » est masquée
+par défaut. Voir `docs/models/multi-sources.md`.
+
 Un clic ou un tap sélectionne le premier maillage touché par le rayon issu de la caméra.
 Une popup affiche alors le nom de la structure, une courte description sourcée et sa licence,
 et un fin contour turquoise clignote autour de la pièce. Un clic dans le vide, `Échap` ou le

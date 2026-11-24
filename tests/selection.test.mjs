@@ -79,5 +79,14 @@ for (const file of ["skin", "muscles", "skeleton", "organs", "arteries", "veins"
   }
 }
 
+/* Couches ajoutées et compléments de la référence masculine. */
+assert.ok(js.includes("const REFERENCE_LAYERS = ['pregnancy']"), "couche grossesse absente");
+assert.ok(js.includes("G_FJ2811: 'skin'"), "oreille externe femelle mal classée");
+assert.ok(js.includes('FACIAL_TOKENS'), "tokens muscles faciaux absents");
+assert.ok(js.includes('TRUNK_TOKENS'), "tokens muscles du tronc absents");
+assert.ok(js.includes('HAIR_TOKENS'), "tokens cheveux absents");
+assert.ok(js.includes('buildLandmarks()'), "recalage des compléments absent");
+assert.ok(js.includes('makeWarp('), "déformation des compléments absente");
+
 console.log(`PASS sélection — ${Object.keys(desc.descriptions.seema).length} homme, ` +
   `${Object.keys(desc.descriptions.bodyatlas).length} femme`);

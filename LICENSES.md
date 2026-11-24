@@ -123,3 +123,22 @@
   les autres descriptions sont factuelles et citent l'identifiant et la source, sans
   invention clinique.
 - Consulté le 2026-11-24.
+
+## Compléments anatomiques féminins (2026-11-25)
+
+- Source : https://github.com/SeemaBansal1/3d-human-body-anatomy (Z-Anatomy) —
+  **CC BY-SA 4.0** 🟡. Le corps féminin composite hérite donc de cette licence
+  pour les pièces greffées ; le jeu HRA d'origine reste CC BY 4.0.
+- Pièces ajoutées et recalées sur la morphologie féminine :
+  34 muscles faciaux, 8 muscles du tronc (grand dorsal, grand droit, carré des
+  lombes, transverse de l'abdomen), 5 maillages cheveux/sourcils et 255 nerfs
+  périphériques nommés. Chaque pièce reste sélectionnable et son popup indique
+  « référence masculine adaptée ».
+- L'oblique interne n'est pas présente dans cette référence : elle n'a pas été
+  ajoutée plutôt que d'être inventée.
+- Aucun asset MakeHuman ou Innerscene n'a été nécessaire : les compléments
+  proviennent du jeu déjà publié et vérifié.
+- Recalage : déplacement pondéré par 13 repères anatomiques
+  (yeux, mandible, frontal, sternum, humérus, radius, fémur, tibia, sacrum),
+  calculé à l'exécution sans aléa ni réseau supplémentaire.
+- Consulté le 2026-11-25.

@@ -57,7 +57,8 @@
         grid-template-columns:repeat(2,44px); gap:8px; }
       #nav-commands button { width:44px; height:44px; min-width:44px; min-height:44px; margin:0;
         padding:0; border-radius:8px; font-size:11px; font-weight:600; }
-      #cp-skin-only { width:100%; min-height:44px; margin-top:8px; }
+      .presets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
+      .presets button { min-height:44px; padding:0 8px; border-radius:8px; font-size:12px; font-weight:600; }
       #selection-popup { position:absolute; z-index:14; width:min(280px,calc(100vw - 24px));
         padding:16px 44px 16px 16px; border:1px solid var(--accent); border-radius:12px;
         background:rgba(16,22,29,.97); box-shadow:0 10px 30px rgba(0,0,0,.5); }
@@ -111,8 +112,16 @@
             <label for="cp-couche-organs"><input type="checkbox" aria-label="Organes" id="cp-couche-organs" data-layer="organs" checked /> Organes</label>
             <label for="cp-couche-vessels"><input type="checkbox" aria-label="Vaisseaux" id="cp-couche-vessels" data-layer="vessels" checked /> Vaisseaux</label>
             <label for="cp-couche-nerves"><input type="checkbox" aria-label="Nerfs" id="cp-couche-nerves" data-layer="nerves" checked /> Nerfs</label>
+            <label for="cp-couche-cosmetic"><input type="checkbox" aria-label="Cheveux et sourcils" id="cp-couche-cosmetic" data-layer="cosmetic" checked /> Cheveux et sourcils</label>
+            <label for="cp-couche-pregnancy"><input type="checkbox" aria-label="Grossesse — référence" id="cp-couche-pregnancy" data-layer="pregnancy" /> Grossesse — référence</label>
           </fieldset>
-          <button type="button" id="cp-skin-only" title="N'afficher que la peau">Peau seule</button>
+          <div class="presets" aria-label="Préréglages d'affichage">
+            <button type="button" id="cp-preset-skin" title="N'afficher que la peau et les cheveux">Peau</button>
+            <button type="button" id="cp-preset-muscles" title="N'afficher que les muscles">Muscles</button>
+            <button type="button" id="cp-preset-skeleton" title="N'afficher que le squelette">Squelette</button>
+            <button type="button" id="cp-preset-organs" title="N'afficher que les organes">Organes</button>
+            <button type="button" id="cp-preset-xray" title="Afficher tous les calques en transparence">Rayon X</button>
+          </div>
         </div>
         <div class="panel" id="panel-info" hidden>
           <h2>Information</h2>

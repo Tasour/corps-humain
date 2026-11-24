@@ -35,3 +35,18 @@ morphologie sans les couches internes. Les descriptions sont construites par
 
 Voir `docs/veille/2026-11-24-femelle-meilleur-modele.md`,
 `docs/veille/2026-11-24-forks-body-atlas.md`, `docs/models/concours-femme.md` et `LICENSES.md`.
+
+## Compléments du 2026-11-25
+
+Le corps femelle reçoit des compléments prélevés sur la référence masculine
+`seema` (Z-Anatomy, CC BY-SA 4.0) et recalés sur 13 repères anatomiques :
+34 muscles faciaux, 8 muscles du tronc, cheveux et sourcils, 255 nerfs
+périphériques. Ils restent des structures indépendantes, étiquetées
+« référence masculine adaptée » dans le popup. L'oblique interne manque dans
+cette référence et n'a pas été fabriquée.
+
+Les 8 structures de grossesse (placenta, amnion, cordon) sont désormais dans une
+couche « Grossesse — référence », masquée au démarrage. Les préréglages Peau,
+Muscles, Squelette, Organes et Rayon X permettent d'éviter le mélange
+transparent qui rendait le dos illisible. Le mode Rayon X reste le mode par
+défaut ; l'ordre de rendu des couches est désormais explicite.

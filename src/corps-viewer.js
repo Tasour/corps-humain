@@ -4,7 +4,12 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves'];
+const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves', 'cosmetic'];
+const REFERENCE_LAYERS = ['pregnancy'];
+const ALL_LAYERS = [...LAYERS, ...REFERENCE_LAYERS];
+const FEMALE_OVERRIDES = { G_FJ2811: 'skin' };
+const RENDER_ORDER = { pregnancy: 0, organs: 1, skeleton: 2, vessels: 3,
+  nerves: 4, muscles: 5, skin: 6, cosmetic: 7 };
 const MAP = {
   skeletal: 'skeleton', joints: 'skeleton', ligaments: 'skeleton', skeleton: 'skeleton',
   muscular: 'muscles', muscles: 'muscles', 'donor-muscle': 'muscles', connective: 'muscles',
@@ -14,7 +19,7 @@ const MAP = {
   nervous: 'nerves', nerves: 'nerves',
   cardiac: 'organs', respiratory: 'organs', digestive: 'organs', urinary: 'organs',
   sensory: 'organs', endocrine: 'organs', lymphatic: 'organs', reproductive: 'organs',
-  pregnancy: 'organs', visceral: 'organs', heart: 'organs', organs: 'organs',
+  pregnancy: 'pregnancy', visceral: 'organs', heart: 'organs', organs: 'organs',
   brain: 'organs', borrowed: 'organs', renal: 'organs',
 };
 const MALE = {
@@ -31,6 +36,20 @@ const FEMALE = {
   license: 'CC BY 4.0',
   note: '2 534 pièces, peau Visible Human Female, apports masculins recalés et documentés.',
   kind: 'chunk', dir: './docs/models/body-atlas/', manifest: 'atlas-female.json',
+};
+
+/* Compléments issus de la référence masculine : jamais fusionnés avec le HRA,
+ * chaque pièce reste sélectionnable et étiquetée comme adaptation. */
+const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+const FACIAL_TOKENS = ['frontalis', 'orbicularisoculi', 'orbicularisoris', 'masseter',
+  'temporalis', 'zygomaticus', 'risorius', 'levatorlabii', 'depressorlabii',
+  'depressoranguli', 'mentalis', 'corrugator', 'procerus', 'nasalis'];
+const TRUNK_TOKENS = ['latissimusdorsi', 'rectusabdominis', 'quadratuslumborum',
+  'internaloblique', 'transversusabdominis'];
+const HAIR_TOKENS = ['hairsofhead', 'hairsofeyebrow', 'eyebrow'];
+const matches = (name, tokens) => {
+  const n = norm(name);
+  return tokens.some((t) => n.includes(t));
 };
 
 export function initCorpsViewer() {
@@ -71,10 +90,18 @@ export function initCorpsViewer() {
   const mats = new Map();
   const extraMats = new Map();
   const colors = { skin: '#bc9c7e', muscles: '#a9584c', skeleton: '#e4dcc0',
-    organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f' };
+    organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f',
+    cosmetic: '#2b211c', hair: '#2b211c' };
   for (const [k, c] of Object.entries(colors)) {
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
+  // Variation déterministe et subtile de la peau, sans texture réseau.
+  mats.get('skin').onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      '#include <color_fragment>\n diffuseColor.rgb *= 0.975 + 0.025 * sin(gl_FragCoord.x * 0.07 + gl_FragCoord.y * 0.11);');
+  };
+  let xray = true;
   const matFor = (hex) => {
     if (!extraMats.has(hex)) extraMats.set(hex, new THREE.MeshStandardMaterial({
       color: new THREE.Color(hex), roughness: 0.62 }));
@@ -128,8 +155,8 @@ export function initCorpsViewer() {
   ground.add(maleSquare, femaleSquare); scene.add(ground);
 
   const bodies = new THREE.Group(); scene.add(bodies);
-  let maleModel = null, femaleModel = null;
-  const allBodies = () => [maleModel, femaleModel].filter(Boolean);
+  let maleModel = null, femaleModel = null, supplements = null, femaleManifest = null;
+  const allBodies = () => [maleModel, femaleModel, supplements].filter(Boolean);
 
   // Sélection et contour.
   const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
@@ -203,14 +230,14 @@ export function initCorpsViewer() {
   new IntersectionObserver((e) => { if (e[0].isIntersecting) need = true; }, { threshold: 0.01 }).observe(host);
 
   const sync = () => {
-    const n = boxes.filter((b) => b.checked).length;
+    const n = boxes.filter((b) => LAYERS.includes(b.dataset.layer) && b.checked).length;
     master.checked = n === LAYERS.length;
     master.indeterminate = n > 0 && n < LAYERS.length;
   };
   const readUrl = () => {
     const l = new URLSearchParams(location.search).get('layers');
     if (!l) return;
-    const want = new Set(l === 'all' ? LAYERS : l.split(','));
+    const want = new Set(l === 'all' ? ALL_LAYERS : l.split(','));
     for (const b of boxes) b.checked = want.has(b.dataset.layer);
     sync();
   };
@@ -229,8 +256,9 @@ export function initCorpsViewer() {
     camera.left = -s * a; camera.right = s * a; camera.top = s; camera.bottom = -s;
     camera.updateProjectionMatrix();
   };
-  const mark = (o, sys, source, id) => {
-    o.userData.layer = MAP[sys] || sys || 'organs';
+  const mark = (o, sys, source, id, forceLayer) => {
+    o.userData.layer = forceLayer || FEMALE_OVERRIDES[id] || MAP[sys] || sys || 'organs';
+    o.renderOrder = RENDER_ORDER[o.userData.layer] ?? 0;
     o.userData.selectionSource = source;
     o.userData.selectionId = id || o.name;
     o.userData.selectionLabel = id || o.name;
@@ -246,15 +274,14 @@ export function initCorpsViewer() {
   };
   const apply = () => {
     const active = new Set(boxes.filter((b) => b.checked).map((b) => b.dataset.layer));
-    const all = active.size === LAYERS.length;
     let n = 0;
     for (const m of allBodies()) m.traverse((o) => {
       if (!o.isMesh) return;
       o.visible = active.has(o.userData.layer);
       if (o.visible) n++;
     });
-    const skin = mats.get('skin'); skin.transparent = all; skin.opacity = all ? 0.16 : 1; skin.depthWrite = !all;
-    const muscle = mats.get('muscles'); muscle.transparent = all; muscle.opacity = all ? 0.6 : 1; muscle.depthWrite = !all;
+    const skin = mats.get('skin'); skin.transparent = xray; skin.opacity = xray ? 0.16 : 1; skin.depthWrite = !xray;
+    const muscle = mats.get('muscles'); muscle.transparent = xray; muscle.opacity = xray ? 0.6 : 1; muscle.depthWrite = !xray;
     if (window.__corps) window.__corps.activeLayers = [...active];
     document.getElementById('corps-info').textContent = `${n} maillage(s) visible(s)`;
     need = true;
@@ -328,8 +355,10 @@ export function initCorpsViewer() {
         gltf.scene.traverse((o) => {
           if (!o.isMesh) return;
           if (/modesty[ _]?cover/i.test(o.name)) { doomed.push(o); return; }
-          o.material = mats.get(layer);
-          mark(o, layer, cfg.id, o.name);
+          o.userData.file = f;
+          const cosmetic = matches(o.name, HAIR_TOKENS);
+          o.material = mats.get(cosmetic ? 'hair' : layer);
+          mark(o, layer, cfg.id, o.name, cosmetic ? 'cosmetic' : undefined);
         });
         for (const o of doomed) o.parent.remove(o);
         g.add(gltf.scene);
@@ -339,9 +368,15 @@ export function initCorpsViewer() {
   }
   async function buildChunk(cfg) {
     const at = await (await fetch(cfg.dir + cfg.manifest)).json();
+    femaleManifest = at;
     const g = new THREE.Group();
     const by = at.chunks.map(() => []);
-    for (const p of at.parts) by[p.chunk].push(p);
+    const nameCounts = new Map();
+    for (const p of at.parts) {
+      const key = norm(p.name);
+      nameCounts.set(key, (nameCounts.get(key) || 0) + 1);
+      by[p.chunk].push(p);
+    }
     let next = 0;
     const worker = async () => {
       while (next < at.chunks.length) {
@@ -352,10 +387,16 @@ export function initCorpsViewer() {
           geo.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(buf, p.normals, p.vertexCount * 3), 3, true));
           geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, p.indices, p.indexCount), 1));
           geo.computeBoundingSphere();
-          const m = new THREE.Mesh(geo, mats.get(MAP[p.system] || 'organs'));
-          m.name = p.name; mark(m, p.system, cfg.id, p.id);
-          m.userData.selectionLabel = p.name;
-          if (descriptions[cfg.id]?.[p.id]) m.userData.selectionEntry = descriptions[cfg.id][p.id];
+          const layer = FEMALE_OVERRIDES[p.id] || MAP[p.system] || 'organs';
+          const m = new THREE.Mesh(geo, mats.get(layer));
+          m.name = p.name; mark(m, p.system, cfg.id, p.id, layer);
+          const duplicate = nameCounts.get(norm(p.name)) > 1;
+          const cx = (p.bounds[0][0] + p.bounds[1][0]) / 2;
+          const side = Math.abs(cx) < 0.005 ? 'médian' : cx > 0 ? 'gauche' : 'droite';
+          const label = duplicate ? `${p.name} — ${side}` : p.name;
+          m.userData.selectionLabel = label;
+          const entry = descriptions[cfg.id]?.[p.id];
+          if (entry) m.userData.selectionEntry = duplicate ? { ...entry, name: label } : entry;
           m.matrixAutoUpdate = false;
           g.add(m);
         }
@@ -365,12 +406,119 @@ export function initCorpsViewer() {
     return g;
   }
 
+  const normName = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const centerOf = (bounds) => new THREE.Vector3(
+    (bounds[0][0] + bounds[1][0]) / 2,
+    (bounds[0][1] + bounds[1][1]) / 2,
+    (bounds[0][2] + bounds[1][2]) / 2);
+  const femaleCenter = (key) => {
+    const part = femaleManifest?.parts.find((p) => p.id === key ||
+      normName(p.name) === normName(key));
+    return part ? centerOf(part.bounds) : null;
+  };
+  const maleCenter = (pattern, side, exact) => {
+    let found = null;
+    maleModel.updateMatrixWorld(true);
+    const wanted = normName(exact || pattern + (side || ''));
+    maleModel.traverse((o) => {
+      if (found || !o.isMesh) return;
+      const n = normName(o.name);
+      const ok = exact ? n === wanted : n.includes(normName(pattern)) && (!side || n.endsWith(normName(side)));
+      if (!ok) return;
+      found = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()).sub(maleModel.position);
+    });
+    return found;
+  };
+  const buildLandmarks = () => {
+    const pairs = [];
+    const add = (male, female) => {
+      if (male && female) pairs.push([male, female]);
+    };
+    add(maleCenter('sclera', 'r001'), femaleCenter('VH_F_sclera_R'));
+    add(maleCenter('sclera', 'l001'), femaleCenter('VH_F_sclera_L'));
+    add(maleCenter('mandible'), femaleCenter('G_FJ3289'));
+    add(maleCenter('frontalbone'), femaleCenter('G_FJ3200'));
+    add(maleCenter('bodyofsternum'), femaleCenter('G_FJ3178'));
+    add(maleCenter('humerus', 'r001'), femaleCenter('G_FJ3368'));
+    add(maleCenter('humerus', 'l001'), femaleCenter('G_FJ3262'));
+    add(maleCenter('radius', 'r001'), femaleCenter('G_FJ3349'));
+    add(maleCenter('radius', 'l001'), femaleCenter('G_FJ3277'));
+    add(maleCenter(null, null, 'femurr001'), femaleCenter('VH_F_femur_R'));
+    add(maleCenter(null, null, 'femurl001'), femaleCenter('VH_F_femur_L'));
+    add(maleCenter(null, null, 'tibiar001'), femaleCenter('VH_F_tibia_R'));
+    add(maleCenter(null, null, 'tibial001'), femaleCenter('VH_F_tibia_L'));
+    add(maleCenter('sacrum'), femaleCenter('VH_F_sacrum'));
+    return pairs;
+  };
+  const makeWarp = (pairs) => (p) => {
+    if (!pairs.length) return p.clone();
+    let sx = 0, sy = 0, sz = 0, sw = 0;
+    for (const [male, female] of pairs) {
+      const d2 = p.distanceToSquared(male);
+      const w = 1 / (d2 * d2 + 1e-5);
+      sx += (female.x - male.x) * w;
+      sy += (female.y - male.y) * w;
+      sz += (female.z - male.z) * w;
+      sw += w;
+    }
+    return new THREE.Vector3(p.x + sx / sw, p.y + sy / sw, p.z + sz / sw);
+  };
+  const cleanName = (name) => {
+    const raw = String(name || '');
+    const side = raw.match(/[._]?([rl])\d+$/i)?.[1]?.toLowerCase();
+    const base = raw.replace(/[._]?[rl]?\d+$/i, '').replace(/_/g, ' ').trim();
+    return side ? `${base} — ${side === 'l' ? 'gauche' : 'droite'}` : base;
+  };
+  const supplementEntry = (name, kind) => ({
+    name: cleanName(name),
+    description: `${cleanName(name)} — ${kind} de la référence masculine (Z-Anatomy), recalé sur la morphologie féminine. Ce n'est pas une donnée issue de la femme scanée.`,
+    source: 'Z-Anatomy via 3D Human Body Anatomy (SeemaBansal1)',
+    license: 'CC BY-SA 4.0',
+    origin: 'référence masculine adaptée',
+  });
+
+  async function buildSupplements() {
+    const warp = makeWarp(buildLandmarks());
+    const g = new THREE.Group();
+    const nervesFile = MALE.files.nerves[0];
+    const musclesFile = MALE.files.muscles[0];
+    let added = 0;
+    maleModel.traverse((o) => {
+      if (!o.isMesh || !o.userData.file) return;
+      let layer = null, kind = null;
+      if (matches(o.name, HAIR_TOKENS)) { layer = 'cosmetic'; kind = 'cheveux ou sourcils'; }
+      else if (o.userData.file === musclesFile && matches(o.name, FACIAL_TOKENS)) { layer = 'muscles'; kind = 'muscle facial'; }
+      else if (o.userData.file === musclesFile && matches(o.name, TRUNK_TOKENS)) { layer = 'muscles'; kind = 'muscle du tronc'; }
+      else if (o.userData.file === nervesFile) { layer = 'nerves'; kind = 'nerf périphérique'; }
+      if (!layer) return;
+      const geo = o.geometry.clone();
+      const pos = geo.getAttribute('position');
+      for (let i = 0; i < pos.count; i++) {
+        const q = warp(new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i)));
+        pos.setXYZ(i, q.x, q.y, q.z);
+      }
+      if (!pos.array.every(Number.isFinite)) return;
+      pos.needsUpdate = true;
+      geo.computeVertexNormals();
+      geo.computeBoundingSphere();
+      const m = new THREE.Mesh(geo, mats.get(layer === 'cosmetic' ? 'hair' : layer));
+      m.name = o.name;
+      mark(m, layer, MALE.id, o.name, layer);
+      m.userData.selectionLabel = cleanName(o.name);
+      m.userData.selectionEntry = supplementEntry(o.name, kind);
+      g.add(m);
+      added++;
+    });
+    g.userData.count = added;
+    return g;
+  }
+
   async function load() {
     const myToken = ++token;
     if (ctrl) ctrl.abort();
     ctrl = new AbortController();
     bodies.clear();
-    maleModel = null; femaleModel = null;
+    maleModel = null; femaleModel = null; supplements = null; femaleManifest = null;
     const male = await buildGlbSet(MALE);
     if (myToken !== token) return;
     const female = await buildChunk(FEMALE);
@@ -378,14 +526,20 @@ export function initCorpsViewer() {
     maleModel = male; femaleModel = female;
     maleModel.position.x = -0.45; femaleModel.position.x = 0.45;
     bodies.add(maleModel, femaleModel);
+    supplements = await buildSupplements();
+    supplements.position.x = 0.45;
+    bodies.add(supplements);
     document.querySelector('.source-label').textContent = 'Champions ♂/♀';
     document.getElementById('source-sexe-note').textContent =
       `Homme : ${MALE.label} (${MALE.license}) · Femme : ${FEMALE.label} (${FEMALE.license}) — ${FEMALE.note}. ` +
-      `Le clic sélectionne le premier maillage touché par le rayon, y compris à travers la peau translucide.`;
+      `Compléments : muscles faciaux, muscles du tronc, cheveux et réseau nerveux périphérique issus de la ` +
+      `référence masculine Z-Anatomy, recalés sur la femme et étiquetés comme adaptations. ` +
+      `Le clic sélectionne le premier maillage touché par le rayon ; en mode Rayon X, il peut traverser la peau translucide.`;
     window.__corps = {
-      maleModel, femaleModel, source: MALE.id, female: FEMALE.id,
+      maleModel, femaleModel, supplements, source: MALE.id, female: FEMALE.id,
       THREE, camera, controls, renderer, controller: ctrl, fitView, resetView, focusPoint,
-      bodyBox, zoomBy, orbitBy, panBy, presetView, select, clearSelection,
+      bodyBox, zoomBy, orbitBy, panBy, presetView, select, clearSelection, setPreset, apply,
+      loaders: { GLTFLoader, DRACOLoader }, get xray() { return xray; },
     };
     clearSelection();
     apply(); resize(); fitView();
@@ -447,13 +601,30 @@ export function initCorpsViewer() {
   document.getElementById('nav-reset').addEventListener('click', resetView);
   for (const b of boxes) b.addEventListener('change', () => { sync(); writeUrl(); apply(); });
   master.addEventListener('change', () => {
-    for (const b of boxes) b.checked = master.checked;
+    for (const b of boxes) {
+      if (LAYERS.includes(b.dataset.layer)) b.checked = master.checked;
+    }
     master.indeterminate = false; writeUrl(); apply();
   });
-  document.getElementById('cp-skin-only').addEventListener('click', () => {
-    for (const b of boxes) b.checked = b.dataset.layer === 'skin';
+  const presets = {
+    skin: ['skin', 'cosmetic'],
+    muscles: ['muscles'],
+    skeleton: ['skeleton'],
+    organs: ['organs'],
+    xray: ALL_LAYERS,
+  };
+  const setPreset = (kind) => {
+    const want = new Set(presets[kind] || []);
+    for (const b of boxes) b.checked = want.has(b.dataset.layer);
+    xray = kind === 'xray';
     sync(); writeUrl(); apply();
-  });
+  };
+  for (const [kind, id] of Object.entries({
+    skin: 'cp-preset-skin', muscles: 'cp-preset-muscles', skeleton: 'cp-preset-skeleton',
+    organs: 'cp-preset-organs', xray: 'cp-preset-xray',
+  })) {
+    document.getElementById(id).addEventListener('click', () => setPreset(kind));
+  }
   window.addEventListener('resize', () => { resize(); need = true; });
 
   function frame() {
