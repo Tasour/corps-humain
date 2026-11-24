@@ -84,27 +84,30 @@
     </header>
     <main>
       <nav id="toolbar" aria-label="Outils d'interface">
-        <button type="button" data-panel="sources" aria-expanded="false" aria-controls="panel-sources">SRC</button>
-        <button type="button" data-panel="sexe" aria-expanded="false" aria-controls="panel-sexe">SEXE</button>
+        <button type="button" data-panel="concours" aria-expanded="false" aria-controls="panel-concours" title="Concours anatomiques">CONC</button>
         <button type="button" data-panel="couches" aria-expanded="false" aria-controls="panel-couches" title="Couches anatomiques">COUCH</button>
         <button type="button" data-panel="info" aria-expanded="false" aria-controls="panel-info">INFO</button>
       </nav>
       <section id="viewport">
-        <div class="panel" id="panel-sources" hidden>
-          <h2>Source anatomique</h2>
-          <label for="cp-source">Jeu de données</label>
-          <select id="cp-source" aria-label="Source anatomique">
+        <div class="panel" id="panel-concours" hidden>
+          <h2>Concours anatomiques</h2>
+          <label for="cp-male">Homme — carré bleu</label>
+          <select id="cp-male" aria-label="Candidat homme">
             <option value="seema">3D Human Body Anatomy</option>
             <option value="nqwrc">3D Anatomy — nqwrc</option>
             <option value="wangzh">Human Atlas 3D — wangzh</option>
           </select>
-        </div>
-        <div class="panel" id="panel-sexe" hidden>
-          <h2>Sexe</h2>
-          <label for="cp-sexe">Corps affiché</label>
-          <select id="cp-sexe" aria-label="Sexe" disabled>
-            <option value="male">Homme — seule source disponible</option>
+          <label for="cp-female">Femme — carré rose</label>
+          <select id="cp-female" aria-label="Candidat femme">
+            <option value="female-atlas">Female Atlas — corps complet</option>
+            <option value="enhanced">Human Atlas Enhanced — femme</option>
+            <option value="slorksmo">Human Atlas — femme</option>
+            <option value="bodyatlas">Body Atlas — femme</option>
+            <option value="anatria">Anatria — tronc seulement</option>
+            <option value="organui">OrganUI — organes seulement</option>
+            <option value="none">Aucune — laisser Vide</option>
           </select>
+          <p id="concours-note" class="source-note">—</p>
         </div>
         <div class="panel" id="panel-couches" hidden>
           <h2>Couches anatomiques</h2>

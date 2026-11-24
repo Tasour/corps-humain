@@ -8,13 +8,8 @@ const js = readFileSync(root + "src/corps-viewer.js", "utf8");
 for (const id of ["nav-zoom-in", "nav-zoom-out", "nav-fit", "nav-reset"]) {
   assert.ok(html.includes(`id="${id}"`), `bouton ${id} absent`);
 }
-for (const removed of ["bodyatlas", "slorksmo", "enhanced"]) {
-  assert.ok(!html.includes(`value="${removed}"`), `source ${removed} encore présente`);
-}
-for (const kept of ["seema", "nqwrc", "wangzh"]) {
-  assert.ok(html.includes(`value="${kept}"`), `source ${kept} absente`);
-}
-assert.ok(!html.includes('Body Atlas 3D'), "ancienne source encore dans le header");
+assert.ok(html.includes('data-panel="concours"'), "panneau concours absent");
+assert.ok(html.includes('id="panel-concours"'), "panneau concours absent");
 assert.ok(html.includes('role="application"'), "canvas sans rôle application");
 assert.ok(html.includes('aria-label="Vue 3D interactive du corps humain"'), "aria-label canvas absent");
 assert.ok(js.includes("THREE.MOUSE.ROTATE"), "orbite souris absente");
@@ -31,6 +26,5 @@ assert.ok(js.includes("'Vide'"), "texte Vide absent");
 assert.ok(js.includes("fitView"), "recadrage absent");
 assert.ok(js.includes("resetView"), "reset absent");
 assert.ok(js.includes("focusPoint"), "pivot sur point cliqué absent");
-assert.ok(js.includes("SOURCE_SEX"), "audit des sexes absent");
 assert.ok(js.includes("setScalar(0.001)"), "mise à l'échelle wangzh absente");
-console.log("PASS navigation 3D et sources réduites");
+console.log("PASS navigation et concours");

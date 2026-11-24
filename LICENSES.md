@@ -87,3 +87,24 @@
   https://www.innerscene.com/tools/library/3d-parts/brain-with-spinal-cord-5c8ea879
 - Licence : **CC0 1.0** (🟢), 47 maillages ajoutés au système nerveux de Body Atlas.
 - Consulté le 2026-11-24.
+
+## Female Atlas
+
+- URL : https://github.com/HiMahendraBeniwal/female-atlas
+- Licence : **MIT** (code) + **CC BY 4.0** (données anatomiques) — 🟢.
+- 3 004 pièces, 16 systèmes, appareil reproducteur féminin complet.
+- Consulté le 2026-11-24.
+
+## Anatria-3D — atlas féminin
+
+- URL : https://github.com/Nurkan1/Anatria-3D
+- Licence : **CC BY 4.0** pour le modèle féminin HRA — 🟢.
+- Modèle féminin limité au tronc (pas de tête, membres ni muscles squelettiques).
+- Consulté le 2026-11-24.
+
+## OrganUI Female Reproductive
+
+- URL : https://github.com/organui/uterus-3d
+- Licence : **MIT** (code) + **CC BY 4.0** (modèle HRA) — 🟢.
+- 27 organes reproducteurs féminins, sans corps entier.
+- Consulté le 2026-11-24.

@@ -64,6 +64,8 @@ for (const f of fs.readdirSync(dstModels)) {
 fs.cpSync(atlasDir, path.join(dstModels, "body-atlas"), { recursive: true });
 const forksDir = path.join(modelsDir, "forks");
 if (fs.existsSync(forksDir)) fs.cpSync(forksDir, path.join(dstModels, "forks"), { recursive: true });
+const contestsDir = path.join(modelsDir, "contests");
+if (fs.existsSync(contestsDir)) fs.cpSync(contestsDir, path.join(dstModels, "contests"), { recursive: true });
 for (const old of [
   "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
   "textures", "data", "icons", "screenshots", "v2-style.css",
@@ -72,4 +74,4 @@ for (const old of [
   if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
 }
 
-console.log(`[unify] index.html = Body Atlas 3D (${build})`);
+console.log(`[unify] index.html = concours homme/femme (${build})`);

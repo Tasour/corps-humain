@@ -16,3 +16,9 @@ Un carré bleu représente l’homme et un carré rose la femme. Les sources
 aucune ne fournissant un corps féminin complet séparé, le carré rose porte « Vide ». Voir `docs/analyses/audit-sexes-sources.md`.
 
 Voir `docs/veille/2026-11-24-forks-body-atlas.md` et `LICENSES.md`.
+
+## Concours
+
+Homme : `seema`, `nqwrc`, `wangzh`.
+Femme : `female-atlas`, `enhanced`, `slorksmo`, `bodyatlas`, `anatria`, `organui`.
+Voir `docs/models/concours-femme.md`.
