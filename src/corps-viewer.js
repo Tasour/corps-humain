@@ -38,7 +38,37 @@ export function initCorpsViewer() {
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   const modelCache = new Map();
   const systemOf = new Map();
+  const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves'];
+  const layerBoxes = [...document.querySelectorAll('#cp-couches input[data-layer]')];
+  const masterBox = document.getElementById('cp-couche-all');
   let model = null, skinMesh = null, needsRender = true;
+
+  function syncMaster() {
+    const count = layerBoxes.filter((b) => b.checked).length;
+    masterBox.checked = count === LAYERS.length;
+    masterBox.indeterminate = count > 0 && count < LAYERS.length;
+  }
+
+  function readUrlLayers() {
+    const param = new URLSearchParams(location.search).get('layers');
+    if (!param) return;
+    if (param === 'all') {
+      for (const box of layerBoxes) box.checked = true;
+      syncMaster();
+      return;
+    }
+    const wanted = new Set(param.split(',').filter((x) => LAYERS.includes(x)));
+    for (const box of layerBoxes) box.checked = wanted.has(box.dataset.layer);
+    syncMaster();
+  }
+
+  function writeUrlLayers() {
+    const url = new URL(location.href);
+    const active = layerBoxes.filter((b) => b.checked).map((b) => b.dataset.layer);
+    if (active.length === LAYERS.length) url.searchParams.delete('layers');
+    else url.searchParams.set('layers', active.join(','));
+    history.replaceState(null, '', url);
+  }
 
   controls.addEventListener('change', () => { needsRender = true; });
   if ('IntersectionObserver' in window) {
@@ -70,25 +100,28 @@ export function initCorpsViewer() {
 
   function applyLayer() {
     if (!model) return;
-    const layer = document.getElementById('cp-couche').value || 'all';
+    const active = new Set(layerBoxes.filter((b) => b.checked).map((b) => b.dataset.layer));
+    const all = active.size === LAYERS.length;
     let visible = 0;
     model.traverse((o) => {
       if (!o.isMesh) return;
       const key = o.name.toLowerCase().replace(/[.\s]/g, '')
         .replace(/(\D)\d+$/, '$1').replace(/_+$/, '');
-      const system = systemOf.get(key)
+      let system = systemOf.get(key)
         || (key.startsWith('nerve') ? 'nerves' : null)
         || (key.replace(/_/g, '').startsWith('vesselext') ? 'vessels' : null);
-      o.visible = layer === 'all' || system === layer;
+      if (system === 'joints') system = 'skeleton';
+      o.visible = active.has(system);
       if (o.visible) visible++;
     });
     if (skinMesh) {
-      const translucide = layer === 'all';
+      const translucide = all;
       const mat = skinMesh.material;
       mat.transparent = translucide;
       mat.opacity = translucide ? 0.22 : 1;
       mat.depthWrite = !translucide;
     }
+    if (window.__corps) window.__corps.activeLayers = [...active];
     document.getElementById('corps-info').textContent = `${visible} maillage(s) visible(s)`;
     camera.zoom = 1;
     camera.updateProjectionMatrix();
@@ -112,13 +145,26 @@ export function initCorpsViewer() {
     model.traverse((o) => {
       if (!skinMesh && o.isMesh && o.name.toLowerCase().startsWith('skin')) skinMesh = o;
     });
-    window.__corps = { model, systemOf, sexe };
+    window.__corps = { model, systemOf, sexe, THREE, camera, renderer };
     applyLayer(); resize();
     needsRender = true;
   }
 
   document.getElementById('cp-sexe').addEventListener('change', load);
-  document.getElementById('cp-couche').addEventListener('change', applyLayer);
+  for (const box of layerBoxes) {
+    box.addEventListener('change', () => {
+      syncMaster();
+      writeUrlLayers();
+      applyLayer();
+    });
+  }
+  masterBox.addEventListener('change', () => {
+    for (const box of layerBoxes) box.checked = masterBox.checked;
+    masterBox.indeterminate = false;
+    writeUrlLayers();
+    applyLayer();
+  });
+  readUrlLayers();
   window.addEventListener('resize', () => { resize(); needsRender = true; });
 
   function frame() {

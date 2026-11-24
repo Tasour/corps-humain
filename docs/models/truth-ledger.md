@@ -1,5 +1,11 @@
 # Registre de vérité anatomique — v1
 
+## Cible courante
+
+**Homme uniquement.** La femme reste figée sur le build `158ebf8` jusqu'à la
+validation complète de l'homme. Les scripts correctifs sont paramétrés par
+`sex` et seront réexécutés ensuite sans réécriture.
+
 ## Règles non négociables
 
 1. **Aucune donnée sans provenance scellée.** Toute valeur externe est transcrite

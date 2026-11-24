@@ -243,6 +243,14 @@ scripts/
   export-zanatomy.py         export Blender des structures Z-Anatomy
 ```
 
+## Sélecteur de couches
+
+Le rail gauche liste six couches activables individuellement par checkbox :
+peau, muscles, squelette, organes, vaisseaux, nerfs. Toutes sont cochées par
+défaut. Une case maîtresse « Toutes les couches » les active ou les désactive
+d'un seul geste. L'état est reflété dans l'URL (`?layers=skin,muscles`), ce qui
+rend chaque capture reproductible.
+
 ## Validation anatomique externe
 
 Les proportions du modèle live sont comparées à deux références publiques indépendantes :

@@ -1,0 +1,54 @@
+{
+ "sex": "male",
+ "method": "translation rigide commune, centroïde du groupe crânien aligné sur la tête cutanée",
+ "skin_head_centroid": [
+  0.00668,
+  -0.00975,
+  1.435957
+ ],
+ "per_organ_delta": {
+  "brain": [
+   0.007731,
+   -0.028374,
+   -0.189236
+  ],
+  "skull": [
+   0.007109,
+   -0.007695,
+   -0.175692
+  ],
+  "eye_l": [
+   0.005402,
+   -0.012302,
+   -0.197234
+  ],
+  "eye_r": [
+   0.024207,
+   -0.011805,
+   -0.198074
+  ],
+  "cerebellum": [
+   0.007039,
+   -0.019735,
+   -0.190978
+  ],
+  "brainstem": [
+   0.007364,
+   -0.018909,
+   -0.208321
+  ]
+ },
+ "applied_delta": [
+  0.009809,
+  -0.01647,
+  -0.193256
+ ],
+ "moved_meshes": [
+  "brain",
+  "skull",
+  "eye_l",
+  "eye_r",
+  "cerebellum",
+  "brainstem"
+ ]
+}
