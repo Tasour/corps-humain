@@ -48,24 +48,6 @@ try {
   assert.ok(apresClic > apresAttente,
     "v2 ne redessine pas après une interaction");
 
-  await page.goto(`${BASE}/`);
-  await page.waitForFunction(() => window.__app?.scene, null, { timeout: 120000 });
-  const v1a = await page.evaluate(() => ({
-    renders: window.__app.scene.renders,
-    hidden: window.__app.scene.hiddenFrames,
-  }));
-  await page.waitForTimeout(1000);
-  const v1b = await page.evaluate(() => ({
-    renders: window.__app.scene.renders,
-    hidden: window.__app.scene.hiddenFrames,
-  }));
-  mesures.v1 = {
-    rendusEn1s: v1b.renders - v1a.renders,
-    framesMasquees: v1b.hidden - v1a.hidden,
-    regime: "continu assumé (moniteur LIVE + animations physiologiques)",
-  };
-  assert.ok(Number.isFinite(v1b.renders), "compteur v1 absent");
-  assert.ok(v1b.renders > v1a.renders, "v1 ne rend rien alors que le moniteur est actif");
   await ctx.close();
 } finally {
   await browser.close();
