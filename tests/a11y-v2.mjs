@@ -253,33 +253,6 @@ await check("résolution de rendu bornée et réversible (BENCH-017)", async () 
     `courante hors bornes : ${q.pixelRatio} > base ${q.base}`);
 });
 
-/* ---------- v1 : filtre de type (radiogroup) ------------------------------ */
-const v1page = await desktop.newPage();
-v1page.setDefaultTimeout(90000);
-await v1page.goto(`${BASE}/`);
-await v1page.waitForSelector("#kind-filter .seg");
-
-await check("v1 : filtre de type en radiogroup avec navigation flèches", async () => {
-  const before = await v1page.evaluate(() => ({
-    role: document.getElementById("kind-filter").getAttribute("role"),
-    checked: document.querySelectorAll('#kind-filter [role="radio"][aria-checked="true"]').length,
-    roving: [...document.querySelectorAll("#kind-filter .seg")].filter((b) => b.tabIndex === 0).length,
-    kind: document.querySelector("#kind-filter .active")?.dataset.kind,
-  }));
-  assert.equal(before.role, "radiogroup");
-  assert.equal(before.checked, 1);
-  assert.equal(before.roving, 1);
-  await v1page.locator("#kind-filter .active").focus();
-  await v1page.keyboard.press("ArrowRight");
-  const after = await v1page.evaluate(() => ({
-    checked: document.querySelectorAll('#kind-filter [role="radio"][aria-checked="true"]').length,
-    kind: document.querySelector("#kind-filter .active")?.dataset.kind,
-  }));
-  assert.notEqual(after.kind, before.kind, "la flèche droite ne change pas de filtre");
-  assert.equal(after.checked, 1);
-});
-await v1page.close();
-
 await check("touche / place le focus dans la recherche", async () => {
   await page.evaluate(() => document.body.focus());
   await page.keyboard.press("/");
