@@ -1,0 +1,213 @@
+{
+ "source_comparee": "158ebf8",
+ "meshes": {
+  "chest_muscles_l": {
+   "edge_ratio_max_median": 10.741,
+   "edge_median_m": 0.003724,
+   "displacement": {
+    "max_m": 0.05351,
+    "p95_m": 0.04156
+   }
+  },
+  "chest_muscles_r": {
+   "edge_ratio_max_median": 14.782,
+   "edge_median_m": 0.003603,
+   "displacement": {
+    "max_m": 0.05803,
+    "p95_m": 0.03923
+   }
+  },
+  "foot_muscles_l": {
+   "edge_ratio_max_median": 19.432,
+   "edge_median_m": 0.00321,
+   "displacement": {
+    "max_m": 0.02667,
+    "p95_m": 0.02139
+   }
+  },
+  "hand_muscles_l": {
+   "edge_ratio_max_median": 8.679,
+   "edge_median_m": 0.003066,
+   "displacement": {
+    "max_m": 0.03767,
+    "p95_m": 0.02526
+   }
+  },
+  "foot_muscles_r": {
+   "edge_ratio_max_median": 15.706,
+   "edge_median_m": 0.003492,
+   "displacement": {
+    "max_m": 0.02809,
+    "p95_m": 0.01993
+   }
+  },
+  "hand_muscles_r": {
+   "edge_ratio_max_median": 10.011,
+   "edge_median_m": 0.002963,
+   "displacement": {
+    "max_m": 0.03574,
+    "p95_m": 0.02396
+   }
+  },
+  "deltoid_l": {
+   "edge_ratio_max_median": 37.05,
+   "edge_median_m": 0.003228,
+   "displacement": {
+    "max_m": 0.05787,
+    "p95_m": 0.05199
+   }
+  },
+  "deltoid_r": {
+   "edge_ratio_max_median": 38.322,
+   "edge_median_m": 0.003197,
+   "displacement": {
+    "max_m": 0.06058,
+    "p95_m": 0.04386
+   }
+  },
+  "trapezius_l": {
+   "edge_ratio_max_median": 7.678,
+   "edge_median_m": 0.003672,
+   "displacement": {
+    "max_m": 0.03619,
+    "p95_m": 0.02889
+   }
+  },
+  "trapezius_r": {
+   "edge_ratio_max_median": 10.049,
+   "edge_median_m": 0.003635,
+   "displacement": {
+    "max_m": 0.03883,
+    "p95_m": 0.03058
+   }
+  },
+  "diaphragm": {
+   "edge_ratio_max_median": 82.069,
+   "edge_median_m": 0.002907,
+   "displacement": {
+    "max_m": 0.11969,
+    "p95_m": 0.07942
+   }
+  },
+  "forearm_muscles_l": {
+   "edge_ratio_max_median": 21.449,
+   "edge_median_m": 0.00366,
+   "displacement": {
+    "max_m": 0.04239,
+    "p95_m": 0.03135
+   }
+  },
+  "forearm_muscles_r": {
+   "edge_ratio_max_median": 21.601,
+   "edge_median_m": 0.003774,
+   "displacement": {
+    "max_m": 0.03966,
+    "p95_m": 0.02663
+   }
+  },
+  "neck_muscles_l": {
+   "edge_ratio_max_median": 9.332,
+   "edge_median_m": 0.003471,
+   "displacement": {
+    "max_m": 0.02438,
+    "p95_m": 0.01883
+   }
+  },
+  "upper_arm_muscles_l": {
+   "edge_ratio_max_median": 24.871,
+   "edge_median_m": 0.003729,
+   "displacement": {
+    "max_m": 0.07958,
+    "p95_m": 0.05422
+   }
+  },
+  "upper_arm_muscles_r": {
+   "edge_ratio_max_median": 30.825,
+   "edge_median_m": 0.003684,
+   "displacement": {
+    "max_m": 0.07556,
+    "p95_m": 0.04797
+   }
+  },
+  "back_muscles_r": {
+   "edge_ratio_max_median": 17.417,
+   "edge_median_m": 0.003358,
+   "displacement": {
+    "max_m": 0.05752,
+    "p95_m": 0.04408
+   }
+  },
+  "back_muscles_l": {
+   "edge_ratio_max_median": 18.608,
+   "edge_median_m": 0.003466,
+   "displacement": {
+    "max_m": 0.05756,
+    "p95_m": 0.04472
+   }
+  },
+  "shin_muscles_l": {
+   "edge_ratio_max_median": 8.217,
+   "edge_median_m": 0.003578,
+   "displacement": {
+    "max_m": 0.02915,
+    "p95_m": 0.02229
+   }
+  },
+  "abdominal_muscles": {
+   "edge_ratio_max_median": 28.076,
+   "edge_median_m": 0.003184,
+   "displacement": {
+    "max_m": 0.08058,
+    "p95_m": 0.06058
+   }
+  },
+  "rotator_cuff_l": {
+   "edge_ratio_max_median": 19.551,
+   "edge_median_m": 0.003411,
+   "displacement": {
+    "max_m": 0.06316,
+    "p95_m": 0.05368
+   }
+  },
+  "shoulder_muscles_l": {
+   "edge_ratio_max_median": 55.008,
+   "edge_median_m": 0.003185,
+   "displacement": {
+    "max_m": 0.10163,
+    "p95_m": 0.07784
+   }
+  },
+  "neck_muscles_r": {
+   "edge_ratio_max_median": 5.915,
+   "edge_median_m": 0.003515,
+   "displacement": {
+    "max_m": 0.02502,
+    "p95_m": 0.01862
+   }
+  },
+  "shin_muscles_r": {
+   "edge_ratio_max_median": 9.204,
+   "edge_median_m": 0.003768,
+   "displacement": {
+    "max_m": 0.02596,
+    "p95_m": 0.02134
+   }
+  },
+  "rotator_cuff_r": {
+   "edge_ratio_max_median": 17.125,
+   "edge_median_m": 0.003311,
+   "displacement": {
+    "max_m": 0.06214,
+    "p95_m": 0.05769
+   }
+  },
+  "shoulder_muscles_r": {
+   "edge_ratio_max_median": 61.694,
+   "edge_median_m": 0.003112,
+   "displacement": {
+    "max_m": 0.10279,
+    "p95_m": 0.076
+   }
+  }
+ }
+}

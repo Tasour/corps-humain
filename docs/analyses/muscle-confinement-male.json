@@ -3,168 +3,168 @@
  "margin_m": 0.002,
  "meshes": {
   "abdominal_muscles": {
-   "vertices_moved": 9990,
-   "max_push_m": 0.016615
+   "vertices_moved": 285,
+   "max_push_m": 0.084419
   },
   "back_muscles_l": {
-   "vertices_moved": 21426,
-   "max_push_m": 0.047594
+   "vertices_moved": 291,
+   "max_push_m": 0.091258
   },
   "back_muscles_r": {
-   "vertices_moved": 23787,
-   "max_push_m": 0.023541
+   "vertices_moved": 295,
+   "max_push_m": 0.083295
   },
   "calf_l": {
-   "vertices_moved": 4039,
-   "max_push_m": 0.017929
+   "vertices_moved": 2865,
+   "max_push_m": 0.00399
   },
   "calf_r": {
-   "vertices_moved": 3809,
-   "max_push_m": 0.019751
+   "vertices_moved": 2924,
+   "max_push_m": 0.012068
   },
   "chest_muscles_l": {
-   "vertices_moved": 1366,
-   "max_push_m": 0.009055
+   "vertices_moved": 271,
+   "max_push_m": 0.082497
   },
   "chest_muscles_r": {
-   "vertices_moved": 1252,
-   "max_push_m": 0.008149
+   "vertices_moved": 321,
+   "max_push_m": 0.08354
   },
   "deltoid_l": {
-   "vertices_moved": 1301,
-   "max_push_m": 0.012047
+   "vertices_moved": 286,
+   "max_push_m": 0.089042
   },
   "deltoid_r": {
-   "vertices_moved": 746,
-   "max_push_m": 0.00804
+   "vertices_moved": 327,
+   "max_push_m": 0.08756
   },
   "diaphragm": {
-   "vertices_moved": 2546,
-   "max_push_m": 0.015714
+   "vertices_moved": 53,
+   "max_push_m": 0.002535
   },
   "foot_muscles_l": {
-   "vertices_moved": 6657,
-   "max_push_m": 0.003724
+   "vertices_moved": 348,
+   "max_push_m": 0.03822
   },
   "foot_muscles_r": {
-   "vertices_moved": 5027,
-   "max_push_m": 0.003944
+   "vertices_moved": 355,
+   "max_push_m": 0.036345
   },
   "forearm_muscles_l": {
-   "vertices_moved": 11768,
-   "max_push_m": 0.019315
+   "vertices_moved": 315,
+   "max_push_m": 0.070623
   },
   "forearm_muscles_r": {
-   "vertices_moved": 12518,
-   "max_push_m": 0.013163
+   "vertices_moved": 343,
+   "max_push_m": 0.082016
   },
   "gluteal_l": {
-   "vertices_moved": 3144,
-   "max_push_m": 0.039778
+   "vertices_moved": 355,
+   "max_push_m": 0.150803
   },
   "gluteal_r": {
-   "vertices_moved": 3038,
-   "max_push_m": 0.018945
+   "vertices_moved": 282,
+   "max_push_m": 0.113177
   },
   "hamstrings_l": {
-   "vertices_moved": 881,
-   "max_push_m": 0.005747
+   "vertices_moved": 309,
+   "max_push_m": 0.066834
   },
   "hamstrings_r": {
-   "vertices_moved": 924,
-   "max_push_m": 0.008209
+   "vertices_moved": 313,
+   "max_push_m": 0.063007
   },
   "hand_muscles_l": {
-   "vertices_moved": 6950,
-   "max_push_m": 0.015798
+   "vertices_moved": 366,
+   "max_push_m": 0.046954
   },
   "hand_muscles_r": {
-   "vertices_moved": 6583,
-   "max_push_m": 0.016136
+   "vertices_moved": 366,
+   "max_push_m": 0.043528
   },
   "iliopsoas_l": {
-   "vertices_moved": 1460,
-   "max_push_m": 0.075443
+   "vertices_moved": 340,
+   "max_push_m": 0.088651
   },
   "iliopsoas_r": {
-   "vertices_moved": 1297,
-   "max_push_m": 0.026505
+   "vertices_moved": 346,
+   "max_push_m": 0.0978
   },
   "adductors_l": {
-   "vertices_moved": 2504,
-   "max_push_m": 0.055482
+   "vertices_moved": 331,
+   "max_push_m": 0.078012
   },
   "adductors_r": {
-   "vertices_moved": 2566,
-   "max_push_m": 0.014621
+   "vertices_moved": 307,
+   "max_push_m": 0.074702
   },
   "intercostals_l": {
-   "vertices_moved": 45406,
-   "max_push_m": 0.056662
+   "vertices_moved": 254,
+   "max_push_m": 0.112224
   },
   "intercostals_r": {
-   "vertices_moved": 50610,
-   "max_push_m": 0.028714
+   "vertices_moved": 284,
+   "max_push_m": 0.114681
   },
   "neck_muscles_l": {
-   "vertices_moved": 6967,
-   "max_push_m": 0.005551
+   "vertices_moved": 306,
+   "max_push_m": 0.060761
   },
   "neck_muscles_r": {
-   "vertices_moved": 7284,
-   "max_push_m": 0.004681
+   "vertices_moved": 347,
+   "max_push_m": 0.060205
   },
   "pelvic_floor": {
-   "vertices_moved": 13573,
-   "max_push_m": 0.00978
+   "vertices_moved": 361,
+   "max_push_m": 0.092184
   },
   "quadriceps_l": {
-   "vertices_moved": 1994,
-   "max_push_m": 0.022442
+   "vertices_moved": 324,
+   "max_push_m": 0.067949
   },
   "quadriceps_r": {
-   "vertices_moved": 1994,
-   "max_push_m": 0.020279
+   "vertices_moved": 322,
+   "max_push_m": 0.065734
   },
   "rotator_cuff_l": {
-   "vertices_moved": 1640,
-   "max_push_m": 0.016875
+   "vertices_moved": 270,
+   "max_push_m": 0.085585
   },
   "rotator_cuff_r": {
-   "vertices_moved": 1176,
-   "max_push_m": 0.022298
+   "vertices_moved": 330,
+   "max_push_m": 0.087917
   },
   "shin_muscles_l": {
-   "vertices_moved": 3679,
-   "max_push_m": 0.009071
+   "vertices_moved": 331,
+   "max_push_m": 0.105141
   },
   "shin_muscles_r": {
-   "vertices_moved": 3191,
-   "max_push_m": 0.011567
+   "vertices_moved": 329,
+   "max_push_m": 0.106265
   },
   "shoulder_muscles_l": {
-   "vertices_moved": 6372,
-   "max_push_m": 0.04739
+   "vertices_moved": 287,
+   "max_push_m": 0.123851
   },
   "shoulder_muscles_r": {
-   "vertices_moved": 6967,
-   "max_push_m": 0.020152
+   "vertices_moved": 328,
+   "max_push_m": 0.121215
   },
   "trapezius_l": {
-   "vertices_moved": 2048,
-   "max_push_m": 0.009364
+   "vertices_moved": 219,
+   "max_push_m": 0.082245
   },
   "trapezius_r": {
-   "vertices_moved": 2244,
-   "max_push_m": 0.009357
+   "vertices_moved": 247,
+   "max_push_m": 0.080981
   },
   "upper_arm_muscles_l": {
-   "vertices_moved": 1389,
-   "max_push_m": 0.024141
+   "vertices_moved": 309,
+   "max_push_m": 0.041516
   },
   "upper_arm_muscles_r": {
-   "vertices_moved": 1836,
-   "max_push_m": 0.023693
+   "vertices_moved": 292,
+   "max_push_m": 0.050914
   }
  }
 }

@@ -1,0 +1,592 @@
+{
+ "sex": "male",
+ "skeleton_unchanged": true,
+ "pairs": {
+  "upper_arm_muscles_l": {
+   "bone": "humerus_l",
+   "angle_before_deg": 8.875,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.98228,
+    -0.18337,
+    0.03889
+   ],
+   "muscle_center": [
+    0.38254,
+    0.02803,
+    1.37851
+   ]
+  },
+  "upper_arm_muscles_r": {
+   "bone": "humerus_r",
+   "angle_before_deg": 6.266,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.9871,
+    0.15694,
+    -0.03163
+   ],
+   "muscle_center": [
+    -0.38543,
+    0.02934,
+    1.37753
+   ]
+  },
+  "forearm_muscles_l": {
+   "bone": "forearm_l",
+   "angle_before_deg": 6.728,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.95001,
+    0.31047,
+    0.03305
+   ],
+   "muscle_center": [
+    0.65711,
+    -0.01203,
+    1.34857
+   ]
+  },
+  "forearm_muscles_r": {
+   "bone": "forearm_r",
+   "angle_before_deg": 6.401,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.96196,
+    -0.26721,
+    -0.05683
+   ],
+   "muscle_center": [
+    -0.65625,
+    -0.01067,
+    1.34705
+   ]
+  },
+  "hand_muscles_l": {
+   "bone": "hand_l",
+   "angle_before_deg": 5.681,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.88451,
+    0.45495,
+    0.10327
+   ],
+   "muscle_center": [
+    0.76249,
+    -0.04636,
+    1.32663
+   ]
+  },
+  "hand_muscles_r": {
+   "bone": "hand_r",
+   "angle_before_deg": 2.413,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.88524,
+    -0.46057,
+    -0.06501
+   ],
+   "muscle_center": [
+    -0.75664,
+    -0.04618,
+    1.3252
+   ]
+  },
+  "quadriceps_l": {
+   "bone": "femur_l",
+   "angle_before_deg": 4.486,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.07418,
+    -0.00832,
+    -0.99721
+   ],
+   "muscle_center": [
+    0.10207,
+    -0.01197,
+    0.65244
+   ]
+  },
+  "quadriceps_r": {
+   "bone": "femur_r",
+   "angle_before_deg": 3.47,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.09014,
+    0.01714,
+    0.99578
+   ],
+   "muscle_center": [
+    -0.10215,
+    -0.01053,
+    0.65104
+   ]
+  },
+  "shin_muscles_l": {
+   "bone": "lower_leg_l",
+   "angle_before_deg": 16.274,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.01765,
+    -0.13284,
+    0.99098
+   ],
+   "muscle_center": [
+    0.0962,
+    0.00503,
+    0.14054
+   ]
+  },
+  "shin_muscles_r": {
+   "bone": "lower_leg_r",
+   "angle_before_deg": 17.049,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    0.03743,
+    -0.1413,
+    0.98926
+   ],
+   "muscle_center": [
+    -0.09396,
+    0.00533,
+    0.14054
+   ]
+  },
+  "foot_muscles_l": {
+   "bone": "foot_l",
+   "angle_before_deg": 10.729,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.29504,
+    0.92738,
+    0.23003
+   ],
+   "muscle_center": [
+    0.08563,
+    -0.01273,
+    0.01715
+   ]
+  },
+  "foot_muscles_r": {
+   "bone": "foot_r",
+   "angle_before_deg": 9.932,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.30383,
+    -0.92413,
+    -0.23169
+   ],
+   "muscle_center": [
+    -0.08526,
+    -0.01261,
+    0.01818
+   ]
+  },
+  "deltoid_l": {
+   "bone": "humerus_l",
+   "angle_before_deg": 50.135,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.98228,
+    -0.18337,
+    0.03889
+   ],
+   "muscle_center": [
+    0.13101,
+    0.03555,
+    1.40121
+   ]
+  },
+  "deltoid_r": {
+   "bone": "humerus_r",
+   "angle_before_deg": 49.575,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.9871,
+    0.15694,
+    -0.03163
+   ],
+   "muscle_center": [
+    -0.12897,
+    0.0362,
+    1.40193
+   ]
+  },
+  "rotator_cuff_l": {
+   "bone": "humerus_l",
+   "angle_before_deg": 68.175,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.98228,
+    -0.18337,
+    0.03889
+   ],
+   "muscle_center": [
+    0.09506,
+    0.09689,
+    1.35885
+   ]
+  },
+  "rotator_cuff_r": {
+   "bone": "humerus_r",
+   "angle_before_deg": 66.308,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.9871,
+    0.15694,
+    -0.03163
+   ],
+   "muscle_center": [
+    -0.08947,
+    0.09457,
+    1.35461
+   ]
+  },
+  "shoulder_muscles_l": {
+   "bone": "scapula_l",
+   "angle_before_deg": 28.297,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.35675,
+    0.47247,
+    -0.80592
+   ],
+   "muscle_center": [
+    0.07697,
+    0.04624,
+    1.32433
+   ]
+  },
+  "shoulder_muscles_r": {
+   "bone": "scapula_r",
+   "angle_before_deg": 25.096,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.34589,
+    -0.46859,
+    0.81289
+   ],
+   "muscle_center": [
+    -0.07487,
+    0.04668,
+    1.32416
+   ]
+  },
+  "trapezius_l": {
+   "bone": "clavicle_l",
+   "angle_before_deg": 74.406,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.74879,
+    -0.62486,
+    -0.22102
+   ],
+   "muscle_center": [
+    0.05062,
+    0.08607,
+    1.4076
+   ]
+  },
+  "trapezius_r": {
+   "bone": "clavicle_r",
+   "angle_before_deg": 74.695,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.74275,
+    0.63282,
+    0.21877
+   ],
+   "muscle_center": [
+    -0.0498,
+    0.08631,
+    1.40709
+   ]
+  },
+  "chest_muscles_l": {
+   "bone": "ribs_l",
+   "angle_before_deg": 79.021,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.14456,
+    0.04091,
+    0.98865
+   ],
+   "muscle_center": [
+    0.08648,
+    -0.06716,
+    1.33324
+   ]
+  },
+  "chest_muscles_r": {
+   "bone": "ribs_r",
+   "angle_before_deg": 67.474,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    0.14514,
+    0.03994,
+    0.9886
+   ],
+   "muscle_center": [
+    -0.0821,
+    -0.06607,
+    1.33493
+   ]
+  },
+  "intercostals_l": {
+   "bone": "ribs_l",
+   "angle_before_deg": 13.284,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.14456,
+    0.04091,
+    0.98865
+   ],
+   "muscle_center": [
+    0.10661,
+    0.01402,
+    1.26916
+   ]
+  },
+  "intercostals_r": {
+   "bone": "ribs_r",
+   "angle_before_deg": 33.94,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    0.14514,
+    0.03994,
+    0.9886
+   ],
+   "muscle_center": [
+    -0.10395,
+    0.01887,
+    1.2704
+   ]
+  },
+  "back_muscles_l": {
+   "bone": "ribs_l",
+   "angle_before_deg": 12.048,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.14456,
+    0.04091,
+    0.98865
+   ],
+   "muscle_center": [
+    0.02647,
+    0.08948,
+    1.3003
+   ]
+  },
+  "back_muscles_r": {
+   "bone": "ribs_r",
+   "angle_before_deg": 12.825,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    0.14514,
+    0.03994,
+    0.9886
+   ],
+   "muscle_center": [
+    -0.02711,
+    0.09338,
+    1.30149
+   ]
+  },
+  "abdominal_muscles": {
+   "bone": "pelvis",
+   "angle_before_deg": 54.909,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.80852,
+    0.05186,
+    0.58618
+   ],
+   "muscle_center": [
+    0.0005,
+    -0.07254,
+    1.08599
+   ]
+  },
+  "diaphragm": {
+   "bone": "ribs_l",
+   "angle_before_deg": 85.505,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.14456,
+    0.04091,
+    0.98865
+   ],
+   "muscle_center": [
+    -0.00696,
+    0.00737,
+    1.18591
+   ]
+  },
+  "gluteal_l": {
+   "bone": "pelvis",
+   "angle_before_deg": 57.444,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.80852,
+    0.05186,
+    0.58618
+   ],
+   "muscle_center": [
+    0.09753,
+    0.04133,
+    0.86129
+   ]
+  },
+  "gluteal_r": {
+   "bone": "pelvis",
+   "angle_before_deg": 50.088,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.80852,
+    0.05186,
+    0.58618
+   ],
+   "muscle_center": [
+    -0.09466,
+    0.04117,
+    0.8603
+   ]
+  },
+  "hamstrings_l": {
+   "bone": "femur_l",
+   "angle_before_deg": 11.239,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.07418,
+    -0.00832,
+    -0.99721
+   ],
+   "muscle_center": [
+    0.06122,
+    0.0387,
+    0.57502
+   ]
+  },
+  "hamstrings_r": {
+   "bone": "femur_r",
+   "angle_before_deg": 11.002,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.09014,
+    0.01714,
+    0.99578
+   ],
+   "muscle_center": [
+    -0.05721,
+    0.03792,
+    0.57356
+   ]
+  },
+  "adductors_l": {
+   "bone": "femur_l",
+   "angle_before_deg": 1.306,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.07418,
+    -0.00832,
+    -0.99721
+   ],
+   "muscle_center": [
+    0.0802,
+    0.01423,
+    0.66832
+   ]
+  },
+  "adductors_r": {
+   "bone": "femur_r",
+   "angle_before_deg": 1.362,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.09014,
+    0.01714,
+    0.99578
+   ],
+   "muscle_center": [
+    -0.07939,
+    0.01487,
+    0.66851
+   ]
+  },
+  "iliopsoas_l": {
+   "bone": "pelvis",
+   "angle_before_deg": 34.114,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.80852,
+    0.05186,
+    0.58618
+   ],
+   "muscle_center": [
+    0.08191,
+    0.05898,
+    1.00417
+   ]
+  },
+  "iliopsoas_r": {
+   "bone": "pelvis",
+   "angle_before_deg": 75.657,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.80852,
+    0.05186,
+    0.58618
+   ],
+   "muscle_center": [
+    -0.07727,
+    0.05916,
+    1.00579
+   ]
+  },
+  "pelvic_floor": {
+   "bone": "pelvis",
+   "angle_before_deg": 79.931,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.80852,
+    0.05186,
+    0.58618
+   ],
+   "muscle_center": [
+    -9e-05,
+    0.0339,
+    0.83951
+   ]
+  },
+  "neck_muscles_l": {
+   "bone": "spine_cervical",
+   "angle_before_deg": 29.445,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.00199,
+    0.05674,
+    0.99839
+   ],
+   "muscle_center": [
+    0.04197,
+    0.01938,
+    1.49771
+   ]
+  },
+  "neck_muscles_r": {
+   "bone": "spine_cervical",
+   "angle_before_deg": 27.416,
+   "angle_after_deg": 0.0,
+   "bone_axis": [
+    -0.00199,
+    0.05674,
+    0.99839
+   ],
+   "muscle_center": [
+    -0.04334,
+    0.02203,
+    1.49836
+   ]
+  }
+ },
+ "dry_run": true
+}

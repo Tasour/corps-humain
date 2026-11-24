@@ -1,0 +1,184 @@
+{
+ "sex": "male",
+ "margin_m": 0.002,
+ "cycles": [
+  [
+   8,
+   true
+  ],
+  [
+   4,
+   true
+  ],
+  [
+   2,
+   true
+  ]
+ ],
+ "meshes": {
+  "abdominal_muscles": {
+   "edge_ratio_before": 21.391,
+   "edge_ratio_after": 30.286
+  },
+  "back_muscles_l": {
+   "edge_ratio_before": 69.276,
+   "edge_ratio_after": 764.429
+  },
+  "back_muscles_r": {
+   "edge_ratio_before": 84.981,
+   "edge_ratio_after": 1189.665
+  },
+  "calf_l": {
+   "edge_ratio_before": 82.283,
+   "edge_ratio_after": 422.085
+  },
+  "calf_r": {
+   "edge_ratio_before": 90.972,
+   "edge_ratio_after": 417.317
+  },
+  "chest_muscles_l": {
+   "edge_ratio_before": 37.181,
+   "edge_ratio_after": 85.005
+  },
+  "chest_muscles_r": {
+   "edge_ratio_before": 44.33,
+   "edge_ratio_after": 72.99
+  },
+  "deltoid_l": {
+   "edge_ratio_before": 173.879,
+   "edge_ratio_after": 133295.168
+  },
+  "deltoid_r": {
+   "edge_ratio_before": 154.227,
+   "edge_ratio_after": 92940.627
+  },
+  "diaphragm": {
+   "edge_ratio_before": 31.041,
+   "edge_ratio_after": 29.029
+  },
+  "foot_muscles_l": {
+   "edge_ratio_before": 70.376,
+   "edge_ratio_after": 11525.031
+  },
+  "foot_muscles_r": {
+   "edge_ratio_before": 73.769,
+   "edge_ratio_after": 9430.702
+  },
+  "forearm_muscles_l": {
+   "edge_ratio_before": 60.638,
+   "edge_ratio_after": 993.301
+  },
+  "forearm_muscles_r": {
+   "edge_ratio_before": 67.317,
+   "edge_ratio_after": 816.44
+  },
+  "gluteal_l": {
+   "edge_ratio_before": 104.458,
+   "edge_ratio_after": 231.931
+  },
+  "gluteal_r": {
+   "edge_ratio_before": 85.095,
+   "edge_ratio_after": 192.152
+  },
+  "hamstrings_l": {
+   "edge_ratio_before": 19.855,
+   "edge_ratio_after": 15.643
+  },
+  "hamstrings_r": {
+   "edge_ratio_before": 16.86,
+   "edge_ratio_after": 16.907
+  },
+  "hand_muscles_l": {
+   "edge_ratio_before": 59.689,
+   "edge_ratio_after": 22147.067
+  },
+  "hand_muscles_r": {
+   "edge_ratio_before": 84.913,
+   "edge_ratio_after": 35662.956
+  },
+  "iliopsoas_l": {
+   "edge_ratio_before": 112.392,
+   "edge_ratio_after": 854.103
+  },
+  "iliopsoas_r": {
+   "edge_ratio_before": 92.39,
+   "edge_ratio_after": 1119.396
+  },
+  "adductors_l": {
+   "edge_ratio_before": 130.721,
+   "edge_ratio_after": 200.716
+  },
+  "adductors_r": {
+   "edge_ratio_before": 114.691,
+   "edge_ratio_after": 221.036
+  },
+  "intercostals_l": {
+   "edge_ratio_before": 139.192,
+   "edge_ratio_after": 621.089
+  },
+  "intercostals_r": {
+   "edge_ratio_before": 139.174,
+   "edge_ratio_after": 588.876
+  },
+  "neck_muscles_l": {
+   "edge_ratio_before": 110.693,
+   "edge_ratio_after": 244.356
+  },
+  "neck_muscles_r": {
+   "edge_ratio_before": 85.928,
+   "edge_ratio_after": 276.911
+  },
+  "pelvic_floor": {
+   "edge_ratio_before": 225.22,
+   "edge_ratio_after": 1329.963
+  },
+  "quadriceps_l": {
+   "edge_ratio_before": 38.149,
+   "edge_ratio_after": 41.808
+  },
+  "quadriceps_r": {
+   "edge_ratio_before": 34.162,
+   "edge_ratio_after": 45.462
+  },
+  "rotator_cuff_l": {
+   "edge_ratio_before": 195.771,
+   "edge_ratio_after": 324607.257
+  },
+  "rotator_cuff_r": {
+   "edge_ratio_before": 206.124,
+   "edge_ratio_after": 201617.34
+  },
+  "shin_muscles_l": {
+   "edge_ratio_before": 136.002,
+   "edge_ratio_after": 2713.142
+  },
+  "shin_muscles_r": {
+   "edge_ratio_before": 116.04,
+   "edge_ratio_after": 2751.978
+  },
+  "shoulder_muscles_l": {
+   "edge_ratio_before": 102.723,
+   "edge_ratio_after": 307.668
+  },
+  "shoulder_muscles_r": {
+   "edge_ratio_before": 100.058,
+   "edge_ratio_after": 289.268
+  },
+  "trapezius_l": {
+   "edge_ratio_before": 55.287,
+   "edge_ratio_after": 142.549
+  },
+  "trapezius_r": {
+   "edge_ratio_before": 50.456,
+   "edge_ratio_after": 148.908
+  },
+  "upper_arm_muscles_l": {
+   "edge_ratio_before": 42.907,
+   "edge_ratio_after": 196.456
+  },
+  "upper_arm_muscles_r": {
+   "edge_ratio_before": 44.756,
+   "edge_ratio_after": 197.148
+  }
+ }
+}

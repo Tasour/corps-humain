@@ -1,0 +1,155 @@
+{
+ "source": "ANSUR II NATICK/TR-15/007, cinquième colonne: circonférences mesurées",
+ "csv_sha256": "0547aea0170e5293de519389981135e75803f02e6d40c77ace740decc0caac64",
+ "sex": "male",
+ "formula": "rayon_muscle = 0.85 * circonférence_mm / (2π) / 1000, borné 0.008–0.060 m",
+ "circumferences": {
+  "bicepscircumferenceflexed": {
+   "mean_mm": 358.136,
+   "sd_mm": 34.618,
+   "n": 4082
+  },
+  "forearmcircumferenceflexed": {
+   "mean_mm": 310.059,
+   "sd_mm": 21.991,
+   "n": 4082
+  },
+  "handcircumference": {
+   "mean_mm": 212.284,
+   "sd_mm": 10.243,
+   "n": 4082
+  },
+  "thighcircumference": {
+   "mean_mm": 625.142,
+   "sd_mm": 58.452,
+   "n": 4082
+  },
+  "lowerthighcircumference": {
+   "mean_mm": 409.288,
+   "sd_mm": 31.873,
+   "n": 4082
+  },
+  "calfcircumference": {
+   "mean_mm": 392.261,
+   "sd_mm": 29.709,
+   "n": 4082
+  },
+  "balloffootcircumference": {
+   "mean_mm": 252.017,
+   "sd_mm": 12.936,
+   "n": 4082
+  },
+  "neckcircumference": {
+   "mean_mm": 397.649,
+   "sd_mm": 25.777,
+   "n": 4082
+  },
+  "chestcircumference": {
+   "mean_mm": 1058.706,
+   "sd_mm": 87.435,
+   "n": 4082
+  },
+  "waistcircumference": {
+   "mean_mm": 940.577,
+   "sd_mm": 111.706,
+   "n": 4082
+  },
+  "buttockcircumference": {
+   "mean_mm": 1019.519,
+   "sd_mm": 76.681,
+   "n": 4082
+  },
+  "shouldercircumference": {
+   "mean_mm": 1178.587,
+   "sd_mm": 63.586,
+   "n": 4082
+  },
+  "wristcircumference": {
+   "mean_mm": 175.917,
+   "sd_mm": 8.955,
+   "n": 4082
+  }
+ },
+ "mapping": {
+  "upper_arm_muscles_l": "bicepscircumferenceflexed",
+  "upper_arm_muscles_r": "bicepscircumferenceflexed",
+  "forearm_muscles_l": "forearmcircumferenceflexed",
+  "forearm_muscles_r": "forearmcircumferenceflexed",
+  "hand_muscles_l": "handcircumference",
+  "hand_muscles_r": "handcircumference",
+  "quadriceps_l": "thighcircumference",
+  "quadriceps_r": "thighcircumference",
+  "hamstrings_l": "lowerthighcircumference",
+  "hamstrings_r": "lowerthighcircumference",
+  "adductors_l": "lowerthighcircumference",
+  "adductors_r": "lowerthighcircumference",
+  "shin_muscles_l": "calfcircumference",
+  "shin_muscles_r": "calfcircumference",
+  "foot_muscles_l": "balloffootcircumference",
+  "foot_muscles_r": "balloffootcircumference",
+  "neck_muscles_l": "neckcircumference",
+  "neck_muscles_r": "neckcircumference",
+  "chest_muscles_l": "chestcircumference",
+  "chest_muscles_r": "chestcircumference",
+  "intercostals_l": "chestcircumference",
+  "intercostals_r": "chestcircumference",
+  "abdominal_muscles": "waistcircumference",
+  "back_muscles_l": "waistcircumference",
+  "back_muscles_r": "waistcircumference",
+  "gluteal_l": "buttockcircumference",
+  "gluteal_r": "buttockcircumference",
+  "deltoid_l": "shouldercircumference",
+  "deltoid_r": "shouldercircumference",
+  "shoulder_muscles_l": "shouldercircumference",
+  "shoulder_muscles_r": "shouldercircumference",
+  "rotator_cuff_l": "shouldercircumference",
+  "rotator_cuff_r": "shouldercircumference",
+  "trapezius_l": "neckcircumference",
+  "trapezius_r": "neckcircumference",
+  "iliopsoas_l": "waistcircumference",
+  "iliopsoas_r": "waistcircumference",
+  "pelvic_floor": "buttockcircumference",
+  "diaphragm": "chestcircumference"
+ },
+ "radii_m": {
+  "upper_arm_muscles_l": 0.04845,
+  "upper_arm_muscles_r": 0.04845,
+  "forearm_muscles_l": 0.04195,
+  "forearm_muscles_r": 0.04195,
+  "hand_muscles_l": 0.02872,
+  "hand_muscles_r": 0.02872,
+  "quadriceps_l": 0.05833,
+  "quadriceps_r": 0.05833,
+  "hamstrings_l": 0.05537,
+  "hamstrings_r": 0.05537,
+  "adductors_l": 0.05537,
+  "adductors_r": 0.05537,
+  "shin_muscles_l": 0.05307,
+  "shin_muscles_r": 0.05307,
+  "foot_muscles_l": 0.03409,
+  "foot_muscles_r": 0.03409,
+  "neck_muscles_l": 0.05379,
+  "neck_muscles_r": 0.05379,
+  "chest_muscles_l": 0.05833,
+  "chest_muscles_r": 0.05833,
+  "intercostals_l": 0.05833,
+  "intercostals_r": 0.05833,
+  "abdominal_muscles": 0.05833,
+  "back_muscles_l": 0.05833,
+  "back_muscles_r": 0.05833,
+  "gluteal_l": 0.05833,
+  "gluteal_r": 0.05833,
+  "deltoid_l": 0.05833,
+  "deltoid_r": 0.05833,
+  "shoulder_muscles_l": 0.05833,
+  "shoulder_muscles_r": 0.05833,
+  "rotator_cuff_l": 0.05833,
+  "rotator_cuff_r": 0.05833,
+  "trapezius_l": 0.05379,
+  "trapezius_r": 0.05379,
+  "iliopsoas_l": 0.05833,
+  "iliopsoas_r": 0.05833,
+  "pelvic_floor": 0.05833,
+  "diaphragm": 0.05833
+ }
+}

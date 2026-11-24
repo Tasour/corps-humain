@@ -1,0 +1,113 @@
+{
+ "region": "côtes flottantes, y 0.95–1.35 m",
+ "method": "aire de la boîte englobante x-z par coupe de 24 mm",
+ "slices": [
+  {
+   "y": 0.95,
+   "skin_area_m2": 0.07505,
+   "bone_area_m2": null
+  },
+  {
+   "y": 0.97,
+   "skin_area_m2": 0.07241,
+   "bone_area_m2": null
+  },
+  {
+   "y": 0.99,
+   "skin_area_m2": 0.07003,
+   "bone_area_m2": null
+  },
+  {
+   "y": 1.01,
+   "skin_area_m2": 0.07031,
+   "bone_area_m2": null
+  },
+  {
+   "y": 1.03,
+   "skin_area_m2": 0.06755,
+   "bone_area_m2": null
+  },
+  {
+   "y": 1.05,
+   "skin_area_m2": 0.06812,
+   "bone_area_m2": null
+  },
+  {
+   "y": 1.07,
+   "skin_area_m2": 0.07476,
+   "bone_area_m2": null
+  },
+  {
+   "y": 1.09,
+   "skin_area_m2": 0.08178,
+   "bone_area_m2": 0.01566
+  },
+  {
+   "y": 1.11,
+   "skin_area_m2": 0.08741,
+   "bone_area_m2": 0.02047
+  },
+  {
+   "y": 1.13,
+   "skin_area_m2": 0.09575,
+   "bone_area_m2": 0.02684
+  },
+  {
+   "y": 1.15,
+   "skin_area_m2": 0.1068,
+   "bone_area_m2": 0.03556
+  },
+  {
+   "y": 1.17,
+   "skin_area_m2": 0.11587,
+   "bone_area_m2": 0.03782
+  },
+  {
+   "y": 1.19,
+   "skin_area_m2": 0.12319,
+   "bone_area_m2": 0.04266
+  },
+  {
+   "y": 1.21,
+   "skin_area_m2": 0.126,
+   "bone_area_m2": 0.04744
+  },
+  {
+   "y": 1.23,
+   "skin_area_m2": 0.12313,
+   "bone_area_m2": 0.049
+  },
+  {
+   "y": 1.25,
+   "skin_area_m2": 0.1324,
+   "bone_area_m2": 0.05315
+  },
+  {
+   "y": 1.27,
+   "skin_area_m2": 0.14177,
+   "bone_area_m2": 0.05317
+  },
+  {
+   "y": 1.29,
+   "skin_area_m2": 0.15903,
+   "bone_area_m2": 0.05083
+  },
+  {
+   "y": 1.31,
+   "skin_area_m2": 0.42685,
+   "bone_area_m2": 0.04781
+  },
+  {
+   "y": 1.33,
+   "skin_area_m2": 0.42993,
+   "bone_area_m2": 0.04506
+  },
+  {
+   "y": 1.35,
+   "skin_area_m2": 0.43578,
+   "bone_area_m2": 0.04152
+  }
+ ],
+ "mean_skin_to_bone_area_ratio": 4.602,
+ "max_ratio": 10.496
+}

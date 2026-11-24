@@ -1,0 +1,171 @@
+{
+ "sex": "male",
+ "margin_m": 0.002,
+ "iterations": 12,
+ "meshes": {
+  "abdominal_muscles": {
+   "vertices_initial": 172,
+   "max_displacement_m": 0.012132
+  },
+  "back_muscles_l": {
+   "vertices_initial": 167,
+   "max_displacement_m": 0.009248
+  },
+  "back_muscles_r": {
+   "vertices_initial": 163,
+   "max_displacement_m": 0.022164
+  },
+  "calf_l": {
+   "vertices_initial": 1495,
+   "max_displacement_m": 0.003349
+  },
+  "calf_r": {
+   "vertices_initial": 1510,
+   "max_displacement_m": 0.005257
+  },
+  "chest_muscles_l": {
+   "vertices_initial": 175,
+   "max_displacement_m": 0.005324
+  },
+  "chest_muscles_r": {
+   "vertices_initial": 219,
+   "max_displacement_m": 0.015579
+  },
+  "deltoid_l": {
+   "vertices_initial": 190,
+   "max_displacement_m": 0.015921
+  },
+  "deltoid_r": {
+   "vertices_initial": 209,
+   "max_displacement_m": 0.015382
+  },
+  "diaphragm": {
+   "vertices_initial": 33,
+   "max_displacement_m": 0.002238
+  },
+  "foot_muscles_l": {
+   "vertices_initial": 214,
+   "max_displacement_m": 0.006411
+  },
+  "foot_muscles_r": {
+   "vertices_initial": 219,
+   "max_displacement_m": 0.003145
+  },
+  "forearm_muscles_l": {
+   "vertices_initial": 230,
+   "max_displacement_m": 0.007334
+  },
+  "forearm_muscles_r": {
+   "vertices_initial": 242,
+   "max_displacement_m": 0.01069
+  },
+  "gluteal_l": {
+   "vertices_initial": 229,
+   "max_displacement_m": 0.013548
+  },
+  "gluteal_r": {
+   "vertices_initial": 165,
+   "max_displacement_m": 0.018127
+  },
+  "hamstrings_l": {
+   "vertices_initial": 156,
+   "max_displacement_m": 0.007563
+  },
+  "hamstrings_r": {
+   "vertices_initial": 170,
+   "max_displacement_m": 0.013145
+  },
+  "hand_muscles_l": {
+   "vertices_initial": 298,
+   "max_displacement_m": 0.008099
+  },
+  "hand_muscles_r": {
+   "vertices_initial": 305,
+   "max_displacement_m": 0.009228
+  },
+  "iliopsoas_l": {
+   "vertices_initial": 186,
+   "max_displacement_m": 0.014493
+  },
+  "iliopsoas_r": {
+   "vertices_initial": 215,
+   "max_displacement_m": 0.012005
+  },
+  "adductors_l": {
+   "vertices_initial": 188,
+   "max_displacement_m": 0.012155
+  },
+  "adductors_r": {
+   "vertices_initial": 162,
+   "max_displacement_m": 0.019724
+  },
+  "intercostals_l": {
+   "vertices_initial": 145,
+   "max_displacement_m": 0.039936
+  },
+  "intercostals_r": {
+   "vertices_initial": 162,
+   "max_displacement_m": 0.013596
+  },
+  "neck_muscles_l": {
+   "vertices_initial": 198,
+   "max_displacement_m": 0.032332
+  },
+  "neck_muscles_r": {
+   "vertices_initial": 217,
+   "max_displacement_m": 0.005816
+  },
+  "pelvic_floor": {
+   "vertices_initial": 243,
+   "max_displacement_m": 0.02872
+  },
+  "quadriceps_l": {
+   "vertices_initial": 184,
+   "max_displacement_m": 0.031083
+  },
+  "quadriceps_r": {
+   "vertices_initial": 190,
+   "max_displacement_m": 0.014204
+  },
+  "rotator_cuff_l": {
+   "vertices_initial": 162,
+   "max_displacement_m": 0.014434
+  },
+  "rotator_cuff_r": {
+   "vertices_initial": 166,
+   "max_displacement_m": 0.012019
+  },
+  "shin_muscles_l": {
+   "vertices_initial": 223,
+   "max_displacement_m": 0.038993
+  },
+  "shin_muscles_r": {
+   "vertices_initial": 228,
+   "max_displacement_m": 0.029075
+  },
+  "shoulder_muscles_l": {
+   "vertices_initial": 173,
+   "max_displacement_m": 0.048898
+  },
+  "shoulder_muscles_r": {
+   "vertices_initial": 190,
+   "max_displacement_m": 0.009727
+  },
+  "trapezius_l": {
+   "vertices_initial": 129,
+   "max_displacement_m": 0.006486
+  },
+  "trapezius_r": {
+   "vertices_initial": 119,
+   "max_displacement_m": 0.01171
+  },
+  "upper_arm_muscles_l": {
+   "vertices_initial": 175,
+   "max_displacement_m": 0.026188
+  },
+  "upper_arm_muscles_r": {
+   "vertices_initial": 180,
+   "max_displacement_m": 0.00646
+  }
+ }
+}

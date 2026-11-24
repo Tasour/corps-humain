@@ -1,0 +1,7 @@
+{
+ "sex": "male",
+ "max_gap_m": 0.02,
+ "keep_m": 0.015,
+ "vertices_moved": 320,
+ "max_move_m": 0.03
+}

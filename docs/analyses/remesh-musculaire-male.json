@@ -1,0 +1,211 @@
+{
+ "sex": "male",
+ "voxel_m": 0.004,
+ "meshes": {
+  "abdominal_muscles": {
+   "vertices_before": 20751,
+   "vertices_after": 35158,
+   "vertices_projected": 19493
+  },
+  "back_muscles_l": {
+   "vertices_before": 42222,
+   "vertices_after": 14672,
+   "vertices_projected": 8160
+  },
+  "back_muscles_r": {
+   "vertices_before": 42160,
+   "vertices_after": 10720,
+   "vertices_projected": 5962
+  },
+  "calf_l": {
+   "vertices_before": 7345,
+   "vertices_after": 17654,
+   "vertices_projected": 14680
+  },
+  "calf_r": {
+   "vertices_before": 7289,
+   "vertices_after": 16998,
+   "vertices_projected": 13495
+  },
+  "chest_muscles_l": {
+   "vertices_before": 2841,
+   "vertices_after": 6920,
+   "vertices_projected": 4732
+  },
+  "chest_muscles_r": {
+   "vertices_before": 2853,
+   "vertices_after": 7476,
+   "vertices_projected": 5053
+  },
+  "deltoid_l": {
+   "vertices_before": 2799,
+   "vertices_after": 7208,
+   "vertices_projected": 5567
+  },
+  "deltoid_r": {
+   "vertices_before": 2768,
+   "vertices_after": 7032,
+   "vertices_projected": 5080
+  },
+  "diaphragm": {
+   "vertices_before": 4311,
+   "vertices_after": 38272,
+   "vertices_projected": 25821
+  },
+  "foot_muscles_l": {
+   "vertices_before": 10478,
+   "vertices_after": 3124,
+   "vertices_projected": 2563
+  },
+  "foot_muscles_r": {
+   "vertices_before": 10445,
+   "vertices_after": 2626,
+   "vertices_projected": 2084
+  },
+  "forearm_muscles_l": {
+   "vertices_before": 19123,
+   "vertices_after": 9662,
+   "vertices_projected": 7429
+  },
+  "forearm_muscles_r": {
+   "vertices_before": 19135,
+   "vertices_after": 8344,
+   "vertices_projected": 6648
+  },
+  "gluteal_l": {
+   "vertices_before": 5666,
+   "vertices_after": 16202,
+   "vertices_projected": 12522
+  },
+  "gluteal_r": {
+   "vertices_before": 5705,
+   "vertices_after": 17348,
+   "vertices_projected": 13667
+  },
+  "hamstrings_l": {
+   "vertices_before": 1556,
+   "vertices_after": 9700,
+   "vertices_projected": 7471
+  },
+  "hamstrings_r": {
+   "vertices_before": 1565,
+   "vertices_after": 10068,
+   "vertices_projected": 7567
+  },
+  "hand_muscles_l": {
+   "vertices_before": 8682,
+   "vertices_after": 950,
+   "vertices_projected": 791
+  },
+  "hand_muscles_r": {
+   "vertices_before": 8675,
+   "vertices_after": 972,
+   "vertices_projected": 768
+  },
+  "iliopsoas_l": {
+   "vertices_before": 2144,
+   "vertices_after": 13448,
+   "vertices_projected": 11828
+  },
+  "iliopsoas_r": {
+   "vertices_before": 2193,
+   "vertices_after": 12698,
+   "vertices_projected": 11218
+  },
+  "adductors_l": {
+   "vertices_before": 3539,
+   "vertices_after": 11316,
+   "vertices_projected": 9254
+  },
+  "adductors_r": {
+   "vertices_before": 3508,
+   "vertices_after": 11724,
+   "vertices_projected": 9925
+  },
+  "intercostals_l": {
+   "vertices_before": 93660,
+   "vertices_after": 35684,
+   "vertices_projected": 20922
+  },
+  "intercostals_r": {
+   "vertices_before": 93707,
+   "vertices_after": 27888,
+   "vertices_projected": 17240
+  },
+  "neck_muscles_l": {
+   "vertices_before": 10763,
+   "vertices_after": 4252,
+   "vertices_projected": 2895
+  },
+  "neck_muscles_r": {
+   "vertices_before": 11589,
+   "vertices_after": 4134,
+   "vertices_projected": 2886
+  },
+  "pelvic_floor": {
+   "vertices_before": 16106,
+   "vertices_after": 1868,
+   "vertices_projected": 1675
+  },
+  "quadriceps_l": {
+   "vertices_before": 3153,
+   "vertices_after": 15646,
+   "vertices_projected": 12043
+  },
+  "quadriceps_r": {
+   "vertices_before": 3149,
+   "vertices_after": 17720,
+   "vertices_projected": 13255
+  },
+  "rotator_cuff_l": {
+   "vertices_before": 2974,
+   "vertices_after": 5154,
+   "vertices_projected": 3606
+  },
+  "rotator_cuff_r": {
+   "vertices_before": 3035,
+   "vertices_after": 5092,
+   "vertices_projected": 3823
+  },
+  "shin_muscles_l": {
+   "vertices_before": 5946,
+   "vertices_after": 5812,
+   "vertices_projected": 4640
+  },
+  "shin_muscles_r": {
+   "vertices_before": 6000,
+   "vertices_after": 6000,
+   "vertices_projected": 4389
+  },
+  "shoulder_muscles_l": {
+   "vertices_before": 13552,
+   "vertices_after": 30396,
+   "vertices_projected": 19785
+  },
+  "shoulder_muscles_r": {
+   "vertices_before": 13383,
+   "vertices_after": 23832,
+   "vertices_projected": 16087
+  },
+  "trapezius_l": {
+   "vertices_before": 5089,
+   "vertices_after": 7322,
+   "vertices_projected": 4175
+  },
+  "trapezius_r": {
+   "vertices_before": 5111,
+   "vertices_after": 7070,
+   "vertices_projected": 4588
+  },
+  "upper_arm_muscles_l": {
+   "vertices_before": 3095,
+   "vertices_after": 11620,
+   "vertices_projected": 8614
+  },
+  "upper_arm_muscles_r": {
+   "vertices_before": 3129,
+   "vertices_after": 13554,
+   "vertices_projected": 9726
+  }
+ }
+}

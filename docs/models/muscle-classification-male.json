@@ -1,0 +1,375 @@
+{
+ "sex": "male",
+ "threshold_eigen_ratio": 4.0,
+ "meshes": {
+  "abdominal_muscles": {
+   "eigenvalues": [
+    0.00248798,
+    0.00734391,
+    0.01533309
+   ],
+   "ratio": 6.163,
+   "kind": "tubular"
+  },
+  "back_muscles_l": {
+   "eigenvalues": [
+    0.00047958,
+    0.0005926,
+    0.02899628
+   ],
+   "ratio": 60.462,
+   "kind": "tubular"
+  },
+  "back_muscles_r": {
+   "eigenvalues": [
+    0.0004068,
+    0.00056351,
+    0.02902219
+   ],
+   "ratio": 71.342,
+   "kind": "tubular"
+  },
+  "calf_l": {
+   "eigenvalues": [
+    0.00060861,
+    0.00278239,
+    0.02205697
+   ],
+   "ratio": 36.242,
+   "kind": "tubular"
+  },
+  "calf_r": {
+   "eigenvalues": [
+    0.00057105,
+    0.00278644,
+    0.0221334
+   ],
+   "ratio": 38.759,
+   "kind": "tubular"
+  },
+  "chest_muscles_l": {
+   "eigenvalues": [
+    0.00025604,
+    0.00342149,
+    0.00554584
+   ],
+   "ratio": 21.66,
+   "kind": "tubular"
+  },
+  "chest_muscles_r": {
+   "eigenvalues": [
+    0.00031242,
+    0.00325124,
+    0.00512559
+   ],
+   "ratio": 16.406,
+   "kind": "tubular"
+  },
+  "deltoid_l": {
+   "eigenvalues": [
+    0.0002859,
+    0.00120701,
+    0.00291459
+   ],
+   "ratio": 10.194,
+   "kind": "tubular"
+  },
+  "deltoid_r": {
+   "eigenvalues": [
+    0.00026029,
+    0.00109185,
+    0.00276256
+   ],
+   "ratio": 10.614,
+   "kind": "tubular"
+  },
+  "diaphragm": {
+   "eigenvalues": [
+    0.00280273,
+    0.00550646,
+    0.00983782
+   ],
+   "ratio": 3.51,
+   "kind": "plaque"
+  },
+  "foot_muscles_l": {
+   "eigenvalues": [
+    0.00017223,
+    0.00048153,
+    0.00276496
+   ],
+   "ratio": 16.054,
+   "kind": "tubular"
+  },
+  "foot_muscles_r": {
+   "eigenvalues": [
+    0.00017433,
+    0.00046988,
+    0.00276032
+   ],
+   "ratio": 15.834,
+   "kind": "tubular"
+  },
+  "forearm_muscles_l": {
+   "eigenvalues": [
+    0.0002587,
+    0.00046476,
+    0.01296187
+   ],
+   "ratio": 50.104,
+   "kind": "tubular"
+  },
+  "forearm_muscles_r": {
+   "eigenvalues": [
+    0.00032935,
+    0.00055473,
+    0.01237314
+   ],
+   "ratio": 37.569,
+   "kind": "tubular"
+  },
+  "gluteal_l": {
+   "eigenvalues": [
+    0.00144451,
+    0.00272613,
+    0.02111121
+   ],
+   "ratio": 14.615,
+   "kind": "tubular"
+  },
+  "gluteal_r": {
+   "eigenvalues": [
+    0.0014183,
+    0.00273252,
+    0.02142283
+   ],
+   "ratio": 15.105,
+   "kind": "tubular"
+  },
+  "hamstrings_l": {
+   "eigenvalues": [
+    0.00035353,
+    0.00173592,
+    0.03059369
+   ],
+   "ratio": 86.538,
+   "kind": "tubular"
+  },
+  "hamstrings_r": {
+   "eigenvalues": [
+    0.00038261,
+    0.00158295,
+    0.03067895
+   ],
+   "ratio": 80.183,
+   "kind": "tubular"
+  },
+  "hand_muscles_l": {
+   "eigenvalues": [
+    2.047e-05,
+    0.0001302,
+    0.00073456
+   ],
+   "ratio": 35.891,
+   "kind": "tubular"
+  },
+  "hand_muscles_r": {
+   "eigenvalues": [
+    3.06e-05,
+    0.0001275,
+    0.00066729
+   ],
+   "ratio": 21.804,
+   "kind": "tubular"
+  },
+  "iliopsoas_l": {
+   "eigenvalues": [
+    0.00145736,
+    0.00197182,
+    0.012461
+   ],
+   "ratio": 8.55,
+   "kind": "tubular"
+  },
+  "iliopsoas_r": {
+   "eigenvalues": [
+    0.00144398,
+    0.00201591,
+    0.01296779
+   ],
+   "ratio": 8.981,
+   "kind": "tubular"
+  },
+  "adductors_l": {
+   "eigenvalues": [
+    0.00035224,
+    0.00312967,
+    0.02128912
+   ],
+   "ratio": 60.44,
+   "kind": "tubular"
+  },
+  "adductors_r": {
+   "eigenvalues": [
+    0.00035236,
+    0.00300846,
+    0.02111543
+   ],
+   "ratio": 59.926,
+   "kind": "tubular"
+  },
+  "intercostals_l": {
+   "eigenvalues": [
+    0.00141102,
+    0.00714997,
+    0.00840705
+   ],
+   "ratio": 5.958,
+   "kind": "tubular"
+  },
+  "intercostals_r": {
+   "eigenvalues": [
+    0.00121807,
+    0.00699678,
+    0.00961804
+   ],
+   "ratio": 7.896,
+   "kind": "tubular"
+  },
+  "neck_muscles_l": {
+   "eigenvalues": [
+    0.00046414,
+    0.00097572,
+    0.00345342
+   ],
+   "ratio": 7.44,
+   "kind": "tubular"
+  },
+  "neck_muscles_r": {
+   "eigenvalues": [
+    0.0005425,
+    0.0011382,
+    0.00386302
+   ],
+   "ratio": 7.121,
+   "kind": "tubular"
+  },
+  "pelvic_floor": {
+   "eigenvalues": [
+    8.156e-05,
+    0.00024793,
+    0.00358456
+   ],
+   "ratio": 43.951,
+   "kind": "tubular"
+  },
+  "quadriceps_l": {
+   "eigenvalues": [
+    0.00034617,
+    0.00073715,
+    0.04913092
+   ],
+   "ratio": 141.925,
+   "kind": "tubular"
+  },
+  "quadriceps_r": {
+   "eigenvalues": [
+    0.00035908,
+    0.00074062,
+    0.04874994
+   ],
+   "ratio": 135.763,
+   "kind": "tubular"
+  },
+  "rotator_cuff_l": {
+   "eigenvalues": [
+    0.00014191,
+    0.00118634,
+    0.00648182
+   ],
+   "ratio": 45.676,
+   "kind": "tubular"
+  },
+  "rotator_cuff_r": {
+   "eigenvalues": [
+    0.00013488,
+    0.00101892,
+    0.00646987
+   ],
+   "ratio": 47.967,
+   "kind": "tubular"
+  },
+  "shin_muscles_l": {
+   "eigenvalues": [
+    0.00034931,
+    0.0022938,
+    0.01949175
+   ],
+   "ratio": 55.801,
+   "kind": "tubular"
+  },
+  "shin_muscles_r": {
+   "eigenvalues": [
+    0.00032297,
+    0.00222905,
+    0.01973571
+   ],
+   "ratio": 61.106,
+   "kind": "tubular"
+  },
+  "shoulder_muscles_l": {
+   "eigenvalues": [
+    0.00140962,
+    0.00610327,
+    0.01324322
+   ],
+   "ratio": 9.395,
+   "kind": "tubular"
+  },
+  "shoulder_muscles_r": {
+   "eigenvalues": [
+    0.00127283,
+    0.00623061,
+    0.0132046
+   ],
+   "ratio": 10.374,
+   "kind": "tubular"
+  },
+  "trapezius_l": {
+   "eigenvalues": [
+    0.000431,
+    0.00343873,
+    0.01107572
+   ],
+   "ratio": 25.698,
+   "kind": "tubular"
+  },
+  "trapezius_r": {
+   "eigenvalues": [
+    0.00041197,
+    0.0034297,
+    0.01105022
+   ],
+   "ratio": 26.823,
+   "kind": "tubular"
+  },
+  "upper_arm_muscles_l": {
+   "eigenvalues": [
+    0.00028016,
+    0.00047094,
+    0.0180763
+   ],
+   "ratio": 64.522,
+   "kind": "tubular"
+  },
+  "upper_arm_muscles_r": {
+   "eigenvalues": [
+    0.00032584,
+    0.00073689,
+    0.01829464
+   ],
+   "ratio": 56.147,
+   "kind": "tubular"
+  }
+ }
+}
