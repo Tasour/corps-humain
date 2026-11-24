@@ -73,4 +73,4 @@ const rapport = {
 };
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(rapport, null, 1));
-console.log(`[dirty] OK — v2 ${mesures.v2.rendusAuRepos} rendu(s) au repos, ${mesures.v2.rendusApresInteraction} après interaction ; v1 ${mesures.v1.rendusEn1s} rendus/s (exemption documentée)`);
+console.log(`[dirty] OK — v2 ${mesures.v2.rendusAuRepos} rendu(s) au repos, ${mesures.v2.rendusApresInteraction} après interaction`);
