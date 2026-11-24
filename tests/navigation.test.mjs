@@ -25,4 +25,6 @@ assert.ok(js.includes('clearSelection()'), "reset de sélection absent");
 assert.ok(js.includes('EdgesGeometry'), "contour absent");
 assert.ok(js.includes('0x40f0e0'), "couleur turquoise absente");
 assert.ok(js.includes('selection-descriptions.json'), "descriptions absentes");
+assert.ok(html.includes('id="cp-skin-only"'), "préréglage peau seule absent");
+assert.ok(js.includes("getElementById('cp-skin-only')"), "préréglage peau seule non câblé");
 console.log("PASS navigation et sélection");

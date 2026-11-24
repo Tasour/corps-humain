@@ -26,10 +26,11 @@ const MALE = {
     organs: ['organs.glb'], vessels: ['arteries.glb', 'veins.glb'], nerves: ['nerves.glb'] },
 };
 const FEMALE = {
-  id: 'female-atlas',
-  label: 'Female Atlas',
+  id: 'bodyatlas',
+  label: 'Body Atlas 3D — femme',
   license: 'CC BY 4.0',
-  kind: 'chunk', dir: './docs/models/contests/female-atlas/', manifest: 'atlas.json',
+  note: '2 534 pièces, peau Visible Human Female, apports masculins recalés et documentés.',
+  kind: 'chunk', dir: './docs/models/body-atlas/', manifest: 'atlas-female.json',
 };
 
 export function initCorpsViewer() {
@@ -90,8 +91,8 @@ export function initCorpsViewer() {
     return '#bb8f68';
   };
   let need = true, token = 0, ctrl = null;
-  let descriptions = { seema: {}, 'female-atlas': {} };
-  let descAlias = { seema: {}, 'female-atlas': {} };
+  let descriptions = { seema: {}, bodyatlas: {} };
+  let descAlias = { seema: {}, bodyatlas: {} };
   const alpha = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '').replace(/\d+$/, '');
   const buildAlias = () => {
     for (const source of Object.keys(descriptions)) {
@@ -141,7 +142,7 @@ export function initCorpsViewer() {
   function clearOutline() {
     while (outlineGroup.children.length) {
       const o = outlineGroup.children.pop();
-      o.geometry.dispose();
+      if (!o.userData.sharedGeometry) o.geometry.dispose();
       o.material.dispose();
     }
   }
@@ -152,23 +153,41 @@ export function initCorpsViewer() {
     if (window.__corps) window.__corps.selection = null;
     need = true;
   }
+  function outlineFor(mesh) {
+    const edges = new THREE.EdgesGeometry(mesh.geometry, 25);
+    if (edges.getAttribute('position').count <= 6000) {
+      return new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
+        color: 0x40f0e0, transparent: true, opacity: reduced ? 0.9 : 0.6,
+        blending: THREE.AdditiveBlending, depthTest: true,
+      }));
+    }
+    // Grand maillage : un liseré de silhouette plutôt qu'un quadrillage dense.
+    edges.dispose();
+    const hull = new THREE.Mesh(mesh.geometry, new THREE.MeshBasicMaterial({
+      color: 0x40f0e0, transparent: true, opacity: reduced ? 0.24 : 0.16,
+      blending: THREE.AdditiveBlending, side: THREE.BackSide, depthWrite: false,
+    }));
+    hull.userData.sharedGeometry = true;
+    hull.matrixAutoUpdate = false;
+    hull.matrix.copy(mesh.matrixWorld).multiply(new THREE.Matrix4().makeScale(1.012, 1.012, 1.012));
+    return hull;
+  }
   function select(mesh, clientX, clientY) {
     clearOutline();
     scene.updateMatrixWorld(true);
-    const edges = new THREE.EdgesGeometry(mesh.geometry, 25);
-    const material = new THREE.LineBasicMaterial({
-      color: 0x40f0e0, transparent: true, opacity: reduced ? 0.9 : 0.6,
-      blending: THREE.AdditiveBlending, depthTest: true,
-    });
-    const line = new THREE.LineSegments(edges, material);
-    line.matrixAutoUpdate = false;
-    line.matrix.copy(mesh.matrixWorld);
-    line.matrixWorldNeedsUpdate = true;
-    outlineGroup.add(line);
+    const outline = outlineFor(mesh);
+    outline.matrixAutoUpdate = false;
+    if (outline.userData.sharedGeometry) {
+      outline.matrix.copy(mesh.matrixWorld).multiply(new THREE.Matrix4().makeScale(1.012, 1.012, 1.012));
+    } else {
+      outline.matrix.copy(mesh.matrixWorld);
+    }
+    outline.matrixWorldNeedsUpdate = true;
+    outlineGroup.add(outline);
     const entry = mesh.userData.selectionEntry || {};
     popupName.textContent = entry.name || mesh.userData.selectionLabel || 'Structure';
     popupDesc.textContent = entry.description || 'Structure anatomique référencée dans la source.';
-    popupSource.textContent = `${entry.source || ''}${entry.license ? ' — ' + entry.license : ''}`;
+    popupSource.textContent = [entry.source, entry.license, entry.origin].filter(Boolean).join(' · ');
     const section = host.parentElement.getBoundingClientRect();
     const x = Math.min(clientX - section.left + 12, section.width - 300);
     const y = Math.min(clientY - section.top + 12, section.height - 180);
@@ -361,7 +380,8 @@ export function initCorpsViewer() {
     bodies.add(maleModel, femaleModel);
     document.querySelector('.source-label').textContent = 'Champions ♂/♀';
     document.getElementById('source-sexe-note').textContent =
-      `Homme : ${MALE.label} (${MALE.license}) · Femme : ${FEMALE.label} (${FEMALE.license}). Cliquez une structure pour l'identifier.`;
+      `Homme : ${MALE.label} (${MALE.license}) · Femme : ${FEMALE.label} (${FEMALE.license}) — ${FEMALE.note}. ` +
+      `Le clic sélectionne le premier maillage touché par le rayon, y compris à travers la peau translucide.`;
     window.__corps = {
       maleModel, femaleModel, source: MALE.id, female: FEMALE.id,
       THREE, camera, controls, renderer, controller: ctrl, fitView, resetView, focusPoint,
@@ -429,6 +449,10 @@ export function initCorpsViewer() {
   master.addEventListener('change', () => {
     for (const b of boxes) b.checked = master.checked;
     master.indeterminate = false; writeUrl(); apply();
+  });
+  document.getElementById('cp-skin-only').addEventListener('click', () => {
+    for (const b of boxes) b.checked = b.dataset.layer === 'skin';
+    sync(); writeUrl(); apply();
   });
   window.addEventListener('resize', () => { resize(); need = true; });
 

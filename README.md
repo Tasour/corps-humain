@@ -16,8 +16,10 @@ Le contrôle des collisions est assuré par `npm run check:collisions` et
 ### Paire déployée et sélection
 
 Le site affiche deux champions figés, issus du concours du 2026-11-24 : **3D Human Body
-Anatomy** (`seema`, CC BY-SA 4.0) sur le carré bleu et **Female Atlas**
-(`female-atlas`, MIT + CC BY 4.0) sur le carré rose. Les géométries restent indépendantes.
+Anatomy** (`seema`, CC BY-SA 4.0) sur le carré bleu et **Body Atlas 3D — femme**
+(`bodyatlas`, CC BY 4.0) sur le carré rose. Les géométries restent indépendantes.
+`female-atlas` a été écarté : 72 % de géométrie dérivée d'une référence masculine
+et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleur-modele.md`.
 
 Un clic ou un tap sélectionne le premier maillage touché par le rayon issu de la caméra.
 Une popup affiche alors le nom de la structure, une courte description sourcée et sa licence,

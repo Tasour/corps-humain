@@ -88,7 +88,7 @@
 - Licence : **CC0 1.0** (🟢), 47 maillages ajoutés au système nerveux de Body Atlas.
 - Consulté le 2026-11-24.
 
-## Female Atlas
+## Female Atlas — écarté, conservé comme archive
 
 - URL : https://github.com/HiMahendraBeniwal/female-atlas
 - Licence : **MIT** (code) + **CC BY 4.0** (données anatomiques) — 🟢.
@@ -115,8 +115,11 @@
   `scripts/build_selection_descriptions.py`.
 - Homme : noms et résumés issus des fichiers `content/*.json` de
   https://github.com/SeemaBansal1/3d-human-body-anatomy — **CC BY-SA 4.0**.
-- Femme : noms et identifiants FMA/UBERON du manifeste de
-  https://github.com/HiMahendraBeniwal/female-atlas — **CC BY 4.0**.
-- Aucune description médicale n'est inventée : à défaut de résumé amont, un texte factuel
-  de repli cite le fichier source.
+- Femme : noms et identifiants FMA/UBERON du manifeste femelle de
+  https://github.com/ImliStack/Body-Atlas-3D — **CC BY 4.0**. La provenance de chaque
+  pièce est conservée : Visible Human Female (HRA), BodyParts3D 4.0 recalé (DBCLS),
+  Allen Human Reference Atlas.
+- La définition du segment basal latéral gauche (FMA:7379) suit Terminologia Anatomica ;
+  les autres descriptions sont factuelles et citent l'identifiant et la source, sans
+  invention clinique.
 - Consulté le 2026-11-24.

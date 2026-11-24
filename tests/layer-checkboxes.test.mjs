@@ -17,7 +17,7 @@ for (const layer of LAYERS) {
 assert.ok(!html.includes('data-panel="concours"'), "le bouton concours doit être supprimé");
 assert.ok(!html.includes('id="panel-concours"'), "le panneau concours doit être supprimé");
 assert.ok(js.includes("id: 'seema'"), "champion homme absent");
-assert.ok(js.includes("id: 'female-atlas'"), "championne femme absente");
+assert.ok(js.includes("id: 'bodyatlas'"), "championne femme absente");
 assert.ok(!html.includes('ancien-atlas'), "le lien vers l'ancien atlas doit être supprimé");
 assert.ok(html.includes('id="toolbar"'), "barre d'outils absente");
 assert.ok(js.includes("active.has(o.userData.layer)"), "bascule par couche absente");

@@ -63,8 +63,16 @@ for (const f of fs.readdirSync(dstModels)) {
 }
 fs.cpSync(path.join(modelsDir, "forks", "seema"),
   path.join(dstModels, "forks", "seema"), { recursive: true });
-fs.cpSync(path.join(modelsDir, "contests", "female-atlas"),
-  path.join(dstModels, "contests", "female-atlas"), { recursive: true });
+const femaleSrc = path.join(modelsDir, "body-atlas");
+const femaleDst = path.join(dstModels, "body-atlas");
+fs.mkdirSync(femaleDst, { recursive: true });
+fs.copyFileSync(path.join(femaleSrc, "atlas-female.json"),
+  path.join(femaleDst, "atlas-female.json"));
+for (const f of fs.readdirSync(femaleSrc)) {
+  if (/^female-\d+\.bin\.gz$/.test(f)) {
+    fs.copyFileSync(path.join(femaleSrc, f), path.join(femaleDst, f));
+  }
+}
 fs.copyFileSync(path.join(modelsDir, "selection-descriptions.json"),
   path.join(dstModels, "selection-descriptions.json"));
 for (const old of [
@@ -75,4 +83,4 @@ for (const old of [
   if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
 }
 
-console.log(`[unify] index.html = champions seema + female-atlas (${build})`);
+console.log(`[unify] index.html = champions seema + bodyatlas (${build})`);

@@ -36,20 +36,32 @@ assert.ok(js.includes("Math.sin(performance.now() / 1200"), "flash 1,2 s absent"
 assert.ok(js.includes("reduced ? 0.9"), "reduced motion absent");
 
 /* Descriptions sourcées : champs obligatoires. */
-assert.ok(desc.descriptions.seema && desc.descriptions["female-atlas"], "descriptions incomplètes");
+assert.ok(desc.descriptions.seema && desc.descriptions.bodyatlas, "descriptions incomplètes");
 for (const [source, entries] of Object.entries(desc.descriptions)) {
   for (const [id, entry] of Object.entries(entries)) {
     assert.ok(entry.name && id, `${source}:${id} sans nom`);
     assert.ok(entry.description, `${source}:${id} sans description`);
     assert.ok(entry.source, `${source}:${id} sans source`);
     assert.ok(entry.license, `${source}:${id} sans licence`);
+    assert.ok(entry.origin, `${source}:${id} sans provenance`);
   }
 }
+assert.ok(desc.descriptions.bodyatlas.VH_F_left_lateral_basal_bronchopulmonary_segment
+  .description.includes('S9'), "description médicale de FMA:7379 absente");
 
 /* Couverture : chaque pièce sélectionnable possède une entrée. */
-const female = JSON.parse(readFileSync(root + "docs/models/contests/female-atlas/atlas.json", "utf8"));
+const female = JSON.parse(readFileSync(root + "docs/models/body-atlas/atlas-female.json", "utf8"));
 for (const p of female.parts) {
-  assert.ok(desc.descriptions["female-atlas"][p.id], `female-atlas:${p.id} sans description`);
+  assert.ok(desc.descriptions.bodyatlas[p.id], `bodyatlas:${p.id} sans description`);
+}
+
+/* Contrôles anatomiques : une seule paire d'yeux, aucune structure mâle pure. */
+const sclera = female.parts.filter((p) => /^(left|right) sclera$/i.test(p.name));
+assert.equal(sclera.length, 2, `${sclera.length} sclères au lieu de deux`);
+const maleOnly = ['penis', 'testis', 'testicle', 'prostate', 'scrotum', 'seminal vesicle'];
+for (const p of female.parts) {
+  assert.ok(!maleOnly.some((t) => p.name.toLowerCase().includes(t)),
+    `structure masculine dans le set femelle : ${p.name}`);
 }
 
 const glbJson = (file) => {
@@ -68,4 +80,4 @@ for (const file of ["skin", "muscles", "skeleton", "organs", "arteries", "veins"
 }
 
 console.log(`PASS sélection — ${Object.keys(desc.descriptions.seema).length} homme, ` +
-  `${Object.keys(desc.descriptions["female-atlas"]).length} femme`);
+  `${Object.keys(desc.descriptions.bodyatlas).length} femme`);

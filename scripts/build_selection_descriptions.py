@@ -7,7 +7,7 @@ import sys
 
 ROOT = '/home/tasour/corps-humain'
 SEEMA_SRC = '/tmp/opencode/seema-src/content'
-FEMALE_MANIFEST = f'{ROOT}/docs/models/contests/female-atlas/atlas.json'
+FEMALE_MANIFEST = f'{ROOT}/docs/models/body-atlas/atlas-female.json'
 OUT = f'{ROOT}/docs/models/selection-descriptions.json'
 sys.path.insert(0, f'{ROOT}/scripts')
 from glb_geom import load_glb  # noqa: E402
@@ -48,6 +48,7 @@ def load_seema():
                 'description': summary,
                 'source': f'SeemaBansal 3d-human-body-anatomy — {fname}',
                 'license': 'CC BY-SA 4.0',
+                'origin': 'Z-Anatomy / BodyParts3D (référence masculine)',
             }
             for key in [st.get('id'), st.get('medical'), st.get('common')] + list(st.get('match') or []):
                 if key:
@@ -58,6 +59,7 @@ def load_seema():
                 'description': f'{common} — nom courant référencé dans {fname}.',
                 'source': f'SeemaBansal 3d-human-body-anatomy — {fname}',
                 'license': 'CC BY-SA 4.0',
+                'origin': 'Z-Anatomy / BodyParts3D (référence masculine)',
             })
     out = {}
     models = f'{ROOT}/docs/models/forks/seema/models'
@@ -78,6 +80,7 @@ def load_seema():
                     'description': f'Structure anatomique référencée dans la source {g}.',
                     'source': f'SeemaBansal 3d-human-body-anatomy — {g}',
                     'license': 'CC BY-SA 4.0',
+                    'origin': 'Z-Anatomy / BodyParts3D (référence masculine)',
                 }
     return out
 
@@ -92,37 +95,72 @@ SYSTEMS = {
 }
 
 
-def load_female_atlas():
+CURATED = {
+    'FMA:7379': {
+        'description': 'Segment bas latéral du lobe inférieur gauche (S9) : territoire pulmonaire '
+                       'desservi par la bronche segmentaire basale latérale (B9) et l’artère '
+                       'segmentaire correspondante. Il répond au segment basal antérieur (S8) '
+                       'en avant et au segment basal postérieur (S10) en arrière.',
+        'source': 'Terminologia Anatomica — FMA:7379 (Human Reference Atlas)',
+        'license': 'CC BY 4.0',
+    },
+}
+
+
+def female_origin(part_id):
+    if part_id.startswith('VH_F_'):
+        return 'Visible Human Female (HRA)'
+    if part_id.startswith('GFJM'):
+        return 'BodyParts3D 4.0 — miroir recalé sur la femelle'
+    if part_id.startswith('GFJ'):
+        return 'BodyParts3D 4.0 — recalé sur la femelle'
+    if part_id.startswith('Allen'):
+        return 'Allen Human Reference Atlas'
+    return 'Human Reference Atlas'
+
+
+def load_female_body():
     data = json.load(open(FEMALE_MANIFEST))
     out = {}
     for p in data['parts']:
         sid = p['id']
         system = SYSTEMS.get(p.get('system'), p.get('system', 'anatomique'))
-        fma = p.get('conceptId', '')
-        desc = f'Structure du système {system} identifiée {fma} dans le Human Reference Atlas (Visible Human Female).'
-        if p.get('name'):
-            desc = f'{p["name"]} — {desc}'
+        concept = p.get('conceptId', '')
+        origin = female_origin(sid)
+        curated = CURATED.get(concept, {})
+        if p.get('system') == 'pregnancy':
+            desc = curated.get('description') or (
+                f'{p.get("name") or sid} — Référence de grossesse issue du {origin} '
+                f'({concept}) : structure témoin, non présente hors grossesse.')
+        else:
+            desc = curated.get('description') or (
+                f'{p.get("name") or sid} — Structure du système {system} identifiée '
+                f'{concept} dans {origin}.')
         out[sid] = {
             'name': p.get('name') or sid,
             'description': ' '.join(desc.split()),
-            'source': 'Female Atlas — Human Reference Atlas / Visible Human Female',
-            'license': 'CC BY 4.0',
+            'source': curated.get('source') or (
+                'Body Atlas 3D — Human Reference Atlas / Visible Human Female'
+                if sid.startswith('VH_F_') else
+                'Body Atlas 3D — BodyParts3D 4.0 (DBCLS), recalé sur la femelle'),
+            'license': curated.get('license', 'CC BY 4.0'),
+            'origin': origin,
         }
     return out
 
 
 result = {
-    'version': 1,
+    'version': 2,
     'sources': {
         'seema': 'https://github.com/SeemaBansal1/3d-human-body-anatomy',
-        'female-atlas': 'https://github.com/HiMahendraBeniwal/female-atlas',
+        'bodyatlas': 'https://github.com/ImliStack/Body-Atlas-3D',
     },
     'descriptions': {
         'seema': load_seema(),
-        'female-atlas': load_female_atlas(),
+        'bodyatlas': load_female_body(),
     },
 }
 with open(OUT, 'w') as f:
     json.dump(result, f, indent=1, ensure_ascii=False)
 print('[descriptions] seema', len(result['descriptions']['seema']),
-      'female-atlas', len(result['descriptions']['female-atlas']))
+      'bodyatlas', len(result['descriptions']['bodyatlas']))

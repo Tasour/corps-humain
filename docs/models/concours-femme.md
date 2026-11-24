@@ -1,7 +1,10 @@
 # Concours femme — 2026-11-24
 
-Six candidates sont proposées dans le panneau `CONC`. Aucune géométrie n'est
-mélangée entre elles.
+Concours historique du 2026-11-24. `female-atlas` a d'abord été retenu puis
+**écarté** après audit (deux paires d'yeux, 72 % de géométrie masculine).
+La championne publiée est désormais `bodyatlas`. Voir
+`docs/veille/2026-11-24-femelle-meilleur-modele.md`. Aucune géométrie n'est
+mélangée entre les sets.
 
 | Clé | Source | Couverture | Licence |
 |---|---|---|---|
