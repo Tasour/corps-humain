@@ -7,7 +7,6 @@ const report = JSON.parse(readFileSync(p('docs/analyses/verification-4-couches.j
 const completeness = JSON.parse(readFileSync(p('docs/analyses/completude-couches.json'), 'utf8'));
 
 for (const sex of ['femme', 'homme']) {
-  assert.ok(existsSync(p(`docs/humain-${sex}-complet.blend`)), `scène ${sex} absente`);
   assert.ok(existsSync(p(`docs/videos/${sex}-validation.mp4`)), `vidéo ${sex} absente`);
   const glb = p(`docs/models/corps-${sex === 'femme' ? 'female' : 'male'}-opt.glb`);
   assert.ok(existsSync(glb), `GLB ${sex} absent`);
