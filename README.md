@@ -328,3 +328,9 @@ Le **code** est sous licence MIT — voir [LICENSE](LICENSE).
 Les **maillages anatomiques** de `public/models/` sont sous licence **CC BY-SA 4.0** :
 BodyParts3D 4.0 (© The Database Center for Life Science, CC BY 4.0) et Z-Anatomy
 (CC BY-SA 4.0). Voir `public/models/README.md` pour le détail des attributions.
+
+Le contour de sélection est un liseré Fresnel sur les structures fines comme les
+cheveux. La rotation s'ancre sur le corps glissé, avec deux boutons H/F et un
+indicateur de pivot. Activer la peau manuellement la rend opaque et sélectionnable ;
+le mode Rayon X reste un bouton explicite. Les muscles du visage de la femme
+possèdent leur propre couche et leur préréglage « Visage ».

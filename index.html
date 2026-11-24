@@ -59,6 +59,9 @@
         padding:0; border-radius:8px; font-size:11px; font-weight:600; }
       .presets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
       .presets button { min-height:44px; padding:0 8px; border-radius:8px; font-size:12px; font-weight:600; }
+      #pivot-indicator { position:absolute; right:12px; top:12px; z-index:11; padding:4px 8px;
+        border:1px solid var(--line); border-radius:8px; background:rgba(16,22,29,.88);
+        color:var(--muted); font-size:11px; pointer-events:none; }
       #selection-popup { position:absolute; z-index:14; width:min(280px,calc(100vw - 24px));
         padding:16px 44px 16px 16px; border:1px solid var(--accent); border-radius:12px;
         background:rgba(16,22,29,.97); box-shadow:0 10px 30px rgba(0,0,0,.5); }
@@ -108,6 +111,7 @@
             </label>
             <label for="cp-couche-skin"><input type="checkbox" aria-label="Peau" id="cp-couche-skin" data-layer="skin" checked /> Peau</label>
             <label for="cp-couche-muscles"><input type="checkbox" aria-label="Muscles" id="cp-couche-muscles" data-layer="muscles" checked /> Muscles</label>
+            <label for="cp-couche-facial"><input type="checkbox" aria-label="Muscles du visage" id="cp-couche-facial" data-layer="facial" checked /> Muscles du visage</label>
             <label for="cp-couche-skeleton"><input type="checkbox" aria-label="Squelette" id="cp-couche-skeleton" data-layer="skeleton" checked /> Squelette</label>
             <label for="cp-couche-organs"><input type="checkbox" aria-label="Organes" id="cp-couche-organs" data-layer="organs" checked /> Organes</label>
             <label for="cp-couche-vessels"><input type="checkbox" aria-label="Vaisseaux" id="cp-couche-vessels" data-layer="vessels" checked /> Vaisseaux</label>
@@ -120,7 +124,8 @@
             <button type="button" id="cp-preset-muscles" title="N'afficher que les muscles">Muscles</button>
             <button type="button" id="cp-preset-skeleton" title="N'afficher que le squelette">Squelette</button>
             <button type="button" id="cp-preset-organs" title="N'afficher que les organes">Organes</button>
-            <button type="button" id="cp-preset-xray" title="Afficher tous les calques en transparence">Rayon X</button>
+            <button type="button" id="cp-preset-face" title="N'afficher que les muscles du visage">Visage</button>
+            <button type="button" id="cp-preset-xray" aria-pressed="true" title="Afficher tous les calques en transparence">Rayon X</button>
           </div>
         </div>
         <div class="panel" id="panel-info" hidden>
@@ -135,7 +140,10 @@
           <button type="button" id="nav-zoom-out" aria-label="Dézoomer">−</button>
           <button type="button" id="nav-fit" aria-label="Cadrer le modèle">CADRER</button>
           <button type="button" id="nav-reset" aria-label="Réinitialiser la vue">RESET</button>
+          <button type="button" id="nav-focus-male" aria-label="Pivoter autour de l'homme">H</button>
+          <button type="button" id="nav-focus-female" aria-label="Pivoter autour de la femme">F</button>
         </div>
+        <div id="pivot-indicator" aria-live="polite">Pivot : ensemble</div>
         <div id="selection-popup" hidden role="dialog" aria-modal="false" aria-live="polite" aria-label="Détails de la structure">
           <button type="button" id="selection-close" aria-label="Fermer la sélection">×</button>
           <h2 id="selection-name"></h2>

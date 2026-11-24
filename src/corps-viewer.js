@@ -4,12 +4,13 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves', 'cosmetic'];
+const LAYERS = ['skin', 'muscles', 'facial', 'skeleton', 'organs', 'vessels', 'nerves', 'cosmetic'];
 const REFERENCE_LAYERS = ['pregnancy'];
 const ALL_LAYERS = [...LAYERS, ...REFERENCE_LAYERS];
 const FEMALE_OVERRIDES = { G_FJ2811: 'skin' };
+const THIN_LAYERS = new Set(['nerves', 'vessels', 'cosmetic']);
 const RENDER_ORDER = { pregnancy: 0, organs: 1, skeleton: 2, vessels: 3,
-  nerves: 4, muscles: 5, skin: 6, cosmetic: 7 };
+  nerves: 4, muscles: 5, facial: 5, skin: 6, cosmetic: 7 };
 const MAP = {
   skeletal: 'skeleton', joints: 'skeleton', ligaments: 'skeleton', skeleton: 'skeleton',
   muscular: 'muscles', muscles: 'muscles', 'donor-muscle': 'muscles', connective: 'muscles',
@@ -89,7 +90,7 @@ export function initCorpsViewer() {
   const master = document.getElementById('cp-couche-all');
   const mats = new Map();
   const extraMats = new Map();
-  const colors = { skin: '#bc9c7e', muscles: '#a9584c', skeleton: '#e4dcc0',
+  const colors = { skin: '#bc9c7e', muscles: '#a9584c', facial: '#c87568', skeleton: '#e4dcc0',
     organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f',
     cosmetic: '#2b211c', hair: '#2b211c' };
   for (const [k, c] of Object.entries(colors)) {
@@ -102,6 +103,12 @@ export function initCorpsViewer() {
       '#include <color_fragment>\n diffuseColor.rgb *= 0.975 + 0.025 * sin(gl_FragCoord.x * 0.07 + gl_FragCoord.y * 0.11);');
   };
   let xray = true;
+  const xrayButton = document.getElementById('cp-preset-xray');
+  const setXray = (on) => {
+    xray = on;
+    xrayButton.setAttribute('aria-pressed', String(on));
+  };
+  setXray(true);
   const matFor = (hex) => {
     if (!extraMats.has(hex)) extraMats.set(hex, new THREE.MeshStandardMaterial({
       color: new THREE.Color(hex), roughness: 0.62 }));
@@ -118,6 +125,38 @@ export function initCorpsViewer() {
     return '#bb8f68';
   };
   let need = true, token = 0, ctrl = null;
+  let pivotBody = 'both';
+  const pivotIndicator = document.getElementById('pivot-indicator');
+  const PIVOT_LABELS = { both: 'Pivot : ensemble', male: 'Pivot : homme',
+    female: 'Pivot : femme', item: 'Pivot : structure' };
+  const updatePivotIndicator = () => {
+    if (pivotIndicator) pivotIndicator.textContent = PIVOT_LABELS[pivotBody] || PIVOT_LABELS.both;
+  };
+  const bodyFromObject = (object) => {
+    let cur = object;
+    while (cur) {
+      if (cur === maleModel) return 'male';
+      if (cur === femaleModel || cur === supplements) return 'female';
+      cur = cur.parent;
+    }
+    return null;
+  };
+  const bodyCenter = (which) => {
+    const target = which === 'male' ? maleModel : which === 'female' ? femaleModel : null;
+    if (!target) return null;
+    return new THREE.Box3().setFromObject(target).getCenter(new THREE.Vector3());
+  };
+  const setPivotBody = (which) => {
+    const center = bodyCenter(which);
+    if (!center) return;
+    const offset = camera.position.clone().sub(controls.target);
+    controls.target.copy(center);
+    camera.position.copy(center).add(offset);
+    pivotBody = which;
+    updatePivotIndicator();
+    controls.update(); need = true;
+  };
+  updatePivotIndicator();
   let descriptions = { seema: {}, bodyatlas: {} };
   let descAlias = { seema: {}, bodyatlas: {} };
   const alpha = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '').replace(/\d+$/, '');
@@ -182,33 +221,62 @@ export function initCorpsViewer() {
   }
   function outlineFor(mesh) {
     const edges = new THREE.EdgesGeometry(mesh.geometry, 25);
-    if (edges.getAttribute('position').count <= 6000) {
+    const edgeCount = edges.getAttribute('position').count;
+    const thin = THIN_LAYERS.has(mesh.userData.layer) || matches(mesh.name, HAIR_TOKENS);
+    if (edgeCount <= 6000 && !thin) {
       return new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
         color: 0x40f0e0, transparent: true, opacity: reduced ? 0.9 : 0.6,
         blending: THREE.AdditiveBlending, depthTest: true,
       }));
     }
-    // Grand maillage : un liseré de silhouette plutôt qu'un quadrillage dense.
+    // Maillages fins ou denses : liseré Fresnel sur la surface elle-même,
+    // sans hull inversé qui se recouvre sur les mèches et les vaisseaux.
     edges.dispose();
-    const hull = new THREE.Mesh(mesh.geometry, new THREE.MeshBasicMaterial({
-      color: 0x40f0e0, transparent: true, opacity: reduced ? 0.24 : 0.16,
-      blending: THREE.AdditiveBlending, side: THREE.BackSide, depthWrite: false,
-    }));
-    hull.userData.sharedGeometry = true;
-    hull.matrixAutoUpdate = false;
-    hull.matrix.copy(mesh.matrixWorld).multiply(new THREE.Matrix4().makeScale(1.012, 1.012, 1.012));
-    return hull;
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(0x40f0e0) },
+        uOpacity: { value: reduced ? 0.9 : 0.6 },
+      },
+      vertexShader: `
+        varying vec3 vNormalW;
+        varying vec3 vViewW;
+        void main() {
+          vec4 world = modelMatrix * vec4(position, 1.0);
+          vNormalW = normalize(mat3(modelMatrix) * normal);
+          vViewW = normalize(cameraPosition - world.xyz);
+          gl_Position = projectionMatrix * viewMatrix * world;
+        }`,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform float uOpacity;
+        varying vec3 vNormalW;
+        varying vec3 vViewW;
+        void main() {
+          float rim = pow(1.0 - abs(dot(normalize(vNormalW), normalize(vViewW))), 2.0);
+          float alpha = rim * uOpacity;
+          if (alpha < 0.01) discard;
+          gl_FragColor = vec4(uColor, alpha);
+        }`,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthTest: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+    });
+    const overlay = new THREE.Mesh(mesh.geometry, material);
+    overlay.userData.sharedGeometry = true;
+    overlay.userData.outlineKind = 'fresnel';
+    return overlay;
   }
   function select(mesh, clientX, clientY) {
     clearOutline();
     scene.updateMatrixWorld(true);
     const outline = outlineFor(mesh);
     outline.matrixAutoUpdate = false;
-    if (outline.userData.sharedGeometry) {
-      outline.matrix.copy(mesh.matrixWorld).multiply(new THREE.Matrix4().makeScale(1.012, 1.012, 1.012));
-    } else {
-      outline.matrix.copy(mesh.matrixWorld);
-    }
+    outline.matrix.copy(mesh.matrixWorld);
     outline.matrixWorldNeedsUpdate = true;
     outlineGroup.add(outline);
     const entry = mesh.userData.selectionEntry || {};
@@ -282,6 +350,7 @@ export function initCorpsViewer() {
     });
     const skin = mats.get('skin'); skin.transparent = xray; skin.opacity = xray ? 0.16 : 1; skin.depthWrite = !xray;
     const muscle = mats.get('muscles'); muscle.transparent = xray; muscle.opacity = xray ? 0.6 : 1; muscle.depthWrite = !xray;
+    const facial = mats.get('facial'); facial.transparent = xray; facial.opacity = xray ? 0.72 : 1; facial.depthWrite = !xray;
     if (window.__corps) window.__corps.activeLayers = [...active];
     document.getElementById('corps-info').textContent = `${n} maillage(s) visible(s)`;
     need = true;
@@ -294,6 +363,7 @@ export function initCorpsViewer() {
     const s = box.getSize(new THREE.Vector3());
     controls.target.copy(c);
     camera.position.set(c.x, c.y + 0.6, 4);
+    pivotBody = 'both'; updatePivotIndicator();
     const a = (host.clientWidth || 1) / (host.clientHeight || 1);
     const span = a < 0.85 ? 1.05 : 1.12;
     const zoom = Math.min((2 * span * a) / Math.max(s.x, 0.1), (2 * span) / Math.max(s.y, 0.1)) * 0.85;
@@ -304,11 +374,14 @@ export function initCorpsViewer() {
     const b = bodyBox();
     const c = b.isEmpty() ? new THREE.Vector3(0, 0.85, 0) : b.getCenter(new THREE.Vector3());
     camera.position.set(c.x, c.y + 0.6, 4); controls.target.copy(c);
+    pivotBody = 'both'; updatePivotIndicator();
     camera.zoom = 1; camera.updateProjectionMatrix(); controls.update(); need = true;
   };
   const focusPoint = (p) => {
     const off = camera.position.clone().sub(controls.target);
-    controls.target.copy(p); camera.position.copy(p).add(off); controls.update(); need = true;
+    controls.target.copy(p); camera.position.copy(p).add(off);
+    pivotBody = 'item'; updatePivotIndicator();
+    controls.update(); need = true;
   };
   const zoomBy = (f) => { camera.zoom = Math.max(0.5, Math.min(4, camera.zoom * f)); camera.updateProjectionMatrix(); need = true; };
   const orbitBy = (t, p) => {
@@ -487,7 +560,7 @@ export function initCorpsViewer() {
       if (!o.isMesh || !o.userData.file) return;
       let layer = null, kind = null;
       if (matches(o.name, HAIR_TOKENS)) { layer = 'cosmetic'; kind = 'cheveux ou sourcils'; }
-      else if (o.userData.file === musclesFile && matches(o.name, FACIAL_TOKENS)) { layer = 'muscles'; kind = 'muscle facial'; }
+      else if (o.userData.file === musclesFile && matches(o.name, FACIAL_TOKENS)) { layer = 'facial'; kind = 'muscle facial'; }
       else if (o.userData.file === musclesFile && matches(o.name, TRUNK_TOKENS)) { layer = 'muscles'; kind = 'muscle du tronc'; }
       else if (o.userData.file === nervesFile) { layer = 'nerves'; kind = 'nerf périphérique'; }
       if (!layer) return;
@@ -537,8 +610,9 @@ export function initCorpsViewer() {
       `Le clic sélectionne le premier maillage touché par le rayon ; en mode Rayon X, il peut traverser la peau translucide.`;
     window.__corps = {
       maleModel, femaleModel, supplements, source: MALE.id, female: FEMALE.id,
-      THREE, camera, controls, renderer, controller: ctrl, fitView, resetView, focusPoint,
+      THREE, camera, controls, renderer, controller: ctrl, outlineGroup, fitView, resetView, focusPoint,
       bodyBox, zoomBy, orbitBy, panBy, presetView, select, clearSelection, setPreset, apply,
+      setPivotBody, bodyCenter, bodyFromObject, get pivotBody() { return pivotBody; },
       loaders: { GLTFLoader, DRACOLoader }, get xray() { return xray; },
     };
     clearSelection();
@@ -561,13 +635,18 @@ export function initCorpsViewer() {
   }
   let down = null;
   renderer.domElement.addEventListener('pointerdown', (e) => {
-    down = { x: e.clientX, y: e.clientY };
+    const mesh = pick(e.clientX, e.clientY);
+    down = { x: e.clientX, y: e.clientY, body: bodyFromObject(mesh) };
   });
   renderer.domElement.addEventListener('pointerup', (e) => {
     if (!down) return;
     const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+    const startBody = down.body;
     down = null;
-    if (moved > 6) return;
+    if (moved > 6) {
+      if (startBody) setPivotBody(startBody);
+      return;
+    }
     const mesh = pick(e.clientX, e.clientY);
     if (mesh) select(mesh, e.clientX, e.clientY);
     else clearSelection();
@@ -599,16 +678,21 @@ export function initCorpsViewer() {
   document.getElementById('nav-zoom-out').addEventListener('click', () => zoomBy(1 / 1.2));
   document.getElementById('nav-fit').addEventListener('click', fitView);
   document.getElementById('nav-reset').addEventListener('click', resetView);
-  for (const b of boxes) b.addEventListener('change', () => { sync(); writeUrl(); apply(); });
+  document.getElementById('nav-focus-male').addEventListener('click', () => setPivotBody('male'));
+  document.getElementById('nav-focus-female').addEventListener('click', () => setPivotBody('female'));
+  for (const b of boxes) b.addEventListener('change', () => {
+    setXray(false); sync(); writeUrl(); apply();
+  });
   master.addEventListener('change', () => {
     for (const b of boxes) {
       if (LAYERS.includes(b.dataset.layer)) b.checked = master.checked;
     }
-    master.indeterminate = false; writeUrl(); apply();
+    master.indeterminate = false; setXray(false); writeUrl(); apply();
   });
   const presets = {
     skin: ['skin', 'cosmetic'],
-    muscles: ['muscles'],
+    muscles: ['muscles', 'facial'],
+    facial: ['facial'],
     skeleton: ['skeleton'],
     organs: ['organs'],
     xray: ALL_LAYERS,
@@ -616,12 +700,12 @@ export function initCorpsViewer() {
   const setPreset = (kind) => {
     const want = new Set(presets[kind] || []);
     for (const b of boxes) b.checked = want.has(b.dataset.layer);
-    xray = kind === 'xray';
+    setXray(kind === 'xray');
     sync(); writeUrl(); apply();
   };
   for (const [kind, id] of Object.entries({
-    skin: 'cp-preset-skin', muscles: 'cp-preset-muscles', skeleton: 'cp-preset-skeleton',
-    organs: 'cp-preset-organs', xray: 'cp-preset-xray',
+    skin: 'cp-preset-skin', muscles: 'cp-preset-muscles', facial: 'cp-preset-face',
+    skeleton: 'cp-preset-skeleton', organs: 'cp-preset-organs', xray: 'cp-preset-xray',
   })) {
     document.getElementById(id).addEventListener('click', () => setPreset(kind));
   }
@@ -633,7 +717,10 @@ export function initCorpsViewer() {
     const changed = controls.update();
     if (selection && !reduced) {
       const op = 0.5 + 0.5 * Math.sin(performance.now() / 1200 * Math.PI * 2);
-      for (const o of outlineGroup.children) o.material.opacity = op;
+      for (const o of outlineGroup.children) {
+        if (o.material.uniforms?.uOpacity) o.material.uniforms.uOpacity.value = op;
+        else o.material.opacity = op;
+      }
     }
     if (changed || need || selection) { resize(); renderer.render(scene, camera); need = false; }
   }

@@ -50,3 +50,19 @@ couche « Grossesse — référence », masquée au démarrage. Les préréglage
 Muscles, Squelette, Organes et Rayon X permettent d'éviter le mélange
 transparent qui rendait le dos illisible. Le mode Rayon X reste le mode par
 défaut ; l'ordre de rendu des couches est désormais explicite.
+
+## Correctifs d'ergonomie du 2026-11-25
+
+- Le contour de sélection utilise un **overlay Fresnel** pour les maillages fins
+  (cheveux, nerfs, vaisseaux) : un liseré turquoise suit la silhouette sans
+  produire de grandes plages opaques. Les petits volumes solides gardent
+  `EdgesGeometry`.
+- Le pivot de rotation suit le corps sur lequel le glisser commence. Un simple
+  clic sélectionne sans déplacer le pivot. Les boutons **H** et **F** forcent
+  le pivot sur l'homme ou la femme, et l'indicateur « Pivot : … » affiche l'état.
+- Toute modification manuelle des cases quitte le mode Rayon X : la peau
+  réactivée est donc opaque à opacité 1, ce qui permet de la sélectionner.
+  Le mode Rayon X reste disponible avec son bouton dédié.
+- Les 34 muscles faciaux de la femme ont leur propre couche « Muscles du visage »
+  et un préréglage « Visage », afin d'être visibles et sélectionnables même en
+  présence de cheveux ou de peau.

@@ -30,6 +30,8 @@ assert.ok(js.includes("moved > 6"), "seuil anti-glisser absent");
 
 /* Contour turquoise. */
 assert.ok(js.includes("new THREE.EdgesGeometry("), "contour géométrique absent");
+assert.ok(js.includes("outlineKind = 'fresnel'"), "overlay Fresnel absent");
+assert.ok(js.includes("THIN_LAYERS.has(mesh.userData.layer)"), "protection des maillages fins absente");
 assert.ok(js.includes("0x40f0e0"), "couleur turquoise absente");
 assert.ok(js.includes("THREE.AdditiveBlending"), "fusion additive absente");
 assert.ok(js.includes("Math.sin(performance.now() / 1200"), "flash 1,2 s absent");
