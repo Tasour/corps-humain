@@ -9,8 +9,8 @@ Le sélecteur `SRC` propose six jeux de modèles, chargés uniquement depuis
 | `slorksmo` | Human Atlas — slorksmo | homme, femme | 🟢 MIT + CC BY 4.0 |
 | `enhanced` | Human Atlas Enhanced | homme, femme | 🟢 MIT + CC BY 4.0 |
 | `seema` | 3D Human Body Anatomy | homme | 🟡 CC BY-SA 4.0 |
-| `nqwrc` | 3D Anatomy | homme | 🔴 CC BY-NC-SA 4.0 |
-| `wangzh` | Human Atlas 3D — wangzh | homme | 🟢 MIT + CC BY 4.0 |
+| `nqwrc` | 3D Anatomy | homme uniquement, pas de peau | 🔴 CC BY-NC-SA 4.0 |
+| `wangzh` | Human Atlas 3D — wangzh | homme, chargement parallèle | 🟢 MIT + CC BY 4.0 |
 
 Les sources 🟡 et 🔴 sont présentes à des fins de comparaison locale ; leur
 licence impose des obligations ou interdit un usage commercial. Voir

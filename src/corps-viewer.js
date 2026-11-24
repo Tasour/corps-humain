@@ -8,7 +8,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves'];
 const MAP = {
   skeletal: 'skeleton', joints: 'skeleton', ligaments: 'skeleton', skeleton: 'skeleton',
-  muscular: 'muscles', muscles: 'muscles', connective: 'muscles',
+  muscular: 'muscles', muscles: 'muscles', 'donor-muscle': 'muscles', connective: 'muscles',
   integumentary: 'skin', skin: 'skin',
   arterial: 'vessels', venous: 'vessels', cardiovascular: 'vessels',
   arteries: 'vessels', veins: 'vessels', vessels: 'vessels',
@@ -41,6 +41,8 @@ const GLBSETS = {
 };
 const NERVE_FILES = [
   ['spinal-cord-with-nerve-roots-7c8957a4.glb', 'spine'],
+  ['brain-with-spinal-cord-5c8ea879.glb', 'spine'],
+  ['cranial-nerves-under-the-brain-396de6f6.glb', 'brain'],
   ['arm-nerves-bc1c5fa1.glb', 'arm'],
   ['leg-nerves-60edf433.glb', 'leg'],
 ];
@@ -80,6 +82,25 @@ export function initCorpsViewer() {
   for (const [k, c] of Object.entries(colors)) {
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
+  const extraMats = new Map();
+  const matFor = (hex) => {
+    if (!extraMats.has(hex)) {
+      extraMats.set(hex, new THREE.MeshStandardMaterial({ color: new THREE.Color(hex), roughness: 0.62 }));
+    }
+    return extraMats.get(hex);
+  };
+  const organColor = (name) => {
+    const n = name.toLowerCase();
+    if (/heart|cardiac/.test(n)) return '#b23b3b';
+    if (/lung|pulmon|bronch/.test(n)) return '#d99aa6';
+    if (/liver|hepat/.test(n)) return '#8b4a3a';
+    if (/kidney|renal|urinar|bladder/.test(n)) return '#a05a6a';
+    if (/intestin|stomach|digest|esophag|colon|rectum/.test(n)) return '#c99a63';
+    if (/brain|cerebr|cerebell|spinal|nerv/.test(n)) return '#d9b45f';
+    if (/uterus|ovary|testis|prostat|reproduct/.test(n)) return '#b98aa0';
+    if (/spleen|pancreas|thyroid|adrenal/.test(n)) return '#9a7b8f';
+    return '#bb8f68';
+  };
   let model = null, need = true, token = 0, ctrl = null;
 
   controls.addEventListener('change', () => { need = true; });
@@ -120,6 +141,11 @@ export function initCorpsViewer() {
     const active = new Set(boxes.filter((b) => b.checked).map((b) => b.dataset.layer));
     let n = 0;
     model.traverse((o) => { if (o.isMesh) { o.visible = active.has(o.userData.layer); if (o.visible) n++; } });
+    const all = active.size === LAYERS.length;
+    const skin = mats.get('skin');
+    skin.transparent = all; skin.opacity = all ? 0.16 : 1; skin.depthWrite = !all;
+    const muscle = mats.get('muscles');
+    muscle.transparent = all; muscle.opacity = all ? 0.6 : 1; muscle.depthWrite = !all;
     if (window.__corps) window.__corps.activeLayers = [...active];
     document.getElementById('corps-info').textContent = `${n} maillage(s) visible(s)`;
     camera.zoom = 1; camera.updateProjectionMatrix(); controls.target.set(0, 0.85, 0);
@@ -153,6 +179,7 @@ export function initCorpsViewer() {
     const at = await r.json();
     const g = new THREE.Group();
     g.userData.targets = {
+      brain: bbox(at.parts.filter((p) => p.system === 'nervous')),
       spine: bbox(at.parts.filter((p) => /vertebra|sacrum/i.test(p.name))),
       arm: bbox(at.parts.filter((p) => /left/i.test(p.name) && /humerus|radius|ulna/i.test(p.name))),
       leg: bbox(at.parts.filter((p) => /left/i.test(p.name) && /femur|tibia|fibula/i.test(p.name))),
@@ -188,7 +215,15 @@ export function initCorpsViewer() {
       for (const f of files) {
         if (signal.aborted) return g;
         const gltf = await loader.loadAsync(cfg.dir + f);
-        gltf.scene.traverse((o) => { if (o.isMesh) { o.material = mats.get(layer); mark(o, layer); } });
+        const doomed = [];
+        gltf.scene.traverse((o) => {
+          if (!o.isMesh) return;
+          if (/modesty[ _]?cover/i.test(o.name)) { doomed.push(o); return; }
+          const material = (src === 'seema' && layer === 'organs')
+            ? matFor(organColor(o.name)) : mats.get(layer);
+          o.material = material; mark(o, layer);
+        });
+        for (const o of doomed) o.parent.remove(o);
         g.add(gltf.scene);
       }
     }
@@ -199,8 +234,8 @@ export function initCorpsViewer() {
     const base = './docs/models/forks/wangzh/data/';
     const m = await (await fetch(base + 'manifest.json', { signal })).json();
     const g = new THREE.Group();
-    for (const c of m.chunks) {
-      if (signal.aborted) return g;
+    const built = await Promise.all(m.chunks.map(async (c) => {
+      if (signal.aborted) return null;
       const buf = new Uint8Array(await (await fetch(base + c.name + '.bin', { signal })).arrayBuffer());
       const dv = new DataView(buf.buffer);
       const nV = dv.getUint32(0, true), nI = dv.getUint32(4, true);
@@ -218,8 +253,12 @@ export function initCorpsViewer() {
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
       geo.setIndex(new THREE.BufferAttribute(idx, 1)); geo.computeVertexNormals();
-      const mesh = new THREE.Mesh(geo, mats.get(MAP[c.system] || 'organs'));
-      mark(mesh, c.system); g.add(mesh);
+      return { geo, c };
+    }));
+    for (const item of built) {
+      if (!item) continue;
+      const mesh = new THREE.Mesh(item.geo, mats.get(MAP[item.c.system] || 'organs'));
+      mark(mesh, item.c.system); g.add(mesh);
     }
     return g;
   }
@@ -267,6 +306,7 @@ export function initCorpsViewer() {
       cache.set(key, built);
     }
     if (myToken !== token) return;
+    renderer.setPixelRatio(src === 'nqwrc' ? 1 : Math.min(window.devicePixelRatio || 1, tactile ? 1.25 : 1.5));
     model = cache.get(key); scene.add(model);
     window.__corps = { model, sexe, source: src, THREE, camera, renderer, controller: ctrl };
     apply(); resize(); need = true;

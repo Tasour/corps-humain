@@ -80,3 +80,10 @@
 - URL : https://github.com/wangzh12023/human-atlas-3d
 - Licence : **MIT** (code) + **CC BY 4.0** (données) — 🟢.
 - Consulté le 2026-11-24.
+
+## Innerscene — Cranial nerves / Brain with spinal cord
+
+- URLs : https://www.innerscene.com/tools/library/3d-parts/cranial-nerves-under-the-brain-396de6f6 ,
+  https://www.innerscene.com/tools/library/3d-parts/brain-with-spinal-cord-5c8ea879
+- Licence : **CC0 1.0** (🟢), 47 maillages ajoutés au système nerveux de Body Atlas.
+- Consulté le 2026-11-24.
