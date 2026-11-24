@@ -75,3 +75,13 @@ Il n'y a **ni double squelette géométrique, ni muscle féminin dans l'homme**.
 Les doublons perçus viennent de l'armature Blender et des six muscles faciaux
 non catalogués. Aucun modèle ni catalogue n'a été modifié de façon
 permanente ; ce rapport est la seule livraison de cette passe.
+
+## Intégration finale
+
+Les six muscles faciaux ont reçu le matériau musculaire `#b5463d` dans les
+deux GLB, sans modification de géométrie. Le catalogue contient désormais 153
+entrées, dont ces six muscles. Le viewer affiche 135 objets visibles chez
+l'homme et 140 chez la femme, toutes couches cochées, et 0 objet toutes
+couches décochées. Les captures de preuve sont `integration-male-all.png`,
+`integration-male-muscles.png`, `integration-female-all.png` et
+`integration-male-mobile.png`.

@@ -1156,5 +1156,107 @@
     "system": "vessels",
     "category": "Cardiovascular",
     "color": "#2e6db4"
+  },
+  {
+    "key": "frontalis",
+    "label": "Frontalis",
+    "system": "muscles",
+    "category": "Musculoskeletal",
+    "color": "#b5463d",
+    "anchor": [
+      0.00019,
+      1.66045,
+      0.08505
+    ],
+    "anchorFemale": [
+      -0.0002,
+      1.76244,
+      0.09027
+    ]
+  },
+  {
+    "key": "orbicularis_oculi_l",
+    "label": "Orbicularis Oculi (L)",
+    "system": "muscles",
+    "category": "Musculoskeletal",
+    "color": "#b5463d",
+    "anchor": [
+      -0.03197,
+      1.6357,
+      0.08801
+    ],
+    "anchorFemale": [
+      -0.03401,
+      1.7361,
+      0.09345
+    ]
+  },
+  {
+    "key": "orbicularis_oculi_r",
+    "label": "Orbicularis Oculi (R)",
+    "system": "muscles",
+    "category": "Musculoskeletal",
+    "color": "#b5463d",
+    "anchor": [
+      0.03212,
+      1.63567,
+      0.08802
+    ],
+    "anchorFemale": [
+      0.03394,
+      1.7361,
+      0.09345
+    ]
+  },
+  {
+    "key": "masseter_l",
+    "label": "Masseter (L)",
+    "system": "muscles",
+    "category": "Musculoskeletal",
+    "color": "#b5463d",
+    "anchor": [
+      -0.05499,
+      1.58576,
+      0.05973
+    ],
+    "anchorFemale": [
+      -0.05837,
+      1.68306,
+      0.0636
+    ]
+  },
+  {
+    "key": "masseter_r",
+    "label": "Masseter (R)",
+    "system": "muscles",
+    "category": "Musculoskeletal",
+    "color": "#b5463d",
+    "anchor": [
+      0.05491,
+      1.58576,
+      0.05981
+    ],
+    "anchorFemale": [
+      0.05842,
+      1.68306,
+      0.0636
+    ]
+  },
+  {
+    "key": "orbicularis_oris",
+    "label": "Orbicularis Oris",
+    "system": "muscles",
+    "category": "Musculoskeletal",
+    "color": "#b5463d",
+    "anchor": [
+      -0.00021,
+      1.56581,
+      0.09005
+    ],
+    "anchorFemale": [
+      -0.00016,
+      1.66201,
+      0.09556
+    ]
   }
 ]
