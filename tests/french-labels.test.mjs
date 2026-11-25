@@ -17,6 +17,7 @@ for (const source of ['seema', 'bodyatlas']) {
   }
 }
 
-assert.ok(html.includes('id="selection-latin"'), 'sous-titre latin absent de la popup');
-assert.ok(viewer.includes("field === 'latin'"), 'résolution du nom latin absente');
+assert.ok(!html.includes('id="selection-latin"'), 'sous-titre latin encore présent');
+assert.ok(!html.includes('id="selection-description"'), 'description encore présente');
+assert.ok(html.includes('id="selection-name"'), 'titre du popup absent');
 console.log(`PASS libellés français : ${checked} noms, titre FR + nom source`);

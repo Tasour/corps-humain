@@ -77,16 +77,16 @@
       #cp-view:focus-visible { outline:3px solid var(--accent); outline-offset:-3px; }
       .presets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
       .presets button { min-height:44px; padding:0 8px; border-radius:8px; font-size:12px; font-weight:600; }
-      #pivot-indicator { position:absolute; right:12px; top:12px; z-index:11; padding:4px 8px;
-        border:1px solid var(--line); border-radius:8px; background:var(--chip);
-        color:var(--muted); font-size:12px; pointer-events:none; }
+      #pivot-indicator { position:absolute; right:12px; top:12px; z-index:11; min-height:44px;
+        padding:4px 12px; border:1px solid var(--line); border-radius:8px;
+        background:var(--chip); color:var(--muted); font-size:12px; cursor:pointer;
+        font-family:inherit; }
+      #pivot-indicator:hover, #pivot-indicator:focus-visible { color:var(--ink); border-color:var(--accent); }
       #selection-popup { position:absolute; z-index:14; width:min(280px,calc(100vw - 24px));
         padding:16px 44px 16px 16px; border:1px solid var(--accent); border-radius:12px;
         background:var(--panel); box-shadow:var(--shadow); }
       #selection-popup[hidden] { display:none; }
-      #selection-popup h2 { margin:0 0 4px; font-size:15px; color:var(--accent); }
-      #selection-popup p { margin:8px 0 0; font-size:13px; line-height:1.45; }
-      .selection-latin { margin:0 !important; color:var(--muted); font-size:12px; font-style:italic; }
+      #selection-popup h2 { margin:0; padding-right:44px; font-size:15px; color:var(--accent); }
       #selection-close { position:absolute; right:8px; top:8px; width:44px; height:44px;
         min-width:44px; min-height:44px; margin:0; padding:0; border-radius:8px; font-size:18px; }
       .gesture-hint { position:absolute; left:8px; bottom:8px; margin:0; padding:4px 8px; border-radius:8px;
@@ -179,13 +179,10 @@
         </div>
         <div id="cp-view" tabindex="0" role="application" data-i18n-attrs="aria-label:canvasLabel" aria-label="Vue 3D interactive du corps humain"></div>
         <p class="gesture-hint" data-i18n="hint">Glissez pour tourner · double-tap pour zoomer</p>
-        <div id="pivot-indicator">Pivot : ensemble</div>
+        <button type="button" id="pivot-indicator">Pivot : ensemble</button>
         <div id="selection-popup" hidden role="dialog" aria-modal="false" data-i18n-attrs="aria-label:popupLabel" aria-label="Détails de la structure">
           <button type="button" id="selection-close" data-i18n-attrs="aria-label:closeSelection" aria-label="Fermer la sélection">×</button>
           <h2 id="selection-name"></h2>
-          <p id="selection-latin" class="selection-latin"></p>
-          <p id="selection-description"></p>
-          <p id="selection-source" class="source-note"></p>
         </div>
       </section>
     </main>

@@ -14,8 +14,11 @@ assert.ok(html.includes('role="dialog"'), "popup sans rôle dialog");
 assert.ok(html.includes('aria-modal="false"'), "aria-modal absent");
 assert.ok(html.includes('aria-live="polite"'), "annonce aria-live absente");
 assert.ok(html.includes('id="selection-name"'), "nom du popup absent");
-assert.ok(html.includes('id="selection-description"'), "description du popup absente");
-assert.ok(html.includes('id="selection-source"'), "source du popup absente");
+assert.ok(!html.includes('id="selection-description"'), "description toujours présente");
+assert.ok(!html.includes('id="selection-source"'), "source toujours présente");
+assert.ok(!html.includes('id="selection-latin"'), "sous-titre toujours présent");
+assert.ok(!js.includes('popupDesc'), "référence JS à la description résiduelle");
+assert.ok(!js.includes('popupSource'), "référence JS à la source résiduelle");
 assert.ok(html.includes('id="selection-close"'), "bouton de fermeture absent");
 assert.ok(html.includes('id="selection-popup"') && html.includes('width:44px'),
   "bouton de fermeture trop petit");

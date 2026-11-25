@@ -44,6 +44,11 @@ const MALE_GENITALIA = {
   manifest: 'male-genitalia.json',
   chunk: 'male-genitalia.bin.gz',
 };
+const MALE_SKIN_PATCH = {
+  dir: './docs/models/male-genitalia/',
+  manifest: 'skin-patch.json',
+  chunk: 'skin-patch.bin.gz',
+};
 const FEMALE = {
   id: 'bodyatlas',
   label: 'Body Atlas 3D — femme',
@@ -91,7 +96,7 @@ export function initCorpsViewer() {
   controls.enablePan = true;
   controls.screenSpacePanning = true;
   controls.minZoom = 0.5;
-  controls.maxZoom = 4;
+  controls.maxZoom = 20;
   controls.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.PAN, RIGHT: THREE.MOUSE.PAN };
   controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
 
@@ -153,8 +158,20 @@ export function initCorpsViewer() {
   const pivotIndicator = document.getElementById('pivot-indicator');
   const PIVOT_KEYS = { both: 'pivotBoth', male: 'pivotMale',
     female: 'pivotFemale', item: 'pivotItem' };
+  const REGION_KEYS = { head: 'regionHead', neck: 'regionNeck', arms: 'regionArms',
+    hands: 'regionHands', torso: 'regionTorso', abdomen: 'regionAbdomen',
+    pelvis: 'regionPelvis', thighs: 'regionThighs', legs: 'regionLegs', feet: 'regionFeet' };
   const updatePivotIndicator = () => {
-    if (pivotIndicator) pivotIndicator.textContent = t(PIVOT_KEYS[pivotBody] || 'pivotBoth');
+    if (!pivotIndicator) return;
+    if (REGION_KEYS[pivotBody]) {
+      pivotIndicator.textContent = t('regionObserved', { r: t(REGION_KEYS[pivotBody]) });
+      pivotIndicator.setAttribute('aria-label', t('returnBody'));
+      pivotIndicator.title = t('returnBody');
+      return;
+    }
+    pivotIndicator.textContent = t(PIVOT_KEYS[pivotBody] || 'pivotBoth');
+    pivotIndicator.setAttribute('aria-label', t('returnBody'));
+    pivotIndicator.title = t('returnBody');
   };
   const bodyFromObject = (object) => {
     let cur = object;
@@ -223,9 +240,6 @@ export function initCorpsViewer() {
   const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
   const popup = document.getElementById('selection-popup');
   const popupName = document.getElementById('selection-name');
-  const popupLatin = document.getElementById('selection-latin');
-  const popupDesc = document.getElementById('selection-description');
-  const popupSource = document.getElementById('selection-source');
   let selection = null;
 
   function clearOutline() {
@@ -313,10 +327,6 @@ export function initCorpsViewer() {
     if (!selection) return;
     const entry = selection.mesh?.userData?.selectionEntry || {};
     popupName.textContent = localizedField(entry, 'name', 'Structure');
-    if (popupLatin) popupLatin.textContent = localizedField(entry, 'latin', '');
-    popupDesc.textContent = localizedField(entry, 'description', t('fallbackDescription'));
-    popupSource.textContent = [entry.source, entry.license, localizedField(entry, 'origin', '')]
-      .filter(Boolean).join(' · ');
   };
   window.addEventListener('corps:lang', refreshLocale);
   function select(mesh, clientX, clientY) {
@@ -329,10 +339,6 @@ export function initCorpsViewer() {
     outlineGroup.add(outline);
     const entry = mesh.userData.selectionEntry || {};
     popupName.textContent = localizedField(entry, 'name', mesh.userData.selectionLabel || 'Structure');
-    if (popupLatin) popupLatin.textContent = localizedField(entry, 'latin', '');
-    popupDesc.textContent = localizedField(entry, 'description', t('fallbackDescription'));
-    popupSource.textContent = [entry.source, entry.license, localizedField(entry, 'origin', '')]
-      .filter(Boolean).join(' · ');
     const section = host.parentElement.getBoundingClientRect();
     const x = Math.min(clientX - section.left + 12, section.width - 300);
     const y = Math.min(clientY - section.top + 12, section.height - 180);
@@ -396,6 +402,60 @@ export function initCorpsViewer() {
     for (const m of activeBodies()) b.union(new THREE.Box3().setFromObject(m));
     return b;
   };
+
+  /* Régions d'observation : chaque région devient son propre centre de rotation. */
+  const REGIONS = [
+    { key: 'head', test: (x, y) => y > 1.44 },
+    { key: 'neck', test: (x, y) => y > 1.37 && y <= 1.44 },
+    { key: 'hands', test: (x, y) => Math.abs(x) > 0.36 && y > 0.76 && y <= 0.98 },
+    { key: 'arms', test: (x, y) => Math.abs(x) > 0.16 && y > 0.98 },
+    { key: 'torso', test: (x, y) => y > 1.18 && y <= 1.37 && Math.abs(x) <= 0.2 },
+    { key: 'abdomen', test: (x, y) => y > 0.97 && y <= 1.18 && Math.abs(x) <= 0.18 },
+    { key: 'pelvis', test: (x, y) => y > 0.74 && y <= 0.97 && Math.abs(x) <= 0.24 },
+    { key: 'thighs', test: (x, y) => y > 0.44 && y <= 0.74 && Math.abs(x) <= 0.22 },
+    { key: 'legs', test: (x, y) => y > 0.08 && y <= 0.44 && Math.abs(x) <= 0.22 },
+    { key: 'feet', test: (x, y) => y <= 0.08 },
+  ];
+  const regionBoxCache = new Map();
+  const regionBox = (key) => {
+    const cacheKey = `${activeSex}:${key}`;
+    if (regionBoxCache.has(cacheKey)) return regionBoxCache.get(cacheKey);
+    const region = REGIONS.find((r) => r.key === key);
+    const box = new THREE.Box3();
+    if (region) {
+      for (const body of activeBodies()) {
+        body.traverse((o) => {
+          if (!o.isBatchedMesh) return;
+          const layer = o.userData.batchLayer;
+          if (layer !== 'skin') return;
+          const a = o.geometry.getAttribute('position').array;
+          for (let i = 0; i < a.length; i += 3) {
+            const x = a[i], y = a[i + 1], z = a[i + 2];
+            if (!region.test(x, y, z)) continue;
+            if (x < box.min.x) box.min.x = x;
+            if (y < box.min.y) box.min.y = y;
+            if (z < box.min.z) box.min.z = z;
+            if (x > box.max.x) box.max.x = x;
+            if (y > box.max.y) box.max.y = y;
+            if (z > box.max.z) box.max.z = z;
+          }
+        });
+      }
+    }
+    regionBoxCache.set(cacheKey, box);
+    return box;
+  };
+  const regionAt = (point) => {
+    for (const region of REGIONS) if (region.test(point.x, point.y, point.z)) return region.key;
+    let best = null, bestD = Infinity;
+    for (const region of REGIONS) {
+      const b = regionBox(region.key);
+      if (b.isEmpty()) continue;
+      const d = b.distanceToPoint(point);
+      if (d < bestD) { bestD = d; best = region.key; }
+    }
+    return best;
+  };
   const apply = () => {
     const active = new Set(boxes.filter((b) => b.checked).map((b) => b.dataset.layer));
     let n = 0;
@@ -435,6 +495,8 @@ export function initCorpsViewer() {
     }
   };
   const fitView = () => {
+    tween = null;
+    activeRegion = null;
     const b = bodyBox();
     if (b.isEmpty()) return;
     const c = b.getCenter(new THREE.Vector3());
@@ -449,6 +511,8 @@ export function initCorpsViewer() {
     camera.updateProjectionMatrix(); controls.update(); need = true;
   };
   const resetView = () => {
+    tween = null;
+    activeRegion = null;
     const b = bodyBox();
     const c = b.isEmpty() ? new THREE.Vector3(0, 0.85, 0) : b.getCenter(new THREE.Vector3());
     camera.position.set(c.x, c.y + 0.6, 4); controls.target.copy(c);
@@ -461,7 +525,65 @@ export function initCorpsViewer() {
     pivotBody = 'item'; updatePivotIndicator();
     controls.update(); need = true;
   };
-  const zoomBy = (f) => { camera.zoom = Math.max(0.5, Math.min(4, camera.zoom * f)); camera.updateProjectionMatrix(); need = true; };
+  let activeRegion = null;
+  let tween = null;
+  const fitZoomFor = (box) => {
+    const size = box.getSize(new THREE.Vector3());
+    const a = (host.clientWidth || 1) / (host.clientHeight || 1);
+    const span = a < 0.85 ? 1.05 : 1.12;
+    const zoom = Math.min((2 * span * a) / Math.max(size.x, 0.1),
+      (2 * span) / Math.max(size.y, 0.1)) * 0.8;
+    return Math.max(0.5, Math.min(controls.maxZoom, zoom));
+  };
+  const observe = (key) => {
+    const box = regionBox(key);
+    if (!box.isEmpty()) {
+      const center = box.getCenter(new THREE.Vector3());
+      const offset = camera.position.clone().sub(controls.target);
+      const dir = offset.lengthSq() > 1e-6 ? offset.normalize() : new THREE.Vector3(0, 0, 1);
+      const to = {
+        target: center,
+        position: center.clone().add(dir.clone().multiplyScalar(4)),
+        zoom: fitZoomFor(box),
+      };
+      tween = reduced ? null : {
+        t0: performance.now(), dur: 700,
+        from: { target: controls.target.clone(), position: camera.position.clone(), zoom: camera.zoom },
+        to,
+      };
+      if (reduced) {
+        controls.target.copy(to.target);
+        camera.position.copy(to.position);
+        camera.zoom = to.zoom;
+        camera.updateProjectionMatrix();
+        controls.update();
+      }
+    }
+    activeRegion = key;
+    pivotBody = key;
+    updatePivotIndicator();
+    need = true;
+  };
+  const cycleRegion = (dir) => {
+    const keys = REGIONS.map((r) => r.key);
+    const i = activeRegion ? keys.indexOf(activeRegion) : -1;
+    observe(keys[(i + dir + keys.length) % keys.length]);
+  };
+  const applyTween = (now) => {
+    if (!tween) return false;
+    const k = Math.min(1, (now - tween.t0) / tween.dur);
+    const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    controls.target.lerpVectors(tween.from.target, tween.to.target, e);
+    camera.position.lerpVectors(tween.from.position, tween.to.position, e);
+    camera.zoom = tween.from.zoom + (tween.to.zoom - tween.from.zoom) * e;
+    camera.updateProjectionMatrix();
+    if (k >= 1) tween = null;
+    return true;
+  };
+  const zoomBy = (f) => {
+    camera.zoom = Math.max(0.5, Math.min(controls.maxZoom, camera.zoom * f));
+    camera.updateProjectionMatrix(); need = true;
+  };
   const orbitBy = (t, p) => {
     const off = camera.position.clone().sub(controls.target);
     const sph = new THREE.Spherical().setFromVector3(off);
@@ -925,6 +1047,30 @@ export function initCorpsViewer() {
     origin: 'référence masculine adaptée',
   });
 
+  async function buildMaleSkinPatch() {
+    const at = await (await fetch(versioned(MALE_SKIN_PATCH.dir + MALE_SKIN_PATCH.manifest))).json();
+    const buffer = await chunkFetch({ url: MALE_SKIN_PATCH.dir + MALE_SKIN_PATCH.chunk.replace('.gz', ''),
+      gzip: MALE_SKIN_PATCH.dir + MALE_SKIN_PATCH.chunk });
+    const g = new THREE.Group();
+    for (const p of at.parts) {
+      assertRange(p, buffer, p.name);
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(
+        new Float32Array(buffer, p.positions, p.vertexCount * 3), 3));
+      geo.setAttribute('normal', new THREE.BufferAttribute(
+        new Float32Array(buffer, p.normals, p.vertexCount * 3), 3));
+      geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buffer, p.indices, p.indexCount), 1));
+      validateGeometry(geo, p.name);
+      geo.computeBoundingSphere();
+      const m = new THREE.Mesh(geo, mats.get('skin'));
+      m.name = p.name;
+      mark(m, 'skin', MALE.id, p.name, 'skin');
+      m.userData.selectionLabel = 'Peau autour des organes génitaux';
+      g.add(m);
+    }
+    return g;
+  }
+
   async function buildMaleGenitalia() {
     const at = await (await fetch(versioned(MALE_GENITALIA.dir + MALE_GENITALIA.manifest))).json();
     const buffer = await chunkFetch({ url: MALE_GENITALIA.dir + MALE_GENITALIA.chunk.replace('.gz', ''),
@@ -1027,6 +1173,8 @@ export function initCorpsViewer() {
         model.userData.source = 'seema';
         const genitalia = await buildMaleGenitalia();
         for (const child of [...genitalia.children]) model.add(child);
+        const skinPatch = await buildMaleSkinPatch();
+        for (const child of [...skinPatch.children]) model.add(child);
         model.position.x = 0;
         batchModel(model);
         model.visible = activeSex === 'male';
@@ -1059,6 +1207,9 @@ export function initCorpsViewer() {
     if (window.__corps) return;
     window.__corps = {
       THREE, camera, controls, renderer, outlineGroup, fitView, resetView, focusPoint,
+      observe, cycleRegion, regionBox, regions: REGIONS,
+      stepTween: (ms) => { if (!tween) return false; const moved = applyTween(tween ? tween.t0 + ms : performance.now()); need = true; return moved; },
+      renderNow: () => { renderer.render(scene, camera); },
       bodyBox, zoomBy, orbitBy, panBy, presetView, select, clearSelection, setPreset, apply,
       setPivotBody, setActiveSex, bodyCenter,
       get maleModel() { return modelCache.get('male') || null; },
@@ -1144,7 +1295,7 @@ export function initCorpsViewer() {
     const offset = camera.position.clone().sub(controls.target);
     controls.target.copy(p);
     camera.position.copy(p).add(offset);
-    camera.zoom = Math.max(0.5, Math.min(4, camera.zoom * factor));
+    camera.zoom = Math.max(0.5, Math.min(controls.maxZoom, camera.zoom * factor));
     camera.updateProjectionMatrix();
     pivotBody = activeSex; updatePivotIndicator();
     controls.update(); need = true;
@@ -1152,6 +1303,7 @@ export function initCorpsViewer() {
   let down = null;
   let lastTap = { t: 0, x: 0, y: 0 };
   renderer.domElement.addEventListener('pointerdown', (e) => {
+    tween = null;
     down = { x: e.clientX, y: e.clientY };
   });
   renderer.domElement.addEventListener('pointerup', (e) => {
@@ -1163,7 +1315,10 @@ export function initCorpsViewer() {
     if (now - lastTap.t < 300 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 24) {
       lastTap = { t: 0, x: 0, y: 0 };
       clearSelection();
-      zoomAtPoint(e.clientX, e.clientY, 1.5);
+      const hit = pointFromClient(e.clientX, e.clientY);
+      const key = hit ? regionAt(hit) : null;
+      if (key) observe(key);
+      else zoomAtPoint(e.clientX, e.clientY, 1.5);
       return;
     }
     lastTap = { t: now, x: e.clientX, y: e.clientY };
@@ -1172,9 +1327,10 @@ export function initCorpsViewer() {
     else clearSelection();
   });
   document.getElementById('selection-close').addEventListener('click', clearSelection);
+  document.getElementById('pivot-indicator').addEventListener('click', resetView);
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { clearSelection(); return; }
-    if (['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(document.activeElement?.tagName)) return;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
     switch (e.key) {
       case 'f': case 'F': fitView(); break;
       case 'r': case 'R': resetView(); break;
@@ -1184,6 +1340,8 @@ export function initCorpsViewer() {
       case 'ArrowRight': panBy(0.05, 0); break;
       case 'ArrowUp': panBy(0, 0.05); break;
       case 'ArrowDown': panBy(0, -0.05); break;
+      case '[': cycleRegion(-1); break;
+      case ']': cycleRegion(1); break;
       case 'a': case 'A': orbitBy(-0.15, 0); break;
       case 'd': case 'D': orbitBy(0.15, 0); break;
       case 'w': case 'W': orbitBy(0, -0.15); break;
@@ -1231,6 +1389,7 @@ export function initCorpsViewer() {
   function frame() {
     requestAnimationFrame(frame);
     if (document.hidden) return;
+    if (applyTween(performance.now())) need = true;
     const changed = controls.update();
     const now = performance.now();
     let pulsed = false;

@@ -23,13 +23,17 @@ et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleu
 
 Le corps féminin est complété par des muscles faciaux, des muscles du tronc et un
 réseau nerveux périphérique issus de la référence masculine et recalés sur 13 repères
-anatomiques. La chevelure longue est générée de façon déterministe par
-`scripts/rebuild-female-supplements.py` (calotte + nappe arrière, graine fixe) ;
-les deux muscles `Transversus abdominis`, mal recalés
-et détachés de la paroi, ont été retirés. Le côlon de BodyParts3D est reculé de 15 mm
-pour rester derrière le muscle droit. Le corps masculin reçoit 12 pièces génitales
-(pénis, testicules, prostate, conduits et vésicules) issues de BodyParts3D male
-(CC BY 4.0), extraites par `scripts/extract-male-genitalia.py`. Toutes les mesures
+anatomiques. La chevelure longue provient de **`kblood/CharacterCreator`**
+(`output/hair_long01.glb`, **CC0-1.0**, MakeHuman system assets) : le GLB est
+archivé dans `docs/models/hair-cc0/` avec son empreinte SHA-256, réaligné sur le
+crâne féminin par `scripts/rebuild-female-supplements.py`. Les deux muscles
+`Transversus abdominis`, mal recalés et détachés de la paroi, ont été retirés.
+Le côlon de BodyParts3D est reculé de 15 mm pour rester derrière le muscle droit.
+Le corps masculin reçoit 12 pièces génitales (pénis, testicules, prostate, conduits
+et vésicules) issues de BodyParts3D male (CC BY 4.0), extraites par
+`scripts/extract-male-genitalia.py`, et un patch cutané issu de `Modesty_cover`
+avec une ouverture elliptique lisse, généré par `scripts/extract-modesty-cover.mjs`.
+Toutes les mesures
 sont archivées dans `docs/analyses/anatomie-2026-11-25.json` et vérifiées par
 `npm run test:anatomie`. La couche « Grossesse » est réservée à la femme,
 masquée par défaut et désactivée pour l'homme ; elle ne modifie ni l'opacité de la peau
@@ -82,8 +86,13 @@ relecture anatomique humaine n'est pas signée.
 - **Préférences** : thème clair / sombre / « suivre le système » (défaut) et langue
   française (défaut) / anglaise, persistées dans `localStorage`. Toutes les chaines
   de l'interface, les noms et descriptions anatomiques sont localisés. La popup
-  affiche le nom français en titre et le nom anatomique source en sous-titre ;
+  d'une structure n'affiche que son titre ;
   `npm run test:labels-fr` interdit tout mot fonction anglais résiduel.
+- **Observation par région** : un double-tap ouvre la région touchée (tête, cou,
+  bras, mains, torse, ventre, bassin, cuisses, jambes, pieds), en fait son propre
+  centre de rotation et anime la caméra jusqu'à l'encadrement complet de la région ;
+  `[` et `]` parcourent les régions, le clic sur l'indicateur « Observation »
+  revient au corps entier.
 - **Résilience du cache** : les URL de modèles portent `?v=<build>`, le service worker
   les sert en réseau d'abord, et un manifeste périmé déclenche une erreur explicite
   avec bouton « Vider le cache et recharger » au lieu d'un rendu corrompu.

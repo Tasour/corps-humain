@@ -37,6 +37,31 @@ def decode(part):
 
 
 def female_hair():
+    """Chevelure CC0 importée de CharacterCreator (MakeHuman long01).
+
+    Source : kblood/CharacterCreator — output/hair_long01.glb, CC0-1.0.
+    Alignement déterministe sur le crâne femelle mesuré.
+    """
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    from glb_geom import load_glb, accessor_array
+
+    doc, binary = load_glb(ROOT / 'docs/models/hair-cc0/hair_long01.glb')
+    primitive = doc['meshes'][0]['primitives'][0]
+    pos = accessor_array(doc, binary, primitive['attributes']['POSITION'])
+    nor = accessor_array(doc, binary, primitive['attributes']['NORMAL'])
+    idx = accessor_array(doc, binary, primitive['indices']).reshape(-1).astype(int)
+
+    # Crâne femelle : centre x ≈ -0,006, centre z ≈ -0,046, sommet 1,6663.
+    # Coiffure source : centre x = 0, centre z ≈ 0,0145, sommet 1,6689.
+    fitted = []
+    for x, y, z in pos:
+        fitted.append((x * 0.9 - 0.006, y - 0.0026, (z - 0.0145) * 0.9 - 0.046))
+    normals = [tuple(v / (sum(c * c for c in v) ** 0.5 or 1)) for v in nor]
+    bounds = [[min(p[i] for p in fitted), max(p[i] for p in fitted)] for i in range(3)]
+    return [v for p in fitted for v in p], [v for n in normals for v in n], list(idx), bounds
+
+
+def female_hair_procedural():
     """Chevelure longue déterministe : calotte lisse + nappe arrière.
 
     Géométrie originale générée à partir des mensurations du crâne féminin.
