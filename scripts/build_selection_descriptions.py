@@ -162,5 +162,11 @@ result = {
 }
 with open(OUT, 'w') as f:
     json.dump(result, f, indent=1, ensure_ascii=False)
+for source in ('seema', 'bodyatlas'):
+    subset = {'version': result['version'],
+              'sources': {source: result['sources'][source]},
+              'descriptions': {source: result['descriptions'][source]}}
+    with open(f'{ROOT}/docs/models/selection-descriptions-{source}.json', 'w') as f:
+        json.dump(subset, f, separators=(',', ':'), ensure_ascii=False)
 print('[descriptions] seema', len(result['descriptions']['seema']),
       'bodyatlas', len(result['descriptions']['bodyatlas']))

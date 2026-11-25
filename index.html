@@ -32,6 +32,13 @@
       #toolbar button { width:auto; min-width:64px; height:44px; min-height:44px; margin:0; padding:0 12px;
         border-radius:8px; font-size:12px; font-weight:600; letter-spacing:.02em; }
       #toolbar button[aria-expanded="true"], #toolbar button[aria-pressed="true"] { background:#2a4a4d; border-color:var(--accent); }
+      #sex-toggle { perspective:400px; }
+      .sex-card { display:block; width:24px; height:24px; margin:0 auto; position:relative;
+        transform-style:preserve-3d; transition:transform .24s ease; }
+      #sex-toggle[aria-pressed="true"] .sex-card { transform:rotateY(180deg); }
+      .sex-face { position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+        backface-visibility:hidden; font-size:15px; line-height:1; }
+      .sex-f { transform:rotateY(180deg); }
       #viewport { position:relative; min-width:0; min-height:0; }
       .panel { position:absolute; left:12px; top:12px; z-index:10; width:240px; max-width:calc(100vw - 24px);
         max-height:calc(100vh - 160px); overflow:auto;
@@ -97,7 +104,12 @@
       <nav id="toolbar" aria-label="Outils d'interface">
         <button type="button" data-panel="couches" aria-expanded="false" aria-controls="panel-couches" title="Couches anatomiques">COUCH</button>
         <button type="button" data-panel="info" aria-expanded="false" aria-controls="panel-info">INFO</button>
-        <button type="button" id="sex-toggle" aria-label="Afficher la femme" aria-pressed="true" title="Changer de sexe">♂</button>
+        <button type="button" id="sex-toggle" aria-label="Afficher la femme" aria-pressed="false" title="Changer de sexe">
+          <span class="sex-card" aria-hidden="true">
+            <span class="sex-face sex-m">♂</span>
+            <span class="sex-face sex-f">♀</span>
+          </span>
+        </button>
       </nav>
       <section id="viewport">
         <div class="panel" id="panel-couches" hidden>

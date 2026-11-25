@@ -17,13 +17,15 @@ const facial = js.match(/const FACIAL_TOKENS = \[([\s\S]*?)\];/)?.[1] || "";
 assert.equal((facial.match(/'/g) || []).length, 28, "14 tokens faciaux attendus");
 const trunk = js.match(/const TRUNK_TOKENS = \[([\s\S]*?)\];/)?.[1] || "";
 assert.equal((trunk.match(/'/g) || []).length, 10, "5 tokens de tronc attendus");
-assert.ok(js.includes("nervesFile"), "nerfs périphériques absents");
+assert.ok(js.includes('female-supplements.bin.gz'), "chunk des compléments absent");
 assert.ok(js.includes("référence masculine adaptée"), "provenance des compléments absente");
 assert.ok(js.includes("RENDER_ORDER"), "ordre de rendu des couches absent");
 assert.ok(js.includes("xray = true"), "mode Rayon X par défaut absent");
-assert.ok(js.includes("layer = 'muscles'; kind = 'muscle facial'"),
+const supplements = JSON.parse(readFileSync(root +
+  "docs/models/body-atlas/female-supplements.json", "utf8"));
+assert.ok(supplements.parts.some((p) => p.layer === 'muscles' && /frontalis/i.test(p.name)),
   "muscles faciaux non fusionnés avec les muscles");
-assert.ok(!js.includes("layer = 'facial'"), "sous-couche faciale encore présente");
+assert.ok(!supplements.parts.some((p) => p.layer === 'facial'), "sous-couche faciale encore présente");
 assert.ok(js.includes("fitTps"), "interpolant TPS absent");
 assert.ok(js.includes("thresholdMm = 0.1") || js.includes("<= 0.1"),
   "seuil de 0,1 mm absent du calcul");
@@ -35,4 +37,9 @@ assert.ok(js.includes("sex-toggle"), "bouton sexe absent du viewer");
 assert.ok(js.includes("searchParams.set('sex'"), "sexe non conservé dans l'URL");
 assert.ok(js.includes("zoomAtPoint("), "zoom au point touché absent");
 assert.ok(!js.includes("setPivotBody(startBody)"), "pivot encore modifié au relâchement");
-console.log("PASS compléments, alignement facial et interface");
+assert.ok(js.includes('BatchedMesh'), "batching absent");
+assert.ok(js.includes('decode-worker.js'), "worker de décodage absent");
+assert.ok(js.includes('female-supplements.json'), "compléments précalculés absents");
+assert.ok(js.includes('lastWidth'), "redimensionnement par frame encore présent");
+assert.ok(!js.includes('resize(); renderer.render'), "resize encore appelé à chaque frame");
+console.log("PASS compléments, alignement, batching et interface");

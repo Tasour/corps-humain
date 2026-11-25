@@ -81,3 +81,19 @@ défaut ; l'ordre de rendu des couches est désormais explicite.
 - Le recalage facial utilise un interpolant TPS sur 13 repères crâniens. Le
   résidu maximal mesuré est de 0,000008 mm, largement sous le seuil de 0,1 mm.
   Voir `docs/models/facial-alignment.json`.
+
+## Architecture de chargement optimisée (2026-11-25)
+
+- Un seul corps est chargé avant le premier rendu ; l'autre est préchargé en
+  tâche idle puis mis en cache par le service worker.
+- Les descriptions sont fractionnées en `selection-descriptions-seema.json` et
+  `selection-descriptions-bodyatlas.json`.
+- Les chunks femelle utilisent meshopt avec positions quantifiées sur 16 bits
+  et normales octahèdre 8 bits : **48,1 → 26,0 Mo**. Le décodage se fait dans
+  trois Web Workers.
+- Les 302 compléments féminins sont précalculés dans `female-supplements.bin.gz`.
+- Le rendu est groupé par matériau avec `BatchedMesh` : environ **2 800 draw
+  calls** auparavant, **moins de 12** désormais.
+- `renderer.setSize()` n'est plus appelé à chaque frame, et le buffer de rendu
+  n'est conservé qu'avec `?capture=1`.
+- Mesures détaillées : `docs/analyses/performance-2026-11-25.json`.

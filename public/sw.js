@@ -16,15 +16,10 @@ const SHELL = [
   "./icons/apple-touch-icon.png",
 ];
 
-/* Petites données uniquement. Les buffers de l'ancien atlas (models/v2/*)
- * et les GLB ne sont plus pré-cachés : ils sont chargés à la demande et leurs
- * URL sont versionnées par le BUILD_ID, donc jamais périmées dans le cache. */
-const DATA = [
-  "./docs/models/catalog.json",
-  /* Le modèle par défaut est pré-caché : sans lui, un rechargement hors ligne
-   * afficherait une erreur. L'autre sexe est mis en cache à la demande. */
-  `./docs/models/corps-female-opt.glb?v=${BUILD}`,
-];
+/* Les modèles sont volumineux : ils ne bloquent pas l'installation.
+ * Le client envoie PRECACHE_MODELS après le premier rendu pour charger
+ * les deux corps en arrière-plan. */
+const DATA = [];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -69,6 +64,15 @@ self.addEventListener("activate", (event) => {
       .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_VERSION).map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type !== "PRECACHE_MODELS") return;
+  const urls = Array.isArray(event.data.urls) ? event.data.urls : [];
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_VERSION);
+    await Promise.all(urls.map((url) => cache.add(url).catch(() => {})));
+  })());
 });
 
 self.addEventListener("fetch", (event) => {

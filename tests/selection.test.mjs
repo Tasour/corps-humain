@@ -4,7 +4,9 @@ import { readFileSync } from "node:fs";
 const root = new URL("..", import.meta.url).pathname;
 const html = readFileSync(root + "index.html", "utf8");
 const js = readFileSync(root + "src/corps-viewer.js", "utf8");
-const desc = JSON.parse(readFileSync(root + "docs/models/selection-descriptions.json", "utf8"));
+const maleDesc = JSON.parse(readFileSync(root + "docs/models/selection-descriptions-seema.json", "utf8"));
+const femaleDesc = JSON.parse(readFileSync(root + "docs/models/selection-descriptions-bodyatlas.json", "utf8"));
+const desc = { descriptions: { ...maleDesc.descriptions, ...femaleDesc.descriptions } };
 
 /* Popup accessible. */
 assert.ok(html.includes('id="selection-popup"'), "popup absente");
@@ -34,7 +36,7 @@ assert.ok(js.includes("outlineKind = 'fresnel'"), "overlay Fresnel absent");
 assert.ok(js.includes("THIN_LAYERS.has(mesh.userData.layer)"), "protection des maillages fins absente");
 assert.ok(js.includes("0x40f0e0"), "couleur turquoise absente");
 assert.ok(js.includes("THREE.AdditiveBlending"), "fusion additive absente");
-assert.ok(js.includes("Math.sin(performance.now() / 1200"), "flash 1,2 s absent");
+assert.ok(js.includes("Math.sin(now / 1200"), "flash 1,2 s absent");
 assert.ok(js.includes("reduced ? 0.9"), "reduced motion absent");
 
 /* Descriptions sourcées : champs obligatoires. */
@@ -52,7 +54,7 @@ assert.ok(desc.descriptions.bodyatlas.VH_F_left_lateral_basal_bronchopulmonary_s
   .description.includes('S9'), "description médicale de FMA:7379 absente");
 
 /* Couverture : chaque pièce sélectionnable possède une entrée. */
-const female = JSON.parse(readFileSync(root + "docs/models/body-atlas/atlas-female.json", "utf8"));
+const female = JSON.parse(readFileSync(root + "docs/models/body-atlas/atlas-female-meshopt.json", "utf8"));
 for (const p of female.parts) {
   assert.ok(desc.descriptions.bodyatlas[p.id], `bodyatlas:${p.id} sans description`);
 }
@@ -87,8 +89,8 @@ assert.ok(js.includes("G_FJ2811: 'skin'"), "oreille externe femelle mal classée
 assert.ok(js.includes('FACIAL_TOKENS'), "tokens muscles faciaux absents");
 assert.ok(js.includes('TRUNK_TOKENS'), "tokens muscles du tronc absents");
 assert.ok(js.includes('HAIR_TOKENS'), "tokens cheveux absents");
-assert.ok(js.includes('buildLandmarks()'), "recalage des compléments absent");
-assert.ok(js.includes('makeWarp('), "déformation des compléments absente");
+assert.ok(js.includes('female-supplements.json'), "compléments précalculés absents");
+assert.ok(js.includes('facialAlignment'), "rapport d'alignement absent");
 
 console.log(`PASS sélection — ${Object.keys(desc.descriptions.seema).length} homme, ` +
   `${Object.keys(desc.descriptions.bodyatlas).length} femme`);

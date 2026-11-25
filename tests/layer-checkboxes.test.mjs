@@ -25,8 +25,11 @@ for (const id of ["cp-preset-skin", "cp-preset-muscles", "cp-preset-skeleton",
   assert.ok(html.includes(`id="${id}"`), `préréglage ${id} absent`);
 }
 assert.ok(html.includes('id="sex-toggle"'), "bouton sexe unique absent");
-assert.ok(html.includes('id="sex-toggle" aria-label="Afficher la femme" aria-pressed="true"'),
+assert.ok(html.includes('id="sex-toggle" aria-label="Afficher la femme" aria-pressed="false"'),
   "bouton sexe mal initialisé");
+assert.ok(html.includes('class="sex-card"') && html.includes('class="sex-face sex-m"')
+  && html.includes('class="sex-face sex-f"'), "carte recto-verso absente");
+assert.ok(!js.includes("groundSquare"), "carrés de sol encore présents");
 assert.ok(!html.includes('id="nav-focus-male"') && !html.includes('id="nav-focus-female"'),
   "anciens boutons H/F encore présents");
 assert.ok(!html.includes('id="nav-commands"'), "ancienne barre de commandes encore présente");

@@ -43,6 +43,11 @@ if (!html.includes("cp-view") || !html.includes("data-build")) {
 if (html.includes("ancien-atlas")) {
   throw new Error("ancienne source encore présente dans index.html");
 }
+const mainBundle = fs.readdirSync(path.join(dist, "assets"))
+  .find((f) => f.startsWith("main-") && f.endsWith(".js"));
+if (mainBundle && !html.includes(`assets/${mainBundle}`)) {
+  html = html.replace("</head>", `<link rel="modulepreload" href="./assets/${mainBundle}"></head>`);
+}
 fs.writeFileSync(index, html);
 
 const swPath = path.join(dist, "sw.js");
@@ -66,15 +71,17 @@ fs.cpSync(path.join(modelsDir, "forks", "seema"),
 const femaleSrc = path.join(modelsDir, "body-atlas");
 const femaleDst = path.join(dstModels, "body-atlas");
 fs.mkdirSync(femaleDst, { recursive: true });
-fs.copyFileSync(path.join(femaleSrc, "atlas-female.json"),
-  path.join(femaleDst, "atlas-female.json"));
+fs.copyFileSync(path.join(femaleSrc, "atlas-female-meshopt.json"),
+  path.join(femaleDst, "atlas-female-meshopt.json"));
 for (const f of fs.readdirSync(femaleSrc)) {
-  if (/^female-\d+\.bin\.gz$/.test(f)) {
+  if (/^female-meshopt-\d+\.bin$/.test(f) || /^female-supplements\.(json|bin\.gz)$/.test(f)) {
     fs.copyFileSync(path.join(femaleSrc, f), path.join(femaleDst, f));
   }
 }
-fs.copyFileSync(path.join(modelsDir, "selection-descriptions.json"),
-  path.join(dstModels, "selection-descriptions.json"));
+for (const source of ["seema", "bodyatlas"]) {
+  fs.copyFileSync(path.join(modelsDir, `selection-descriptions-${source}.json`),
+    path.join(dstModels, `selection-descriptions-${source}.json`));
+}
 for (const old of [
   "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
   "textures", "data", "icons", "screenshots", "v2-style.css",

@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-25",
+  "baseline": {
+    "transferMB": 60.4,
+    "coldReadyMs": {"male": 8300, "female": 6100},
+    "drawCalls": {"male": 2199, "female": 2830},
+    "frameP50Ms": 16.7,
+    "frameP95Ms": 33.4,
+    "setSizeCallsPer60Frames": 60
+  },
+  "optimized": {
+    "transferMBAtFirstRender": {"male": 11.0, "female": 35.4},
+    "coldReadyMsWarmServer": {"male": 877, "female": 1030},
+    "drawCalls": {"male": 7, "female": 9},
+    "batches": 17,
+    "partsBatched": 5033,
+    "frameP50Ms": 16.7,
+    "setSizeCallsPer60Frames": 0,
+    "femaleChunksMB": {"gzip": 48.11, "meshopt": 26.01},
+    "supplementChunksMB": {"raw": 8.54, "gz": 5.20}
+  },
+  "notes": [
+    "Le corps actif est chargé avant le premier rendu ; l'autre est préchargé en idle puis mis en cache par le service worker.",
+    "Les descriptions sont fractionnées par source.",
+    "Les compléments féminins sont précalculés hors ligne.",
+    "Le rendu est groupé par matériau avec BatchedMesh.",
+    "Le LOD n'a pas été livré : la cible de fluidité est atteinte sans réduction de géométrie."
+  ]
+}

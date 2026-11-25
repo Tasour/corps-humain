@@ -340,3 +340,8 @@ en bas d'écran et un zoom au double-tap sur mobile. Aucun glisser ne recentre p
 la caméra au relâchement. Les muscles du visage font partie de la couche Muscles
 et sont alignés sur le crâne avec un résidu maximal de 0,000008 mm
 (`docs/models/facial-alignment.json`).
+
+Le chargement est progressif : le corps actif s'affiche en premier, l'autre est
+préchargé en arrière-plan. Les assets femelle sont compressés avec meshopt
+(48,1 → 26,0 Mo), les compléments sont précalculés et le rendu est groupé par
+matériau, ce qui réduit les appels de dessin de ~2 800 à moins de 12.
