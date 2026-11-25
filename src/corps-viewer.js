@@ -236,6 +236,28 @@ export function initCorpsViewer() {
     return activeSex === 'male' ? [maleModel] : [femaleModel, supplements].filter(Boolean);
   };
 
+  /* Contention des couches internes femelles : le modèle Body Atlas combine
+   * une peau Visible Human Female et des organes/muscles HRA qui dépassent
+   * l'enveloppe cutanée de 5 à 19 mm. On rétracte ces couches vers l'axe du
+   * corps (X/Z), sans toucher à la hauteur, jusqu'à rentrer sous la peau.
+   * Facteurs mesurés sur les zones crâne, avant-bras, cuisse et mollet. */
+  const FEMALE_CONTAIN = {
+    muscles: [0.76, 1, 0.76], vessels: [0.78, 1, 0.78], nerves: [0.78, 1, 0.78],
+    skeleton: [0.78, 1, 0.78], organs: [0.82, 1, 0.82], pregnancy: [0.9, 0.9, 0.4],
+  };
+  const containFemaleLayers = (...bodies) => {
+    for (const body of bodies) {
+      if (!body) continue;
+      body.traverse((o) => {
+        if (!o.isBatchedMesh) return;
+        const f = FEMALE_CONTAIN[o.userData.batchLayer];
+        if (!f) return;
+        o.scale.set(f[0], f[1], f[2]);
+        o.position.z = -0.05 * (1 - f[2]);
+      });
+    }
+  };
+
   // Sélection et contour.
   const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
   const popup = document.getElementById('selection-popup');
@@ -363,7 +385,18 @@ export function initCorpsViewer() {
     const s = q.get('sex');
     if (s === 'f' || s === 'female') activeSex = 'female';
     const l = q.get('layers');
-    if (!l) return;
+    if (!l) {
+      /* Le modèle femelle combine deux sources : par défaut on n'affiche que
+       * l'enveloppe contenue (peau, squelette, organes, cheveux) pour éviter
+       * les couches internes qui dépassent aux extrémités. Les autres couches
+       * restent activables d'un geste. */
+      if (activeSex === 'female') {
+        const clean = new Set(['skin', 'skeleton', 'organs', 'cosmetic']);
+        for (const b of boxes) b.checked = clean.has(b.dataset.layer);
+        sync();
+      }
+      return;
+    }
     const want = new Set(l === 'all' ? ALL_LAYERS : l.split(','));
     for (const b of boxes) b.checked = want.has(b.dataset.layer);
     sync();
@@ -1198,6 +1231,7 @@ export function initCorpsViewer() {
       batchModel(extra);
       bodies.add(extra);
       modelCache.set('supplements', extra);
+      containFemaleLayers(model, extra);
       return model;
     })();
     loading.set(which, task);

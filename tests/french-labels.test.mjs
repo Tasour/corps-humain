@@ -17,6 +17,14 @@ for (const source of ['seema', 'bodyatlas']) {
   }
 }
 
+const supplements = JSON.parse(readFileSync(root + 'docs/models/body-atlas/female-supplements.json', 'utf8'));
+for (const part of supplements.parts) {
+  if (!part.entry) continue;
+  assert.ok(part.entry.name_fr, `supplément ${part.name} : name_fr absent`);
+  assert.ok(!pattern.test(part.entry.name_fr), `supplément ${part.name} : anglais résiduel « ${part.entry.name_fr} »`);
+  checked++;
+}
+
 assert.ok(!html.includes('id="selection-latin"'), 'sous-titre latin encore présent');
 assert.ok(!html.includes('id="selection-description"'), 'description encore présente');
 assert.ok(html.includes('id="selection-name"'), 'titre du popup absent');

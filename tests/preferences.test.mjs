@@ -27,4 +27,8 @@ assert.ok(js.includes("activate(requested, false)"), "recadrage au changement de
 assert.ok(!js.includes("position.x = 0.45"), "décalage de modèle encore présent");
 assert.ok(!js.includes("position.x = -0.45"), "décalage de modèle encore présent");
 assert.ok(js.includes("aria-disabled"), "case grossesse non désactivée proprement");
+assert.ok(js.includes("FEMALE_CONTAIN"), "contention des couches femelles absente");
+assert.ok(js.includes("containFemaleLayers"), "application de la contention absente");
+assert.ok(js.includes("const clean = new Set(['skin', 'skeleton', 'organs', 'cosmetic'])"),
+  "affichage féminin par défaut non nettoyé");
 console.log("PASS préférences, langues et caméra stable");

@@ -331,6 +331,24 @@ FR_EXTRA.update({
     'basomedial nucleus accessory basal nucleus (left)': 'noyau basomédial, noyau basal accessoire (gauche)',
 })
 FR_EXTRA.update({
+    'frontalis muscle': 'muscle frontal', 'nasalis muscle': 'muscle nasal',
+    'orbital part of orbicularis oculi': 'partie orbitaire du muscle orbiculaire de l’œil',
+    'palpebral part of orbicularis oculi': 'partie palpébrale du muscle orbiculaire de l’œil',
+    'orbicularis oris muscle': 'muscle orbiculaire de la bouche',
+    'zygomaticus major muscle': 'muscle grand zygomatique',
+    'zygomaticus minor muscle': 'muscle petit zygomatique',
+    'corrugator supercilii': 'muscle corrugateur du sourcil',
+    'depressor anguli oris': 'muscle abaisseur de l’angle de la bouche',
+    'depressor labii inferioris': 'muscle abaisseur de la lèvre inférieure',
+    'procerus muscle': 'muscle procerus', 'risorius muscle': 'muscle risorius',
+    'levator labii superioris': 'muscle élévateur de la lèvre supérieure',
+    'mentalis muscle': 'muscle mentonnier',
+    'superficial part of masseter': 'partie superficielle du muscle masséter',
+    'deep part of masseter': 'partie profonde du muscle masséter',
+    'temporalis muscle': 'muscle temporal',
+    'latissimus dorsi muscle': 'muscle grand dorsal',
+    'rectus abdominis muscle': 'muscle droit de l’abdomen',
+    'quadratus lumborum muscle': 'muscle carré des lombes',
     'rectus femoris muscle': 'muscle droit fémoral',
     'vastus lateralis muscle': 'muscle vaste latéral',
     'vastus medialis muscle': 'muscle vaste médial',
@@ -441,6 +459,13 @@ def localize_name(name, lang):
     key = text.lower().strip()
     if key in FR_PHRASES:
         return FR_PHRASES[key]
+    # Les noms entre parenthèses sont localisés séparément.
+    def paren(match):
+        inner = match.group(1)
+        if inner.strip() == text.strip() or len(inner) > 120:
+            return match.group(0)
+        return '(' + localize_name(inner, 'fr') + ')'
+    text = re.sub(r'\(([^()]+)\)', paren, text)
     tokens = re.findall(r'[A-Za-zÀ-ÿ]+|\d+|\([^)]*\)', text)
     words = []
     for tok in tokens:
