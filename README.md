@@ -334,3 +334,9 @@ cheveux. La rotation s'ancre sur le corps glissé, avec deux boutons H/F et un
 indicateur de pivot. Activer la peau manuellement la rend opaque et sélectionnable ;
 le mode Rayon X reste un bouton explicite. Les muscles du visage de la femme
 possèdent leur propre couche et leur préréglage « Visage ».
+
+L'interface affiche un seul bouton sexe (homme par défaut), une barre horizontale
+en bas d'écran et un zoom au double-tap sur mobile. Aucun glisser ne recentre plus
+la caméra au relâchement. Les muscles du visage font partie de la couche Muscles
+et sont alignés sur le crâne avec un résidu maximal de 0,000008 mm
+(`docs/models/facial-alignment.json`).

@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 const root = new URL("..", import.meta.url).pathname;
 const html = readFileSync(root + "index.html", "utf8");
 const js = readFileSync(root + "src/corps-viewer.js", "utf8");
+const alignment = JSON.parse(readFileSync(root + "docs/models/facial-alignment.json", "utf8"));
 
 const count = (needle) => js.split(needle).length - 1;
 assert.ok(html.includes('id="cp-couche-pregnancy"'), "couche grossesse absente");
@@ -20,11 +21,18 @@ assert.ok(js.includes("nervesFile"), "nerfs périphériques absents");
 assert.ok(js.includes("référence masculine adaptée"), "provenance des compléments absente");
 assert.ok(js.includes("RENDER_ORDER"), "ordre de rendu des couches absent");
 assert.ok(js.includes("xray = true"), "mode Rayon X par défaut absent");
-assert.ok(js.includes("layer = 'facial'"), "sous-couche faciale absente");
-assert.ok(html.includes('id="cp-couche-facial"'), "case muscles du visage absente");
-assert.ok(js.includes("facial: ['facial']"), "préréglage Visage absent");
-assert.ok(js.includes("facial.opacity = xray ? 0.72 : 1"), "opacité faciale absente");
-assert.ok(js.includes("setXray(false); sync()"), "désactivation manuelle du Rayon X absente");
-assert.ok(js.includes("setPivotBody(startBody)"), "pivot au glisser absent");
-assert.ok(js.includes("pivotBody = 'item'"), "focus double-clic sans état de pivot");
-console.log("PASS compléments anatomiques et couches de référence");
+assert.ok(js.includes("layer = 'muscles'; kind = 'muscle facial'"),
+  "muscles faciaux non fusionnés avec les muscles");
+assert.ok(!js.includes("layer = 'facial'"), "sous-couche faciale encore présente");
+assert.ok(js.includes("fitTps"), "interpolant TPS absent");
+assert.ok(js.includes("thresholdMm = 0.1") || js.includes("<= 0.1"),
+  "seuil de 0,1 mm absent du calcul");
+assert.ok(alignment.count === 34, "rapport d'alignement incomplet");
+assert.ok(alignment.residualMmMax <= 0.1, "résidu d'alignement supérieur à 0,1 mm");
+assert.ok(alignment.entries.every((e) => e.residualMm <= 0.1), "un muscle dépasse le seuil");
+assert.ok(js.includes("setActiveSex("), "bouton sexe non câblé");
+assert.ok(js.includes("sex-toggle"), "bouton sexe absent du viewer");
+assert.ok(js.includes("searchParams.set('sex'"), "sexe non conservé dans l'URL");
+assert.ok(js.includes("zoomAtPoint("), "zoom au point touché absent");
+assert.ok(!js.includes("setPivotBody(startBody)"), "pivot encore modifié au relâchement");
+console.log("PASS compléments, alignement facial et interface");

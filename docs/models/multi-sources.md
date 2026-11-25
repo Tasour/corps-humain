@@ -66,3 +66,18 @@ défaut ; l'ordre de rendu des couches est désormais explicite.
 - Les 34 muscles faciaux de la femme ont leur propre couche « Muscles du visage »
   et un préréglage « Visage », afin d'être visibles et sélectionnables même en
   présence de cheveux ou de peau.
+
+## Interface du 2026-11-25
+
+- Un seul bouton « sexe » remplace les boutons H/F : `#` par défaut sur l'homme,
+  il bascule vers `♀` au clic et n'affiche que le corps actif. Le pivot et la vue
+  suivent ce choix explicite ; aucun glisser ne modifie plus la caméra au relâchement.
+- La barre d'outils est horizontale, fixée en bas de l'écran, avec COUCH, INFO et
+  le bouton sexe. Les boutons +, −, CADRER et RESET ont été supprimés.
+- Sur mobile, le double-tap zoome de 50 % autour du point touché, comme sur une
+  carte ; le pincement reste disponible.
+- Les muscles du visage sont intégrés à la couche `muscles` : la couche séparée
+  et le préréglage « Visage » ont été supprimés.
+- Le recalage facial utilise un interpolant TPS sur 13 repères crâniens. Le
+  résidu maximal mesuré est de 0,000008 mm, largement sous le seuil de 0,1 mm.
+  Voir `docs/models/facial-alignment.json`.

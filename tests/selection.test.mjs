@@ -21,7 +21,7 @@ assert.ok(html.includes('id="selection-popup"') && html.includes('width:44px'),
 /* Raycast : premier objet touché, reset dans le vide, échap. */
 assert.ok(js.includes("new THREE.Raycaster()"), "raycaster absent");
 assert.ok(js.includes("setFromCamera(ndc, camera)"), "rayon depuis la caméra absent");
-assert.ok(js.includes("intersectObjects(allBodies(), true)"), "intersection des deux corps absente");
+assert.ok(js.includes("intersectObjects(activeBodies(), true)"), "raycast sur le corps actif absent");
 assert.ok(js.includes("hits.find("), "premier objet visible non retenu");
 assert.ok(js.includes("if (mesh) select(mesh"), "sélection absente");
 assert.ok(js.includes("else clearSelection()"), "reset dans le vide absent");

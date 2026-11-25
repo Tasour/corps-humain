@@ -25,14 +25,16 @@
       a.atlas:active { transform:scale(.97); }
       .source-label { display:inline-flex; align-items:center; min-height:44px; padding:0 12px;
         border:1px solid var(--line); border-radius:8px; color:var(--muted); font-size:12px; white-space:nowrap; }
-      main { height:calc(100vh - 58px - env(safe-area-inset-top)); display:grid; grid-template-columns:56px minmax(0,1fr); position:relative; }
-      #toolbar { display:flex; flex-direction:column; gap:8px; padding:8px; border-right:1px solid var(--line);
-        background:#111820; overflow:auto; }
-      #toolbar button { width:44px; min-width:44px; height:44px; min-height:44px; margin:0; padding:0; border-radius:8px;
-        font-size:11px; font-weight:600; letter-spacing:.02em; }
-      #toolbar button[aria-expanded="true"] { background:#2a4a4d; border-color:var(--accent); }
+      main { height:calc(100vh - 58px - env(safe-area-inset-top)); display:grid; grid-template-columns:minmax(0,1fr); position:relative; }
+      #toolbar { position:absolute; left:0; right:0; bottom:0; z-index:15; display:flex; flex-direction:row;
+        justify-content:center; gap:8px; padding:8px 12px calc(8px + env(safe-area-inset-bottom));
+        border-top:1px solid var(--line); background:#111820; }
+      #toolbar button { width:auto; min-width:64px; height:44px; min-height:44px; margin:0; padding:0 12px;
+        border-radius:8px; font-size:12px; font-weight:600; letter-spacing:.02em; }
+      #toolbar button[aria-expanded="true"], #toolbar button[aria-pressed="true"] { background:#2a4a4d; border-color:var(--accent); }
       #viewport { position:relative; min-width:0; min-height:0; }
-      .panel { position:absolute; left:64px; top:12px; z-index:10; width:240px; max-width:calc(100vw - 76px);
+      .panel { position:absolute; left:12px; top:12px; z-index:10; width:240px; max-width:calc(100vw - 24px);
+        max-height:calc(100vh - 160px); overflow:auto;
         padding:16px; border:1px solid var(--line); border-radius:8px; background:rgba(21,28,36,.97);
         box-shadow:0 12px 32px rgba(0,0,0,.45); }
       .panel[hidden] { display:none; }
@@ -50,13 +52,9 @@
         margin:0; accent-color:var(--accent); cursor:pointer; }
       fieldset.couches label.maitre { font-weight:600; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:4px; }
       #corps-info { margin-top:12px; color:var(--muted); font-size:12px; }
-      #cp-view { position:absolute; inset:0; min-width:0; min-height:0; overflow:hidden; }
+      #cp-view { position:absolute; left:0; right:0; top:0; bottom:60px; min-width:0; min-height:0; overflow:hidden; }
       #cp-view canvas { display:block; width:100%; height:100%; touch-action:none; }
       #cp-view:focus-visible { outline:3px solid var(--accent); outline-offset:-3px; }
-      #nav-commands { position:absolute; right:12px; bottom:12px; z-index:12; display:grid;
-        grid-template-columns:repeat(2,44px); gap:8px; }
-      #nav-commands button { width:44px; height:44px; min-width:44px; min-height:44px; margin:0;
-        padding:0; border-radius:8px; font-size:11px; font-weight:600; }
       .presets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
       .presets button { min-height:44px; padding:0 8px; border-radius:8px; font-size:12px; font-weight:600; }
       #pivot-indicator { position:absolute; right:12px; top:12px; z-index:11; padding:4px 8px;
@@ -71,15 +69,14 @@
       #selection-close { position:absolute; right:8px; top:8px; width:44px; height:44px;
         min-width:44px; min-height:44px; margin:0; padding:0; border-radius:8px; font-size:18px; }
       @media (pointer:coarse) {
-        #cp-view::after { content:'Glissez pour tourner · pincez pour zoomer'; position:absolute; left:8px; bottom:8px;
+        #cp-view::after { content:'Glissez pour tourner · double-tap pour zoomer'; position:absolute; left:8px; bottom:8px;
           background:rgba(0,0,0,.55); color:#e6e6e6; font-size:11px; padding:4px 8px; border-radius:8px; pointer-events:none; }
       }
       @media (max-width:700px) {
-        main { grid-template-columns:52px minmax(0,1fr); }
-        #toolbar { padding:8px 4px; }
-        #toolbar button { width:44px; min-width:44px; }
-        .panel { left:58px; top:8px; width:min(240px,calc(100vw - 68px)); }
-        #selection-popup { left:12px !important; right:12px; top:auto !important; bottom:12px; width:auto; }
+        #toolbar { justify-content:space-around; gap:4px; padding:8px 8px calc(8px + env(safe-area-inset-bottom)); }
+        #toolbar button { min-width:64px; }
+        .panel { left:12px; top:8px; width:min(240px,calc(100vw - 24px)); max-height:calc(100vh - 152px); }
+        #selection-popup { left:12px !important; right:12px; top:auto !important; bottom:68px; width:auto; }
         .build { display:none; }
       }
       .skip-link { position:absolute; left:8px; top:-48px; z-index:20; padding:8px 12px;
@@ -100,6 +97,7 @@
       <nav id="toolbar" aria-label="Outils d'interface">
         <button type="button" data-panel="couches" aria-expanded="false" aria-controls="panel-couches" title="Couches anatomiques">COUCH</button>
         <button type="button" data-panel="info" aria-expanded="false" aria-controls="panel-info">INFO</button>
+        <button type="button" id="sex-toggle" aria-label="Afficher la femme" aria-pressed="true" title="Changer de sexe">♂</button>
       </nav>
       <section id="viewport">
         <div class="panel" id="panel-couches" hidden>
@@ -111,7 +109,6 @@
             </label>
             <label for="cp-couche-skin"><input type="checkbox" aria-label="Peau" id="cp-couche-skin" data-layer="skin" checked /> Peau</label>
             <label for="cp-couche-muscles"><input type="checkbox" aria-label="Muscles" id="cp-couche-muscles" data-layer="muscles" checked /> Muscles</label>
-            <label for="cp-couche-facial"><input type="checkbox" aria-label="Muscles du visage" id="cp-couche-facial" data-layer="facial" checked /> Muscles du visage</label>
             <label for="cp-couche-skeleton"><input type="checkbox" aria-label="Squelette" id="cp-couche-skeleton" data-layer="skeleton" checked /> Squelette</label>
             <label for="cp-couche-organs"><input type="checkbox" aria-label="Organes" id="cp-couche-organs" data-layer="organs" checked /> Organes</label>
             <label for="cp-couche-vessels"><input type="checkbox" aria-label="Vaisseaux" id="cp-couche-vessels" data-layer="vessels" checked /> Vaisseaux</label>
@@ -124,7 +121,6 @@
             <button type="button" id="cp-preset-muscles" title="N'afficher que les muscles">Muscles</button>
             <button type="button" id="cp-preset-skeleton" title="N'afficher que le squelette">Squelette</button>
             <button type="button" id="cp-preset-organs" title="N'afficher que les organes">Organes</button>
-            <button type="button" id="cp-preset-face" title="N'afficher que les muscles du visage">Visage</button>
             <button type="button" id="cp-preset-xray" aria-pressed="true" title="Afficher tous les calques en transparence">Rayon X</button>
           </div>
         </div>
@@ -135,14 +131,6 @@
           <p class="avertissement">Usage pédagogique uniquement. Ne remplace ni un diagnostic ni un avis médical.</p>
         </div>
         <div id="cp-view" tabindex="0" role="application" aria-label="Vue 3D interactive du corps humain"></div>
-        <div id="nav-commands" aria-label="Commandes de navigation 3D">
-          <button type="button" id="nav-zoom-in" aria-label="Zoomer">+</button>
-          <button type="button" id="nav-zoom-out" aria-label="Dézoomer">−</button>
-          <button type="button" id="nav-fit" aria-label="Cadrer le modèle">CADRER</button>
-          <button type="button" id="nav-reset" aria-label="Réinitialiser la vue">RESET</button>
-          <button type="button" id="nav-focus-male" aria-label="Pivoter autour de l'homme">H</button>
-          <button type="button" id="nav-focus-female" aria-label="Pivoter autour de la femme">F</button>
-        </div>
         <div id="pivot-indicator" aria-live="polite">Pivot : ensemble</div>
         <div id="selection-popup" hidden role="dialog" aria-modal="false" aria-live="polite" aria-label="Détails de la structure">
           <button type="button" id="selection-close" aria-label="Fermer la sélection">×</button>
