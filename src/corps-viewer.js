@@ -37,6 +37,11 @@ const SUPPLEMENTS = {
   manifest: 'female-supplements.json',
   chunk: 'female-supplements.bin.gz',
 };
+const MALE_GENITALIA = {
+  dir: './docs/models/male-genitalia/',
+  manifest: 'male-genitalia.json',
+  chunk: 'male-genitalia.bin.gz',
+};
 const FEMALE = {
   id: 'bodyatlas',
   label: 'Body Atlas 3D — femme',
@@ -572,6 +577,10 @@ export function initCorpsViewer() {
             geo.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(buf, p.normals, p.vertexCount * 3), 3, true));
             geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, p.indices, p.indexCount), 1));
           }
+          // Le côlon de BodyParts3D est trop antérieur : il passe devant la
+          // paroi musculaire. On le recule de 15 mm pour le loger derrière le
+          // muscle droit, sans toucher aux autres organes.
+          if (cfg.id === 'bodyatlas' && /colon/i.test(p.name)) geo.translate(0, 0, -0.015);
           geo.computeBoundingSphere();
           const layer = FEMALE_OVERRIDES[p.id] || MAP[p.system] || 'organs';
           const m = new THREE.Mesh(geo, mats.get(layer));
@@ -891,6 +900,35 @@ export function initCorpsViewer() {
     origin: 'référence masculine adaptée',
   });
 
+  async function buildMaleGenitalia() {
+    const at = await (await fetch(MALE_GENITALIA.dir + MALE_GENITALIA.manifest)).json();
+    const buffer = await chunkFetch({ url: MALE_GENITALIA.dir + MALE_GENITALIA.chunk.replace('.gz', ''),
+      gzip: MALE_GENITALIA.dir + MALE_GENITALIA.chunk });
+    const g = new THREE.Group();
+    for (const p of at.parts) {
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(
+        new Float32Array(buffer, p.positions, p.vertexCount * 3), 3));
+      geo.setAttribute('normal', new THREE.BufferAttribute(
+        new Float32Array(buffer, p.normals, p.vertexCount * 3), 3));
+      geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buffer, p.indices, p.indexCount), 1));
+      geo.computeBoundingSphere();
+      const m = new THREE.Mesh(geo, mats.get('organs'));
+      m.name = p.id;
+      mark(m, 'reproductive', 'bodyatlas', p.id, 'organs');
+      m.userData.selectionLabel = p.name;
+      m.userData.selectionSource = 'bodyatlas';
+      m.userData.selectionEntry = (descriptions.seema?.[p.id] || descriptions.bodyatlas?.[p.id]) || {
+        name: p.name,
+        description: `${p.name} — organe du système reproducteur masculin (BodyParts3D, CC BY 4.0).`,
+        source: 'BodyParts3D', license: 'CC BY 4.0', origin: 'référence masculine',
+      };
+      g.add(m);
+    }
+    g.userData.count = at.parts.length;
+    return g;
+  }
+
   async function buildSupplements() {
     const at = await (await fetch(SUPPLEMENTS.dir + SUPPLEMENTS.manifest)).json();
     const buffer = await chunkFetch({ url: SUPPLEMENTS.dir + SUPPLEMENTS.chunk.replace('.gz', ''),
@@ -958,6 +996,8 @@ export function initCorpsViewer() {
       if (which === 'male') {
         const model = await buildGlbSet(MALE);
         model.userData.source = 'seema';
+        const genitalia = await buildMaleGenitalia();
+        for (const child of [...genitalia.children]) model.add(child);
         model.position.x = 0;
         batchModel(model);
         model.visible = activeSex === 'male';

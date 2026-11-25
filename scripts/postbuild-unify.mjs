@@ -68,6 +68,8 @@ for (const f of fs.readdirSync(dstModels)) {
 }
 fs.cpSync(path.join(modelsDir, "forks", "seema"),
   path.join(dstModels, "forks", "seema"), { recursive: true });
+fs.cpSync(path.join(modelsDir, "male-genitalia"),
+  path.join(dstModels, "male-genitalia"), { recursive: true });
 const femaleSrc = path.join(modelsDir, "body-atlas");
 const femaleDst = path.join(dstModels, "body-atlas");
 fs.mkdirSync(femaleDst, { recursive: true });

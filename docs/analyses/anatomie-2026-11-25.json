@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-25",
+  "objet": "Diagnostic des quatre défauts anatomiques signalés",
+  "mesures": {
+    "genitalite_masculine": {
+      "seema": "0 maillage pénis/testis/scrotum dans les 7 GLB (417+476+255+297+271+256+226 nœuds)",
+      "source_retenue": "docs/models/body-atlas/atlas.json — BodyParts3D male, CC BY 4.0",
+      "pieces": 12,
+      "chunk": 11,
+      "ids": ["FJ3132", "FJ3133", "FJ3134", "FJ3135", "FJ3136", "FJ3137", "FJ3138", "FJ3139", "FJ3140", "FJ3141", "FJ3142", "FJ3143"]
+    },
+    "genitalite_feminine": {
+      "bodyatlas": "19 pièces reproductrices, dont VH_F_vagina (y 0,743→0,801, z −0,083→−0,059)",
+      "etat": "présente et conservée"
+    },
+    "tissus_decolles": {
+      "pieces": ["Transversus_abdominis_muscler001", "Transversus_abdominis_musclel001"],
+      "sommets": 3673,
+      "bboxes": {
+        "droite": {"x": [-0.1926, -0.0121], "y": [0.8102, 1.2436], "z": [-0.1394, 0.021]},
+        "gauche": {"x": [-0.0044, 0.1771], "y": [0.8102, 1.2436], "z": [-0.1394, 0.021]}
+      },
+      "origine": "Z-Anatomy mâle recalé, suppléments",
+      "action": "retrait du manifeste et du chunk"
+    },
+    "colon_transverse": {
+      "bbox": {"x": [-0.1022, 0.0991], "y": [0.9709, 1.0763], "z": [-0.0699, 0.0469]},
+      "peau_avant_a_y_1_0": 0.0932,
+      "muscles": {
+        "oblique_externe_max_z": 0.0607,
+        "rectus_abdominis_max_z": 0.039,
+        "transversus_abdominis_max_z": 0.021
+      },
+      "constat": "le côlon est derrière la peau (0,047 < 0,093) mais devant le muscle droit (0,039) : traversée de la paroi musculaire, pas de la peau",
+      "action": "reculer les pièces digestives pour passer derrière le muscle droit"
+    },
+    "cheveux": {
+      "actuels": "Hairs_of_head001, Z-Anatomy mâle recalé, 8299 sommets, y 1,453→1,726, z −0,208→−0,006",
+      "source_retenue": "docs/models/contests/female-atlas/atlas.json — HMA + BodyParts3D, MIT + CC BY 4.0",
+      "remplacement": "Hair of head, chunk 18, concept FMA54241",
+      "bbox": {"x": [-0.0789, 0.0772], "y": [1.4685, 1.6663], "z": [-0.1757, 0.0158]}
+    }
+  },
+  "nonMesure": [
+    "la distance exacte des tissus décollés à la surface cutanée",
+    "la qualité esthétique finale de la coiffure de remplacement (à valider par capture)"
+  ]
+}

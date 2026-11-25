@@ -21,9 +21,16 @@ Anatomy** (`seema`, CC BY-SA 4.0) sur le carré bleu et **Body Atlas 3D — femm
 `female-atlas` a été écarté : 72 % de géométrie dérivée d'une référence masculine
 et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleur-modele.md`.
 
-Le corps féminin est complété par des muscles faciaux, des muscles du tronc, des
-cheveux et un réseau nerveux périphérique issus de la référence masculine et
-recalés sur 13 repères anatomiques. La couche « Grossesse » est réservée à la femme,
+Le corps féminin est complété par des muscles faciaux, des muscles du tronc et un
+réseau nerveux périphérique issus de la référence masculine et recalés sur 13 repères
+anatomiques. La chevelure provient de `female-atlas` (MIT + CC BY 4.0) et remplace
+l'ancienne coiffure masculine ; les deux muscles `Transversus abdominis`, mal recalés
+et détachés de la paroi, ont été retirés. Le côlon de BodyParts3D est reculé de 15 mm
+pour rester derrière le muscle droit. Le corps masculin reçoit 12 pièces génitales
+(pénis, testicules, prostate, conduits et vésicules) issues de BodyParts3D male
+(CC BY 4.0), extraites par `scripts/extract-male-genitalia.py`. Toutes les mesures
+sont archivées dans `docs/analyses/anatomie-2026-11-25.json` et vérifiées par
+`npm run test:anatomie`. La couche « Grossesse » est réservée à la femme,
 masquée par défaut et désactivée pour l'homme ; elle ne modifie ni l'opacité de la peau
 ni l'état Rayon X. Voir `docs/models/multi-sources.md`.
 
