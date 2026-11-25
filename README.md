@@ -23,8 +23,9 @@ et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleu
 
 Le corps féminin est complété par des muscles faciaux, des muscles du tronc et un
 réseau nerveux périphérique issus de la référence masculine et recalés sur 13 repères
-anatomiques. La chevelure provient de `female-atlas` (MIT + CC BY 4.0) et remplace
-l'ancienne coiffure masculine ; les deux muscles `Transversus abdominis`, mal recalés
+anatomiques. La chevelure longue est générée de façon déterministe par
+`scripts/rebuild-female-supplements.py` (calotte + nappe arrière, graine fixe) ;
+les deux muscles `Transversus abdominis`, mal recalés
 et détachés de la paroi, ont été retirés. Le côlon de BodyParts3D est reculé de 15 mm
 pour rester derrière le muscle droit. Le corps masculin reçoit 12 pièces génitales
 (pénis, testicules, prostate, conduits et vésicules) issues de BodyParts3D male
@@ -80,7 +81,12 @@ relecture anatomique humaine n'est pas signée.
 - Interface responsive desktop / mobile, sans dépendance à un backend.
 - **Préférences** : thème clair / sombre / « suivre le système » (défaut) et langue
   française (défaut) / anglaise, persistées dans `localStorage`. Toutes les chaines
-  de l'interface, les noms et descriptions anatomiques sont localisés.
+  de l'interface, les noms et descriptions anatomiques sont localisés. La popup
+  affiche le nom français en titre et le nom anatomique source en sous-titre ;
+  `npm run test:labels-fr` interdit tout mot fonction anglais résiduel.
+- **Résilience du cache** : les URL de modèles portent `?v=<build>`, le service worker
+  les sert en réseau d'abord, et un manifeste périmé déclenche une erreur explicite
+  avec bouton « Vider le cache et recharger » au lieu d'un rendu corrompu.
 - **Caméra verrouillée au changement de sexe** : cible, position et zoom restent strictement
   identiques ; seul le modèle affiché change.
 

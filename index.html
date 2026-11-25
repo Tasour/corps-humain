@@ -84,8 +84,9 @@
         padding:16px 44px 16px 16px; border:1px solid var(--accent); border-radius:12px;
         background:var(--panel); box-shadow:var(--shadow); }
       #selection-popup[hidden] { display:none; }
-      #selection-popup h2 { margin:0 0 8px; font-size:15px; color:var(--accent); }
+      #selection-popup h2 { margin:0 0 4px; font-size:15px; color:var(--accent); }
       #selection-popup p { margin:8px 0 0; font-size:13px; line-height:1.45; }
+      .selection-latin { margin:0 !important; color:var(--muted); font-size:12px; font-style:italic; }
       #selection-close { position:absolute; right:8px; top:8px; width:44px; height:44px;
         min-width:44px; min-height:44px; margin:0; padding:0; border-radius:8px; font-size:18px; }
       .gesture-hint { position:absolute; left:8px; bottom:8px; margin:0; padding:4px 8px; border-radius:8px;
@@ -96,7 +97,9 @@
         #toolbar button { min-width:64px; }
         .panel { left:12px; top:8px; width:min(240px,calc(100vw - 24px)); max-height:calc(100vh - 152px); }
         #selection-popup { left:12px !important; right:12px; top:auto !important; bottom:68px; width:auto; }
-        .build { display:none; }
+        .build { display:inline-block; font-size:11px; padding:4px; max-width:60px;
+          overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        #clear-cache { width:100%; margin-top:12px; }
       }
       .skip-link { position:absolute; left:8px; top:-52px; z-index:20; padding:12px;
         min-height:44px; display:inline-flex; align-items:center;
@@ -172,6 +175,7 @@
             <option value="fr" data-i18n="languageFr">Français</option>
             <option value="en" data-i18n="languageEn">English</option>
           </select>
+          <button type="button" id="clear-cache" data-i18n="clearCache">Vider le cache et recharger</button>
         </div>
         <div id="cp-view" tabindex="0" role="application" data-i18n-attrs="aria-label:canvasLabel" aria-label="Vue 3D interactive du corps humain"></div>
         <p class="gesture-hint" data-i18n="hint">Glissez pour tourner · double-tap pour zoomer</p>
@@ -179,6 +183,7 @@
         <div id="selection-popup" hidden role="dialog" aria-modal="false" data-i18n-attrs="aria-label:popupLabel" aria-label="Détails de la structure">
           <button type="button" id="selection-close" data-i18n-attrs="aria-label:closeSelection" aria-label="Fermer la sélection">×</button>
           <h2 id="selection-name"></h2>
+          <p id="selection-latin" class="selection-latin"></p>
           <p id="selection-description"></p>
           <p id="selection-source" class="source-note"></p>
         </div>
@@ -236,7 +241,10 @@
       window.addEventListener('corps:lang', (event) => setI18nLang(event.detail.lang));
 
       const build = document.documentElement.dataset.build;
-      if (build && build !== 'DEV') document.getElementById('build-label').textContent = build;
+      if (build && build !== 'DEV') {
+        document.getElementById('build-label').textContent =
+          window.innerWidth < 600 ? build.slice(0, 7) : build;
+      }
       try {
         initCorpsViewer();
       } catch (error) {
@@ -247,21 +255,32 @@
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
       }
+      const clearButton = document.getElementById('clear-cache');
+      clearButton.addEventListener('click', async () => {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((key) => caches.delete(key)));
+        const registrations = await navigator.serviceWorker?.getRegistrations().catch(() => []) || [];
+        await Promise.all(registrations.map((registration) => registration.unregister().catch(() => {})));
+        clearButton.textContent = t('cacheCleared');
+        setTimeout(() => location.reload(true), 400);
+      });
+      window.addEventListener('corps:error', () => {
+        document.getElementById('corps-info').hidden = false;
+        clearButton.focus();
+      });
       setTimeout(async () => {
         try {
           const response = await fetch(`./index.html?check=${Date.now()}`, { cache: 'no-store' });
           const html = await response.text();
           const found = html.match(/data-build="([^"]+)"/);
-          if (found && found[1] !== build && found[1] !== 'DEV') {
-            const button = document.createElement('button');
-            button.id = 'update-btn';
-            button.type = 'button';
-            button.textContent = `Nouvelle version ${found[1]} — Recharger`;
-            button.addEventListener('click', () => location.reload(true));
-            document.getElementById('toolbar').appendChild(button);
+          if (found && found[1] !== build && found[1] !== 'DEV' &&
+              sessionStorage.getItem('corps-reloaded') !== found[1]) {
+            sessionStorage.setItem('corps-reloaded', found[1]);
+            document.getElementById('corps-info').textContent = t('newVersion');
+            location.reload(true);
           }
         } catch { /* hors ligne */ }
-      }, 8000);
+      }, 4000);
     </script>
   </body>
 </html>

@@ -5,6 +5,8 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { t, getI18nLang } from './i18n.js';
 
+const BUILD = document.documentElement.dataset.build || 'DEV';
+const versioned = (url) => `${url}${url.includes('?') ? '&' : '?'}v=${encodeURIComponent(BUILD)}`;
 const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves', 'cosmetic'];
 const REFERENCE_LAYERS = ['pregnancy'];
 const ALL_LAYERS = [...LAYERS, ...REFERENCE_LAYERS];
@@ -221,6 +223,7 @@ export function initCorpsViewer() {
   const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
   const popup = document.getElementById('selection-popup');
   const popupName = document.getElementById('selection-name');
+  const popupLatin = document.getElementById('selection-latin');
   const popupDesc = document.getElementById('selection-description');
   const popupSource = document.getElementById('selection-source');
   let selection = null;
@@ -293,6 +296,7 @@ export function initCorpsViewer() {
   }
   const localizedField = (entry, field, fallback) => {
     const lang = getI18nLang();
+    if (field === 'latin') return entry?.name_latin || entry?.name || fallback || '';
     return entry?.[`${field}_${lang}`] || entry?.[field] || fallback || '';
   };
   const refreshSourceNote = () => {
@@ -309,6 +313,7 @@ export function initCorpsViewer() {
     if (!selection) return;
     const entry = selection.mesh?.userData?.selectionEntry || {};
     popupName.textContent = localizedField(entry, 'name', 'Structure');
+    if (popupLatin) popupLatin.textContent = localizedField(entry, 'latin', '');
     popupDesc.textContent = localizedField(entry, 'description', t('fallbackDescription'));
     popupSource.textContent = [entry.source, entry.license, localizedField(entry, 'origin', '')]
       .filter(Boolean).join(' · ');
@@ -324,6 +329,7 @@ export function initCorpsViewer() {
     outlineGroup.add(outline);
     const entry = mesh.userData.selectionEntry || {};
     popupName.textContent = localizedField(entry, 'name', mesh.userData.selectionLabel || 'Structure');
+    if (popupLatin) popupLatin.textContent = localizedField(entry, 'latin', '');
     popupDesc.textContent = localizedField(entry, 'description', t('fallbackDescription'));
     popupSource.textContent = [entry.source, entry.license, localizedField(entry, 'origin', '')]
       .filter(Boolean).join(' · ');
@@ -479,9 +485,27 @@ export function initCorpsViewer() {
     controls.update(); need = true;
   };
 
+  const validateGeometry = (geo, label) => {
+    const pos = geo.getAttribute('position');
+    if (!pos || pos.count === 0) throw new Error(`Géométrie vide : ${label}`);
+    const idx = geo.getIndex();
+    if (!idx) return;
+    for (const value of idx.array) {
+      if (!Number.isInteger(value) || value < 0 || value >= pos.count) {
+        throw new Error(`Indice invalide (${value}) dans ${label} — cache ou manifeste périmé`);
+      }
+    }
+  };
+  const assertRange = (part, buffer, label) => {
+    const end = Math.max(part.positions + part.vertexCount * 12,
+      part.normals + part.vertexCount * 12, part.indices + part.indexCount * 4);
+    if (end > buffer.byteLength) {
+      throw new Error(`Offsets hors du chunk pour ${label} — cache ou manifeste périmé`);
+    }
+  };
   async function chunkFetch(chunk) {
     const use = !!chunk.gzip && typeof DecompressionStream !== 'undefined';
-    const r = await fetch(use ? chunk.gzip : chunk.url);
+    const r = await fetch(use ? versioned(chunk.gzip) : versioned(chunk.url));
     if (!r.ok) throw new Error('chunk absent');
     let buf = await r.arrayBuffer();
     const h = new Uint8Array(buf, 0, 2);
@@ -546,7 +570,7 @@ export function initCorpsViewer() {
     return g;
   }
   async function buildChunk(cfg) {
-    const at = await (await fetch(cfg.dir + cfg.manifest)).json();
+    const at = await (await fetch(versioned(cfg.dir + cfg.manifest))).json();
     femaleManifest = at;
     const g = new THREE.Group();
     const by = at.chunks.map(() => []);
@@ -577,6 +601,7 @@ export function initCorpsViewer() {
             geo.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(buf, p.normals, p.vertexCount * 3), 3, true));
             geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, p.indices, p.indexCount), 1));
           }
+          validateGeometry(geo, p.name);
           // Le côlon de BodyParts3D est trop antérieur : il passe devant la
           // paroi musculaire. On le recule de 15 mm pour le loger derrière le
           // muscle droit, sans toucher aux autres organes.
@@ -901,17 +926,19 @@ export function initCorpsViewer() {
   });
 
   async function buildMaleGenitalia() {
-    const at = await (await fetch(MALE_GENITALIA.dir + MALE_GENITALIA.manifest)).json();
+    const at = await (await fetch(versioned(MALE_GENITALIA.dir + MALE_GENITALIA.manifest))).json();
     const buffer = await chunkFetch({ url: MALE_GENITALIA.dir + MALE_GENITALIA.chunk.replace('.gz', ''),
       gzip: MALE_GENITALIA.dir + MALE_GENITALIA.chunk });
     const g = new THREE.Group();
     for (const p of at.parts) {
+      assertRange(p, buffer, p.id);
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(
         new Float32Array(buffer, p.positions, p.vertexCount * 3), 3));
       geo.setAttribute('normal', new THREE.BufferAttribute(
         new Float32Array(buffer, p.normals, p.vertexCount * 3), 3));
       geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buffer, p.indices, p.indexCount), 1));
+      validateGeometry(geo, p.id);
       geo.computeBoundingSphere();
       const m = new THREE.Mesh(geo, mats.get('organs'));
       m.name = p.id;
@@ -930,17 +957,19 @@ export function initCorpsViewer() {
   }
 
   async function buildSupplements() {
-    const at = await (await fetch(SUPPLEMENTS.dir + SUPPLEMENTS.manifest)).json();
+    const at = await (await fetch(versioned(SUPPLEMENTS.dir + SUPPLEMENTS.manifest))).json();
     const buffer = await chunkFetch({ url: SUPPLEMENTS.dir + SUPPLEMENTS.chunk.replace('.gz', ''),
       gzip: SUPPLEMENTS.dir + SUPPLEMENTS.chunk });
     const g = new THREE.Group();
     for (const p of at.parts) {
+      assertRange(p, buffer, p.name);
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(
         new Float32Array(buffer, p.positions, p.vertexCount * 3), 3));
       geo.setAttribute('normal', new THREE.BufferAttribute(
         new Float32Array(buffer, p.normals, p.vertexCount * 3), 3));
       geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buffer, p.indices, p.indexCount), 1));
+      validateGeometry(geo, p.name);
       geo.computeBoundingSphere();
       const m = new THREE.Mesh(geo, mats.get(p.layer === 'cosmetic' ? 'hair' : p.layer));
       m.name = p.name;
@@ -978,7 +1007,7 @@ export function initCorpsViewer() {
   async function loadDescriptions(which) {
     const source = which === 'male' ? 'seema' : 'bodyatlas';
     if (descriptionSources.has(source)) return;
-    const response = await fetch(`./docs/models/selection-descriptions-${source}.json`);
+    const response = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json`));
     if (!response.ok) return;
     const data = await response.json();
     descriptions[source] = data.descriptions?.[source] || {};
@@ -1245,5 +1274,10 @@ export function initCorpsViewer() {
         navigator.serviceWorker?.controller?.postMessage({ type: 'PRECACHE_MODELS', urls });
       })
       .catch(() => {});
-  }, { timeout: 4000 }));
+  }, { timeout: 4000 })).catch((error) => {
+    const info = document.getElementById('corps-info');
+    info.textContent = `${t('modelError')} — ${error.message}`;
+    window.dispatchEvent(new CustomEvent('corps:error', { detail: { message: error.message } }));
+    console.error(error);
+  });
 }

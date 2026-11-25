@@ -116,7 +116,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* GLB versionnés (?v=BUILD_ID) et assets hachés : cache d'abord. */
+  /* Chunks de modèles : réseau d'abord. Leur URL porte ?v=BUILD_ID, donc un
+   * ancien manifeste ne peut jamais être associé à un binaire plus récent. */
+  if (url.searchParams.has('v') || /\.(bin|bin\.gz|wasm)$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok && response.type === 'basic') {
+            const copy = response.clone();
+            caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request)),
+    );
+    return;
+  }
+
+  /* Assets hachés : cache d'abord. */
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;

@@ -37,23 +37,77 @@ def decode(part):
 
 
 def female_hair():
-    doc = json.loads((ROOT / 'docs/models/contests/female-atlas/atlas.json').read_text())
-    part = next(p for p in doc['parts'] if p['name'] == 'Hair of head')
-    chunk = doc['chunks'][part['chunk']]['gzip'].lstrip('./')
-    src = gzip.decompress((ROOT / chunk).read_bytes())
-    n = part['vertexCount']
-    pos = struct.unpack_from(f'<{n * 3}f', src, part['positions'])
-    nor = struct.unpack_from(f'<{n * 3}h', src, part['normals'])
-    idx = struct.unpack_from(f'<{part["indexCount"]}I', src, part['indices'])
-    # Recalage : la coiffure d'origine est enfouie dans le crâne. On l'élargit
-    # légèrement et on l'étire en profondeur autour du centre du crâne pour
-    # faire affleurer les mèches sans déplacer le sommet.
-    centered = []
-    for i in range(0, len(pos), 3):
-        x, y, z = pos[i], pos[i + 1], pos[i + 2]
-        centered.extend((x * 1.16, y, -0.08 + (z + 0.08) * 1.9 + 0.03))
-    bounds = part['bounds']
-    return centered, [v / 32767.0 for v in nor], list(idx), bounds
+    """Chevelure longue déterministe : calotte lisse + nappe arrière.
+
+    Géométrie originale générée à partir des mensurations du crâne féminin.
+    Aucun modèle tiers, aucune graine aléatoire.
+    """
+    import math
+
+    cx, cy, cz = 0.0, 1.555, -0.045
+    rx, ry, rz = 0.088, 0.112, 0.098
+    off = 0.007
+    pos, idx = [], []
+
+    # Calotte : hémisphère tronqué au-dessus du front.
+    nphi, ntheta = 96, 14
+    for i in range(ntheta + 1):
+        theta = 1.35 * i / ntheta
+        for j in range(nphi):
+            phi = 2 * math.pi * j / nphi
+            s = math.sin(theta)
+            pos.append((cx + (rx + off) * s * math.cos(phi),
+                        cy + (ry + off) * math.cos(theta),
+                        cz + (rz + off) * s * math.sin(phi)))
+    for i in range(ntheta):
+        for j in range(nphi):
+            a = i * nphi + j
+            b = i * nphi + (j + 1) % nphi
+            c = (i + 1) * nphi + j
+            d = (i + 1) * nphi + (j + 1) % nphi
+            idx.extend((a, c, b, b, c, d))
+
+    # Nappe arrière : surface lisse qui descend jusqu'aux épaules.
+    na = 64
+    nrows = 18
+    base = len(pos)
+    for i in range(nrows + 1):
+        t = i / nrows
+        y = 1.61 - 0.35 * t
+        rx_row = 0.09 + 0.07 * t
+        rz_row = 0.10 + 0.02 * t
+        zc = cz - 0.01 * t
+        for j in range(na + 1):
+            a = -1.8 + 3.6 * j / na
+            wave = 0.003 * math.sin(a * 3 + t * 2)
+            x = rx_row * math.sin(a) + wave * math.sin(a)
+            z = zc - rz_row * math.cos(a) + wave * math.cos(a)
+            pos.append((x, y, z))
+    for i in range(nrows):
+        for j in range(na):
+            a = base + i * (na + 1) + j
+            b = a + 1
+            c = a + na + 1
+            d = c + 1
+            idx.extend((a, c, b, b, c, d))
+
+    # Normales accumulées à partir des faces.
+    nor = [[0.0, 0.0, 0.0] for _ in pos]
+    for a, b, c in zip(idx[0::3], idx[1::3], idx[2::3]):
+        pa, pb, pc = pos[a], pos[b], pos[c]
+        u = [pb[i] - pa[i] for i in range(3)]
+        v = [pc[i] - pa[i] for i in range(3)]
+        n = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]]
+        for vi in (a, b, c):
+            for i in range(3):
+                nor[vi][i] += n[i]
+    for n in nor:
+        length = math.sqrt(sum(v * v for v in n)) or 1.0
+        for i in range(3):
+            n[i] /= length
+
+    bounds = [[min(p[i] for p in pos), max(p[i] for p in pos)] for i in range(3)]
+    return [v for p in pos for v in p], [v for n in nor for v in n], idx, bounds
 
 
 hair_pos, hair_nor, hair_idx, hair_bounds = female_hair()

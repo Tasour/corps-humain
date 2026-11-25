@@ -66,6 +66,9 @@ const DICT = {
     showFemale: 'Afficher la femme',
     showMale: 'Afficher l’homme',
     loadingModel: 'Chargement du modèle…',
+    clearCache: 'Vider le cache et recharger',
+    cacheCleared: 'Cache vidé, rechargement…',
+    newVersion: 'Nouvelle version disponible — rechargement',
   },
   en: {
     documentTitle: 'CORPS — Interactive human anatomy',
@@ -132,6 +135,9 @@ const DICT = {
     showFemale: 'Show the female body',
     showMale: 'Show the male body',
     loadingModel: 'Loading model…',
+    clearCache: 'Clear cache and reload',
+    cacheCleared: 'Cache cleared, reloading…',
+    newVersion: 'New version available — reloading',
   },
 };
 
