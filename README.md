@@ -23,8 +23,9 @@ et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleu
 
 Le corps féminin est complété par des muscles faciaux, des muscles du tronc, des
 cheveux et un réseau nerveux périphérique issus de la référence masculine et
-recalés sur 13 repères anatomiques. La couche « Grossesse — référence » est masquée
-par défaut. Voir `docs/models/multi-sources.md`.
+recalés sur 13 repères anatomiques. La couche « Grossesse » est réservée à la femme,
+masquée par défaut et désactivée pour l'homme ; elle ne modifie ni l'opacité de la peau
+ni l'état Rayon X. Voir `docs/models/multi-sources.md`.
 
 Un clic ou un tap sélectionne le premier maillage touché par le rayon issu de la caméra.
 Une popup affiche alors le nom de la structure, une courte description sourcée et sa licence,
@@ -70,6 +71,11 @@ relecture anatomique humaine n'est pas signée.
 - Jeux pédagogiques : **pathologies simulées** et **chasse aux organes** (5 modes).
 - **Installable sur mobile (PWA)** : icône dédiée, plein écran et accès hors ligne.
 - Interface responsive desktop / mobile, sans dépendance à un backend.
+- **Préférences** : thème clair / sombre / « suivre le système » (défaut) et langue
+  française (défaut) / anglaise, persistées dans `localStorage`. Toutes les chaines
+  de l'interface, les noms et descriptions anatomiques sont localisés.
+- **Caméra verrouillée au changement de sexe** : cible, position et zoom restent strictement
+  identiques ; seul le modèle affiché change.
 
 ## Lancer le projet
 
@@ -264,11 +270,18 @@ scripts/
 
 ## Sélecteur de couches
 
-Une barre d'outils à gauche ouvre des panneaux flottants : concours homme (3 candidats), concours femme (6 candidates), couches et information. Les deux corps peuvent être affichés côte à côte sur des sols bleu et rose. Le sexe réel de chaque source est audité dans `docs/analyses/audit-sexes-sources.md` : `wangzh` est mixte ♂/♀, `nqwrc` est masculin et `seema` est générique. La navigation suit les règles universelles souris, tactile et clavier décrites dans `docs/design/navigation-3d.md`. Six couches sont activables individuellement par checkbox (47 muscles chez l'homme, organes faciaux inclus) :
-peau, muscles, squelette, organes, vaisseaux, nerfs. Toutes sont cochées par
-défaut. Une case maîtresse « Toutes les couches » les active ou les désactive
-d'un seul geste. L'état est reflété dans l'URL (`?layers=skin,muscles`), ce qui
-rend chaque capture reproductible.
+Une barre d'outils horizontale fixe en bas de l'écran ouvre trois panneaux —
+**COUCH**, **INFO** et **REGL** — auxquels s'ajoute le bouton de bascule de sexe.
+Le sexe réel de chaque source est audité dans `docs/analyses/audit-sexes-sources.md`.
+La navigation suit les règles universelles souris, tactile et clavier décrites dans
+`docs/design/navigation-3d.md`. Sept couches sont activables individuellement par
+checkbox : peau, muscles, squelette, organes, vaisseaux, nerfs, cheveux et sourcils.
+Toutes sont cochées par défaut ; la couche « Grossesse » reste hors de la case maîtresse
+« Toutes les couches » et du préréglage Rayon X. L'état est reflété dans l'URL
+(`?layers=skin,muscles`), ce qui rend chaque capture reproductible. L'intégrité du chunk
+binaire des compléments féminins est vérifiée par `npm run test:supplements` : les offsets
+du manifeste doivent correspondre au layout `[positions][normales][indices]` et tous les
+indices doivent rester sous le nombre de sommets.
 
 ## Validation anatomique externe
 

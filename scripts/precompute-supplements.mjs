@@ -1,65 +1,60 @@
-/* Précalcule les compléments féminins dans un chunk binaire. */
+/* Précalcule les compléments féminins dans un chunk binaire.
+ *
+ * Le binaire livré est la source de vérité : il contient déjà les positions,
+ * normales et indices recalés sur la femme. Ce script ne le régénère jamais
+ * depuis buildSupplements() (qui relit le manifeste et peut propager un
+ * décalage d'offsets) ; il vérifie les offsets et localise les entrées.
+ */
 import fs from 'node:fs';
 import zlib from 'node:zlib';
-import { chromium } from 'playwright';
+import { execFileSync } from 'node:child_process';
 
-const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 800, height: 600 } });
-await page.goto('http://127.0.0.1:8901/?sex=m', { waitUntil: 'domcontentloaded' });
-await page.waitForFunction(() => window.__corps && /visible/.test(
-  document.getElementById('corps-info').textContent), { timeout: 120000 });
+const DIR = 'docs/models/body-atlas/';
+const MANIFEST = DIR + 'female-supplements.json';
+const CHUNK = DIR + 'female-supplements.bin.gz';
 
-const json = await page.evaluate(async () => {
-  const d = window.__corps.debug;
-  const at = await (await fetch('./docs/models/body-atlas/atlas-female-meshopt.json')).json();
-  d.setFemaleManifest(at);
-  const group = await d.buildSupplements();
-  const parts = [];
-  group.traverse((o) => {
-    if (!o.isMesh) return;
-    const pos = o.geometry.attributes.position.array;
-    const nor = o.geometry.attributes.normal.array;
-    const idx = o.geometry.index.array;
-    parts.push({
-      name: o.name,
-      layer: o.userData.layer,
-      label: o.userData.selectionLabel,
-      entry: o.userData.selectionEntry,
-      positions: Array.from(pos),
-      normals: Array.from(nor),
-      indices: Array.from(idx),
-    });
-  });
-  return { count: group.userData.count, alignment: group.userData.facialAlignment, parts };
-});
-await browser.close();
+const localize = (entry) => JSON.parse(execFileSync('python3', ['-c', `
+import json,sys
+sys.path.insert(0,'/home/tasour/corps-humain/scripts')
+from descriptions_i18n import add_localization
+entry=json.loads(sys.stdin.read())
+add_localization(entry)
+print(json.dumps(entry,ensure_ascii=False))
+`, '-'], { input: JSON.stringify(entry), encoding: 'utf8' }));
 
+const manifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
+const gz = fs.readFileSync(CHUNK);
+const raw = zlib.gunzipSync(gz);
+
+/* Offsets canoniques : [positions][normales][indices], alignés sur 4 octets. */
 let offset = 0;
-const blobs = [];
-const manifest = { version: 1, format: 'raw', alignment: json.alignment, parts: [] };
-for (const part of json.parts) {
-  const positions = new Float32Array(part.positions);
-  const normals = new Float32Array(part.normals);
-  const indices = new Uint32Array(part.indices);
-  const p = {
-    name: part.name, layer: part.layer, label: part.label, entry: part.entry,
-    positions: offset, normals: 0, indices: 0,
-    vertexCount: positions.length / 3, indexCount: indices.length,
-  };
-  const pad = () => {
-    const r = offset % 4;
-    if (r) { blobs.push(Buffer.alloc(4 - r)); offset += 4 - r; }
-  };
+const pad = () => { const r = offset % 4; if (r) { offset += 4 - r; } };
+let repaired = 0;
+for (const part of manifest.parts) {
   pad();
-  p.normals = offset; blobs.push(Buffer.from(positions.buffer)); offset += positions.byteLength; pad();
-  p.indices = offset; blobs.push(Buffer.from(normals.buffer)); offset += normals.byteLength; pad();
-  blobs.push(Buffer.from(indices.buffer)); offset += indices.byteLength; pad();
-  manifest.parts.push(p);
+  const positions = offset;
+  offset += part.vertexCount * 3 * 4;
+  pad();
+  const normals = offset;
+  offset += part.vertexCount * 3 * 4;
+  pad();
+  const indices = offset;
+  offset += part.indexCount * 4;
+  pad();
+  if (part.positions !== positions || part.normals !== normals || part.indices !== indices) {
+    repaired++;
+  }
+  part.positions = positions;
+  part.normals = normals;
+  part.indices = indices;
 }
-const raw = Buffer.concat(blobs);
-const gz = zlib.gzipSync(raw, { level: 9 });
-fs.writeFileSync('docs/models/body-atlas/female-supplements.json', JSON.stringify(manifest));
-fs.writeFileSync('docs/models/body-atlas/female-supplements.bin.gz', gz);
-console.log('parts', json.count, 'raw', (raw.length / 1e6).toFixed(2), 'Mo',
-  'gz', (gz.length / 1e6).toFixed(2), 'Mo',
-  'alignment', json.alignment.length);
+if (offset !== raw.length) {
+  throw new Error(`Taille manifeste incompatible : ${offset} octets attendus, ${raw.length} présents`);
+}
+for (const part of manifest.parts) {
+  if (part.entry) part.entry = localize(part.entry);
+}
+fs.writeFileSync(MANIFEST, JSON.stringify(manifest));
+
+console.log('parts', manifest.parts.length, 'raw', (raw.length / 1e6).toFixed(2), 'Mo',
+  'gz', (gz.length / 1e6).toFixed(2), 'Mo', 'offsets réparés', repaired);

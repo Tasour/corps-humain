@@ -20,7 +20,7 @@ assert.equal((trunk.match(/'/g) || []).length, 10, "5 tokens de tronc attendus")
 assert.ok(js.includes('female-supplements.bin.gz'), "chunk des compléments absent");
 assert.ok(js.includes("référence masculine adaptée"), "provenance des compléments absente");
 assert.ok(js.includes("RENDER_ORDER"), "ordre de rendu des couches absent");
-assert.ok(js.includes("xray = true"), "mode Rayon X par défaut absent");
+assert.ok(js.includes("xray = false"), "peau opaque par défaut absente");
 const supplements = JSON.parse(readFileSync(root +
   "docs/models/body-atlas/female-supplements.json", "utf8"));
 assert.ok(supplements.parts.some((p) => p.layer === 'muscles' && /frontalis/i.test(p.name)),

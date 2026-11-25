@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { t, getI18nLang } from './i18n.js';
 
 const LAYERS = ['skin', 'muscles', 'skeleton', 'organs', 'vessels', 'nerves', 'cosmetic'];
 const REFERENCE_LAYERS = ['pregnancy'];
@@ -98,8 +99,8 @@ export function initCorpsViewer() {
   const mats = new Map();
   const extraMats = new Map();
   const colors = { skin: '#bc9c7e', muscles: '#a9584c', skeleton: '#e4dcc0',
-    organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f',
-    cosmetic: '#2b211c', hair: '#2b211c' };
+    organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f', pregnancy: '#bb9068',
+    cosmetic: '#4a3529', hair: '#4a3529' };
   for (const [k, c] of Object.entries(colors)) {
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
@@ -109,13 +110,21 @@ export function initCorpsViewer() {
       '#include <color_fragment>',
       '#include <color_fragment>\n diffuseColor.rgb *= 0.975 + 0.025 * sin(gl_FragCoord.x * 0.07 + gl_FragCoord.y * 0.11);');
   };
-  let xray = true;
+  let xray = false;
   const xrayButton = document.getElementById('cp-preset-xray');
   const setXray = (on) => {
     xray = on;
     xrayButton.setAttribute('aria-pressed', String(on));
   };
-  setXray(true);
+  setXray(false);
+  const syncSceneTheme = () => {
+    const theme = document.documentElement.dataset.theme;
+    const dark = theme === 'dark' || (theme !== 'light' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+    scene.background.set(dark ? '#161a20' : '#e9edf1');
+  };
+  syncSceneTheme();
+  window.addEventListener('corps:theme', syncSceneTheme);
   const matFor = (hex) => {
     if (!extraMats.has(hex)) extraMats.set(hex, new THREE.MeshStandardMaterial({
       color: new THREE.Color(hex), roughness: 0.62 }));
@@ -135,10 +144,10 @@ export function initCorpsViewer() {
   let pivotBody = 'both';
   let activeSex = 'male';
   const pivotIndicator = document.getElementById('pivot-indicator');
-  const PIVOT_LABELS = { both: 'Pivot : ensemble', male: 'Pivot : homme',
-    female: 'Pivot : femme', item: 'Pivot : structure' };
+  const PIVOT_KEYS = { both: 'pivotBoth', male: 'pivotMale',
+    female: 'pivotFemale', item: 'pivotItem' };
   const updatePivotIndicator = () => {
-    if (pivotIndicator) pivotIndicator.textContent = PIVOT_LABELS[pivotBody] || PIVOT_LABELS.both;
+    if (pivotIndicator) pivotIndicator.textContent = t(PIVOT_KEYS[pivotBody] || 'pivotBoth');
   };
   const bodyFromObject = (object) => {
     let cur = object;
@@ -167,18 +176,16 @@ export function initCorpsViewer() {
   const sexButton = document.getElementById('sex-toggle');
   const updateSexButton = () => {
     if (!sexButton) return;
-    sexButton.setAttribute('aria-label', activeSex === 'male'
-      ? 'Sexe actif : homme. Cliquer pour afficher la femme'
-      : 'Sexe actif : femme. Cliquer pour afficher l’homme');
+    sexButton.setAttribute('aria-label', t(activeSex === 'male' ? 'activeMale' : 'activeFemale'));
     sexButton.setAttribute('aria-pressed', String(activeSex === 'female'));
-    sexButton.title = activeSex === 'male' ? 'Afficher la femme' : 'Afficher l’homme';
+    sexButton.title = t(activeSex === 'male' ? 'showFemale' : 'showMale');
   };
   const setActiveSex = async (which) => {
     const requested = which === 'female' ? 'female' : 'male';
     setSexLoading(true);
     clearTimeout(sexWarningTimer);
     sexWarningTimer = setTimeout(() => setSexLoading(false), 4000);
-    await activate(requested);
+    await activate(requested, false);
     clearTimeout(sexWarningTimer);
     setSexLoading(false);
     writeUrl();
@@ -279,6 +286,29 @@ export function initCorpsViewer() {
     overlay.userData.outlineKind = 'fresnel';
     return overlay;
   }
+  const localizedField = (entry, field, fallback) => {
+    const lang = getI18nLang();
+    return entry?.[`${field}_${lang}`] || entry?.[field] || fallback || '';
+  };
+  const refreshSourceNote = () => {
+    document.querySelector('.source-label').textContent = t('champions');
+    document.getElementById('source-sexe-note').textContent = t('sourceNote', {
+      male: MALE.label, maleLicense: MALE.license,
+      female: FEMALE.label, femaleLicense: FEMALE.license, note: t('femaleNote'),
+    });
+  };
+  const refreshLocale = () => {
+    updatePivotIndicator();
+    updateSexButton();
+    refreshSourceNote();
+    if (!selection) return;
+    const entry = selection.mesh?.userData?.selectionEntry || {};
+    popupName.textContent = localizedField(entry, 'name', 'Structure');
+    popupDesc.textContent = localizedField(entry, 'description', t('fallbackDescription'));
+    popupSource.textContent = [entry.source, entry.license, localizedField(entry, 'origin', '')]
+      .filter(Boolean).join(' · ');
+  };
+  window.addEventListener('corps:lang', refreshLocale);
   function select(mesh, clientX, clientY) {
     clearOutline();
     scene.updateMatrixWorld(true);
@@ -288,9 +318,10 @@ export function initCorpsViewer() {
     outline.matrixWorldNeedsUpdate = true;
     outlineGroup.add(outline);
     const entry = mesh.userData.selectionEntry || {};
-    popupName.textContent = entry.name || mesh.userData.selectionLabel || 'Structure';
-    popupDesc.textContent = entry.description || 'Structure anatomique référencée dans la source.';
-    popupSource.textContent = [entry.source, entry.license, entry.origin].filter(Boolean).join(' · ');
+    popupName.textContent = localizedField(entry, 'name', mesh.userData.selectionLabel || 'Structure');
+    popupDesc.textContent = localizedField(entry, 'description', t('fallbackDescription'));
+    popupSource.textContent = [entry.source, entry.license, localizedField(entry, 'origin', '')]
+      .filter(Boolean).join(' · ');
     const section = host.parentElement.getBoundingClientRect();
     const x = Math.min(clientX - section.left + 12, section.width - 300);
     const y = Math.min(clientY - section.top + 12, section.height - 180);
@@ -370,11 +401,27 @@ export function initCorpsViewer() {
     if (maleModel) maleModel.visible = activeSex === 'male';
     if (femaleModel) femaleModel.visible = activeSex === 'female';
     if (supplements) supplements.visible = activeSex === 'female';
-    const skin = mats.get('skin'); skin.transparent = xray; skin.opacity = xray ? 0.16 : 1; skin.depthWrite = !xray;
+    const skin = mats.get('skin');
+    skin.transparent = xray; skin.opacity = xray ? 0.16 : 1;
+    skin.depthWrite = !xray; skin.side = xray ? THREE.FrontSide : THREE.DoubleSide;
+    skin.needsUpdate = true;
     const muscle = mats.get('muscles'); muscle.transparent = xray; muscle.opacity = xray ? 0.6 : 1; muscle.depthWrite = !xray;
+    const hair = mats.get('hair'); hair.transparent = xray; hair.opacity = xray ? 0.55 : 1; hair.depthWrite = !xray;
     if (window.__corps) window.__corps.activeLayers = [...active];
-    document.getElementById('corps-info').textContent = `${n} maillage(s) visible(s)`;
+    document.getElementById('corps-info').textContent = t('meshesVisible', { n });
     need = true;
+  };
+  const updateLayerAvailability = () => {
+    const pregnancy = document.getElementById('cp-couche-pregnancy');
+    if (!pregnancy) return;
+    const available = activeSex === 'female';
+    pregnancy.disabled = !available;
+    pregnancy.setAttribute('aria-disabled', String(!available));
+    if (!available && pregnancy.checked) {
+      pregnancy.checked = false;
+      apply();
+      writeUrl();
+    }
   };
   const fitView = () => {
     const b = bodyBox();
@@ -911,7 +958,7 @@ export function initCorpsViewer() {
       if (which === 'male') {
         const model = await buildGlbSet(MALE);
         model.userData.source = 'seema';
-        model.position.x = -0.45;
+        model.position.x = 0;
         batchModel(model);
         model.visible = activeSex === 'male';
         bodies.add(model);
@@ -921,7 +968,7 @@ export function initCorpsViewer() {
       }
       const model = await buildChunk(FEMALE);
       model.userData.source = 'bodyatlas';
-      model.position.x = 0.45;
+      model.position.x = 0;
       batchModel(model);
       model.visible = activeSex === 'female';
       bodies.add(model);
@@ -929,7 +976,7 @@ export function initCorpsViewer() {
       applyEntries(model);
       const extra = await buildSupplements();
       extra.userData.source = 'seema';
-      extra.position.x = 0.45;
+      extra.position.x = 0;
       extra.visible = activeSex === 'female';
       batchModel(extra);
       bodies.add(extra);
@@ -956,7 +1003,7 @@ export function initCorpsViewer() {
         buildSupplements, setFemaleManifest: (data) => { femaleManifest = data; } },
     };
   };
-  async function activate(which) {
+  async function activate(which, fit = true) {
     const myToken = ++token;
     await loadDescriptions(which);
     await loadModel(which);
@@ -967,14 +1014,13 @@ export function initCorpsViewer() {
     femaleModel = modelCache.get('female') || null;
     supplements = modelCache.get('supplements') || null;
     ensureApi();
-    document.querySelector('.source-label').textContent = 'Champions ♂/♀';
-    document.getElementById('source-sexe-note').textContent =
-      `Homme : ${MALE.label} (${MALE.license}) · Femme : ${FEMALE.label} (${FEMALE.license}) — ${FEMALE.note}. ` +
-      `Compléments : muscles faciaux, muscles du tronc, cheveux et réseau nerveux périphérique issus de la ` +
-      `référence masculine Z-Anatomy, recalés sur la femme et étiquetés comme adaptations. ` +
-      `Le clic sélectionne le premier maillage touché par le rayon ; en mode Rayon X, il peut traverser la peau translucide.`;
+    refreshSourceNote();
     clearSelection();
-    apply(); resize(); fitView(); need = true;
+    updateLayerAvailability();
+    apply(); resize();
+    if (fit) fitView();
+    else { pivotBody = which; updatePivotIndicator(); }
+    need = true;
   }
   let sexWarningTimer = 0;
   const setSexLoading = (on) => {
@@ -1083,20 +1129,20 @@ export function initCorpsViewer() {
     setActiveSex(activeSex === 'male' ? 'female' : 'male');
   });
   for (const b of boxes) b.addEventListener('change', () => {
-    setXray(false); sync(); writeUrl(); apply();
+    sync(); writeUrl(); apply();
   });
   master.addEventListener('change', () => {
     for (const b of boxes) {
       if (LAYERS.includes(b.dataset.layer)) b.checked = master.checked;
     }
-    master.indeterminate = false; setXray(false); writeUrl(); apply();
+    master.indeterminate = false; writeUrl(); apply();
   });
   const presets = {
     skin: ['skin', 'cosmetic'],
     muscles: ['muscles'],
     skeleton: ['skeleton'],
     organs: ['organs'],
-    xray: ALL_LAYERS,
+    xray: LAYERS,
   };
   const setPreset = (kind) => {
     const want = new Set(presets[kind] || []);

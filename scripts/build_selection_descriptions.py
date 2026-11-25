@@ -11,6 +11,7 @@ FEMALE_MANIFEST = f'{ROOT}/docs/models/body-atlas/atlas-female.json'
 OUT = f'{ROOT}/docs/models/selection-descriptions.json'
 sys.path.insert(0, f'{ROOT}/scripts')
 from glb_geom import load_glb  # noqa: E402
+from descriptions_i18n import add_localization, system_label  # noqa: E402
 
 
 def norm(s):
@@ -49,6 +50,7 @@ def load_seema():
                 'source': f'SeemaBansal 3d-human-body-anatomy — {fname}',
                 'license': 'CC BY-SA 4.0',
                 'origin': 'Z-Anatomy / BodyParts3D (référence masculine)',
+                'system': system_from_file(fname),
             }
             for key in [st.get('id'), st.get('medical'), st.get('common')] + list(st.get('match') or []):
                 if key:
@@ -60,6 +62,7 @@ def load_seema():
                 'source': f'SeemaBansal 3d-human-body-anatomy — {fname}',
                 'license': 'CC BY-SA 4.0',
                 'origin': 'Z-Anatomy / BodyParts3D (référence masculine)',
+                'system': system_from_file(fname),
             })
     out = {}
     models = f'{ROOT}/docs/models/forks/seema/models'
@@ -81,7 +84,10 @@ def load_seema():
                     'source': f'SeemaBansal 3d-human-body-anatomy — {g}',
                     'license': 'CC BY-SA 4.0',
                     'origin': 'Z-Anatomy / BodyParts3D (référence masculine)',
+                    'system': system_from_file(g),
                 }
+    for entry in out.values():
+        add_localization(entry)
     return out
 
 
@@ -105,6 +111,17 @@ CURATED = {
         'license': 'CC BY 4.0',
     },
 }
+
+
+def system_from_file(filename):
+    name = filename.lower()
+    for key in ('muscle', 'skeleton', 'arter', 'vein', 'nerve', 'organ', 'skin'):
+        if key in name:
+            return {
+                'muscle': 'muscular', 'skeleton': 'skeletal', 'arter': 'arterial',
+                'vein': 'venous', 'nerve': 'nervous', 'organ': 'organs', 'skin': 'skin',
+            }[key]
+    return 'organs'
 
 
 def female_origin(part_id):
@@ -145,7 +162,10 @@ def load_female_body():
                 'Body Atlas 3D — BodyParts3D 4.0 (DBCLS), recalé sur la femelle'),
             'license': curated.get('license', 'CC BY 4.0'),
             'origin': origin,
+            'system': p.get('system', 'organs'),
         }
+    for entry in out.values():
+        add_localization(entry)
     return out
 
 
