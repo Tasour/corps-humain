@@ -241,22 +241,10 @@ export function initCorpsViewer() {
    * l'enveloppe cutanée de 5 à 19 mm. On rétracte ces couches vers l'axe du
    * corps (X/Z), sans toucher à la hauteur, jusqu'à rentrer sous la peau.
    * Facteurs mesurés sur les zones crâne, avant-bras, cuisse et mollet. */
-  const FEMALE_CONTAIN = {
-    muscles: [0.76, 1, 0.76], vessels: [0.78, 1, 0.78], nerves: [0.78, 1, 0.78],
-    skeleton: [0.78, 1, 0.78], organs: [0.82, 1, 0.82], pregnancy: [0.9, 0.9, 0.4],
-  };
-  const containFemaleLayers = (...bodies) => {
-    for (const body of bodies) {
-      if (!body) continue;
-      body.traverse((o) => {
-        if (!o.isBatchedMesh) return;
-        const f = FEMALE_CONTAIN[o.userData.batchLayer];
-        if (!f) return;
-        o.scale.set(f[0], f[1], f[2]);
-        o.position.z = -0.05 * (1 - f[2]);
-      });
-    }
-  };
+  /* Les couches internes femelles (HRA) et les suppléments sont conservés dans
+   * leur repère natif : toute rétractation par couche désynchronise les os, les
+   * muscles, les vaisseaux et les organes entre eux. La propreté par défaut est
+   * assurée par la sélection des couches, pas par une déformation. */
 
   // Sélection et contour.
   const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
@@ -391,7 +379,7 @@ export function initCorpsViewer() {
        * les couches internes qui dépassent aux extrémités. Les autres couches
        * restent activables d'un geste. */
       if (activeSex === 'female') {
-        const clean = new Set(['skin', 'skeleton', 'organs', 'cosmetic']);
+        const clean = new Set(['skin', 'cosmetic']);
         for (const b of boxes) b.checked = clean.has(b.dataset.layer);
         sync();
       }
@@ -1231,7 +1219,6 @@ export function initCorpsViewer() {
       batchModel(extra);
       bodies.add(extra);
       modelCache.set('supplements', extra);
-      containFemaleLayers(model, extra);
       return model;
     })();
     loading.set(which, task);

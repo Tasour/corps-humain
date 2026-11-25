@@ -88,12 +88,13 @@ relecture anatomique humaine n'est pas signée.
   de l'interface, les noms et descriptions anatomiques sont localisés. La popup
   d'une structure n'affiche que son titre ;
   `npm run test:labels-fr` interdit tout mot fonction anglais résiduel.
-- **Contention de l'enveloppe** : les organes, muscles, vaisseaux, nerfs et le
-  squelette du modèle femelle proviennent d'une autre source que la peau et la
-  dépassaient de 5 à 19 mm. Ils sont rétractés vers l'axe du corps (facteurs
-  mesurés par zone) et vérifiés par `node scripts/verify-containment.mjs`.
-  L'affichage féminin par défaut se limite à peau, squelette, organes et cheveux ;
-  les autres couches restent activables.
+- **Cohérence du modèle femelle** : aucune couche n'est déformée. Une
+  rétractation par couche avait désynchronisé os, muscles, vaisseaux, organes et
+  peau (côtes dans les poumons, bras décalés). La correction a été retirée ;
+  `node scripts/verify-containment.mjs` vérifie l'absence de déformation,
+  l'ordre côtes > poumons et la couverture de l'occiput par les cheveux.
+  L'affichage féminin par défaut se limite à la peau et aux cheveux ; les autres
+  couches restent activables et restent alignées entre elles.
 - **Observation par région** : un double-tap ouvre la région touchée (tête, cou,
   bras, mains, torse, ventre, bassin, cuisses, jambes, pieds), en fait son propre
   centre de rotation et anime la caméra jusqu'à l'encadrement complet de la région ;

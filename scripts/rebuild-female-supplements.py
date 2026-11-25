@@ -55,7 +55,15 @@ def female_hair():
     # Coiffure source : centre x = 0, centre z ≈ 0,0145, sommet 1,6689.
     fitted = []
     for x, y, z in pos:
-        fitted.append((x * 0.9 - 0.006, y - 0.0026, (z - 0.0145) * 0.9 - 0.046))
+        x2 = x * 0.9 - 0.006
+        y2 = y - 0.0026
+        z1 = (z - 0.0145) * 0.9 - 0.046
+        # Extension vers l'arrière, dosée selon la hauteur : forte au niveau
+        # du crâne (couvre l'occiput), nulle aux épaules (évite une nappe).
+        t = max(0.0, min(1.0, (y2 - 1.38) / 0.24))
+        k = 1.0 + 0.35 * t
+        z2 = (-0.02 + (z1 + 0.02) * k - 0.005 * t) if z1 < -0.02 else z1
+        fitted.append((x2, y2, z2))
     normals = [tuple(v / (sum(c * c for c in v) ** 0.5 or 1)) for v in nor]
     bounds = [[min(p[i] for p in fitted), max(p[i] for p in fitted)] for i in range(3)]
     return [v for p in fitted for v in p], [v for n in normals for v in n], list(idx), bounds

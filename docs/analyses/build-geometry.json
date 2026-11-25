@@ -1,5 +1,5 @@
 {
- "build": "1a60e91-2026-11-25",
+ "build": "5836dd6-2026-11-25",
  "geometry": {
   "atlas-female-meshopt.json": "a8db352c5ff5b4aadc07a9d9afc20d42edd9b858079839b068ffb18d49e26378",
   "atlas-female.json": "12a1efeaed47bc34823402aa0bbdf721a51ceab565c36a3ceff30eb675685671",
@@ -51,8 +51,8 @@
   "female-meshopt-7.bin": "4abcd2c77dc1b504c8e7732e6e00b1e972392fda67c59a9d30d5633d3296ccb6",
   "female-meshopt-8.bin": "548ee2978d194049847d9652daa0a8e122e5d039e668e5fabdbd974d3a8241f6",
   "female-meshopt-9.bin": "7adb086d784d0c814acea6f515184117c09962bb302f321685179843d2623dad",
-  "female-supplements.bin.gz": "439997a66e1b6a21aeab46500fe8b43f6c9e00a04d790d6edfb7ddd9743ba2d3",
+  "female-supplements.bin.gz": "7233d3dc99e0af03077e60e39715b69e7843a1d2321859d2af85d93fc1023a13",
   "female-supplements.json": "1cf41f2d49bc5b220ea070723dde87edf0765963a1ea5357f25efc91cfa43f5a"
  },
- "combined": "04e6e462442e465f"
+ "combined": "c865f7ae5f06e334"
 }
