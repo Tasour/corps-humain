@@ -63,6 +63,15 @@ def female_hair():
         t = max(0.0, min(1.0, (y2 - 1.38) / 0.24))
         k = 1.0 + 0.35 * t
         z2 = (-0.02 + (z1 + 0.02) * k - 0.005 * t) if z1 < -0.02 else z1
+        # Le sommet du crâne reste découvert : on avance la chevelure vers
+        # l'arrière uniquement au-dessus de 1,55 pour couvrir l'occiput.
+        t2 = max(0.0, min(1.0, (y2 - 1.55) / 0.10))
+        z2 -= 0.032 * t2
+        # Enveloppe externe : la chevelure doit passer devant le scalp.
+        hx, hy, hz = 1.10, 1.02, 1.10
+        x2 = x2 * hx
+        y2 = 1.55 + (y2 - 1.55) * hy
+        z2 = -0.05 + (z2 + 0.05) * hz
         fitted.append((x2, y2, z2))
     normals = [tuple(v / (sum(c * c for c in v) ** 0.5 or 1)) for v in nor]
     bounds = [[min(p[i] for p in fitted), max(p[i] for p in fitted)] for i in range(3)]
@@ -98,7 +107,7 @@ def female_hair_procedural():
             b = i * nphi + (j + 1) % nphi
             c = (i + 1) * nphi + j
             d = (i + 1) * nphi + (j + 1) % nphi
-            idx.extend((a, c, b, b, c, d))
+            idx.extend((a, b, c, b, d, c))
 
     # Nappe arrière : surface lisse qui descend jusqu'aux épaules.
     na = 64
@@ -122,7 +131,7 @@ def female_hair_procedural():
             b = a + 1
             c = a + na + 1
             d = c + 1
-            idx.extend((a, c, b, b, c, d))
+            idx.extend((a, b, c, b, d, c))
 
     # Normales accumulées à partir des faces.
     nor = [[0.0, 0.0, 0.0] for _ in pos]
@@ -146,7 +155,7 @@ def female_hair_procedural():
 hair_pos, hair_nor, hair_idx, hair_bounds = female_hair()
 parts = []
 for part in manifest['parts']:
-    if part['name'] in DROP:
+    if part['name'] in DROP or part['name'] == 'Hair_scalp_cap':
         continue
     if part['name'] in (HAIR_OLD, 'Hair_of_head_female'):
         part['name'] = 'Hair_of_head_female'
@@ -165,6 +174,55 @@ for part in manifest['parts']:
         parts.append((part, hair_pos, hair_nor, hair_idx))
     else:
         parts.append((part, *decode(part)))
+
+def scalp_cap():
+    """Calotte chevelue qui comble le trou du sommet du crâne."""
+    import math
+
+    cx, cy, cz = 0.0, 1.55, -0.05
+    rx, ry, rz = 0.096, 0.132, 0.118
+    off = 0.004
+    pos, nor, idx = [], [], []
+    nphi, ntheta = 48, 12
+    for i in range(ntheta + 1):
+        th = 1.2 * i / ntheta
+        for j in range(nphi):
+            ph = 2 * math.pi * j / nphi
+            s = math.sin(th)
+            x = cx + (rx + off) * s * math.cos(ph)
+            y = cy + (ry + off) * math.cos(th)
+            z = cz + (rz + off) * s * math.sin(ph)
+            pos.append((x, y, z))
+            nx, ny, nz = (x - cx) / (rx * rx), (y - cy) / (ry * ry), (z - cz) / (rz * rz)
+            ln = math.sqrt(nx * nx + ny * ny + nz * nz) or 1
+            nor.append((nx / ln, ny / ln, nz / ln))
+    for i in range(ntheta):
+        for j in range(nphi):
+            a = i * nphi + j
+            b = i * nphi + (j + 1) % nphi
+            c = (i + 1) * nphi + j
+            d = (i + 1) * nphi + (j + 1) % nphi
+            idx.extend((a, b, c, b, d, c))
+    return pos, nor, idx
+
+
+cap_pos, cap_nor, cap_idx = scalp_cap()
+cap_bounds = [[min(p[i] for p in cap_pos), max(p[i] for p in cap_pos)] for i in range(3)]
+cap_part = {
+    'name': 'Hair_scalp_cap', 'label': 'Cuir chevelu', 'layer': 'cosmetic',
+    'vertexCount': len(cap_pos), 'indexCount': len(cap_idx),
+    'bounds': cap_bounds,
+    'entry': {
+        'name': 'Scalp hair', 'name_fr': 'Cuir chevelu chevelu',
+        'name_latin': 'Scalp hair',
+        'description': 'Calotte de cuir chevelu qui comble le sommet sous la chevelure.',
+        'source': 'Généré', 'license': 'CC0', 'origin': 'généré',
+        'system': 'integumentary',
+    },
+}
+add_localization(cap_part['entry'])
+parts.append((cap_part, [v for p in cap_pos for v in p],
+              [v for n in cap_nor for v in n], cap_idx))
 
 offset = 0
 blobs = []
