@@ -1,0 +1,376 @@
+{
+ "date": "2026-11-26T00:04:11.632Z",
+ "toleranceMm": 2,
+ "sexes": {
+  "m": {
+   "zones": {
+    "head": {
+     "skin": {
+      "mn": [
+       -0.136,
+       1.44,
+       -0.107
+      ],
+      "mx": [
+       0.136,
+       1.699,
+       0.117
+      ]
+     },
+     "outsideMm": 0.7,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 0.6
+      },
+      {
+       "layer": "vessels",
+       "mm": 0.7
+      },
+      {
+       "layer": "nerves",
+       "mm": 0.1
+      },
+      {
+       "layer": "skeleton",
+       "mm": 0.7
+      },
+      {
+       "layer": "organs",
+       "mm": 0.4
+      }
+     ]
+    },
+    "forearm": {
+     "skin": {
+      "mn": [
+       -0.283,
+       0.95,
+       -0.127
+      ],
+      "mx": [
+       0.283,
+       1.2,
+       0.132
+      ]
+     },
+     "outsideMm": 0.1,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 0
+      },
+      {
+       "layer": "vessels",
+       "mm": 0
+      },
+      {
+       "layer": "nerves",
+       "mm": 0
+      },
+      {
+       "layer": "skeleton",
+       "mm": 0
+      },
+      {
+       "layer": "organs",
+       "mm": 0.1
+      }
+     ]
+    },
+    "thigh": {
+     "skin": {
+      "mn": [
+       -0.324,
+       0.45,
+       -0.119
+      ],
+      "mx": [
+       0.324,
+       0.75,
+       0.1
+      ]
+     },
+     "outsideMm": 0.1,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 0.1
+      },
+      {
+       "layer": "vessels",
+       "mm": 0.1
+      },
+      {
+       "layer": "skeleton",
+       "mm": 0.1
+      }
+     ]
+    },
+    "calf": {
+     "skin": {
+      "mn": [
+       -0.149,
+       0.1,
+       -0.118
+      ],
+      "mx": [
+       0.149,
+       0.45,
+       0.047
+      ]
+     },
+     "outsideMm": 0.2,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 0.1
+      },
+      {
+       "layer": "vessels",
+       "mm": 0.2
+      },
+      {
+       "layer": "nerves",
+       "mm": 0
+      }
+     ]
+    },
+    "foot": {
+     "skin": {
+      "mn": [
+       -0.149,
+       0,
+       -0.109
+      ],
+      "mx": [
+       0.149,
+       0.1,
+       0.146
+      ]
+     },
+     "outsideMm": 0.1,
+     "layers": [
+      {
+       "layer": "vessels",
+       "mm": 0.1
+      }
+     ]
+    }
+   },
+   "ribs": 0.142,
+   "lungs": 0.131,
+   "hair": {
+    "zmin": -0.132,
+    "zmax": 0.095
+   },
+   "drawCalls": 2,
+   "layers": [
+    "skin",
+    "cosmetic"
+   ],
+   "labels": {
+    "total": 2205,
+    "english": 0
+   },
+   "checks": {
+    "containment": true,
+    "ribsOutsideLungs": true,
+    "scalpCovered": true,
+    "labelsFrench": true,
+    "drawCalls": true
+   }
+  },
+  "f": {
+   "zones": {
+    "head": {
+     "skin": {
+      "mn": [
+       -0.096,
+       1.44,
+       -0.155
+      ],
+      "mx": [
+       0.084,
+       1.666,
+       0.064
+      ]
+     },
+     "outsideMm": 18.2,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 7.7
+      },
+      {
+       "layer": "nerves",
+       "mm": 0
+      },
+      {
+       "layer": "skeleton",
+       "mm": 18
+      },
+      {
+       "layer": "organs",
+       "mm": 18.2
+      }
+     ]
+    },
+    "forearm": {
+     "skin": {
+      "mn": [
+       -0.373,
+       0.95,
+       -0.218
+      ],
+      "mx": [
+       0.363,
+       1.2,
+       0.093
+      ]
+     },
+     "outsideMm": 23.4,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 18.5
+      },
+      {
+       "layer": "vessels",
+       "mm": 23.4
+      },
+      {
+       "layer": "nerves",
+       "mm": 3.3
+      },
+      {
+       "layer": "skeleton",
+       "mm": 15.3
+      },
+      {
+       "layer": "organs",
+       "mm": 0.1
+      }
+     ]
+    },
+    "thigh": {
+     "skin": {
+      "mn": [
+       -0.465,
+       0.45,
+       -0.201
+      ],
+      "mx": [
+       0.452,
+       0.75,
+       0.032
+      ]
+     },
+     "outsideMm": 6.9,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 0.1
+      },
+      {
+       "layer": "vessels",
+       "mm": 0.1
+      },
+      {
+       "layer": "nerves",
+       "mm": 6.9
+      },
+      {
+       "layer": "skeleton",
+       "mm": 0.1
+      },
+      {
+       "layer": "organs",
+       "mm": 0
+      }
+     ]
+    },
+    "calf": {
+     "skin": {
+      "mn": [
+       -0.201,
+       0.1,
+       -0.162
+      ],
+      "mx": [
+       0.177,
+       0.45,
+       0.009
+      ]
+     },
+     "outsideMm": 7.2,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 7.2
+      },
+      {
+       "layer": "vessels",
+       "mm": 1.6
+      },
+      {
+       "layer": "skeleton",
+       "mm": 0.1
+      }
+     ]
+    },
+    "foot": {
+     "skin": {
+      "mn": [
+       -0.205,
+       0,
+       -0.167
+      ],
+      "mx": [
+       0.181,
+       0.1,
+       0.107
+      ]
+     },
+     "outsideMm": 35.9,
+     "layers": [
+      {
+       "layer": "muscles",
+       "mm": 31.6
+      },
+      {
+       "layer": "vessels",
+       "mm": 35.9
+      },
+      {
+       "layer": "skeleton",
+       "mm": 34.9
+      }
+     ]
+    }
+   },
+   "ribs": 0.15,
+   "lungs": 0.078,
+   "hair": {
+    "zmin": -0.168,
+    "zmax": 0.064
+   },
+   "drawCalls": 2,
+   "layers": [
+    "skin",
+    "cosmetic"
+   ],
+   "labels": {
+    "total": 2534,
+    "english": 0
+   },
+   "checks": {
+    "containment": false,
+    "ribsOutsideLungs": true,
+    "scalpCovered": true,
+    "labelsFrench": true,
+    "drawCalls": true
+   }
+  }
+ }
+}

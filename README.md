@@ -93,8 +93,10 @@ relecture anatomique humaine n'est pas signée.
   peau (côtes dans les poumons, bras décalés). La correction a été retirée ;
   `node scripts/verify-containment.mjs` vérifie l'absence de déformation,
   l'ordre côtes > poumons et la couverture de l'occiput par les cheveux.
-  L'affichage féminin par défaut se limite à la peau et aux cheveux ; les autres
-  couches restent activables et restent alignées entre elles.
+  L'affichage par défaut des deux sexes se limite à la peau et aux cheveux ; les
+  autres couches restent activables. `node scripts/model-qa.mjs` mesure pour
+  chaque sexe la contention, l'ordre côtes/poumons, la couverture du scalp, les
+  noms français et les draw calls, et écrit `docs/analyses/modele-qa.json`.
 - **Observation par région** : un double-tap ouvre la région touchée (tête, cou,
   bras, mains, torse, ventre, bassin, cuisses, jambes, pieds), en fait son propre
   centre de rotation et anime la caméra jusqu'à l'encadrement complet de la région ;

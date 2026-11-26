@@ -378,11 +378,9 @@ export function initCorpsViewer() {
        * l'enveloppe contenue (peau, squelette, organes, cheveux) pour éviter
        * les couches internes qui dépassent aux extrémités. Les autres couches
        * restent activables d'un geste. */
-      if (activeSex === 'female') {
-        const clean = new Set(['skin', 'cosmetic']);
-        for (const b of boxes) b.checked = clean.has(b.dataset.layer);
-        sync();
-      }
+      const clean = new Set(['skin', 'cosmetic']);
+      for (const b of boxes) b.checked = clean.has(b.dataset.layer);
+      sync();
       return;
     }
     const want = new Set(l === 'all' ? ALL_LAYERS : l.split(','));
