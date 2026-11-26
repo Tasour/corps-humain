@@ -32,10 +32,9 @@ jobs:
           test -f dist/index.html
           test ! -f dist/v2.html
           test ! -f dist/classique.html
-          test -f dist/docs/models/forks/seema/models/skin.glb
-          test -f dist/docs/models/body-atlas/atlas-female-meshopt.json
+          test -f dist/docs/models/male/skin.glb
           test -f dist/docs/models/selection-descriptions-seema.json
-          test -f dist/docs/models/selection-descriptions-bodyatlas.json
+          test ! -f dist/docs/models/body-atlas/atlas-female-meshopt.json
           test ! -f dist/docs/models/contests/female-atlas/atlas.json
       - name: Publication sur gh-pages
         uses: peaceiris/actions-gh-pages@v3
