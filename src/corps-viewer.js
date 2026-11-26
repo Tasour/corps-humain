@@ -93,6 +93,7 @@ export function initCorpsViewer() {
   cc.minZoom = 0.5;
   cc.maxZoom = 20;
   cc.dollyToCursor = !reduced;
+  cc.dollySpeed = 1.8;
   cc.mouseButtons.LEFT = CameraControls.ACTION.ROTATE;
   cc.mouseButtons.MIDDLE = CameraControls.ACTION.TRUCK;
   cc.mouseButtons.RIGHT = CameraControls.ACTION.TRUCK;
@@ -100,6 +101,13 @@ export function initCorpsViewer() {
   cc.touches.TWO = CameraControls.ACTION.TOUCH_DOLLY_TRUCK;
   const ccTarget = () => cc.getTarget(new THREE.Vector3());
   const setLook = (pos, target) => cc.setLookAt(pos.x, pos.y, pos.z, target.x, target.y, target.z, false);
+  /* camera-controls n'expose pas de propriété zoom : on passe par zoomTo(). */
+  const setZoom = (z) => {
+    const v = Math.max(0.5, Math.min(cc.maxZoom, z));
+    cc.zoomTo(v, false);
+    camera.zoom = v;
+    camera.updateProjectionMatrix();
+  };
   const controls = {
     get target() { return ccTarget(); },
     minZoom: cc.minZoom, maxZoom: cc.maxZoom,
@@ -482,8 +490,8 @@ export function initCorpsViewer() {
     const a = (host.clientWidth || 1) / (host.clientHeight || 1);
     const span = a < 0.85 ? 1.05 : 1.12;
     const zoom = Math.min((2 * span * a) / Math.max(s.x, 0.1), (2 * span) / Math.max(s.y, 0.1)) * 0.85;
-    cc.zoom = Math.max(0.5, Math.min(4, zoom)); camera.zoom = cc.zoom;
-    camera.updateProjectionMatrix(); cc.update(1 / 60); need = true;
+    setZoom(zoom);
+    cc.update(1 / 60); need = true;
   };
   const resetView = () => {
     tween = null;
@@ -492,7 +500,8 @@ export function initCorpsViewer() {
     const c = b.isEmpty() ? new THREE.Vector3(0, 0.85, 0) : b.getCenter(new THREE.Vector3());
     setLook(new THREE.Vector3(c.x, c.y + 0.6, 4), c);
     pivotBody = activeSex; updatePivotIndicator();
-    cc.zoom = 1; camera.zoom = 1; camera.updateProjectionMatrix(); cc.update(1 / 60); need = true;
+    setZoom(1);
+    cc.update(1 / 60); need = true;
   };
   const focusPoint = (p) => {
     const off = camera.position.clone().sub(ccTarget());
@@ -528,8 +537,7 @@ export function initCorpsViewer() {
       };
       if (reduced) {
         setLook(to.position, to.target);
-        cc.zoom = to.zoom; camera.zoom = to.zoom;
-        camera.updateProjectionMatrix();
+        setZoom(to.zoom);
         cc.update(1 / 60);
       }
     }
@@ -549,15 +557,12 @@ export function initCorpsViewer() {
     const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     setLook(new THREE.Vector3().lerpVectors(tween.from.position, tween.to.position, e),
       new THREE.Vector3().lerpVectors(tween.from.target, tween.to.target, e));
-    cc.zoom = tween.from.zoom + (tween.to.zoom - tween.from.zoom) * e;
-    camera.zoom = cc.zoom;
-    camera.updateProjectionMatrix();
+    setZoom(tween.from.zoom + (tween.to.zoom - tween.from.zoom) * e);
     if (k >= 1) tween = null;
     return true;
   };
   const zoomBy = (f) => {
-    cc.zoom = Math.max(0.5, Math.min(cc.maxZoom, cc.zoom * f)); camera.zoom = cc.zoom;
-    camera.updateProjectionMatrix(); need = true;
+    setZoom(camera.zoom * f); need = true;
   };
   const orbitBy = (t, p) => {
     const t0 = ccTarget();
@@ -1224,8 +1229,7 @@ export function initCorpsViewer() {
     const p = pointFromClient(x, y) || ccTarget();
     const offset = camera.position.clone().sub(ccTarget());
     setLook(p.clone().add(offset), p);
-    cc.zoom = Math.max(0.5, Math.min(cc.maxZoom, cc.zoom * factor)); camera.zoom = cc.zoom;
-    camera.updateProjectionMatrix();
+    setZoom(camera.zoom * factor);
     pivotBody = activeSex; updatePivotIndicator();
     cc.update(1 / 60); need = true;
   };
@@ -1247,7 +1251,7 @@ export function initCorpsViewer() {
       const hit = pointFromClient(e.clientX, e.clientY);
       const key = hit ? regionAt(hit) : null;
       if (key) observe(key);
-      else zoomAtPoint(e.clientX, e.clientY, 1.5);
+      else zoomAtPoint(e.clientX, e.clientY, 2.0);
       return;
     }
     lastTap = { t: now, x: e.clientX, y: e.clientY };
@@ -1263,8 +1267,8 @@ export function initCorpsViewer() {
     switch (e.key) {
       case 'f': case 'F': fitView(); break;
       case 'r': case 'R': resetView(); break;
-      case '+': case '=': zoomBy(1.2); break;
-      case '-': case '_': zoomBy(1 / 1.2); break;
+      case '+': case '=': zoomBy(1.35); break;
+      case '-': case '_': zoomBy(1 / 1.35); break;
       case 'ArrowLeft': panBy(-0.05, 0); break;
       case 'ArrowRight': panBy(0.05, 0); break;
       case 'ArrowUp': panBy(0, 0.05); break;
