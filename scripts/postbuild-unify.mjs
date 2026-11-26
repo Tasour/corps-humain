@@ -86,7 +86,7 @@ for (const source of ["seema", "bodyatlas"]) {
 }
 for (const old of [
   "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
-  "textures", "data", "icons", "screenshots", "v2-style.css",
+  "textures", "data", "screenshots", "v2-style.css",
 ]) {
   const p = path.join(dist, old);
   if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
