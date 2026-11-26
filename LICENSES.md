@@ -69,6 +69,22 @@
 - Licence : données **CC BY-SA 4.0** via Z-Anatomy — 🟡.
 - Utilisé uniquement pour comparaison locale dans le sélecteur. Consulté le 2026-11-24.
 
+## Body Explorer — graft homme (variante `?model=v2`)
+
+- URL : https://seanwhiteconsulting.com/body-explorer.html
+- Source du modèle : https://seanwhiteconsulting.com/demo/body-explorer/ (index v2026.11.0).
+- Licence : **CC BY-SA 4.0** (structures Z-Anatomy) + **CC BY 4.0** (BodyParts3D 4.0,
+  Human Reference Atlas) + **CC0 1.0** (quelques structures procédurales) — 🟡 partage
+  identique obligatoire pour le modèle dérivé.
+- Attribution : « Z-Anatomy — The libre 3D atlas of anatomy — CC BY-SA 4.0 » ;
+  « BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0
+  International » ; « HuBMAP Human Reference Atlas, Browne & Schlehlein, CC BY 4.0 ».
+- Consulté le 2026-11-26. 134 GLB source conservés dans `docs/models/body-explorer/`
+  (md5 du lot vérifié à la source : `3eef9e6bf91c640421663334d55031da` pour Z-Anatomy.zip).
+- Modifications : translation rigide `(0 ; +78,11 ; −100,00) mm`, déquantification Float32,
+  export Draco. Couches importées : squelette, nerfs, organes. Peau, muscles et vaisseaux
+  restent ceux de la référence locale.
+
 ## 3D Anatomy — nqwrc
 
 - URL : https://github.com/nqwrc/3d-anatomy

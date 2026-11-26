@@ -171,6 +171,35 @@ chaque structure le meilleur modèle 3D (Z-Anatomy ou BodyParts3D), est fourni d
   (1 251 structures canoniques), noms TA2 français/latin, triangles, meilleur modèle
   et alternatives.
 
+### Graft homme — variante Body Explorer (`?model=v2`)
+
+Le modèle masculin accepte `?model=v2` (le champion historique reste le défaut, forçable avec
+`?model=legacy`). La variante **conserve la peau, les muscles et les 1 043 vaisseaux** de la
+référence locale et remplace trois couches par celles de
+[Body Explorer](https://seanwhiteconsulting.com/body-explorer.html) :
+
+| Couche | Avant | Après |
+|---|---:|---:|
+| Squelette + articulations | 271 | **774** |
+| Nerfs | 255 | **695** |
+| Organes + ganglions | 297 | **537** |
+| **Total** | **2 198** | **3 381** |
+
+La géométrie importée est alignée par une **translation rigide mesurée** sur 1 340 structures
+appariées : `(0 ; +78,11 ; −100,00) mm`, résidu médian **0,03 mm**, 1 332 paires sous 2 mm.
+Aucune déformation ni recalage par pièce. Les 4 muscles du pouce mal latéralisés dans la
+référence locale sont corrigés à l'affichage.
+
+Sources pré-générées dans `docs/models/body-explorer/` (134 GLB meshopt, 58 Mo) et
+`docs/models/forks/bodyexplorer/models/` (3 GLB Draco, 10,3 Mo). Pour régénérer :
+
+```bash
+npm run models:graft
+```
+
+Licences : CC BY-SA 4.0 (Z-Anatomy) + CC BY 4.0 (BodyParts3D, HuBMAP). Détails dans
+`LICENSES.md`.
+
 ### Performance et passage à l'échelle
 
 L'architecture pour afficher l'intégralité des structures sans surchauffe est décrite dans

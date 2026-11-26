@@ -34,6 +34,25 @@ const MALE = {
   files: { skin: ['skin.glb'], muscles: ['muscles.glb'], skeleton: ['skeleton.glb'],
     organs: ['organs.glb'], vessels: ['arteries.glb', 'veins.glb'], nerves: ['nerves.glb'] },
 };
+/* Variant greffé : squelette, nerfs et organes de Body Explorer (1 994 pièces),
+ * peau, muscles et vaisseaux conservés de la référence locale.
+ * Géométrie alignée par translation rigide (0, +78,11, -100,00) mm. */
+const MALE_V2 = {
+  id: 'bodyexplorer',
+  label: 'Anatomie humaine — graft Body Explorer',
+  license: 'CC BY-SA 4.0 (Z-Anatomy) + CC BY 4.0 (BodyParts3D, HuBMAP)',
+  kind: 'glbset', dir: '',
+  files: {
+    skin: ['./docs/models/forks/seema/models/skin.glb'],
+    muscles: ['./docs/models/forks/seema/models/muscles.glb'],
+    skeleton: ['./docs/models/forks/bodyexplorer/models/skeleton.glb'],
+    organs: ['./docs/models/forks/bodyexplorer/models/organs.glb'],
+    vessels: ['./docs/models/forks/seema/models/arteries.glb',
+      './docs/models/forks/seema/models/veins.glb'],
+    nerves: ['./docs/models/forks/bodyexplorer/models/nerves.glb'],
+  },
+};
+const MALE_CFG = new URLSearchParams(location.search).get('model') === 'v2' ? MALE_V2 : MALE;
 const SUPPLEMENTS = {
   dir: './docs/models/body-atlas/',
   manifest: 'female-supplements.json',
@@ -216,8 +235,8 @@ export function initCorpsViewer() {
     updateSexButton();
   };
   updatePivotIndicator();
-  let descriptions = { seema: {}, bodyatlas: {} };
-  let descAlias = { seema: {}, bodyatlas: {} };
+  let descriptions = { seema: {}, bodyatlas: {}, bodyexplorer: {} };
+  let descAlias = { seema: {}, bodyatlas: {}, bodyexplorer: {} };
   const alpha = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '').replace(/\d+$/, '');
   const buildAlias = () => {
     for (const source of Object.keys(descriptions)) {
@@ -326,7 +345,7 @@ export function initCorpsViewer() {
   const refreshSourceNote = () => {
     document.querySelector('.source-label').textContent = t('champions');
     document.getElementById('source-sexe-note').textContent = t('sourceNote', {
-      male: MALE.label, maleLicense: MALE.license,
+      male: MALE_CFG.label, maleLicense: MALE_CFG.license,
       female: FEMALE.label, femaleLicense: FEMALE.license, note: t('femaleNote'),
     });
   };
@@ -405,13 +424,22 @@ export function initCorpsViewer() {
     camera.left = -s * a; camera.right = s * a; camera.top = s; camera.bottom = -s;
     camera.updateProjectionMatrix();
   };
+  /* BodyParts3D étiquette ces 4 muscles du pouce du mauvais côté :
+   * « Left » est en X négatif, « Right » en X positif. On corrige à l'affichage. */
+  const SIDE_LABEL_FIX = {
+    'Left flexor pollicis brevis': 'Right flexor pollicis brevis',
+    'Right flexor pollicis brevis': 'Left flexor pollicis brevis',
+    'Superficial head of left flexor pollicis brevis': 'Superficial head of right flexor pollicis brevis',
+    'Superficial head of right flexor pollicis brevis': 'Superficial head of left flexor pollicis brevis',
+  };
   const mark = (o, sys, source, id, forceLayer) => {
+    const fixed = SIDE_LABEL_FIX[id] || id;
     o.userData.layer = forceLayer || FEMALE_OVERRIDES[id] || MAP[sys] || sys || 'organs';
     o.renderOrder = RENDER_ORDER[o.userData.layer] ?? 0;
     o.userData.selectionSource = source;
-    o.userData.selectionId = id || o.name;
-    o.userData.selectionLabel = id || o.name;
-    const rawId = id || o.name;
+    o.userData.selectionId = fixed || o.name;
+    o.userData.selectionLabel = fixed || o.name;
+    const rawId = fixed || o.name;
     const entry = descriptions[source]?.[rawId] || descAlias[source]?.[alpha(rawId)];
     if (entry) o.userData.selectionEntry = entry;
     return o;
@@ -1237,17 +1265,21 @@ export function initCorpsViewer() {
     });
   };
   async function loadDescriptions(which) {
-    const source = which === 'male' ? 'seema' : 'bodyatlas';
-    if (descriptionSources.has(source)) return;
-    const response = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json`));
-    if (!response.ok) return;
-    const data = await response.json();
-    descriptions[source] = data.descriptions?.[source] || {};
-    descAlias[source] = {};
-    for (const [key, value] of Object.entries(descriptions[source])) {
-      descAlias[source][alpha(key)] = value;
+    const chain = which === 'male'
+      ? (MALE_CFG === MALE_V2 ? ['seema', 'bodyexplorer'] : ['seema'])
+      : ['bodyatlas'];
+    for (const source of chain) {
+      if (descriptionSources.has(source)) continue;
+      const response = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json`));
+      if (!response.ok) continue;
+      const data = await response.json();
+      descriptions[source] = data.descriptions?.[source] || {};
+      descAlias[source] = {};
+      for (const [key, value] of Object.entries(descriptions[source])) {
+        descAlias[source][alpha(key)] = value;
+      }
+      descriptionSources.add(source);
     }
-    descriptionSources.add(source);
     for (const model of modelCache.values()) applyEntries(model);
   }
   async function loadModel(which) {
@@ -1255,8 +1287,8 @@ export function initCorpsViewer() {
     if (loading.has(which)) return loading.get(which);
     const task = (async () => {
       if (which === 'male') {
-        const model = await buildGlbSet(MALE);
-        model.userData.source = 'seema';
+        const model = await buildGlbSet(MALE_CFG);
+        model.userData.source = MALE_CFG.id;
         const genitalia = await buildMaleGenitalia();
         for (const child of [...genitalia.children]) model.add(child);
         const skinPatch = await buildMaleSkinPatch();
@@ -1496,7 +1528,7 @@ export function initCorpsViewer() {
   readUrl();
   const prefetchAssets = (which) => {
     const urls = which === 'male'
-      ? Object.values(MALE.files).flat().map((f) => MALE.dir + f)
+      ? Object.values(MALE_CFG.files).flat().map((f) => MALE_CFG.dir + f)
       : [FEMALE.dir + FEMALE.manifest];
     for (const url of urls) {
       if (!url) continue;
@@ -1514,7 +1546,7 @@ export function initCorpsViewer() {
       .then(() => {
         prefetchAssets(other);
         const urls = [
-          ...Object.values(MALE.files).flat().map((f) => MALE.dir + f),
+          ...Object.values(MALE_CFG.files).flat().map((f) => MALE_CFG.dir + f),
           FEMALE.dir + FEMALE.manifest,
           ...(femaleManifest?.chunks || []).map((c) => c.gzip || c.url),
         ];
