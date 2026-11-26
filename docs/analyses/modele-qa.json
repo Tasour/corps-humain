@@ -1,5 +1,5 @@
 {
- "date": "2026-11-26T00:04:11.632Z",
+ "date": "2026-11-26T00:34:33.807Z",
  "toleranceMm": 2,
  "sexes": {
   "m": {
@@ -196,23 +196,19 @@
        0.064
       ]
      },
-     "outsideMm": 18.2,
+     "outsideMm": 2,
      "layers": [
       {
        "layer": "muscles",
-       "mm": 7.7
+       "mm": 2
       },
       {
        "layer": "nerves",
        "mm": 0
       },
       {
-       "layer": "skeleton",
-       "mm": 18
-      },
-      {
        "layer": "organs",
-       "mm": 18.2
+       "mm": 0
       }
      ]
     },
@@ -229,23 +225,23 @@
        0.093
       ]
      },
-     "outsideMm": 23.4,
+     "outsideMm": 0.1,
      "layers": [
       {
        "layer": "muscles",
-       "mm": 18.5
+       "mm": 0.1
       },
       {
        "layer": "vessels",
-       "mm": 23.4
+       "mm": 0.1
       },
       {
        "layer": "nerves",
-       "mm": 3.3
+       "mm": 0.1
       },
       {
        "layer": "skeleton",
-       "mm": 15.3
+       "mm": 0.1
       },
       {
        "layer": "organs",
@@ -270,7 +266,7 @@
      "layers": [
       {
        "layer": "muscles",
-       "mm": 0.1
+       "mm": 0
       },
       {
        "layer": "vessels",
@@ -303,15 +299,19 @@
        0.009
       ]
      },
-     "outsideMm": 7.2,
+     "outsideMm": 0.1,
      "layers": [
       {
        "layer": "muscles",
-       "mm": 7.2
+       "mm": 0.1
       },
       {
        "layer": "vessels",
-       "mm": 1.6
+       "mm": 0.1
+      },
+      {
+       "layer": "nerves",
+       "mm": 0.1
       },
       {
        "layer": "skeleton",
@@ -332,19 +332,19 @@
        0.107
       ]
      },
-     "outsideMm": 35.9,
+     "outsideMm": 6.9,
      "layers": [
       {
        "layer": "muscles",
-       "mm": 31.6
+       "mm": 1.4
       },
       {
        "layer": "vessels",
-       "mm": 35.9
+       "mm": 6.9
       },
       {
        "layer": "skeleton",
-       "mm": 34.9
+       "mm": 6
       }
      ]
     }

@@ -97,6 +97,8 @@ relecture anatomique humaine n'est pas signée.
   autres couches restent activables. `node scripts/model-qa.mjs` mesure pour
   chaque sexe la contention, l'ordre côtes/poumons, la couverture du scalp, les
   noms français et les draw calls, et écrit `docs/analyses/modele-qa.json`.
+  Un recalage par pièce, limité aux membres et à la tête, ramène les couches
+  femelles dans l'enveloppe cutanée sans toucher au torse ni aux organes.
 - **Observation par région** : un double-tap ouvre la région touchée (tête, cou,
   bras, mains, torse, ventre, bassin, cuisses, jambes, pieds), en fait son propre
   centre de rotation et anime la caméra jusqu'à l'encadrement complet de la région ;

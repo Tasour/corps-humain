@@ -31,18 +31,26 @@ for (const sex of ['m', 'f']) {
       let out = null;
       for (const model of models) model.traverse((o) => {
         if (!o.isBatchedMesh || o.userData.batchLayer !== layer) return;
-        const a = o.geometry.getAttribute('position').array;
-        for (let i = 0; i < a.length; i += 3) {
-          const y = a[i + 1];
-          if (y < zone.y[0] || y >= zone.y[1]) continue;
-          if (!out) out = { mn: [Infinity, Infinity, Infinity], mx: [-Infinity, -Infinity, -Infinity], n: 0 };
-          out.n++;
-          for (let k = 0; k < 3; k++) {
-            const v = a[i + k];
-            if (v < out.mn[k]) out.mn[k] = v;
-            if (v > out.mx[k]) out.mx[k] = v;
+        const m = new o.matrix.constructor();
+        (o.userData.parts || []).forEach((part, idx) => {
+          o.getMatrixAt(idx, m);
+          const e = m.elements;
+          const a = part.geometry.getAttribute('position').array;
+          for (let i = 0; i < a.length; i += 3) {
+            const x = a[i], y0 = a[i + 1], z = a[i + 2];
+            const wx = e[0] * x + e[4] * y0 + e[8] * z + e[12];
+            const wy = e[1] * x + e[5] * y0 + e[9] * z + e[13];
+            const wz = e[2] * x + e[6] * y0 + e[10] * z + e[14];
+            if (wy < zone.y[0] || wy >= zone.y[1]) continue;
+            if (!out) out = { mn: [Infinity, Infinity, Infinity], mx: [-Infinity, -Infinity, -Infinity], n: 0 };
+            out.n++;
+            const w = [wx, wy, wz];
+            for (let k = 0; k < 3; k++) {
+              if (w[k] < out.mn[k]) out.mn[k] = w[k];
+              if (w[k] > out.mx[k]) out.mx[k] = w[k];
+            }
           }
-        }
+        });
       });
       return out;
     };

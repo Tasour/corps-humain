@@ -827,6 +827,73 @@ export function initCorpsViewer() {
     return model;
   }
 
+  /* Recalage par pièce, limité aux membres et à la tête : chaque pièce qui
+   * dépasse la peau de sa région est ramenée dans l'enveloppe cutanée par une
+   * transformation propre (échelle uniforme + translation), appliquée à
+   * l'instance du lot. On ne touche jamais au torse, à l'abdomen ni au bassin
+   * pour ne pas déplacer les organes. */
+  const LIMB_REGIONS = new Set(['head', 'neck', 'arms', 'hands', 'thighs', 'legs', 'feet']);
+  const alignPartsToSkin = (model, reference = model) => {
+    const batches = [];
+    model.traverse((o) => { if (o.isBatchedMesh) batches.push(o); });
+    const skinBatches = [];
+    reference.traverse((o) => { if (o.isBatchedMesh && o.userData.batchLayer === 'skin') skinBatches.push(o); });
+    if (!skinBatches.length) return;
+    const boxes = new Map();
+    const regionOf = (p) => {
+      for (const r of REGIONS) if (r.test(p.x, p.y, p.z)) return r.key;
+      return 'torso';
+    };
+    const point = new THREE.Vector3();
+    for (const sb of skinBatches) for (const part of sb.userData.parts) {
+      const a = part.geometry.getAttribute('position').array;
+      for (let i = 0; i < a.length; i += 3) {
+        point.set(a[i], a[i + 1], a[i + 2]);
+        const key = regionOf(point);
+        if (!boxes.has(key)) boxes.set(key, new THREE.Box3(point.clone(), point.clone()));
+        else boxes.get(key).expandByPoint(point);
+      }
+    }
+    const matrix = new THREE.Matrix4();
+    for (const batch of batches) {
+      const layer = batch.userData.batchLayer;
+      if (layer === 'skin' || layer === 'cosmetic') continue;
+      let touched = false;
+      batch.userData.parts.forEach((part, i) => {
+        if (!part.geometry.boundingBox) part.geometry.computeBoundingBox();
+        const b = part.geometry.boundingBox;
+        const center = b.getCenter(new THREE.Vector3());
+        const region = regionOf(center);
+        if (!LIMB_REGIONS.has(region)) return;
+        const sb = boxes.get(region);
+        if (!sb) return;
+        const bs = b.getSize(new THREE.Vector3());
+        const ss = sb.getSize(new THREE.Vector3());
+        let beyond = 0;
+        for (const k of ['x', 'y', 'z']) {
+          beyond = Math.max(beyond, sb.min[k] - b.min[k], b.max[k] - sb.max[k]);
+        }
+        if (beyond <= 0.002) return;
+        let s = 1;
+        for (const k of ['x', 'y', 'z']) {
+          if (bs[k] > 1e-6) s = Math.min(s, (ss[k] - 0.012) / bs[k]);
+        }
+        s = Math.max(0.5, Math.min(1, s)) * 0.985;
+        const t = sb.getCenter(new THREE.Vector3()).sub(center);
+        if (t.length() > 0.03) t.setLength(0.03);
+        matrix.makeScale(s, s, s);
+        matrix.setPosition((1 - s) * center.x + t.x, (1 - s) * center.y + t.y, (1 - s) * center.z + t.z);
+        batch.setMatrixAt(i, matrix);
+        touched = true;
+      });
+      if (touched) {
+        if (batch._matricesTexture) batch._matricesTexture.needsUpdate = true;
+        batch.computeBoundingBox();
+        batch.computeBoundingSphere();
+      }
+    }
+  };
+
   const normName = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   const centerOf = (bounds) => new THREE.Vector3(
     (bounds[0][0] + bounds[1][0]) / 2,
@@ -1206,6 +1273,7 @@ export function initCorpsViewer() {
       model.userData.source = 'bodyatlas';
       model.position.x = 0;
       batchModel(model);
+      alignPartsToSkin(model);
       model.visible = activeSex === 'female';
       bodies.add(model);
       modelCache.set(which, model);
@@ -1215,6 +1283,7 @@ export function initCorpsViewer() {
       extra.position.x = 0;
       extra.visible = activeSex === 'female';
       batchModel(extra);
+      alignPartsToSkin(extra, model);
       bodies.add(extra);
       modelCache.set('supplements', extra);
       return model;
