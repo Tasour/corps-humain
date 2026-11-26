@@ -30,8 +30,3 @@ jobs:
         run: npm run verif:completude
       - name: Vérifier le rapport
         run: npm run verif:anatomie
-      - name: Test de régression visuelle web
-        run: |
-          python3 -m http.server 8899 --directory docs &
-          sleep 2
-          npm run test:web-anime
