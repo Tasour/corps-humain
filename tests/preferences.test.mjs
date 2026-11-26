@@ -22,13 +22,12 @@ assert.ok(settings.includes("corps-theme") && settings.includes("corps-lang"),
 assert.ok(settings.includes("prefers-color-scheme"), "suivi du système absent");
 assert.ok(js.includes("syncSceneTheme"), "thème de la scène non synchronisé");
 assert.ok(js.includes("localizedField"), "champs localisés absents du popup");
-assert.ok(js.includes("updateLayerAvailability"), "couches par sexe absentes");
-assert.ok(js.includes("activate(requested, false)"), "recadrage au changement de sexe encore présent");
+assert.ok(js.includes("updateLayerAvailability"), "gestion des couches absente");
+assert.ok(!js.includes("activate(requested, false)"), "changement de sexe encore présent");
 assert.ok(!js.includes("position.x = 0.45"), "décalage de modèle encore présent");
 assert.ok(!js.includes("position.x = -0.45"), "décalage de modèle encore présent");
-assert.ok(js.includes("aria-disabled"), "case grossesse non désactivée proprement");
 assert.ok(!js.includes("FEMALE_CONTAIN"), "déformation par couche encore présente");
 assert.ok(!js.includes("containFemaleLayers"), "rétractation par couche encore présente");
 assert.ok(js.includes("const clean = new Set(['skin', 'cosmetic'])"),
-  "affichage féminin par défaut non nettoyé");
+  "affichage par défaut non nettoyé");
 console.log("PASS préférences, langues et caméra stable");

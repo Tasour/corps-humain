@@ -17,21 +17,12 @@ for (const layer of LAYERS) {
 }
 assert.ok(!html.includes('id="cp-couche-facial"'), "couche faciale encore séparée");
 assert.ok(!html.includes('id="cp-preset-face"'), "préréglage Visage encore présent");
-assert.ok(html.includes('id="cp-couche-pregnancy"'), "case grossesse absente");
-assert.ok(!html.includes('data-layer="pregnancy" checked'), "grossesse ne doit pas être visible par défaut");
-assert.ok(js.includes("REFERENCE_LAYERS = ['pregnancy']"), "couche de référence absente");
-assert.ok(js.includes("pregnancy: 'pregnancy'"), "mapping pregnancy absent");
 for (const id of ["cp-preset-skin", "cp-preset-muscles", "cp-preset-skeleton",
   "cp-preset-organs", "cp-preset-xray"]) {
   assert.ok(html.includes(`id="${id}"`), `préréglage ${id} absent`);
 }
-assert.ok(html.includes('id="sex-toggle"'), "bouton sexe unique absent");
-assert.ok(html.includes('id="sex-toggle" aria-label="Afficher la femme" aria-pressed="false"'),
-  "bouton sexe mal initialisé");
-assert.ok(html.includes('class="sex-card"') && html.includes('class="sex-face sex-m"')
-  && html.includes('class="sex-face sex-f"'), "carte recto-verso absente");
 assert.ok(!js.includes("groundSquare"), "carrés de sol encore présents");
-assert.ok(!html.includes('id="nav-focus-male"') && !html.includes('id="nav-focus-female"'),
+assert.ok(!html.includes('id="nav-focus-male"'),
   "anciens boutons H/F encore présents");
 assert.ok(!html.includes('id="nav-commands"'), "ancienne barre de commandes encore présente");
 assert.ok(html.includes('#toolbar { position:absolute; left:0; right:0; bottom:0;'),
@@ -40,7 +31,6 @@ assert.ok(html.includes('id="cp-preset-xray" aria-pressed="false"'), "Rayon X sa
 assert.ok(!html.includes('data-panel="concours"'), "le bouton concours doit être supprimé");
 assert.ok(!html.includes('id="panel-concours"'), "le panneau concours doit être supprimé");
 assert.ok(js.includes("id: 'seema'"), "champion homme absent");
-assert.ok(js.includes("id: 'bodyatlas'"), "championne femme absente");
 assert.ok(html.includes('id="toolbar"'), "barre d'outils absente");
 assert.ok(html.includes('id="pivot-indicator"'), "indicateur de pivot absent");
 assert.ok(js.includes("active.has(o.userData.layer)"), "bascule par couche absente");

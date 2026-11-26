@@ -2,7 +2,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import CameraControls from 'camera-controls';
+CameraControls.install({ THREE });
 import { t, getI18nLang } from './i18n.js';
 
 const BUILD = document.documentElement.dataset.build || 'DEV';
@@ -30,33 +31,9 @@ const MALE = {
   id: 'seema',
   label: '3D Human Body Anatomy',
   license: 'CC BY-SA 4.0',
-  kind: 'glbset', dir: './docs/models/forks/seema/models/',
+  kind: 'glbset', dir: './docs/models/male/',
   files: { skin: ['skin.glb'], muscles: ['muscles.glb'], skeleton: ['skeleton.glb'],
     organs: ['organs.glb'], vessels: ['arteries.glb', 'veins.glb'], nerves: ['nerves.glb'] },
-};
-/* Variant greffé : squelette, nerfs et organes de Body Explorer (1 994 pièces),
- * peau, muscles et vaisseaux conservés de la référence locale.
- * Géométrie alignée par translation rigide (0, +78,11, -100,00) mm. */
-const MALE_V2 = {
-  id: 'bodyexplorer',
-  label: 'Anatomie humaine — graft Body Explorer',
-  license: 'CC BY-SA 4.0 (Z-Anatomy) + CC BY 4.0 (BodyParts3D, HuBMAP)',
-  kind: 'glbset', dir: '',
-  files: {
-    skin: ['./docs/models/forks/seema/models/skin.glb'],
-    muscles: ['./docs/models/forks/seema/models/muscles.glb'],
-    skeleton: ['./docs/models/forks/bodyexplorer/models/skeleton.glb'],
-    organs: ['./docs/models/forks/bodyexplorer/models/organs.glb'],
-    vessels: ['./docs/models/forks/seema/models/arteries.glb',
-      './docs/models/forks/seema/models/veins.glb'],
-    nerves: ['./docs/models/forks/bodyexplorer/models/nerves.glb'],
-  },
-};
-const MALE_CFG = new URLSearchParams(location.search).get('model') === 'v2' ? MALE_V2 : MALE;
-const SUPPLEMENTS = {
-  dir: './docs/models/body-atlas/',
-  manifest: 'female-supplements.json',
-  chunk: 'female-supplements.bin.gz',
 };
 const MALE_GENITALIA = {
   dir: './docs/models/male-genitalia/',
@@ -68,14 +45,6 @@ const MALE_SKIN_PATCH = {
   manifest: 'skin-patch.json',
   chunk: 'skin-patch.bin.gz',
 };
-const FEMALE = {
-  id: 'bodyatlas',
-  label: 'Body Atlas 3D — femme',
-  license: 'CC BY 4.0',
-  note: '2 534 pièces, peau Visible Human Female, apports masculins recalés et documentés.',
-  kind: 'chunk', dir: './docs/models/body-atlas/', manifest: 'atlas-female-meshopt.json',
-};
-
 /* Compléments issus de la référence masculine : jamais fusionnés avec le HRA,
  * chaque pièce reste sélectionnable et étiquetée comme adaptation. */
 const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -100,24 +69,43 @@ export function initCorpsViewer() {
   camera.position.set(0, 1.45, 4);
   camera.lookAt(0, 0.85, 0);
   const capture = new URLSearchParams(location.search).has('capture');
-  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: capture });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  /* Palier appareil : mémoire, cœurs et user-agent. Les appareils faibles
+   * désactivent l'anticrénelage et plafonnent le DPR à 1. */
+  const lowPower = (navigator.deviceMemory > 0 && navigator.deviceMemory <= 4) ||
+    (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4) ||
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  const renderer = new THREE.WebGLRenderer({
+    antialias: !lowPower, preserveDrawingBuffer: capture, powerPreference: 'high-performance',
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 1.5));
   host.appendChild(renderer.domElement);
   scene.add(new THREE.HemisphereLight(0xffffff, 0x444455, 1.9));
   for (const [x, z, i] of [[2, 3, 2.0], [-2, -1, 0.8]]) {
     const l = new THREE.DirectionalLight(0xffffff, i);
     l.position.set(x, -2, z); scene.add(l);
   }
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 0.85, 0);
-  controls.enableDamping = !reduced;
-  controls.dampingFactor = 0.08;
-  controls.enablePan = true;
-  controls.screenSpacePanning = true;
-  controls.minZoom = 0.5;
-  controls.maxZoom = 20;
-  controls.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.PAN, RIGHT: THREE.MOUSE.PAN };
-  controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+  /* camera-controls : transitions amorties, zoom vers le curseur, truck/tour
+   * et gestes tactiles. reduced-motion supprime l'amortissement. */
+  const cc = new CameraControls(camera, renderer.domElement);
+  cc.setLookAt(0, 1.45, 0, 0, 0.85, 0, false);
+  cc.smoothTime = reduced ? 0 : 0.22;
+  cc.draggingSmoothTime = reduced ? 0 : 0.09;
+  cc.minZoom = 0.5;
+  cc.maxZoom = 20;
+  cc.dollyToCursor = !reduced;
+  cc.mouseButtons.LEFT = CameraControls.ACTION.ROTATE;
+  cc.mouseButtons.MIDDLE = CameraControls.ACTION.TRUCK;
+  cc.mouseButtons.RIGHT = CameraControls.ACTION.TRUCK;
+  cc.touches.ONE = CameraControls.ACTION.TOUCH_ROTATE;
+  cc.touches.TWO = CameraControls.ACTION.TOUCH_DOLLY_TRUCK;
+  const ccTarget = () => cc.getTarget(new THREE.Vector3());
+  const setLook = (pos, target) => cc.setLookAt(pos.x, pos.y, pos.z, target.x, target.y, target.z, false);
+  const controls = {
+    get target() { return ccTarget(); },
+    minZoom: cc.minZoom, maxZoom: cc.maxZoom,
+    update() { cc.update(1 / 60); },
+    addEventListener(type, fn) { cc.addEventListener(type === 'change' ? 'update' : type, fn); },
+  };
 
   const loader = new GLTFLoader();
   const draco = new DRACOLoader();
@@ -194,49 +182,25 @@ export function initCorpsViewer() {
   };
   const bodyFromObject = (object) => {
     let cur = object;
-    while (cur) {
-      if (cur === maleModel) return 'male';
-      if (cur === femaleModel || cur === supplements) return 'female';
-      cur = cur.parent;
-    }
+    while (cur) { if (cur === maleModel) return 'male'; cur = cur.parent; }
     return null;
   };
-  const bodyCenter = (which) => {
-    const target = which === 'male' ? maleModel : which === 'female' ? femaleModel : null;
-    if (!target) return null;
-    return new THREE.Box3().setFromObject(target).getCenter(new THREE.Vector3());
+  const bodyCenter = () => {
+    if (!maleModel) return null;
+    return new THREE.Box3().setFromObject(maleModel).getCenter(new THREE.Vector3());
   };
   const setPivotBody = (which) => {
     const center = bodyCenter(which);
     if (!center) return;
-    const offset = camera.position.clone().sub(controls.target);
-    controls.target.copy(center);
-    camera.position.copy(center).add(offset);
+    const offset = camera.position.clone().sub(ccTarget());
+    setLook(center.clone().add(offset), center);
     pivotBody = which;
     updatePivotIndicator();
-    controls.update(); need = true;
-  };
-  const sexButton = document.getElementById('sex-toggle');
-  const updateSexButton = () => {
-    if (!sexButton) return;
-    sexButton.setAttribute('aria-label', t(activeSex === 'male' ? 'activeMale' : 'activeFemale'));
-    sexButton.setAttribute('aria-pressed', String(activeSex === 'female'));
-    sexButton.title = t(activeSex === 'male' ? 'showFemale' : 'showMale');
-  };
-  const setActiveSex = async (which) => {
-    const requested = which === 'female' ? 'female' : 'male';
-    setSexLoading(true);
-    clearTimeout(sexWarningTimer);
-    sexWarningTimer = setTimeout(() => setSexLoading(false), 4000);
-    await activate(requested, false);
-    clearTimeout(sexWarningTimer);
-    setSexLoading(false);
-    writeUrl();
-    updateSexButton();
+    cc.update(1 / 60); need = true;
   };
   updatePivotIndicator();
-  let descriptions = { seema: {}, bodyatlas: {}, bodyexplorer: {} };
-  let descAlias = { seema: {}, bodyatlas: {}, bodyexplorer: {} };
+  let descriptions = { seema: {} };
+  let descAlias = { seema: {} };
   const alpha = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '').replace(/\d+$/, '');
   const buildAlias = () => {
     for (const source of Object.keys(descriptions)) {
@@ -248,22 +212,9 @@ export function initCorpsViewer() {
   };
 
   const bodies = new THREE.Group(); scene.add(bodies);
-  let maleModel = null, femaleModel = null, supplements = null, femaleManifest = null;
-  const allBodies = () => [maleModel, femaleModel, supplements].filter(Boolean);
-  const activeBodies = () => {
-    if (!maleModel || !femaleModel) return allBodies();
-    return activeSex === 'male' ? [maleModel] : [femaleModel, supplements].filter(Boolean);
-  };
-
-  /* Contention des couches internes femelles : le modèle Body Atlas combine
-   * une peau Visible Human Female et des organes/muscles HRA qui dépassent
-   * l'enveloppe cutanée de 5 à 19 mm. On rétracte ces couches vers l'axe du
-   * corps (X/Z), sans toucher à la hauteur, jusqu'à rentrer sous la peau.
-   * Facteurs mesurés sur les zones crâne, avant-bras, cuisse et mollet. */
-  /* Les couches internes femelles (HRA) et les suppléments sont conservés dans
-   * leur repère natif : toute rétractation par couche désynchronise les os, les
-   * muscles, les vaisseaux et les organes entre eux. La propreté par défaut est
-   * assurée par la sélection des couches, pas par une déformation. */
+  let maleModel = null;
+  const allBodies = () => [maleModel].filter(Boolean);
+  const activeBodies = allBodies;
 
   // Sélection et contour.
   const outlineGroup = new THREE.Group(); scene.add(outlineGroup);
@@ -343,15 +294,11 @@ export function initCorpsViewer() {
     return entry?.[`${field}_${lang}`] || entry?.[field] || fallback || '';
   };
   const refreshSourceNote = () => {
-    document.querySelector('.source-label').textContent = t('champions');
-    document.getElementById('source-sexe-note').textContent = t('sourceNote', {
-      male: MALE_CFG.label, maleLicense: MALE_CFG.license,
-      female: FEMALE.label, femaleLicense: FEMALE.license, note: t('femaleNote'),
-    });
+    document.querySelector('.source-label').textContent = 'Modèle unique';
+    document.getElementById('source-sexe-note').textContent = `${MALE.label} — ${MALE.license}`;
   };
   const refreshLocale = () => {
     updatePivotIndicator();
-    updateSexButton();
     refreshSourceNote();
     if (!selection) return;
     const entry = selection.mesh?.userData?.selectionEntry || {};
@@ -379,7 +326,7 @@ export function initCorpsViewer() {
     need = true;
   }
 
-  controls.addEventListener('change', () => { need = true; });
+  cc.addEventListener('update', () => { need = true; });
   new IntersectionObserver((e) => { if (e[0].isIntersecting) need = true; }, { threshold: 0.01 }).observe(host);
 
   const sync = () => {
@@ -389,14 +336,10 @@ export function initCorpsViewer() {
   };
   const readUrl = () => {
     const q = new URLSearchParams(location.search);
-    const s = q.get('sex');
-    if (s === 'f' || s === 'female') activeSex = 'female';
     const l = q.get('layers');
     if (!l) {
-      /* Le modèle femelle combine deux sources : par défaut on n'affiche que
-       * l'enveloppe contenue (peau, squelette, organes, cheveux) pour éviter
-       * les couches internes qui dépassent aux extrémités. Les autres couches
-       * restent activables d'un geste. */
+      /* Par défaut : enveloppe contenue (peau et cheveux). Les couches
+       * internes restent activables d'un geste. */
       const clean = new Set(['skin', 'cosmetic']);
       for (const b of boxes) b.checked = clean.has(b.dataset.layer);
       sync();
@@ -408,7 +351,6 @@ export function initCorpsViewer() {
   };
   const writeUrl = () => {
     const u = new URL(location.href);
-    u.searchParams.set('sex', activeSex === 'male' ? 'm' : 'f');
     const active = boxes.filter((b) => b.checked).map((b) => b.dataset.layer);
     if (active.length === LAYERS.length) u.searchParams.delete('layers');
     else u.searchParams.set('layers', active.join(','));
@@ -517,8 +459,6 @@ export function initCorpsViewer() {
       if (o.visible) n++;
     });
     if (maleModel) maleModel.visible = activeSex === 'male';
-    if (femaleModel) femaleModel.visible = activeSex === 'female';
-    if (supplements) supplements.visible = activeSex === 'female';
     const skin = mats.get('skin');
     skin.transparent = xray; skin.opacity = xray ? 0.16 : 1;
     skin.depthWrite = !xray; skin.side = xray ? THREE.FrontSide : THREE.DoubleSide;
@@ -529,18 +469,7 @@ export function initCorpsViewer() {
     document.getElementById('corps-info').textContent = t('meshesVisible', { n });
     need = true;
   };
-  const updateLayerAvailability = () => {
-    const pregnancy = document.getElementById('cp-couche-pregnancy');
-    if (!pregnancy) return;
-    const available = activeSex === 'female';
-    pregnancy.disabled = !available;
-    pregnancy.setAttribute('aria-disabled', String(!available));
-    if (!available && pregnancy.checked) {
-      pregnancy.checked = false;
-      apply();
-      writeUrl();
-    }
-  };
+  const updateLayerAvailability = () => {};
   const fitView = () => {
     tween = null;
     activeRegion = null;
@@ -548,29 +477,28 @@ export function initCorpsViewer() {
     if (b.isEmpty()) return;
     const c = b.getCenter(new THREE.Vector3());
     const s = b.getSize(new THREE.Vector3());
-    controls.target.copy(c);
-    camera.position.set(c.x, c.y + 0.6, 4);
+    setLook(new THREE.Vector3(c.x, c.y + 0.6, 4), c);
     pivotBody = activeSex; updatePivotIndicator();
     const a = (host.clientWidth || 1) / (host.clientHeight || 1);
     const span = a < 0.85 ? 1.05 : 1.12;
     const zoom = Math.min((2 * span * a) / Math.max(s.x, 0.1), (2 * span) / Math.max(s.y, 0.1)) * 0.85;
-    camera.zoom = Math.max(0.5, Math.min(4, zoom));
-    camera.updateProjectionMatrix(); controls.update(); need = true;
+    cc.zoom = Math.max(0.5, Math.min(4, zoom)); camera.zoom = cc.zoom;
+    camera.updateProjectionMatrix(); cc.update(1 / 60); need = true;
   };
   const resetView = () => {
     tween = null;
     activeRegion = null;
     const b = bodyBox();
     const c = b.isEmpty() ? new THREE.Vector3(0, 0.85, 0) : b.getCenter(new THREE.Vector3());
-    camera.position.set(c.x, c.y + 0.6, 4); controls.target.copy(c);
+    setLook(new THREE.Vector3(c.x, c.y + 0.6, 4), c);
     pivotBody = activeSex; updatePivotIndicator();
-    camera.zoom = 1; camera.updateProjectionMatrix(); controls.update(); need = true;
+    cc.zoom = 1; camera.zoom = 1; camera.updateProjectionMatrix(); cc.update(1 / 60); need = true;
   };
   const focusPoint = (p) => {
-    const off = camera.position.clone().sub(controls.target);
-    controls.target.copy(p); camera.position.copy(p).add(off);
+    const off = camera.position.clone().sub(ccTarget());
+    setLook(p.clone().add(off), p);
     pivotBody = 'item'; updatePivotIndicator();
-    controls.update(); need = true;
+    cc.update(1 / 60); need = true;
   };
   let activeRegion = null;
   let tween = null;
@@ -580,13 +508,13 @@ export function initCorpsViewer() {
     const span = a < 0.85 ? 1.05 : 1.12;
     const zoom = Math.min((2 * span * a) / Math.max(size.x, 0.1),
       (2 * span) / Math.max(size.y, 0.1)) * 0.8;
-    return Math.max(0.5, Math.min(controls.maxZoom, zoom));
+    return Math.max(0.5, Math.min(cc.maxZoom, zoom));
   };
   const observe = (key) => {
     const box = regionBox(key);
     if (!box.isEmpty()) {
       const center = box.getCenter(new THREE.Vector3());
-      const offset = camera.position.clone().sub(controls.target);
+      const offset = camera.position.clone().sub(ccTarget());
       const dir = offset.lengthSq() > 1e-6 ? offset.normalize() : new THREE.Vector3(0, 0, 1);
       const to = {
         target: center,
@@ -595,15 +523,14 @@ export function initCorpsViewer() {
       };
       tween = reduced ? null : {
         t0: performance.now(), dur: 700,
-        from: { target: controls.target.clone(), position: camera.position.clone(), zoom: camera.zoom },
+        from: { target: ccTarget(), position: camera.position.clone(), zoom: camera.zoom },
         to,
       };
       if (reduced) {
-        controls.target.copy(to.target);
-        camera.position.copy(to.position);
-        camera.zoom = to.zoom;
+        setLook(to.position, to.target);
+        cc.zoom = to.zoom; camera.zoom = to.zoom;
         camera.updateProjectionMatrix();
-        controls.update();
+        cc.update(1 / 60);
       }
     }
     activeRegion = key;
@@ -620,38 +547,40 @@ export function initCorpsViewer() {
     if (!tween) return false;
     const k = Math.min(1, (now - tween.t0) / tween.dur);
     const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-    controls.target.lerpVectors(tween.from.target, tween.to.target, e);
-    camera.position.lerpVectors(tween.from.position, tween.to.position, e);
-    camera.zoom = tween.from.zoom + (tween.to.zoom - tween.from.zoom) * e;
+    setLook(new THREE.Vector3().lerpVectors(tween.from.position, tween.to.position, e),
+      new THREE.Vector3().lerpVectors(tween.from.target, tween.to.target, e));
+    cc.zoom = tween.from.zoom + (tween.to.zoom - tween.from.zoom) * e;
+    camera.zoom = cc.zoom;
     camera.updateProjectionMatrix();
     if (k >= 1) tween = null;
     return true;
   };
   const zoomBy = (f) => {
-    camera.zoom = Math.max(0.5, Math.min(controls.maxZoom, camera.zoom * f));
+    cc.zoom = Math.max(0.5, Math.min(cc.maxZoom, cc.zoom * f)); camera.zoom = cc.zoom;
     camera.updateProjectionMatrix(); need = true;
   };
   const orbitBy = (t, p) => {
-    const off = camera.position.clone().sub(controls.target);
-    const sph = new THREE.Spherical().setFromVector3(off);
+    const t0 = ccTarget();
+    const sph = new THREE.Spherical().setFromVector3(camera.position.clone().sub(t0));
     sph.theta += t; sph.phi = Math.max(0.15, Math.min(Math.PI - 0.15, sph.phi + p));
-    camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(sph));
-    controls.update(); need = true;
+    setLook(t0.clone().add(new THREE.Vector3().setFromSpherical(sph)), t0);
+    cc.update(1 / 60); need = true;
   };
   const panBy = (dx, dy) => {
     const right = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 0).multiplyScalar(dx);
     const up = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 1).multiplyScalar(dy);
-    const d = right.add(up); controls.target.add(d); camera.position.add(d); controls.update(); need = true;
+    const d = right.add(up); const t0 = ccTarget().add(d);
+    setLook(camera.position.clone().add(d), t0); cc.update(1 / 60); need = true;
   };
   const presetView = (n) => {
     const presets = [[0, Math.PI / 2], [Math.PI, Math.PI / 2], [Math.PI / 2, Math.PI / 2],
       [-Math.PI / 2, Math.PI / 2], [0, 0.2], [0, Math.PI - 0.2]];
     const p = presets[n - 1]; if (!p) return;
-    const off = camera.position.clone().sub(controls.target);
-    const sph = new THREE.Spherical().setFromVector3(off);
+    const t0 = ccTarget();
+    const sph = new THREE.Spherical().setFromVector3(camera.position.clone().sub(t0));
     sph.theta = p[0]; sph.phi = p[1];
-    camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(sph));
-    controls.update(); need = true;
+    setLook(t0.clone().add(new THREE.Vector3().setFromSpherical(sph)), t0);
+    cc.update(1 / 60); need = true;
   };
 
   const validateGeometry = (geo, label) => {
@@ -720,10 +649,9 @@ export function initCorpsViewer() {
     const g = new THREE.Group();
     const entries = Object.entries(cfg.files).flatMap(([layer, files]) =>
       files.map((f) => ({ layer, f })));
-    const loaded = await Promise.all(entries.map(async ({ layer, f }) => ({
-      layer, f, gltf: await loader.loadAsync(cfg.dir + f),
-    })));
-    for (const { layer, f, gltf } of loaded) {
+    const priority = new Set(['skin', 'muscles', 'skeleton']);
+    const ingest = async ({ layer, f }) => {
+      const gltf = await loader.loadAsync(cfg.dir + f);
       const doomed = [];
       gltf.scene.traverse((o) => {
         if (!o.isMesh) return;
@@ -735,70 +663,21 @@ export function initCorpsViewer() {
       });
       for (const o of doomed) o.parent.remove(o);
       g.add(gltf.scene);
-    }
-    return g;
-  }
-  async function buildChunk(cfg) {
-    const at = await (await fetch(versioned(cfg.dir + cfg.manifest))).json();
-    femaleManifest = at;
-    const g = new THREE.Group();
-    const by = at.chunks.map(() => []);
-    const nameCounts = new Map();
-    for (const p of at.parts) {
-      const key = norm(p.name);
-      nameCounts.set(key, (nameCounts.get(key) || 0) + 1);
-      by[p.chunk].push(p);
-    }
-    let next = 0;
-    const worker = async () => {
-      while (next < at.chunks.length) {
-        const ci = next++;
-        const buffer = await chunkFetch(at.chunks[ci]);
-        const decoded = at.format === 'meshopt'
-          ? new Map((await decodeChunk(buffer, by[ci])).map((d) => [d.id, d]))
-          : null;
-        for (const p of by[ci]) {
-          const geo = new THREE.BufferGeometry();
-          if (decoded) {
-            const d = decoded.get(p.id);
-            geo.setAttribute('position', new THREE.BufferAttribute(d.positions, 3));
-            geo.setAttribute('normal', new THREE.BufferAttribute(d.normals, 3, true));
-            geo.setIndex(new THREE.BufferAttribute(d.indices, 1));
-          } else {
-            const buf = buffer;
-            geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(buf, p.positions, p.vertexCount * 3), 3));
-            geo.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(buf, p.normals, p.vertexCount * 3), 3, true));
-            geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buf, p.indices, p.indexCount), 1));
-          }
-          validateGeometry(geo, p.name);
-          // Le côlon de BodyParts3D est trop antérieur : il passe devant la
-          // paroi musculaire. On le recule de 15 mm pour le loger derrière le
-          // muscle droit, sans toucher aux autres organes.
-          if (cfg.id === 'bodyatlas' && /colon/i.test(p.name)) geo.translate(0, 0, -0.015);
-          geo.computeBoundingSphere();
-          const layer = FEMALE_OVERRIDES[p.id] || MAP[p.system] || 'organs';
-          const m = new THREE.Mesh(geo, mats.get(layer));
-          m.name = p.name; mark(m, p.system, cfg.id, p.id, layer);
-          const duplicate = nameCounts.get(norm(p.name)) > 1;
-          const cx = (p.bounds[0][0] + p.bounds[1][0]) / 2;
-          const side = Math.abs(cx) < 0.005 ? 'médian' : cx > 0 ? 'gauche' : 'droite';
-          const label = duplicate ? `${p.name} — ${side}` : p.name;
-          m.userData.selectionLabel = label;
-          const entry = descriptions[cfg.id]?.[p.id];
-          if (entry) m.userData.selectionEntry = duplicate ? { ...entry, name: label } : entry;
-          m.matrixAutoUpdate = false;
-          g.add(m);
-        }
-      }
     };
-    await Promise.all([worker(), worker(), worker()]);
+    /* Premier rendu : silhouette, muscles et squelette. Le reste arrive en
+     * tâche idle, sans bloquer l'interaction ni le premier affineur de vue. */
+    await Promise.all(entries.filter((e) => priority.has(e.layer)).map(ingest));
+    const rest = entries.filter((e) => !priority.has(e.layer));
+    if (rest.length) {
+      const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 300));
+      g.userData.deferred = Promise.all(rest.map(ingest)).then(() => g.userData.onDeferred?.())
+        .catch(() => {});
+    }
     return g;
   }
-
   function batchModel(model) {
-    if (!model || model.userData.batched) return model;
     const meshes = [];
-    model.traverse((o) => { if (o.isMesh && !o.isBatchedMesh) meshes.push(o); });
+    model.traverse((o) => { if (o.isMesh && !o.isBatchedMesh && !o.userData.batchedPart) meshes.push(o); });
     if (!meshes.length) return model;
     model.updateMatrixWorld(true);
     const inverse = new THREE.Matrix4().copy(model.matrixWorld).invert();
@@ -849,7 +728,7 @@ export function initCorpsViewer() {
       batch.computeBoundingSphere();
       batches.push(batch);
     }
-    for (const mesh of meshes) mesh.parent?.remove(mesh);
+    for (const mesh of meshes) { mesh.userData.batchedPart = true; mesh.parent?.remove(mesh); }
     for (const batch of batches) model.add(batch);
     model.userData.batched = true;
     return model;
@@ -927,11 +806,7 @@ export function initCorpsViewer() {
     (bounds[0][0] + bounds[1][0]) / 2,
     (bounds[0][1] + bounds[1][1]) / 2,
     (bounds[0][2] + bounds[1][2]) / 2);
-  const femaleCenter = (key) => {
-    const part = femaleManifest?.parts.find((p) => p.id === key ||
-      normName(p.name) === normName(key));
-    return part ? centerOf(part.bounds) : null;
-  };
+  const femaleCenter = () => null;
   const maleCenter = (pattern, side, exact) => {
     let found = null;
     maleModel.updateMatrixWorld(true);
@@ -1086,7 +961,7 @@ export function initCorpsViewer() {
   };
   const femalePartPoints = (partId) => {
     let mesh = null;
-    femaleModel?.traverse((o) => {
+    null?.traverse((o) => {
       if (!mesh && o.isMesh && o.userData.selectionId === partId) mesh = o;
     });
     if (!mesh) return null;
@@ -1202,10 +1077,10 @@ export function initCorpsViewer() {
       geo.computeBoundingSphere();
       const m = new THREE.Mesh(geo, mats.get('organs'));
       m.name = p.id;
-      mark(m, 'reproductive', 'bodyatlas', p.id, 'organs');
+      mark(m, 'reproductive', MALE.id, p.id, 'organs');
       m.userData.selectionLabel = p.name;
-      m.userData.selectionSource = 'bodyatlas';
-      m.userData.selectionEntry = (descriptions.seema?.[p.id] || descriptions.bodyatlas?.[p.id]) || {
+      m.userData.selectionSource = MALE.id;
+      m.userData.selectionEntry = descriptions[MALE.id]?.[p.id] || {
         name: p.name,
         description: `${p.name} — organe du système reproducteur masculin (BodyParts3D, CC BY 4.0).`,
         source: 'BodyParts3D', license: 'CC BY 4.0', origin: 'référence masculine',
@@ -1216,39 +1091,12 @@ export function initCorpsViewer() {
     return g;
   }
 
-  async function buildSupplements() {
-    const at = await (await fetch(versioned(SUPPLEMENTS.dir + SUPPLEMENTS.manifest))).json();
-    const buffer = await chunkFetch({ url: SUPPLEMENTS.dir + SUPPLEMENTS.chunk.replace('.gz', ''),
-      gzip: SUPPLEMENTS.dir + SUPPLEMENTS.chunk });
-    const g = new THREE.Group();
-    for (const p of at.parts) {
-      assertRange(p, buffer, p.name);
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(
-        new Float32Array(buffer, p.positions, p.vertexCount * 3), 3));
-      geo.setAttribute('normal', new THREE.BufferAttribute(
-        new Float32Array(buffer, p.normals, p.vertexCount * 3), 3));
-      geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buffer, p.indices, p.indexCount), 1));
-      validateGeometry(geo, p.name);
-      geo.computeBoundingSphere();
-      const m = new THREE.Mesh(geo, mats.get(p.layer === 'cosmetic' ? 'hair' : p.layer));
-      m.name = p.name;
-      mark(m, p.layer, MALE.id, p.name, p.layer);
-      m.userData.selectionLabel = p.label || cleanName(p.name);
-      if (p.entry) m.userData.selectionEntry = p.entry;
-      g.add(m);
-    }
-    g.userData.count = at.parts.length;
-    g.userData.facialAlignment = at.alignment || [];
-    return g;
-  }
-
   const modelCache = new Map();
   const loading = new Map();
   const descriptionSources = new Set();
   const applyEntries = (model) => {
     if (!model) return;
-    const source = model.userData?.source || (model === modelCache.get('male') ? 'seema' : 'bodyatlas');
+    const source = model.userData?.source || MALE.id;
     const attach = (userData, fallbackName) => {
       if (!userData || userData.origin) return;
       const raw = userData.selectionId || fallbackName;
@@ -1264,11 +1112,8 @@ export function initCorpsViewer() {
       attach(o.userData, o.name);
     });
   };
-  async function loadDescriptions(which) {
-    const chain = which === 'male'
-      ? (MALE_CFG === MALE_V2 ? ['seema', 'bodyexplorer'] : ['seema'])
-      : ['bodyatlas'];
-    for (const source of chain) {
+  async function loadDescriptions() {
+    for (const source of ['seema']) {
       if (descriptionSources.has(source)) continue;
       const response = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json`));
       if (!response.ok) continue;
@@ -1282,45 +1127,26 @@ export function initCorpsViewer() {
     }
     for (const model of modelCache.values()) applyEntries(model);
   }
-  async function loadModel(which) {
-    if (modelCache.has(which)) return modelCache.get(which);
-    if (loading.has(which)) return loading.get(which);
+  async function loadModel() {
+    if (modelCache.has('male')) return modelCache.get('male');
+    if (loading.has('male')) return loading.get('male');
     const task = (async () => {
-      if (which === 'male') {
-        const model = await buildGlbSet(MALE_CFG);
-        model.userData.source = MALE_CFG.id;
-        const genitalia = await buildMaleGenitalia();
-        for (const child of [...genitalia.children]) model.add(child);
-        const skinPatch = await buildMaleSkinPatch();
-        for (const child of [...skinPatch.children]) model.add(child);
-        model.position.x = 0;
-        batchModel(model);
-        model.visible = activeSex === 'male';
-        bodies.add(model);
-        modelCache.set(which, model);
-        applyEntries(model);
-        return model;
-      }
-      const model = await buildChunk(FEMALE);
-      model.userData.source = 'bodyatlas';
+      const model = await buildGlbSet(MALE);
+      model.userData.source = MALE.id;
+      model.userData.onDeferred = () => { batchModel(model); applyEntries(model); need = true; };
+      const genitalia = await buildMaleGenitalia();
+      for (const child of [...genitalia.children]) model.add(child);
+      const skinPatch = await buildMaleSkinPatch();
+      for (const child of [...skinPatch.children]) model.add(child);
       model.position.x = 0;
       batchModel(model);
-      alignPartsToSkin(model);
-      model.visible = activeSex === 'female';
+      model.visible = true;
       bodies.add(model);
-      modelCache.set(which, model);
+      modelCache.set('male', model);
       applyEntries(model);
-      const extra = await buildSupplements();
-      extra.userData.source = 'seema';
-      extra.position.x = 0;
-      extra.visible = activeSex === 'female';
-      batchModel(extra);
-      alignPartsToSkin(extra, model);
-      bodies.add(extra);
-      modelCache.set('supplements', extra);
       return model;
     })();
-    loading.set(which, task);
+    loading.set('male', task);
     return task;
   }
   const ensureApi = () => {
@@ -1331,45 +1157,29 @@ export function initCorpsViewer() {
       stepTween: (ms) => { if (!tween) return false; const moved = applyTween(tween ? tween.t0 + ms : performance.now()); need = true; return moved; },
       renderNow: () => { renderer.render(scene, camera); },
       bodyBox, zoomBy, orbitBy, panBy, presetView, select, clearSelection, setPreset, apply,
-      setPivotBody, setActiveSex, bodyCenter,
+      setPivotBody, bodyCenter,
       get maleModel() { return modelCache.get('male') || null; },
-      get femaleModel() { return modelCache.get('female') || null; },
-      get supplements() { return modelCache.get('supplements') || null; },
       get pivotBody() { return pivotBody; }, get activeSex() { return activeSex; },
-      get facialAlignment() { return modelCache.get('supplements')?.userData.facialAlignment || []; },
       get prefetched() { return [...modelCache.keys()]; },
       loaders: { GLTFLoader, DRACOLoader }, get xray() { return xray; },
-      debug: { fitAffine, fitTps, femalePartPoints, extremePoints, headAffine, headPartFor,
-        buildSupplements, setFemaleManifest: (data) => { femaleManifest = data; } },
     };
   };
-  async function activate(which, fit = true) {
+  async function activate(fit = true) {
     const myToken = ++token;
-    await loadDescriptions(which);
-    await loadModel(which);
+    await loadDescriptions();
+    await loadModel();
     if (myToken !== token) return;
-    activeSex = which;
-    updateSexButton();
+    activeSex = 'male';
     maleModel = modelCache.get('male') || null;
-    femaleModel = modelCache.get('female') || null;
-    supplements = modelCache.get('supplements') || null;
     ensureApi();
     refreshSourceNote();
     clearSelection();
     updateLayerAvailability();
     apply(); resize();
     if (fit) fitView();
-    else { pivotBody = which; updatePivotIndicator(); }
+    else { pivotBody = 'male'; updatePivotIndicator(); }
     need = true;
   }
-  let sexWarningTimer = 0;
-  const setSexLoading = (on) => {
-    if (sexButton) {
-      sexButton.disabled = on;
-      sexButton.setAttribute('aria-busy', String(on));
-    }
-  };
-
   function pick(clientX, clientY) {
     const rect = renderer.domElement.getBoundingClientRect();
     const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1,
@@ -1411,14 +1221,13 @@ export function initCorpsViewer() {
     return hit ? hit.point : null;
   };
   const zoomAtPoint = (x, y, factor) => {
-    const p = pointFromClient(x, y) || controls.target.clone();
-    const offset = camera.position.clone().sub(controls.target);
-    controls.target.copy(p);
-    camera.position.copy(p).add(offset);
-    camera.zoom = Math.max(0.5, Math.min(controls.maxZoom, camera.zoom * factor));
+    const p = pointFromClient(x, y) || ccTarget();
+    const offset = camera.position.clone().sub(ccTarget());
+    setLook(p.clone().add(offset), p);
+    cc.zoom = Math.max(0.5, Math.min(cc.maxZoom, cc.zoom * factor)); camera.zoom = cc.zoom;
     camera.updateProjectionMatrix();
     pivotBody = activeSex; updatePivotIndicator();
-    controls.update(); need = true;
+    cc.update(1 / 60); need = true;
   };
   let down = null;
   let lastTap = { t: 0, x: 0, y: 0 };
@@ -1472,9 +1281,6 @@ export function initCorpsViewer() {
     }
     e.preventDefault();
   });
-  if (sexButton) sexButton.addEventListener('click', () => {
-    setActiveSex(activeSex === 'male' ? 'female' : 'male');
-  });
   for (const b of boxes) b.addEventListener('change', () => {
     sync(); writeUrl(); apply();
   });
@@ -1510,7 +1316,7 @@ export function initCorpsViewer() {
     requestAnimationFrame(frame);
     if (document.hidden) return;
     if (applyTween(performance.now())) need = true;
-    const changed = controls.update();
+    const changed = cc.update(1 / 60);
     const now = performance.now();
     let pulsed = false;
     if (selection && !reduced && now - lastPulse > 33) {
@@ -1526,34 +1332,10 @@ export function initCorpsViewer() {
   }
   resize(); frame();
   readUrl();
-  const prefetchAssets = (which) => {
-    const urls = which === 'male'
-      ? Object.values(MALE_CFG.files).flat().map((f) => MALE_CFG.dir + f)
-      : [FEMALE.dir + FEMALE.manifest];
-    for (const url of urls) {
-      if (!url) continue;
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = url;
-      document.head.appendChild(link);
-    }
-  };
-  const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 600));
-  activate(activeSex).then(() => idle(() => {
-    const other = activeSex === 'male' ? 'female' : 'male';
-    loadDescriptions(other)
-      .then(() => loadModel(other))
-      .then(() => {
-        prefetchAssets(other);
-        const urls = [
-          ...Object.values(MALE_CFG.files).flat().map((f) => MALE_CFG.dir + f),
-          FEMALE.dir + FEMALE.manifest,
-          ...(femaleManifest?.chunks || []).map((c) => c.gzip || c.url),
-        ];
-        navigator.serviceWorker?.controller?.postMessage({ type: 'PRECACHE_MODELS', urls });
-      })
-      .catch(() => {});
-  }, { timeout: 4000 })).catch((error) => {
+  const maleUrls = Object.values(MALE.files).flat().map((f) => MALE.dir + f);
+  activate().then(() => {
+    navigator.serviceWorker?.controller?.postMessage({ type: 'PRECACHE_MODELS', urls: maleUrls });
+  }).catch((error) => {
     const info = document.getElementById('corps-info');
     info.textContent = `${t('modelError')} — ${error.message}`;
     window.dispatchEvent(new CustomEvent('corps:error', { detail: { message: error.message } }));

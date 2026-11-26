@@ -7,21 +7,11 @@ const viewer = readFileSync(root + 'src/corps-viewer.js', 'utf8');
 const pattern = /\b(of|the|and|left|right|artery|vein|nerve|bone|with|from)\b/i;
 let checked = 0;
 
-for (const source of ['seema', 'bodyatlas']) {
-  const data = JSON.parse(readFileSync(root + `docs/models/selection-descriptions-${source}.json`, 'utf8'));
-  for (const entry of Object.values(data.descriptions[source])) {
-    assert.ok(entry.name_fr, `${source} : name_fr absent pour ${entry.name}`);
-    assert.ok(entry.name_latin, `${source} : name_latin absent pour ${entry.name}`);
-    assert.ok(!pattern.test(entry.name_fr), `${source} : anglais résiduel « ${entry.name_fr} »`);
-    checked++;
-  }
-}
-
-const supplements = JSON.parse(readFileSync(root + 'docs/models/body-atlas/female-supplements.json', 'utf8'));
-for (const part of supplements.parts) {
-  if (!part.entry) continue;
-  assert.ok(part.entry.name_fr, `supplément ${part.name} : name_fr absent`);
-  assert.ok(!pattern.test(part.entry.name_fr), `supplément ${part.name} : anglais résiduel « ${part.entry.name_fr} »`);
+const data = JSON.parse(readFileSync(root + 'docs/models/selection-descriptions-seema.json', 'utf8'));
+for (const entry of Object.values(data.descriptions.seema)) {
+  assert.ok(entry.name_fr, `seema : name_fr absent pour ${entry.name}`);
+  assert.ok(entry.name_latin, `seema : name_latin absent pour ${entry.name}`);
+  assert.ok(!pattern.test(entry.name_fr), `seema : anglais résiduel « ${entry.name_fr} »`);
   checked++;
 }
 

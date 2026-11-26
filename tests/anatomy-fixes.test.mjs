@@ -6,7 +6,6 @@ const root = new URL('..', import.meta.url).pathname;
 const read = (p) => readFileSync(root + p);
 const manifest = JSON.parse(read('docs/models/male-genitalia/male-genitalia.json'));
 const binary = zlib.gunzipSync(read('docs/models/male-genitalia/male-genitalia.bin.gz'));
-const supplements = JSON.parse(read('docs/models/body-atlas/female-supplements.json'));
 const descriptions = JSON.parse(read('docs/models/selection-descriptions-seema.json'));
 const viewer = read('src/corps-viewer.js', 'utf8');
 
@@ -28,13 +27,7 @@ for (const part of manifest.parts) {
   assert.ok(entry?.name_fr && entry?.name_en, `${part.id} : descriptions localisées absentes`);
 }
 assert.equal(offset, binary.length, 'taille du chunk masculin incohérente');
-
-assert.ok(!supplements.parts.some((p) => /transversus_abdominis/i.test(p.name)),
-  'muscle détaché toujours publié');
-const hair = supplements.parts.find((p) => p.name === 'Hair_of_head_female');
-assert.ok(hair, 'chevelure féminine absente');
-assert.ok(/MIT \+ CC BY 4\.0/.test(hair.entry?.license || ''), 'licence de la chevelure absente');
-assert.ok(viewer.includes("geo.translate(0, 0, -0.015)"), 'recul du côlon absent');
+assert.ok(viewer.includes('MALE_GENITALIA'), 'génitalité non câblée dans le viewer');
 assert.ok(read('docs/analyses/anatomie-2026-11-25.json').length > 500, 'archivage des mesures absent');
 
-console.log('PASS anatomie : 12 pièces mâles, cheveux féminins, côlon reculé');
+console.log('PASS anatomie : 12 pièces de génitalité masculine');

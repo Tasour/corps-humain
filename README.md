@@ -13,37 +13,19 @@ Le contrôle des collisions est assuré par `npm run check:collisions` et
 
 **Application en ligne :** https://tasour.github.io/corps-humain/
 
-### Paire déployée et sélection
+### Modèle publié
 
-Le site affiche deux champions figés, issus du concours du 2026-11-24 : **3D Human Body
-Anatomy** (`seema`, CC BY-SA 4.0) sur le carré bleu et **Body Atlas 3D — femme**
-(`bodyatlas`, CC BY 4.0) sur le carré rose. Les géométries restent indépendantes.
-`female-atlas` a été écarté : 72 % de géométrie dérivée d'une référence masculine
-et deux paires d'yeux superposées. Voir `docs/veille/2026-11-24-femelle-meilleur-modele.md`.
-
-Le corps féminin est complété par des muscles faciaux, des muscles du tronc et un
-réseau nerveux périphérique issus de la référence masculine et recalés sur 13 repères
-anatomiques. La chevelure longue provient de **`kblood/CharacterCreator`**
-(`output/hair_long01.glb`, **CC0-1.0**, MakeHuman system assets) : le GLB est
-archivé dans `docs/models/hair-cc0/` avec son empreinte SHA-256, réaligné sur le
-crâne féminin par `scripts/rebuild-female-supplements.py`. Les deux muscles
-`Transversus abdominis`, mal recalés et détachés de la paroi, ont été retirés.
-Le côlon de BodyParts3D est reculé de 15 mm pour rester derrière le muscle droit.
-Le corps masculin reçoit 12 pièces génitales (pénis, testicules, prostate, conduits
-et vésicules) issues de BodyParts3D male (CC BY 4.0), extraites par
-`scripts/extract-male-genitalia.py`, et un patch cutané issu de `Modesty_cover`
-avec une ouverture elliptique lisse, généré par `scripts/extract-modesty-cover.mjs`.
-Toutes les mesures
-sont archivées dans `docs/analyses/anatomie-2026-11-25.json` et vérifiées par
-`npm run test:anatomie`. La couche « Grossesse » est réservée à la femme,
-masquée par défaut et désactivée pour l'homme ; elle ne modifie ni l'opacité de la peau
-ni l'état Rayon X. Voir `docs/models/multi-sources.md`.
+Le site affiche un **unique modèle masculin** : **3D Human Body Anatomy** (`seema`,
+CC BY-SA 4.0, via Z-Anatomy/BodyParts3D), servi depuis `docs/models/male/`. Les 12 pièces
+génitales masculines (pénis, testicules, prostate, conduits et vésicules, CC BY 4.0) sont
+extraites par `scripts/extract-male-genitalia.py` et couvertes par un patch cutané à
+ouverture elliptique (`scripts/extract-modesty-cover.mjs`). Les mesures sont archivées dans
+`docs/analyses/anatomie-2026-11-25.json` et vérifiées par `npm run test:anatomie`.
 
 Un clic ou un tap sélectionne le premier maillage touché par le rayon issu de la caméra.
-Une popup affiche alors le nom de la structure, une courte description sourcée et sa licence,
-et un fin contour turquoise clignote autour de la pièce. Un clic dans le vide, `Échap` ou le
-bouton × effacent la sélection. Les candidats non retenus restent archivés dans
-`docs/models/` mais ne sont plus publiés. Détails : `docs/models/multi-sources.md`.
+Une popup affiche le nom de la structure, une courte description sourcée et sa licence, et un
+fin contour turquoise clignote autour de la pièce. Un clic dans le vide, `Échap` ou le bouton ×
+effacent la sélection.
 
 ### Version déployée
 
@@ -171,35 +153,6 @@ chaque structure le meilleur modèle 3D (Z-Anatomy ou BodyParts3D), est fourni d
   (1 251 structures canoniques), noms TA2 français/latin, triangles, meilleur modèle
   et alternatives.
 
-### Graft homme — variante Body Explorer (`?model=v2`)
-
-Le modèle masculin accepte `?model=v2` (le champion historique reste le défaut, forçable avec
-`?model=legacy`). La variante **conserve la peau, les muscles et les 1 043 vaisseaux** de la
-référence locale et remplace trois couches par celles de
-[Body Explorer](https://seanwhiteconsulting.com/body-explorer.html) :
-
-| Couche | Avant | Après |
-|---|---:|---:|
-| Squelette + articulations | 271 | **774** |
-| Nerfs | 255 | **695** |
-| Organes + ganglions | 297 | **537** |
-| **Total** | **2 198** | **3 381** |
-
-La géométrie importée est alignée par une **translation rigide mesurée** sur 1 340 structures
-appariées : `(0 ; +78,11 ; −100,00) mm`, résidu médian **0,03 mm**, 1 332 paires sous 2 mm.
-Aucune déformation ni recalage par pièce. Les 4 muscles du pouce mal latéralisés dans la
-référence locale sont corrigés à l'affichage.
-
-Sources pré-générées dans `docs/models/body-explorer/` (134 GLB meshopt, 58 Mo) et
-`docs/models/forks/bodyexplorer/models/` (3 GLB Draco, 10,3 Mo). Pour régénérer :
-
-```bash
-npm run models:graft
-```
-
-Licences : CC BY-SA 4.0 (Z-Anatomy) + CC BY 4.0 (BodyParts3D, HuBMAP). Détails dans
-`LICENSES.md`.
-
 ### Performance et passage à l'échelle
 
 L'architecture pour afficher l'intégralité des structures sans surchauffe est décrite dans
@@ -207,6 +160,22 @@ L'architecture pour afficher l'intégralité des structures sans surchauffe est 
 `BatchedMesh`, moteur Rust→WASM pour le picking et le culling, niveaux de détail et
 budget thermique. Un prototype WASM (`wasm/corps-core`, 37 Ko) et un benchmark de
 batching (`bench/batching.html`) l'accompagnent.
+
+### Performance mesurée (modèle masculin seul, 2026-11-26)
+
+Le retrait des autres modèles a divisé le poids livré par quatre :
+
+| Mesure | Avant (2 modèles) | Après (homme seul) |
+|---|---:|---:|
+| Transfert au premier rendu (desktop) | 49,8 Mo | **12,6 Mo** |
+| Requêtes au premier rendu | 41 | **17** |
+| Premier rendu, desktop | 777 ms | **729 ms** |
+| Premier rendu, mobile 4× throttlé | 9 778 ms | **6 326 ms** |
+| `dist/` | 61 Mo | **15 Mo** |
+
+Le chargement est **progressif** : peau, muscles et squelette sont servis d'abord, les organes,
+vaisseaux et nerfs arrivent en tâche de fond sans bloquer l'interaction. Les appareils faibles
+(mémoire ≤ 4 Go, ≤ 4 cœurs ou mobile) désactivent l'anticrénelage et plafonnent le DPR à 1.
 
 Le **jeu de données v2** (2 009 structures × 3 niveaux de détail) est décrit dans
 [`docs/jeu-de-donnees-v2.md`](docs/jeu-de-donnees-v2.md) et généré via `npm run models:v2`.
@@ -390,6 +359,13 @@ Les contenus pédagogiques sont originaux. Les idées de visualisation s'inspire
 - [Z-Anatomy](https://github.com/Z-Anatomy/Models-of-human-anatomy) — maillages Z-Anatomy
   et référence de modélisation anatomique libre.
 - [anatomyatelier.org](https://anatomyatelier.org/) — inspiration pédagogique.
+
+La navigation 3D utilise deux bibliothèques libres :
+
+- [camera-controls](https://github.com/yomotsu/camera-controls) (yomotsu, **MIT**) —
+  orbite, truck, zoom vers le curseur, transitions amorties, gestes tactiles et clavier ;
+- [three.js](https://github.com/mrdoob/three.js) (**MIT**) — rendu, `BatchedMesh` et
+  `DRACOLoader`.
 
 ## Avertissement
 

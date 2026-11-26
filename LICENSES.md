@@ -158,3 +158,10 @@
   (yeux, mandible, frontal, sternum, humérus, radius, fémur, tibia, sacrum),
   calculé à l'exécution sans aléa ni réseau supplémentaire.
 - Consulté le 2026-11-25.
+
+## camera-controls — navigation 3D
+
+- URL : https://github.com/yomotsu/camera-controls
+- Version : 3.1.2. Licence : **MIT** — 🟢.
+- Utilisé pour l'orbite, le truck, le zoom vers le curseur, les transitions amorties,
+  les gestes tactiles et le clavier. Consulté le 2026-11-26.

@@ -18,15 +18,15 @@ try {
 } catch { /* hors dépôt */ }
 const build = `${sha}-${new Date().toISOString().slice(0, 10)}`;
 
-/* Empreinte de la géométrie publiée : manifestes + chunks Body Atlas. */
+/* Empreinte de la géométrie publiée : les 7 GLB du modèle masculin. */
 const modelsDir = path.join(root, "docs", "models");
-const atlasDir = path.join(modelsDir, "body-atlas");
+const atlasDir = path.join(modelsDir, "male");
 const geometry = {};
 for (const f of fs.readdirSync(atlasDir).sort()) {
   const fp = path.join(atlasDir, f);
   if (!fs.statSync(fp).isFile()) continue;
   geometry[f] = createHash("sha256")
-    .update(fs.readFileSync(path.join(atlasDir, f))).digest("hex");
+    .update(fs.readFileSync(fp)).digest("hex");
 }
 const geometryHash = createHash("sha256")
   .update(JSON.stringify(geometry)).digest("hex").slice(0, 16);
@@ -66,26 +66,12 @@ for (const f of fs.readdirSync(dstModels)) {
   if (fs.statSync(p).isDirectory()) fs.rmSync(p, { recursive: true, force: true });
   else fs.rmSync(p, { force: true });
 }
-fs.cpSync(path.join(modelsDir, "forks", "seema"),
-  path.join(dstModels, "forks", "seema"), { recursive: true });
-fs.cpSync(path.join(modelsDir, "forks", "bodyexplorer"),
-  path.join(dstModels, "forks", "bodyexplorer"), { recursive: true });
+/* Publier uniquement le modèle masculin. */
+fs.cpSync(path.join(modelsDir, "male"), path.join(dstModels, "male"), { recursive: true });
 fs.cpSync(path.join(modelsDir, "male-genitalia"),
   path.join(dstModels, "male-genitalia"), { recursive: true });
-const femaleSrc = path.join(modelsDir, "body-atlas");
-const femaleDst = path.join(dstModels, "body-atlas");
-fs.mkdirSync(femaleDst, { recursive: true });
-fs.copyFileSync(path.join(femaleSrc, "atlas-female-meshopt.json"),
-  path.join(femaleDst, "atlas-female-meshopt.json"));
-for (const f of fs.readdirSync(femaleSrc)) {
-  if (/^female-meshopt-\d+\.bin$/.test(f) || /^female-supplements\.(json|bin\.gz)$/.test(f)) {
-    fs.copyFileSync(path.join(femaleSrc, f), path.join(femaleDst, f));
-  }
-}
-for (const source of ["seema", "bodyatlas", "bodyexplorer"]) {
-  fs.copyFileSync(path.join(modelsDir, `selection-descriptions-${source}.json`),
-    path.join(dstModels, `selection-descriptions-${source}.json`));
-}
+fs.copyFileSync(path.join(modelsDir, "selection-descriptions-seema.json"),
+  path.join(dstModels, "selection-descriptions-seema.json"));
 for (const old of [
   "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
   "textures", "data", "screenshots", "v2-style.css",
@@ -94,4 +80,4 @@ for (const old of [
   if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true });
 }
 
-console.log(`[unify] index.html = champions seema + bodyatlas, graft bodyexplorer (${build})`);
+console.log(`[unify] index.html = modèle masculin unique (${build})`);
