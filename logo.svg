@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="CORPS — logo inspiré de l'homme vitruvien">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d2b3a"/>
+      <stop offset="1" stop-color="#081720"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a9f0e4"/>
+      <stop offset="1" stop-color="#4bb8c9"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="48" fill="url(#bg)"/>
+  <circle cx="120" cy="122" r="86" fill="none" stroke="url(#ink)" stroke-width="2.4" opacity=".85"/>
+  <rect x="44" y="46" width="152" height="152" fill="none" stroke="url(#ink)" stroke-width="1.6" opacity=".55"/>
+  <g fill="none" stroke="url(#ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- tête -->
+    <circle cx="120" cy="72" r="12"/>
+    <!-- tronc -->
+    <path d="M120 84 L120 138"/>
+    <path d="M104 96 Q120 106 136 96"/>
+    <!-- bras écartés -->
+    <path d="M112 94 L74 78 L44 62"/>
+    <path d="M128 94 L166 78 L196 62"/>
+    <!-- mains -->
+    <path d="M44 62 l-7 -4 M44 62 l-6 3 M196 62 l7 -4 M196 62 l6 3"/>
+    <!-- bassin -->
+    <path d="M108 138 Q120 148 132 138"/>
+    <!-- jambes écartées -->
+    <path d="M112 140 L92 176 L76 202"/>
+    <path d="M128 140 L148 176 L164 202"/>
+    <!-- pieds -->
+    <path d="M76 202 l-9 4 M164 202 l9 4"/>
+  </g>
+  <g fill="url(#ink)" opacity=".9">
+    <circle cx="120" cy="72" r="3"/>
+    <circle cx="120" cy="112" r="2.5"/>
+  </g>
+</svg>

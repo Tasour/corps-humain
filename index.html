@@ -1,0 +1,261 @@
+<!doctype html>
+<!-- Correctif design 2026-11-24 : noms accessibles, cibles 44 px et grille 8 pt. -->
+<html data-geometry="b1d4db4c4afe0950" lang="fr" data-build="d6dfad7-2026-11-27">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#10151b" />
+    <title>CORPS — Anatomie en position croix</title>
+    <meta name="description" content="Corps humain 3D statique en position croix : peau, muscles, squelette, organes, vaisseaux et nerfs affichés ensemble." />
+    <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+    <style>
+      :root { color-scheme:light dark; --paper:#10151b; --surface:#151c24; --surface-2:#111820;
+        --ink:#e8ecef; --muted:#9aa8b3; --line:#2b3540; --accent:#7fd4d0; --accent-strong:#2a4a4d;
+        --panel:rgba(21,28,36,.97); --shadow:0 12px 32px rgba(0,0,0,.45); --scene:#161a20;
+        --chip:rgba(16,22,29,.88); --hint:rgba(0,0,0,.55); --hint-ink:#e6e6e6;
+        --skip-bg:#e8ecef; --skip-ink:#10151b; }
+      :root[data-theme="light"] { color-scheme:light; --paper:#f5f6f7; --surface:#ffffff; --surface-2:#eef1f4;
+        --ink:#15191d; --muted:#5c6873; --line:#d5dce2; --accent:#006f6a; --accent-strong:#d7efed;
+        --panel:rgba(255,255,255,.97); --shadow:0 12px 32px rgba(20,30,40,.18); --scene:#e9edf1;
+        --chip:rgba(255,255,255,.9); --hint:rgba(20,25,30,.8); --hint-ink:#ffffff;
+        --skip-bg:#15191d; --skip-ink:#ffffff; }
+      :root[data-theme="dark"] { color-scheme:dark; }
+      * { box-sizing:border-box; }
+      body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.45 system-ui,sans-serif; overflow:hidden; }
+      header { height:calc(58px + env(safe-area-inset-top)); display:flex; align-items:center; justify-content:space-between; gap:12px;
+        padding:env(safe-area-inset-top) max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left));
+        border-bottom:1px solid var(--line); background:var(--surface); }
+      .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+      .brand img { width:32px; height:32px; }
+      .brand h1 { margin:0; font:600 18px/1.4 Georgia,serif; letter-spacing:.14em; }
+      .build { color:var(--muted); font:11px/1.4 monospace; white-space:nowrap; }
+      a.atlas { display:inline-flex; align-items:center; justify-content:center; min-height:44px; min-width:44px;
+        padding:0 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface-2); color:var(--ink);
+        text-decoration:none; font-size:13px; }
+      a.atlas:active { transform:scale(.97); }
+      .source-label { display:inline-flex; align-items:center; min-height:44px; padding:0 12px;
+        border:1px solid var(--line); border-radius:8px; color:var(--muted); font-size:12px; white-space:nowrap; }
+      main { height:calc(100vh - 58px - env(safe-area-inset-top)); display:grid; grid-template-columns:minmax(0,1fr); position:relative; }
+      #toolbar { position:absolute; left:0; right:0; bottom:0; z-index:15; display:flex; flex-direction:row;
+        justify-content:center; gap:8px; padding:8px 12px calc(8px + env(safe-area-inset-bottom));
+        border-top:1px solid var(--line); background:var(--surface-2); }
+      #layer-rail { position:fixed; right:8px; top:50%; transform:translateY(-50%);
+        z-index:16; display:flex; flex-direction:column; align-items:center; gap:8px;
+        padding:8px; border-radius:12px; background:var(--panel); border:1px solid var(--line);
+        box-shadow:var(--shadow); opacity:0.96; max-width:136px; }
+      #layer-rail-toggle { touch-action:manipulation; width:44px; height:44px; min-height:44px; padding:0; border-radius:8px;
+        border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink);
+        cursor:pointer; font-size:16px; line-height:1.35; }
+      #layer-rail.collapsed #layer-rail-steps, #layer-rail.collapsed #layer-rail-slider,
+      #layer-rail.collapsed #layer-rail-status { display:none; }
+      #layer-rail.collapsed { padding:4px; }
+      #layer-rail-steps { display:flex; flex-direction:column; gap:4px; }
+      #layer-rail-steps button { touch-action:manipulation; min-height:44px; min-width:44px; padding:8px; font-size:11px;
+        line-height:1.35; border-radius:8px; border:1px solid var(--chip); background:var(--chip); color:var(--ink);
+        cursor:pointer; }
+      #layer-rail-steps button[aria-pressed="false"] { opacity:0.45; }
+      #layer-rail-slider { writing-mode:vertical-lr; direction:rtl; width:44px; height:180px;
+        accent-color:var(--accent); }
+      #layer-rail-status { margin:0; font-size:10px; color:var(--muted); max-width:88px; text-align:center; line-height:1.4; }
+      @media (max-width:700px) { #layer-rail { right:4px; gap:8px; padding:8px; max-width:112px; }
+        #layer-rail-steps button { min-height:44px; min-width:44px; font-size:10px; padding:4px; }
+        #layer-rail-slider { height:120px; width:44px; }
+        #layer-rail-status { font-size:10px; max-width:96px; } }
+      #zoom-overlay { position:absolute; right:12px; bottom:calc(64px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px; z-index:14; }
+      #zoom-overlay button { width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink); font-size:20px; line-height:1.4; padding:8px; cursor:pointer; }
+      .quality-status { margin:12px 0 8px; color:var(--muted); font-size:12px; line-height:1.4; }
+      #quality-retry { width:100%; min-height:44px; margin:0 0 8px; }
+      #shortcuts-help { margin-top:12px; font-size:13px; }
+      #shortcuts-help summary { cursor:pointer; min-height:44px; display:flex; align-items:center; }
+      #shortcuts-help table { width:100%; border-collapse:collapse; table-layout:fixed; }
+      #shortcuts-help th, #shortcuts-help td { text-align:left; padding:4px 8px 4px 0; vertical-align:top; font-weight:400; }
+      #shortcuts-help th { color:var(--muted); white-space:normal; width:46%; padding-right:12px; word-break:break-word; }
+      #toolbar button { cursor:pointer; width:auto; min-width:64px; height:44px; min-height:44px; margin:0; padding:0 12px;
+        border-radius:8px; font-size:12px; font-weight:600; letter-spacing:.02em; }
+      #toolbar button[aria-expanded="true"], #toolbar button[aria-pressed="true"] { background:var(--accent-strong); border-color:var(--accent); }
+      #sex-toggle { perspective:400px; }
+      .sex-card { display:block; width:24px; height:24px; margin:0 auto; position:relative;
+        transform-style:preserve-3d; transition:transform .24s ease; }
+      #sex-toggle[aria-pressed="true"] .sex-card { transform:rotateY(180deg); }
+      .sex-face { position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+        backface-visibility:hidden; font-size:15px; line-height:1; }
+      .sex-f { transform:rotateY(180deg); }
+      #viewport { position:relative; min-width:0; min-height:0; }
+      .panel { position:absolute; left:12px; top:12px; z-index:10; width:240px; max-width:calc(100vw - 24px);
+        max-height:calc(100vh - 160px); overflow:auto;
+        padding:16px; border:1px solid var(--line); border-radius:8px; background:var(--panel);
+        box-shadow:var(--shadow); }
+      .panel[hidden] { display:none; }
+      .avertissement { margin:12px 0 0; color:var(--muted); font-size:12px; line-height:1.4; }
+      .source-note { margin:12px 0 0; color:var(--accent); font-size:12px; line-height:1.4; }
+      .panel h2 { margin:0 0 12px; font-size:15px; }
+      .panel-close { position:absolute; right:8px; top:8px; width:44px; height:44px; min-width:44px;
+        min-height:44px; margin:0; padding:0; border-radius:8px; font-size:18px; }
+      .panel h2 { padding-right:44px; }
+      .panel label { display:block; margin:12px 0 0; color:var(--muted); font-size:12px; }
+      select { width:100%; min-height:44px; margin-top:4px; padding:8px 12px; border:1px solid var(--line);
+        border-radius:8px; background:var(--surface-2); color:var(--ink); font-size:15px; }
+      fieldset.couches { border:0; padding:0; margin:12px 0 0; min-width:0; }
+      fieldset.couches legend { padding:0; color:var(--muted); font-size:12px; }
+      fieldset.couches label { display:flex; align-items:center; gap:8px; min-height:44px;
+        margin:0; color:var(--ink); font-size:13px; cursor:pointer; }
+      fieldset.couches input[type="checkbox"] { flex:0 0 auto; width:20px; height:20px;
+        margin:0; accent-color:var(--accent); cursor:pointer; }
+      fieldset.couches label.maitre { font-weight:600; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:4px; }
+      #corps-info { margin-top:12px; color:var(--muted); font-size:12px; }
+      #cp-view { position:absolute; left:0; right:0; top:0; bottom:60px; min-width:0; min-height:0; overflow:hidden; }
+      #cp-view canvas { display:block; width:100%; height:100%; touch-action:none; cursor:grab; }
+      #cp-view canvas:active { cursor:grabbing; }
+      body { overscroll-behavior:none; }
+      #cp-view:focus-visible { outline:3px solid var(--accent); outline-offset:-3px; }
+      .presets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
+      .presets button { min-height:44px; padding:0 8px; border-radius:8px; font-size:12px; font-weight:600; }
+      #pivot-indicator { position:absolute; right:12px; top:12px; z-index:11; min-height:44px;
+        padding:4px 12px; border:1px solid var(--line); border-radius:8px;
+        background:var(--chip); color:var(--muted); font-size:12px; cursor:pointer;
+        font-family:inherit; }
+      #pivot-indicator:hover, #pivot-indicator:focus-visible { color:var(--ink); border-color:var(--accent); }
+      #selection-popup { position:absolute; z-index:14; width:min(280px,calc(100vw - 24px));
+        padding:16px 44px 16px 16px; border:1px solid var(--accent); border-radius:12px;
+        background:var(--panel); box-shadow:var(--shadow); }
+      #selection-popup[hidden] { display:none; }
+      #selection-popup h2 { margin:0; padding-right:44px; font-size:15px; color:var(--accent); }
+      #selection-close { position:absolute; right:8px; top:8px; width:44px; height:44px;
+        min-width:44px; min-height:44px; margin:0; padding:0; border-radius:8px; font-size:18px; }
+      .gesture-hint { position:absolute; left:8px; bottom:8px; margin:0; padding:4px 8px; border-radius:8px;
+        background:var(--hint); color:var(--hint-ink); font-size:11px; pointer-events:none; z-index:9; }
+      @media (pointer:fine) { .gesture-hint { display:none; } }
+      @media (max-width:700px) {
+        #toolbar { justify-content:space-around; gap:4px; padding:8px 8px calc(8px + env(safe-area-inset-bottom)); }
+        #toolbar button { min-width:64px; }
+        .panel { left:12px; top:8px; width:min(240px,calc(100vw - 24px)); max-height:calc(100vh - 152px); }
+        #selection-popup { left:12px !important; right:12px; top:auto !important; bottom:68px; width:auto; }
+        .build { display:inline-block; font-size:11px; padding:4px; max-width:60px;
+          overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        #clear-cache { width:100%; margin-top:12px; }
+      }
+      .skip-link { position:absolute; left:8px; top:-52px; z-index:20; padding:12px;
+        min-height:44px; display:inline-flex; align-items:center;
+        background:var(--skip-bg); color:var(--skip-ink); border-radius:4px; font-size:13px; }
+      .skip-link:focus { top:8px; }
+      @media (prefers-reduced-motion:reduce) {
+        *,*::before,*::after { transition-duration:.01ms !important; animation-duration:.01ms !important; }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/main-BIOqydSN.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/RoomEnvironment-Bet7YmEx.js">
+  </head>
+  <body>
+    <a class="skip-link" href="#cp-view" data-i18n="skip">Aller au corps 3D</a>
+    <header>
+      <div class="brand"><img src="./logo.svg" alt="" /><h1>CORPS</h1><span class="build" id="build-label"></span></div>
+      <span class="source-label" data-i18n="sourceLabel">Anatomie 3D</span>
+    </header>
+    <main>
+      <nav id="toolbar" aria-label="Outils d'interface" data-i18n-attrs="aria-label:toolbarLabel">
+        <button type="button" data-panel="couches" aria-expanded="false" aria-controls="panel-couches" title="Couches anatomiques" data-i18n="layers" data-i18n-attrs="title:titleLayers">COUCH</button>
+        <button type="button" data-panel="info" aria-expanded="false" aria-controls="panel-info" title="Information" data-i18n="info" data-i18n-attrs="title:titleInfo">INFO</button>
+        <button type="button" data-panel="reglages" aria-expanded="false" aria-controls="panel-reglages" title="Réglages de l’application" data-i18n="settings" data-i18n-attrs="title:titleSettings">REGL</button>
+      </nav>
+      <section id="viewport">
+        <div class="panel" id="panel-couches" hidden>
+          <button type="button" class="panel-close" data-close-panel aria-label="Fermer">×</button>
+          <h2 data-i18n="layersTitle">Couches anatomiques</h2>
+          <fieldset class="couches" id="cp-couches">
+            <legend data-i18n="showHide">Afficher / masquer</legend>
+            <label class="maitre" for="cp-couche-all">
+              <input type="checkbox" aria-label="Toutes les couches" id="cp-couche-all" data-i18n-attrs="aria-label:allLayers" checked /> <span data-i18n="allLayers">Toutes les couches</span>
+            </label>
+            <label for="cp-couche-skin"><input type="checkbox" aria-label="Peau" id="cp-couche-skin" data-layer="skin" data-i18n-attrs="aria-label:skin" checked /> <span data-i18n="skin">Peau</span></label>
+            <label for="cp-couche-muscles"><input type="checkbox" aria-label="Muscles" id="cp-couche-muscles" data-layer="muscles" data-i18n-attrs="aria-label:muscles" checked /> <span data-i18n="muscles">Muscles</span></label>
+            <label for="cp-couche-skeleton"><input type="checkbox" aria-label="Squelette" id="cp-couche-skeleton" data-layer="skeleton" data-i18n-attrs="aria-label:skeleton" checked /> <span data-i18n="skeleton">Squelette</span></label>
+            <label for="cp-couche-organs"><input type="checkbox" aria-label="Organes" id="cp-couche-organs" data-layer="organs" data-i18n-attrs="aria-label:organs" checked /> <span data-i18n="organs">Organes</span></label>
+            <label for="cp-couche-vessels"><input type="checkbox" aria-label="Vaisseaux" id="cp-couche-vessels" data-layer="vessels" data-i18n-attrs="aria-label:vessels" checked /> <span data-i18n="vessels">Vaisseaux</span></label>
+            <label for="cp-couche-nerves"><input type="checkbox" aria-label="Nerfs" id="cp-couche-nerves" data-layer="nerves" data-i18n-attrs="aria-label:nerves" checked /> <span data-i18n="nerves">Nerfs</span></label>
+            <label for="cp-couche-cosmetic"><input type="checkbox" aria-label="Cheveux et sourcils" id="cp-couche-cosmetic" data-layer="cosmetic" data-i18n-attrs="aria-label:cosmetic" checked /> <span data-i18n="cosmetic">Cheveux et sourcils</span></label>
+          </fieldset>
+          <div class="presets" aria-label="Préréglages d’affichage" data-i18n-attrs="aria-label:presets">
+            <button type="button" id="cp-preset-skin" title="N’afficher que la peau et les cheveux" data-i18n="presetSkin" data-i18n-attrs="title:titleSkin">Peau</button>
+            <button type="button" id="cp-preset-muscles" title="N’afficher que les muscles" data-i18n="presetMuscles" data-i18n-attrs="title:titleMuscles">Muscles</button>
+            <button type="button" id="cp-preset-skeleton" title="N’afficher que le squelette" data-i18n="presetSkeleton" data-i18n-attrs="title:titleSkeleton">Squelette</button>
+            <button type="button" id="cp-preset-organs" title="N’afficher que les organes" data-i18n="presetOrgans" data-i18n-attrs="title:titleOrgans">Organes</button>
+            <button type="button" id="cp-preset-xray" aria-pressed="false" title="Afficher tous les calques en transparence" data-i18n="presetXray" data-i18n-attrs="title:titleXray">Rayon X</button>
+          </div>
+        </div>
+        <div class="panel" id="panel-info" hidden>
+          <button type="button" class="panel-close" data-close-panel aria-label="Fermer">×</button>
+          <h2 data-i18n="infoTitle">Information</h2>
+          <div id="corps-info" role="status" aria-live="polite" data-i18n="loading">Chargement…</div>
+          <p id="source-sexe-note" class="source-note">—</p>
+          <p class="avertissement" data-i18n="warning">Usage pédagogique uniquement. Ne remplace ni un diagnostic ni un avis médical.</p>
+        </div>
+        <div class="panel" id="panel-reglages" hidden>
+          <button type="button" class="panel-close" data-close-panel aria-label="Fermer">×</button>
+          <h2 data-i18n="settingsTitle">Réglages</h2>
+          <label for="setting-theme" data-i18n="themeLabel">Thème</label>
+          <select id="setting-theme" aria-label="Thème" data-i18n-attrs="aria-label:themeLabel">
+            <option value="system" data-i18n="themeSystem">Suivre le système</option>
+            <option value="light" data-i18n="themeLight">Clair</option>
+            <option value="dark" data-i18n="themeDark">Sombre</option>
+          </select>
+          <label for="setting-lang" data-i18n="languageLabel">Langue</label>
+          <select id="setting-lang" aria-label="Langue" data-i18n-attrs="aria-label:languageLabel">
+            <option value="fr" data-i18n="languageFr">Français</option>
+            <option value="en" data-i18n="languageEn">English</option>
+          </select>
+          <button type="button" id="clear-cache" data-i18n="clearCache">Vider le cache et recharger</button>
+          <p id="quality-status" class="quality-status" role="status" aria-live="polite">Qualité maximale (LOD0)</p>
+          <button type="button" id="quality-retry" hidden>Qualité maximale</button>
+          <details id="shortcuts-help">
+            <summary>Raccourcis clavier et gestes</summary>
+            <table>
+              <tbody>
+                <tr><th>Glisser (souris)</th><td>Tourner autour du corps</td></tr>
+                <tr><th>Shift, Ctrl ou Cmd + glisser</th><td>Déplacer en 2D (pan)</td></tr>
+                <tr><th>Molette</th><td>Zoomer vers le curseur</td></tr>
+                <tr><th>Shift + molette</th><td>Déplacer horizontalement</td></tr>
+                <tr><th>Clic droit ou molette enfoncée</th><td>Déplacer en 2D (pan)</td></tr>
+                <tr><th>Double-clic dans le vide</th><td>Zoomer ×2</td></tr>
+                <tr><th>Flèches</th><td>Déplacer en 2D (5 % de la vue par frappe)</td></tr>
+                <tr><th>W A S D</th><td>Tourner</td></tr>
+                <tr><th>F / R</th><td>Cadrer le corps / réinitialiser</td></tr>
+                <tr><th>[ et ]</th><td>Région anatomique précédente / suivante</td></tr>
+                <tr><th>1 à 6</th><td>Vues prédéfinies</td></tr>
+                <tr><th>Échap</th><td>Effacer la sélection</td></tr>
+                <tr><th>Tactile : 1 doigt</th><td>Tourner</td></tr>
+                <tr><th>Tactile : 2 doigts</th><td>Pincer pour zoomer, glisser pour déplacer</td></tr>
+                <tr><th>Tactile : 3 doigts</th><td>Déplacer en 2D</td></tr>
+              </tbody>
+            </table>
+          </details>
+        </div>
+        <div id="cp-view" tabindex="0" role="application" data-i18n-attrs="aria-label:canvasLabel" aria-label="Vue 3D interactive du corps humain" aria-keyshortcuts="f r + - ArrowLeft ArrowRight ArrowUp ArrowDown a d w s [ ] 1 2 3 4 5 6 Escape"></div>
+        <p class="gesture-hint" data-i18n="hint">Glissez pour tourner · double-tap pour zoomer</p>
+        <aside id="layer-rail" aria-label="Couches anatomiques, de l’extérieur vers l’intérieur">
+          <button type="button" id="layer-rail-toggle" aria-expanded="true" aria-controls="layer-rail-steps"
+                  title="Replier les couches" aria-label="Replier les couches">›</button>
+          <div id="layer-rail-steps" role="group" aria-label="Couches">
+            <button type="button" data-layer-step="skin">Peau</button>
+            <button type="button" data-layer-step="muscles">Muscles</button>
+            <button type="button" data-layer-step="vessels">Vaisseaux</button>
+            <button type="button" data-layer-step="nerves">Nerfs</button>
+            <button type="button" data-layer-step="skeleton">Squelette</button>
+            <button type="button" data-layer-step="organs">Organes</button>
+          </div>
+          <input id="layer-rail-slider" type="range" min="0" max="5" step="1" value="0"
+                 aria-label="Retirer les couches de l’extérieur vers l’intérieur" />
+          <p id="layer-rail-status" role="status" aria-live="polite">Toutes les couches</p>
+        </aside>
+        <div id="zoom-overlay" role="group" aria-label="Zoom">
+          <button type="button" id="zoom-in" aria-label="Zoomer" title="Zoomer">+</button>
+          <button type="button" id="zoom-out" aria-label="Dézoomer" title="Dézoomer">−</button>
+        </div>
+        <button type="button" id="pivot-indicator">Pivot : ensemble</button>
+        <div id="selection-popup" hidden role="dialog" aria-modal="false" data-i18n-attrs="aria-label:popupLabel" aria-label="Détails de la structure">
+          <button type="button" id="selection-close" data-i18n-attrs="aria-label:closeSelection" aria-label="Fermer la sélection">×</button>
+          <h2 id="selection-name"></h2>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
