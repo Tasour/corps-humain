@@ -43,14 +43,14 @@
         z-index:16; display:flex; flex-direction:column; align-items:center; gap:8px;
         padding:8px; border-radius:12px; background:var(--panel); border:1px solid var(--line);
         box-shadow:var(--shadow); opacity:0.96; max-width:136px; }
-      #layer-rail-toggle { width:44px; height:44px; min-height:44px; padding:0; border-radius:8px;
+      #layer-rail-toggle { touch-action:manipulation; width:44px; height:44px; min-height:44px; padding:0; border-radius:8px;
         border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink);
         cursor:pointer; font-size:16px; line-height:1.35; }
       #layer-rail.collapsed #layer-rail-steps, #layer-rail.collapsed #layer-rail-slider,
       #layer-rail.collapsed #layer-rail-status { display:none; }
       #layer-rail.collapsed { padding:4px; }
       #layer-rail-steps { display:flex; flex-direction:column; gap:4px; }
-      #layer-rail-steps button { min-height:44px; min-width:44px; padding:8px; font-size:11px;
+      #layer-rail-steps button { touch-action:manipulation; min-height:44px; min-width:44px; padding:8px; font-size:11px;
         line-height:1.35; border-radius:8px; border:1px solid var(--chip); background:var(--chip); color:var(--ink);
         cursor:pointer; }
       #layer-rail-steps button[aria-pressed="false"] { opacity:0.45; }

@@ -552,6 +552,14 @@ export function initCorpsViewer() {
       const label = collapsed ? 'Déplier les couches' : 'Replier les couches';
       railToggle.setAttribute('aria-label', label);
       railToggle.title = label;
+      /* On décale la vue d'une demi-largeur de rail sans toucher au zoom :
+       * recadrer complètement ferait perdre le zoom de l'utilisateur. */
+      const width = rail.getBoundingClientRect().width + 16;
+      const viewWidth = (camera.right - camera.left) / Math.max(camera.zoom, 0.001);
+      const dx = ((collapsed ? -1 : 1) * (width / 2) / (host.clientWidth || 1)) * viewWidth;
+      const target = ccTarget(); target.x += dx;
+      setLook(camera.position.clone().add(new THREE.Vector3(dx, 0, 0)), target);
+      cc.update(1 / 60); need = true; wake();
     });
   }
 
@@ -604,6 +612,12 @@ export function initCorpsViewer() {
     need = true;
   };
   const updateLayerAvailability = () => {};
+  /* Largeur occupée par le rail des couches quand il est ouvert. */
+  const railInset = () => {
+    const r = document.getElementById('layer-rail');
+    if (!r || r.classList.contains('collapsed')) return 0;
+    return r.getBoundingClientRect().width + 16;
+  };
   const fitView = () => {
     tween = null;
     activeRegion = null;
@@ -611,12 +625,18 @@ export function initCorpsViewer() {
     if (b.isEmpty()) return;
     const c = b.getCenter(new THREE.Vector3());
     const s = b.getSize(new THREE.Vector3());
-    setLook(new THREE.Vector3(c.x, c.y + 0.6, 4), c);
     pivotBody = activeSex; updatePivotIndicator();
     const a = (host.clientWidth || 1) / (host.clientHeight || 1);
     const span = a < 0.85 ? 1.05 : 1.12;
     const zoom = Math.min((2 * span * a) / Math.max(s.x, 0.1), (2 * span) / Math.max(s.y, 0.1)) * 0.85;
     setZoom(zoom);
+    /* Le rail ouvert recouvrait le bras : on décale le corps vers la gauche
+     * d'une demi-largeur de rail, en unités monde de la vue courante. */
+    const inset = railInset();
+    const viewWidth = (camera.right - camera.left) / Math.max(camera.zoom, 0.001);
+    const shift = inset ? (inset / (host.clientWidth || 1)) * viewWidth / 2 : 0;
+    const target = c.clone().add(new THREE.Vector3(shift, 0, 0));
+    setLook(new THREE.Vector3(target.x, target.y + 0.6, 4), target);
     cc.update(1 / 60); need = true;
   };
   const resetView = () => {
@@ -1607,6 +1627,7 @@ export function initCorpsViewer() {
     e.preventDefault();
   });
   for (const b of boxes) b.addEventListener('change', () => {
+    railSaved = null;   // un réglage manuel annule l'isolement mémorisé
     sync(); writeUrl(); apply(); railSync();
   });
   master.addEventListener('change', () => {
@@ -1674,7 +1695,7 @@ export function initCorpsViewer() {
     }
   }
   resize(); wake();
-  readUrl();
+  readUrl(); railSync();
   const maleUrls = Object.values(MALE.files).flat().map((f) => MALE.dir + f);
   activate().then(() => {
     navigator.serviceWorker?.controller?.postMessage({ type: 'PRECACHE_MODELS', urls: maleUrls });

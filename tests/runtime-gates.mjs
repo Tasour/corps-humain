@@ -181,6 +181,41 @@ async function open({ mobile = true, failLod0 = false } = {}) {
   await ctx.close();
 }
 
+/* 6. Rail ouvert : aucun overlay ne recouvre le corps, et le zoom est préservé.
+ * Garde-fou du défaut « le rail masquait le bras droit ». */
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, serviceWorkers: 'block' });
+  const page = await ctx.newPage();
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'deviceMemory', { get: () => 2 });
+  });
+  await page.goto(base + '/?capture=1', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => /maillage\(s\) visible\(s\)/.test(
+    document.getElementById('corps-info')?.textContent || ''), null, { timeout: 120000 });
+  await page.waitForTimeout(2500);
+  const z0 = await page.evaluate(() => window.__corps.camera.zoom);
+  await page.click('#layer-rail-toggle');
+  await page.waitForTimeout(600);
+  const r = await page.evaluate(() => {
+    const c = window.__corps;
+    const el = document.querySelector('#cp-view canvas');
+    const rect = el.getBoundingClientRect();
+    const b = new c.THREE.Box3().setFromObject(c.maleModel);
+    const xs = [];
+    for (const x of [b.min.x, b.max.x]) for (const y of [b.min.y, b.max.y]) for (const z of [b.min.z, b.max.z]) {
+      const v = new c.THREE.Vector3(x, y, z).project(c.camera);
+      xs.push(rect.left + (v.x * 0.5 + 0.5) * rect.width);
+    }
+    const rail = document.getElementById('layer-rail').getBoundingClientRect();
+    const overlap = Math.max(0, Math.min(rail.right, Math.max(...xs)) - Math.max(rail.left, Math.min(...xs)));
+    return { overlap: Math.round(overlap), zoom: c.camera.zoom };
+  });
+  const ok = r.overlap === 0 && Math.abs(r.zoom - z0) < 0.01;
+  if (!ok) failed = true;
+  results.push(`rail ouvert : chevauchement ${r.overlap} px, zoom ${z0.toFixed(2)}→${r.zoom.toFixed(2)} ${ok ? 'OK' : 'ECHEC'}`);
+  await ctx.close();
+}
+
 await browser.close();
 server.close();
 console.log(results.join('\n'));
