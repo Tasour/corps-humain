@@ -57,8 +57,11 @@ async function open({ mobile = true, failLod0 = false } = {}) {
     document.getElementById('corps-info')?.textContent || ''), null, { timeout: 180000 });
   await page.waitForFunction(() => window.__firstRenderAt > 0, null, { timeout: 60000 });
   const data = await page.evaluate(() => {
-    const t = window.__firstRenderAt;
-    const entries = performance.getEntriesByType('resource').filter((e) => e.responseEnd <= t);
+    /* Mesure déterministe : on ne dépend pas du moment du paint (variable selon
+     * la machine CI). Le chemin critique est défini par nature : les trois GLB
+     * prioritaires, le JS, le wasm Draco et les descriptions gzippées. */
+    const critical = /(skin|muscles|skeleton)(-lod1)?\.glb$|\.js$|\.wasm$|selection-descriptions-seema\.json\.gz$/;
+    const entries = performance.getEntriesByType('resource').filter((e) => critical.test(e.name));
     const bytes = entries.reduce((s, e) => s + (e.transferSize || 0), 0);
     let parts = 0;
     window.__corps?.maleModel?.traverse((o) => { if (o.isBatchedMesh) parts += (o.userData.parts || []).length; });
