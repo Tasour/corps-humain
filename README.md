@@ -18,9 +18,11 @@ Le contrôle des collisions est assuré par `npm run check:collisions` et
 Le site affiche un **unique modèle masculin** : **3D Human Body Anatomy** (`seema`,
 CC BY-SA 4.0, via Z-Anatomy/BodyParts3D), servi depuis `docs/models/male/`. Les 12 pièces
 génitales masculines (pénis, testicules, prostate, conduits et vésicules, CC BY 4.0) sont
-extraites par `scripts/extract-male-genitalia.py` et couvertes par un patch cutané à
-ouverture elliptique (`scripts/extract-modesty-cover.mjs`). Les mesures sont archivées dans
-`docs/analyses/anatomie-2026-11-25.json` et vérifiées par `npm run test:anatomie`.
+extraites par `scripts/extract-male-genitalia.py`. La région génitale est fermée par le
+« Modesty cover » d'origine, conservé dans la peau et rétracté de 4 % (`conformCover` dans
+`src/corps-viewer.js`) : le patch découpé à ouverture elliptique laissait un trou en étoile
+et des lambeaux. La génitalité est masquée tant que la peau est visible. Les mesures sont
+archivées dans `docs/analyses/anatomie-2026-11-25.json` et vérifiées par `npm run test:anatomie`.
 
 ### Commandes de navigation
 

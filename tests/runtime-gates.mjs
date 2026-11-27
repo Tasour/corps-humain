@@ -216,6 +216,28 @@ async function open({ mobile = true, failLod0 = false } = {}) {
   await ctx.close();
 }
 
+/* 7. Sensibilité du zoom : trois crans de molette doivent franchement
+ * rapprocher. Mesuré à 1,38× par cran ; le seuil de 1,25 bloque un retour
+ * discret au réglage précédent (1,19). */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 }, serviceWorkers: 'block' });
+  const page = await ctx.newPage();
+  await page.goto(base + '/?capture=1', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => /maillage\(s\) visible\(s\)/.test(
+    document.getElementById('corps-info')?.textContent || ''), null, { timeout: 120000 });
+  await page.waitForTimeout(2000);
+  const z0 = await page.evaluate(() => window.__corps.camera.zoom);
+  await page.mouse.move(600, 450);
+  for (let i = 0; i < 3; i++) await page.mouse.wheel(0, -120);
+  await page.waitForTimeout(600);
+  const z1 = await page.evaluate(() => window.__corps.camera.zoom);
+  const gain = Math.pow(z1 / z0, 1 / 3);
+  const ok = gain >= 1.25;
+  if (!ok) failed = true;
+  results.push(`zoom : ${gain.toFixed(2)}× par cran (≥ 1,25) ${ok ? 'OK' : 'TROP FAIBLE'}`);
+  await ctx.close();
+}
+
 await browser.close();
 server.close();
 console.log(results.join('\n'));

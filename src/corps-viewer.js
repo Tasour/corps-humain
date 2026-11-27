@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import CameraControls from 'camera-controls';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 CameraControls.install({ THREE });
 import { t, getI18nLang } from './i18n.js';
 
@@ -13,6 +14,8 @@ const REFERENCE_LAYERS = ['pregnancy'];
 const ALL_LAYERS = [...LAYERS, ...REFERENCE_LAYERS];
 const FEMALE_OVERRIDES = { G_FJ2811: 'skin' };
 const THIN_LAYERS = new Set(['nerves', 'vessels', 'cosmetic']);
+/* Couches strictement sous-cutanées : invisibles à travers une peau opaque. */
+const UNDER_SKIN = new Set(['vessels', 'nerves']);
 const RENDER_ORDER = { pregnancy: 0, organs: 1, skeleton: 2, vessels: 3,
   nerves: 4, muscles: 5, skin: 6, cosmetic: 7 };
 const MAP = {
@@ -51,11 +54,6 @@ const MALE_GENITALIA = {
   manifest: 'male-genitalia.json',
   chunk: 'male-genitalia.bin.gz',
 };
-const MALE_SKIN_PATCH = {
-  dir: './docs/models/male-genitalia/',
-  manifest: 'skin-patch.json',
-  chunk: 'skin-patch.bin.gz',
-};
 /* Compléments issus de la référence masculine : jamais fusionnés avec le HRA,
  * chaque pièce reste sélectionnable et étiquetée comme adaptation. */
 const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -90,12 +88,19 @@ export function initCorpsViewer() {
     antialias: true, preserveDrawingBuffer: capture, powerPreference: 'high-performance',
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  /* Rendu photométrique : sans tone mapping ni environnement, une peau unie
+   * paraît plastique. ACES + un studio suffisent à changer la perception. */
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.92;
   host.appendChild(renderer.domElement);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x444455, 1.9));
-  for (const [x, z, i] of [[2, 3, 2.0], [-2, -1, 0.8]]) {
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x444455, 0.7));
+  for (const [x, z, i] of [[2, 3, 1.1], [-2, -1, 0.45]]) {
     const l = new THREE.DirectionalLight(0xffffff, i);
     l.position.set(x, -2, z); scene.add(l);
   }
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.6;
   /* camera-controls : transitions amorties, zoom vers le curseur, truck/tour
    * et gestes tactiles. reduced-motion supprime l'amortissement. */
   const cc = new CameraControls(camera, renderer.domElement);
@@ -104,7 +109,7 @@ export function initCorpsViewer() {
   cc.draggingSmoothTime = reduced ? 0 : 0.09;
   cc.minZoom = 0.5;
   cc.maxZoom = 20;
-  cc.dollySpeed = 1.8;
+  cc.dollySpeed = 4.0;
   cc.mouseButtons.left = CameraControls.ACTION.ROTATE;
   cc.mouseButtons.middle = CameraControls.ACTION.TRUCK;
   cc.mouseButtons.right = CameraControls.ACTION.TRUCK;
@@ -155,13 +160,13 @@ export function initCorpsViewer() {
   const master = document.getElementById('cp-couche-all');
   const mats = new Map();
   const extraMats = new Map();
-  const colors = { skin: '#bc9c7e', muscles: '#a9584c', skeleton: '#e4dcc0',
+  const colors = { skin: '#c99b7c', muscles: '#a9584c', skeleton: '#e4dcc0',
     organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f', pregnancy: '#bb9068',
     cosmetic: '#4a3529', hair: '#4a3529',
     /* L'œil est déjà modélisé (sclère, iris, cornée) mais tout était peint en
      * couleur de peau : iris invisible. Trois matières suffisent. */
     sclera: '#e9e4da', iris: '#7a5236', cornea: '#e3edf2', pupil: '#0d0b0a',
-    cartilage: '#d9d0ba' };
+    cartilage: '#d9d0ba', lid: '#b9857a' };
   for (const [k, c] of Object.entries(colors)) {
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
@@ -170,12 +175,55 @@ export function initCorpsViewer() {
   mats.get('cornea').opacity = 0.1;
   mats.get('cornea').depthWrite = false;
   mats.get('cornea').roughness = 0.1;
-  // Variation déterministe et subtile de la peau, sans texture réseau.
-  mats.get('skin').onBeforeCompile = (shader) => {
-    shader.fragmentShader = shader.fragmentShader.replace(
-      '#include <color_fragment>',
-      '#include <color_fragment>\n diffuseColor.rgb *= 0.975 + 0.025 * sin(gl_FragCoord.x * 0.07 + gl_FragCoord.y * 0.11);');
+  /* Micro-relief de peau sans texture ni UV : bruit procédural triplanaire
+   * (pores fins + marbrures larges), rugosité variable et légère rougeur.
+   * Le motif précédent (sinus sur les coordonnées écran) était un placage
+   * fixe à l'écran, pas une matière. */
+  const SKIN_NOISE = `
+    float h13(vec3 p){ p = fract(p * 0.3183099 + vec3(0.1, 0.2, 0.3)); p *= 17.0;
+      return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+    float vnoise(vec3 x){ vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(mix(h13(i), h13(i + vec3(1,0,0)), f.x), mix(h13(i + vec3(0,1,0)), h13(i + vec3(1,1,0)), f.x), f.y),
+                 mix(mix(h13(i + vec3(0,0,1)), h13(i + vec3(1,0,1)), f.x), mix(h13(i + vec3(0,1,1)), h13(i + vec3(1,1,1)), f.x), f.y), f.z); }
+  `;
+  const skinDetail = (material, strength = 0.0022) => {
+    material.onBeforeCompile = (shader) => {
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
+        .replace('#include <begin_vertex>',
+          '#include <begin_vertex>\n  vWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\n' + SKIN_NOISE)
+        .replace('#include <color_fragment>', `#include <color_fragment>
+          diffuseColor.rgb *= 0.965 + 0.05 * vnoise(vWPos * 26.0);
+          diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.03, 0.97, 0.95),
+            0.12 * vnoise(vWPos * 60.0));`)
+        .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
+          roughnessFactor = clamp(roughnessFactor * (0.94 + 0.12 * vnoise(vWPos * 90.0)), 0.04, 1.0);`)
+        .replace('#include <normal_fragment_begin>', `#include <normal_fragment_begin>
+        {
+          vec3 nW = normalize(normal * mat3(viewMatrix));
+          /* Fréquence bornée à ~8 mm : au-delà, l'échantillonnage par pixel
+           * transformait les pores en striures verticales (aspect bois). */
+          float h = vnoise(vWPos * 120.0) * 0.65 + vnoise(vWPos * 42.0) * 0.35;
+          vec3 dp1 = dFdx(vWPos); vec3 dp2 = dFdy(vWPos);
+          float hx = dFdx(h); float hy = dFdy(h);
+          vec3 R1 = cross(dp2, nW); vec3 R2 = cross(nW, dp1);
+          float det = dot(dp1, R1);
+          vec3 grad = sign(det) * (hx * R1 + hy * R2);
+          vec3 nPert = normalize(abs(det) * nW - grad * ${strength.toFixed(5)});
+          normal = normalize(mat3(viewMatrix) * nPert);
+        }`);
+    };
+    material.needsUpdate = true;
+    return material;
   };
+  /* Amplitude volontairement très faible : le maillage est à ~1 cm, un relief
+   * de 1 mm sous-échantillonné produit un motif d'écorce. On casse le plastique
+   * sans dessiner de motif. */
+  skinDetail(mats.get('skin'), 0.0005);
+  skinDetail(mats.get('organs'), 0.00022);
+  skinDetail(mats.get('muscles'), 0.00028);
   let xray = false;
   const xrayButton = document.getElementById('cp-preset-xray');
   const setXray = (on) => {
@@ -389,10 +437,9 @@ export function initCorpsViewer() {
     const q = new URLSearchParams(location.search);
     const l = q.get('layers');
     if (!l) {
-      /* Par défaut : enveloppe contenue (peau et cheveux). Les couches
-       * internes restent activables d'un geste. */
-      const clean = new Set(['skin', 'cosmetic']);
-      for (const b of boxes) b.checked = clean.has(b.dataset.layer);
+      /* Par défaut : toutes les couches actives. Le rail les retire ensuite
+       * une à une, de l'extérieur vers l'intérieur. */
+      for (const b of boxes) b.checked = ALL_LAYERS.includes(b.dataset.layer);
       sync();
       return;
     }
@@ -587,10 +634,17 @@ export function initCorpsViewer() {
     const active = new Set(boxes.filter((b) => b.checked).map((b) => b.dataset.layer));
     let n = 0;
     for (const m of activeBodies()) m.traverse((o) => {
+      /* Vaisseaux et nerfs courent sous la peau : avec une peau opaque, ils
+       * ne peuvent pas être vus, et les quelques-uns qui affleurent perçaient
+       * la surface (traits rouges sur les mollets). On les masque tant que la
+       * peau est opaque ; la vue radio les rétablit. */
+      const opaque = active.has('skin') && !xray;
       if (o.isBatchedMesh) {
+        const under = UNDER_SKIN.has(o.userData.batchLayer) && opaque;
         o.visible = o.userData.altForSkin
           ? !active.has('skin') && (active.has('skeleton') || active.has('organs'))
-          : active.has(o.userData.batchLayer);
+          : active.has(o.userData.batchLayer) &&
+            !(o.userData.hideWithSkin && active.has('skin')) && !under;
         if (o.visible) n += o.userData.parts?.length || 0;
         return;
       }
@@ -803,6 +857,91 @@ export function initCorpsViewer() {
     return task;
   };
 
+  /* La peau est livrée en une centaine de zones distinctes (front, joue,
+   * menton…). À chaque couture, les deux zones ont leurs propres sommets et
+   * leurs propres normales : l'éclairage casse et dessine des arêtes
+   * verticales — c'est la première cause de l'aspect « cartoon ». On moyenne
+   * les normales des sommets confondus, sans fusionner les maillages pour
+   * que chaque zone reste sélectionnable. */
+  const smoothSeams = (root) => {
+    root.updateMatrixWorld(true);
+    const q = 1e4;                       // 0,1 mm : les coutures sont exactes
+    const buckets = new Map();
+    const items = [];
+    const v = new THREE.Vector3();
+    const n = new THREE.Vector3();
+    root.traverse((o) => {
+      if (!o.isMesh || !o.geometry?.getAttribute) return;
+      const pos = o.geometry.getAttribute('position');
+      const nor = o.geometry.getAttribute('normal');
+      if (!pos || !nor || !o.matrixWorld) return;
+      const nm = new THREE.Matrix3().getNormalMatrix(o.matrixWorld);
+      const keys = new Array(pos.count);
+      for (let i = 0; i < pos.count; i++) {
+        v.fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld);
+        n.fromBufferAttribute(nor, i).applyMatrix3(nm).normalize();
+        const key = `${Math.round(v.x * q)},${Math.round(v.y * q)},${Math.round(v.z * q)}`;
+        keys[i] = key;
+        const b = buckets.get(key);
+        if (b) b.push(n.x, n.y, n.z);
+        else buckets.set(key, [n.x, n.y, n.z]);
+      }
+      items.push({ o, keys, nm });
+    });
+    const own = new THREE.Vector3();
+    for (const { o, keys, nm } of items) {
+      const nor = o.geometry.getAttribute('normal');
+      const inv = new THREE.Matrix3().copy(nm).invert();
+      for (let i = 0; i < keys.length; i++) {
+        const b = buckets.get(keys[i]);
+        if (!b || b.length < 3) continue;
+        /* On n'agrège que les normales du même côté de la surface : près d'un
+         * pli (paupière, aile du nez) deux sommets confondus peuvent porter
+         * des normales opposées, et leur moyenne fabriquerait un faux méplat. */
+        own.fromBufferAttribute(nor, i).applyMatrix3(nm).normalize();
+        let sx = 0, sy = 0, sz = 0;
+        for (let k = 0; k < b.length; k += 3) {
+          if (own.x * b[k] + own.y * b[k + 1] + own.z * b[k + 2] < 0.4) continue;
+          sx += b[k]; sy += b[k + 1]; sz += b[k + 2];
+        }
+        n.set(sx, sy, sz);
+        if (n.lengthSq() < 1e-12) continue;
+        n.normalize().applyMatrix3(inv).normalize();
+        nor.setXYZ(i, n.x, n.y, n.z);
+      }
+      nor.needsUpdate = true;
+    }
+  };
+
+  /* Le « Modesty cover » du modèle flotte à 6–15 mm au-dessus de la peau : à
+   * l'écran, ce décalage dessine une culotte avec un rebord net sur les
+   * hanches. On le rétracte de 4 % autour de son centre : son bord passe
+   * sous la peau et disparaît, seule émerge la bosse du pubis, qui ferme
+   * proprement la région génitale. */
+  const conformCover = (root) => {
+    const cover = [];
+    root.traverse((o) => { if (o.isMesh && /modesty[ _]?cover/i.test(o.name || '')) cover.push(o); });
+    if (!cover.length) return;
+    root.updateMatrixWorld(true);
+    const box = new THREE.Box3();
+    for (const o of cover) box.expandByObject(o);
+    if (box.isEmpty()) return;
+    const center = box.getCenter(new THREE.Vector3());
+    const scale = 0.96;
+    for (const o of cover) {
+      const pos = o.geometry.getAttribute('position');
+      if (!pos) continue;
+      const c = center.clone().applyMatrix4(o.matrixWorld.clone().invert());
+      for (let i = 0; i < pos.count; i++) {
+        pos.setXYZ(i,
+          c.x + (pos.getX(i) - c.x) * scale,
+          c.y + (pos.getY(i) - c.y) * scale,
+          c.z + (pos.getZ(i) - c.z) * scale);
+      }
+      pos.needsUpdate = true;
+    }
+  };
+
   async function buildGlbSet(cfg, { defer = true } = {}) {
     draco.setDecoderPath('./draco/');
     const g = new THREE.Group();
@@ -814,17 +953,38 @@ export function initCorpsViewer() {
       const doomed = [];
       gltf.scene.traverse((o) => {
         if (!o.isMesh) return;
-        if (/modesty[ _]?cover/i.test(o.name)) { doomed.push(o); return; }
+        /* Le « Modesty cover » du modèle est la seule surface propre de la
+         * région génitale : le patch découpé qui le remplaçait laissait un trou
+         * en étoile et des lambeaux. On le garde tel quel, dans la peau. */
+        if (/modesty[ _]?cover/i.test(o.name || '')) {
+          o.userData.selectionLabel = 'Peau de la région génitale';
+          o.userData.selectionId = o.name;
+        }
         const eye = /^(sclera|iris|cornea)/i.exec(o.name || '')?.[1]?.toLowerCase();
         /* Le GLB organes contient une seconde copie exacte de l'œil : elle
          * z-fightait avec celle de la peau. On ne garde que la copie cutanée. */
         if (eye && layer !== 'skin') { doomed.push(o); return; }
         o.userData.file = f;
-        const cosmetic = matches(o.name, HAIR_TOKENS);
-        o.material = mats.get(eye || (cosmetic ? 'hair' : layer));
+        const cosmetic = matches(o.name, HAIR_TOKENS) || /eyelash|^eyebrow/i.test(o.name || '');
+        /* Le bord libre de la paupière laissait voir le muscle rouge : on lui
+         * donne la teinte d'une muqueuse, sinon le regard paraît injecté. */
+        const lid = /palpebral_part_of_orbicularis/i.test(o.name || '');
+        /* Les muscles oculomoteurs remplissent l'orbite derrière le globe :
+         * avec la peau, ils apparaissaient en rouge dans l'ouverture
+         * palpébrale (regard injecté). On les masque tant que la peau est là. */
+        if (/(lateral|medial|superior|inferior)_rectus_muscle|(superior|inferior)_oblique_muscle|levator_palpebrae/i.test(o.name || '')) {
+          o.geometry.computeBoundingBox();
+          const bb = o.geometry.boundingBox;
+          if (bb && (bb.min.y + bb.max.y) / 2 > 1.4) o.userData.hideWithSkin = true;
+        }
+        o.material = mats.get(eye || (cosmetic ? 'hair' : (lid ? 'lid' : layer)));
         mark(o, layer, cfg.id, o.name, cosmetic ? 'cosmetic' : undefined);
       });
       for (const o of doomed) o.parent.remove(o);
+      if (layer === 'skin') {
+        conformCover(gltf.scene);
+        if (!/nosmooth/.test(location.search)) smoothSeams(gltf.scene);
+      }
       /* Le modèle fournit l'iris mais pas la pupille : un disque de 40 % du
        * rayon de l'iris, posé 0,8 mm devant, suffit à donner un regard. */
       gltf.scene.traverse((o) => {
@@ -899,9 +1059,11 @@ export function initCorpsViewer() {
       const layer = mesh.userData.layer || 'organs';
       /* Clé = couche + matériau : sans cela, l'iris et la cornée seraient
        * fusionnés dans le lot de peau et perdraient leur couleur. */
-      const key = layer + '|' + (mesh.material?.uuid || 'default');
+      const key = layer + '|' + (mesh.material?.uuid || 'default') +
+        (mesh.userData.hideWithSkin ? '|hidden' : '');
       if (!groups.has(key)) {
-        groups.set(key, { material: mesh.material, layer, geometries: [], metas: [] });
+        groups.set(key, { material: mesh.material, layer, hideWithSkin: !!mesh.userData.hideWithSkin,
+          geometries: [], metas: [] });
       }
       geo.computeBoundingBox();
       geo.computeBoundingSphere();
@@ -921,6 +1083,7 @@ export function initCorpsViewer() {
       const batch = new THREE.BatchedMesh(group.geometries.length, vertices, indices, group.material);
       batch.userData.batchLayer = layer;
       batch.userData.altForSkin = group.metas.every((m) => m.userData.altForSkin);
+      batch.userData.hideWithSkin = group.hideWithSkin;
       batch.userData.parts = [];
       batch.renderOrder = RENDER_ORDER[layer] ?? 0;
       const identity = new THREE.Matrix4();
@@ -1242,30 +1405,6 @@ export function initCorpsViewer() {
     origin: 'référence masculine adaptée',
   });
 
-  async function buildMaleSkinPatch() {
-    const at = await (await fetch(versioned(MALE_SKIN_PATCH.dir + MALE_SKIN_PATCH.manifest))).json();
-    const buffer = await chunkFetch({ url: MALE_SKIN_PATCH.dir + MALE_SKIN_PATCH.chunk.replace('.gz', ''),
-      gzip: MALE_SKIN_PATCH.dir + MALE_SKIN_PATCH.chunk });
-    const g = new THREE.Group();
-    for (const p of at.parts) {
-      assertRange(p, buffer, p.name);
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(
-        new Float32Array(buffer, p.positions, p.vertexCount * 3), 3));
-      geo.setAttribute('normal', new THREE.BufferAttribute(
-        new Float32Array(buffer, p.normals, p.vertexCount * 3), 3));
-      geo.setIndex(new THREE.BufferAttribute(new Uint32Array(buffer, p.indices, p.indexCount), 1));
-      validateGeometry(geo, p.name);
-      geo.computeBoundingSphere();
-      const m = new THREE.Mesh(geo, mats.get('skin'));
-      m.name = p.name;
-      mark(m, 'skin', MALE.id, p.name, 'skin');
-      m.userData.selectionLabel = 'Peau autour des organes génitaux';
-      g.add(m);
-    }
-    return g;
-  }
-
   async function buildMaleGenitalia() {
     const at = await (await fetch(versioned(MALE_GENITALIA.dir + MALE_GENITALIA.manifest))).json();
     const buffer = await chunkFetch({ url: MALE_GENITALIA.dir + MALE_GENITALIA.chunk.replace('.gz', ''),
@@ -1284,6 +1423,9 @@ export function initCorpsViewer() {
       const m = new THREE.Mesh(geo, mats.get('organs'));
       m.name = p.id;
       mark(m, 'reproductive', MALE.id, p.id, 'organs');
+      /* Organes génitaux externes : la peau (et son couvreur) les recouvre.
+       * Sans cela ils traversaient la surface cutanée au bassin. */
+      m.userData.hideWithSkin = true;
       m.userData.selectionLabel = p.name;
       m.userData.selectionSource = MALE.id;
       m.userData.selectionEntry = descriptions[MALE.id]?.[p.id] || {
@@ -1379,8 +1521,6 @@ export function initCorpsViewer() {
     }
     const genitalia = await buildMaleGenitalia();
     for (const child of [...genitalia.children]) model.add(child);
-    const skinPatch = await buildMaleSkinPatch();
-    for (const child of [...skinPatch.children]) model.add(child);
     model.position.x = 0;
     batchModel(model);
     setNavBoundary(model);
@@ -1454,7 +1594,11 @@ export function initCorpsViewer() {
   const ensureApi = () => {
     if (window.__corps) return;
     window.__corps = {
-      THREE, camera, controls, renderer, outlineGroup, fitView, resetView, focusPoint,
+      THREE, scene, camera, controls, renderer, outlineGroup, mats, fitView, resetView, focusPoint,
+      setLookAt: (px, py, pz, tx, ty, tz) => {
+        setLook(new THREE.Vector3(px, py, pz), new THREE.Vector3(tx, ty, tz));
+        need = true;
+      },
       observe, cycleRegion, regionBox, regions: REGIONS,
       stepTween: (ms) => { if (!tween) return false; const moved = applyTween(tween ? tween.t0 + ms : performance.now()); need = true; return moved; },
       renderNow: () => { renderer.render(scene, camera); },
@@ -1586,7 +1730,7 @@ export function initCorpsViewer() {
       const hit = pointFromClient(e.clientX, e.clientY);
       const key = hit ? regionAt(hit) : null;
       if (key) observe(key);
-      else zoomAtPoint(e.clientX, e.clientY, 2.0);
+      else zoomAtPoint(e.clientX, e.clientY, 2.5);
       return;
     }
     lastTap = { t: now, x: e.clientX, y: e.clientY };
@@ -1602,8 +1746,8 @@ export function initCorpsViewer() {
     switch (e.key) {
       case 'f': case 'F': fitView(); break;
       case 'r': case 'R': resetView(); break;
-      case '+': case '=': zoomBy(1.35); break;
-      case '-': case '_': zoomBy(1 / 1.35); break;
+      case '+': case '=': zoomBy(1.5); break;
+      case '-': case '_': zoomBy(1 / 1.5); break;
       case 'ArrowLeft': panBy(-panStep(), 0); break;
       case 'ArrowRight': panBy(panStep(), 0); break;
       case 'ArrowUp': panBy(0, panStep()); break;

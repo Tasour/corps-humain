@@ -28,6 +28,6 @@ assert.ok(!js.includes("position.x = 0.45"), "décalage de modèle encore prése
 assert.ok(!js.includes("position.x = -0.45"), "décalage de modèle encore présent");
 assert.ok(!js.includes("FEMALE_CONTAIN"), "déformation par couche encore présente");
 assert.ok(!js.includes("containFemaleLayers"), "rétractation par couche encore présente");
-assert.ok(js.includes("const clean = new Set(['skin', 'cosmetic'])"),
-  "affichage par défaut non nettoyé");
+assert.ok(js.includes("for (const b of boxes) b.checked = ALL_LAYERS.includes(b.dataset.layer);"),
+  "affichage par défaut incomplet : toutes les couches doivent être actives");
 console.log("PASS préférences, langues et caméra stable");
