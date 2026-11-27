@@ -42,7 +42,15 @@ assert.ok(js.includes('!(o.userData.hideWithSkin && active.has(\'skin\'))'), 'r�
 /* 5. Région génitale : couvreur d'origine, rétracté, sans patch découpé. */
 assert.ok(/modesty\[ _\]\?cover/i.test(js), 'couvreur génital non reconnu');
 assert.ok(js.includes('const conformCover = '), 'rétraction du couvreur absente');
-assert.ok(/const scale = 0\.96/.test(js), 'facteur de rétraction inattendu');
+assert.ok(/const GUARD = 0\.0015/.test(js), 'garde de 1,5 mm du couvreur absente');
+assert.ok(js.includes('computeVertexNormals()'), 'normales du couvreur non recalculées');
+
+/* 5bis. Regard et bouche : anneau limbique, lèvres teintées, peau adoucie. */
+assert.ok(js.includes("limbus: '#4a2c1a'"), 'anneau limbique absent');
+assert.ok(js.includes('new THREE.RingGeometry(r * 1.02, r * 2.95 / 3, 32)'), 'limbe non posé au bord de l’iris');
+assert.ok(js.includes('MeshPhysicalMaterial'), 'peau sans rétrodiffusion');
+assert.ok(js.includes('sheen: 0.55'), 'sheen de peau non réglé');
+assert.ok(/vWPos\.y - 1\.529/.test(js), 'masque des lèvres absent');
 assert.ok(!js.includes('buildMaleSkinPatch'), 'ancien patch découpé encore chargé');
 
 /* 6. Affichage initial : toutes les couches. */

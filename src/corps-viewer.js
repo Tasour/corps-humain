@@ -166,8 +166,18 @@ export function initCorpsViewer() {
     /* L'œil est déjà modélisé (sclère, iris, cornée) mais tout était peint en
      * couleur de peau : iris invisible. Trois matières suffisent. */
     sclera: '#e9e4da', iris: '#7a5236', cornea: '#e3edf2', pupil: '#0d0b0a',
-    cartilage: '#d9d0ba', lid: '#b9857a' };
+    cartilage: '#d9d0ba', lid: '#b9857a', limbus: '#4a2c1a' };
   for (const [k, c] of Object.entries(colors)) {
+    if (k === 'skin') {
+      /* Une peau n'est pas du plastique : sa rétrodiffusion adoucit les
+       * transitions ombre-lumière (sheen chaud), sans coût de SSS complet. */
+      mats.set(k, new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(c), roughness: 0.52, sheen: 0.55,
+        sheenRoughness: 0.75, sheenColor: new THREE.Color('#ff9d7a'),
+        specularIntensity: 0.45,
+      }));
+      continue;
+    }
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
   /* La cornée translucide blanchit l'iris : on la rend presque invisible. */
@@ -197,7 +207,17 @@ export function initCorpsViewer() {
         .replace('#include <color_fragment>', `#include <color_fragment>
           diffuseColor.rgb *= 0.965 + 0.05 * vnoise(vWPos * 26.0);
           diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.03, 0.97, 0.95),
-            0.12 * vnoise(vWPos * 60.0));`)
+            0.12 * vnoise(vWPos * 60.0));
+          /* Lèvres : la bouche est à une position fixe du modèle, un masque
+           * ellipsoïdal serré suffit ; les joues et le menton restent hors champ. */
+          {
+            float mx = vWPos.x / 0.016;
+            float my = (vWPos.y - 1.529) / 0.011;
+            float mz = (vWPos.z - 0.096) / 0.010;
+            float lip = exp(-0.5 * (mx * mx + my * my + mz * mz));
+            diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.05, 0.85, 0.83),
+              0.4 * lip);
+          }`)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
           roughnessFactor = clamp(roughnessFactor * (0.94 + 0.12 * vnoise(vWPos * 90.0)), 0.04, 1.0);`)
         .replace('#include <normal_fragment_begin>', `#include <normal_fragment_begin>
@@ -913,32 +933,119 @@ export function initCorpsViewer() {
     }
   };
 
-  /* Le « Modesty cover » du modèle flotte à 6–15 mm au-dessus de la peau : à
-   * l'écran, ce décalage dessine une culotte avec un rebord net sur les
-   * hanches. On le rétracte de 4 % autour de son centre : son bord passe
-   * sous la peau et disparaît, seule émerge la bosse du pubis, qui ferme
-   * proprement la région génitale. */
+  /* Le « Modesty cover » du modèle est une coque qui flotte à 6–16 mm au-dessus
+   * de la peau (mesuré sommet par sommet) : à l'écran, ce décalage dessine une
+   * culotte avec un rebord net. On plaque la coque à 1,5 mm de la surface du
+   * corps : chaque sommet s'avance le long de sa normale d'un écart mesuré,
+   * puis lissé sur le maillage pour ne pas suivre le grain des sommets de peau. */
   const conformCover = (root) => {
     const cover = [];
     root.traverse((o) => { if (o.isMesh && /modesty[ _]?cover/i.test(o.name || '')) cover.push(o); });
     if (!cover.length) return;
     root.updateMatrixWorld(true);
-    const box = new THREE.Box3();
-    for (const o of cover) box.expandByObject(o);
-    if (box.isEmpty()) return;
-    const center = box.getCenter(new THREE.Vector3());
-    const scale = 0.96;
+    const cell = 0.02;
+    const grid = new Map();
+    const v = new THREE.Vector3();
+    root.traverse((o) => {
+      if (!o.isMesh || /modesty[ _]?cover/i.test(o.name || '')) return;
+      const pos = o.geometry?.getAttribute?.('position');
+      if (!pos) return;
+      for (let i = 0; i < pos.count; i++) {
+        v.fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld);
+        const key = `${Math.floor(v.x / cell)},${Math.floor(v.y / cell)},${Math.floor(v.z / cell)}`;
+        const list = grid.get(key);
+        if (list) list.push(v.x, v.y, v.z);
+        else grid.set(key, [v.x, v.y, v.z]);
+      }
+    });
+    const GUARD = 0.0015;
     for (const o of cover) {
       const pos = o.geometry.getAttribute('position');
-      if (!pos) continue;
-      const c = center.clone().applyMatrix4(o.matrixWorld.clone().invert());
+      const nor = o.geometry.getAttribute('normal');
+      const index = o.geometry.getIndex();
+      if (!pos || !nor || !index) continue;
+      const local = o.matrixWorld.clone().invert();
+      const near = new THREE.Vector3();
+      const nrm = new THREE.Vector3();
+      const gap = new Float64Array(pos.count);
       for (let i = 0; i < pos.count; i++) {
-        pos.setXYZ(i,
-          c.x + (pos.getX(i) - c.x) * scale,
-          c.y + (pos.getY(i) - c.y) * scale,
-          c.z + (pos.getZ(i) - c.z) * scale);
+        v.fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld);
+        const cx = Math.floor(v.x / cell), cy = Math.floor(v.y / cell), cz = Math.floor(v.z / cell);
+        let best = Infinity;
+        for (let dx = -2; dx <= 2; dx++) {
+          for (let dy = -2; dy <= 2; dy++) {
+            for (let dz = -2; dz <= 2; dz++) {
+              const list = grid.get(`${cx + dx},${cy + dy},${cz + dz}`);
+              if (!list) continue;
+              for (let k = 0; k < list.length; k += 3) {
+                const d = (list[k] - v.x) ** 2 + (list[k + 1] - v.y) ** 2 + (list[k + 2] - v.z) ** 2;
+                if (d < best) best = d;
+              }
+            }
+          }
+        }
+        gap[i] = Number.isFinite(best) && best <= 0.04 * 0.04 ? Math.sqrt(best) : 0;
+      }
+      /* Adjacence par arêtes, pour lisser le champ d'écart sans casser la forme. */
+      const adj = new Map();
+      for (let t = 0; t < index.count; t += 3) {
+        const tri = [index.getX(t), index.getX(t + 1), index.getX(t + 2)];
+        for (let e = 0; e < 3; e++) {
+          const a = tri[e], b = tri[(e + 1) % 3];
+          if (!adj.has(a)) adj.set(a, new Set());
+          adj.get(a).add(b);
+          if (!adj.has(b)) adj.set(b, new Set());
+          adj.get(b).add(a);
+        }
+      }
+      const smooth = Float64Array.from(gap);
+      for (let pass = 0; pass < 2; pass++) {
+        for (const [i, nb] of adj) {
+          if (!nb.size) continue;
+          let sum = 0;
+          for (const j of nb) sum += gap[j];
+          smooth[i] = gap[i] * 0.5 + (sum / nb.size) * 0.5;
+        }
+        gap.set(smooth);
+      }
+      for (let i = 0; i < pos.count; i++) {
+        if (gap[i] <= GUARD) continue;
+        nrm.fromBufferAttribute(nor, i).transformDirection(o.matrixWorld).normalize();
+        const move = Math.min(gap[i] - GUARD, 0.012);
+        v.fromBufferAttribute(pos, i).addScaledVector(nrm, -move).applyMatrix4(local);
+        pos.setXYZ(i, v.x, v.y, v.z);
       }
       pos.needsUpdate = true;
+      pos.needsUpdate = true;
+      /* Le pli inguinal de la coque, une fois plaquée, devient une arête sombre :
+       * un léger lissage laplacien l'adoucit sans effacer le pli. */
+      const rings = new Map();
+      for (let t = 0; t < index.count; t += 3) {
+        const tri = [index.getX(t), index.getX(t + 1), index.getX(t + 2)];
+        for (let e = 0; e < 3; e++) {
+          const a = tri[e], b = tri[(e + 1) % 3];
+          if (!rings.has(a)) rings.set(a, []);
+          rings.get(a).push(b);
+          if (!rings.has(b)) rings.set(b, []);
+          rings.get(b).push(a);
+        }
+      }
+      const avg = new Float64Array(pos.count * 3);
+      const cur = pos.array.slice();
+      for (let pass = 0; pass < 3; pass++) {
+        for (const [i, nb] of rings) {
+          if (!nb.length) continue;
+          let sx = 0, sy = 0, sz = 0;
+          for (const j of nb) { sx += cur[j * 3]; sy += cur[j * 3 + 1]; sz += cur[j * 3 + 2]; }
+          avg[i * 3] = cur[i * 3] * 0.75 + (sx / nb.length) * 0.25;
+          avg[i * 3 + 1] = cur[i * 3 + 1] * 0.75 + (sy / nb.length) * 0.25;
+          avg[i * 3 + 2] = cur[i * 3 + 2] * 0.75 + (sz / nb.length) * 0.25;
+        }
+        for (let i = 0; i < avg.length; i++) cur[i] = avg[i];
+      }
+      pos.array.set(cur);
+      pos.needsUpdate = true;
+      o.geometry.computeVertexNormals();
     }
   };
 
@@ -982,7 +1089,7 @@ export function initCorpsViewer() {
       });
       for (const o of doomed) o.parent.remove(o);
       if (layer === 'skin') {
-        conformCover(gltf.scene);
+        if (!/noconform/.test(location.search)) conformCover(gltf.scene);
         if (!/nosmooth/.test(location.search)) smoothSeams(gltf.scene);
       }
       /* Le modèle fournit l'iris mais pas la pupille : un disque de 40 % du
@@ -992,11 +1099,20 @@ export function initCorpsViewer() {
         o.geometry.computeBoundingBox();
         const b = o.geometry.boundingBox;
         const r = Math.max(b.max.x - b.min.x, b.max.y - b.min.y) * 0.32;
+        const cx = (b.min.x + b.max.x) / 2, cy = (b.min.y + b.max.y) / 2;
         const pupil = new THREE.Mesh(new THREE.CircleGeometry(r, 28), mats.get('pupil'));
         pupil.name = (o.name || 'iris').replace(/^iris/i, 'Pupil');
-        pupil.position.set((b.min.x + b.max.x) / 2, (b.min.y + b.max.y) / 2, b.max.z + 0.0008);
+        pupil.position.set(cx, cy, b.max.z + 0.0008);
         mark(pupil, 'skin', cfg.id, pupil.name);
         o.add(pupil);
+        /* L'iris du modèle est un disque uni : l'anneau limbique sombre, posé
+         * à son bord, suffit à donner un regard net. */
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(r * 1.02, r * 2.95 / 3, 32), mats.get('limbus'));
+        ring.name = (o.name || 'iris').replace(/^iris/i, 'Limbus');
+        ring.position.set(cx, cy, b.max.z + 0.0004);
+        mark(ring, 'skin', cfg.id, ring.name);
+        o.add(ring);
       });
       /* Oreilles : le modèle les met dans la peau. On en crée une copie
        * cartilage, montrée seulement quand la peau est retirée, et rattachée

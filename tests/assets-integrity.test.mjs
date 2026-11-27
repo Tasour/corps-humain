@@ -12,7 +12,7 @@ assert.ok(!viewer.includes("buildMaleSkinPatch"), "ancien patch découpé encore
 assert.ok(!viewer.includes("skin-patch"), "assets du patch encore référencés");
 assert.ok(/modesty[ _]?cover/i.test(viewer), "couvreur cutané non reconnu");
 assert.ok(viewer.includes("conformCover"), "couvreur non rétracté sur la peau");
-assert.ok(/const scale = 0\.96/.test(viewer), "rétraction du couvreur absente");
+assert.ok(/const GUARD = 0\.0015/.test(viewer), "plaquage du couvreur à 1,5 mm absent");
 
 /* La génitalité est masquée tant que la peau est visible. */
 const genitalia = readFileSync(root + "docs/models/male-genitalia/male-genitalia.json", "utf8");
