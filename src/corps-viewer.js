@@ -92,15 +92,33 @@ export function initCorpsViewer() {
   cc.draggingSmoothTime = reduced ? 0 : 0.09;
   cc.minZoom = 0.5;
   cc.maxZoom = 20;
-  cc.dollyToCursor = !reduced;
   cc.dollySpeed = 1.8;
-  cc.mouseButtons.LEFT = CameraControls.ACTION.ROTATE;
-  cc.mouseButtons.MIDDLE = CameraControls.ACTION.TRUCK;
-  cc.mouseButtons.RIGHT = CameraControls.ACTION.TRUCK;
-  cc.touches.ONE = CameraControls.ACTION.TOUCH_ROTATE;
-  cc.touches.TWO = CameraControls.ACTION.TOUCH_DOLLY_TRUCK;
+  cc.mouseButtons.left = CameraControls.ACTION.ROTATE;
+  cc.mouseButtons.middle = CameraControls.ACTION.TRUCK;
+  cc.mouseButtons.right = CameraControls.ACTION.TRUCK;
+  cc.touches.one = CameraControls.ACTION.TOUCH_ROTATE;
+  /* Caméra orthographique : la doc impose Touch_Zoom_Truck. Touch_Dolly_Truck
+   * n'y zoome pas du tout (mesuré ×1,00) : ma mesure précédente était polluée
+   * par l'événement simulé du seuil de glissement. */
+  cc.touches.two = CameraControls.ACTION.TOUCH_ZOOM_TRUCK;
+  cc.touches.three = CameraControls.ACTION.TOUCH_TRUCK;
+  /* Bornes : on peut voir le sommet du crâne et effleurer le dessous des pieds,
+   * mais jamais passer sous le sol (95° laisse la caméra au-dessus du plan). */
+  cc.minPolarAngle = 0.25;
+  cc.maxPolarAngle = 1.66;
+  cc.dollyToCursor = true;
   const ccTarget = () => cc.getTarget(new THREE.Vector3());
   const setLook = (pos, target) => cc.setLookAt(pos.x, pos.y, pos.z, target.x, target.y, target.z, false);
+  /* camera-controls ne lit pas les modificateurs du glisser : on bascule
+   * l'action du bouton gauche dans keydown/keyup, avant son propre handler. */
+  const PAN_MOD = (e) => e.shiftKey || e.ctrlKey || e.metaKey;
+  const applyPanModifier = (e) => {
+    cc.mouseButtons.left = PAN_MOD(e) ? CameraControls.ACTION.TRUCK : CameraControls.ACTION.ROTATE;
+  };
+  window.addEventListener('keydown', applyPanModifier);
+  window.addEventListener('keyup', (e) => { if (!PAN_MOD(e)) applyPanModifier(e); });
+  window.addEventListener('blur', () => { cc.mouseButtons.left = CameraControls.ACTION.ROTATE; });
+
   /* camera-controls n'expose pas de propriété zoom : on passe par zoomTo(). */
   const setZoom = (z) => {
     const v = Math.max(0.5, Math.min(cc.maxZoom, z));
@@ -168,6 +186,8 @@ export function initCorpsViewer() {
     return '#bb8f68';
   };
   let need = true, token = 0, ctrl = null;
+  let rafId = 0;
+  const wake = () => { if (!rafId) rafId = requestAnimationFrame(frame); };
   let pivotBody = 'both';
   let activeSex = 'male';
   const pivotIndicator = document.getElementById('pivot-indicator');
@@ -238,6 +258,7 @@ export function initCorpsViewer() {
     }
   }
   function clearSelection() {
+    clearTimeout(popupTimer);
     selection = null;
     clearOutline();
     popup.hidden = true;
@@ -561,6 +582,11 @@ export function initCorpsViewer() {
     if (k >= 1) tween = null;
     return true;
   };
+  /* Un pas de flèche = 5 % de la hauteur vue, quel que soit le zoom. */
+  const panStep = () => {
+    const h = (camera.top - camera.bottom) / Math.max(camera.zoom, 0.001);
+    return h * 0.05;
+  };
   const zoomBy = (f) => {
     setZoom(camera.zoom * f); need = true;
   };
@@ -574,8 +600,11 @@ export function initCorpsViewer() {
   const panBy = (dx, dy) => {
     const right = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 0).multiplyScalar(dx);
     const up = new THREE.Vector3().setFromMatrixColumn(camera.matrix, 1).multiplyScalar(dy);
-    const d = right.add(up); const t0 = ccTarget().add(d);
-    setLook(camera.position.clone().add(d), t0); cc.update(1 / 60); need = true;
+    const d = right.add(up);
+    const old = ccTarget();
+    const t0 = clampTarget(old.clone().add(d));
+    setLook(camera.position.clone().add(t0.clone().sub(old)), t0);
+    cc.update(1 / 60); need = true; wake();
   };
   const presetView = (n) => {
     const presets = [[0, Math.PI / 2], [Math.PI, Math.PI / 2], [Math.PI / 2, Math.PI / 2],
@@ -1132,19 +1161,35 @@ export function initCorpsViewer() {
     }
     for (const model of modelCache.values()) applyEntries(model);
   }
+  /* Frontière de navigation : la cible ne peut pas sortir d'une boîte trois
+   * fois plus grande que le corps, donc on ne perd jamais le modèle de vue. */
+  const navBox = new THREE.Box3();
+  const clampTarget = (v) => { if (!navBox.isEmpty()) navBox.clampPoint(v, v); return v; };
+  const setNavBoundary = (model) => {
+    const b = new THREE.Box3().setFromObject(model);
+    if (b.isEmpty()) return;
+    const size = b.getSize(new THREE.Vector3()).multiplyScalar(3);
+    navBox.setFromCenterAndSize(b.getCenter(new THREE.Vector3()), size);
+    cc.setBoundary(navBox);
+  };
+
   async function loadModel() {
     if (modelCache.has('male')) return modelCache.get('male');
     if (loading.has('male')) return loading.get('male');
     const task = (async () => {
       const model = await buildGlbSet(MALE);
       model.userData.source = MALE.id;
-      model.userData.onDeferred = () => { batchModel(model); applyEntries(model); need = true; };
+      model.userData.onDeferred = () => {
+        batchModel(model); applyEntries(model);
+        setNavBoundary(model); need = true; wake();
+      };
       const genitalia = await buildMaleGenitalia();
       for (const child of [...genitalia.children]) model.add(child);
       const skinPatch = await buildMaleSkinPatch();
       for (const child of [...skinPatch.children]) model.add(child);
       model.position.x = 0;
       batchModel(model);
+      setNavBoundary(model);
       model.visible = true;
       bodies.add(model);
       modelCache.set('male', model);
@@ -1185,6 +1230,35 @@ export function initCorpsViewer() {
     else { pivotBody = 'male'; updatePivotIndicator(); }
     need = true;
   }
+  /* Camera-controls tourne dès le premier pixel : on désactive l'action du
+   * bouton gauche pendant un tap, puis on simule le pointerdown une fois le
+   * seuil dépassé, avec le vrai pointerId pour que le pointerup corresponde. */
+  let dragArmed = false;
+  /* Capture sur window : camera-controls a enregistré ses handlers avant nous
+   * et, au niveau cible, l'ordre d'enregistrement décide. isTrusted évite de
+   * recapturer l'événement pointerdown que l'on simule soi-même. */
+  window.addEventListener('pointerdown', (e) => {
+    if (!e.isTrusted || e.pointerType !== 'mouse') return;
+    if (!renderer.domElement.contains(e.target)) return;
+    dragArmed = false;
+    cc.mouseButtons.left = CameraControls.ACTION.NONE;
+  }, true);
+  window.addEventListener('pointermove', (e) => {
+    if (!down || dragArmed || e.pointerType !== 'mouse') return;
+    if (e.pointerId !== down.id) return;
+    if (Math.hypot(e.clientX - down.x, e.clientY - down.y) <= 6) return;
+    dragArmed = true;
+    applyPanModifier(e);
+    renderer.domElement.dispatchEvent(new PointerEvent('pointerdown', {
+      pointerId: e.pointerId, clientX: e.clientX, clientY: e.clientY,
+      button: 0, buttons: 1, bubbles: true, isPrimary: true,
+    }));
+  });
+  window.addEventListener('pointerup', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    applyPanModifier(e);
+  });
+
   function pick(clientX, clientY) {
     const rect = renderer.domElement.getBoundingClientRect();
     const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1,
@@ -1235,9 +1309,17 @@ export function initCorpsViewer() {
   };
   let down = null;
   let lastTap = { t: 0, x: 0, y: 0 };
+  let popupTimer = 0;
+  window.addEventListener('wheel', (e) => {
+    if (!e.isTrusted || !e.shiftKey || !e.deltaY) return;
+    if (!renderer.domElement.contains(e.target)) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    panBy((e.deltaY > 0 ? -1 : 1) * panStep() * 1.5, 0);
+  }, { capture: true, passive: false });
+
   renderer.domElement.addEventListener('pointerdown', (e) => {
     tween = null;
-    down = { x: e.clientX, y: e.clientY };
+    down = { x: e.clientX, y: e.clientY, id: e.pointerId };
   });
   renderer.domElement.addEventListener('pointerup', (e) => {
     if (!down) return;
@@ -1247,6 +1329,7 @@ export function initCorpsViewer() {
     const now = Date.now();
     if (now - lastTap.t < 300 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 24) {
       lastTap = { t: 0, x: 0, y: 0 };
+      clearTimeout(popupTimer);
       clearSelection();
       const hit = pointFromClient(e.clientX, e.clientY);
       const key = hit ? regionAt(hit) : null;
@@ -1256,23 +1339,29 @@ export function initCorpsViewer() {
     }
     lastTap = { t: now, x: e.clientX, y: e.clientY };
     const mesh = pick(e.clientX, e.clientY);
-    if (mesh) select(mesh, e.clientX, e.clientY);
-    else clearSelection();
+    if (mesh) popupTimer = setTimeout(() => select(mesh, e.clientX, e.clientY), 220);
+    else { clearTimeout(popupTimer); clearSelection(); }
   });
   document.getElementById('selection-close').addEventListener('click', clearSelection);
   document.getElementById('pivot-indicator').addEventListener('click', resetView);
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { clearSelection(); return; }
-    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+    if (['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(document.activeElement?.tagName)) return;
     switch (e.key) {
       case 'f': case 'F': fitView(); break;
       case 'r': case 'R': resetView(); break;
       case '+': case '=': zoomBy(1.35); break;
       case '-': case '_': zoomBy(1 / 1.35); break;
-      case 'ArrowLeft': panBy(-0.05, 0); break;
-      case 'ArrowRight': panBy(0.05, 0); break;
-      case 'ArrowUp': panBy(0, 0.05); break;
-      case 'ArrowDown': panBy(0, -0.05); break;
+      case 'ArrowLeft': panBy(-panStep(), 0); break;
+      case 'ArrowRight': panBy(panStep(), 0); break;
+      case 'ArrowUp': panBy(0, panStep()); break;
+      case 'ArrowDown': panBy(0, -panStep()); break;
+      case '?': {
+        const d = document.getElementById('shortcuts-help');
+        const btn = document.querySelector('[data-panel="reglages"]');
+        if (d && btn) { btn.click(); d.open = !d.open; }
+        break;
+      }
       case '[': cycleRegion(-1); break;
       case ']': cycleRegion(1); break;
       case 'a': case 'A': orbitBy(-0.15, 0); break;
@@ -1313,11 +1402,16 @@ export function initCorpsViewer() {
   })) {
     document.getElementById(id).addEventListener('click', () => setPreset(kind));
   }
-  window.addEventListener('resize', () => { resize(); need = true; });
+  document.getElementById('zoom-in')?.addEventListener('click', () => zoomBy(1.35));
+  document.getElementById('zoom-out')?.addEventListener('click', () => zoomBy(1 / 1.35));
+  window.addEventListener('resize', () => { resize(); need = true; wake(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) wake(); });
+  ['pointerdown', 'pointermove', 'wheel', 'keydown', 'keyup', 'click', 'change', 'touchstart']
+    .forEach((t) => window.addEventListener(t, wake, { passive: true }));
 
   let lastPulse = 0;
   function frame() {
-    requestAnimationFrame(frame);
+    rafId = 0;
     if (document.hidden) return;
     if (applyTween(performance.now())) need = true;
     const changed = cc.update(1 / 60);
@@ -1332,9 +1426,12 @@ export function initCorpsViewer() {
         else o.material.opacity = op;
       }
     }
-    if (changed || need || pulsed) { renderer.render(scene, camera); need = false; }
+    if (changed || need || pulsed) {
+      renderer.render(scene, camera); need = false;
+      rafId = requestAnimationFrame(frame);
+    }
   }
-  resize(); frame();
+  resize(); wake();
   readUrl();
   const maleUrls = Object.values(MALE.files).flat().map((f) => MALE.dir + f);
   activate().then(() => {

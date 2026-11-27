@@ -39,6 +39,13 @@
       #toolbar { position:absolute; left:0; right:0; bottom:0; z-index:15; display:flex; flex-direction:row;
         justify-content:center; gap:8px; padding:8px 12px calc(8px + env(safe-area-inset-bottom));
         border-top:1px solid var(--line); background:var(--surface-2); }
+      #zoom-overlay { position:absolute; right:12px; bottom:calc(64px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px; z-index:14; }
+      #zoom-overlay button { width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink); font-size:20px; line-height:1.4; padding:8px; cursor:pointer; }
+      #shortcuts-help { margin-top:12px; font-size:13px; }
+      #shortcuts-help summary { cursor:pointer; min-height:44px; display:flex; align-items:center; }
+      #shortcuts-help table { width:100%; border-collapse:collapse; table-layout:fixed; }
+      #shortcuts-help th, #shortcuts-help td { text-align:left; padding:4px 8px 4px 0; vertical-align:top; font-weight:400; }
+      #shortcuts-help th { color:var(--muted); white-space:normal; width:46%; padding-right:12px; word-break:break-word; }
       #toolbar button { cursor:pointer; width:auto; min-width:64px; height:44px; min-height:44px; margin:0; padding:0 12px;
         border-radius:8px; font-size:12px; font-weight:600; letter-spacing:.02em; }
       #toolbar button[aria-expanded="true"], #toolbar button[aria-pressed="true"] { background:var(--accent-strong); border-color:var(--accent); }
@@ -73,7 +80,9 @@
       fieldset.couches label.maitre { font-weight:600; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:4px; }
       #corps-info { margin-top:12px; color:var(--muted); font-size:12px; }
       #cp-view { position:absolute; left:0; right:0; top:0; bottom:60px; min-width:0; min-height:0; overflow:hidden; }
-      #cp-view canvas { display:block; width:100%; height:100%; touch-action:none; }
+      #cp-view canvas { display:block; width:100%; height:100%; touch-action:none; cursor:grab; }
+      #cp-view canvas:active { cursor:grabbing; }
+      body { overscroll-behavior:none; }
       #cp-view:focus-visible { outline:3px solid var(--accent); outline-offset:-3px; }
       .presets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:8px; }
       .presets button { min-height:44px; padding:0 8px; border-radius:8px; font-size:12px; font-weight:600; }
@@ -169,9 +178,35 @@
             <option value="en" data-i18n="languageEn">English</option>
           </select>
           <button type="button" id="clear-cache" data-i18n="clearCache">Vider le cache et recharger</button>
+          <details id="shortcuts-help">
+            <summary>Raccourcis clavier et gestes</summary>
+            <table>
+              <tbody>
+                <tr><th>Glisser (souris)</th><td>Tourner autour du corps</td></tr>
+                <tr><th>Shift, Ctrl ou Cmd + glisser</th><td>Déplacer en 2D (pan)</td></tr>
+                <tr><th>Molette</th><td>Zoomer vers le curseur</td></tr>
+                <tr><th>Shift + molette</th><td>Déplacer horizontalement</td></tr>
+                <tr><th>Clic droit ou molette enfoncée</th><td>Déplacer en 2D (pan)</td></tr>
+                <tr><th>Double-clic dans le vide</th><td>Zoomer ×2</td></tr>
+                <tr><th>Flèches</th><td>Déplacer en 2D (5 % de la vue par frappe)</td></tr>
+                <tr><th>W A S D</th><td>Tourner</td></tr>
+                <tr><th>F / R</th><td>Cadrer le corps / réinitialiser</td></tr>
+                <tr><th>[ et ]</th><td>Région anatomique précédente / suivante</td></tr>
+                <tr><th>1 à 6</th><td>Vues prédéfinies</td></tr>
+                <tr><th>Échap</th><td>Effacer la sélection</td></tr>
+                <tr><th>Tactile : 1 doigt</th><td>Tourner</td></tr>
+                <tr><th>Tactile : 2 doigts</th><td>Pincer pour zoomer, glisser pour déplacer</td></tr>
+                <tr><th>Tactile : 3 doigts</th><td>Déplacer en 2D</td></tr>
+              </tbody>
+            </table>
+          </details>
         </div>
-        <div id="cp-view" tabindex="0" role="application" data-i18n-attrs="aria-label:canvasLabel" aria-label="Vue 3D interactive du corps humain"></div>
+        <div id="cp-view" tabindex="0" role="application" data-i18n-attrs="aria-label:canvasLabel" aria-label="Vue 3D interactive du corps humain" aria-keyshortcuts="f r + - ArrowLeft ArrowRight ArrowUp ArrowDown a d w s [ ] 1 2 3 4 5 6 Escape"></div>
         <p class="gesture-hint" data-i18n="hint">Glissez pour tourner · double-tap pour zoomer</p>
+        <div id="zoom-overlay" role="group" aria-label="Zoom">
+          <button type="button" id="zoom-in" aria-label="Zoomer" title="Zoomer">+</button>
+          <button type="button" id="zoom-out" aria-label="Dézoomer" title="Dézoomer">−</button>
+        </div>
         <button type="button" id="pivot-indicator">Pivot : ensemble</button>
         <div id="selection-popup" hidden role="dialog" aria-modal="false" data-i18n-attrs="aria-label:popupLabel" aria-label="Détails de la structure">
           <button type="button" id="selection-close" data-i18n-attrs="aria-label:closeSelection" aria-label="Fermer la sélection">×</button>

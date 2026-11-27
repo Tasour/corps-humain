@@ -27,8 +27,9 @@ assert.ok(js.includes("new THREE.Raycaster()"), "raycaster absent");
 assert.ok(js.includes("setFromCamera(ndc, camera)"), "rayon depuis la caméra absent");
 assert.ok(js.includes("intersectObjects(activeBodies(), true)"), "raycast sur le corps actif absent");
 assert.ok(js.includes("hits.find("), "premier objet visible non retenu");
-assert.ok(js.includes("if (mesh) select(mesh"), "sélection absente");
-assert.ok(js.includes("else clearSelection()"), "reset dans le vide absent");
+assert.ok(js.includes("popupTimer = setTimeout(() => select(mesh"), "sélection différée absente");
+assert.ok(js.includes("clearTimeout(popupTimer)"), "annulation du popup absente");
+assert.ok(js.includes("else { clearTimeout(popupTimer); clearSelection(); }"), "reset dans le vide absent");
 assert.ok(js.includes("e.key === 'Escape'"), "échap absent");
 assert.ok(js.includes("moved > 6"), "seuil anti-glisser absent");
 

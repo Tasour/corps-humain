@@ -22,6 +22,28 @@ extraites par `scripts/extract-male-genitalia.py` et couvertes par un patch cuta
 ouverture elliptique (`scripts/extract-modesty-cover.mjs`). Les mesures sont archivées dans
 `docs/analyses/anatomie-2026-11-25.json` et vérifiées par `npm run test:anatomie`.
 
+### Commandes de navigation
+
+| Action | Souris / clavier | Tactile |
+|---|---|---|
+| Tourner autour du corps | Glisser | 1 doigt |
+| Déplacer en 2D (pan) | Shift, Ctrl ou Cmd + glisser ; bouton droit ; molette enfoncée | 2 doigts (translation) ou 3 doigts |
+| Zoomer | Molette (vers le curseur) ; `+` / `-` ; boutons + et − | Pincement à 2 doigts ; boutons + et − |
+| Pan horizontal | Shift + molette | — |
+| Zoomer ×2 | Double-clic dans le vide | Double-tap dans le vide |
+| Cadrer le corps / réinitialiser | `F` / `R` | — |
+| Tourner au clavier | `W` `A` `S` `D` | — |
+| Déplacer au clavier | Flèches (5 % de la vue par frappe) | — |
+| Régions anatomiques | `[` et `]` | Double-tap sur une région |
+| Vues prédéfinies | `1` à `6` | — |
+| Effacer la sélection | `Échap` | Toucher le vide |
+| Aide des raccourcis | `?` | Panneau Réglages |
+
+Le glissement ne démarre qu'après 6 px : un tap qui tremble ne fait pas tourner la caméra.
+La cible reste dans une boîte trois fois plus grande que le corps, et l'inclinaison est bornée,
+donc on ne peut ni perdre le modèle ni passer sous le sol. La boucle de rendu se suspend au
+repos et reprend à la première interaction.
+
 Un clic ou un tap sélectionne le premier maillage touché par le rayon issu de la caméra.
 Une popup affiche le nom de la structure, une courte description sourcée et sa licence, et un
 fin contour turquoise clignote autour de la pièce. Un clic dans le vide, `Échap` ou le bouton ×
