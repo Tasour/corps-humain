@@ -68,10 +68,12 @@ for (const f of fs.readdirSync(dstModels)) {
 }
 /* Publier uniquement le modèle masculin. */
 fs.cpSync(path.join(modelsDir, "male"), path.join(dstModels, "male"), { recursive: true });
+fs.cpSync(path.join(modelsDir, "male-lod"), path.join(dstModels, "male-lod"), { recursive: true });
 fs.cpSync(path.join(modelsDir, "male-genitalia"),
   path.join(dstModels, "male-genitalia"), { recursive: true });
-fs.copyFileSync(path.join(modelsDir, "selection-descriptions-seema.json"),
-  path.join(dstModels, "selection-descriptions-seema.json"));
+for (const name of ["selection-descriptions-seema.json", "selection-descriptions-seema.json.gz"]) {
+  fs.copyFileSync(path.join(modelsDir, name), path.join(dstModels, name));
+}
 for (const old of [
   "v2.html", "classique.html", "ancien-atlas.html", "models", "structures",
   "textures", "data", "screenshots", "v2-style.css",

@@ -35,6 +35,17 @@ const MALE = {
   files: { skin: ['skin.glb'], muscles: ['muscles.glb'], skeleton: ['skeleton.glb'],
     organs: ['organs.glb'], vessels: ['arteries.glb', 'veins.glb'], nerves: ['nerves.glb'] },
 };
+/* Niveaux de détail : même structure de pièces, moitié des triangles.
+ * Mesuré sur mobile bridé : LOD1 = 5,16 s / -1,3 Mo contre LOD0 = 6,57 s. */
+const MALE_LOD = {
+  id: 'seema',
+  dir: './docs/models/male-lod/',
+  files: {
+    skin: ['skin-lod1.glb'], muscles: ['muscles-lod1.glb'], skeleton: ['skeleton-lod1.glb'],
+    organs: ['organs-lod1.glb'], vessels: ['arteries-lod1.glb', 'veins-lod1.glb'],
+    nerves: ['nerves-lod1.glb'],
+  },
+};
 const MALE_GENITALIA = {
   dir: './docs/models/male-genitalia/',
   manifest: 'male-genitalia.json',
@@ -187,6 +198,7 @@ export function initCorpsViewer() {
   };
   let need = true, token = 0, ctrl = null;
   let rafId = 0;
+  const deferredStarters = [];
   const wake = () => { if (!rafId) rafId = requestAnimationFrame(frame); };
   let pivotBody = 'both';
   let activeSex = 'male';
@@ -678,7 +690,7 @@ export function initCorpsViewer() {
     return task;
   };
 
-  async function buildGlbSet(cfg) {
+  async function buildGlbSet(cfg, { defer = true } = {}) {
     draco.setDecoderPath('./draco/');
     const g = new THREE.Group();
     const entries = Object.entries(cfg.files).flatMap(([layer, files]) =>
@@ -702,10 +714,18 @@ export function initCorpsViewer() {
      * tâche idle, sans bloquer l'interaction ni le premier affineur de vue. */
     await Promise.all(entries.filter((e) => priority.has(e.layer)).map(ingest));
     const rest = entries.filter((e) => !priority.has(e.layer));
-    if (rest.length) {
-      const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 300));
-      g.userData.deferred = Promise.all(rest.map(ingest)).then(() => g.userData.onDeferred?.())
-        .catch(() => {});
+    if (rest.length && defer) {
+      /* Les couches non prioritaires démarrent APRÈS le premier rendu réel :
+       * lancées avant, elles volent la bande passante au chemin critique. */
+      g.userData.startDeferred = () => {
+        if (g.userData.deferredStarted) return;
+        g.userData.deferredStarted = true;
+        g.userData.deferred = Promise.all(rest.map(ingest)).then(() => g.userData.onDeferred?.())
+          .catch(() => {});
+      };
+      deferredStarters.push(g.userData.startDeferred);
+    } else if (rest.length) {
+      await Promise.all(rest.map(ingest));
     }
     return g;
   }
@@ -1149,9 +1169,24 @@ export function initCorpsViewer() {
   async function loadDescriptions() {
     for (const source of ['seema']) {
       if (descriptionSources.has(source)) continue;
-      const response = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json`));
-      if (!response.ok) continue;
-      const data = await response.json();
+      /* Le JSON pèse 2,35 Mo ; la variante gzip (~0,4 Mo) est servie en
+       * priorité quand le navigateur sait décompresser. */
+      let data = null;
+      if (typeof DecompressionStream === 'function') {
+        try {
+          const gz = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json.gz`));
+          if (gz.ok) {
+            const buf = await new Response(
+              gz.body.pipeThrough(new DecompressionStream('gzip'))).text();
+            data = JSON.parse(buf);
+          }
+        } catch { data = null; }   // serveur qui décompresse déjà : repli sur le JSON
+      }
+      if (!data) {
+        const response = await fetch(versioned(`./docs/models/selection-descriptions-${source}.json`));
+        if (!response.ok) continue;
+        data = await response.json();
+      }
       descriptions[source] = data.descriptions?.[source] || {};
       descAlias[source] = {};
       for (const [key, value] of Object.entries(descriptions[source])) {
@@ -1173,27 +1208,86 @@ export function initCorpsViewer() {
     cc.setBoundary(navBox);
   };
 
-  async function loadModel() {
-    if (modelCache.has('male')) return modelCache.get('male');
-    if (loading.has('male')) return loading.get('male');
-    const task = (async () => {
-      const model = await buildGlbSet(MALE);
-      model.userData.source = MALE.id;
+  /* Fabrique un modèle masculin complet (peau, muscles, squelette, organes,
+   * vaisseaux, nerfs + génitalité et patch cutané), déjà groupé en lots. */
+  async function createMaleModel(cfg, { defer = true } = {}) {
+    const model = await buildGlbSet(cfg, { defer });
+    model.userData.source = MALE.id;
+    if (defer) {
       model.userData.onDeferred = () => {
         batchModel(model); applyEntries(model);
         setNavBoundary(model); need = true; wake();
       };
-      const genitalia = await buildMaleGenitalia();
-      for (const child of [...genitalia.children]) model.add(child);
-      const skinPatch = await buildMaleSkinPatch();
-      for (const child of [...skinPatch.children]) model.add(child);
-      model.position.x = 0;
-      batchModel(model);
-      setNavBoundary(model);
+    }
+    const genitalia = await buildMaleGenitalia();
+    for (const child of [...genitalia.children]) model.add(child);
+    const skinPatch = await buildMaleSkinPatch();
+    for (const child of [...skinPatch.children]) model.add(child);
+    model.position.x = 0;
+    batchModel(model);
+    setNavBoundary(model);
+    applyEntries(model);
+    return model;
+  }
+
+  let quality = lowPower ? 'standard' : 'max';
+  let upgrading = false;
+  const setQuality = (state) => {
+    const status = document.getElementById('quality-status');
+    const button = document.getElementById('quality-retry');
+    quality = state === 'max' ? 'max' : 'standard';
+    if (!status || !button) return;
+    const labels = {
+      standard: 'Qualité standard (LOD1)',
+      upgrading: 'Passage en qualité maximale…',
+      max: 'Qualité maximale (LOD0)',
+      fallback: 'Qualité standard — amélioration indisponible',
+    };
+    status.textContent = labels[state] || labels.standard;
+    status.dataset.state = state;
+    button.hidden = state === 'max' || state === 'upgrading';
+    button.textContent = state === 'fallback' ? 'Réessayer' : 'Qualité maximale';
+  };
+
+  /* Montée en LOD0 : le modèle complet est construit hors scène, puis échangé
+   * d'un seul geste. Un échec laisse le LOD1 intact, sans état partiel. */
+  async function upgradeToMax() {
+    if (upgrading || quality === 'max') return;
+    const previous = modelCache.get('male');
+    upgrading = true;
+    setQuality('upgrading');
+    try {
+      const fresh = await createMaleModel(MALE, { defer: false });
+      fresh.visible = true;
+      bodies.add(fresh);
+      bodies.remove(previous);
+      modelCache.set('male', fresh);
+      maleModel = fresh;
+      previous.traverse((o) => { if (o.isBatchedMesh && o !== fresh) o.dispose?.(); });
+      applyEntries(fresh);
+      setQuality('max');
+      apply(); fitView(); need = true; wake();
+    } catch (error) {
+      console.warn('LOD0 indisponible, repli sur LOD1 :', error?.message || error);
+      setQuality('fallback');
+    } finally {
+      upgrading = false;
+    }
+  }
+
+  async function loadModel() {
+    if (modelCache.has('male')) return modelCache.get('male');
+    if (loading.has('male')) return loading.get('male');
+    const task = (async () => {
+      /* Chargement progressif dans les deux cas : seules les trois couches
+       * prioritaires (peau, muscles, squelette) bloquent le premier rendu.
+       * defer:false est réservé à la montée en qualité, qui doit être atomique. */
+      const cfg = lowPower ? MALE_LOD : MALE;
+      const model = await createMaleModel(cfg, { defer: true });
       model.visible = true;
       bodies.add(model);
       modelCache.set('male', model);
-      applyEntries(model);
+      setQuality(quality);
       return model;
     })();
     loading.set('male', task);
@@ -1228,7 +1322,7 @@ export function initCorpsViewer() {
     apply(); resize();
     if (fit) fitView();
     else { pivotBody = 'male'; updatePivotIndicator(); }
-    need = true;
+    need = true; wake();
   }
   /* Camera-controls tourne dès le premier pixel : on désactive l'action du
    * bouton gauche pendant un tap, puis on simule le pointerdown une fois le
@@ -1402,12 +1496,17 @@ export function initCorpsViewer() {
   })) {
     document.getElementById(id).addEventListener('click', () => setPreset(kind));
   }
+  document.getElementById('quality-retry')?.addEventListener('click', () => upgradeToMax());
   document.getElementById('zoom-in')?.addEventListener('click', () => zoomBy(1.35));
   document.getElementById('zoom-out')?.addEventListener('click', () => zoomBy(1 / 1.35));
   window.addEventListener('resize', () => { resize(); need = true; wake(); });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) wake(); });
   ['pointerdown', 'pointermove', 'wheel', 'keydown', 'keyup', 'click', 'change', 'touchstart']
     .forEach((t) => window.addEventListener(t, wake, { passive: true }));
+  /* Veille à 4 Hz : un `need` posé par le chargement, une sélection ou un thème
+   * relance la boucle sans coût de rendu. Sans elle, la suspension du rAF
+   * pouvait laisser un modèle chargé jamais dessiné. */
+  setInterval(() => { if (need && !rafId) wake(); }, 250);
 
   let lastPulse = 0;
   function frame() {
@@ -1428,6 +1527,11 @@ export function initCorpsViewer() {
     }
     if (changed || need || pulsed) {
       renderer.render(scene, camera); need = false;
+      if (!window.__firstRenderAt && maleModel) {
+        window.__firstRenderAt = performance.now();
+        try { performance.mark('corps-first-render'); } catch { /* ignoré */ }
+      }
+      if (deferredStarters.length) deferredStarters.splice(0).forEach((fn) => fn());
       rafId = requestAnimationFrame(frame);
     }
   }

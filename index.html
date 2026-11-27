@@ -41,6 +41,8 @@
         border-top:1px solid var(--line); background:var(--surface-2); }
       #zoom-overlay { position:absolute; right:12px; bottom:calc(64px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px; z-index:14; }
       #zoom-overlay button { width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink); font-size:20px; line-height:1.4; padding:8px; cursor:pointer; }
+      .quality-status { margin:12px 0 8px; color:var(--muted); font-size:12px; line-height:1.4; }
+      #quality-retry { width:100%; min-height:44px; margin:0 0 8px; }
       #shortcuts-help { margin-top:12px; font-size:13px; }
       #shortcuts-help summary { cursor:pointer; min-height:44px; display:flex; align-items:center; }
       #shortcuts-help table { width:100%; border-collapse:collapse; table-layout:fixed; }
@@ -178,6 +180,8 @@
             <option value="en" data-i18n="languageEn">English</option>
           </select>
           <button type="button" id="clear-cache" data-i18n="clearCache">Vider le cache et recharger</button>
+          <p id="quality-status" class="quality-status" role="status" aria-live="polite">Qualité maximale (LOD0)</p>
+          <button type="button" id="quality-retry" hidden>Qualité maximale</button>
           <details id="shortcuts-help">
             <summary>Raccourcis clavier et gestes</summary>
             <table>

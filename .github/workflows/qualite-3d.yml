@@ -82,3 +82,5 @@ jobs:
         run: npm run test:pages
       - name: Build
         run: npm run build
+      - name: Gates runtime (budget et repli LOD)
+        run: npm run test:runtime

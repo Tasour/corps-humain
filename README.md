@@ -183,6 +183,43 @@ L'architecture pour afficher l'intégralité des structures sans surchauffe est 
 budget thermique. Un prototype WASM (`wasm/corps-core`, 37 Ko) et un benchmark de
 batching (`bench/batching.html`) l'accompagnent.
 
+### Chargement et niveaux de détail (2026-11-27)
+
+Le codec a été tranché par la mesure, pas par la théorie. Sur contenu identique :
+
+| Fichier | Draco | Meshopt | Poids Draco | Poids meshopt |
+|---|---:|---:|---:|---:|
+| Peau | 39,7 ms | 2,5 ms | 770 Ko | 1 190 Ko |
+| Muscles | 58,2 ms | 6,8 ms | 1 911 Ko | — |
+| Squelette | 32,1 ms | 4,2 ms | 1 196 Ko | 1 190 Ko |
+
+Meshopt décode **9,6× plus vite** mais **grossit** les fichiers quand on préserve les
+pièces (`optimize` gagne du poids en fusionnant les maillages, ce qui détruit 254 noms
+et la sélection). Sur un réseau mobile, le poids gagne : **Draco est conservé**.
+
+Le levier retenu est le **niveau de détail** et le **chargement progressif** :
+
+| Variante | Poids au premier rendu | Mobile 4× / 1,6 Mbit |
+|---|---:|---:|
+| Avant (LOD0, tout différé immédiatement) | 7,6 Mo | 6 571 ms |
+| LOD0 + différés après le premier rendu | 4,6 Mo | 4 565 ms |
+| **LOD1 + descriptions gzip** | **3,85 Mo** | **3 652 ms** |
+
+- LOD1 = 50 % des triangles avec **erreur bornée à 0,2 %**. Non contrainte, la
+  simplification perçait la peau (points noirs, yeux creux) pour 2,97 Mo : la qualité
+  passe avant 0,9 Mo.
+- Les descriptions (2,35 Mo) sont servies en `.json.gz` (92 Ko) avec repli JSON.
+- Les couches non prioritaires démarrent **après** le premier rendu : lancées avant,
+  elles volaient la bande passante au chemin critique.
+- Appareil faible (mobile, ≤ 4 cœurs ou ≤ 4 Go) : LOD1. Desktop : LOD0. La montée en
+  LOD0 est **explicite** (Réglages → Qualité maximale), construite hors scène puis
+  échangée d'un seul geste. Un échec laisse le LOD1 intact et affiche « amélioration
+  indisponible » avec un bouton Réessayer.
+
+Ces budgets sont verrouillés par `npm run test:runtime` : transfert mesuré jusqu'au
+premier rendu (marqueur `corps-first-render`), canvas non vide, repli LOD0 et montée
+réussie.
+
 ### Performance mesurée (modèle masculin seul, 2026-11-26)
 
 Le retrait des autres modèles a divisé le poids livré par quatre :
