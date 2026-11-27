@@ -39,6 +39,28 @@
       #toolbar { position:absolute; left:0; right:0; bottom:0; z-index:15; display:flex; flex-direction:row;
         justify-content:center; gap:8px; padding:8px 12px calc(8px + env(safe-area-inset-bottom));
         border-top:1px solid var(--line); background:var(--surface-2); }
+      #layer-rail { position:fixed; right:8px; top:50%; transform:translateY(-50%);
+        z-index:16; display:flex; flex-direction:column; align-items:center; gap:8px;
+        padding:8px; border-radius:12px; background:var(--panel); border:1px solid var(--line);
+        box-shadow:var(--shadow); opacity:0.96; max-width:136px; }
+      #layer-rail-toggle { width:44px; height:44px; min-height:44px; padding:0; border-radius:8px;
+        border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink);
+        cursor:pointer; font-size:16px; line-height:1.35; }
+      #layer-rail.collapsed #layer-rail-steps, #layer-rail.collapsed #layer-rail-slider,
+      #layer-rail.collapsed #layer-rail-status { display:none; }
+      #layer-rail.collapsed { padding:4px; }
+      #layer-rail-steps { display:flex; flex-direction:column; gap:4px; }
+      #layer-rail-steps button { min-height:44px; min-width:44px; padding:8px; font-size:11px;
+        line-height:1.35; border-radius:8px; border:1px solid var(--chip); background:var(--chip); color:var(--ink);
+        cursor:pointer; }
+      #layer-rail-steps button[aria-pressed="false"] { opacity:0.45; }
+      #layer-rail-slider { writing-mode:vertical-lr; direction:rtl; width:44px; height:180px;
+        accent-color:var(--accent); }
+      #layer-rail-status { margin:0; font-size:10px; color:var(--muted); max-width:88px; text-align:center; line-height:1.4; }
+      @media (max-width:700px) { #layer-rail { right:4px; gap:8px; padding:8px; max-width:112px; }
+        #layer-rail-steps button { min-height:44px; min-width:44px; font-size:10px; padding:4px; }
+        #layer-rail-slider { height:120px; width:44px; }
+        #layer-rail-status { font-size:10px; max-width:96px; } }
       #zoom-overlay { position:absolute; right:12px; bottom:calc(64px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:8px; z-index:14; }
       #zoom-overlay button { width:44px; height:44px; min-width:44px; min-height:44px; border-radius:50%; border:0; box-shadow:0 0 0 2px var(--chip); background:var(--chip); color:var(--ink); font-size:20px; line-height:1.4; padding:8px; cursor:pointer; }
       .quality-status { margin:12px 0 8px; color:var(--muted); font-size:12px; line-height:1.4; }
@@ -207,6 +229,21 @@
         </div>
         <div id="cp-view" tabindex="0" role="application" data-i18n-attrs="aria-label:canvasLabel" aria-label="Vue 3D interactive du corps humain" aria-keyshortcuts="f r + - ArrowLeft ArrowRight ArrowUp ArrowDown a d w s [ ] 1 2 3 4 5 6 Escape"></div>
         <p class="gesture-hint" data-i18n="hint">Glissez pour tourner · double-tap pour zoomer</p>
+        <aside id="layer-rail" aria-label="Couches anatomiques, de l’extérieur vers l’intérieur">
+          <button type="button" id="layer-rail-toggle" aria-expanded="true" aria-controls="layer-rail-steps"
+                  title="Replier les couches" aria-label="Replier les couches">›</button>
+          <div id="layer-rail-steps" role="group" aria-label="Couches">
+            <button type="button" data-layer-step="skin">Peau</button>
+            <button type="button" data-layer-step="muscles">Muscles</button>
+            <button type="button" data-layer-step="vessels">Vaisseaux</button>
+            <button type="button" data-layer-step="nerves">Nerfs</button>
+            <button type="button" data-layer-step="skeleton">Squelette</button>
+            <button type="button" data-layer-step="organs">Organes</button>
+          </div>
+          <input id="layer-rail-slider" type="range" min="0" max="5" step="1" value="0"
+                 aria-label="Retirer les couches de l’extérieur vers l’intérieur" />
+          <p id="layer-rail-status" role="status" aria-live="polite">Toutes les couches</p>
+        </aside>
         <div id="zoom-overlay" role="group" aria-label="Zoom">
           <button type="button" id="zoom-in" aria-label="Zoomer" title="Zoomer">+</button>
           <button type="button" id="zoom-out" aria-label="Dézoomer" title="Dézoomer">−</button>

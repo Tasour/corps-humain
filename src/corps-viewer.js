@@ -80,15 +80,16 @@ export function initCorpsViewer() {
   camera.position.set(0, 1.45, 4);
   camera.lookAt(0, 0.85, 0);
   const capture = new URLSearchParams(location.search).has('capture');
-  /* Palier appareil : mémoire, cœurs et user-agent. Les appareils faibles
-   * désactivent l'anticrénelage et plafonnent le DPR à 1. */
-  const lowPower = (navigator.deviceMemory > 0 && navigator.deviceMemory <= 4) ||
-    (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4) ||
-    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  /* Palier appareil : capacité réelle uniquement. L'user-agent ne sert plus de
+   * critère — il classait tout téléphone, y compris un flagship, comme faible,
+   * ce qui coupait l'anticrénelage et bridait le DPR à 1 (rendu flou). */
+  const cores = navigator.hardwareConcurrency || 0;
+  const memory = navigator.deviceMemory || 0;
+  const lowPower = (memory > 0 && memory <= 4) || (cores > 0 && cores <= 4);
   const renderer = new THREE.WebGLRenderer({
-    antialias: !lowPower, preserveDrawingBuffer: capture, powerPreference: 'high-performance',
+    antialias: true, preserveDrawingBuffer: capture, powerPreference: 'high-performance',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   host.appendChild(renderer.domElement);
   scene.add(new THREE.HemisphereLight(0xffffff, 0x444455, 1.9));
   for (const [x, z, i] of [[2, 3, 2.0], [-2, -1, 0.8]]) {
@@ -159,7 +160,8 @@ export function initCorpsViewer() {
     cosmetic: '#4a3529', hair: '#4a3529',
     /* L'œil est déjà modélisé (sclère, iris, cornée) mais tout était peint en
      * couleur de peau : iris invisible. Trois matières suffisent. */
-    sclera: '#e9e4da', iris: '#7a5236', cornea: '#e3edf2', pupil: '#0d0b0a' };
+    sclera: '#e9e4da', iris: '#7a5236', cornea: '#e3edf2', pupil: '#0d0b0a',
+    cartilage: '#d9d0ba' };
   for (const [k, c] of Object.entries(colors)) {
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
@@ -494,17 +496,100 @@ export function initCorpsViewer() {
     }
     return best;
   };
+  /* Rail latéral : l'ordre extérieur → intérieur pilote un écorché progressif.
+   * Cheveux et sourcils sont fusionnés avec la peau. Un double-tap sur une
+   * pastille isole la couche, un second double-tap restaure l'état d'avant. */
+  const LAYER_ORDER = ['skin', 'muscles', 'vessels', 'nerves', 'skeleton', 'organs'];
+  const rail = document.getElementById('layer-rail');
+  const railSlider = document.getElementById('layer-rail-slider');
+  const railStatus = document.getElementById('layer-rail-status');
+  const railSteps = [...document.querySelectorAll('#layer-rail-steps button')];
+  let railSaved = null;
+
+  const railSet = (removedCount) => {
+    const removed = new Set(LAYER_ORDER.slice(0, removedCount));
+    for (const b of boxes) {
+      const layer = b.dataset.layer;
+      if (layer === 'pregnancy') continue;
+      /* Les cheveux suivent la peau : une seule entrée dans le rail. */
+      const shown = layer === 'cosmetic' ? !removed.has('skin') : !removed.has(layer);
+      if (LAYER_ORDER.includes(layer) || layer === 'cosmetic') b.checked = shown;
+    }
+    sync(); writeUrl(); apply();
+  };
+  const railSync = () => {
+    if (!railSlider) return;
+    let n = 0;
+    for (const layer of LAYER_ORDER) {
+      const box = boxes.find((b) => b.dataset.layer === layer);
+      if (box && !box.checked) n++; else break;
+    }
+    railSlider.value = String(n);
+    railSteps.forEach((btn) => {
+      const box = boxes.find((b) => b.dataset.layer === btn.dataset.layerStep);
+      btn.setAttribute('aria-pressed', String(!!box?.checked));
+    });
+    const labels = LAYER_ORDER.slice(0, n).map((l) => railSteps.find((b) => b.dataset.layerStep === l)?.textContent?.trim() || l);
+    railStatus.textContent = n === 0 ? 'Toutes les couches'
+      : (labels.length > 1 ? `${labels.join(', ')} masqués` : `${labels[0]} masquée`);
+  };
+
+  const railToggle = document.getElementById('layer-rail-toggle');
+  /* Sur téléphone le rail démarre replié : une poignée discrète, on l'ouvre
+   * au tap. Ouvert en permanence, il recouvrait le bras. */
+  if (rail && railToggle && window.matchMedia('(max-width:700px)').matches) {
+    rail.classList.add('collapsed');
+    railToggle.textContent = '‹';
+    railToggle.setAttribute('aria-expanded', 'false');
+    railToggle.setAttribute('aria-label', 'Déplier les couches');
+    railToggle.title = 'Déplier les couches';
+  }
+  if (railToggle) {
+    railToggle.addEventListener('click', () => {
+      const collapsed = rail.classList.toggle('collapsed');
+      railToggle.textContent = collapsed ? '‹' : '›';
+      railToggle.setAttribute('aria-expanded', String(!collapsed));
+      const label = collapsed ? 'Déplier les couches' : 'Replier les couches';
+      railToggle.setAttribute('aria-label', label);
+      railToggle.title = label;
+    });
+  }
+
+  if (railSlider) {
+    railSlider.addEventListener('input', () => { railSaved = null; railSet(Number(railSlider.value)); railSync(); });
+    railSlider.addEventListener('keydown', (e) => { if (e.key === 'ArrowUp') e.preventDefault(); });
+    railSteps.forEach((btn) => {
+      btn.addEventListener('dblclick', () => {
+        const layer = btn.dataset.layerStep;
+        if (railSaved) { railSet(railSaved.n); railStatus.textContent = railSaved.label; railSaved = null; railSync(); return; }
+        const before = Number(railSlider.value);
+        railSaved = { n: before, label: railStatus.textContent };
+        for (const b of boxes) {
+          const l = b.dataset.layer;
+          if (l === 'pregnancy') continue;
+          b.checked = l === layer || (l === 'cosmetic' && layer === 'skin');
+        }
+        sync(); writeUrl(); apply();
+        railStatus.textContent = `Isolé : ${btn.textContent.trim()}`;
+      });
+    });
+  }
+
   const apply = () => {
     const active = new Set(boxes.filter((b) => b.checked).map((b) => b.dataset.layer));
     let n = 0;
     for (const m of activeBodies()) m.traverse((o) => {
       if (o.isBatchedMesh) {
-        o.visible = active.has(o.userData.batchLayer);
+        o.visible = o.userData.altForSkin
+          ? !active.has('skin') && (active.has('skeleton') || active.has('organs'))
+          : active.has(o.userData.batchLayer);
         if (o.visible) n += o.userData.parts?.length || 0;
         return;
       }
       if (!o.isMesh) return;
-      o.visible = active.has(o.userData.layer);
+      o.visible = o.userData.altForSkin
+        ? !active.has('skin') && (active.has('skeleton') || active.has('organs'))
+        : active.has(o.userData.layer);
       if (o.visible) n++;
     });
     if (maleModel) maleModel.visible = activeSex === 'male';
@@ -733,6 +818,23 @@ export function initCorpsViewer() {
         mark(pupil, 'skin', cfg.id, pupil.name);
         o.add(pupil);
       });
+      /* Oreilles : le modèle les met dans la peau. On en crée une copie
+       * cartilage, montrée seulement quand la peau est retirée, et rattachée
+       * au squelette ET aux organes pour qu'elle survive aux deux couches. */
+      if (layer === 'skin') {
+        const EAR = /auricle|^(helix|antihelix|tragus|antitragus|lobule|concha|cavity of concha|scapha|cymba)/i;
+        gltf.scene.traverse((o) => {
+          if (!o.isMesh || !EAR.test(o.name || '') || /nasal|nose/i.test(o.name || '')) return;
+          const clone = new THREE.Mesh(o.geometry, mats.get('cartilage'));
+          clone.name = (o.name || 'auricle') + '-cart';
+          clone.position.copy(o.position);
+          clone.quaternion.copy(o.quaternion);
+          clone.scale.copy(o.scale);
+          mark(clone, 'skeleton', cfg.id, clone.name);
+          clone.userData.altForSkin = true;
+          o.parent?.add(clone);
+        });
+      }
       g.add(gltf.scene);
     };
     /* Premier rendu : silhouette, muscles et squelette. Le reste arrive en
@@ -798,6 +900,7 @@ export function initCorpsViewer() {
       const indices = group.geometries.reduce((sum, g) => sum + (g.index?.count || 0), 0);
       const batch = new THREE.BatchedMesh(group.geometries.length, vertices, indices, group.material);
       batch.userData.batchLayer = layer;
+      batch.userData.altForSkin = group.metas.every((m) => m.userData.altForSkin);
       batch.userData.parts = [];
       batch.renderOrder = RENDER_ORDER[layer] ?? 0;
       const identity = new THREE.Matrix4();
@@ -1504,7 +1607,7 @@ export function initCorpsViewer() {
     e.preventDefault();
   });
   for (const b of boxes) b.addEventListener('change', () => {
-    sync(); writeUrl(); apply();
+    sync(); writeUrl(); apply(); railSync();
   });
   master.addEventListener('change', () => {
     for (const b of boxes) {
@@ -1523,7 +1626,7 @@ export function initCorpsViewer() {
     const want = new Set(presets[kind] || []);
     for (const b of boxes) b.checked = want.has(b.dataset.layer);
     setXray(kind === 'xray');
-    sync(); writeUrl(); apply();
+    sync(); writeUrl(); apply(); railSync();
   };
   for (const [kind, id] of Object.entries({
     skin: 'cp-preset-skin', muscles: 'cp-preset-muscles',

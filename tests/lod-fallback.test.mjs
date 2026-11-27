@@ -47,4 +47,25 @@ assert.ok(js.includes("layer !== 'skin'") && js.includes('doomed.push(o)'),
 assert.ok(js.includes('layer + \'|\' + (mesh.material?.uuid'), 'batching par matériau absent');
 assert.ok(js.includes("mats.get('cornea').opacity = 0.1"), 'cornée trop opaque');
 
+
+/* Qualité mobile : plus de bridage lié à l'user-agent. */
+assert.ok(js.includes('antialias: true'), 'anticrénelage coupé');
+assert.ok(js.includes('setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))'), 'DPR non plafonné à 2');
+assert.ok(!/userAgent\.test|\/Mobile\/i\.test\(navigator\.userAgent\)/.test(js), 'user-agent encore utilisé');
+assert.ok(js.includes('navigator.hardwareConcurrency') && js.includes('navigator.deviceMemory'),
+  'capacité réelle non mesurée');
+
+/* Oreilles : copie cartilage visible sans peau, avec squelette ou organes. */
+assert.ok(js.includes("cartilage: '#d9d0ba'"), 'matériau cartilage absent');
+assert.ok(js.includes('altForSkin'), 'copie cartilage non marquée');
+assert.ok(js.includes("!active.has('skin') && (active.has('skeleton') || active.has('organes')".replace('organes','organs')), 'règle de visibilité des oreilles absente');
+
+/* Rail des couches : ordre extérieur → intérieur, isolation au double-tap. */
+assert.ok(js.includes("const LAYER_ORDER = ['skin', 'muscles', 'vessels', 'nerves', 'skeleton', 'organs']"),
+  'ordre des couches absent');
+assert.ok(js.includes("btn.addEventListener('dblclick'"), 'isolation au double-tap absente');
+assert.ok(js.includes('railSaved'), 'retour après isolation absent');
+assert.ok(js.includes("l === 'cosmetic' && layer === 'skin'"), 'cheveux non fusionnés avec la peau');
+assert.ok(js.includes("matchMedia('(max-width:700px)')"), 'rail non replié sur mobile');
+
 console.log('PASS LOD : configuration, swap atomique, repli, statut et descriptions gzip');

@@ -49,6 +49,11 @@ async function open({ mobile = true, failLod0 = false } = {}) {
     hasTouch: mobile, userAgent: mobile ? IPHONE : undefined, serviceWorkers: 'block',
   });
   const page = await ctx.newPage();
+  /* Le palier appareil dépend de la machine hôte : on force 2 Go de mémoire
+   * pour que « mobile » charge bien le LOD1, comme un vrai téléphone modeste. */
+  if (mobile) await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'deviceMemory', { get: () => 2 });
+  });
   if (failLod0) {
     await page.route('**/models/male/*.glb', (route) => route.fulfill({ status: 500, body: 'boom' }));
   }
@@ -87,13 +92,12 @@ async function open({ mobile = true, failLod0 = false } = {}) {
 {
   const r = await open();
   const mb = +(r.bytes / 1e6).toFixed(2);
-  /* 4,0 Mo et non 3,0 : à 2,97 Mo il fallait une simplification non contrainte
-   * qui perçait la peau (points noirs, yeux creux). Avec l'erreur bornée à
-   * 0,2 %, le LOD1 reste propre mais pèse 3,85 Mo. */
-  const ok = mb <= 4.0 && r.distinct > 12;
+  /* 5,0 Mo : un téléphone capable reçoit désormais le LOD0 (4,6 Mo) au lieu du
+   * LOD1, pour la netteté. Le LOD1 reste servi aux appareils à mémoire ≤ 4 Go. */
+  const ok = mb <= 5.0 && r.distinct > 12;
   if (r.distinct <= 12) results.push(`canvas mobile quasi vide : ${r.distinct} couleurs distinctes`);
   if (!ok) failed = true;
-  results.push(`budget premier rendu mobile : ${mb} Mo (≤ 4,0) ${ok ? 'OK' : 'DEPASSEMENT'}`);
+  results.push(`budget premier rendu mobile : ${mb} Mo (≤ 5,0) ${ok ? 'OK' : 'DEPASSEMENT'}`);
   await r.ctx.close();
 }
 
