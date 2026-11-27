@@ -144,6 +144,39 @@ async function open({ mobile = true, failLod0 = false } = {}) {
   await r.ctx.close();
 }
 
+/* 5. Couches : en peau seule, aucun lot étranger et aucun pixel rouge.
+ * Garde-fou du défaut « artère carotide visible au coin de l'œil » : le
+ * chargement différé créait des lots visibles malgré les cases décochées. */
+{
+  const ctx = await browser.newContext({ viewport: { width: 900, height: 900 }, serviceWorkers: 'block' });
+  const page = await ctx.newPage();
+  await page.goto(base + '/?capture=1&layers=skin', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => /maillage\(s\) visible\(s\)/.test(
+    document.getElementById('corps-info')?.textContent || ''), null, { timeout: 120000 });
+  await page.waitForTimeout(3000);
+  const r = await page.evaluate(() => {
+    const intrus = [];
+    window.__corps.maleModel.traverse((o) => {
+      if (o.isBatchedMesh && o.visible && o.userData.batchLayer !== 'skin') intrus.push(o.userData.batchLayer);
+    });
+    const gl = document.querySelector('#cp-view canvas');
+    let rouges = 0;
+    if (gl) {
+      const c = document.createElement('canvas');
+      c.width = 200; c.height = 200;
+      const g = c.getContext('2d');
+      g.drawImage(gl, 0, 0, c.width, c.height);
+      const d = g.getImageData(0, 0, c.width, c.height).data;
+      for (let i = 0; i < d.length; i += 4) if (d[i] > 140 && d[i + 1] < 90 && d[i + 2] < 90) rouges++;
+    }
+    return { intrus: [...new Set(intrus)], rouges };
+  });
+  const ok = r.intrus.length === 0 && r.rouges === 0;
+  if (!ok) failed = true;
+  results.push(`couches peau seule : lots étrangers ${r.intrus.length ? r.intrus.join(',') : 'aucun'}, pixels rouges ${r.rouges} ${ok ? 'OK' : 'ECHEC'}`);
+  await ctx.close();
+}
+
 await browser.close();
 server.close();
 console.log(results.join('\n'));

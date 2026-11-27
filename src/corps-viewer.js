@@ -1216,7 +1216,13 @@ export function initCorpsViewer() {
     if (defer) {
       model.userData.onDeferred = () => {
         batchModel(model); applyEntries(model);
-        setNavBoundary(model); need = true; wake();
+        setNavBoundary(model);
+        /* Indispensable : les lots créés par le chargement différé naissent
+         * visibles. Sans ce apply(), organes, vaisseaux et nerfs s'affichent
+         * même quand leurs cases sont décochées — d'où l'artère carotide rouge
+         * visible au coin de l'œil en mode peau seule. */
+        apply();
+        need = true; wake();
       };
     }
     const genitalia = await buildMaleGenitalia();
