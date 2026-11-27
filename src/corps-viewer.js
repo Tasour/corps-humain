@@ -156,10 +156,18 @@ export function initCorpsViewer() {
   const extraMats = new Map();
   const colors = { skin: '#bc9c7e', muscles: '#a9584c', skeleton: '#e4dcc0',
     organs: '#bb9068', vessels: '#c24b3f', nerves: '#d9b45f', pregnancy: '#bb9068',
-    cosmetic: '#4a3529', hair: '#4a3529' };
+    cosmetic: '#4a3529', hair: '#4a3529',
+    /* L'œil est déjà modélisé (sclère, iris, cornée) mais tout était peint en
+     * couleur de peau : iris invisible. Trois matières suffisent. */
+    sclera: '#e9e4da', iris: '#7a5236', cornea: '#e3edf2', pupil: '#0d0b0a' };
   for (const [k, c] of Object.entries(colors)) {
     mats.set(k, new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.62 }));
   }
+  /* La cornée translucide blanchit l'iris : on la rend presque invisible. */
+  mats.get('cornea').transparent = true;
+  mats.get('cornea').opacity = 0.1;
+  mats.get('cornea').depthWrite = false;
+  mats.get('cornea').roughness = 0.1;
   // Variation déterministe et subtile de la peau, sans texture réseau.
   mats.get('skin').onBeforeCompile = (shader) => {
     shader.fragmentShader = shader.fragmentShader.replace(
@@ -702,12 +710,29 @@ export function initCorpsViewer() {
       gltf.scene.traverse((o) => {
         if (!o.isMesh) return;
         if (/modesty[ _]?cover/i.test(o.name)) { doomed.push(o); return; }
+        const eye = /^(sclera|iris|cornea)/i.exec(o.name || '')?.[1]?.toLowerCase();
+        /* Le GLB organes contient une seconde copie exacte de l'œil : elle
+         * z-fightait avec celle de la peau. On ne garde que la copie cutanée. */
+        if (eye && layer !== 'skin') { doomed.push(o); return; }
         o.userData.file = f;
         const cosmetic = matches(o.name, HAIR_TOKENS);
-        o.material = mats.get(cosmetic ? 'hair' : layer);
+        o.material = mats.get(eye || (cosmetic ? 'hair' : layer));
         mark(o, layer, cfg.id, o.name, cosmetic ? 'cosmetic' : undefined);
       });
       for (const o of doomed) o.parent.remove(o);
+      /* Le modèle fournit l'iris mais pas la pupille : un disque de 40 % du
+       * rayon de l'iris, posé 0,8 mm devant, suffit à donner un regard. */
+      gltf.scene.traverse((o) => {
+        if (!o.isMesh || !/^iris/i.test(o.name || '')) return;
+        o.geometry.computeBoundingBox();
+        const b = o.geometry.boundingBox;
+        const r = Math.max(b.max.x - b.min.x, b.max.y - b.min.y) * 0.32;
+        const pupil = new THREE.Mesh(new THREE.CircleGeometry(r, 28), mats.get('pupil'));
+        pupil.name = (o.name || 'iris').replace(/^iris/i, 'Pupil');
+        pupil.position.set((b.min.x + b.max.x) / 2, (b.min.y + b.max.y) / 2, b.max.z + 0.0008);
+        mark(pupil, 'skin', cfg.id, pupil.name);
+        o.add(pupil);
+      });
       g.add(gltf.scene);
     };
     /* Premier rendu : silhouette, muscles et squelette. Le reste arrive en
@@ -750,12 +775,15 @@ export function initCorpsViewer() {
         geo.setAttribute('normal', new THREE.BufferAttribute(floats, 3));
       }
       const layer = mesh.userData.layer || 'organs';
-      if (!groups.has(layer)) {
-        groups.set(layer, { material: mesh.material, geometries: [], metas: [] });
+      /* Clé = couche + matériau : sans cela, l'iris et la cornée seraient
+       * fusionnés dans le lot de peau et perdraient leur couleur. */
+      const key = layer + '|' + (mesh.material?.uuid || 'default');
+      if (!groups.has(key)) {
+        groups.set(key, { material: mesh.material, layer, geometries: [], metas: [] });
       }
       geo.computeBoundingBox();
       geo.computeBoundingSphere();
-      const group = groups.get(layer);
+      const group = groups.get(key);
       group.geometries.push(geo);
       group.metas.push({
         name: mesh.name,
@@ -764,7 +792,8 @@ export function initCorpsViewer() {
       });
     }
     const batches = [];
-    for (const [layer, group] of groups) {
+    for (const [, group] of groups) {
+      const layer = group.layer;
       const vertices = group.geometries.reduce((sum, g) => sum + g.getAttribute('position').count, 0);
       const indices = group.geometries.reduce((sum, g) => sum + (g.index?.count || 0), 0);
       const batch = new THREE.BatchedMesh(group.geometries.length, vertices, indices, group.material);

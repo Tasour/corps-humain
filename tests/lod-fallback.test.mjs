@@ -36,4 +36,15 @@ assert.ok(js.includes('DecompressionStream'), 'descriptions non gzippées');
 assert.ok(js.includes('selection-descriptions-${source}.json.gz'), 'variante gzip non demandée');
 assert.ok(js.includes('catch { data = null; }'), 'repli JSON absent si le serveur décompresse');
 
+
+/* Œil : matériaux dédiés, pupille procédurale et dédoublonnage. */
+assert.ok(js.includes("sclera: '#e9e4da'"), 'matériau sclère absent');
+assert.ok(js.includes("iris: '#7a5236'"), 'matériau iris absent');
+assert.ok(js.includes("pupil: '#0d0b0a'"), 'matériau pupille absent');
+assert.ok(js.includes('CircleGeometry'), 'pupille procédurale absente');
+assert.ok(js.includes("layer !== 'skin'") && js.includes('doomed.push(o)'),
+  'dédoublonnage de l’œil organs absent');
+assert.ok(js.includes('layer + \'|\' + (mesh.material?.uuid'), 'batching par matériau absent');
+assert.ok(js.includes("mats.get('cornea').opacity = 0.1"), 'cornée trop opaque');
+
 console.log('PASS LOD : configuration, swap atomique, repli, statut et descriptions gzip');
